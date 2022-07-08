@@ -1,0 +1,15 @@
+{
+	"chemicals": "5",
+	"country": "Germany",
+	"fertilizer": "2",
+	"growing time": "60",
+	"hired load": "2",
+	"packaging" : "0.6",
+	"planting": "Seed",
+	"planting price": "1.2",
+	"revenue": "20",
+	"selfload": "2",
+	"soil need": "0.2",
+	"species": "PetuniaAtkinsiana",
+	"vermin exposure": "2",
+}

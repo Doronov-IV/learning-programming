@@ -1,0 +1,15 @@
+{
+	"chemicals": "5",
+	"country": "Poland",
+	"fertilizer": "4",
+	"growing time": "90",
+	"hired load": "0",
+	"packaging" : "2.4",
+	"planting": "Cutting",
+	"planting price": "40",
+	"revenue": "150",
+	"selfload": "3",
+	"soil need": "0.5",
+	"species": "PetuniaPendula",
+	"vermin exposure": "2",
+}

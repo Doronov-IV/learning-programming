@@ -1,0 +1,15 @@
+{
+	"chemicals": "1",
+	"country": "The Netherlands",
+	"fertilizer": "1",
+	"growing time": "20",
+	"hired load": "0",
+	"packaging" : "3",
+	"planting": "Bulb",
+	"planting price": "40",
+	"revenue": "100",
+	"selfload": "2",
+	"soil need": "0.35",
+	"species": "Hyacinthus",
+	"vermin exposure": "1",
+}

@@ -1,0 +1,15 @@
+{
+	"chemicals": "5",
+	"country": "The Netherlands",
+	"fertilizer": "3",
+	"growing time": "110",
+	"hired load": "0",
+	"packaging" : "2.4",
+	"planting": "Cutting",
+	"planting price": "35",
+	"revenue": "150",
+	"selfload": "3",
+	"soil need": "0.5",
+	"species": "Fuchsia",
+	"vermin exposure": "5",
+}

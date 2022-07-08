@@ -1,0 +1,33 @@
+<entity>
+
+	type=тип-посадочного-материала
+	origin=страна-покупки-посадочного-материала
+	species=вид
+	soil=почва
+	turf=торф
+	humus=перегной
+	fertilizer=удобрение
+	chemicals=ядохимикаты
+	seeding=посадочный-материал
+	packaging=тара
+	
+	workload=трудоёмкость
+	selfload=собственный-труд
+	hired=наёмный-труд
+	
+	cultivation-time=время-на-выращивание
+	revenue=выручка
+	unit-quantity=кол-во-выращимаевых-растений-за-сезон
+	
+	vermin-exposure=подверженость-вредителям
+
+</entity>
+
+<common>
+
+	rent=аренда-торгового-места
+	heat=отопление
+	delivery=транспортировка-товара
+
+</common>
+
