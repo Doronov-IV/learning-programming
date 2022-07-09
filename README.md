@@ -1,4 +1,4 @@
-An archive for old and a workspace for new projects and exercises of my educational path.
+An archive for old and a workspace for new projects and exercises on my educational path.
 
 The roadmap is:
 
