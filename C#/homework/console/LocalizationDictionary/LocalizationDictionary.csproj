@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Tools\FileReader\AbstractFileReader.cs" Link="Links\FileReader\AbstractFileReader.cs" />
+    <Compile Include="..\..\Tools\FileReader\Common\FileReader.cs" Link="Links\FileReader\Common\FileReader.cs" />
+    <Compile Include="..\..\Tools\FileReader\Common\TextFileReader.cs" Link="Links\FileReader\Common\TextFileReader.cs" />
+    <Compile Include="..\..\Tools\FileReader\Generic\FileReader.cs" Link="Links\FileReader\Generic\FileReader.cs" />
+    <Compile Include="..\..\Tools\FileReader\Generic\JsonParser.cs" Link="Links\FileReader\Generic\JsonParser.cs" />
+    <Compile Include="..\..\Tools\Formatting\Toolbox.cs" Link="Links\Toolbox\Toolbox.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Links\FileReader\Common\" />
+    <Folder Include="Links\FileReader\Common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.44.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,79 @@
+[
+{
+	"Name": "Boeuf Bourguignon",
+	"Calories":  156,
+	"Price": 18.2
+},
+
+{
+	"Name": "Blanquette de Veau",
+	"Calories":  157,
+	"Price": 19
+},
+
+{
+	"Name": "Cassoulet",
+	"Calories":  158,
+	"Price": 17.5
+},
+
+{
+	"Name": "Confit de Canard",
+	"Calories":  159,
+	"Price": 15
+},
+
+{
+	"Name": "Coq au Vin",
+	"Calories":  160,
+	"Price": 19.3
+},
+
+{
+	"Name": "Foie Gras",
+	"Calories":  161,
+	"Price": 22
+},
+
+{
+	"Name": "Fondue Savoyarde",
+	"Calories":  162,
+	"Price": 18.9
+},
+
+{
+	"Name": "Kalops",
+	"Calories":  163,
+	"Price": 12.7
+},
+
+{
+	"Name": "Kladkaka",
+	"Calories":  164,
+	"Price": 7.62
+},
+
+{
+	"Name": "Korv Stroganoff",
+	"Calories":  165,
+	"Price": 14.5
+},
+
+{
+	"Name": "Kottbullar",
+	"Calories":  166,
+	"Price": 4.5
+},
+
+{
+	"Name": "Ostkaka",
+	"Calories":  167,
+	"Price": 11.1
+},
+
+{
+	"Name": "Pyttipanna",
+	"Calories":  168,
+	"Price": 14.9
+}
+]
