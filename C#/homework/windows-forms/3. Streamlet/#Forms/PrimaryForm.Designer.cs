@@ -39,11 +39,11 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.LeftListView = new System.Windows.Forms.ListView();
-            this.RightListView = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.RightListView = new System.Windows.Forms.ListView();
+            this.LeftListView = new System.Windows.Forms.ListView();
             this.TopMenuToolStrip.SuspendLayout();
             this.MiddleToolStrip.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -138,31 +138,6 @@
             this.panel1.Size = new System.Drawing.Size(698, 773);
             this.panel1.TabIndex = 3;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.statusStrip2);
-            this.panel2.Controls.Add(this.RightListView);
-            this.panel2.Location = new System.Drawing.Point(704, 78);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(666, 773);
-            this.panel2.TabIndex = 4;
-            // 
-            // LeftListView
-            // 
-            this.LeftListView.Location = new System.Drawing.Point(0, 0);
-            this.LeftListView.Name = "LeftListView";
-            this.LeftListView.Size = new System.Drawing.Size(695, 739);
-            this.LeftListView.TabIndex = 0;
-            this.LeftListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // RightListView
-            // 
-            this.RightListView.Location = new System.Drawing.Point(3, 3);
-            this.RightListView.Name = "RightListView";
-            this.RightListView.Size = new System.Drawing.Size(660, 736);
-            this.RightListView.TabIndex = 0;
-            this.RightListView.UseCompatibleStateImageBehavior = false;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -172,6 +147,15 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.statusStrip2);
+            this.panel2.Controls.Add(this.RightListView);
+            this.panel2.Location = new System.Drawing.Point(704, 78);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(666, 773);
+            this.panel2.TabIndex = 4;
+            // 
             // statusStrip2
             // 
             this.statusStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -180,6 +164,23 @@
             this.statusStrip2.Size = new System.Drawing.Size(666, 22);
             this.statusStrip2.TabIndex = 1;
             this.statusStrip2.Text = "statusStrip2";
+            // 
+            // RightListView
+            // 
+            this.RightListView.Location = new System.Drawing.Point(3, 3);
+            this.RightListView.Name = "RightListView";
+            this.RightListView.Size = new System.Drawing.Size(660, 736);
+            this.RightListView.TabIndex = 0;
+            this.RightListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // LeftListView
+            // 
+            this.LeftListView.Location = new System.Drawing.Point(0, 0);
+            this.LeftListView.Name = "LeftListView";
+            this.LeftListView.Size = new System.Drawing.Size(695, 739);
+            this.LeftListView.TabIndex = 0;
+            this.LeftListView.UseCompatibleStateImageBehavior = false;
+            this.LeftListView.SelectedIndexChanged += new System.EventHandler(this.LeftListView_SelectedIndexChanged);
             // 
             // PrimaryForm
             // 
@@ -219,9 +220,9 @@
         private ToolStripButton toolStripButton3;
         private Panel panel1;
         private StatusStrip statusStrip1;
-        private ListView LeftListView;
         private Panel panel2;
         private StatusStrip statusStrip2;
+        private ListView LeftListView;
         private ListView RightListView;
     }
 }
