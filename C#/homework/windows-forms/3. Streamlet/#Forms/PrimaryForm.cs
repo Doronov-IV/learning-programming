@@ -19,6 +19,11 @@ namespace Streamlet.Forms
 
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
+            
+        }
+
+        private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
         }
     }
