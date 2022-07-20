@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Tools\Formatting\Toolbox.cs" Link="Links\Toolbox.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.44.0" />
   </ItemGroup>
 
@@ -21,7 +17,7 @@
 
   <ItemGroup>
     <Reference Include="tools">
-      <HintPath>..\..\..\tools\tools\bin\Debug\tools.dll</HintPath>
+      <HintPath>..\..\..\tools\precompiled-dll\tools.dll</HintPath>
     </Reference>
   </ItemGroup>
 

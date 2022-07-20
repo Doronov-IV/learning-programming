@@ -122,7 +122,7 @@ namespace Delivery.Service
 
             FileReader<List<Course>> readerCourse = new FileReader<List<Course>>();
 
-            CoursesMenuList = readerCourse.Read("JSON\\Data\\Courses\\CourseMenu.json").Object;
+            CoursesMenuList = readerCourse.Read("JSON\\Data\\Courses\\CourseMenu.json");
 
             // <read courses />
 
@@ -131,7 +131,7 @@ namespace Delivery.Service
 
             FileReader<List<Drink>> readerDrinks = new FileReader<List<Drink>>();
 
-            DrinksMenuList = readerDrinks.Read("JSON\\Data\\Drinks\\DrinksMenu.json").Object;
+            DrinksMenuList = readerDrinks.Read("JSON\\Data\\Drinks\\DrinksMenu.json");
 
             // <read drinks />
         }
