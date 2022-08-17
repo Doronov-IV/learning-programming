@@ -43,19 +43,35 @@ namespace Streamlet.Forms
 
         private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref DirectoryInfo DirectoryPointer)
         {
+            if (listBox.SelectedItem.ToString() != "/..")
+            {
+                MoveDown(listBox, ref DirectoryPointer);
+            }
+            else
+            {
+                MoveUp(listBox, ref DirectoryPointer);
+            }
+        }
+
+
+        private void MoveDown(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        {
             if (listBox.SelectedItem is DriveInfo selectedDrive)
             {
                 DirectoryPointer = selectedDrive.RootDirectory;
                 GetDirectoryContents(listBox, DirectoryPointer);
             }
-            else if (listBox.SelectedItem is DirectoryInfo selectedDir)
-            {
-                DirectoryPointer = selectedDir;
-                GetDirectoryContents(listBox, DirectoryPointer);
-            }
             else
             {
-                MoveUp(listBox, ref DirectoryPointer);
+                foreach (DirectoryInfo unit in DirectoryPointer.GetDirectories())
+                {
+                    if (unit.Name.Equals(listBox.SelectedItem))
+                    {
+                        DirectoryPointer = unit;
+                        GetDirectoryContents(listBox, DirectoryPointer);
+                        break;
+                    }
+                }
             }
         }
 
@@ -66,8 +82,14 @@ namespace Streamlet.Forms
             {
                 listBox.Items.Clear();
                 listBox.Items.Add("/..");
-                listBox.Items.AddRange(DirectoryPointer.GetDirectories());
-                listBox.Items.AddRange(DirectoryPointer.GetFiles());
+                DirectoryPointer.GetDirectories().ToList().ForEach(unit =>
+                {
+                    listBox.Items.Add(unit.Name);
+                });
+                DirectoryPointer.GetFiles().ToList().ForEach(unit =>
+                {
+                    listBox.Items.Add(unit.Name);
+                });
             }
             else GetDrives(listBox);
         }
