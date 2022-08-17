@@ -56,42 +56,68 @@ namespace Streamlet.Forms
 
         private void MoveDown(ListBox listBox, ref DirectoryInfo DirectoryPointer)
         {
-            if (listBox.SelectedItem is DriveInfo selectedDrive)
+            try
             {
-                DirectoryPointer = selectedDrive.RootDirectory;
-                GetDirectoryContents(listBox, DirectoryPointer);
-            }
-            else
-            {
-                foreach (DirectoryInfo unit in DirectoryPointer.GetDirectories())
+                if (listBox.SelectedItem is DriveInfo selectedDrive)
                 {
-                    if (unit.Name.Equals(listBox.SelectedItem))
+                    DirectoryPointer = selectedDrive.RootDirectory;
+                    GetDirectoryContents(listBox, DirectoryPointer);
+                }
+                else
+                {
+                    foreach (DirectoryInfo unit in DirectoryPointer.GetDirectories())
                     {
-                        DirectoryPointer = unit;
-                        GetDirectoryContents(listBox, DirectoryPointer);
-                        break;
+                        if (unit.Name.Equals(listBox.SelectedItem))
+                        {
+                            DirectoryPointer = unit;
+                            GetDirectoryContents(listBox, DirectoryPointer);
+                            break;
+                        }
                     }
                 }
+            }
+            catch (System.UnauthorizedAccessException ex)
+            {
+                ShowFailMessage(listBox);
             }
         }
 
 
         private void GetDirectoryContents(ListBox listBox, DirectoryInfo DirectoryPointer)
         {
-            if (DirectoryPointer is not null)
+            try
             {
-                listBox.Items.Clear();
-                listBox.Items.Add("/..");
-                DirectoryPointer.GetDirectories().ToList().ForEach(unit =>
+                if (DirectoryPointer is not null)
                 {
-                    listBox.Items.Add(unit.Name);
-                });
-                DirectoryPointer.GetFiles().ToList().ForEach(unit =>
-                {
-                    listBox.Items.Add(unit.Name);
-                });
+                    listBox.Items.Clear();
+                    listBox.Items.Add("/..");
+                    DirectoryPointer.GetDirectories().ToList().ForEach(unit =>
+                    {
+                        listBox.Items.Add(unit.Name);
+                    });
+                    DirectoryPointer.GetFiles().ToList().ForEach(unit =>
+                    {
+                        listBox.Items.Add(unit.Name);
+                    });
+                }
+                else GetDrives(listBox);
             }
-            else GetDrives(listBox);
+            catch (System.UnauthorizedAccessException ex)
+            {
+                ShowFailMessage(listBox);
+            }
+        }
+
+
+        private void ShowFailMessage(ListBox listBox)
+        {
+            listBox.Items.Clear();
+            listBox.Items.Add("/..");
+            listBox.Items.Add("\n");
+            listBox.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
+            listBox.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
+            listBox.Items.Add("\n");
+            listBox.Items.Add("\t\tPress Backspace to leave....");
         }
 
 
@@ -118,12 +144,25 @@ namespace Streamlet.Forms
 
         private void OnLeftListBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (LeftListBox.SelectedItem is not null) OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+            if (LeftListBox.SelectedItem is not null)
+            {
+                OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+                LeftAddressTextBox.Text = LeftWindowPointer?.FullName;
+            }
         }
 
         private void OnRightListBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (RightListBox.SelectedItem is not null) OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+            if (RightListBox.SelectedItem is not null)
+            {
+                OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+                RightAddressTextBox.Text = RightWindowPointer?.FullName;
+            }
+        }
+
+        private void LeftListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

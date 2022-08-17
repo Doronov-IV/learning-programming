@@ -129,32 +129,33 @@
             // 
             this.LeftListBox.FormattingEnabled = true;
             this.LeftListBox.ItemHeight = 20;
-            this.LeftListBox.Location = new System.Drawing.Point(12, 104);
+            this.LeftListBox.Location = new System.Drawing.Point(12, 91);
             this.LeftListBox.Name = "LeftListBox";
-            this.LeftListBox.Size = new System.Drawing.Size(682, 724);
+            this.LeftListBox.Size = new System.Drawing.Size(682, 744);
             this.LeftListBox.TabIndex = 3;
+            this.LeftListBox.SelectedIndexChanged += new System.EventHandler(this.LeftListBox_SelectedIndexChanged);
             this.LeftListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnLeftListBoxMouseDoubleClick);
             // 
             // RightListBox
             // 
             this.RightListBox.FormattingEnabled = true;
             this.RightListBox.ItemHeight = 20;
-            this.RightListBox.Location = new System.Drawing.Point(714, 104);
+            this.RightListBox.Location = new System.Drawing.Point(714, 91);
             this.RightListBox.Name = "RightListBox";
-            this.RightListBox.Size = new System.Drawing.Size(656, 724);
+            this.RightListBox.Size = new System.Drawing.Size(656, 744);
             this.RightListBox.TabIndex = 4;
             this.RightListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListBoxMouseDoubleClick);
             // 
             // LeftAddressTextBox
             // 
-            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 71);
+            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 58);
             this.LeftAddressTextBox.Name = "LeftAddressTextBox";
             this.LeftAddressTextBox.Size = new System.Drawing.Size(682, 27);
             this.LeftAddressTextBox.TabIndex = 5;
             // 
             // RightAddressTextBox
             // 
-            this.RightAddressTextBox.Location = new System.Drawing.Point(714, 71);
+            this.RightAddressTextBox.Location = new System.Drawing.Point(714, 58);
             this.RightAddressTextBox.Name = "RightAddressTextBox";
             this.RightAddressTextBox.Size = new System.Drawing.Size(656, 27);
             this.RightAddressTextBox.TabIndex = 6;
