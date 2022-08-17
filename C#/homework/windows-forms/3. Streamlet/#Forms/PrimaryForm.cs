@@ -12,6 +12,11 @@ namespace Streamlet.Forms
 {
     public partial class PrimaryForm : Form
     {
+
+        DirectoryInfo LeftWindowPointer;
+        DirectoryInfo RightWindowPointer;
+
+
         public PrimaryForm()
         {
             InitializeComponent();
@@ -19,20 +24,52 @@ namespace Streamlet.Forms
 
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
-            LeftListView.View = View.List;
 
             var driverList = DriveInfo.GetDrives();
 
-            ListViewItem[] itemList = new ListViewItem[driverList.Count()];
+            LeftListBox.Items.AddRange(driverList);
+            RightListBox.Items.AddRange(driverList);
+        }
 
-            ListViewItem item = default(ListViewItem);
-
-            for (int i = 0, iSize = driverList.Length; i < iSize; ++i)
+        private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
+        {
+            if (LeftListBox.SelectedItem is DriveInfo selectedDrive)
             {
-                itemList[i] = new ListViewItem(driverList[i].Name);
+                LeftWindowPointer = selectedDrive.RootDirectory;
+                GetDirectoryContents(LeftListBox, LeftWindowPointer);
             }
+            else if (LeftListBox.SelectedItem is DirectoryInfo selectedDir)
+            {
+                LeftWindowPointer = selectedDir;
+                GetDirectoryContents(LeftListBox, LeftWindowPointer);
+            }
+            else
+            {
+                if (LeftWindowPointer != null) LeftWindowPointer = LeftWindowPointer.Parent;
+                GetDirectoryContents(LeftListBox, LeftWindowPointer);
+            }
+            
+        }
 
-            LeftListView.Items.AddRange(itemList);
+        private void GetDirectoryContents(ListBox listBox, DirectoryInfo DirectoryPointer)
+        {
+            if (DirectoryPointer is not null)
+            {
+                listBox.Items.Clear();
+                listBox.Items.Add("/..");
+                listBox.Items.AddRange(LeftWindowPointer.GetDirectories());
+                listBox.Items.AddRange(LeftWindowPointer.GetFiles());
+            }
+            else GetDrives(listBox);
+        }
+
+        private void GetDrives(ListBox listBox)
+        {
+            var driverList = DriveInfo.GetDrives();
+
+            listBox.Items.Clear();
+
+            listBox.Items.AddRange(driverList);
         }
 
         private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

@@ -38,16 +38,12 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
-            this.RightListView = new System.Windows.Forms.ListView();
-            this.LeftListView = new System.Windows.Forms.ListView();
+            this.LeftListBox = new System.Windows.Forms.ListBox();
+            this.RightListBox = new System.Windows.Forms.ListBox();
+            this.LeftAddressTextBox = new System.Windows.Forms.TextBox();
+            this.RightAddressTextBox = new System.Windows.Forms.TextBox();
             this.TopMenuToolStrip.SuspendLayout();
             this.MiddleToolStrip.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // TopMenuToolStrip
@@ -129,66 +125,48 @@
             this.toolStripButton3.Size = new System.Drawing.Size(29, 24);
             this.toolStripButton3.Text = "toolStripButton3";
             // 
-            // panel1
+            // LeftListBox
             // 
-            this.panel1.Controls.Add(this.statusStrip1);
-            this.panel1.Controls.Add(this.LeftListView);
-            this.panel1.Location = new System.Drawing.Point(0, 78);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(698, 773);
-            this.panel1.TabIndex = 3;
+            this.LeftListBox.FormattingEnabled = true;
+            this.LeftListBox.ItemHeight = 20;
+            this.LeftListBox.Location = new System.Drawing.Point(12, 104);
+            this.LeftListBox.Name = "LeftListBox";
+            this.LeftListBox.Size = new System.Drawing.Size(682, 724);
+            this.LeftListBox.TabIndex = 3;
+            this.LeftListBox.SelectedValueChanged += new System.EventHandler(this.OnLeftListBoxSelectedValueChanged);
             // 
-            // statusStrip1
+            // RightListBox
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 751);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(698, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.RightListBox.FormattingEnabled = true;
+            this.RightListBox.ItemHeight = 20;
+            this.RightListBox.Location = new System.Drawing.Point(714, 104);
+            this.RightListBox.Name = "RightListBox";
+            this.RightListBox.Size = new System.Drawing.Size(656, 724);
+            this.RightListBox.TabIndex = 4;
             // 
-            // panel2
+            // LeftAddressTextBox
             // 
-            this.panel2.Controls.Add(this.statusStrip2);
-            this.panel2.Controls.Add(this.RightListView);
-            this.panel2.Location = new System.Drawing.Point(704, 78);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(666, 773);
-            this.panel2.TabIndex = 4;
+            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 71);
+            this.LeftAddressTextBox.Name = "LeftAddressTextBox";
+            this.LeftAddressTextBox.Size = new System.Drawing.Size(682, 27);
+            this.LeftAddressTextBox.TabIndex = 5;
             // 
-            // statusStrip2
+            // RightAddressTextBox
             // 
-            this.statusStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip2.Location = new System.Drawing.Point(0, 751);
-            this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(666, 22);
-            this.statusStrip2.TabIndex = 1;
-            this.statusStrip2.Text = "statusStrip2";
-            // 
-            // RightListView
-            // 
-            this.RightListView.Location = new System.Drawing.Point(3, 3);
-            this.RightListView.Name = "RightListView";
-            this.RightListView.Size = new System.Drawing.Size(660, 736);
-            this.RightListView.TabIndex = 0;
-            this.RightListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // LeftListView
-            // 
-            this.LeftListView.Location = new System.Drawing.Point(0, 0);
-            this.LeftListView.Name = "LeftListView";
-            this.LeftListView.Size = new System.Drawing.Size(695, 739);
-            this.LeftListView.TabIndex = 0;
-            this.LeftListView.UseCompatibleStateImageBehavior = false;
-            this.LeftListView.SelectedIndexChanged += new System.EventHandler(this.LeftListView_SelectedIndexChanged);
+            this.RightAddressTextBox.Location = new System.Drawing.Point(714, 71);
+            this.RightAddressTextBox.Name = "RightAddressTextBox";
+            this.RightAddressTextBox.Size = new System.Drawing.Size(656, 27);
+            this.RightAddressTextBox.TabIndex = 6;
             // 
             // PrimaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 853);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.RightAddressTextBox);
+            this.Controls.Add(this.LeftAddressTextBox);
+            this.Controls.Add(this.RightListBox);
+            this.Controls.Add(this.LeftListBox);
             this.Controls.Add(this.MiddleToolStrip);
             this.Controls.Add(this.TopMenuToolStrip);
             this.Name = "PrimaryForm";
@@ -198,10 +176,6 @@
             this.TopMenuToolStrip.PerformLayout();
             this.MiddleToolStrip.ResumeLayout(false);
             this.MiddleToolStrip.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,11 +192,9 @@
         private ToolStripButton toolStripButton1;
         private ToolStripButton toolStripButton2;
         private ToolStripButton toolStripButton3;
-        private Panel panel1;
-        private StatusStrip statusStrip1;
-        private Panel panel2;
-        private StatusStrip statusStrip2;
-        private ListView LeftListView;
-        private ListView RightListView;
+        private ListBox LeftListBox;
+        private ListBox RightListBox;
+        private TextBox LeftAddressTextBox;
+        private TextBox RightAddressTextBox;
     }
 }
