@@ -133,7 +133,7 @@
             this.LeftListBox.Name = "LeftListBox";
             this.LeftListBox.Size = new System.Drawing.Size(682, 724);
             this.LeftListBox.TabIndex = 3;
-            this.LeftListBox.SelectedValueChanged += new System.EventHandler(this.OnLeftListBoxSelectedValueChanged);
+            this.LeftListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnLeftListBoxMouseDoubleClick);
             // 
             // RightListBox
             // 
@@ -143,7 +143,7 @@
             this.RightListBox.Name = "RightListBox";
             this.RightListBox.Size = new System.Drawing.Size(656, 724);
             this.RightListBox.TabIndex = 4;
-            this.RightListBox.SelectedIndexChanged += new System.EventHandler(this.OnRighttListBoxSelectedValueChanged);
+            this.RightListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListBoxMouseDoubleClick);
             // 
             // LeftAddressTextBox
             // 

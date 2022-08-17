@@ -116,9 +116,14 @@ namespace Streamlet.Forms
 
         }
 
-        private void LeftListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnLeftListBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (LeftListBox.SelectedItem is not null) OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+        }
 
+        private void OnRightListBoxMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (RightListBox.SelectedItem is not null) OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
         }
     }
 }
