@@ -24,32 +24,41 @@ namespace Streamlet.Forms
 
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
+            GetDirectoryContents(LeftListBox, LeftWindowPointer);
 
-            var driverList = DriveInfo.GetDrives();
-
-            LeftListBox.Items.AddRange(driverList);
-            RightListBox.Items.AddRange(driverList);
+            GetDirectoryContents(RightListBox, RightWindowPointer);
         }
 
         private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
         {
-            if (LeftListBox.SelectedItem is DriveInfo selectedDrive)
+            OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+        }
+
+
+        private void OnRighttListBoxSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+        }
+
+
+        private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        {
+            if (listBox.SelectedItem is DriveInfo selectedDrive)
             {
-                LeftWindowPointer = selectedDrive.RootDirectory;
-                GetDirectoryContents(LeftListBox, LeftWindowPointer);
+                DirectoryPointer = selectedDrive.RootDirectory;
+                GetDirectoryContents(listBox, DirectoryPointer);
             }
-            else if (LeftListBox.SelectedItem is DirectoryInfo selectedDir)
+            else if (listBox.SelectedItem is DirectoryInfo selectedDir)
             {
-                LeftWindowPointer = selectedDir;
-                GetDirectoryContents(LeftListBox, LeftWindowPointer);
+                DirectoryPointer = selectedDir;
+                GetDirectoryContents(listBox, DirectoryPointer);
             }
             else
             {
-                if (LeftWindowPointer != null) LeftWindowPointer = LeftWindowPointer.Parent;
-                GetDirectoryContents(LeftListBox, LeftWindowPointer);
+                MoveUp(listBox, ref DirectoryPointer);
             }
-            
         }
+
 
         private void GetDirectoryContents(ListBox listBox, DirectoryInfo DirectoryPointer)
         {
@@ -57,11 +66,19 @@ namespace Streamlet.Forms
             {
                 listBox.Items.Clear();
                 listBox.Items.Add("/..");
-                listBox.Items.AddRange(LeftWindowPointer.GetDirectories());
-                listBox.Items.AddRange(LeftWindowPointer.GetFiles());
+                listBox.Items.AddRange(DirectoryPointer.GetDirectories());
+                listBox.Items.AddRange(DirectoryPointer.GetFiles());
             }
             else GetDrives(listBox);
         }
+
+
+        private void MoveUp(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        {
+            if (DirectoryPointer is not null) DirectoryPointer = DirectoryPointer.Parent;
+            GetDirectoryContents(listBox, DirectoryPointer);
+        }
+
 
         private void GetDrives(ListBox listBox)
         {

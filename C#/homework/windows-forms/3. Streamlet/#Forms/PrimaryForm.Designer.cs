@@ -143,6 +143,7 @@
             this.RightListBox.Name = "RightListBox";
             this.RightListBox.Size = new System.Drawing.Size(656, 724);
             this.RightListBox.TabIndex = 4;
+            this.RightListBox.SelectedIndexChanged += new System.EventHandler(this.OnRighttListBoxSelectedValueChanged);
             // 
             // LeftAddressTextBox
             // 
