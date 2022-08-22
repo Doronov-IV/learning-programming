@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrimaryForm));
             this.TopMenuToolStrip = new System.Windows.Forms.MenuStrip();
             this.FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MiddleToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.OpenTool = new System.Windows.Forms.ToolStripButton();
+            this.CopyPathTool = new System.Windows.Forms.ToolStripButton();
+            this.DeleteTool = new System.Windows.Forms.ToolStripButton();
             this.LeftListBox = new System.Windows.Forms.ListBox();
             this.RightListBox = new System.Windows.Forms.ListBox();
             this.LeftAddressTextBox = new System.Windows.Forms.TextBox();
@@ -88,9 +87,9 @@
             // 
             this.MiddleToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MiddleToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.OpenTool,
+            this.CopyPathTool,
+            this.DeleteTool});
             this.MiddleToolStrip.Location = new System.Drawing.Point(0, 28);
             this.MiddleToolStrip.Name = "MiddleToolStrip";
             this.MiddleToolStrip.Size = new System.Drawing.Size(1382, 27);
@@ -98,32 +97,32 @@
             this.MiddleToolStrip.Text = "toolStrip1";
             this.MiddleToolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MiddleToolStrip_ItemClicked);
             // 
-            // toolStripButton1
+            // OpenTool
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(29, 24);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.OpenTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.OpenTool.Image = global::Streamlet.Properties.Resources.OpenIcon;
+            this.OpenTool.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenTool.Name = "OpenTool";
+            this.OpenTool.Size = new System.Drawing.Size(29, 24);
+            this.OpenTool.Text = "Open";
             // 
-            // toolStripButton2
+            // CopyPathTool
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(29, 24);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.CopyPathTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CopyPathTool.Image = global::Streamlet.Properties.Resources.CopyPathIcon;
+            this.CopyPathTool.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CopyPathTool.Name = "CopyPathTool";
+            this.CopyPathTool.Size = new System.Drawing.Size(29, 24);
+            this.CopyPathTool.Text = "Copy Path";
             // 
-            // toolStripButton3
+            // DeleteTool
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(29, 24);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.DeleteTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DeleteTool.Image = global::Streamlet.Properties.Resources.DeletionIcon;
+            this.DeleteTool.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DeleteTool.Name = "DeleteTool";
+            this.DeleteTool.Size = new System.Drawing.Size(29, 24);
+            this.DeleteTool.Text = "Delete";
             // 
             // LeftListBox
             // 
@@ -191,9 +190,9 @@
         private ToolStripMenuItem ViewToolStripMenuItem;
         private ToolStripMenuItem SettingsToolStripMenuItem;
         private ToolStrip MiddleToolStrip;
-        private ToolStripButton toolStripButton1;
-        private ToolStripButton toolStripButton2;
-        private ToolStripButton toolStripButton3;
+        private ToolStripButton OpenTool;
+        private ToolStripButton CopyPathTool;
+        private ToolStripButton DeleteTool;
         private ListBox LeftListBox;
         private ListBox RightListBox;
         private TextBox LeftAddressTextBox;

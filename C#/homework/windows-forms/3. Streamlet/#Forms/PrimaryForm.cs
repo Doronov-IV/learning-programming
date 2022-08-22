@@ -8,13 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+using Streamlet.Service;
+
+
 namespace Streamlet.Forms
 {
     public partial class PrimaryForm : Form
     {
 
-        DirectoryInfo LeftWindowPointer;
-        DirectoryInfo RightWindowPointer;
+        string GoUpEscapeString = "[ .. ]";
+
+        FileSystemPointer LeftWindowPointer = new FileSystemPointer();
+        FileSystemPointer RightWindowPointer = new FileSystemPointer();
+
+        ListBox ActiveListBox;
 
 
         public PrimaryForm()
@@ -41,9 +49,9 @@ namespace Streamlet.Forms
         }
 
 
-        private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
-            if (listBox.SelectedItem.ToString() != "/..")
+            if (listBox.SelectedItem.ToString() != GoUpEscapeString)
             {
                 MoveDown(listBox, ref DirectoryPointer);
             }
@@ -54,22 +62,22 @@ namespace Streamlet.Forms
         }
 
 
-        private void MoveDown(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        private void MoveDown(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
             try
             {
                 if (listBox.SelectedItem is DriveInfo selectedDrive)
                 {
-                    DirectoryPointer = selectedDrive.RootDirectory;
+                    DirectoryPointer.CurrentDirectory = selectedDrive.RootDirectory;
                     GetDirectoryContents(listBox, DirectoryPointer);
                 }
                 else
                 {
-                    foreach (DirectoryInfo unit in DirectoryPointer.GetDirectories())
+                    foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
                     {
                         if (unit.Name.Equals(listBox.SelectedItem))
                         {
-                            DirectoryPointer = unit;
+                            DirectoryPointer.CurrentDirectory = unit;
                             GetDirectoryContents(listBox, DirectoryPointer);
                             break;
                         }
@@ -83,19 +91,19 @@ namespace Streamlet.Forms
         }
 
 
-        private void GetDirectoryContents(ListBox listBox, DirectoryInfo DirectoryPointer)
+        private void GetDirectoryContents(ListBox listBox, FileSystemPointer DirectoryPointer)
         {
             try
             {
-                if (DirectoryPointer is not null)
+                if (DirectoryPointer?.CurrentDirectory is not null)
                 {
                     listBox.Items.Clear();
-                    listBox.Items.Add("/..");
-                    DirectoryPointer.GetDirectories().ToList().ForEach(unit =>
+                    listBox.Items.Add(GoUpEscapeString);
+                    DirectoryPointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
                     {
                         listBox.Items.Add(unit.Name);
                     });
-                    DirectoryPointer.GetFiles().ToList().ForEach(unit =>
+                    DirectoryPointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
                     {
                         listBox.Items.Add(unit.Name);
                     });
@@ -112,7 +120,7 @@ namespace Streamlet.Forms
         private void ShowFailMessage(ListBox listBox)
         {
             listBox.Items.Clear();
-            listBox.Items.Add("/..");
+            listBox.Items.Add(GoUpEscapeString);
             listBox.Items.Add("\n");
             listBox.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
             listBox.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
@@ -121,9 +129,9 @@ namespace Streamlet.Forms
         }
 
 
-        private void MoveUp(ListBox listBox, ref DirectoryInfo DirectoryPointer)
+        private void MoveUp(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
-            if (DirectoryPointer is not null) DirectoryPointer = DirectoryPointer.Parent;
+            if (DirectoryPointer is not null) DirectoryPointer.CurrentDirectory = DirectoryPointer.CurrentDirectory.Parent;
             GetDirectoryContents(listBox, DirectoryPointer);
         }
 
@@ -147,7 +155,7 @@ namespace Streamlet.Forms
             if (LeftListBox.SelectedItem is not null)
             {
                 OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
-                LeftAddressTextBox.Text = LeftWindowPointer?.FullName;
+                LeftAddressTextBox.Text = LeftWindowPointer?.CurrentDirectory?.FullName;
             }
         }
 
@@ -156,7 +164,7 @@ namespace Streamlet.Forms
             if (RightListBox.SelectedItem is not null)
             {
                 OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
-                RightAddressTextBox.Text = RightWindowPointer?.FullName;
+                RightAddressTextBox.Text = RightWindowPointer?.CurrentDirectory?.FullName;
             }
         }
 
