@@ -14,6 +14,11 @@ using Streamlet.Service;
 
 namespace Streamlet.Forms
 {
+    /// <summary>
+    /// File explorer form;
+    /// <br />
+    /// Форма-проводник;
+    /// </summary>
     public partial class PrimaryForm : Form
     {
 
