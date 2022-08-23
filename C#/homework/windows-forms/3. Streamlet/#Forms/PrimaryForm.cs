@@ -51,6 +51,8 @@ namespace Streamlet.Forms
 
         private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
+            ActiveListBox = listBox;
+
             if (listBox.SelectedItem.ToString() != GoUpEscapeString)
             {
                 MoveDown(listBox, ref DirectoryPointer);
@@ -68,7 +70,7 @@ namespace Streamlet.Forms
             {
                 if (listBox.SelectedItem is DriveInfo selectedDrive)
                 {
-                    DirectoryPointer.CurrentDirectory = selectedDrive.RootDirectory;
+                    DirectoryPointer.NextDirectory(selectedDrive.RootDirectory);
                     GetDirectoryContents(listBox, DirectoryPointer);
                 }
                 else
@@ -77,7 +79,7 @@ namespace Streamlet.Forms
                     {
                         if (unit.Name.Equals(listBox.SelectedItem))
                         {
-                            DirectoryPointer.CurrentDirectory = unit;
+                            DirectoryPointer.NextDirectory(unit);
                             GetDirectoryContents(listBox, DirectoryPointer);
                             break;
                         }
@@ -125,13 +127,13 @@ namespace Streamlet.Forms
             listBox.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
             listBox.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
             listBox.Items.Add("\n");
-            listBox.Items.Add("\t\tPress Backspace to leave....");
+            listBox.Items.Add("\t\tPress  [ .. ]  to leave....");
         }
 
 
         private void MoveUp(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
-            if (DirectoryPointer is not null) DirectoryPointer.CurrentDirectory = DirectoryPointer.CurrentDirectory.Parent;
+            if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
             GetDirectoryContents(listBox, DirectoryPointer);
         }
 

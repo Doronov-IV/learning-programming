@@ -42,7 +42,7 @@ namespace Streamlet.Service
         public DirectoryInfo CurrentDirectory
         {
             get { return _CurrentDirectory; }
-            set { _CurrentDirectory = value; }
+            protected set { _CurrentDirectory = value; }
         }
 
 
@@ -52,7 +52,7 @@ namespace Streamlet.Service
         public DirectoryInfo PreviousDirectory
         {
             get { return _PreviousDirectory; }
-            set { _PreviousDirectory = value; }
+            protected set { _PreviousDirectory = value; }
         }
 
 
@@ -73,7 +73,24 @@ namespace Streamlet.Service
         #region API - Contract
 
 
-        //
+        /// <summary>
+        /// Step into the next directory;
+        /// <br/>
+        /// Rewrites "previous directory";
+        /// <br />
+        /// Переместиться в следующую папку;
+        /// <br />
+        /// Изменяет поле "предыдущая папка";
+        /// </summary>
+        /// <param name="nextDirectory"></param>
+        public void NextDirectory(DirectoryInfo nextDirectory)
+        {
+            if (null != nextDirectory)
+            {
+                _PreviousDirectory = _CurrentDirectory;
+                _CurrentDirectory = nextDirectory;
+            }
+        }
 
 
         #endregion API
