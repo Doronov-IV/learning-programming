@@ -179,5 +179,51 @@ namespace Streamlet.Forms
         {
 
         }
+
+        private void OnLeftAddressTextBoxLeave(object sender, EventArgs e)
+        {
+            OnAnyAddressTextBoxLeave(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer);
+        }
+
+        private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13) OnLeftAddressTextBoxLeave(sender, e);
+        }
+
+
+
+
+
+        private void OnRightAddressTextBoxLeave(object sender, EventArgs e)
+        {
+            OnAnyAddressTextBoxLeave(RightListBox, RightAddressTextBox, ref RightWindowPointer);
+        }
+
+        private void OnRightListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13) OnRightAddressTextBoxLeave(sender, e);
+        }
+
+
+        private void OnAnyAddressTextBoxLeave(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer specificPointer)
+        {
+            string sText = specificTextBox.Text;
+
+            if (File.Exists(sText) && sText.EndsWith(".txt"))
+            {
+                specificPointer.NextDirectory(new FileInfo(sText).Directory);
+                var a = new SecondaryForm();
+                a.Show();
+            }
+            else if (Directory.Exists(sText))
+            {
+                specificPointer.NextDirectory(new DirectoryInfo(sText));
+                GetDirectoryContents(listBox, specificPointer);
+            }
+            else
+            {
+                specificTextBox.Text = specificPointer.CurrentDirectory?.FullName;
+            }
+        }
     }
 }

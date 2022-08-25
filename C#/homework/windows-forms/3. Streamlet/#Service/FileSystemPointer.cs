@@ -85,11 +85,10 @@ namespace Streamlet.Service
         /// <param name="nextDirectory"></param>
         public void NextDirectory(DirectoryInfo nextDirectory)
         {
-            if (null != nextDirectory)
-            {
-                _PreviousDirectory = _CurrentDirectory;
-                _CurrentDirectory = nextDirectory;
-            }
+            // The 'null-check' is not needed and can ruin the debug process;
+            // Проверка на null не требуется, и может услоднить процесс дебага;
+            _PreviousDirectory = _CurrentDirectory;
+            _CurrentDirectory = nextDirectory;
         }
 
 

@@ -143,6 +143,7 @@
             this.RightListBox.Name = "RightListBox";
             this.RightListBox.Size = new System.Drawing.Size(656, 744);
             this.RightListBox.TabIndex = 4;
+            this.RightListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightListBoxKeyDown);
             this.RightListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListBoxMouseDoubleClick);
             // 
             // LeftAddressTextBox
@@ -151,6 +152,8 @@
             this.LeftAddressTextBox.Name = "LeftAddressTextBox";
             this.LeftAddressTextBox.Size = new System.Drawing.Size(682, 27);
             this.LeftAddressTextBox.TabIndex = 5;
+            this.LeftAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnLeftAddressTextBoxKeyDown);
+            this.LeftAddressTextBox.Leave += new System.EventHandler(this.OnLeftAddressTextBoxLeave);
             // 
             // RightAddressTextBox
             // 
@@ -158,6 +161,8 @@
             this.RightAddressTextBox.Name = "RightAddressTextBox";
             this.RightAddressTextBox.Size = new System.Drawing.Size(656, 27);
             this.RightAddressTextBox.TabIndex = 6;
+            this.RightAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightListBoxKeyDown);
+            this.RightAddressTextBox.Leave += new System.EventHandler(this.OnRightAddressTextBoxLeave);
             // 
             // PrimaryForm
             // 
