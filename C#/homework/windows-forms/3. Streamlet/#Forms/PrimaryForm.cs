@@ -22,25 +22,126 @@ namespace Streamlet.Forms
     public partial class PrimaryForm : Form
     {
 
-        string GoUpEscapeString = "[ .. ]";
 
-        FileSystemPointer LeftWindowPointer = new FileSystemPointer();
-        FileSystemPointer RightWindowPointer = new FileSystemPointer();
-
-        ListBox ActiveListBox;
+        #region PROPERTIES
 
 
+        /// <summary>
+        /// A pattern that represents the 'go-higher' option in the list boxes;
+        /// <br />
+        /// Набор символов, котоырй представляет собой переход на уровень выше в лист-боксах;
+        /// </summary>
+        private string GoUpEscapeString = "[ .. ]";
+
+
+        /// <summary>
+        /// A file-system pointer for the left list;
+        /// <br />
+        /// Указатель файловой системы для левого списка;
+        /// </summary>
+        private FileSystemPointer LeftWindowPointer = new FileSystemPointer();
+
+
+        /// <summary>
+        /// A file-system pointer for the right list;
+        /// <br />
+        /// Указатель файловой системы для правого списка;
+        /// </summary>
+        private FileSystemPointer RightWindowPointer = new FileSystemPointer();
+
+
+        /// <summary>
+        /// A reference to the focused list box;
+        /// <br />
+        /// Ссылка на активный лист-бокс;
+        /// </summary>
+        private ListBox ActiveListBox;
+
+
+        #endregion PROPERTIES
+
+
+
+        #region CONSTRUCTION
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по-умолчанию;
+        /// </summary>
         public PrimaryForm()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Prepare list boxes, show a list of the disks;
+        /// <br />
+        /// Подготовить лист-боксы, отобразить список дисков;
+        /// </summary>
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
             GetDirectoryContents(LeftListBox, LeftWindowPointer);
 
             GetDirectoryContents(RightListBox, RightWindowPointer);
         }
+
+
+        #endregion CONSTRUCTION
+
+
+
+        #region Module : ListBoxes 
+
+
+        #region RIGHT ONE
+
+
+        //
+
+
+        #endregion RIGHT ONE
+
+
+        #region LEFT ONE
+
+
+        //
+
+
+        #endregion LEFT ONE
+
+
+        #endregion Module : ListBoxes 
+
+
+
+        #region Module : Address TextBoxes 
+
+
+        #region RIGHT ONE
+
+
+        //
+
+
+        #endregion RIGHT ONE
+
+
+        #region LEFT ONE
+
+
+        //
+
+
+        #endregion LEFT ONE
+
+
+        #endregion Module : Address TextBoxes 
+
+
 
         private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
         {
