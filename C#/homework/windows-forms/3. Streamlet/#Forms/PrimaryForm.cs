@@ -96,65 +96,6 @@ namespace Streamlet.Forms
         #region Module : ListBoxes 
 
 
-        #region RIGHT ONE
-
-
-        //
-
-
-        #endregion RIGHT ONE
-
-
-        #region LEFT ONE
-
-
-        //
-
-
-        #endregion LEFT ONE
-
-
-        #endregion Module : ListBoxes 
-
-
-
-        #region Module : Address TextBoxes 
-
-
-        #region RIGHT ONE
-
-
-        //
-
-
-        #endregion RIGHT ONE
-
-
-        #region LEFT ONE
-
-
-        //
-
-
-        #endregion LEFT ONE
-
-
-        #endregion Module : Address TextBoxes 
-
-
-
-        private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
-        {
-            OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
-        }
-
-
-        private void OnRighttListBoxSelectedValueChanged(object sender, EventArgs e)
-        {
-            OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
-        }
-
-
         private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref FileSystemPointer DirectoryPointer)
         {
             ActiveListBox = listBox;
@@ -281,18 +222,31 @@ namespace Streamlet.Forms
 
         }
 
+
+        private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+        }
+
+
+        private void OnRighttListBoxSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+        }
+
+
+        #endregion Module : ListBoxes 
+
+
+
+        #region Module : Address TextBoxes 
+
+
+
         private void OnLeftAddressTextBoxLeave(object sender, EventArgs e)
         {
             OnAnyAddressTextBoxLeave(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer);
         }
-
-        private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyValue == 13) OnLeftAddressTextBoxLeave(sender, e);
-        }
-
-
-
 
 
         private void OnRightAddressTextBoxLeave(object sender, EventArgs e)
@@ -300,9 +254,22 @@ namespace Streamlet.Forms
             OnAnyAddressTextBoxLeave(RightListBox, RightAddressTextBox, ref RightWindowPointer);
         }
 
-        private void OnRightListBoxKeyDown(object sender, KeyEventArgs e)
+
+        private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 13) OnRightAddressTextBoxLeave(sender, e);
+            OnAnyListBoxKeyDown(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer, e);
+        }
+        
+
+        private void OnRightAddressTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            OnAnyListBoxKeyDown(RightListBox, RightAddressTextBox, ref RightWindowPointer, e);
+        }
+
+
+        private void OnAnyListBoxKeyDown(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer ptr, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13) OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
         }
 
 
@@ -326,5 +293,9 @@ namespace Streamlet.Forms
                 specificTextBox.Text = specificPointer.CurrentDirectory?.FullName;
             }
         }
+
+
+
+        #endregion Module : Address TextBoxes 
     }
 }
