@@ -1,9 +1,0 @@
-
-	GTM+3 21:12 - 26.05.2022. 
-0) make default schedules attached to a default stock;
-1) make visual plantio print current stock schedules already ffs;
-2) make a method for recalculation for schedules referenced in the 'setActiveStock' one;
-I think it's enough for today evening.
-
-
-0) make Schedules attached to Stocks somehow
