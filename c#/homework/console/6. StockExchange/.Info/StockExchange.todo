@@ -1,0 +1,15 @@
+
+		Classes.
+	
+	Top Level:
+	- ExchangeSimulator = Симулятор биржи
+	- Exchange = Биржа
+	
+	Clients:
+	- Brocker = Брокер
+	- Bank = Банк 
+	
+	Goods:
+	- (abstract) Asset = Актив
+	- Equity = Ценная бумага
+	- Currency = Валюта

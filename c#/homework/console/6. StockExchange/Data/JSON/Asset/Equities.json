@@ -1,0 +1,27 @@
+[
+{
+	"Name": "Texas Oil equity",
+	"Price": -1.95,
+	"Owner": null
+},
+{
+	"Name": "Apple™ equity",
+	"Price":  4.33,
+	"Owner": null
+},
+{
+	"Name": "Microsoft® equity",
+	"Price": 4.05,
+	"Owner": null
+},
+{
+	"Name": "Oracle equity",
+	"Price": 2.22,
+	"Owner": null
+},
+{
+	"Name": "Pyaterochka equity",
+	"Price": 9.99,
+	"Owner": null
+}
+]

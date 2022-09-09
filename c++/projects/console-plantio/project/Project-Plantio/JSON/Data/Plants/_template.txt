@@ -1,0 +1,15 @@
+{
+	"chemicals": "",
+	"country": "",
+	"fertilizer": "",
+	"growing time": "",
+	"hired load": "",
+	"packaging" : "",
+	"planting": "",
+	"planting price": "",
+	"revenue": "",
+	"selfload": "",
+	"soil need": "",
+	"species": "",
+	"vermin exposure": "",
+}

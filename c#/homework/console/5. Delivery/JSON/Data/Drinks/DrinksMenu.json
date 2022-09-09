@@ -1,0 +1,43 @@
+[
+{
+	"Name": "Greenfield Christmas Misery",
+	"Calories":  2,
+	"Price": 10.1
+},
+
+{
+	"Name": "Pu'er tea",
+	"Calories":  3,
+	"Price": 12
+},
+
+{
+	"Name": "Tieguanyin tea",
+	"Calories":  4,
+	"Price": 11.5
+},
+
+{
+	"Name": "Americano",
+	"Calories":  2,
+	"Price": 5.56
+},
+
+{
+	"Name": "Cappuccino",
+	"Calories":  3,
+	"Price": 6.7
+},
+
+{
+	"Name": "Espresso",
+	"Calories":  1,
+	"Price": 5.9
+},
+
+{
+	"Name": "Latte",
+	"Calories":  2,
+	"Price": 7.7
+}
+]
