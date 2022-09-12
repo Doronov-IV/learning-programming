@@ -242,37 +242,89 @@ namespace Streamlet.Forms
         #region Module : Address TextBoxes 
 
 
+            #region SPECIFIC_METHODS
 
+
+        /// <summary>
+        /// When left address box gets inactive;
+        /// <br />
+        /// Когда уйдёт фокус с левой адресной строки;
+        /// </summary>
         private void OnLeftAddressTextBoxLeave(object sender, EventArgs e)
         {
             OnAnyAddressTextBoxLeave(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer);
         }
 
-
+        /// <summary>
+        /// When right address box gets inactive;
+        /// <br />
+        /// Когда уйдёт фокус с правой адресной строки;
+        /// </summary>
         private void OnRightAddressTextBoxLeave(object sender, EventArgs e)
         {
             OnAnyAddressTextBoxLeave(RightListBox, RightAddressTextBox, ref RightWindowPointer);
         }
 
 
+
+        /// <summary>
+        /// When left address box gets some key pressed;
+        /// <br />
+        /// Когда в левой строке нажата клавиша;
+        /// </summary>
         private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             OnAnyListBoxKeyDown(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer, e);
         }
-        
 
+        /// <summary>
+        /// When right address box gets some key pressed;
+        /// <br />
+        /// Когда в правой строке нажата клавиша;
+        /// </summary>
         private void OnRightAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             OnAnyListBoxKeyDown(RightListBox, RightAddressTextBox, ref RightWindowPointer, e);
         }
 
 
+            #endregion SPECIFIC_METHODS
+
+
+
+            #region GENERIC_METHODS
+
+
+
+        /// <summary>
+        /// When any address box gets some key pressed;
+        /// <br />
+        /// Когда в любой строке нажата клавиша;
+        /// </summary>
+        /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
+        /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
+        /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
+        /// <param name="e">Key pressed;<br/>Нажатая клавиша;</param>
         private void OnAnyListBoxKeyDown(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer ptr, KeyEventArgs e)
         {
-            if (e.KeyValue == 13) OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
+            // 'enter';
+            if (e.KeyCode == Keys.Enter) OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
+            // 'esc';
+            else if (e.KeyCode == Keys.Escape)
+            {
+                specificTextBox.Text = "aaa";
+                OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
+            }
         }
 
-
+        /// <summary>
+        /// When any address box gets inactive;
+        /// <br />
+        /// Когда уйдёт фокус с любой адресной строки;
+        /// </summary>
+        /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
+        /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
+        /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
         private void OnAnyAddressTextBoxLeave(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer specificPointer)
         {
             string sText = specificTextBox.Text;
@@ -294,6 +346,8 @@ namespace Streamlet.Forms
             }
         }
 
+
+            #endregion GENERIC_METHODS
 
 
         #endregion Module : Address TextBoxes 
