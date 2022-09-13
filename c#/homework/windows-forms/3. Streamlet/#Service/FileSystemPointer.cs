@@ -28,13 +28,6 @@ namespace Streamlet.Service
         protected DirectoryInfo _PreviousDirectory;
 
 
-        /// <summary>
-        /// A reference for the array of all drives;
-        /// <br />
-        /// Ссылка на массив дисков;
-        /// </summary>
-        protected DriveInfo[] _DrivesList;
-
 
         /// <summary>
         /// @see _CurrentDirectory;
@@ -53,16 +46,6 @@ namespace Streamlet.Service
         {
             get { return _PreviousDirectory; }
             protected set { _PreviousDirectory = value; }
-        }
-
-
-        /// <summary>
-        /// @see _DrivesList;
-        /// </summary>
-        public DriveInfo[] DrivesList
-        {
-            get { return _DrivesList; }
-            set { _DrivesList = value; }
         }
 
 
@@ -96,7 +79,7 @@ namespace Streamlet.Service
 
 
 
-        #region LOGIC - Mostly private encapsulated auxiliary methods
+        #region LOGIC - EMPTY
 
 
         //
@@ -118,7 +101,6 @@ namespace Streamlet.Service
         {
             _CurrentDirectory = null;
             _PreviousDirectory = null;
-            _DrivesList = null;
         }
 
 

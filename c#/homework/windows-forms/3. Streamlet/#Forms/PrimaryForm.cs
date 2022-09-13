@@ -58,6 +58,9 @@ namespace Streamlet.Forms
         private ListBox ActiveListBox;
 
 
+        private List<DriveInfo> machineDriveInfo;
+
+
         #endregion PROPERTIES
 
 
@@ -73,6 +76,8 @@ namespace Streamlet.Forms
         public PrimaryForm()
         {
             InitializeComponent();
+            
+            machineDriveInfo = new List<DriveInfo>();
         }
 
 
@@ -83,6 +88,10 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
+            LeftListBox.Items.Add(new StreamletListObject("DEFAULT"));
+
+            RightListBox.Items.Add(new StreamletListObject("DEFAULT"));
+
             GetDirectoryContents(LeftListBox, LeftWindowPointer);
 
             GetDirectoryContents(RightListBox, RightWindowPointer);
@@ -100,7 +109,7 @@ namespace Streamlet.Forms
         {
             ActiveListBox = listBox;
 
-            if (listBox.SelectedItem.ToString() != GoUpEscapeString)
+            if (!listBox.SelectedItem.ToString().Contains(GoUpEscapeString))
             {
                 MoveDown(listBox, ref DirectoryPointer);
             }
@@ -115,7 +124,17 @@ namespace Streamlet.Forms
         {
             try
             {
-                if (listBox.SelectedItem is DriveInfo selectedDrive)
+                DriveInfo selectedDrive = null;
+
+                foreach (var item in machineDriveInfo)
+                {
+                    if (listBox.SelectedItem.ToString().Contains(item.Name))
+                    {
+                        selectedDrive = item;
+                    }
+                }
+
+                if (null != selectedDrive)
                 {
                     DirectoryPointer.NextDirectory(selectedDrive.RootDirectory);
                     GetDirectoryContents(listBox, DirectoryPointer);
@@ -124,7 +143,7 @@ namespace Streamlet.Forms
                 {
                     foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
                     {
-                        if (unit.Name.Equals(listBox.SelectedItem))
+                        if (listBox.SelectedItem.ToString().Contains(unit.Name))
                         {
                             DirectoryPointer.NextDirectory(unit);
                             GetDirectoryContents(listBox, DirectoryPointer);
@@ -146,15 +165,15 @@ namespace Streamlet.Forms
             {
                 if (DirectoryPointer?.CurrentDirectory is not null)
                 {
-                    listBox.Items.Clear();
-                    listBox.Items.Add(GoUpEscapeString);
+                    ClearListBoxItems(listBox);
+                    listBox.Items.Add(new StreamletListObject(GoUpEscapeString));
                     DirectoryPointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
                     {
-                        listBox.Items.Add(unit.Name);
+                        listBox.Items.Add(new StreamletListObject(unit));
                     });
                     DirectoryPointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
                     {
-                        listBox.Items.Add(unit.Name);
+                        listBox.Items.Add(new StreamletListObject(unit));
                     });
                 }
                 else GetDrives(listBox);
@@ -187,11 +206,16 @@ namespace Streamlet.Forms
 
         private void GetDrives(ListBox listBox)
         {
-            var driverList = DriveInfo.GetDrives();
+            var driveList = DriveInfo.GetDrives();
 
             listBox.Items.Clear();
 
-            listBox.Items.AddRange(driverList);
+            if (machineDriveInfo.Count == 0) machineDriveInfo.AddRange(driveList);
+
+            foreach (var item in driveList)
+            {
+                listBox.Items.Add(new StreamletListObject(item.Name));
+            }
         }
 
         private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -232,6 +256,19 @@ namespace Streamlet.Forms
         private void OnRighttListBoxSelectedValueChanged(object sender, EventArgs e)
         {
             OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+        }
+
+
+        /// <summary>
+        /// Clear all list items except for the header one;
+        /// <br />
+        /// Очистить список кроме заголовка;
+        /// </summary>
+        /// <param name="listBox">Specific listbox;<br \>Конкретный лист бокс;</param>
+        private void ClearListBoxItems(ListBox listBox)
+        {
+            listBox.Items.Clear();
+            listBox.Items.Add(new StreamletListObject("DEFAULT"));
         }
 
 
