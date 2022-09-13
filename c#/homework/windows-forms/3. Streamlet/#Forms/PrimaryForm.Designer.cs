@@ -37,10 +37,18 @@
             this.OpenTool = new System.Windows.Forms.ToolStripButton();
             this.CopyPathTool = new System.Windows.Forms.ToolStripButton();
             this.DeleteTool = new System.Windows.Forms.ToolStripButton();
-            this.LeftListBox = new System.Windows.Forms.ListBox();
-            this.RightListBox = new System.Windows.Forms.ListBox();
+            this.LeftListView = new System.Windows.Forms.ListView();
+            this.LeftNameColumn = new System.Windows.Forms.ColumnHeader();
+            this.LeftExtColumn = new System.Windows.Forms.ColumnHeader();
+            this.LeftSizeColumn = new System.Windows.Forms.ColumnHeader();
+            this.LeftDateColumn = new System.Windows.Forms.ColumnHeader();
             this.LeftAddressTextBox = new System.Windows.Forms.TextBox();
             this.RightAddressTextBox = new System.Windows.Forms.TextBox();
+            this.RightListView = new System.Windows.Forms.ListView();
+            this.RightNameColumn = new System.Windows.Forms.ColumnHeader();
+            this.RightExtColumn = new System.Windows.Forms.ColumnHeader();
+            this.RightSizeColumn = new System.Windows.Forms.ColumnHeader();
+            this.RightDateColumn = new System.Windows.Forms.ColumnHeader();
             this.TopMenuToolStrip.SuspendLayout();
             this.MiddleToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -124,27 +132,41 @@
             this.DeleteTool.Size = new System.Drawing.Size(29, 24);
             this.DeleteTool.Text = "Delete";
             // 
-            // LeftListBox
+            // LeftListView
             // 
-            this.LeftListBox.FormattingEnabled = true;
-            this.LeftListBox.ItemHeight = 20;
-            this.LeftListBox.Location = new System.Drawing.Point(12, 91);
-            this.LeftListBox.Name = "LeftListBox";
-            this.LeftListBox.Size = new System.Drawing.Size(650, 744);
-            this.LeftListBox.TabIndex = 3;
-            this.LeftListBox.SelectedIndexChanged += new System.EventHandler(this.LeftListBox_SelectedIndexChanged);
-            this.LeftListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnLeftListBoxMouseDoubleClick);
+            this.LeftListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LeftNameColumn,
+            this.LeftExtColumn,
+            this.LeftSizeColumn,
+            this.LeftDateColumn});
+            this.LeftListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LeftListView.Location = new System.Drawing.Point(12, 110);
+            this.LeftListView.Name = "LeftListView";
+            this.LeftListView.Size = new System.Drawing.Size(650, 731);
+            this.LeftListView.TabIndex = 7;
+            this.LeftListView.UseCompatibleStateImageBehavior = false;
+            this.LeftListView.View = System.Windows.Forms.View.Details;
+            this.LeftListView.DoubleClick += new System.EventHandler(this.OnLeftListViewSelectedValueChanged);
             // 
-            // RightListBox
+            // LeftNameColumn
             // 
-            this.RightListBox.FormattingEnabled = true;
-            this.RightListBox.ItemHeight = 20;
-            this.RightListBox.Location = new System.Drawing.Point(745, 91);
-            this.RightListBox.Name = "RightListBox";
-            this.RightListBox.Size = new System.Drawing.Size(625, 744);
-            this.RightListBox.TabIndex = 4;
-            this.RightListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightAddressTextBoxKeyDown);
-            this.RightListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListBoxMouseDoubleClick);
+            this.LeftNameColumn.Text = "Name";
+            this.LeftNameColumn.Width = 240;
+            // 
+            // LeftExtColumn
+            // 
+            this.LeftExtColumn.Text = "Ext";
+            this.LeftExtColumn.Width = 120;
+            // 
+            // LeftSizeColumn
+            // 
+            this.LeftSizeColumn.Text = "Size";
+            this.LeftSizeColumn.Width = 120;
+            // 
+            // LeftDateColumn
+            // 
+            this.LeftDateColumn.Text = "Date";
+            this.LeftDateColumn.Width = 120;
             // 
             // LeftAddressTextBox
             // 
@@ -164,15 +186,50 @@
             this.RightAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightAddressTextBoxKeyDown);
             this.RightAddressTextBox.Leave += new System.EventHandler(this.OnRightAddressTextBoxLeave);
             // 
+            // RightListView
+            // 
+            this.RightListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.RightNameColumn,
+            this.RightExtColumn,
+            this.RightSizeColumn,
+            this.RightDateColumn});
+            this.RightListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RightListView.Location = new System.Drawing.Point(745, 110);
+            this.RightListView.Name = "RightListView";
+            this.RightListView.Size = new System.Drawing.Size(625, 731);
+            this.RightListView.TabIndex = 8;
+            this.RightListView.UseCompatibleStateImageBehavior = false;
+            this.RightListView.View = System.Windows.Forms.View.Details;
+            // 
+            // RightNameColumn
+            // 
+            this.RightNameColumn.Text = "Name";
+            this.RightNameColumn.Width = 240;
+            // 
+            // RightExtColumn
+            // 
+            this.RightExtColumn.Text = "Ext";
+            this.RightExtColumn.Width = 120;
+            // 
+            // RightSizeColumn
+            // 
+            this.RightSizeColumn.Text = "Size";
+            this.RightSizeColumn.Width = 120;
+            // 
+            // RightDateColumn
+            // 
+            this.RightDateColumn.Text = "Date";
+            this.RightDateColumn.Width = 120;
+            // 
             // PrimaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 853);
+            this.Controls.Add(this.RightListView);
             this.Controls.Add(this.RightAddressTextBox);
             this.Controls.Add(this.LeftAddressTextBox);
-            this.Controls.Add(this.RightListBox);
-            this.Controls.Add(this.LeftListBox);
+            this.Controls.Add(this.LeftListView);
             this.Controls.Add(this.MiddleToolStrip);
             this.Controls.Add(this.TopMenuToolStrip);
             this.Name = "PrimaryForm";
@@ -198,9 +255,21 @@
         private ToolStripButton OpenTool;
         private ToolStripButton CopyPathTool;
         private ToolStripButton DeleteTool;
-        private ListBox LeftListBox;
-        private ListBox RightListBox;
         private TextBox LeftAddressTextBox;
         private TextBox RightAddressTextBox;
+        private ListView LeftListView;
+        private ColumnHeader name;
+        private ColumnHeader ext;
+        private ColumnHeader size;
+        private ColumnHeader date;
+        private ColumnHeader LeftNameColumn;
+        private ColumnHeader LeftExtColumn;
+        private ColumnHeader LeftSizeColumn;
+        private ColumnHeader LeftDateColumn;
+        private ListView RightListView;
+        private ColumnHeader RightNameColumn;
+        private ColumnHeader RightExtColumn;
+        private ColumnHeader RightSizeColumn;
+        private ColumnHeader RightDateColumn;
     }
 }

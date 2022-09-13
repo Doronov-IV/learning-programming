@@ -55,7 +55,7 @@ namespace Streamlet.Forms
         /// <br />
         /// Ссылка на активный лист-бокс;
         /// </summary>
-        private ListBox ActiveListBox;
+        private ListView ActiveListView;
 
 
         private List<DriveInfo> machineDriveInfo;
@@ -88,13 +88,11 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnPrimaryFormLoad(object sender, EventArgs e)
         {
-            LeftListBox.Items.Add(new StreamletListObject("DEFAULT"));
+            LeftListView.Groups.Clear();
 
-            RightListBox.Items.Add(new StreamletListObject("DEFAULT"));
+            GetDirectoryContents(LeftListView, LeftWindowPointer);
 
-            GetDirectoryContents(LeftListBox, LeftWindowPointer);
-
-            GetDirectoryContents(RightListBox, RightWindowPointer);
+            GetDirectoryContents(RightListView, RightWindowPointer);
         }
 
 
@@ -105,22 +103,31 @@ namespace Streamlet.Forms
         #region Module : ListBoxes 
 
 
-        private void OnAnyListBoxSelectedItemChanged(ListBox listBox, ref FileSystemPointer DirectoryPointer)
+        private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
-            ActiveListBox = listBox;
+            ActiveListView = listView;
 
-            if (!listBox.SelectedItem.ToString().Contains(GoUpEscapeString))
+            ListViewItem escapeItem = new ListViewItem(GoUpEscapeString);
+
+            bool bDebugFlag = false;
+
+            foreach (var unit in listView.SelectedItems)
             {
-                MoveDown(listBox, ref DirectoryPointer);
+                if (unit.ToString().Contains(escapeItem.ToString())) bDebugFlag = true;
+            }
+
+            if (bDebugFlag == false)
+            {
+                MoveDown(listView, ref DirectoryPointer);
             }
             else
             {
-                MoveUp(listBox, ref DirectoryPointer);
+                MoveUp(listView, ref DirectoryPointer);
             }
         }
 
 
-        private void MoveDown(ListBox listBox, ref FileSystemPointer DirectoryPointer)
+        private void MoveDown(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
             try
             {
@@ -128,93 +135,109 @@ namespace Streamlet.Forms
 
                 foreach (var item in machineDriveInfo)
                 {
-                    if (listBox.SelectedItem.ToString().Contains(item.Name))
+                    foreach (var unit in listView.SelectedItems)
                     {
-                        selectedDrive = item;
+                        if (unit.ToString().Contains(item.Name)) selectedDrive = item;
                     }
                 }
 
                 if (null != selectedDrive)
                 {
                     DirectoryPointer.NextDirectory(selectedDrive.RootDirectory);
-                    GetDirectoryContents(listBox, DirectoryPointer);
+                    GetDirectoryContents(listView, DirectoryPointer);
                 }
                 else
                 {
                     foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
                     {
-                        if (listBox.SelectedItem.ToString().Contains(unit.Name))
+                        foreach (var item in listView.SelectedItems)
                         {
-                            DirectoryPointer.NextDirectory(unit);
-                            GetDirectoryContents(listBox, DirectoryPointer);
-                            break;
+                            if (item.ToString().Contains(unit.Name))
+                            {
+                                DirectoryPointer.NextDirectory(unit);
+                                GetDirectoryContents(listView, DirectoryPointer);
+                                break;
+                            }
                         }
                     }
                 }
             }
             catch (System.UnauthorizedAccessException ex)
             {
-                ShowFailMessage(listBox);
+                ShowFailMessage(listView);
             }
         }
 
 
-        private void GetDirectoryContents(ListBox listBox, FileSystemPointer DirectoryPointer)
+        private void GetDirectoryContents(ListView listView, FileSystemPointer DirectoryPointer)
         {
             try
             {
-                if (DirectoryPointer?.CurrentDirectory is not null)
+                if (DirectoryPointer?.CurrentDirectory != null)
                 {
-                    ClearListBoxItems(listBox);
-                    listBox.Items.Add(new StreamletListObject(GoUpEscapeString));
+                    listView.Items.Clear();
+                    listView.Items.Add(new ListViewItem(GoUpEscapeString));
                     DirectoryPointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
                     {
-                        listBox.Items.Add(new StreamletListObject(unit));
+                        ListViewItem item = new ListViewItem(unit.Name);
+                        item.SubItems.Add(unit.Extension);
+                        item.SubItems.Add("");
+                        item.SubItems.Add(unit.LastWriteTime.ToShortDateString());
+                        listView.Items.Add(item);
                     });
                     DirectoryPointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
                     {
-                        listBox.Items.Add(new StreamletListObject(unit));
+                        ListViewItem item = new ListViewItem(unit.Name);
+                        item.SubItems.Add(unit.Extension);
+                        item.SubItems.Add(unit.Length.ToString());
+                        item.SubItems.Add(unit.LastWriteTime.ToShortDateString());
+                        listView.Items.Add(item);
                     });
                 }
-                else GetDrives(listBox);
+                else GetDrives(listView);
             }
             catch (System.UnauthorizedAccessException ex)
             {
-                ShowFailMessage(listBox);
+                ShowFailMessage(listView);
             }
         }
 
 
-        private void ShowFailMessage(ListBox listBox)
+        private void ShowFailMessage(ListView listView)
         {
-            listBox.Items.Clear();
-            listBox.Items.Add(GoUpEscapeString);
-            listBox.Items.Add("\n");
-            listBox.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
-            listBox.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
-            listBox.Items.Add("\n");
-            listBox.Items.Add("\t\tPress  [ .. ]  to leave....");
+            listView.Items.Clear();
+            listView.Items.Add(GoUpEscapeString);
+            listView.Items.Add("\n");
+            listView.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
+            listView.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
+            listView.Items.Add("\n");
+            listView.Items.Add("\t\tPress  [ .. ]  to leave....");
         }
 
 
-        private void MoveUp(ListBox listBox, ref FileSystemPointer DirectoryPointer)
+        private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
         {
             if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
-            GetDirectoryContents(listBox, DirectoryPointer);
+            GetDirectoryContents(ListView, DirectoryPointer);
         }
 
 
-        private void GetDrives(ListBox listBox)
+        private void GetDrives(ListView listView)
         {
             var driveList = DriveInfo.GetDrives();
 
-            listBox.Items.Clear();
+            listView.Items.Clear();
 
             if (machineDriveInfo.Count == 0) machineDriveInfo.AddRange(driveList);
 
             foreach (var item in driveList)
             {
-                listBox.Items.Add(new StreamletListObject(item.Name));
+                ListViewItem LVItem = new ListViewItem(item.Name);
+                LVItem.SubItems.Add("");
+                LVItem.SubItems.Add("");
+                LVItem.SubItems.Add("");
+
+                listView.Items.Add(LVItem);
             }
         }
 
@@ -223,52 +246,34 @@ namespace Streamlet.Forms
 
         }
 
-        private void OnLeftListBoxMouseDoubleClick(object sender, MouseEventArgs e)
+        private void OnLeftListViewMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (LeftListBox.SelectedItem is not null)
+            if (LeftListView.SelectedItems != null)
             {
-                OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
+                OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
                 LeftAddressTextBox.Text = LeftWindowPointer?.CurrentDirectory?.FullName;
             }
         }
 
-        private void OnRightListBoxMouseDoubleClick(object sender, MouseEventArgs e)
+        private void OnRightListViewMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (RightListBox.SelectedItem is not null)
+            if (RightListView.SelectedItems != null)
             {
-                OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
+                OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
                 RightAddressTextBox.Text = RightWindowPointer?.CurrentDirectory?.FullName;
             }
         }
 
-        private void LeftListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        private void OnLeftListViewSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
         }
 
 
-        private void OnLeftListBoxSelectedValueChanged(object sender, EventArgs e)
+        private void OnRighttListViewSelectedValueChanged(object sender, EventArgs e)
         {
-            OnAnyListBoxSelectedItemChanged(LeftListBox, ref LeftWindowPointer);
-        }
-
-
-        private void OnRighttListBoxSelectedValueChanged(object sender, EventArgs e)
-        {
-            OnAnyListBoxSelectedItemChanged(RightListBox, ref RightWindowPointer);
-        }
-
-
-        /// <summary>
-        /// Clear all list items except for the header one;
-        /// <br />
-        /// Очистить список кроме заголовка;
-        /// </summary>
-        /// <param name="listBox">Specific listbox;<br \>Конкретный лист бокс;</param>
-        private void ClearListBoxItems(ListBox listBox)
-        {
-            listBox.Items.Clear();
-            listBox.Items.Add(new StreamletListObject("DEFAULT"));
+            OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
         }
 
 
@@ -289,7 +294,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnLeftAddressTextBoxLeave(object sender, EventArgs e)
         {
-            OnAnyAddressTextBoxLeave(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer);
+            OnAnyAddressTextBoxLeave(LeftListView, LeftAddressTextBox, ref LeftWindowPointer);
         }
 
         /// <summary>
@@ -299,7 +304,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnRightAddressTextBoxLeave(object sender, EventArgs e)
         {
-            OnAnyAddressTextBoxLeave(RightListBox, RightAddressTextBox, ref RightWindowPointer);
+            OnAnyAddressTextBoxLeave(RightListView, RightAddressTextBox, ref RightWindowPointer);
         }
 
 
@@ -311,7 +316,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            OnAnyListBoxKeyDown(LeftListBox, LeftAddressTextBox, ref LeftWindowPointer, e);
+            OnAnyListBoxKeyDown(LeftListView, LeftAddressTextBox, ref LeftWindowPointer, e);
         }
 
         /// <summary>
@@ -321,7 +326,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnRightAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            OnAnyListBoxKeyDown(RightListBox, RightAddressTextBox, ref RightWindowPointer, e);
+            OnAnyListBoxKeyDown(RightListView, RightAddressTextBox, ref RightWindowPointer, e);
         }
 
 
@@ -338,19 +343,19 @@ namespace Streamlet.Forms
         /// <br />
         /// Когда в любой строке нажата клавиша;
         /// </summary>
-        /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
+        /// <param name="listView">The exact listbox;<br/>Конкретный листбокс;</param>
         /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
         /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
         /// <param name="e">Key pressed;<br/>Нажатая клавиша;</param>
-        private void OnAnyListBoxKeyDown(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer ptr, KeyEventArgs e)
+        private void OnAnyListBoxKeyDown(ListView listView, TextBox specificTextBox, ref FileSystemPointer ptr, KeyEventArgs e)
         {
             // 'enter';
-            if (e.KeyCode == Keys.Enter) OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
+            if (e.KeyCode == Keys.Enter) OnAnyAddressTextBoxLeave(listView, specificTextBox, ref ptr);
             // 'esc';
             else if (e.KeyCode == Keys.Escape)
             {
                 specificTextBox.Text = "aaa";
-                OnAnyAddressTextBoxLeave(listBox, specificTextBox, ref ptr);
+                OnAnyAddressTextBoxLeave(listView, specificTextBox, ref ptr);
             }
         }
 
@@ -362,7 +367,7 @@ namespace Streamlet.Forms
         /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
         /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
         /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
-        private void OnAnyAddressTextBoxLeave(ListBox listBox, TextBox specificTextBox, ref FileSystemPointer specificPointer)
+        private void OnAnyAddressTextBoxLeave(ListView listView, TextBox specificTextBox, ref FileSystemPointer specificPointer)
         {
             string sText = specificTextBox.Text;
 
@@ -375,7 +380,7 @@ namespace Streamlet.Forms
             else if (Directory.Exists(sText))
             {
                 specificPointer.NextDirectory(new DirectoryInfo(sText));
-                GetDirectoryContents(listBox, specificPointer);
+                GetDirectoryContents(listView, specificPointer);
             }
             else
             {
@@ -384,9 +389,13 @@ namespace Streamlet.Forms
         }
 
 
-            #endregion GENERIC_METHODS
-
+        #endregion GENERIC_METHODS
 
         #endregion Module : Address TextBoxes 
+
+        private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

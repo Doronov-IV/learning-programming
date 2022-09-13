@@ -158,6 +158,7 @@ namespace Streamlet.Service
         /// <returns>Name + ext + size + date;<br />Имя + расширение + размер + дата;</returns>
         public override string ToString()
         {
+            /*
             string returnString = "";
 
             string shortenedName = "";
@@ -182,6 +183,14 @@ namespace Streamlet.Service
             returnString += TempToolbox.TabWidth(_Size, 20);
             returnString += TempToolbox.TabWidth(_Date, 15);
             
+
+            return returnString;
+            */
+
+
+            string returnString = "";
+
+            returnString = String.Format("");
 
             return returnString;
         }
