@@ -23,86 +23,58 @@ namespace Streamlet.Forms
     {
 
 
-        #region PROPERTIES
-
-
-        /// <summary>
-        /// A pattern that represents the 'go-higher' option in the list boxes;
-        /// <br />
-        /// Набор символов, котоырй представляет собой переход на уровень выше в лист-боксах;
-        /// </summary>
-        private string GoUpEscapeString = "[ .. ]";
-
-
-        /// <summary>
-        /// A file-system pointer for the left list;
-        /// <br />
-        /// Указатель файловой системы для левого списка;
-        /// </summary>
-        private FileSystemPointer LeftWindowPointer = new FileSystemPointer();
-
-
-        /// <summary>
-        /// A file-system pointer for the right list;
-        /// <br />
-        /// Указатель файловой системы для правого списка;
-        /// </summary>
-        private FileSystemPointer RightWindowPointer = new FileSystemPointer();
-
-
-        /// <summary>
-        /// A reference to the focused list box;
-        /// <br />
-        /// Ссылка на активный лист-бокс;
-        /// </summary>
-        private ListView ActiveListView;
-
-
-        private List<DriveInfo> machineDriveInfo;
-
-
-        #endregion PROPERTIES
-
-
-
-        #region CONSTRUCTION
-
-
-        /// <summary>
-        /// Default constructor;
-        /// <br />
-        /// Конструктор по-умолчанию;
-        /// </summary>
-        public PrimaryForm()
-        {
-            InitializeComponent();
-            
-            machineDriveInfo = new List<DriveInfo>();
-        }
-
-
-        /// <summary>
-        /// Prepare list boxes, show a list of the disks;
-        /// <br />
-        /// Подготовить лист-боксы, отобразить список дисков;
-        /// </summary>
-        private void OnPrimaryFormLoad(object sender, EventArgs e)
-        {
-            LeftListView.Groups.Clear();
-
-            GetDirectoryContents(LeftListView, LeftWindowPointer);
-
-            GetDirectoryContents(RightListView, RightWindowPointer);
-        }
-
-
-        #endregion CONSTRUCTION
-
-
-
         #region Module : ListViews
 
 
+
+        #region Specific Handlers - Pairs of handlers one for each side
+
+
+        private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
+        {
+            if (LeftListView.SelectedItems != null)
+            {
+                OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
+                LeftAddressTextBox.Text = LeftWindowPointer?.CurrentDirectory?.FullName;
+            }
+        }
+
+        private void OnRightListViewMouseDoubleClick(object sender, EventArgs e)
+        {
+            if (RightListView.SelectedItems != null)
+            {
+                OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
+                RightAddressTextBox.Text = RightWindowPointer?.CurrentDirectory?.FullName;
+            }
+        }
+
+
+        private void OnLeftListViewSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
+        }
+
+
+        private void OnRighttListViewSelectedValueChanged(object sender, EventArgs e)
+        {
+            OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
+        }
+
+
+        #endregion Specific Handlers - Pairs of handlers one for each side
+
+
+
+        #region Generic Handlers - Generic methods that are dispatched by specific ones
+
+
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="DirectoryPointer"></param>
         private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
             ActiveListView = listView;
@@ -127,6 +99,20 @@ namespace Streamlet.Forms
         }
 
 
+
+
+        #endregion Generic Handlers - Generic methods that are dispatched by specific ones
+
+
+
+        #region Common non-handler Logic
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="DirectoryPointer"></param>
         private void MoveDown(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
             try
@@ -169,6 +155,23 @@ namespace Streamlet.Forms
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ListView"></param>
+        /// <param name="DirectoryPointer"></param>
+        private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
+        {
+            if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
+            GetDirectoryContents(ListView, DirectoryPointer);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="DirectoryPointer"></param>
         private void GetDirectoryContents(ListView listView, FileSystemPointer DirectoryPointer)
         {
             try
@@ -203,24 +206,10 @@ namespace Streamlet.Forms
         }
 
 
-        private void ShowFailMessage(ListView listView)
-        {
-            listView.Items.Clear();
-            listView.Items.Add(GoUpEscapeString);
-            listView.Items.Add("\n");
-            listView.Items.Add("\tAccess denied.\n");
-            listView.Items.Add("\n");
-            listView.Items.Add("\t\t[ .. ]  to leave....");
-        }
-
-
-        private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
-        {
-            if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
-            GetDirectoryContents(ListView, DirectoryPointer);
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listView"></param>
         private void GetDrives(ListView listView)
         {
             var driveList = DriveInfo.GetDrives();
@@ -240,40 +229,25 @@ namespace Streamlet.Forms
             }
         }
 
-        private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
 
-        }
-
-        private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listView"></param>
+        private void ShowFailMessage(ListView listView)
         {
-            if (LeftListView.SelectedItems != null)
-            {
-                OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
-                LeftAddressTextBox.Text = LeftWindowPointer?.CurrentDirectory?.FullName;
-            }
-        }
-
-        private void OnRightListViewMouseDoubleClick(object sender, EventArgs e)
-        {
-            if (RightListView.SelectedItems != null)
-            {
-                OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
-                RightAddressTextBox.Text = RightWindowPointer?.CurrentDirectory?.FullName;
-            }
+            listView.Items.Clear();
+            listView.Items.Add(GoUpEscapeString);
+            listView.Items.Add("\n");
+            listView.Items.Add("\tAccess denied.\n");
+            listView.Items.Add("\n");
+            listView.Items.Add("\t\t[ .. ]  to leave....");
         }
 
 
-        private void OnLeftListViewSelectedValueChanged(object sender, EventArgs e)
-        {
-            OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
-        }
 
+        #endregion Common non-handler Logic
 
-        private void OnRighttListViewSelectedValueChanged(object sender, EventArgs e)
-        {
-            OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
-        }
 
 
         #endregion Module : ListViews
@@ -283,7 +257,8 @@ namespace Streamlet.Forms
         #region Module : Address TextBoxes 
 
 
-        #region SPECIFIC_METHODS
+
+        #region Specific Handlers (see ListViews region)
 
 
         /// <summary>
@@ -329,11 +304,11 @@ namespace Streamlet.Forms
         }
 
 
-            #endregion SPECIFIC_METHODS
+        #endregion Specific Handlers (see ListViews region)
 
 
 
-        #region GENERIC_METHODS
+        #region Generic Handlers (see ListViews region)
 
 
 
@@ -388,10 +363,22 @@ namespace Streamlet.Forms
         }
 
 
-        #endregion GENERIC_METHODS
+        #endregion Generic Handlers (see ListViews region)
+
+
 
         #endregion Module : Address TextBoxes 
 
+
+
+        #region Module : Middle Icon ToolStrip
+
+
+        /// <summary>
+        /// The 'open' button click handler;
+        /// <br />
+        /// Обработчик клика по кнопке "открыть";
+        /// </summary>
         private void OnOpenToolClick(object sender, EventArgs e)
         {
             if (ActiveListView?.SelectedItems != null)
@@ -401,5 +388,109 @@ namespace Streamlet.Forms
             }
             
         }
+
+
+        #endregion Module : Middle Icon ToolStrip
+
+
+
+
+
+        #region PROPERTIES
+
+
+        /// <summary>
+        /// A pattern that represents the 'go-higher' option in the list boxes;
+        /// <br />
+        /// Набор символов, котоырй представляет собой переход на уровень выше в лист-боксах;
+        /// </summary>
+        private string GoUpEscapeString = "[ .. ]";
+
+
+        /// <summary>
+        /// A file-system pointer for the left list;
+        /// <br />
+        /// Указатель файловой системы для левого списка;
+        /// </summary>
+        private FileSystemPointer LeftWindowPointer = new FileSystemPointer();
+
+
+        /// <summary>
+        /// A file-system pointer for the right list;
+        /// <br />
+        /// Указатель файловой системы для правого списка;
+        /// </summary>
+        private FileSystemPointer RightWindowPointer = new FileSystemPointer();
+
+
+        /// <summary>
+        /// A reference to the focused list box;
+        /// <br />
+        /// Ссылка на активный лист-бокс;
+        /// </summary>
+        private ListView ActiveListView;
+
+
+        /// <summary>
+        /// Auxiliary list of all drives of a current system;
+        /// <br />
+        /// Вспомогательный список дисков данной системы;
+        /// </summary>
+        private List<DriveInfo> machineDriveInfo;
+
+
+        #endregion PROPERTIES
+
+
+
+        #region CONSTRUCTION
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по-умолчанию;
+        /// </summary>
+        public PrimaryForm()
+        {
+            InitializeComponent();
+            
+            machineDriveInfo = new List<DriveInfo>();
+        }
+
+
+        /// <summary>
+        /// Prepare list boxes, show a list of the disks;
+        /// <br />
+        /// Подготовить лист-боксы, отобразить список дисков;
+        /// </summary>
+        private void OnPrimaryFormLoad(object sender, EventArgs e)
+        {
+            LeftListView.Groups.Clear();
+
+            GetDirectoryContents(LeftListView, LeftWindowPointer);
+
+            GetDirectoryContents(RightListView, RightWindowPointer);
+        }
+
+
+        #endregion CONSTRUCTION
+
+
+
+
+
+        #region Trash bin - A Codespace for auto-generated methods for disposal
+
+
+        private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+
+        #endregion Trash bin - A Codespace for auto-generated methods for disposal
+
+
     }
 }
