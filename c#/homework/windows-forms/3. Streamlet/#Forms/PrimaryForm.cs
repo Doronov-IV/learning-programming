@@ -100,7 +100,7 @@ namespace Streamlet.Forms
 
 
 
-        #region Module : ListBoxes 
+        #region Module : ListViews
 
 
         private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
@@ -277,14 +277,14 @@ namespace Streamlet.Forms
         }
 
 
-        #endregion Module : ListBoxes 
+        #endregion Module : ListViews
 
 
 
         #region Module : Address TextBoxes 
 
 
-            #region SPECIFIC_METHODS
+        #region SPECIFIC_METHODS
 
 
         /// <summary>
@@ -392,6 +392,7 @@ namespace Streamlet.Forms
         #endregion GENERIC_METHODS
 
         #endregion Module : Address TextBoxes 
+
 
         private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
         {
