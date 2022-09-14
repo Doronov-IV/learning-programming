@@ -113,6 +113,7 @@
             this.OpenTool.Name = "OpenTool";
             this.OpenTool.Size = new System.Drawing.Size(29, 24);
             this.OpenTool.Text = "Open";
+            this.OpenTool.Click += new System.EventHandler(this.OnOpenToolClick);
             // 
             // CopyPathTool
             // 
@@ -146,7 +147,7 @@
             this.LeftListView.TabIndex = 7;
             this.LeftListView.UseCompatibleStateImageBehavior = false;
             this.LeftListView.View = System.Windows.Forms.View.Details;
-            this.LeftListView.DoubleClick += new System.EventHandler(this.OnLeftListViewSelectedValueChanged);
+            this.LeftListView.DoubleClick += new System.EventHandler(this.OnLeftListViewMouseDoubleClick);
             // 
             // LeftNameColumn
             // 
@@ -170,18 +171,20 @@
             // 
             // LeftAddressTextBox
             // 
-            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 58);
+            this.LeftAddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 68);
             this.LeftAddressTextBox.Name = "LeftAddressTextBox";
-            this.LeftAddressTextBox.Size = new System.Drawing.Size(650, 27);
+            this.LeftAddressTextBox.Size = new System.Drawing.Size(650, 30);
             this.LeftAddressTextBox.TabIndex = 5;
             this.LeftAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnLeftAddressTextBoxKeyDown);
             this.LeftAddressTextBox.Leave += new System.EventHandler(this.OnLeftAddressTextBoxLeave);
             // 
             // RightAddressTextBox
             // 
-            this.RightAddressTextBox.Location = new System.Drawing.Point(745, 58);
+            this.RightAddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RightAddressTextBox.Location = new System.Drawing.Point(745, 68);
             this.RightAddressTextBox.Name = "RightAddressTextBox";
-            this.RightAddressTextBox.Size = new System.Drawing.Size(625, 27);
+            this.RightAddressTextBox.Size = new System.Drawing.Size(625, 30);
             this.RightAddressTextBox.TabIndex = 6;
             this.RightAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightAddressTextBoxKeyDown);
             this.RightAddressTextBox.Leave += new System.EventHandler(this.OnRightAddressTextBoxLeave);

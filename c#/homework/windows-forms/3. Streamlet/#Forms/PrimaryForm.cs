@@ -208,10 +208,9 @@ namespace Streamlet.Forms
             listView.Items.Clear();
             listView.Items.Add(GoUpEscapeString);
             listView.Items.Add("\n");
-            listView.Items.Add("\tI'm afraid this folder is protected by the Operating System itself.\n");
-            listView.Items.Add("\tYou may neither see the contents nor interact with the directory.\n");
+            listView.Items.Add("\tAccess denied.\n");
             listView.Items.Add("\n");
-            listView.Items.Add("\t\tPress  [ .. ]  to leave....");
+            listView.Items.Add("\t\t[ .. ]  to leave....");
         }
 
 
@@ -246,7 +245,7 @@ namespace Streamlet.Forms
 
         }
 
-        private void OnLeftListViewMouseDoubleClick(object sender, MouseEventArgs e)
+        private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
         {
             if (LeftListView.SelectedItems != null)
             {
@@ -255,7 +254,7 @@ namespace Streamlet.Forms
             }
         }
 
-        private void OnRightListViewMouseDoubleClick(object sender, MouseEventArgs e)
+        private void OnRightListViewMouseDoubleClick(object sender, EventArgs e)
         {
             if (RightListView.SelectedItems != null)
             {
@@ -334,7 +333,7 @@ namespace Streamlet.Forms
 
 
 
-            #region GENERIC_METHODS
+        #region GENERIC_METHODS
 
 
 
@@ -393,10 +392,10 @@ namespace Streamlet.Forms
 
         #endregion Module : Address TextBoxes 
 
-
-        private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
+        private void OnOpenToolClick(object sender, EventArgs e)
         {
-
+            if (ActiveListView == LeftListView) OnLeftListViewMouseDoubleClick(sender, e);
+            else OnRightListViewMouseDoubleClick(sender, e);
         }
     }
 }
