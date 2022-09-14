@@ -394,8 +394,12 @@ namespace Streamlet.Forms
 
         private void OnOpenToolClick(object sender, EventArgs e)
         {
-            if (ActiveListView == LeftListView) OnLeftListViewMouseDoubleClick(sender, e);
-            else OnRightListViewMouseDoubleClick(sender, e);
+            if (ActiveListView?.SelectedItems != null)
+            {
+                if (ActiveListView == LeftListView) OnLeftListViewMouseDoubleClick(sender, e);
+                else OnRightListViewMouseDoubleClick(sender, e);
+            }
+            
         }
     }
 }
