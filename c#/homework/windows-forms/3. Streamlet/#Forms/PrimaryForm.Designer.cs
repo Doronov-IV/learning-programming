@@ -133,6 +133,7 @@
             this.DeleteTool.Name = "DeleteTool";
             this.DeleteTool.Size = new System.Drawing.Size(29, 24);
             this.DeleteTool.Text = "Delete";
+            this.DeleteTool.Click += new System.EventHandler(this.OnDeleteToolClick);
             // 
             // LeftListView
             // 

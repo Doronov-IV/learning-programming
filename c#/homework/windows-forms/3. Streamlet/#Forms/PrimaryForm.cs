@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -159,6 +160,48 @@ namespace Streamlet.Forms
         /// <param name="DirectoryPointer">Respective directory pointer;<br />Соответствующий указатель файловой системы;</param>
         private void MoveDown(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
+            bool bDebugFlag = false;
+
+
+            // TLDR; Использовать меньше var'ов и/или контролить типы.
+            #region The 'var' bug
+            /*
+             
+            
+            В общем, в блоке try-catch (ещё ниже) был жёсткий баг, связанный с тем, что я использовал 'var' вместо
+            реального типа объекта и цикл выдавал мне элементы в типе 'object' вместо 'ListViewItem'.
+            Я сидел над этой хренью наверно час, в попытках исправить сделал вот эту херь ниже.
+            Внезапно, она отработала хорошо, но потом мне пришёл в голову вариант проще. 
+
+            Нужно это всё было для того, чтобы исправить баг, связанный с тем, что до 'Equals' у меня был метод 'Contains',
+            который неправильно работал. Например, если бы у вас были две папки с именами "A" и "AP Tuner 3.08", когда вы нажмёте
+            на вторую, то "проводник" всё равно попадёт в первую. 
+
+             
+
+            string sSelectedItemRealName = "";
+
+            Regex matchRegex;
+
+            foreach (var selectedItem in listView.SelectedItems)
+            {
+                foreach (ListViewItem generalItem in listView.Items)
+                {
+                    matchRegex = new Regex(@"\b" + Regex.Escape(generalItem.Text) + @"\b", RegexOptions.IgnoreCase);
+                    if (matchRegex.Match(selectedItem.ToString()).Success)
+                    {
+                        sSelectedItemRealName = generalItem.Text;
+                        break;
+                    }
+                }
+            }
+
+
+            */
+            #endregion The 'var' bug
+
+
+
             try
             {
                 DriveInfo selectedDrive = null;
@@ -178,13 +221,15 @@ namespace Streamlet.Forms
                 }
                 else
                 {
-                    foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
+                    foreach (DirectoryInfo generalItem in DirectoryPointer.CurrentDirectory.GetDirectories())
                     {
-                        foreach (var item in listView.SelectedItems)
+                        foreach (ListViewItem selectedItem in listView.SelectedItems)
                         {
-                            if (item.ToString().Contains(unit.Name))
+                            bDebugFlag = generalItem.Name.Equals(selectedItem.Text);
+
+                            if (bDebugFlag)
                             {
-                                DirectoryPointer.NextDirectory(unit);
+                                DirectoryPointer.NextDirectory(generalItem);
                                 ShowDirectoryContents(listView, DirectoryPointer);
                                 break;
                             }
@@ -306,6 +351,8 @@ namespace Streamlet.Forms
 
 
 
+
+
         #region Module : Address TextBoxes 
 
 
@@ -423,6 +470,8 @@ namespace Streamlet.Forms
 
 
 
+
+
         #region Module : Icon ToolStrip
 
 
@@ -465,7 +514,35 @@ namespace Streamlet.Forms
         }
 
 
+        /// <summary>
+        /// 'Delete' tool click handler;
+        /// <br />
+        /// Хендлер кнопки "Удалить";
+        /// </summary>
+        private void OnDeleteToolClick(object sender, EventArgs e)
+        {
+            if (ActiveListView?.SelectedItems != null)
+            {
+                DialogResult result =  
+                    MessageBox.Show("Do you really want to delete the item(s)?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                if (result == DialogResult.No) return;
+                else
+                {
+                    if (ActiveListView == LeftListView)
+                    {
+                        if (TryDeleteItems(LeftListView, LeftWindowPointer))
+                            ShowDirectoryContents(LeftListView, LeftWindowPointer);
+                    }
+
+                    else
+                    {
+                        if (TryDeleteItems(RightListView, RightWindowPointer))
+                            ShowDirectoryContents(RightListView, RightWindowPointer);
+                    }
+                }
+            }
+        }
 
 
 
@@ -500,7 +577,79 @@ namespace Streamlet.Forms
 
 
 
+        private bool TryDeleteItems(ListView listView, FileSystemPointer specificPointer)
+        {
+            bool bRes = false;
+
+            bool isItemAlreadyDeleted = false;
+
+
+            // for all selected files;
+            foreach (var item in listView.SelectedItems)
+            {
+                isItemAlreadyDeleted = false;
+
+                // for all directories;
+                foreach (var dir in specificPointer.CurrentDirectory.GetDirectories())
+                {
+                    // if target is a directory;
+                    if (item.ToString().Contains(dir.Name))
+                    {
+                        // try delete it;
+                        try
+                        {
+                            dir.Delete();
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show($"You cannot delete this item ({dir.Name}).\n\n{e.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                        // then we don't need to check if it's a file;
+                        isItemAlreadyDeleted = true;
+
+                        break;
+                    }
+                }
+
+                // if target was a file;
+                if (false == isItemAlreadyDeleted)
+                {
+                    // for all files;
+                    foreach (var file in specificPointer.CurrentDirectory.GetFiles())
+                    {
+                        // if there's a match;
+                        if (item.ToString().Contains(file.Name))
+                        {
+                            // try delete;
+                            try
+                            {
+                                file.Delete();
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show($"You cannot delete this item ({file.Name}).\n\n{e.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
+                            // then we don't need to check if it's a file;
+                            isItemAlreadyDeleted = true;
+
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            bRes = isItemAlreadyDeleted;
+
+            return bRes;
+        }
+
+
+
         #endregion Module : Icon ToolStrip
+
 
 
 
@@ -597,6 +746,7 @@ namespace Streamlet.Forms
         {
 
         }
+
 
 
 
