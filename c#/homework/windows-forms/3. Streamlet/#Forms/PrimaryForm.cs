@@ -23,6 +23,28 @@ namespace Streamlet.Forms
     {
 
 
+        // Comments
+        /*
+         
+        
+
+        1.  Вместо 'ListBox' используется 'ListView', так красивее и гораздо удобнее;
+
+        2.  'Listview', 'AddressTextBox' и 'FileSystemPointer' можно было связать одним классом, но я понял это слишком поздно;
+
+        3.  Неправильный ввод в адресную строку не вызывает ошибки, вместо этого он просто стирает неправильный ввод.
+           Можно было бы сделать ошибку без труда, просто текущий вариант чуть больше похож на настоящий проводник;
+
+        4.  Если долго ковыряться в коде, можно найти лишние 'ListView'. Это потому что файлы несколько раз
+           удалялись самим windows forms из-за моих ошибок при обращении с генерируемыми методами.
+
+
+        */
+
+
+
+
+
         #region Module : ListViews
 
 
@@ -30,6 +52,11 @@ namespace Streamlet.Forms
         #region Specific Handlers - Pairs of handlers one for each side
 
 
+        /// <summary>
+        /// Left listview click event handler;
+        /// <br />
+        /// Хендлер клика левого списка;
+        /// </summary>
         private void OnLeftListViewMouseDoubleClick(object sender, EventArgs e)
         {
             if (LeftListView.SelectedItems != null)
@@ -39,6 +66,12 @@ namespace Streamlet.Forms
             }
         }
 
+
+        /// <summary>
+        /// Right listview click event handler;
+        /// <br />
+        /// Хендлер клика правого списка;
+        /// </summary>
         private void OnRightListViewMouseDoubleClick(object sender, EventArgs e)
         {
             if (RightListView.SelectedItems != null)
@@ -49,12 +82,22 @@ namespace Streamlet.Forms
         }
 
 
+        /// <summary>
+        /// Left listview selected value change handler;
+        /// <br />
+        /// Хендлер изменения выбранного значения левого списка;
+        /// </summary>
         private void OnLeftListViewSelectedValueChanged(object sender, EventArgs e)
         {
             OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
         }
 
 
+        /// <summary>
+        /// Right listview selected value change handler;
+        /// <br />
+        /// Хендлер изменения выбранного значения правого списка;
+        /// </summary>
         private void OnRighttListViewSelectedValueChanged(object sender, EventArgs e)
         {
             OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
@@ -69,12 +112,12 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// ;
+        /// Any listview selected value change handler;
         /// <br />
-        /// ;
+        /// Хендлер изменения выбранного значения любого списка;
         /// </summary>
-        /// <param name="listView"></param>
-        /// <param name="DirectoryPointer"></param>
+        /// <param name="listView">Listview in which to display;<br />Listview в котором отобразить;</param>
+        /// <param name="DirectoryPointer">Respective directory pointer;<br />Соответствующий указатель файловой системы;</param>
         private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
             ActiveListView = listView;
@@ -100,7 +143,6 @@ namespace Streamlet.Forms
 
 
 
-
         #endregion Generic Handlers - Generic methods that are dispatched by specific ones
 
 
@@ -109,10 +151,12 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// 
+        /// Get down the level in a local file system;
+        /// <br />
+        /// Перейти на уровень вниз по файловой системе;
         /// </summary>
-        /// <param name="listView"></param>
-        /// <param name="DirectoryPointer"></param>
+        /// <param name="listView">Listview in which to display;<br />Listview в котором отобразить;</param>
+        /// <param name="DirectoryPointer">Respective directory pointer;<br />Соответствующий указатель файловой системы;</param>
         private void MoveDown(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
             try
@@ -130,7 +174,7 @@ namespace Streamlet.Forms
                 if (null != selectedDrive)
                 {
                     DirectoryPointer.NextDirectory(selectedDrive.RootDirectory);
-                    GetDirectoryContents(listView, DirectoryPointer);
+                    ShowDirectoryContents(listView, DirectoryPointer);
                 }
                 else
                 {
@@ -141,7 +185,7 @@ namespace Streamlet.Forms
                             if (item.ToString().Contains(unit.Name))
                             {
                                 DirectoryPointer.NextDirectory(unit);
-                                GetDirectoryContents(listView, DirectoryPointer);
+                                ShowDirectoryContents(listView, DirectoryPointer);
                                 break;
                             }
                         }
@@ -156,23 +200,27 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// 
+        /// Get up the level in a local file system;
+        /// <br />
+        /// Перейти на уровень вверх по файловой системе;
         /// </summary>
-        /// <param name="ListView"></param>
-        /// <param name="DirectoryPointer"></param>
+        /// <param name="listView">Listview in which to display;<br />Listview в котором отобразить;</param>
+        /// <param name="DirectoryPointer">Respective directory pointer;<br />Соответствующий указатель файловой системы;</param>
         private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
         {
             if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
-            GetDirectoryContents(ListView, DirectoryPointer);
+            ShowDirectoryContents(ListView, DirectoryPointer);
         }
 
 
         /// <summary>
-        /// 
+        /// Show the list of directory contents in a specific listview;
+        /// <br />
+        /// Отобразить содержимое папки в конкретном listview;
         /// </summary>
-        /// <param name="listView"></param>
-        /// <param name="DirectoryPointer"></param>
-        private void GetDirectoryContents(ListView listView, FileSystemPointer DirectoryPointer)
+        /// <param name="listView">Listview in which to display;<br />Listview в котором отобразить;</param>
+        /// <param name="DirectoryPointer">Respective directory pointer;<br />Соответствующий указатель файловой системы;</param>
+        private void ShowDirectoryContents(ListView listView, FileSystemPointer DirectoryPointer)
         {
             try
             {
@@ -197,7 +245,7 @@ namespace Streamlet.Forms
                         listView.Items.Add(item);
                     });
                 }
-                else GetDrives(listView);
+                else ShowDrives(listView);
             }
             catch (System.UnauthorizedAccessException ex)
             {
@@ -207,10 +255,12 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// 
+        /// Show the list of drives in a specific listview;
+        /// <br />
+        /// Отобразить список дисков в конкретном listview;
         /// </summary>
-        /// <param name="listView"></param>
-        private void GetDrives(ListView listView)
+        /// <param name="listView">Listview in which to display;<br />Listview в котором отобразить;</param>
+        private void ShowDrives(ListView listView)
         {
             var driveList = DriveInfo.GetDrives();
 
@@ -231,9 +281,11 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// 
+        /// Show fail message in case the directory is protected by the OS;
+        /// <br />
+        /// Отобразить сообщение об ошибке, если директория защищена ОС;
         /// </summary>
-        /// <param name="listView"></param>
+        /// <param name="listView">Listview in whick to display;<br />Listview в котором отобразить;</param>
         private void ShowFailMessage(ListView listView)
         {
             listView.Items.Clear();
@@ -354,7 +406,7 @@ namespace Streamlet.Forms
             else if (Directory.Exists(sText))
             {
                 specificPointer.NextDirectory(new DirectoryInfo(sText));
-                GetDirectoryContents(listView, specificPointer);
+                ShowDirectoryContents(listView, specificPointer);
             }
             else
             {
@@ -468,9 +520,9 @@ namespace Streamlet.Forms
         {
             LeftListView.Groups.Clear();
 
-            GetDirectoryContents(LeftListView, LeftWindowPointer);
+            ShowDirectoryContents(LeftListView, LeftWindowPointer);
 
-            GetDirectoryContents(RightListView, RightWindowPointer);
+            ShowDirectoryContents(RightListView, RightWindowPointer);
         }
 
 
