@@ -423,7 +423,7 @@ namespace Streamlet.Forms
 
 
 
-        #region Module : Middle Icon ToolStrip
+        #region Module : Icon ToolStrip
 
 
         /// <summary>
@@ -442,7 +442,65 @@ namespace Streamlet.Forms
         }
 
 
-        #endregion Module : Middle Icon ToolStrip
+        /// <summary>
+        /// 'Copy Path' tool click handler;
+        /// <br />
+        /// Хендлер клика кнопки "Скопировать Путь";
+        /// </summary>
+        private void OnCopyPathToolClick(object sender, EventArgs e)
+        {
+            if (ActiveListView?.SelectedItems != null)
+            {
+                string CopyToClipboardString = "Error. Debug message.";
+
+                if (ActiveListView == LeftListView) 
+                    CopyToClipboardString = GetItemPathForAnyActiveListView(LeftListView, LeftWindowPointer);
+
+                else
+                    CopyToClipboardString = GetItemPathForAnyActiveListView(RightListView, RightWindowPointer);
+
+
+                System.Windows.Forms.Clipboard.SetText(CopyToClipboardString);
+            }
+        }
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Get the path of the first selected item;
+        /// <br />
+        /// Получить путь первого выделенного файла;
+        /// </summary>
+        /// <param name="listView">Specific source listview;<br />Listview-источник;</param>
+        /// <param name="specificPointer">Respective f.s.p.;<br />Соответствующий указатель;</param>
+        /// <returns></returns>
+        private string GetItemPathForAnyActiveListView(ListView listView, FileSystemPointer specificPointer)
+        {
+            string sRes = "";
+
+            string selectedItemName = listView.SelectedItems[0].Text;
+
+            foreach (var dir in specificPointer.CurrentDirectory.GetDirectories())
+            {
+                if (dir.Name.Contains(selectedItemName)) sRes = dir.FullName;
+            }
+
+            foreach (var file in specificPointer.CurrentDirectory.GetFiles())
+            {
+                if (file.Name.Contains(selectedItemName)) sRes = file.FullName;
+            }
+
+            return sRes;
+        }
+
+
+
+        #endregion Module : Icon ToolStrip
 
 
 
@@ -542,8 +600,9 @@ namespace Streamlet.Forms
 
 
 
-        #endregion Trash bin - A Codespace for auto-generated methods for disposal
 
+
+        #endregion Trash bin - A Codespace for auto-generated methods for disposal
 
 
     }

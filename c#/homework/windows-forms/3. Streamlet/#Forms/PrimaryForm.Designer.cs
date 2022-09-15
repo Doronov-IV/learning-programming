@@ -123,6 +123,7 @@
             this.CopyPathTool.Name = "CopyPathTool";
             this.CopyPathTool.Size = new System.Drawing.Size(29, 24);
             this.CopyPathTool.Text = "Copy Path";
+            this.CopyPathTool.Click += new System.EventHandler(this.OnCopyPathToolClick);
             // 
             // DeleteTool
             // 
