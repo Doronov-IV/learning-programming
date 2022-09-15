@@ -203,6 +203,7 @@
             this.RightListView.TabIndex = 8;
             this.RightListView.UseCompatibleStateImageBehavior = false;
             this.RightListView.View = System.Windows.Forms.View.Details;
+            this.RightListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListViewMouseDoubleClick);
             // 
             // RightNameColumn
             // 
