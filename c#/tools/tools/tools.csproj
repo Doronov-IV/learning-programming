@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassExtensions\StringExtension.cs" />
     <Compile Include="FileReader\AbstractFileReader.cs" />
     <Compile Include="FileReader\Common\FileReader.cs" />
     <Compile Include="FileReader\Common\TextFileReader.cs" />

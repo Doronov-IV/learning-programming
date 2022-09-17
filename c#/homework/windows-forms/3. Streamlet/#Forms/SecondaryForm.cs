@@ -42,6 +42,8 @@ namespace Streamlet.Forms
         #endregion PROPERTIES
 
 
+
+
         #region CONSTRUCTION
 
 
@@ -71,6 +73,10 @@ namespace Streamlet.Forms
 
 
         #endregion CONSTRUCTION
+
+
+
+
 
         private void видToolStripMenuItem_Click(object sender, EventArgs e)
         {

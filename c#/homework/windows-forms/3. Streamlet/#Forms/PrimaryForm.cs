@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 
 using Streamlet.Service;
-
+using Tools.ClassExtensions;
 
 namespace Streamlet.Forms
 {
@@ -125,16 +125,36 @@ namespace Streamlet.Forms
 
             ListViewItem escapeItem = new ListViewItem(GoUpEscapeString);
 
-            bool bDebugFlag = false;
+            bool bDebugFlag = false, bDirectoryFlag = false;
 
-            foreach (var unit in listView.SelectedItems)
+            foreach (ListViewItem unit in listView.SelectedItems)
             {
                 if (unit.ToString().Contains(escapeItem.ToString())) bDebugFlag = true;
             }
 
             if (bDebugFlag == false)
             {
-                MoveDown(listView, ref DirectoryPointer);
+                foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
+                {
+                    if (listView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                }
+
+                if (bDirectoryFlag) MoveDown(listView, ref DirectoryPointer);
+                else
+                {
+                    FileInfo fileToOpen = DirectoryPointer.CurrentDirectory.GetFiles().ToList().Find(unit => unit.Name == listView.SelectedItems[0].Text);
+
+                    // if it is a text file;
+                    if (StringExtension.CompareMultiple( 
+                        data: fileToOpen.Extension, 
+                        compareType: StringComparison.OrdinalIgnoreCase, 
+                        compareValues: new string[] { ".txt", ".html", ".xml", ".doc" }))
+                    {
+                        // then;
+                        SecondaryForm textEditorForm = new SecondaryForm();
+                        textEditorForm.Show();
+                    }
+                }
             }
             else
             {
