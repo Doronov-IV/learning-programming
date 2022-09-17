@@ -125,34 +125,44 @@ namespace Streamlet.Forms
 
             ListViewItem escapeItem = new ListViewItem(GoUpEscapeString);
 
-            bool bDebugFlag = false, bDirectoryFlag = false;
+            bool bIsEscapeStringDebugFlag = false, bDirectoryFlag = false;
 
             foreach (ListViewItem unit in listView.SelectedItems)
             {
-                if (unit.ToString().Contains(escapeItem.ToString())) bDebugFlag = true;
+                if (unit.ToString().Contains(escapeItem.ToString())) bIsEscapeStringDebugFlag = true;
             }
 
-            if (bDebugFlag == false)
+            if (bIsEscapeStringDebugFlag == false)
             {
-                foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
+                if (DirectoryPointer.CurrentDirectory == null) 
                 {
-                    if (listView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                    MoveDown(listView, ref DirectoryPointer);
+                    return;
                 }
 
-                if (bDirectoryFlag) MoveDown(listView, ref DirectoryPointer);
                 else
                 {
-                    FileInfo fileToOpen = DirectoryPointer.CurrentDirectory.GetFiles().ToList().Find(unit => unit.Name == listView.SelectedItems[0].Text);
 
-                    // if it is a text file;
-                    if (StringExtension.CompareMultiple( 
-                        data: fileToOpen.Extension, 
-                        compareType: StringComparison.OrdinalIgnoreCase, 
-                        compareValues: new string[] { ".txt", ".html", ".xml", ".doc" }))
+                    foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
                     {
-                        // then;
-                        SecondaryForm textEditorForm = new SecondaryForm();
-                        textEditorForm.Show();
+                        if (listView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                    }
+
+                    if (bDirectoryFlag) MoveDown(listView, ref DirectoryPointer);
+                    else
+                    {
+                        FileInfo fileToOpen = DirectoryPointer.CurrentDirectory.GetFiles().ToList().Find(unit => unit.Name == listView.SelectedItems[0].Text);
+
+                        // if it is a text file;
+                        if (StringExtension.CompareMultiple(
+                            data: fileToOpen.Extension,
+                            compareType: StringComparison.OrdinalIgnoreCase,
+                            compareValues: new string[] { ".txt", ".html", ".xml", ".doc" }))
+                        {
+                            // then open it in a new form;
+                            SecondaryForm textEditorForm = new SecondaryForm(fileToOpen);
+                            textEditorForm.Show();
+                        }
                     }
                 }
             }
@@ -183,7 +193,7 @@ namespace Streamlet.Forms
             bool bDebugFlag = false;
 
 
-            // TLDR; Использовать меньше var'ов и/или контролить типы.
+            // TL;DR: Использовать меньше var'ов и/или контролить типы.
             #region The 'var' bug
             /*
              

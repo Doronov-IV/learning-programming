@@ -59,6 +59,17 @@ namespace Streamlet.Forms
 
 
         /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public SecondaryForm(FileInfo fileInfo) : this()
+        {
+            MainRichTextBox.Text = File.ReadAllText(fileInfo.FullName);
+        }
+
+
+        /// <summary>
         /// Notebook form laod handler;
         /// <br />
         /// Хендлер загрузки формы текстового редактора;
