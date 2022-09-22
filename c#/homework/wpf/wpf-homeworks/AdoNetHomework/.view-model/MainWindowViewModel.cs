@@ -71,12 +71,20 @@ namespace AdoNetHomework
 
             SqlConnection connection = new SqlConnection(connectionString); // MSSQLLocalDB
 
-            await connection.OpenAsync();
+            // try connect;
+            try
+            {
+                await connection.OpenAsync();
 
+                MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            IsNotConnected = false;
+                IsNotConnected = false;
+            }
+            // if the name was not found;
+            catch (Exception e)
+            {
+                MessageBox.Show($"Something went wrong. Please, try another name.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
