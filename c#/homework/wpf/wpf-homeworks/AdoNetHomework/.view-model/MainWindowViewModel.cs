@@ -35,24 +35,31 @@ namespace AdoNetHomework
 
         private string _dbName;
 
-        public string dbName
-        {
-            get 
-            { 
-                return _dbName;
-            }
-            set
-            {
-                _dbName = value;
-            }
-        }
+        public string dbName { get { return _dbName; } set {  _dbName = value; } }
 
         public DelegateCommand OnClickCommand { get; }
+
+
+        private bool _isNotConnected;
+
+        public bool IsNotConnected 
+        {
+            get 
+            {
+                return _isNotConnected; 
+            } 
+            set 
+            {
+                _isNotConnected = value;
+                OnPropertyChanged(nameof(IsNotConnected));
+            } 
+        }
 
 
         public MainWindowViewModel()
         {
             OnClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
+            IsNotConnected = true;
         }
 
 
@@ -66,7 +73,10 @@ namespace AdoNetHomework
 
             await connection.OpenAsync();
 
-            MessageBox.Show($"Connected: {connection.ClientConnectionId}");
+
+            MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            IsNotConnected = false;
         }
 
 
