@@ -6,6 +6,8 @@ global using System.Linq;
 global using System.Threading.Tasks;
 global using System.Windows;
 global using System.ComponentModel;
+global using Prism.Commands;
+global using Microsoft.Data.SqlClient;
 
 namespace AdoNetHomework
 {

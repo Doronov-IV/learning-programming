@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace AdoNetHomework
 {
@@ -11,7 +7,7 @@ namespace AdoNetHomework
 
 
 
-        #region Property changed
+        #region Property changed legacy
 
 
         /// <summary>
@@ -34,7 +30,48 @@ namespace AdoNetHomework
         }
 
 
-        #endregion Property changed
+        #endregion Property changed legacy
+
+
+        private string _dbName;
+
+        public string dbName
+        {
+            get 
+            { 
+                return _dbName;
+            }
+            set
+            {
+                _dbName = value;
+            }
+        }
+
+        public DelegateCommand OnClickCommand { get; }
+
+
+        public MainWindowViewModel()
+        {
+            OnClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
+        }
+
+
+        private async void OnConnectButtonClickAsync()
+        {
+            // MSSQLLocalDB -
+            // LocalDB -
+            //  -
+            //  -
+            //  -
+
+            string connectionString = $"Server=.\\{dbName};Database = master;Encrypt=false";
+
+            SqlConnection connection = new SqlConnection(connectionString); // MSSQLLocalDB
+
+            await connection.OpenAsync();
+
+            MessageBox.Show($"Connected: {connection.ClientConnectionId}");
+        }
 
 
 

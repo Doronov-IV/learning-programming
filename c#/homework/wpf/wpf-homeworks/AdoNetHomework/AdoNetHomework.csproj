@@ -17,6 +17,7 @@
     <ApplicationDefinition Include=".view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <Page Include=".view\MainWindow.xaml" />
   </ItemGroup>
