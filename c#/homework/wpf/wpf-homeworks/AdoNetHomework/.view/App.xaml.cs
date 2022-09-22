@@ -8,6 +8,7 @@ global using System.Windows;
 global using System.ComponentModel;
 global using Prism.Commands;
 global using Microsoft.Data.SqlClient;
+global using System.Windows.Controls;
 
 namespace AdoNetHomework
 {

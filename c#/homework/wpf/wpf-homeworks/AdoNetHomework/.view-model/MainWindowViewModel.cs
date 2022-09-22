@@ -35,12 +35,30 @@ namespace AdoNetHomework
 
         private string _dbName;
 
+        private bool _isNotConnected;
+
+        private bool _isConnected;
+
+        private string _connectionStatus;
+
         public string dbName { get { return _dbName; } set {  _dbName = value; } }
+
+
+        public string ConnectionStatus
+        {
+            get 
+            {
+                return _connectionStatus; 
+            }
+            set 
+            {
+                _connectionStatus = value;
+                OnPropertyChanged(nameof(ConnectionStatus));
+            }
+        }
 
         public DelegateCommand OnClickCommand { get; }
 
-
-        private bool _isNotConnected;
 
         public bool IsNotConnected 
         {
@@ -56,10 +74,34 @@ namespace AdoNetHomework
         }
 
 
+        public bool IsConnected
+        {
+            get
+            {
+                return _isConnected;
+            }
+            set
+            {
+                _isConnected = value;
+                OnPropertyChanged(nameof(IsConnected));
+            }
+        }
+
+
+        private void ToggleConnectionState()
+        {
+            var bSwapValue = IsConnected;
+            IsConnected = IsNotConnected;
+            IsNotConnected = bSwapValue;
+        }
+
+
         public MainWindowViewModel()
         {
             OnClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
             IsNotConnected = true;
+            IsConnected = false;
+            ConnectionStatus = "Waiting for connection.";
         }
 
 
@@ -74,11 +116,15 @@ namespace AdoNetHomework
             // try connect;
             try
             {
+                ConnectionStatus = "Connecting.";
+
                 await connection.OpenAsync();
 
                 MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                IsNotConnected = false;
+                ToggleConnectionState();
+
+                ConnectionStatus = $"Connected to {dbName}.";
             }
             // if the name was not found;
             catch (Exception e)
@@ -86,6 +132,9 @@ namespace AdoNetHomework
                 MessageBox.Show($"Something went wrong. Please, try another name.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+
 
 
 
