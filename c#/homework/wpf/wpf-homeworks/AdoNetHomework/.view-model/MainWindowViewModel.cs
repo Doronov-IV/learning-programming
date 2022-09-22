@@ -58,13 +58,9 @@ namespace AdoNetHomework
 
         private async void OnConnectButtonClickAsync()
         {
-            // MSSQLLocalDB -
-            // LocalDB -
-            //  -
-            //  -
-            //  -
+            // my local server id - DoronovLocalDb
 
-            string connectionString = $"Server=.\\{dbName};Database = master;Encrypt=false";
+            string connectionString = $"Server=.\\{dbName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             SqlConnection connection = new SqlConnection(connectionString); // MSSQLLocalDB
 
