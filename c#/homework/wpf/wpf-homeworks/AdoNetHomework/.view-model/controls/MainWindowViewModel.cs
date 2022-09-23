@@ -47,6 +47,8 @@ namespace AdoNetHomework
 
         private List<User> _UserList;
 
+        private SqlConnection connection;
+
         public string dbName { get { return _dbName; } set {  _dbName = value; } }
 
         public List<User> UserList 
@@ -76,7 +78,9 @@ namespace AdoNetHomework
             }
         }
 
-        public DelegateCommand OnClickCommand { get; }
+        public DelegateCommand OnConnectButtonClickCommand { get; }
+
+        public DelegateCommand OnCreateButtonClickCommand { get; }
 
 
         public bool IsNotConnected 
@@ -117,7 +121,9 @@ namespace AdoNetHomework
 
         public MainWindowViewModel()
         {
-            OnClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
+            OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
+            OnCreateButtonClickCommand = new DelegateCommand(OnCreateButtonClickAsync);
+
             IsNotConnected = true;
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
@@ -132,7 +138,7 @@ namespace AdoNetHomework
 
             string connectionString = $"Server=.\\{dbName};Database = master;Trusted_Connection=true;Encrypt=false";
 
-            SqlConnection connection = new SqlConnection(connectionString); // MSSQLLocalDB
+            connection = new SqlConnection(connectionString); // MSSQLLocalDB
 
             // try connect;
             try
@@ -157,7 +163,36 @@ namespace AdoNetHomework
 
         private async void OnCreateButtonClickAsync()
         {
+            if (IsConnected)
+            {
+                string queryString =
 
+                    "-- Create the demonstration db;" +
+                    "CREATE DATABASE DoronovAdoNetCoreHomework;" +
+
+                    "--Create the users table;" +
+                    "CREATE TABLE Users" +
+                    "(" +
+                        "[Id] INT PRIMARY KEY IDENTITY(0,1)," +
+	                    "[Name] NVARCHAR(24) NOT NULL," +
+                        "[PhoneNumber] NVARCHAR(11)" +
+                    ")" +
+
+                    "--Create the orders table;" +
+                    "CREATE TABLE Orders" +
+                    "(" +
+                        "[Id] INT PRIMARY KEY IDENTITY(0,1)," +
+                        "[CustomerId] INT NOT NULL," +
+                        "[Sum] INT," +
+                        "[Date] DATE" +
+                    ")";
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                MessageBox.Show($"Database created successfully. Please, check your server.\nRows affected: {rowsAffected}.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information) ;
+            }
         }
 
 

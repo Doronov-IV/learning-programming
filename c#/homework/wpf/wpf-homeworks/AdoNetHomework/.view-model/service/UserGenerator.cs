@@ -29,7 +29,7 @@ namespace AdoNetHomework
             return sResultList;
         }
 
-        public static string GetRandomPhoneNumber()
+        public string GetRandomPhoneNumber()
         {
             string sRes = "";
 
@@ -50,9 +50,15 @@ namespace AdoNetHomework
 
         public UserGenerator()
         {
-            _UserNameList = GetUserNameList($".data/User/UserNames.txt");
-        }
+            try 
+            {
+                _UserNameList = GetUserNameList(@"D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.data\User\UserNames.txt");
+            }
+            catch(Exception e)
+            {
 
+            }
+        }
 
     }
 }
