@@ -34,30 +34,104 @@ namespace AdoNetHomework
         #endregion Property changed legacy
 
 
+
+
+        #region Properties
+
+
+
+
+        #region Private references
+
+
+        /// <summary>
+        /// The name of the db server;
+        /// <br />
+        /// Имя сервера базы данных;
+        /// </summary>
+        private string _dbName;
+
+
+        /// <summary>
+        /// A flag that triggers the buttons;
+        /// <br />
+        /// Returns true if connection hasn't been established, otherwise false;
+        /// <br />
+        /// Флаг, который влияет на кнопки;
+        /// <br />
+        /// Возвращает истину, если подключение не установлено, иначе ложь;
+        /// </summary>
+        private bool _isNotConnected;
+
+
+        /// <summary>
+        /// A flag that triggers the buttons;
+        /// <br />
+        /// Returns true if connection has been established, otherwise false;
+        /// <br />
+        /// Флаг, который влияет на кнопки;
+        /// <br />
+        /// Возвращает истину, если подключение установлено, иначе ложь;
+        /// </summary>
+        private bool _isConnected;
+
+
+        /// <summary>
+        /// A string for user itnterface info;
+        /// <br />
+        /// Строка для вывода информации для пользователя;
+        /// </summary>
+        private string _connectionStatus;
+
+
+        /// <summary>
+        /// Current user list for pushing into db;
+        /// <br />
+        /// Текущий список юзеров для отправки в бд;
+        /// </summary>
+        private List<User> _UserList;
+
+
+        /// <summary>
+        /// Current SQL connection;
+        /// <br />
+        /// Текущее подключение;
+        /// </summary>
+        private SqlConnection connection;
+
+
+        /// <summary>
+        /// Custon service user generator instance;
+        /// <br />
+        /// Экземпляр генератора юзеров;
+        /// </summary>
         UserGenerator userGenerator;
 
 
-        private string _dbName;
+        #endregion Private references
 
-        private bool _isNotConnected;
 
-        private bool _isConnected;
 
-        private string _connectionStatus;
 
-        private List<User> _UserList;
+        #region Public properties
 
-        private SqlConnection connection;
 
-        public string dbName { get { return _dbName; } set {  _dbName = value; } }
+        /// <summary>
+        /// @see private string _dbName;
+        /// </summary>
+        public string dbName { get { return _dbName; } set { _dbName = value; } }
 
-        public List<User> UserList 
+
+        /// <summary>
+        /// @see private List<User> _UserList;
+        /// </summary>
+        public List<User> UserList
         {
-            get 
+            get
             {
-                return _UserList; 
+                return _UserList;
             }
-            set 
+            set
             {
                 _UserList = value;
                 OnPropertyChanged(nameof(UserList));
@@ -65,38 +139,59 @@ namespace AdoNetHomework
         }
 
 
+        /// <summary>
+        /// @see private string _ConnectionStatus;
+        /// </summary>
         public string ConnectionStatus
         {
-            get 
+            get
             {
-                return _connectionStatus; 
+                return _connectionStatus;
             }
-            set 
+            set
             {
                 _connectionStatus = value;
                 OnPropertyChanged(nameof(ConnectionStatus));
             }
         }
 
+
+        /// <summary>
+        /// ConntectionButton click handler delegate;
+        /// <br />
+        /// Делегат хендлера элемента "ConntectionButton";
+        /// </summary>
         public DelegateCommand OnConnectButtonClickCommand { get; }
 
+
+        /// <summary>
+        /// CreationButton click handler delegate;
+        /// <br />
+        /// Делегат хендлера элемента "CreationButton";
+        /// </summary>
         public DelegateCommand OnCreateButtonClickCommand { get; }
 
 
-        public bool IsNotConnected 
+        /// <summary>
+        /// @see private bool _IsNotConnected;
+        /// </summary>
+        public bool IsNotConnected
         {
-            get 
+            get
             {
-                return _isNotConnected; 
-            } 
-            set 
+                return _isNotConnected;
+            }
+            set
             {
                 _isNotConnected = value;
                 OnPropertyChanged(nameof(IsNotConnected));
-            } 
+            }
         }
 
 
+        /// <summary>
+        /// @see private bool _IsConnected;
+        /// </summary>
         public bool IsConnected
         {
             get
@@ -111,12 +206,22 @@ namespace AdoNetHomework
         }
 
 
+        #endregion Public properties
+
+
+
+
+        #endregion Properties
+
+
         private void ToggleConnectionState()
         {
-            var bSwapValue = IsConnected;
+            bool bTemp = IsConnected;
             IsConnected = IsNotConnected;
-            IsNotConnected = bSwapValue;
+            IsNotConnected = bTemp;
         }
+
+
 
 
         public MainWindowViewModel()
@@ -156,7 +261,7 @@ namespace AdoNetHomework
             // if the name was not found;
             catch (Exception e)
             {
-                MessageBox.Show($"Something went wrong. Please, try another name.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
