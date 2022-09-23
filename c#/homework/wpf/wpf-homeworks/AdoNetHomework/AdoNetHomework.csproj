@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".view-model\MainWindowViewModel.cs" />
+    <Compile Include=".model\User.cs" />
+    <Compile Include=".view-model\controls\MainWindowViewModel.cs" />
+    <Compile Include=".view-model\service\UserGenerator.cs" />
     <Compile Include=".view\App.xaml.cs" />
     <Compile Include=".view\MainWindow.xaml.cs" />
   </ItemGroup>
@@ -20,6 +22,12 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <Page Include=".view\MainWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="tools">
+      <HintPath>..\..\..\..\tools\precompiled-dll\tools.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

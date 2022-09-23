@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace AdoNetHomework
 {
     public class MainWindowViewModel : INotifyPropertyChanged
@@ -33,6 +34,9 @@ namespace AdoNetHomework
         #endregion Property changed legacy
 
 
+        UserGenerator userGenerator;
+
+
         private string _dbName;
 
         private bool _isNotConnected;
@@ -41,7 +45,22 @@ namespace AdoNetHomework
 
         private string _connectionStatus;
 
+        private List<User> _UserList;
+
         public string dbName { get { return _dbName; } set {  _dbName = value; } }
+
+        public List<User> UserList 
+        {
+            get 
+            {
+                return _UserList; 
+            }
+            set 
+            {
+                _UserList = value;
+                OnPropertyChanged(nameof(UserList));
+            }
+        }
 
 
         public string ConnectionStatus
@@ -102,6 +121,8 @@ namespace AdoNetHomework
             IsNotConnected = true;
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
+            UserList = new List<User>();
+            userGenerator = new UserGenerator();
         }
 
 
@@ -131,6 +152,12 @@ namespace AdoNetHomework
             {
                 MessageBox.Show($"Something went wrong. Please, try another name.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        private async void OnCreateButtonClickAsync()
+        {
+
         }
 
 
