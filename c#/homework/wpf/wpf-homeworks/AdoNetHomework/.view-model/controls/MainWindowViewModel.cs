@@ -36,7 +36,7 @@ namespace AdoNetHomework
 
 
 
-        #region Properties
+        #region PROPERTIES
 
 
 
@@ -211,39 +211,26 @@ namespace AdoNetHomework
 
 
 
-        #endregion Properties
-
-
-        private void ToggleConnectionState()
-        {
-            bool bTemp = IsConnected;
-            IsConnected = IsNotConnected;
-            IsNotConnected = bTemp;
-        }
+        #endregion PROPERTIES
 
 
 
 
-        public MainWindowViewModel()
-        {
-            OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
-            OnCreateButtonClickCommand = new DelegateCommand(OnCreateButtonClickAsync);
-
-            IsNotConnected = true;
-            IsConnected = false;
-            ConnectionStatus = "Waiting for connection.";
-            UserList = new List<User>();
-            userGenerator = new UserGenerator();
-        }
+        #region HANDLERS
 
 
+        /// <summary>
+        /// Launch connection procedure;
+        /// <br />
+        /// Запустить процесс подключения;
+        /// </summary>
         private async void OnConnectButtonClickAsync()
         {
             // my local server id - DoronovLocalDb
 
             string connectionString = $"Server=.\\{dbName};Database = master;Trusted_Connection=true;Encrypt=false";
 
-            connection = new SqlConnection(connectionString); // MSSQLLocalDB
+            connection = new SqlConnection(connectionString);
 
             // try connect;
             try
@@ -266,43 +253,110 @@ namespace AdoNetHomework
         }
 
 
+        /// <summary>
+        /// Launch database creation and seeding procedure;
+        /// <br />
+        /// Запустить процесс создания и заполнения базы данных;
+        /// </summary>
         private async void OnCreateButtonClickAsync()
+        {
+            string queryString;
+
+
+            for (int i = 0, iSize = 10; i < iSize; ++i)
+            {
+                UserList.Add(userGenerator.GetUser());
+            }
+
+
+            foreach (User user in UserList)
+            {
+                queryString =
+                    $"USE DoronovAdoNetCoreHomework; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+                await ExecuteSQLCommandAsync(queryString);
+            }
+
+
+            MessageBox.Show($"Database created successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        #endregion HANDLERS
+
+
+
+
+        #region LOGIC
+
+
+        /// <summary>
+        /// Change connection status;
+        /// <br />
+        /// Изменить статус подключения;
+        /// </summary>
+        private void ToggleConnectionState()
+        {
+            bool bTemp = IsConnected;
+            IsConnected = IsNotConnected;
+            IsNotConnected = bTemp;
+        }
+
+
+        /// <summary>
+        /// Launch query execution;
+        /// <br />
+        /// Запустить выполнение запроса;
+        /// </summary>
+        /// <param name="queryString">
+        /// SQL query string;
+        /// <br />
+        /// Строка запроса SQL;
+        /// </param>
+        private async Task ExecuteSQLCommandAsync(string queryString)
         {
             if (IsConnected)
             {
-                string queryString =
+                try
+                {
+                    SqlCommand command = new SqlCommand(queryString, connection);
 
-                    "-- Create the demonstration db;" +
-                    "CREATE DATABASE DoronovAdoNetCoreHomework;" +
-
-                    "--Create the users table;" +
-                    "CREATE TABLE Users" +
-                    "(" +
-                        "[Id] INT PRIMARY KEY IDENTITY(0,1)," +
-	                    "[Name] NVARCHAR(24) NOT NULL," +
-                        "[PhoneNumber] NVARCHAR(11)" +
-                    ")" +
-
-                    "--Create the orders table;" +
-                    "CREATE TABLE Orders" +
-                    "(" +
-                        "[Id] INT PRIMARY KEY IDENTITY(0,1)," +
-                        "[CustomerId] INT NOT NULL," +
-                        "[Sum] INT," +
-                        "[Date] DATE" +
-                    ")";
-
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                int rowsAffected = command.ExecuteNonQuery();
-
-                MessageBox.Show($"Database created successfully. Please, check your server.\nRows affected: {rowsAffected}.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information) ;
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show($"Failed to execute your querry.\nException: {e.Message}", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
 
+        #endregion LOGIC
 
 
+
+
+        #region CONSTRUCTION
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public MainWindowViewModel()
+        {
+            OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
+            OnCreateButtonClickCommand = new DelegateCommand(OnCreateButtonClickAsync);
+
+            IsNotConnected = true;
+            IsConnected = false;
+            ConnectionStatus = "Waiting for connection.";
+            UserList = new List<User>();
+            userGenerator = new UserGenerator();
+        }
+
+
+        #endregion CONSTRUCTION
 
 
 

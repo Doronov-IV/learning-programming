@@ -54,7 +54,7 @@ namespace AdoNetHomework
         public User(string Name, string PhoneNumber) : this()
         {
             this.Name = Name;
-            this.PhoneNumber = this.PhoneNumber;
+            this.PhoneNumber = PhoneNumber;
         }
 
 

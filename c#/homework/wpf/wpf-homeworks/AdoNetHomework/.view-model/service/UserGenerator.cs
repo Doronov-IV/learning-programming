@@ -18,7 +18,7 @@ namespace AdoNetHomework
 
         public User GetUser()
         {
-            return new User(UserNameList[random.Next(UserNameList.Count)], GetRandomPhoneNumber());
+            return new User(UserNameList[random.Next(0, UserNameList.Count)], GetRandomPhoneNumber());
         }
 
 
@@ -49,15 +49,9 @@ namespace AdoNetHomework
 
 
         public UserGenerator()
-        {
-            try 
-            {
-                _UserNameList = GetUserNameList(@"D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.data\User\UserNames.txt");
-            }
-            catch(Exception e)
-            {
-
-            }
+        {           
+            _UserNameList = new List<string>();
+            _UserNameList = GetUserNameList(".data\\User\\UserNames.txt");        
         }
 
     }
