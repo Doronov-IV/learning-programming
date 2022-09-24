@@ -115,6 +115,9 @@ namespace AdoNetHomework.ViewModel
         UserGenerator userGenerator;
 
 
+        OrderGenerator orderGenerator;
+
+
         /// <summary>
         /// A string reference for sending queries into the db;
         /// <br /> 
@@ -297,17 +300,31 @@ namespace AdoNetHomework.ViewModel
         private async void OnFillButtonClickAsync()
         {
             User user;
+            Order order;
 
-            for (int i = 0, iSize = 10; i < iSize; ++i)
+            Random random = new Random();
+            int nRandomUsersQuantity = random.Next(10,30);
+
+            // gererating Users;
+            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
             {
                 //UserList.Add(userGenerator.GetUser());
-                user = userGenerator.GetUser();
+                user = userGenerator.GetRandomUser();
                 queryString =
                     $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
                 await ExecuteSQLCommandAsync(queryString);
             }
 
-            MessageBox.Show($"Database created successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
+            // generating Orders;
+            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+            {
+                order = orderGenerator.GetRandomOrder(nRandomUsersQuantity);
+                queryString =
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES({order.CustomerId},{order.Summ}, {order.Date});";
+                await ExecuteSQLCommandAsync(queryString);
+            }
+
+            MessageBox.Show($"Database filled successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
@@ -402,7 +419,9 @@ namespace AdoNetHomework.ViewModel
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
             UserList = new List<User>();
+
             userGenerator = new UserGenerator();
+            orderGenerator = new OrderGenerator();
         }
 
 

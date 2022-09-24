@@ -28,7 +28,7 @@ namespace AdoNetHomework.Service
         /// <br />
         /// Ссылка на копию класса "System.Random";
         /// </summary>
-        private Random random = new Random();
+        private Random random;
 
 
         #endregion PROPERTIES - forming the State of an Object
@@ -49,7 +49,7 @@ namespace AdoNetHomework.Service
         /// <br />
         /// Ссылка на нового пользователя;
         /// </returns>
-        public User GetUser()
+        public User GetRandomUser()
         {
             return new User(UserNameList[random.Next(0, UserNameList.Count)], GetRandomPhoneNumber());
         }
@@ -130,6 +130,7 @@ namespace AdoNetHomework.Service
         /// </summary>
         public UserGenerator()
         {
+            random = new Random();
             UserNameList = new List<string>();
             UserNameList = GetUserNameList(".data\\User\\UserNames.txt");
         }

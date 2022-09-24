@@ -12,12 +12,7 @@ CREATE TABLE [Users]
 CREATE TABLE [Orders]
 (
    [Id] INT PRIMARY KEY IDENTITY(0,1),
-   [CustomerId] INT NOT NULL,
+   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id),
    [Sum] INT,
    [Date] DATE
 )
-
-
-
-Select *
-From Users
