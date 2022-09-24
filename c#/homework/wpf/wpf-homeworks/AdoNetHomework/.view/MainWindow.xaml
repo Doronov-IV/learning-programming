@@ -6,21 +6,22 @@
         xmlns:local="clr-namespace:AdoNetHomework"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Grid>
         <!-- Buttons -->
         <Button x:Name="ConnectButton" Content="Connect" Command ="{Binding OnConnectButtonClickCommand}" IsEnabled="{Binding IsNotConnected}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin ="10,70,10,10" Padding="5"/>
         <Button x:Name="FillDatabaseButton" Content="Fill Database" Command="{Binding OnFillButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if your database is fresh created and you need to fill it with generated data." HorizontalAlignment="Left" Margin="10,110,0,0" Padding="5" VerticalAlignment="Top"/>
+        <Button x:Name="ClearDatabaseButton" Content="Clear Tables" Command="{Binding OnClearButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if you want to clear all tables contents for good." HorizontalAlignment="Left" Margin="10,148,0,0" Padding="5" VerticalAlignment="Top"/>
         
         <!-- Input Text Box -->
-        <TextBox x:Name="DbNameTextBox" Text ="{Binding dbName, Mode=TwoWay}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,40,0,0" TextWrapping="Wrap" Width="120"/>
-        
+        <TextBox x:Name="DbNameTextBox" Text ="{Binding dbName, Mode=TwoWay}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,40,0,0" TextWrapping="Wrap" Width="120"/>
+
         <!-- Tip and Status Labels -->
-        <Label x:Name="DbNameLabel" Content="db name:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="DbNameLabel" Content="server name:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-        
+
         <!-- ListViews -->
-        <ListView x:Name="UsersListView" d:ItemsSource="{Binding UserList}" Margin="239,48,343,142" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ListView x:Name="UsersListView" d:ItemsSource="{Binding UserList}" Margin="240,40,342,150" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

@@ -49,7 +49,7 @@ namespace AdoNetHomework
         /// <br />
         /// Имя сервера базы данных;
         /// </summary>
-        private string _dbName;
+        private string _serverName;
 
 
         /// <summary>
@@ -108,6 +108,22 @@ namespace AdoNetHomework
         UserGenerator userGenerator;
 
 
+        /// <summary>
+        /// A string reference for sending queries into the db;
+        /// <br /> 
+        /// Строка для отправки запросов в б/д;
+        /// </summary>
+        private string queryString;
+
+
+        /// <summary>
+        /// Reserves db name;
+        /// <br />
+        /// Зарезервированное имя базы данных;
+        /// </summary>
+        private readonly string reservedDbName = "DoronovAdoNetCoreHomework";
+
+
         #endregion Private references
 
 
@@ -119,7 +135,7 @@ namespace AdoNetHomework
         /// <summary>
         /// @see private string _dbName;
         /// </summary>
-        public string dbName { get { return _dbName; } set { _dbName = value; } }
+        public string ServerName { get { return _serverName; } set { _serverName = value; } }
 
 
         /// <summary>
@@ -173,6 +189,14 @@ namespace AdoNetHomework
 
 
         /// <summary>
+        /// ClearTablesButton click handler delegate;
+        /// <br />
+        /// Делегат хендлера элемента "ClearTablesButton";
+        /// </summary>
+        public DelegateCommand OnClearButtonClickCommand { get; }
+
+
+        /// <summary>
         /// @see private bool _IsNotConnected;
         /// </summary>
         public bool IsNotConnected
@@ -216,6 +240,11 @@ namespace AdoNetHomework
 
 
 
+        #region LOGIC
+
+
+
+
         #region HANDLERS
 
 
@@ -228,7 +257,7 @@ namespace AdoNetHomework
         {
             // my local server id - DoronovLocalDb
 
-            string connectionString = $"Server=.\\{dbName};Database = master;Trusted_Connection=true;Encrypt=false";
+            string connectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             connection = new SqlConnection(connectionString);
 
@@ -243,7 +272,7 @@ namespace AdoNetHomework
 
                 ToggleConnectionState();
 
-                ConnectionStatus = $"Connected to {dbName}.";
+                ConnectionStatus = $"Connected to {ServerName}.";
             }
             // if the name was not found;
             catch (Exception e)
@@ -254,30 +283,37 @@ namespace AdoNetHomework
 
 
         /// <summary>
-        /// Launch database creation and seeding procedure;
+        /// Launch database seeding procedure;
         /// <br />
         /// Запустить процесс создания и заполнения базы данных;
         /// </summary>
         private async void OnFillButtonClickAsync()
         {
-            string queryString;
-
+            User user;
 
             for (int i = 0, iSize = 10; i < iSize; ++i)
             {
-                UserList.Add(userGenerator.GetUser());
-            }
-
-
-            foreach (User user in UserList)
-            {
+                //UserList.Add(userGenerator.GetUser());
+                user = userGenerator.GetUser();
                 queryString =
-                    $"USE DoronovAdoNetCoreHomework; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+                    $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
                 await ExecuteSQLCommandAsync(queryString);
             }
 
-
             MessageBox.Show($"Database created successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        /// <summary>
+        /// Launch table clear procedure;
+        /// <br />
+        /// Запустить процесс очистки таблиц;
+        /// </summary>
+        private async void OnClearButtonClickAsync()
+        {
+            queryString = $"USE {reservedDbName} DELETE FROM Users; DELETE FROM Orders";
+
+            await ExecuteSQLCommandAsync(queryString);
         }
 
 
@@ -286,7 +322,8 @@ namespace AdoNetHomework
 
 
 
-        #region LOGIC
+
+        #region AUXILIARY
 
 
         /// <summary>
@@ -312,7 +349,7 @@ namespace AdoNetHomework
         /// <br />
         /// Строка запроса SQL;
         /// </param>
-        private async Task ExecuteSQLCommandAsync(string queryString)
+        private async Task ExecuteSQLCommandAsync(string QueryString)
         {
             if (IsConnected)
             {
@@ -328,6 +365,11 @@ namespace AdoNetHomework
                 }
             }
         }
+
+
+        #endregion AUXILIARY
+
+
 
 
         #endregion LOGIC
@@ -347,6 +389,7 @@ namespace AdoNetHomework
         {
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
             OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClickAsync);
+            OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
 
             IsNotConnected = true;
             IsConnected = false;
