@@ -169,7 +169,7 @@ namespace AdoNetHomework
         /// <br />
         /// Делегат хендлера элемента "CreationButton";
         /// </summary>
-        public DelegateCommand OnCreateButtonClickCommand { get; }
+        public DelegateCommand OnFillButtonClickCommand { get; }
 
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace AdoNetHomework
         /// <br />
         /// Запустить процесс создания и заполнения базы данных;
         /// </summary>
-        private async void OnCreateButtonClickAsync()
+        private async void OnFillButtonClickAsync()
         {
             string queryString;
 
@@ -346,7 +346,7 @@ namespace AdoNetHomework
         public MainWindowViewModel()
         {
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
-            OnCreateButtonClickCommand = new DelegateCommand(OnCreateButtonClickAsync);
+            OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClickAsync);
 
             IsNotConnected = true;
             IsConnected = false;
