@@ -1,4 +1,5 @@
-﻿
+﻿using AdoNetHomework.Model;
+using AdoNetHomework.Service;
 
 
 namespace AdoNetHomework
@@ -36,7 +37,7 @@ namespace AdoNetHomework
 
 
 
-        #region PROPERTIES
+        #region PROPERTIES - forming the State of an Object
 
 
 
@@ -235,7 +236,7 @@ namespace AdoNetHomework
 
 
 
-        #endregion PROPERTIES
+        #endregion PROPERTIES - forming the State of an Object
 
 
 

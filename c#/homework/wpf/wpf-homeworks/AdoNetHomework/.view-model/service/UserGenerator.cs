@@ -1,7 +1,8 @@
-﻿
+﻿using AdoNetHomework.Model;
 
-namespace AdoNetHomework
+namespace AdoNetHomework.Service
 {
+
     /// <summary>
     /// User generator;
     /// <br />
@@ -128,9 +129,9 @@ namespace AdoNetHomework
         /// Конструктор по умолчаню;
         /// </summary>
         public UserGenerator()
-        {           
+        {
             UserNameList = new List<string>();
-            UserNameList = GetUserNameList(".data\\User\\UserNames.txt");        
+            UserNameList = GetUserNameList(".data\\User\\UserNames.txt");
         }
 
 

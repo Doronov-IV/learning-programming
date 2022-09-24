@@ -1,11 +1,16 @@
 ﻿
 
-namespace AdoNetHomework
+namespace AdoNetHomework.Model
 {
+    /// <summary>
+    /// Represents one object from table 'Users';
+    /// <br />
+    /// Представляет собой один объект из таблицы "Users";
+    /// </summary>
     public class User
     {
 
-        #region PROPERTIES
+        #region PROPERTIES - forming the State of an Object
 
 
         private int _Id;
@@ -23,11 +28,11 @@ namespace AdoNetHomework
         public string PhoneNumber { get { return _PhoneNumber; } set { _PhoneNumber = value; } }
 
 
-        #endregion PROPERTIES
+        #endregion PROPERTIES - forming the State of an Object
 
 
 
-        #region CONSTRUCTION
+        #region CONSTRUCTION - Object Lifetime Control
 
 
         /// <summary>
@@ -58,7 +63,7 @@ namespace AdoNetHomework
         }
 
 
-        #endregion CONSTRUCTION
+        #endregion CONSTRUCTION - Object Lifetime Control
 
     }
 }

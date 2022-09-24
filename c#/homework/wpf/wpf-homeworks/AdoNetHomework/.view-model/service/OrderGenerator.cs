@@ -1,6 +1,6 @@
-﻿
+﻿using AdoNetHomework.Model;
 
-namespace AdoNetHomework
+namespace AdoNetHomework.Service
 {
     public class OrderGenerator
     {
