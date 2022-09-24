@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include=".model\User.cs" />
     <Compile Include=".view-model\controls\MainWindowViewModel.cs" />
+    <Compile Include=".view-model\service\OrderGenerator.cs" />
     <Compile Include=".view-model\service\UserGenerator.cs" />
     <Compile Include=".view\App.xaml.cs" />
     <Compile Include=".view\MainWindow.xaml.cs" />

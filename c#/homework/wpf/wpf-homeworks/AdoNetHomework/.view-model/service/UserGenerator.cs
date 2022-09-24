@@ -9,26 +9,61 @@ namespace AdoNetHomework
     /// </summary>
     public class UserGenerator
     {
-        private List<string> _UserNameList;
 
+
+        #region PROPERTIES - forming the State of an Object
+
+
+        /// <summary>
+        /// A list of users' names;
+        /// <br />
+        /// Список имён пользователей;
+        /// </summary>
+        private List<string> UserNameList;
+
+
+        /// <summary>
+        /// A reference of 'System.Random' instance;
+        /// <br />
+        /// Ссылка на копию класса "System.Random";
+        /// </summary>
         private Random random = new Random();
 
-        public List<string> UserNameList { get { return _UserNameList; }  set { _UserNameList = value; } }
+
+        #endregion PROPERTIES - forming the State of an Object
 
 
+
+
+        #region API - public Contract Methods
+
+
+        /// <summary>
+        /// Get reference to a new random user for table 'Users';
+        /// <br />
+        /// Получить ссылку на нового случайного пользователя для таблицы "Users";
+        /// </summary>
+        /// <returns>
+        /// A reference to a fresh user;
+        /// <br />
+        /// Ссылка на нового пользователя;
+        /// </returns>
         public User GetUser()
         {
             return new User(UserNameList[random.Next(0, UserNameList.Count)], GetRandomPhoneNumber());
         }
 
 
-        public static List<string> GetUserNameList(string sFilePath)
-        {
-            FileReader reader = new FileReader();
-            List<string> sResultList = reader.ReadList(sFilePath);
-            return sResultList;
-        }
-
+        /// <summary>
+        /// Get random phone number via 'System.Random' for 'Users' table;
+        /// <br />
+        /// Получить случайный номер телефона через "System.Random" для таблицы "Users";
+        /// </summary>
+        /// <returns>
+        /// Long integer number via 'ToString';
+        /// <br />
+        /// Большое целое число через "ToString";
+        /// </returns>
         public string GetRandomPhoneNumber()
         {
             string sRes = "";
@@ -47,12 +82,60 @@ namespace AdoNetHomework
         }
 
 
+        #endregion API - public Contract Methods
 
+
+
+
+
+        #region LOGIC - private interior Methods
+
+
+        /// <summary>
+        /// Get list of users' names for generating new users for 'Users' table;
+        /// <br />
+        /// Получить список имён пользователь для их генерации в таблицу "Users";
+        /// </summary>
+        /// <param name="sFilePath">
+        /// A relative path to a text file;
+        /// <br />
+        /// Относительный путь к текстовому файлу;
+        /// </param>
+        /// <returns>
+        /// List of names;
+        /// <br />
+        /// Список имён;
+        /// </returns>
+        private static List<string> GetUserNameList(string sFilePath)
+        {
+            FileReader reader = new FileReader();
+            List<string> sResultList = reader.ReadList(sFilePath);
+            return sResultList;
+        }
+
+
+        #endregion LOGIC - private interior Methods
+
+
+
+
+        #region CONSTRUCTION - Object Lifetime Control
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчаню;
+        /// </summary>
         public UserGenerator()
         {           
-            _UserNameList = new List<string>();
-            _UserNameList = GetUserNameList(".data\\User\\UserNames.txt");        
+            UserNameList = new List<string>();
+            UserNameList = GetUserNameList(".data\\User\\UserNames.txt");        
         }
+
+
+        #endregion CONSTRUCTION - Object Lifetime Control
+
 
     }
 }
