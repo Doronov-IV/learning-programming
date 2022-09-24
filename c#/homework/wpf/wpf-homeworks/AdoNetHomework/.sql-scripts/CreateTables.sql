@@ -13,6 +13,6 @@ CREATE TABLE [Orders]
 (
    [Id] INT PRIMARY KEY IDENTITY(0,1),
    [CustomerId] INT FOREIGN KEY REFERENCES Users(Id),
-   [Sum] INT,
+   [Summ] FLOAT,
    [Date] DATE
 )

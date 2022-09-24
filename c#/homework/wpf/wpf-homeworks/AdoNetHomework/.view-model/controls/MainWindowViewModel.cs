@@ -1,7 +1,8 @@
 ﻿// Sic parvis magna
 using AdoNetHomework.Model;
 using AdoNetHomework.Service;
-
+using System.Globalization;
+using System.IO;
 
 namespace AdoNetHomework.ViewModel
 {
@@ -274,7 +275,7 @@ namespace AdoNetHomework.ViewModel
             // try connect;
             try
             {
-                ConnectionStatus = "Connecting.";
+                ConnectionStatus = "Connecting .....";
 
                 await connection.OpenAsync();
 
@@ -287,7 +288,7 @@ namespace AdoNetHomework.ViewModel
             // if the name was not found;
             catch (Exception e)
             {
-                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {e.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -320,11 +321,11 @@ namespace AdoNetHomework.ViewModel
             {
                 order = orderGenerator.GetRandomOrder(nRandomUsersQuantity);
                 queryString =
-                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES({order.CustomerId},{order.Summ}, {order.Date});";
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
                 await ExecuteSQLCommandAsync(queryString);
             }
 
-            MessageBox.Show($"Database filled successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
+            ShowSuccessChangesMessageBox();
         }
 
 
@@ -335,9 +336,18 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private async void OnClearButtonClickAsync()
         {
-            queryString = $"USE {reservedDbName} DELETE FROM Users; DELETE FROM Orders";
+            try
+            {
+                queryString = $"USE {reservedDbName} DELETE FROM Users; DELETE FROM Orders";
 
-            await ExecuteSQLCommandAsync(queryString);
+                await ExecuteSQLCommandAsync(queryString);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            ShowSuccessChangesMessageBox();
         }
 
 
@@ -388,6 +398,12 @@ namespace AdoNetHomework.ViewModel
                     MessageBox.Show($"Failed to execute your querry.\nException: {e.Message}", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+
+        private void ShowSuccessChangesMessageBox()
+        {
+            MessageBox.Show($"Data changed successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
