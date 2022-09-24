@@ -1,10 +1,16 @@
-﻿using AdoNetHomework.Model;
+﻿// Sic parvis magna
+using AdoNetHomework.Model;
 using AdoNetHomework.Service;
 
 
-namespace AdoNetHomework
+namespace AdoNetHomework.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// View Model of the Application;
+    /// <br />
+    /// View Model Приложения;
+    /// </summary>
+    public partial class MainWindowViewModel : INotifyPropertyChanged
     {
 
 
@@ -246,7 +252,7 @@ namespace AdoNetHomework
 
 
 
-        #region HANDLERS
+        #region HANDLERS - User Input Handling
 
 
         /// <summary>
@@ -318,13 +324,13 @@ namespace AdoNetHomework
         }
 
 
-        #endregion HANDLERS
+        #endregion HANDLERS - User Input Handling
 
 
 
 
 
-        #region AUXILIARY
+        #region AUXILIARY - secondary Methods
 
 
         /// <summary>
@@ -368,7 +374,7 @@ namespace AdoNetHomework
         }
 
 
-        #endregion AUXILIARY
+        #endregion AUXILIARY - secondary Methods
 
 
 
