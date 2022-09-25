@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AdoNetHomework"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+        
 
     <Grid>
         <!-- Buttons -->
@@ -21,10 +22,12 @@
         <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
 
         <!-- ListViews -->
-        <ListView x:Name="UsersListView" d:ItemsSource="{Binding UserList}" Margin="240,40,342,150" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ListView x:Name="UserListView" ItemsSource="{Binding UserList, Mode=TwoWay}" Margin="240,40,253,129" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="40" Header="Id" DisplayMemberBinding="{Binding Path=Id, Mode=TwoWay}"/>
+                    <GridViewColumn Width="90"  Header ="Name" DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay}"/>
+                    <GridViewColumn Width="130"  Header ="PhoneNumber" DisplayMemberBinding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
                 </GridView>
             </ListView.View>
         </ListView>

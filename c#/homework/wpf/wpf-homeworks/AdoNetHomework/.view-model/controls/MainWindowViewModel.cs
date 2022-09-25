@@ -1,6 +1,7 @@
 ﻿// Sic parvis magna
 using AdoNetHomework.Model;
 using AdoNetHomework.Service;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 
@@ -97,7 +98,10 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Текущий список юзеров для отправки в бд;
         /// </summary>
-        private List<User> _UserList;
+        private ObservableCollection<User> _UserList;
+
+
+        private ObservableCollection<Order> _OrderList;
 
 
         /// <summary>
@@ -152,7 +156,7 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// @see private List<User> _UserList;
         /// </summary>
-        public List<User> UserList
+        public ObservableCollection<User> UserList
         {
             get
             {
@@ -162,6 +166,20 @@ namespace AdoNetHomework.ViewModel
             {
                 _UserList = value;
                 OnPropertyChanged(nameof(UserList));
+            }
+        }
+
+
+        public ObservableCollection<Order> OrderList
+        {
+            get
+            {
+                return _OrderList;
+            }
+            set
+            {
+                _OrderList = value;
+                OnPropertyChanged(nameof(OrderList));
             }
         }
 
@@ -290,6 +308,9 @@ namespace AdoNetHomework.ViewModel
             {
                 MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {e.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+
+            RefreshLists();
         }
 
 
@@ -346,6 +367,8 @@ namespace AdoNetHomework.ViewModel
             }
 
             ShowSuccessChangesMessageBox();
+
+            RefreshLists();
         }
 
 
@@ -356,9 +379,10 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private async void OnClearButtonClickAsync()
         {
+
             try
             {
-                queryString = $"USE {reservedDbName} DELETE FROM Users; DELETE FROM Orders";
+                queryString = $"USE {reservedDbName} DELETE FROM Orders; DELETE FROM Users";
 
                 await ExecuteSQLCommandAsync(queryString);
             }
@@ -368,6 +392,8 @@ namespace AdoNetHomework.ViewModel
             }
 
             ShowSuccessChangesMessageBox();
+
+            RefreshLists();
         }
 
 
@@ -489,6 +515,39 @@ namespace AdoNetHomework.ViewModel
 
 
 
+        private void RefreshUserList()
+        {
+            UserList.Clear();
+
+            SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Users", connection);
+
+            User user = new User();
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    user = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
+                    UserList.Add(user);
+                }
+            }
+        }
+
+
+
+
+        }
+
+
+
+        private void RefreshLists()
+        {
+            RefreshUserList();
+            RefreshOrderList();
+        }
+
+
+
         #endregion AUXILIARY - secondary Methods
 
 
@@ -516,7 +575,8 @@ namespace AdoNetHomework.ViewModel
             IsNotConnected = true;
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
-            UserList = new List<User>();
+            UserList = new ObservableCollection<User>();
+            OrderList = new ObservableCollection<Order>();
 
             userGenerator = new UserGenerator();
             orderGenerator = new OrderGenerator();

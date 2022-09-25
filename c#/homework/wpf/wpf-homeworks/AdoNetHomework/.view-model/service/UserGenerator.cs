@@ -51,7 +51,7 @@ namespace AdoNetHomework.Service
         /// </returns>
         public User GetRandomUser()
         {
-            return new User(UserNameList[random.Next(0, UserNameList.Count)], GetRandomPhoneNumber());
+            return new User(int.MaxValue ,UserNameList[random.Next(0, UserNameList.Count)], GetRandomPhoneNumber());
         }
 
 
