@@ -41,9 +41,9 @@ namespace AdoNetHomework.Service
         /// Текущее кол-мо пользователей;
         /// </param>
         /// <returns></returns>
-        public Order GetRandomOrder(int nUserTableCount)
+        public Order GetRandomOrder(int[] ptrUsersIds)
         {
-            return new Order(id: int.MaxValue, customerId: random.Next(0, nUserTableCount), summ: random.NextDouble(), DateTime.Now);
+            return new Order(id: int.MaxValue, customerId: random.Next(ptrUsersIds[0], ptrUsersIds[random.Next(0, ptrUsersIds.Length)]), summ: random.NextDouble(), DateTime.Now);
         }
 
 

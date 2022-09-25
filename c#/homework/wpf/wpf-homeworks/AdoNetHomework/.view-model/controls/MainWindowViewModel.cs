@@ -298,8 +298,22 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Запустить процесс создания и заполнения базы данных;
         /// </summary>
-        private async void OnFillButtonClickAsync()
+        private void OnFillButtonClick()
         {
+
+            // Readme;
+            /*
+            
+            Я пробовал сделать этот метод асинхронным, но проблема в том, что мне не хватает знаний, чтобы развести потоки
+            заполнения первой таблицы от потоков заполнения второй. Таким образом, элементы второй таблицы могут создаться
+            быстрее, чем элементы первой таблицы, на которую они ссылаются, что вызывает Exception.
+
+            Может быть, можно как-то сделать лучше, но я уже второй день сижу над этими двумя методами, так что мне проще
+            сейчас оставить всё как есть.
+
+             */
+
+
             User user;
             Order order;
 
@@ -313,16 +327,22 @@ namespace AdoNetHomework.ViewModel
                 user = userGenerator.GetRandomUser();
                 queryString =
                     $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
-                await ExecuteSQLCommandAsync(queryString);
+                ExecuteSQLCommand(queryString);
             }
+
+
+            // Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
+            // нам необходимо узнать id пользователей;
+            int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
+
 
             // generating Orders;
             for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
             {
-                order = orderGenerator.GetRandomOrder(nRandomUsersQuantity);
+                order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
                 queryString =
                     $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
-                await ExecuteSQLCommandAsync(queryString);
+                ExecuteSQLCommand(queryString);
             }
 
             ShowSuccessChangesMessageBox();
@@ -378,10 +398,10 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Запустить выполнение запроса;
         /// </summary>
-        /// <param name="queryString">
-        /// SQL query string;
+        /// <param name="QueryString">
+        /// A string that represents the query;
         /// <br />
-        /// Строка запроса SQL;
+        /// Строка, представляющая собой запрос;
         /// </param>
         private async Task ExecuteSQLCommandAsync(string QueryString)
         {
@@ -401,10 +421,72 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        /// <summary>
+        /// Executes SQL command in a non-async way;
+        /// <br />
+        /// Запустить комманду SQL в однопоточном режиме;
+        /// </summary>
+        /// <param name="QueryString">
+        /// A string that represents the query;
+        /// <br />
+        /// Строка, представляющая собой запрос;
+        /// </param>
+        private void ExecuteSQLCommand(string QueryString)
+        {
+            if (IsConnected)
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(queryString, connection);
+
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Failed to execute your querry.\nException: {e.Message}", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Show a message box whenever query ends with successful result;
+        /// <br />
+        /// Отобразить "MessageBox" каждый раз, когда запрос заканчивается успешно;
+        /// </summary>
         private void ShowSuccessChangesMessageBox()
         {
             MessageBox.Show($"Data changed successfully. Please, check your server.", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+
+        /// <summary>
+        /// Connect to the 'Users' table and get list of current ids;
+        /// <br />
+        /// Подключиться к таблице "Users" и получить список актуальных id;
+        /// </summary>
+        /// <returns>
+        /// An array of int 'Id' values;
+        /// <br />
+        /// Массив целых значений "Id";
+        /// </returns>
+        private int[] GetCurrentUsersIdInfo()
+        {
+            List<int> idsList = new List<int>();
+
+            SqlCommand command = new SqlCommand($"SELECT * FROM Users", connection);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    idsList.Add(reader.GetInt32(0));
+                }
+            }
+
+            return idsList.ToArray();
+        }
+
 
 
         #endregion AUXILIARY - secondary Methods
@@ -428,7 +510,7 @@ namespace AdoNetHomework.ViewModel
         public MainWindowViewModel()
         {
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
-            OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClickAsync);
+            OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClick);
             OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
 
             IsNotConnected = true;
