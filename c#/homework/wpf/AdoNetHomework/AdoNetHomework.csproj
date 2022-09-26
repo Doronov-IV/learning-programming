@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".model\Order.cs" />
-    <Compile Include=".model\User.cs" />
-    <Compile Include=".view-model\controls\MainWindowViewModel.cs" />
-    <Compile Include=".view-model\service\OrderGenerator.cs" />
-    <Compile Include=".view-model\service\UserGenerator.cs" />
+    <Compile Include=".model\basics\Order.cs" />
+    <Compile Include=".model\basics\User.cs" />
+    <Compile Include=".view-model\MainWindowViewModel.cs" />
+    <Compile Include=".model\service\OrderGenerator.cs" />
+    <Compile Include=".model\service\UserGenerator.cs" />
     <Compile Include=".view\App.xaml.cs" />
     <Compile Include=".view\MainWindow.xaml.cs" />
   </ItemGroup>
