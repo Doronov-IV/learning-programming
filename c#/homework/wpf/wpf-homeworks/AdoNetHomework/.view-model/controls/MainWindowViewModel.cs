@@ -2,8 +2,12 @@
 using AdoNetHomework.Model;
 using AdoNetHomework.Service;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Intrinsics.X86;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AdoNetHomework.ViewModel
 {
@@ -225,6 +229,9 @@ namespace AdoNetHomework.ViewModel
         public DelegateCommand OnClearButtonClickCommand { get; }
 
 
+
+
+
         /// <summary>
         /// @see private bool _IsNotConnected;
         /// </summary>
@@ -257,6 +264,10 @@ namespace AdoNetHomework.ViewModel
                 OnPropertyChanged(nameof(IsConnected));
             }
         }
+
+        public BindingList<User> UserBindingList;
+
+        public BindingList<Order> OrderBindingList;
 
 
         #endregion Public properties
@@ -310,7 +321,27 @@ namespace AdoNetHomework.ViewModel
             }
 
 
-            RefreshLists();
+            try
+            {
+                ExecuteSQLCommand($"USE {reservedDbName};");
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                try
+                {
+                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
+                }
+                catch (Exception e)
+                {
+                }
+                finally
+                {
+                    RefreshLists();
+                }
+            }
         }
 
 
@@ -341,34 +372,129 @@ namespace AdoNetHomework.ViewModel
             Random random = new Random();
             int nRandomUsersQuantity = random.Next(10,30);
 
-            // gererating Users;
-            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+
+            try
             {
-                //UserList.Add(userGenerator.GetUser());
-                user = userGenerator.GetRandomUser();
-                queryString =
-                    $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
-                ExecuteSQLCommand(queryString);
+                ExecuteSQLCommand($"USE {reservedDbName};");
+            }
+            catch (Exception e)
+            {
+                ExecuteSQLCommand($"USE master; CREATE DATABASE {reservedDbName};");
+            }
+            finally
+            {
+                try
+                {
+                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
+                }
+                catch (Exception e)
+                {
+                    ExecuteSQLCommand(
+
+                    $"USE {reservedDbName};" +
+                    $"CREATE TABLE {reservedDbName}..Users" +
+                    "(" +
+                    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+                    "   [Name] NVARCHAR(24) NOT NULL," +
+                    "   [PhoneNumber] NVARCHAR(14)" +
+                    ")" +
+
+                    $"USE {reservedDbName};" +
+                    $"CREATE TABLE {reservedDbName}..Orders" +
+                    "(" +
+                    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+                    "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
+                    "   [Summ] FLOAT," +
+                    "   [Date] DATE" +
+                    ")"
+                );
+                }
+                finally
+                {
+                    // gererating Users;
+                    for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+                    {
+                        //UserList.Add(userGenerator.GetUser());
+                        user = userGenerator.GetRandomUser();
+                        queryString =
+                            $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+                        TryExecuteSQLCommand(queryString);
+                    }
+
+
+                    // Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
+                    // нам необходимо узнать id пользователей;
+                    int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
+
+
+                    // generating Orders;
+                    for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+                    {
+                        order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
+                        queryString =
+                            $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
+                        TryExecuteSQLCommand(queryString);
+                    }
+
+                    ShowSuccessChangesMessageBox();
+
+                    RefreshLists();
+                }
             }
 
 
-            // Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
-            // нам необходимо узнать id пользователей;
-            int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
+            //ExecuteSQLCommand(
+
+            //    "USE DoronovAdoNetCoreHomework" +
+                
+            //    "--Create the users table;" +
+            //    "CREATE TABLE[Users]" +
+            //    "(" +
+            //    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+            //    "   [Name] NVARCHAR(24) NOT NULL," +
+            //    "   [PhoneNumber] NVARCHAR(14)" +
+            //    ")" +
+
+            //    "--Create the orders table;" +
+            //    "CREATE TABLE[Orders]" +
+            //    "(" +
+            //    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+            //    "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
+            //    "   [Summ] FLOAT," +
+            //    "   [Date] DATE" +
+            //    ")"
+            //    );
 
 
-            // generating Orders;
-            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
-            {
-                order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
-                queryString =
-                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
-                ExecuteSQLCommand(queryString);
-            }
 
-            ShowSuccessChangesMessageBox();
+            //// gererating Users;
+            //for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+            //{
+            //    //UserList.Add(userGenerator.GetUser());
+            //    user = userGenerator.GetRandomUser();
+            //    queryString =
+            //        $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+            //    ExecuteSQLCommand(queryString);
+            //}
 
-            RefreshLists();
+
+            //// Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
+            //// нам необходимо узнать id пользователей;
+            //int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
+
+
+            //// generating Orders;
+            //for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
+            //{
+            //    order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
+            //    queryString =
+            //        $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
+            //    ExecuteSQLCommand(queryString);
+            //}
+
+            //ShowSuccessChangesMessageBox();
+
+            //RefreshLists();
         }
 
 
@@ -379,7 +505,6 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private async void OnClearButtonClickAsync()
         {
-
             try
             {
                 queryString = $"USE {reservedDbName} DELETE FROM Orders; DELETE FROM Users";
@@ -394,6 +519,31 @@ namespace AdoNetHomework.ViewModel
             ShowSuccessChangesMessageBox();
 
             RefreshLists();
+        }
+
+
+        private void UpdateUserTable(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Users;");
+
+            foreach (var user in UserList)
+            {
+                queryString =
+                            $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+                TryExecuteSQLCommand(queryString);
+            }
+        }
+
+        private void UpdateOrderTable(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Orders;");
+
+            foreach (var order in OrderList)
+            {
+                queryString =
+                            $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
+                TryExecuteSQLCommand(queryString);
+            }
         }
 
 
@@ -457,13 +607,13 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Строка, представляющая собой запрос;
         /// </param>
-        private void ExecuteSQLCommand(string QueryString)
+        private void TryExecuteSQLCommand(string QueryString)
         {
             if (IsConnected)
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlCommand command = new SqlCommand(QueryString, connection);
 
                     command.ExecuteNonQuery();
                 }
@@ -471,6 +621,17 @@ namespace AdoNetHomework.ViewModel
                 {
                     MessageBox.Show($"Failed to execute your querry.\nException: {e.Message}", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+
+        private void ExecuteSQLCommand(string QueryString)
+        {
+            if (IsConnected)
+            {
+                SqlCommand command = new SqlCommand(QueryString, connection);
+
+                command.ExecuteNonQuery();
             }
         }
 
@@ -534,16 +695,37 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        private void RefreshOrderList()
+        {
+            OrderList.Clear();
 
+            SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Orders", connection);
 
+            Order order = new Order();
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
+                    OrderList.Add(order);
+                }
+            }
         }
+
+
+
+
+        
 
 
 
         private void RefreshLists()
         {
             RefreshUserList();
+            UserBindingList = new BindingList<User>(UserList);
             RefreshOrderList();
+            OrderBindingList = new BindingList<Order>(OrderList);
         }
 
 
@@ -576,7 +758,9 @@ namespace AdoNetHomework.ViewModel
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
             UserList = new ObservableCollection<User>();
+            UserList.CollectionChanged += UpdateUserTable;
             OrderList = new ObservableCollection<Order>();
+            OrderList.CollectionChanged += UpdateOrderTable;
 
             userGenerator = new UserGenerator();
             orderGenerator = new OrderGenerator();
