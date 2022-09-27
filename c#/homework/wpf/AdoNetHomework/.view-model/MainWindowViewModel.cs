@@ -363,6 +363,8 @@ namespace AdoNetHomework.ViewModel
                 try
                 {
                     ExecuteSQLCommand($"USE {reservedDbName};");
+
+                    RefreshLists();
                 }
                 catch (Exception e)
                 {
@@ -373,6 +375,8 @@ namespace AdoNetHomework.ViewModel
                     try
                     {
                         ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
+
+                        RefreshLists();
                     }
                     catch (Exception e)
                     {
@@ -583,7 +587,38 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private void OnUserListItemPropertyChanged(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ObservableCollection<User> tempUsersForComparison = new ObservableCollection<User>();
+
+            SqlCommand command = new SqlCommand($"SELECT * FROM Users", connection);
+
+            User userRef = new User();
+
+            // create copy of db data in a list;
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    userRef = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
+                    tempUsersForComparison.Add(userRef);
+                }
+            }
+
+            // for each view collection item;
+            foreach (User newUser in PrimaryUserList)
+            {
+                // for each db item;
+                foreach (User oldUser in tempUsersForComparison)
+                {
+                    // if they differ;
+                    if (oldUser.Id == newUser.Id && !oldUser.Equals(newUser))
+                    {
+                        // push changes;
+                        ExecuteSQLCommand($"USE {reservedDbName}; UPDATE Users SET [Name] = '{newUser.Name}', [PhoneNumber] = '{newUser.PhoneNumber}' WHERE Id = {oldUser.Id};");
+                    }
+                }
+            }
+
+            RefreshUserList();
         }
 
 
@@ -594,7 +629,38 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private void OnOrderListItemPropertyChanged(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ObservableCollection<Order> tempOrdersForComparison = new ObservableCollection<Order>();
+
+            SqlCommand command = new SqlCommand($"SELECT * FROM Orders", connection);
+
+            Order orderRef = new Order();
+
+            // create copy of db data in a list;
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
+                    tempOrdersForComparison.Add(orderRef);
+                }
+            }
+
+            // for each view collection item;
+            foreach (Order newOrder in PrimaryOrderList)
+            {
+                // for each db item;
+                foreach (Order oldOrder in tempOrdersForComparison)
+                {
+                    // if they differ;
+                    if (oldOrder.Id == newOrder.Id && !oldOrder.Equals(newOrder))
+                    {
+                        // push changes;
+                        ExecuteSQLCommand($"USE {reservedDbName}; UPDATE Orders SET [CustomerId] = '{newOrder.CustomerId}', [Summ] = '{Math.Round(newOrder.Summ, 1).ToString(CultureInfo.InvariantCulture)}', [Date] = '{newOrder.Date.ToString("yyyy-MM-dd")}' WHERE Id = {oldOrder.Id};");
+                    }
+                }
+            }
+
+            RefreshOrderList();
         }
 
 
