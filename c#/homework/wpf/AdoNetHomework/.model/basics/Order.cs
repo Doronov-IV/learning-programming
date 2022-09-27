@@ -7,8 +7,36 @@ namespace AdoNetHomework.Model
     /// <br />
     /// Представляет собой один объект из таблицы "Orders";
     /// </summary>
-    public class Order
+    public class Order : INotifyPropertyChanged
     {
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
+
 
         #region PROPERTIES - forming the State of an Object
 
@@ -60,25 +88,71 @@ namespace AdoNetHomework.Model
         /// <summary>
         /// @see private int _Id in this file in 'Private references' region;
         /// </summary>
-        public int Id { get { return _Id; } set { _Id = value; } }
+        public int Id 
+        {
+            get 
+            {
+                return _Id; 
+            }
+            set 
+            {
+                _Id = value; 
+                OnPropertyChanged(nameof(Id));
+            }
+        }
 
 
         /// <summary>
         /// @see private int _CustomerId in this file in 'Private references' region;
         /// </summary>
-        public int CustomerId { get { return _CustomerId; } set { _CustomerId = value; } }
+        public int CustomerId 
+        {
+            get 
+            { 
+                return 
+                    _CustomerId; 
+            } 
+            set 
+            { 
+                _CustomerId = value;
+                OnPropertyChanged(nameof(CustomerId));
+            } 
+        }
 
 
         /// <summary>
         /// @see private double _Summ in this file in 'Private references' region;
         /// </summary>
-        public double Summ { get { return _Summ; } set { _Summ = value; } }
+        public double Summ 
+        {
+            get 
+            {
+                return 
+                    _Summ; 
+            } 
+            set 
+            { 
+                _Summ = value;
+                OnPropertyChanged(nameof(Summ));
+            } 
+        }
 
 
         /// <summary>
         /// @see private DateOnly _Date in this file in 'Private references' region;
         /// </summary>
-        public DateOnly Date { get { return _Date; } set { _Date = value; } }
+        public DateOnly Date 
+        {
+            get 
+            { 
+                return _Date; 
+            } 
+            set 
+            { 
+                _Date = value;
+                OnPropertyChanged(nameof(Date));
+            } 
+        }
 
 
         #endregion Public properties
