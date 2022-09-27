@@ -105,6 +105,11 @@ namespace AdoNetHomework.ViewModel
         private ObservableCollection<User> _UserList;
 
 
+        /// <summary>
+        /// Current order list for pushing into db;
+        /// <br />
+        /// Текущий список заказов для отправки в бд;
+        /// </summary>
         private ObservableCollection<Order> _OrderList;
 
 
@@ -625,6 +630,16 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        /// <summary>
+        /// Execute SQL command in non-async mode;
+        /// <br />
+        /// Выполнить SQL запрос в однопоточном режиме;
+        /// </summary>
+        /// <param name="QueryString">
+        /// The string which represents SQL quety;
+        /// <br />
+        /// Строка SQL-запроса;
+        /// </param>
         private void ExecuteSQLCommand(string QueryString)
         {
             if (IsConnected)
@@ -678,7 +693,7 @@ namespace AdoNetHomework.ViewModel
 
         private void RefreshUserList()
         {
-            UserList.Clear();
+            
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Users", connection);
 

@@ -109,8 +109,8 @@ namespace AdoNetHomework.Service
         /// </returns>
         private static List<string> GetUserNameList(string sFilePath)
         {
-            FileReader reader = new FileReader();
-            List<string> sResultList = reader.ReadList(sFilePath);
+            List<string> sResultList = new List<string>();
+            sResultList = File.ReadAllLines("../../../.data/User/UserNames.txt").ToList();
             return sResultList;
         }
 
