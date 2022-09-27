@@ -10,6 +10,8 @@ namespace AdoNetHomework.Model
     public class User : INotifyPropertyChanged
     {
 
+
+
         #region Property changed legacy
 
 
@@ -37,15 +39,53 @@ namespace AdoNetHomework.Model
 
 
 
+
         #region PROPERTIES - forming the State of an Object
 
 
+
+
+
+        #region Private references
+
+
+        /// <summary>
+        /// User.Id property;
+        /// <br />
+        /// User.Id поле;
+        /// </summary>
         private int _Id;
 
+
+        /// <summary>
+        /// User.Name property;
+        /// <br />
+        /// User.Name поле;
+        /// </summary>
         private string _Name;
 
+
+        /// <summary>
+        /// User.PhoneNumber property;
+        /// <br />
+        /// User.PhoneNumber поле;
+        /// </summary>
         private string _PhoneNumber;
 
+
+        #endregion Private references
+
+
+
+
+
+        #region Public properties
+
+
+
+        /// <summary>
+        /// @see private int _Id;
+        /// </summary>
         public int Id 
         {
             get 
@@ -59,6 +99,10 @@ namespace AdoNetHomework.Model
             }
         }
 
+
+        /// <summary>
+        /// @see private string _Name;
+        /// </summary>
         public string Name 
         {
             get 
@@ -72,6 +116,10 @@ namespace AdoNetHomework.Model
             }
         }
 
+
+        /// <summary>
+        /// @see private string _PhoneNumber;
+        /// </summary>
         public string PhoneNumber 
         {
             get 
@@ -86,7 +134,14 @@ namespace AdoNetHomework.Model
         }
 
 
+
+        #endregion Public properties
+
+
+
+
         #endregion PROPERTIES - forming the State of an Object
+
 
 
 
@@ -123,6 +178,8 @@ namespace AdoNetHomework.Model
 
 
         #endregion CONSTRUCTION - Object Lifetime Control
+
+
 
     }
 }

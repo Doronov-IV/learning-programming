@@ -3,7 +3,7 @@
 namespace AdoNetHomework.Model
 {
     /// <summary>
-    /// Represents one object from table 'Orders';
+    /// Represents an object from table 'Orders';
     /// <br />
     /// Представляет собой один объект из таблицы "Orders";
     /// </summary>
@@ -243,6 +243,7 @@ namespace AdoNetHomework.Model
 
 
         #endregion CONSTRUCTION - Object Lifetime Control
+
 
     }
 }
