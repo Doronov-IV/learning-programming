@@ -153,6 +153,9 @@ namespace AdoNetHomework.ViewModel
         private readonly string reservedDbName = "DoronovAdoNetCoreHomework";
 
 
+        private User _SelectedUser;
+
+
         #endregion Private references
 
 
@@ -166,6 +169,21 @@ namespace AdoNetHomework.ViewModel
         /// @see private string _ServerName;
         /// </summary>
         public string ServerName { get { return _serverName; } set { _serverName = value; } }
+
+
+        public User SelectedUser
+        {
+            get
+            {
+                return _SelectedUser;
+            }
+
+            set
+            {
+                _SelectedUser = value;
+                OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
 
 
 
@@ -240,6 +258,10 @@ namespace AdoNetHomework.ViewModel
         /// Делегат хендлера элемента "ClearTablesButton";
         /// </summary>
         public DelegateCommand OnClearButtonClickCommand { get; }
+
+
+        public DelegateCommand OnUserDataGridKeyDownDelegate { get; }
+
 
 
 
@@ -493,6 +515,30 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        private void OnUserDataGridKeyDown()
+        {
+            ObservableCollection<User> tempUserList = new ObservableCollection<User>();
+
+            SqlCommand command;
+
+            foreach(var user in PrimaryUserList)
+            {
+                if (!user.Equals(SelectedUser))
+                {
+                    tempUserList.Add(user);
+                }
+                else
+                {
+                    queryString = $"USE {reservedDbName}; DELETE FROM TABLE Users WHERE Id = {user.Id};";
+
+                    command = new SqlCommand(queryString, connection);
+                }
+            }
+
+            PrimaryUserList = tempUserList;
+        }
+
+
         #endregion View Controls - Buttons and stuff
 
 
@@ -604,7 +650,7 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Когда изменяется объект в списке заказов;
         /// </summary>
-        private void OnOrderListItemPropertyChanged(object? sender, EventArgs e)
+        public void OnOrderListItemPropertyChanged(object? sender, EventArgs e)
         {
             ObservableCollection<Order> tempOrdersForComparison = new ObservableCollection<Order>();
 
@@ -887,6 +933,8 @@ namespace AdoNetHomework.ViewModel
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
             OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClick);
             OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
+            OnUserDataGridKeyDownDelegate = new DelegateCommand(OnUserDataGridKeyDown);
+
 
             // Connection status;
             IsNotConnected = true;

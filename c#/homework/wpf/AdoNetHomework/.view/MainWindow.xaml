@@ -5,34 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdoNetHomework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1000">
-        
+        Title="MainWindow" Height="600" Width="1000"
+        MaxHeight="600"
+        MaxWidth="1000">
+
 
     <Grid>
-        <!-- Buttons -->
-        <Button x:Name="ConnectButton" Content="Connect" Command ="{Binding OnConnectButtonClickCommand}" IsEnabled="{Binding IsNotConnected}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin ="10,70,10,10" Padding="5"/>
-        <Button x:Name="FillDatabaseButton" Content="Fill Database" Command="{Binding OnFillButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if your database is fresh created and you need to fill it with generated data." HorizontalAlignment="Left" Margin="10,110,0,0" Padding="5" VerticalAlignment="Top"/>
-        <Button x:Name="ClearDatabaseButton" Content="Clear Tables" Command="{Binding OnClearButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if you want to clear all tables contents for good." HorizontalAlignment="Left" Margin="10,148,0,0" Padding="5" VerticalAlignment="Top"/>
-        
-        <!-- Input Text Box -->
-        <TextBox x:Name="DbNameTextBox" Text ="{Binding ServerName, Mode=TwoWay}"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,40,0,0" TextWrapping="Wrap" Width="120"/>
-
-        <!-- Tip and Status Labels -->
-        <Label x:Name="DbNameLabel" Content="server name:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
 
-        <!-- User Grid -->
-        <DataGrid Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" Margin="30,30,200,70" Width="235" ClipToBounds="True" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Button Grid.Column="0" Grid.Row="0" x:Name="ConnectButton" Content="Connect" Command ="{Binding OnConnectButtonClickCommand}" IsEnabled="{Binding IsNotConnected}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin ="10,77,0,0" Padding="5" Height="30" Width="58"/>
+        <Button Grid.Column="0" x:Name="FillDatabaseButton" Content="Fill Database" Command="{Binding OnFillButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if your database is fresh created and you need to fill it with generated data." HorizontalAlignment="Left" Margin="10,122,0,0" Padding="5" VerticalAlignment="Top"/>
+        <Button Grid.Column="0" x:Name="ClearDatabaseButton" Content="Clear Tables" Command="{Binding OnClearButtonClickCommand}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" ToolTip="Click here if you want to clear all tables contents for good." HorizontalAlignment="Left" Margin="10,164,0,0" Padding="5" VerticalAlignment="Top"/>
+
+
+        <TextBox ToolTipService.ToolTip="Server Name" Grid.Column="0" Grid.Row="0" x:Name="ServerNameTextBox" Text ="{Binding ServerName, Mode=TwoWay}" VerticalAlignment="Top" Margin="10,49,57,0" TextWrapping="Wrap" RenderTransformOrigin="1.07,0.643"/>
+        <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Center" Margin="0,9,0,0" VerticalAlignment="Top" Height="25" Width="147"/>
+
+
+
+        <DataGrid SelectedItem="{Binding SelectedUser}"
+            Grid.Column="1" Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" ClipToBounds="True" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="89,31,90,36">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="100"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
                 <DataGridTextColumn Width="130"  Header ="Phone Number" Binding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+
             </DataGrid.Columns>
+            
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding OnUserDataGridKeyDownDelegate}"/>
+            </DataGrid.InputBindings>
         </DataGrid>
-        
-        
-        <!-- Order Grid -->
-        <DataGrid  Name="OrderDataGrid" ItemsSource="{Binding Path=PrimaryOrderList, Mode=TwoWay}" Margin="550,30,80,70" Width="325" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+
+
+        <DataGrid  Name="OrderDataGrid" ItemsSource="{Binding Path=PrimaryOrderList, Mode=TwoWay}" Margin="46,31,46,36" Width="325" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="100"  Header ="Customer Id" Binding="{Binding Path=CustomerId, Mode=TwoWay}"/>
                 <DataGridTextColumn Width="100"  Header ="Summ" Binding="{Binding Path=Summ, Mode=TwoWay}"/>
@@ -40,7 +55,17 @@
             </DataGrid.Columns>
         </DataGrid>
 
+
+        <Button Grid.Column="1" Grid.Row="1" Name="AddUserButton" Content="Add" Width="50" Height="20" Margin="276,39,0,0" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left"/>
+        <TextBox Grid.Column="1" Grid.Row="1" ToolTipService.ToolTip="Name" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Name="UserNameTextBox" Text="" Margin="90,14,213,63" TextWrapping="NoWrap"/>
+        <TextBox  Grid.Column="1" Grid.Row="1" ToolTipService.ToolTip="Phone number" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Name="UserPhoneNumberTextBox" Margin="208,14,0,63" TextWrapping="Wrap" Width="118" HorizontalAlignment="Left"/>
+
+
     </Grid>
+
+
 
 
 </Window>
