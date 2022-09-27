@@ -363,19 +363,44 @@ namespace AdoNetHomework.ViewModel
                 try
                 {
                     ExecuteSQLCommand($"USE {reservedDbName};");
-
-                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
-
-                    RefreshLists();
                 }
                 catch (Exception e)
                 {
+                    ExecuteSQLCommand($"USE master; CREATE DATABASE {reservedDbName};");
+                }
+                finally
+                {
+                    try
+                    {
+                        ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
+                    }
+                    catch (Exception e)
+                    {
+                        ExecuteSQLCommand(
+
+                        $"USE {reservedDbName};" +
+                        $"CREATE TABLE {reservedDbName}..Users" +
+                        "(" +
+                        "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+                        "   [Name] NVARCHAR(24) NOT NULL," +
+                        "   [PhoneNumber] NVARCHAR(14)" +
+                        ")" +
+
+                        $"USE {reservedDbName};" +
+                        $"CREATE TABLE {reservedDbName}..Orders" +
+                        "(" +
+                        "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
+                        "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
+                        "   [Summ] FLOAT," +
+                        "   [Date] DATE" +
+                        ")"
+                    );
+                    }
                 }
             }
-            // if the name was not found;
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {e.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -719,7 +744,11 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-
+        /// <summary>
+        /// Pull data from db to collection;
+        /// <br />
+        /// Достать данные из бд в коллекцию;
+        /// </summary>
         private void RefreshUserList()
         {
             PrimaryUserList.Clear();
@@ -739,6 +768,11 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        /// <summary>
+        /// Pull data from db to collection;
+        /// <br />
+        /// Достать данные из бд в коллекцию;
+        /// </summary>
         private void RefreshOrderList()
         {
             PrimaryOrderList.Clear();
@@ -759,11 +793,11 @@ namespace AdoNetHomework.ViewModel
 
 
 
-
-        
-
-
-
+        /// <summary>
+        /// 'Refresh' all lists;
+        /// <br />
+        /// Обновить оба списка;
+        /// </summary>
         private void RefreshLists()
         {
             RefreshUserList();
