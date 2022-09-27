@@ -105,18 +105,12 @@ namespace AdoNetHomework.ViewModel
         private ObservableCollection<User> _PrimaryUserList;
 
 
-        private ObservableCollection<User> _SecondaryUserList;
-
-
         /// <summary>
         /// Current order list for pushing into db;
         /// <br />
         /// Текущий список заказов для отправки в бд;
         /// </summary>
         private ObservableCollection<Order> _PrimaryOrderList;
-
-
-        private ObservableCollection<Order> _SecondaryOrderList;
 
 
         /// <summary>
@@ -167,14 +161,22 @@ namespace AdoNetHomework.ViewModel
         #region Public properties
 
 
+
         /// <summary>
-        /// @see private string _dbName;
+        /// @see private string _ServerName;
         /// </summary>
         public string ServerName { get { return _serverName; } set { _serverName = value; } }
 
 
+
+
+
+        #region Observable collections
+
+
+
         /// <summary>
-        /// @see private List<User> _UserList;
+        /// @see private List<User> _PrimaryUserList;
         /// </summary>
         public ObservableCollection<User> PrimaryUserList
         {
@@ -190,8 +192,9 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-
-
+        /// <summary>
+        /// @see private List<Order> _PrimaryOrderList;
+        /// </summary>
         public ObservableCollection<Order> PrimaryOrderList
         {
             get
@@ -206,21 +209,13 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-        /// <summary>
-        /// @see private string _ConnectionStatus;
-        /// </summary>
-        public string ConnectionStatus
-        {
-            get
-            {
-                return _connectionStatus;
-            }
-            set
-            {
-                _connectionStatus = value;
-                OnPropertyChanged(nameof(ConnectionStatus));
-            }
-        }
+
+        #endregion Observable collections
+
+
+
+        #region Buttons Commands
+
 
 
         /// <summary>
@@ -248,6 +243,12 @@ namespace AdoNetHomework.ViewModel
 
 
 
+        #endregion Buttons Commands
+
+
+
+
+        #region Connection status
 
 
         /// <summary>
@@ -283,9 +284,29 @@ namespace AdoNetHomework.ViewModel
             }
         }
 
-        public BindingList<User> UserBindingList;
 
-        public BindingList<Order> OrderBindingList;
+        /// <summary>
+        /// @see private string _ConnectionStatus;
+        /// </summary>
+        public string ConnectionStatus
+        {
+            get
+            {
+                return _connectionStatus;
+            }
+            set
+            {
+                _connectionStatus = value;
+                OnPropertyChanged(nameof(ConnectionStatus));
+            }
+        }
+
+
+        #endregion Connection status
+
+
+
+
 
 
         #endregion Public properties
@@ -304,6 +325,13 @@ namespace AdoNetHomework.ViewModel
 
 
         #region HANDLERS - User Input Handling
+
+
+
+
+
+
+        #region View Controls - Buttons and stuff
 
 
         /// <summary>
@@ -476,29 +504,81 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-        private void UpdateUserTable(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Users;");
+        #endregion View Controls - Buttons and stuff
 
-            foreach (var user in PrimaryUserList)
+
+
+
+        #region Collection handlers - item changed and other delegates
+
+
+        /// <summary>
+        /// When whole user list changed;
+        /// <br />
+        /// Когда изменяется сам список пользователей;
+        /// </summary>
+        private void OnUserListCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
             {
-                queryString =
-                            $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
-                TryExecuteSQLCommand(queryString);
+                foreach (INotifyPropertyChanged item in e.OldItems)
+                    item.PropertyChanged -= OnUserListItemPropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                foreach (INotifyPropertyChanged item in e.NewItems)
+                    item.PropertyChanged += OnUserListItemPropertyChanged;
             }
         }
 
-        private void UpdateOrderTable(object? sender, NotifyCollectionChangedEventArgs e)
+        /// <summary>
+        /// When whole order list changed;
+        /// <br />
+        /// Когда изменяется сам список заказов;
+        /// </summary>
+        private void OnOrderListCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Orders;");
-
-            foreach (var order in PrimaryOrderList)
+            if (e.OldItems != null)
             {
-                queryString =
-                            $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
-                TryExecuteSQLCommand(queryString);
+                foreach (INotifyPropertyChanged item in e.OldItems)
+                    item.PropertyChanged -= OnOrderListItemPropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                foreach (INotifyPropertyChanged item in e.NewItems)
+                    item.PropertyChanged += OnOrderListItemPropertyChanged;
             }
         }
+
+
+        /// <summary>
+        /// When user list item changed;
+        /// <br />
+        /// Когда изменяется объект в списке пользователей;
+        /// </summary>
+        private void OnUserListItemPropertyChanged(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// When order list item changed;
+        /// <br />
+        /// Когда изменяется объект в списке заказов;
+        /// </summary>
+        private void OnOrderListItemPropertyChanged(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion Collection handlers - item changed and other delegates
+
+
+
+
+
 
 
         #endregion HANDLERS - User Input Handling
@@ -642,7 +722,7 @@ namespace AdoNetHomework.ViewModel
 
         private void RefreshUserList()
         {
-            _SecondaryUserList.Clear();
+            PrimaryUserList.Clear();
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Users", connection);
 
@@ -653,17 +733,15 @@ namespace AdoNetHomework.ViewModel
                 while (reader.Read())
                 {
                     user = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
-                    _SecondaryUserList.Add(user);
+                    PrimaryUserList.Add(user);
                 }
             }
-
-            PrimaryUserList = _SecondaryUserList;
         }
 
 
         private void RefreshOrderList()
         {
-            _SecondaryOrderList.Clear();
+            PrimaryOrderList.Clear();
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Orders", connection);
 
@@ -674,11 +752,9 @@ namespace AdoNetHomework.ViewModel
                 while (reader.Read())
                 {
                     order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
-                    _SecondaryOrderList.Add(order);
+                    PrimaryOrderList.Add(order);
                 }
             }
-
-            PrimaryOrderList = _SecondaryOrderList;
         }
 
 
@@ -716,20 +792,25 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            // Button commands;
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
             OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClick);
             OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
 
+            // Connection status;
             IsNotConnected = true;
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
-            PrimaryUserList = new ObservableCollection<User>();
-            _SecondaryUserList = new ObservableCollection<User>();
-            PrimaryUserList.CollectionChanged += UpdateUserTable;
-            PrimaryOrderList = new ObservableCollection<Order>();
-            _SecondaryOrderList = new ObservableCollection<Order>();
-            PrimaryOrderList.CollectionChanged += UpdateOrderTable;
 
+            // Initializing lists;
+            PrimaryUserList = new ObservableCollection<User>();
+            PrimaryOrderList = new ObservableCollection<Order>();
+
+            // Adding events for user input handling;
+            PrimaryUserList.CollectionChanged += OnUserListCollectionChanged;
+            PrimaryOrderList.CollectionChanged += OnOrderListCollectionChanged;
+
+            // Initializing gemerator instances for object generating;
             userGenerator = new UserGenerator();
             orderGenerator = new OrderGenerator();
         }
