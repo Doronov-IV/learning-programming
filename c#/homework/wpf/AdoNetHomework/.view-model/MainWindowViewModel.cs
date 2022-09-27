@@ -102,7 +102,10 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Текущий список юзеров для отправки в бд;
         /// </summary>
-        private ObservableCollection<User> _UserList;
+        private ObservableCollection<User> _PrimaryUserList;
+
+
+        private ObservableCollection<User> _SecondaryUserList;
 
 
         /// <summary>
@@ -110,7 +113,10 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Текущий список заказов для отправки в бд;
         /// </summary>
-        private ObservableCollection<Order> _OrderList;
+        private ObservableCollection<Order> _PrimaryOrderList;
+
+
+        private ObservableCollection<Order> _SecondaryOrderList;
 
 
         /// <summary>
@@ -129,6 +135,11 @@ namespace AdoNetHomework.ViewModel
         UserGenerator userGenerator;
 
 
+        /// <summary>
+        /// Custon service order generator instance;
+        /// <br />
+        /// Экземпляр генератора заказов;
+        /// </summary>
         OrderGenerator orderGenerator;
 
 
@@ -165,30 +176,32 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// @see private List<User> _UserList;
         /// </summary>
-        public ObservableCollection<User> UserList
+        public ObservableCollection<User> PrimaryUserList
         {
             get
             {
-                return _UserList;
+                return _PrimaryUserList;
             }
             set
             {
-                _UserList = value;
-                OnPropertyChanged(nameof(UserList));
+                _PrimaryUserList = value;
+                OnPropertyChanged(nameof(PrimaryUserList));
             }
         }
 
 
-        public ObservableCollection<Order> OrderList
+
+
+        public ObservableCollection<Order> PrimaryOrderList
         {
             get
             {
-                return _OrderList;
+                return _PrimaryOrderList;
             }
             set
             {
-                _OrderList = value;
-                OnPropertyChanged(nameof(OrderList));
+                _PrimaryOrderList = value;
+                OnPropertyChanged(nameof(PrimaryOrderList));
             }
         }
 
@@ -318,34 +331,23 @@ namespace AdoNetHomework.ViewModel
                 ToggleConnectionState();
 
                 ConnectionStatus = $"Connected to {ServerName}.";
+
+                try
+                {
+                    ExecuteSQLCommand($"USE {reservedDbName};");
+
+                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
+
+                    RefreshLists();
+                }
+                catch (Exception e)
+                {
+                }
             }
             // if the name was not found;
             catch (Exception e)
             {
                 MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {e.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-
-            try
-            {
-                ExecuteSQLCommand($"USE {reservedDbName};");
-            }
-            catch (Exception e)
-            {
-            }
-            finally
-            {
-                try
-                {
-                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
-                }
-                catch (Exception e)
-                {
-                }
-                finally
-                {
-                    RefreshLists();
-                }
             }
         }
 
@@ -446,60 +448,6 @@ namespace AdoNetHomework.ViewModel
                     RefreshLists();
                 }
             }
-
-
-            //ExecuteSQLCommand(
-
-            //    "USE DoronovAdoNetCoreHomework" +
-                
-            //    "--Create the users table;" +
-            //    "CREATE TABLE[Users]" +
-            //    "(" +
-            //    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
-            //    "   [Name] NVARCHAR(24) NOT NULL," +
-            //    "   [PhoneNumber] NVARCHAR(14)" +
-            //    ")" +
-
-            //    "--Create the orders table;" +
-            //    "CREATE TABLE[Orders]" +
-            //    "(" +
-            //    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
-            //    "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
-            //    "   [Summ] FLOAT," +
-            //    "   [Date] DATE" +
-            //    ")"
-            //    );
-
-
-
-            //// gererating Users;
-            //for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
-            //{
-            //    //UserList.Add(userGenerator.GetUser());
-            //    user = userGenerator.GetRandomUser();
-            //    queryString =
-            //        $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
-            //    ExecuteSQLCommand(queryString);
-            //}
-
-
-            //// Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
-            //// нам необходимо узнать id пользователей;
-            //int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
-
-
-            //// generating Orders;
-            //for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
-            //{
-            //    order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
-            //    queryString =
-            //        $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
-            //    ExecuteSQLCommand(queryString);
-            //}
-
-            //ShowSuccessChangesMessageBox();
-
-            //RefreshLists();
         }
 
 
@@ -510,6 +458,7 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private async void OnClearButtonClickAsync()
         {
+            var a = PrimaryUserList;
             try
             {
                 queryString = $"USE {reservedDbName} DELETE FROM Orders; DELETE FROM Users";
@@ -527,11 +476,11 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-        private void UpdateUserTable(object sender, NotifyCollectionChangedEventArgs e)
+        private void UpdateUserTable(object? sender, NotifyCollectionChangedEventArgs e)
         {
             ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Users;");
 
-            foreach (var user in UserList)
+            foreach (var user in PrimaryUserList)
             {
                 queryString =
                             $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
@@ -539,11 +488,11 @@ namespace AdoNetHomework.ViewModel
             }
         }
 
-        private void UpdateOrderTable(object sender, NotifyCollectionChangedEventArgs e)
+        private void UpdateOrderTable(object? sender, NotifyCollectionChangedEventArgs e)
         {
             ExecuteSQLCommand($"USE {reservedDbName}; DELETE FROM Orders;");
 
-            foreach (var order in OrderList)
+            foreach (var order in PrimaryOrderList)
             {
                 queryString =
                             $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
@@ -693,7 +642,7 @@ namespace AdoNetHomework.ViewModel
 
         private void RefreshUserList()
         {
-            
+            _SecondaryUserList.Clear();
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Users", connection);
 
@@ -704,15 +653,17 @@ namespace AdoNetHomework.ViewModel
                 while (reader.Read())
                 {
                     user = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
-                    UserList.Add(user);
+                    _SecondaryUserList.Add(user);
                 }
             }
+
+            PrimaryUserList = _SecondaryUserList;
         }
 
 
         private void RefreshOrderList()
         {
-            OrderList.Clear();
+            _SecondaryOrderList.Clear();
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Orders", connection);
 
@@ -723,9 +674,11 @@ namespace AdoNetHomework.ViewModel
                 while (reader.Read())
                 {
                     order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
-                    OrderList.Add(order);
+                    _SecondaryOrderList.Add(order);
                 }
             }
+
+            PrimaryOrderList = _SecondaryOrderList;
         }
 
 
@@ -738,9 +691,7 @@ namespace AdoNetHomework.ViewModel
         private void RefreshLists()
         {
             RefreshUserList();
-            UserBindingList = new BindingList<User>(UserList);
             RefreshOrderList();
-            OrderBindingList = new BindingList<Order>(OrderList);
         }
 
 
@@ -772,10 +723,12 @@ namespace AdoNetHomework.ViewModel
             IsNotConnected = true;
             IsConnected = false;
             ConnectionStatus = "Waiting for connection.";
-            UserList = new ObservableCollection<User>();
-            UserList.CollectionChanged += UpdateUserTable;
-            OrderList = new ObservableCollection<Order>();
-            OrderList.CollectionChanged += UpdateOrderTable;
+            PrimaryUserList = new ObservableCollection<User>();
+            _SecondaryUserList = new ObservableCollection<User>();
+            PrimaryUserList.CollectionChanged += UpdateUserTable;
+            PrimaryOrderList = new ObservableCollection<Order>();
+            _SecondaryOrderList = new ObservableCollection<Order>();
+            PrimaryOrderList.CollectionChanged += UpdateOrderTable;
 
             userGenerator = new UserGenerator();
             orderGenerator = new OrderGenerator();

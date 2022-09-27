@@ -21,19 +21,8 @@
         <Label x:Name="DbNameLabel" Content="server name:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
 
-        <!-- ListViews -->
-        <!--ListView x:Name="UserListView" ItemsSource="{Binding UserList, Mode=TwoWay}" Margin="240,40,253,129" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="40" Header="Id" DisplayMemberBinding="{Binding Path=Id, Mode=TwoWay}"/>
-                    <GridViewColumn Width="90"  Header ="Name" DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay}"/>
-                    <GridViewColumn Width="130"  Header ="PhoneNumber" DisplayMemberBinding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
-                </GridView>
-            </ListView.View>
-        </ListView-->
 
-
-        <DataGrid Name="UserDataGrid" ItemsSource="{Binding Path=UserList, Mode=TwoWay}" Margin="240,40,273,63" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <DataGrid Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" Margin="240,40,273,63" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="40" Header="Id" Binding="{Binding Path=Id, Mode=TwoWay}"/>
                 <DataGridTextColumn Width="90"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
