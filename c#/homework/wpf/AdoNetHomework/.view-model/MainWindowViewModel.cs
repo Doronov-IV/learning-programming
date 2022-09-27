@@ -614,11 +614,28 @@ namespace AdoNetHomework.ViewModel
                     {
                         // push changes;
                         ExecuteSQLCommand($"USE {reservedDbName}; UPDATE Users SET [Name] = '{newUser.Name}', [PhoneNumber] = '{newUser.PhoneNumber}' WHERE Id = {oldUser.Id};");
+
                     }
                 }
             }
 
-            RefreshUserList();
+
+            #region Critical Exception
+
+            //RefreshUserList();
+
+            /*
+            
+            Если раскомментить, то на первом изменённом элементе выдаёт ElementOutOfRangeException.
+            При этом, этот метод вызывается в других местах, где он работает корректно.
+            Дебаг ничего не дал.
+
+            Так как здесь метод опционален, было принято решение пока от него избавиться.
+
+             */
+
+            #endregion Critical Exception
+
         }
 
 
@@ -660,7 +677,21 @@ namespace AdoNetHomework.ViewModel
                 }
             }
 
-            RefreshOrderList();
+            #region Critical Exception
+
+            //RefreshUserList();
+
+            /*
+            
+            Если раскомментить, то на первом изменённом элементе выдаёт ElementOutOfRangeException.
+            При этом, этот метод вызывается в других местах, где он работает корректно.
+            Дебаг ничего не дал.
+
+            Так как здесь метод опционален, было принято решение пока от него избавиться.
+
+             */
+
+            #endregion Critical Exception
         }
 
 
