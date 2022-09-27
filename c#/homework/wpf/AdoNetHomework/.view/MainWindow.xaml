@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdoNetHomework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1000">
         
 
     <Grid>
@@ -22,11 +22,21 @@
         <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
 
 
-        <DataGrid Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" Margin="240,40,273,63" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <!-- User Grid -->
+        <DataGrid Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" Margin="30,30,200,70" Width="235" ClipToBounds="True" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="40" Header="Id" Binding="{Binding Path=Id, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="90"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="130"  Header ="PhoneNumber" Binding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="100"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="130"  Header ="Phone Number" Binding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        
+        <!-- Order Grid -->
+        <DataGrid  Name="OrderDataGrid" ItemsSource="{Binding Path=PrimaryOrderList, Mode=TwoWay}" Margin="550,30,80,70" Width="325" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="100"  Header ="Customer Id" Binding="{Binding Path=CustomerId, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="100"  Header ="Summ" Binding="{Binding Path=Summ, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="110"  Header ="Date" Binding="{Binding Path=Date, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
 

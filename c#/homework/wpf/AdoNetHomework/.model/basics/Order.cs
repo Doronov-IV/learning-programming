@@ -74,7 +74,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Заметка о дате заказа для таблицы 'Orders';
         /// </summary>
-        private DateOnly _Date;
+        private DateTime _Date;
 
 
         #endregion Private references
@@ -141,7 +141,7 @@ namespace AdoNetHomework.Model
         /// <summary>
         /// @see private DateOnly _Date in this file in 'Private references' region;
         /// </summary>
-        public DateOnly Date 
+        public DateTime Date 
         {
             get 
             { 
@@ -178,47 +178,13 @@ namespace AdoNetHomework.Model
             Summ = double.MaxValue;
             
             // it sort of parses 'DateTime.Now' into 'DateOnly'-like format;
-            Date = new DateOnly(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
+            Date = DateTime.Now;
         }
 
 
 
 
         #region OVERLOADING - Parameters Overloading
-
-
-        /// <summary>
-        /// Constructor with all the properties;
-        /// <br />
-        /// Конструктор со всеми параметрами;
-        /// </summary>
-        /// <param name="id">
-        /// 'Orders' table primary key id;
-        /// <br />
-        /// Идентификатор, первичный ключ таблицы "Orders";
-        /// </param>
-        /// <param name="customerId">
-        /// 'Orders' table customer's id;
-        /// <br />
-        /// Иднтификатор клиента из таблицы "Orders";
-        /// </param>
-        /// <param name="summ">
-        /// 'Orders' table price value;
-        /// <br />
-        /// Показатель стоимости заказа из таблицы "Orders";
-        /// </param>
-        /// <param name="date">
-        /// 'Orders' table date reference;
-        /// <br />
-        /// Заметка о дате из таблицы "Orders";
-        /// </param>
-        public Order(int id, int customerId, double summ, DateOnly date)
-        {
-            Id = id;
-            CustomerId = customerId;
-            Summ = summ;
-            Date = date;
-        }
 
 
         /// <summary>
@@ -233,7 +199,7 @@ namespace AdoNetHomework.Model
             Id = id;
             CustomerId = customerId;
             Summ = summ;
-            Date = new DateOnly(DateTimeNow.Date.Year, DateTimeNow.Date.Month, DateTimeNow.Date.Day);
+            Date = DateTime.Now;
         }
 
 

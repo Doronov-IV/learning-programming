@@ -43,7 +43,7 @@ namespace AdoNetHomework.Service
         /// <returns></returns>
         public Order GetRandomOrder(int[] ptrUsersIds)
         {
-            return new Order(id: int.MaxValue, customerId: random.Next(ptrUsersIds[0], ptrUsersIds[random.Next(0, ptrUsersIds.Length)]), summ: random.NextDouble(), DateTime.Now);
+            return new Order(id: int.MaxValue, customerId: random.Next(ptrUsersIds[0], ptrUsersIds[random.Next(0, ptrUsersIds.Length)]), summ: random.NextDouble(), DateTimeNow: DateTime.Now); ;
         }
 
 

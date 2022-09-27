@@ -396,7 +396,7 @@ namespace AdoNetHomework.ViewModel
                         "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
                         "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
                         "   [Summ] FLOAT," +
-                        "   [Date] DATE" +
+                        "   [Date] DATETIME" +
                         ")"
                     );
                     }
@@ -437,74 +437,34 @@ namespace AdoNetHomework.ViewModel
             int nRandomUsersQuantity = random.Next(10,30);
 
 
-            try
+            // gererating Users;
+            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
             {
-                ExecuteSQLCommand($"USE {reservedDbName};");
+                //UserList.Add(userGenerator.GetUser());
+                user = userGenerator.GetRandomUser();
+                queryString =
+                    $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
+                TryExecuteSQLCommand(queryString);
             }
-            catch (Exception e)
+
+
+            // Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
+            // нам необходимо узнать id пользователей;
+            int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
+
+
+            // generating Orders;
+            for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
             {
-                ExecuteSQLCommand($"USE master; CREATE DATABASE {reservedDbName};");
+                order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
+                queryString =
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString(CultureInfo.InvariantCulture)}');";
+                TryExecuteSQLCommand(queryString);
             }
-            finally
-            {
-                try
-                {
-                    ExecuteSQLCommand($"USE {reservedDbName}; SELECT * FROM Users;");
-                }
-                catch (Exception e)
-                {
-                    ExecuteSQLCommand(
 
-                    $"USE {reservedDbName};" +
-                    $"CREATE TABLE {reservedDbName}..Users" +
-                    "(" +
-                    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
-                    "   [Name] NVARCHAR(24) NOT NULL," +
-                    "   [PhoneNumber] NVARCHAR(14)" +
-                    ")" +
+            ShowSuccessChangesMessageBox();
 
-                    $"USE {reservedDbName};" +
-                    $"CREATE TABLE {reservedDbName}..Orders" +
-                    "(" +
-                    "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
-                    "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
-                    "   [Summ] FLOAT," +
-                    "   [Date] DATE" +
-                    ")"
-                );
-                }
-                finally
-                {
-                    // gererating Users;
-                    for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
-                    {
-                        //UserList.Add(userGenerator.GetUser());
-                        user = userGenerator.GetRandomUser();
-                        queryString =
-                            $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES(N'{user.Name}','{user.PhoneNumber}');";
-                        TryExecuteSQLCommand(queryString);
-                    }
-
-
-                    // Таблица заказов связана вторичным ключом с таблоицей пользователей, чтобы не получить Exception,
-                    // нам необходимо узнать id пользователей;
-                    int[] UsersIdSchemeForRandomOrders = GetCurrentUsersIdInfo();
-
-
-                    // generating Orders;
-                    for (int i = 0, iSize = nRandomUsersQuantity; i < iSize; ++i)
-                    {
-                        order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
-                        queryString =
-                            $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString("yyyy-MM-dd")}');";
-                        TryExecuteSQLCommand(queryString);
-                    }
-
-                    ShowSuccessChangesMessageBox();
-
-                    RefreshLists();
-                }
-            }
+            RefreshLists();
         }
 
 
@@ -657,7 +617,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
+                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
                     tempOrdersForComparison.Add(orderRef);
                 }
             }
@@ -672,7 +632,7 @@ namespace AdoNetHomework.ViewModel
                     if (oldOrder.Id == newOrder.Id && !oldOrder.Equals(newOrder))
                     {
                         // push changes;
-                        ExecuteSQLCommand($"USE {reservedDbName}; UPDATE Orders SET [CustomerId] = '{newOrder.CustomerId}', [Summ] = '{Math.Round(newOrder.Summ, 1).ToString(CultureInfo.InvariantCulture)}', [Date] = '{newOrder.Date.ToString("yyyy-MM-dd")}' WHERE Id = {oldOrder.Id};");
+                        ExecuteSQLCommand($"USE {reservedDbName}; UPDATE Orders SET [CustomerId] = '{newOrder.CustomerId}', [Summ] = '{Math.Round(newOrder.Summ, 1).ToString(CultureInfo.InvariantCulture)}', [Date] = '{newOrder.Date.ToString(CultureInfo.InvariantCulture)}' WHERE Id = {oldOrder.Id};");
                     }
                 }
             }
@@ -882,7 +842,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3).Date);
+                    order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
                     PrimaryOrderList.Add(order);
                 }
             }
