@@ -63,16 +63,16 @@
 
 
 
-        <Button Grid.Column="2" Content="Add Order" Name="AddOrderButton"  HorizontalAlignment="Left" Margin="311,53,0,0" Grid.Row="1" VerticalAlignment="Top" 
+        <Button Grid.Column="2" Content="Add Order" Command="{Binding OnAddOrderButtonClickCommand}" Name="AddOrderButton"  HorizontalAlignment="Left" Margin="311,53,0,0" Grid.Row="1" VerticalAlignment="Top" 
                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        
-        <TextBox Grid.Column="2" Text="" Name="CustomerNumberTextBox" ToolTipService.ToolTip="Customer Number"  HorizontalAlignment="Left" Margin="46,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Height="18" 
+
+        <TextBox Grid.Column="2" Text="{Binding CustomerNumberAddOrderInputField}" Name="CustomerNumberTextBox" ToolTipService.ToolTip="Customer Number"  HorizontalAlignment="Left" Margin="46,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Height="18" 
                  Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-        <TextBox Grid.Column="2" Text="" Name="SummTextBox" ToolTipService.ToolTip="Summ" HorizontalAlignment="Left" Margin="150,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" 
+        <TextBox Grid.Column="2" Text="{Binding SummAddOrderInputField}" Name="SummTextBox" ToolTipService.ToolTip="Summ" HorizontalAlignment="Left" Margin="150,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" 
                  Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-        <TextBox Grid.Column="2" Text="" Name="DateTextBox" ToolTipService.ToolTip="Date" HorizontalAlignment="Left" Margin="251,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+        <TextBox Grid.Column="2" Text="{Binding DateAddOrderInputField}" Name="DateTextBox" ToolTipService.ToolTip="Date (dd-mm-yyyy)" HorizontalAlignment="Left" Margin="251,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                  Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
 

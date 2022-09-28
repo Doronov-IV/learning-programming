@@ -3,6 +3,7 @@ using AdoNetHomework.model.wrappers;
 using AdoNetHomework.Model;
 using AdoNetHomework.Model.Wrappers;
 using AdoNetHomework.Service;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
@@ -383,6 +384,7 @@ namespace AdoNetHomework.ViewModel
 
 
 
+
         #region Buttons Commands
 
 
@@ -422,9 +424,17 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// AddUser click handler command;
         /// <br />
-        /// Команда добавления пользователя при клике по кнопке "Add";
+        /// Команда добавления пользователя при клике по кнопке "Add User";
         /// </summary>
         public DelegateCommand OnAddUserButtonClickCommand { get; }
+
+
+        /// <summary>
+        /// AddOrder click handler command;
+        /// <br />
+        /// Команда добавления заказа при клике по кнопке "Add Order";
+        /// </summary>
+        public DelegateCommand OnAddOrderButtonClickCommand { get; }
 
 
 
@@ -746,6 +756,61 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+        /// <summary>
+        /// 'AddOrder' button command handler;
+        /// <br />
+        /// Хендлер команды нажатия на кпопку "Add Order";
+        /// </summary>
+        private void OnAddOrderButtonClick()
+        {
+            // Check if we have that userNumber;
+            List<int> NumbersList = new List<int>();
+            PrimaryUserList.ToList().ForEach(user => NumbersList.Add(user.TableNumber));
+            int customerNumberTryParse = 0;
+            int CustomerIdByTableNumber = 0;
+
+            try
+            {
+                customerNumberTryParse = int.Parse(CustomerNumberAddOrderInputField);
+
+                CustomerIdByTableNumber = PrimaryUserList.ToList().Find(user => user.TableNumber == int.Parse(CustomerNumberAddOrderInputField)).Id;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Please, enter digital number.", "Wrong Customer Number.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+            if (NumbersList.Contains(customerNumberTryParse))
+            {
+                string[] datetimeString = DateAddOrderInputField.Split("-");
+                int[] datetimeInt = new int[datetimeString.Length];
+
+                try
+                {
+
+                    queryString = $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES " +
+
+                        $"('{CustomerIdByTableNumber}', '{SummAddOrderInputField}', '{DateTime.ParseExact(DateAddOrderInputField, "dd-mm-yyyy", CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture)}');";
+
+                    ExecuteSQLCommand(queryString);
+
+                    ShowSuccessChangesMessageBox();
+
+                    RefreshLists();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Please, enter proper date (dd-mm-yyyy)", "Wrong Customer Number.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please, use existing customer number", "Wrong Customer Number.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         #endregion View Controls - Buttons and stuff
 
 
@@ -1057,7 +1122,9 @@ namespace AdoNetHomework.ViewModel
 
 
 
-
+        ///
+        /// Refresh tables;
+        ///
 
         /// <summary>
         /// Pull data from db to collection;
@@ -1176,6 +1243,7 @@ namespace AdoNetHomework.ViewModel
             OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
             OnUserDataGridDeleteKeyDownCommand = new DelegateCommand(OnUserDataGridDeleteKeyDown);
             OnAddUserButtonClickCommand = new DelegateCommand(OnAddUserButtonClick);
+            OnAddOrderButtonClickCommand = new DelegateCommand(OnAddOrderButtonClick);
 
 
             // Connection status;
