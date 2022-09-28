@@ -1,5 +1,4 @@
 ﻿// Sic parvis magna
-using AdoNetHomework.model.wrappers;
 using AdoNetHomework.Model;
 using AdoNetHomework.Model.Wrappers;
 using AdoNetHomework.Service;
@@ -717,7 +716,7 @@ namespace AdoNetHomework.ViewModel
             {
                 order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
                 queryString =
-                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString(CultureInfo.InvariantCulture)}');";
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture)}');";
                 TryExecuteSQLCommand(queryString);
             }
 

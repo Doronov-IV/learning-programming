@@ -1,6 +1,6 @@
 ﻿using AdoNetHomework.Model;
 
-namespace AdoNetHomework.model.wrappers
+namespace AdoNetHomework.Model.Wrappers
 {
     /// <summary>
     /// A wrapper upon class 'Order' to enumerate Customer Number in the table;
