@@ -1019,7 +1019,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetString(3));
+                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, dateString: reader.GetString(3));
                     tempOrdersForComparison.Add(orderRef);
                 }
             }
@@ -1253,7 +1253,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    order = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetString(3));
+                    order = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, dateString: reader.GetString(3));
                     PrimaryOrderList.Add(order);
                 }
             }

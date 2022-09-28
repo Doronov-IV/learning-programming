@@ -91,7 +91,7 @@ namespace AdoNetHomework.Model.Wrappers
         /// <summary>
         /// @see Order - parameter constructor;
         /// </summary>
-        public OrderTableItem(int id, int customerId, double summ, string DateTimeNow) : base(id, customerId, summ, DateTimeNow)
+        public OrderTableItem(int id, int customerId, double summ, string dateString) : base(id, customerId, summ, dateString)
         {
 
         }

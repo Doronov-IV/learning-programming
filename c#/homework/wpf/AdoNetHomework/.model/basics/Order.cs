@@ -210,12 +210,12 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Это просто копия предыдущего, только с параметром "DateTime.Now";
         /// </summary>
-        public Order(int id, int customerId, double summ, string DateTimeNow)
+        public Order(int id, int customerId, double summ, string dateString)
         {
             Id = id;
             CustomerId = customerId;
             Summ = summ;
-            Date = DateTimeNow;
+            Date = dateString;
         }
 
 
