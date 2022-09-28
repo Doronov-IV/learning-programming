@@ -3,11 +3,13 @@ using AdoNetHomework.model.wrappers;
 using AdoNetHomework.Model;
 using AdoNetHomework.Model.Wrappers;
 using AdoNetHomework.Service;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Intrinsics.X86;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -107,14 +109,12 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private ObservableCollection<UserTableItem> _PrimaryUserList;
 
-
         /// <summary>
         /// Current order list for pushing into db;
         /// <br />
         /// Текущий список заказов для отправки в бд;
         /// </summary>
         private ObservableCollection<OrderTableItem> _PrimaryOrderList;
-
 
         /// <summary>
         /// Current SQL connection;
@@ -123,14 +123,12 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private SqlConnection connection;
 
-
         /// <summary>
         /// Custon service user generator instance;
         /// <br />
         /// Экземпляр генератора юзеров;
         /// </summary>
         UserGenerator userGenerator;
-
 
         /// <summary>
         /// Custon service order generator instance;
@@ -139,7 +137,6 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         OrderGenerator orderGenerator;
 
-
         /// <summary>
         /// A string reference for sending queries into the db;
         /// <br /> 
@@ -147,14 +144,12 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private string queryString;
 
-
         /// <summary>
         /// Reserves db name;
         /// <br />
         /// Зарезервированное имя базы данных;
         /// </summary>
         private readonly string reservedDbName = "DoronovAdoNetCoreHomework";
-
 
         /// <summary>
         /// A property for deletion of the selected user from 'Users' table;
@@ -206,6 +201,19 @@ namespace AdoNetHomework.ViewModel
         private string _DateAddOrderInputField;
 
 
+
+        ///
+        /// Label binding values; 
+        ///
+
+
+        private string _MinOderPriceValue;
+
+        private string _MaxOderPriceValue;
+
+        private string _OverallOderPriceValue;
+
+
         #endregion Private references
 
 
@@ -219,7 +227,6 @@ namespace AdoNetHomework.ViewModel
         /// @see private string _ServerName;
         /// </summary>
         public string ServerName { get { return _serverName; } set { _serverName = value; } }
-
 
         /// <summary>
         /// @see private User _SelectedUser;
@@ -262,7 +269,6 @@ namespace AdoNetHomework.ViewModel
             }
         }
 
-
         /// <summary>
         /// @see private string _PhoneNumberAddUSerInputField;
         /// </summary>
@@ -302,7 +308,6 @@ namespace AdoNetHomework.ViewModel
             }
         }
 
-
         /// <summary>
         /// @see private string _SummAddOrderInputField;
         /// </summary>
@@ -318,7 +323,6 @@ namespace AdoNetHomework.ViewModel
                 OnPropertyChanged(nameof(SummAddOrderInputField));
             }
         }
-
 
         /// <summary>
         /// @see private string _DateAddOrderInputField;
@@ -338,6 +342,50 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+
+        ///
+        /// Label binding values; 
+        ///
+
+
+        /// <summary>
+        /// @see private string _MinOderPriceValue;
+        /// </summary>
+        public string MinOderPriceValue 
+        {
+            get { return _MinOderPriceValue; }
+            set
+            {
+                _MinOderPriceValue = value;
+                OnPropertyChanged(nameof(MinOderPriceValue));
+            }
+        }
+
+        /// <summary>
+        /// @see private string _MaxOderPriceValue;
+        /// </summary>
+        public string MaxOderPriceValue
+        {
+            get { return _MaxOderPriceValue; }
+            set
+            {
+                _MaxOderPriceValue = value;
+                OnPropertyChanged(nameof(MaxOderPriceValue));
+            }
+        }
+
+        /// <summary>
+        /// @see private string _OverallOderPriceValue;
+        /// </summary>
+        public string OverallOderPriceValue 
+        {
+            get { return _OverallOderPriceValue; }
+            set
+            {
+                _OverallOderPriceValue = value;
+                OnPropertyChanged(nameof(OverallOderPriceValue));
+            }
+        }
 
 
 
@@ -740,9 +788,15 @@ namespace AdoNetHomework.ViewModel
         {
             if (NameAddUserInputField.Length <= 24)
             {
+                SqlParameter phoneNumberParam = new SqlParameter("@phone",PhoneNumberAddUSerInputField);
+
+                SqlParameter nameParam = new SqlParameter("@name", NameAddUserInputField);
+
                 if (PhoneNumberAddUSerInputField.StartsWith("+44") && PhoneNumberAddUSerInputField.Length == 13)
                 {
                     queryString = $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES ('{NameAddUserInputField}', '{PhoneNumberAddUSerInputField}');";
+
+
 
                     TryExecuteSQLCommand(queryString);
 
@@ -1187,6 +1241,7 @@ namespace AdoNetHomework.ViewModel
         {
             RefreshUserList();
             RefreshOrderList();
+            RefreshLabelValues();
         }
 
 
@@ -1208,6 +1263,29 @@ namespace AdoNetHomework.ViewModel
                         orderWrapper.CustomerTableNumber = userWrapper.TableNumber;
                     }
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Refresh those label values that show min, max and overall values;
+        /// <br />
+        /// Обновить значения для лейблов, которые показывают минимальное, максимальное и среднее значения;
+        /// </summary>
+        private void RefreshLabelValues()
+        {
+            if (!PrimaryOrderList.IsNullOrEmpty())
+            {
+                var tempColl = PrimaryOrderList.ToList().Select(order => order.Summ).ToList();
+                MinOderPriceValue = tempColl.Min().ToString();
+                MaxOderPriceValue = tempColl.Max().ToString();
+                OverallOderPriceValue = tempColl.Sum().ToString("n2");
+            }
+            else
+            {
+                MinOderPriceValue = "0";
+                MaxOderPriceValue = "0";
+                OverallOderPriceValue = "0";
             }
         }
 
@@ -1262,6 +1340,12 @@ namespace AdoNetHomework.ViewModel
             // Initializing gemerator instances for object generating;
             userGenerator = new UserGenerator();
             orderGenerator = new OrderGenerator();
+
+
+            // Initializing label strings;
+            MinOderPriceValue = 0.ToString();
+            MaxOderPriceValue = 0.ToString();
+            OverallOderPriceValue = 0.ToString();
         }
 
 

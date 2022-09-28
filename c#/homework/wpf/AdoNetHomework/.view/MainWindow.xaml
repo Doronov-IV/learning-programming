@@ -31,12 +31,13 @@
 
 
 
-        <DataGrid SelectedItem="{Binding SelectedUser}"
-            Grid.Column="1" Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" ClipToBounds="True" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="89,31,90,36">
+        <DataGrid SelectedItem="{Binding SelectedUser}" Width="225"
+            Grid.Column="1" Name="UserDataGrid" ItemsSource="{Binding Path=PrimaryUserList, Mode=TwoWay}" ClipToBounds="True" AutoGenerateColumns="False" Margin="0" Height="400" 
+                  Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="30" Header="№" Binding="{Binding Path=TableNumber, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="90"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="120"  Header ="Phone Number" Binding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="*" Header="№" Binding="{Binding Path=TableNumber, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="3*"  Header ="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="4*"  Header ="Phone Number" Binding="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
             </DataGrid.Columns>
 
             <DataGrid.InputBindings>
@@ -46,34 +47,54 @@
 
 
 
-        <DataGrid  Name="OrderDataGrid" ItemsSource="{Binding Path=PrimaryOrderList, Mode=TwoWay}" Margin="46,31,46,36" Width="325" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="2">
+        <DataGrid  Name="OrderDataGrid" ItemsSource="{Binding Path=PrimaryOrderList, Mode=TwoWay}" Margin="0" Height="400" Width="325" AutoGenerateColumns="False" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="100"  Header ="Customer №" Binding="{Binding Path=CustomerTableNumber, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="100"  Header ="Summ" Binding="{Binding Path=Summ, Mode=TwoWay}"/>
-                <DataGridTextColumn Width="110"  Header ="Date" Binding="{Binding Path=Date, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="*"  Header ="Customer №" Binding="{Binding Path=CustomerTableNumber, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="*"  Header ="Summ" Binding="{Binding Path=Summ, Mode=TwoWay}"/>
+                <DataGridTextColumn Width="1.2*"  Header ="Date" Binding="{Binding Path=Date, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
 
 
-        <Button Grid.Column="1" Command="{Binding OnAddUserButtonClickCommand}" Grid.Row="1" Name="AddUserButton" Content="Add User" Width="60" Height="20" Margin="266,53,0,24" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left"/>
+
+        <!-- First table controls -->
+        <Button Grid.Column="1" Command="{Binding OnAddUserButtonClickCommand}" Grid.Row="1" Name="AddUserButton" Content="Add User" Width="60" Height="20" Margin="266,0,0,0" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left"/>
         <TextBox Grid.Column="1" MaxLength="24" Grid.Row="1" ToolTipService.ToolTip="Name" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
             Name="UserNameTextBox" Text="{Binding NameAddUserInputField}" Margin="90,14,213,63" TextWrapping="NoWrap"/>
         <TextBox MaxLength="13"  Grid.Column="1" Grid.Row="1" ToolTipService.ToolTip="Phone number" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
             Name="UserPhoneNumberTextBox" Text="{Binding PhoneNumberAddUSerInputField}" Margin="208,14,0,63" TextWrapping="Wrap" Width="118" HorizontalAlignment="Left"/>
 
 
-
-        <Button Grid.Column="2" Content="Add Order" Command="{Binding OnAddOrderButtonClickCommand}" Name="AddOrderButton"  HorizontalAlignment="Left" Margin="311,53,0,0" Grid.Row="1" VerticalAlignment="Top" 
+        <!-- Second table controls -->
+        <Button Grid.Column="2" Content="Add Order" Command="{Binding OnAddOrderButtonClickCommand}" Name="AddOrderButton"  HorizontalAlignment="Left" Margin="311,0,0,0" Grid.Row="1" VerticalAlignment="Center" 
                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-        <TextBox Grid.Column="2" Text="{Binding CustomerNumberAddOrderInputField}" Name="CustomerNumberTextBox" ToolTipService.ToolTip="Customer Number"  HorizontalAlignment="Left" Margin="46,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Height="18" 
+        <TextBox Grid.Column="2" Text="{Binding CustomerNumberAddOrderInputField}" Name="CustomerNumberTextBox" ToolTipService.ToolTip="Customer Number"  HorizontalAlignment="Left" Margin="46,14,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Height="20" 
                  Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-        <TextBox Grid.Column="2" Text="{Binding SummAddOrderInputField}" Name="SummTextBox" ToolTipService.ToolTip="Summ" HorizontalAlignment="Left" Margin="150,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" 
-                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <TextBox Grid.Column="2" Text="{Binding SummAddOrderInputField}" Name="SummTextBox" ToolTipService.ToolTip="Summ" HorizontalAlignment="Left" Margin="150,14,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" 
+                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="20"/>
 
-        <TextBox Grid.Column="2" Text="{Binding DateAddOrderInputField}" Name="DateTextBox" ToolTipService.ToolTip="Date (dd-mm-yyyy)" HorizontalAlignment="Left" Margin="251,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
-                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <TextBox Grid.Column="2" Text="{Binding DateAddOrderInputField}" Name="DateTextBox" ToolTipService.ToolTip="Date (dd-mm-yyyy)" HorizontalAlignment="Left" Margin="251,14,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="20"/>
+
+
+
+        <!-- MinMaxOverall labels -->
+        <Label Content="Min " HorizontalAlignment="Left" Margin="12,292,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Label Content="Max " HorizontalAlignment="Left" Margin="13,318,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Label Content="Overall " HorizontalAlignment="Left" Margin="13,344,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+
+        <Label Content="{Binding MinOderPriceValue}" HorizontalAlignment="Left" Margin="83,292,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Label Content="{Binding MaxOderPriceValue}" HorizontalAlignment="Left" Margin="83,318,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Label Content="{Binding OverallOderPriceValue}" HorizontalAlignment="Left" Margin="83,344,0,0" VerticalAlignment="Top"
+               Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
 
 
