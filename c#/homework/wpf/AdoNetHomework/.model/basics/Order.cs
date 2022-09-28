@@ -1,5 +1,7 @@
 ﻿
 
+using System.Globalization;
+
 namespace AdoNetHomework.Model
 {
     /// <summary>
@@ -178,29 +180,13 @@ namespace AdoNetHomework.Model
             Summ = double.MaxValue;
             
             // it sort of parses 'DateTime.Now' into 'DateOnly'-like format;
-            Date = DateTime.Now.ToString();
+            Date = DateTime.Now.ToString(CultureInfo.InvariantCulture);
         }
 
 
 
 
         #region OVERLOADING - Parameters Overloading
-
-
-        /// <summary>
-        /// @see Order(int, int, double, DateOnly) in this file right above this method;
-        /// <br />
-        /// It's a copy of the previous one but with 'DateTime.Now' parameter;
-        /// <br />
-        /// Это просто копия предыдущего, только с параметром "DateTime.Now";
-        /// </summary>
-        public Order(int id, int customerId, double summ, DateTime DateTimeNow)
-        {
-            Id = id;
-            CustomerId = customerId;
-            Summ = summ;
-            Date = DateTime.Now.ToString();
-        }
 
 
         /// <summary>

@@ -228,6 +228,15 @@ namespace AdoNetHomework.ViewModel
         private string _OverallOderPriceValue;
 
 
+
+        /// <summary>
+        /// A connection string for the db;
+        /// <br />
+        /// Строка подключения для б/д;
+        /// </summary>
+        private string connectionString = "";
+
+
         #endregion Private references
 
 
@@ -601,25 +610,30 @@ namespace AdoNetHomework.ViewModel
         {
             // my local server id - DoronovLocalDb
 
-            string connectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
-
-            connection = new SqlConnection(connectionString);
-
             // try connect;
             try
             {
+                if (IsConnected != false && connectionString == "")
+                {
+                    connectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+                }
+
+                connection = new SqlConnection(connectionString);
+
                 ConnectionStatus = "Connecting .....";
 
                 await connection.OpenAsync();
 
-                MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
-
                 ToggleConnectionState();
 
-                ConnectionStatus = $"Connected to {ServerName}.";
+                
+
+                MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 try
                 {
+                    ConnectionStatus = $"Connected to {ServerName}.";
+
                     ExecuteSQLCommand($"USE {reservedDbName};");
 
                     RefreshLists();
@@ -662,7 +676,16 @@ namespace AdoNetHomework.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
+                try
+                {
+                    connectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+
+                    OnConnectButtonClickAsync();
+                }
+                catch (Exception exe)
+                {
+                    MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -716,7 +739,7 @@ namespace AdoNetHomework.ViewModel
             {
                 order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
                 queryString =
-                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date}');";
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToString()}');";
                 TryExecuteSQLCommand(queryString);
             }
 
@@ -1008,27 +1031,27 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         public void OnOrderListItemPropertyChanged(object? sender, EventArgs e)
         {
-            ObservableCollection<Order> tempOrdersForComparison = new ObservableCollection<Order>();
+            ObservableCollection<OrderTableItem> tempOrdersForComparison = new ObservableCollection<OrderTableItem>();
 
             SqlCommand command = new SqlCommand($"SELECT * FROM Orders", connection);
 
-            Order orderRef = new Order();
+            OrderTableItem orderRef = new OrderTableItem();
 
             // create copy of db data in a list;
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, dateString: reader.GetString(3));
+                    orderRef = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, dateString: reader.GetString(3));
                     tempOrdersForComparison.Add(orderRef);
                 }
             }
 
             // for each view collection item;
-            foreach (Order newOrder in PrimaryOrderList)
+            foreach (OrderTableItem newOrder in PrimaryOrderList)
             {
                 // for each db item;
-                foreach (Order oldOrder in tempOrdersForComparison)
+                foreach (OrderTableItem oldOrder in tempOrdersForComparison)
                 {
                     // if they differ;
                     if (oldOrder.Id == newOrder.Id && !oldOrder.Equals(newOrder))
@@ -1038,22 +1061,6 @@ namespace AdoNetHomework.ViewModel
                     }
                 }
             }
-
-            #region Critical Exception
-
-            //RefreshUserList();
-
-            /*
-            
-            Если раскомментить, то на первом изменённом элементе выдаёт ElementOutOfRangeException.
-            При этом, этот метод вызывается в других местах, где он работает корректно.
-            Дебаг ничего не дал.
-
-            Так как здесь метод опционален, было принято решение пока от него избавиться.
-
-             */
-
-            #endregion Critical Exception
         }
 
 

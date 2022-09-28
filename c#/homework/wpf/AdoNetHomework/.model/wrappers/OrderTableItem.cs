@@ -68,6 +68,85 @@ namespace AdoNetHomework.Model.Wrappers
         }
 
 
+
+
+        #region Public properties
+
+
+        /// <summary>
+        /// @see private int _Id in this file in 'Private references' region;
+        /// </summary>
+        public int Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                _Id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private int _CustomerId in this file in 'Private references' region;
+        /// </summary>
+        public int CustomerId
+        {
+            get
+            {
+                return
+                    _CustomerId;
+            }
+            set
+            {
+                _CustomerId = value;
+                OnPropertyChanged(nameof(CustomerId));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private double _Summ in this file in 'Private references' region;
+        /// </summary>
+        public double Summ
+        {
+            get
+            {
+                return
+                    _Summ;
+            }
+            set
+            {
+                _Summ = value;
+                OnPropertyChanged(nameof(Summ));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private DateOnly _Date in this file in 'Private references' region;
+        /// </summary>
+        public string Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                _Date = value;
+                OnPropertyChanged(nameof(Date));
+            }
+        }
+
+
+        #endregion Public properties
+
+
+
         #endregion PROPERTIES
 
 
