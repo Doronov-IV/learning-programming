@@ -207,10 +207,25 @@ namespace AdoNetHomework.ViewModel
         ///
 
 
+        /// <summary>
+        /// A value for the "Min" label;
+        /// <br />
+        /// Значение для этикетки "Min";
+        /// </summary>
         private string _MinOderPriceValue;
 
+        /// <summary>
+        /// A value for the "Max" label;
+        /// <br />
+        /// Значение для этикетки "Max";
+        /// </summary>
         private string _MaxOderPriceValue;
 
+        /// <summary>
+        /// A value for the "Overall" label;
+        /// <br />
+        /// Значение для этикетки "Overall";
+        /// </summary>
         private string _OverallOderPriceValue;
 
 
@@ -794,13 +809,19 @@ namespace AdoNetHomework.ViewModel
 
                 if (PhoneNumberAddUSerInputField.StartsWith("+44") && PhoneNumberAddUSerInputField.Length == 13)
                 {
-                    queryString = $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES ('{NameAddUserInputField}', '{PhoneNumberAddUSerInputField}');";
+                    queryString = $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES (@name, @phone);";
 
+                    SqlCommand command = new SqlCommand(queryString, connection);
 
+                    command.Parameters.Add(nameParam);
 
-                    TryExecuteSQLCommand(queryString);
+                    command.Parameters.Add(phoneNumberParam);
+
+                    command.ExecuteNonQuery();
 
                     ShowSuccessChangesMessageBox();
+
+                    RefreshLists();
                 }
                 else
                 {
@@ -842,12 +863,22 @@ namespace AdoNetHomework.ViewModel
 
                 try
                 {
+                    SqlParameter idParam = new SqlParameter("@customerId", CustomerIdByTableNumber);
+                    SqlParameter summParam = new SqlParameter("@summ", SummAddOrderInputField);
+                    SqlParameter dateParam = new SqlParameter("@date", DateTime.ParseExact(DateAddOrderInputField, "dd-mm-yyyy", CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture));
+
 
                     queryString = $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES " +
 
-                        $"('{CustomerIdByTableNumber}', '{SummAddOrderInputField}', '{DateTime.ParseExact(DateAddOrderInputField, "dd-mm-yyyy", CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture)}');";
+                        $"(@customerId, @summ, @date);";
 
-                    ExecuteSQLCommand(queryString);
+                    SqlCommand command = new SqlCommand(queryString, connection);
+
+                    command.Parameters.Add(idParam);
+                    command.Parameters.Add(summParam);
+                    command.Parameters.Add(dateParam);
+
+                    command.ExecuteNonQuery();
 
                     ShowSuccessChangesMessageBox();
 
@@ -1312,7 +1343,7 @@ namespace AdoNetHomework.ViewModel
         public MainWindowViewModel()
         {
             // Debug;
-            ServerName = "DoronovIV";
+            //ServerName = "DoronovIV";
 
 
             // Button commands;

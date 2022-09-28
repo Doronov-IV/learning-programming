@@ -22,10 +22,5 @@ namespace AdoNetHomework
 
             DataContext = new MainWindowViewModel();
         }
-
-        private void UserDataGrid_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
     }
 }
