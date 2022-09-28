@@ -153,7 +153,21 @@ namespace AdoNetHomework.ViewModel
         private readonly string reservedDbName = "DoronovAdoNetCoreHomework";
 
 
+        /// <summary>
+        /// A property for deletion of the selected user from 'Users' table;
+        /// <br />
+        /// Свойство для удаления выбранного элемента из таблицы пользователей;
+        /// </summary>
         private User _SelectedUser;
+
+
+
+
+
+        private string _NameAddUserInputField;
+
+
+        private string _PhoneNumberAddUSerInputField;
 
 
         #endregion Private references
@@ -171,6 +185,9 @@ namespace AdoNetHomework.ViewModel
         public string ServerName { get { return _serverName; } set { _serverName = value; } }
 
 
+        /// <summary>
+        /// @see private User _SelectedUser;
+        /// </summary>
         public User SelectedUser
         {
             get
@@ -182,6 +199,42 @@ namespace AdoNetHomework.ViewModel
             {
                 _SelectedUser = value;
                 OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _NameAddUserInputField;
+        /// </summary>
+        public string NameAddUserInputField
+        {
+            get
+            {
+                return _NameAddUserInputField;
+            }
+
+            set
+            {
+                _NameAddUserInputField = value;
+                OnPropertyChanged(nameof(NameAddUserInputField));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _PhoneNumberAddUSerInputField;
+        /// </summary>
+        public string PhoneNumberAddUSerInputField
+        {
+            get
+            {
+                return _PhoneNumberAddUSerInputField;
+            }
+
+            set
+            {
+                _PhoneNumberAddUSerInputField = value;
+                OnPropertyChanged(nameof(PhoneNumberAddUSerInputField));
             }
         }
 
@@ -260,7 +313,20 @@ namespace AdoNetHomework.ViewModel
         public DelegateCommand OnClearButtonClickCommand { get; }
 
 
-        public DelegateCommand OnUserDataGridKeyDownDelegate { get; }
+        /// <summary>
+        /// Delete 'Users' table command;
+        /// <br />
+        /// Команда удаления элемента из таблицы 'Users';
+        /// </summary>
+        public DelegateCommand OnUserDataGridDeleteKeyDownCommand { get; }
+
+
+        /// <summary>
+        /// AddUser click handler command;
+        /// <br />
+        /// Команда добавления пользователя при клике по кнопке "Add";
+        /// </summary>
+        public DelegateCommand OnAddUserButtonClickCommand { get; }
 
 
 
@@ -515,7 +581,12 @@ namespace AdoNetHomework.ViewModel
         }
 
 
-        private void OnUserDataGridKeyDown()
+        /// <summary>
+        /// Delete element from 'Users' table command handler;
+        /// <br />
+        /// Хендлер комманды удаления элемента из таблицы 'Users';
+        /// </summary>
+        private void OnUserDataGridDeleteKeyDown()
         {
             ObservableCollection<User> tempUserList = new ObservableCollection<User>();
 
@@ -529,13 +600,49 @@ namespace AdoNetHomework.ViewModel
                 }
                 else
                 {
-                    queryString = $"USE {reservedDbName}; DELETE FROM TABLE Users WHERE Id = {user.Id};";
+                    foreach(Order order in PrimaryOrderList)
+                    {
+                        if (order.CustomerId == user.Id)
+                        {
+                            queryString = $"USE {reservedDbName}; DELETE FROM Orders WHERE CustomerId = {user.Id};";
 
-                    command = new SqlCommand(queryString, connection);
+                            ExecuteSQLCommand(queryString);
+                        }
+                    }
+
+                    queryString = $"USE {reservedDbName}; DELETE FROM Users WHERE Id = {user.Id};";
+
+                    ExecuteSQLCommand(queryString);
                 }
             }
 
             PrimaryUserList = tempUserList;
+        }
+
+
+
+        /// <summary>
+        /// 'AddUser' button command handler;
+        /// <br />
+        /// Хендлер команды нажатия на кпопку "Add";
+        /// </summary>
+        private void OnAddUserButtonClick()
+        {
+            if (NameAddUserInputField.Length <= 24)
+            {
+                if (PhoneNumberAddUSerInputField.StartsWith("+44") && PhoneNumberAddUSerInputField.Length == 13)
+                {
+                    queryString = $"USE {reservedDbName}; INSERT INTO Users (Name, PhoneNumber) VALUES ('{NameAddUserInputField}', '{PhoneNumberAddUSerInputField}');";
+
+                    TryExecuteSQLCommand(queryString);
+
+                    ShowSuccessChangesMessageBox();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong phone number format. It should start with '+44' and include 13 symbols at max.", "Wrong Phone Number format.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
 
@@ -929,11 +1036,16 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            // Debug;
+            ServerName = "DoronovIV";
+
+
             // Button commands;
             OnConnectButtonClickCommand = new DelegateCommand(OnConnectButtonClickAsync);
             OnFillButtonClickCommand = new DelegateCommand(OnFillButtonClick);
             OnClearButtonClickCommand = new DelegateCommand(OnClearButtonClickAsync);
-            OnUserDataGridKeyDownDelegate = new DelegateCommand(OnUserDataGridKeyDown);
+            OnUserDataGridDeleteKeyDownCommand = new DelegateCommand(OnUserDataGridDeleteKeyDown);
+            OnAddUserButtonClickCommand = new DelegateCommand(OnAddUserButtonClick);
 
 
             // Connection status;
