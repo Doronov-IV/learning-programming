@@ -74,7 +74,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Заметка о дате заказа для таблицы 'Orders';
         /// </summary>
-        protected DateTime _Date;
+        protected string _Date;
 
 
         #endregion Private references
@@ -141,7 +141,7 @@ namespace AdoNetHomework.Model
         /// <summary>
         /// @see private DateOnly _Date in this file in 'Private references' region;
         /// </summary>
-        public DateTime Date 
+        public string Date 
         {
             get 
             { 
@@ -178,7 +178,7 @@ namespace AdoNetHomework.Model
             Summ = double.MaxValue;
             
             // it sort of parses 'DateTime.Now' into 'DateOnly'-like format;
-            Date = DateTime.Now;
+            Date = DateTime.Now.ToString();
         }
 
 
@@ -199,7 +199,23 @@ namespace AdoNetHomework.Model
             Id = id;
             CustomerId = customerId;
             Summ = summ;
-            Date = DateTime.Now;
+            Date = DateTime.Now.ToString();
+        }
+
+
+        /// <summary>
+        /// @see Order(int, int, double, DateOnly) in this file right above this method;
+        /// <br />
+        /// It's a copy of the previous one but with 'DateTime.Now' parameter;
+        /// <br />
+        /// Это просто копия предыдущего, только с параметром "DateTime.Now";
+        /// </summary>
+        public Order(int id, int customerId, double summ, string DateTimeNow)
+        {
+            Id = id;
+            CustomerId = customerId;
+            Summ = summ;
+            Date = DateTimeNow;
         }
 
 

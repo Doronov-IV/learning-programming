@@ -155,7 +155,7 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Свойство для удаления выбранного элемента из таблицы пользователей;
         /// </summary>
-        private User _SelectedUser;
+        private UserTableItem _SelectedUser;
 
 
 
@@ -245,7 +245,7 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// @see private User _SelectedUser;
         /// </summary>
-        public User SelectedUser
+        public UserTableItem SelectedUser
         {
             get
             {
@@ -601,7 +601,7 @@ namespace AdoNetHomework.ViewModel
         {
             // my local server id - DoronovLocalDb
 
-            string connectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            string connectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             connection = new SqlConnection(connectionString);
 
@@ -654,7 +654,7 @@ namespace AdoNetHomework.ViewModel
                         "   [Id] INT PRIMARY KEY IDENTITY(0,1)," +
                         "   [CustomerId] INT FOREIGN KEY REFERENCES Users(Id)," +
                         "   [Summ] FLOAT," +
-                        "   [Date] DATETIME" +
+                        "   [Date] NVARCHAR(24)" +
                         ")"
                     );
                     }
@@ -716,7 +716,7 @@ namespace AdoNetHomework.ViewModel
             {
                 order = orderGenerator.GetRandomOrder(UsersIdSchemeForRandomOrders);
                 queryString =
-                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture)}');";
+                    $"USE {reservedDbName}; INSERT INTO Orders (CustomerId, Summ, Date) VALUES('{order.CustomerId}','{Math.Round(order.Summ, 1).ToString(CultureInfo.InvariantCulture)}', '{order.Date}');";
                 TryExecuteSQLCommand(queryString);
             }
 
@@ -949,27 +949,27 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private void OnUserListItemPropertyChanged(object? sender, EventArgs e)
         {
-            ObservableCollection<User> tempUsersForComparison = new ObservableCollection<User>();
+            ObservableCollection<UserTableItem> tempUsersForComparison = new ObservableCollection<UserTableItem>();
 
             SqlCommand command = new SqlCommand($"SELECT * FROM Users", connection);
 
-            User userRef = new User();
+            UserTableItem userRef = new UserTableItem();
 
             // create copy of db data in a list;
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    userRef = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
+                    userRef = new UserTableItem(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
                     tempUsersForComparison.Add(userRef);
                 }
             }
 
             // for each view collection item;
-            foreach (User newUser in PrimaryUserList)
+            foreach (UserTableItem newUser in PrimaryUserList)
             {
                 // for each db item;
-                foreach (User oldUser in tempUsersForComparison)
+                foreach (UserTableItem oldUser in tempUsersForComparison)
                 {
                     // if they differ;
                     if (oldUser.Id == newUser.Id && !oldUser.Equals(newUser))
@@ -1019,7 +1019,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
+                    orderRef = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetString(3));
                     tempOrdersForComparison.Add(orderRef);
                 }
             }
@@ -1253,7 +1253,7 @@ namespace AdoNetHomework.ViewModel
             {
                 while (reader.Read())
                 {
-                    order = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
+                    order = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetString(3));
                     PrimaryOrderList.Add(order);
                 }
             }

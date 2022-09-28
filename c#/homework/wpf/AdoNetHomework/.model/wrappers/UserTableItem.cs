@@ -40,6 +40,11 @@ namespace AdoNetHomework.Model.Wrappers
 
 
 
+
+
+
+
+
         #region PROPERTIES
 
 
@@ -67,6 +72,58 @@ namespace AdoNetHomework.Model.Wrappers
                 OnPropertyChanged(nameof(TableNumber));
             }
         }
+
+
+        /// <summary>
+        /// @see private int _Id;
+        /// </summary>
+        public int Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                _Id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _Name;
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                _Name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _PhoneNumber;
+        /// </summary>
+        public string PhoneNumber
+        {
+            get
+            {
+                return _PhoneNumber;
+            }
+            set
+            {
+                _PhoneNumber = value;
+                OnPropertyChanged(nameof(PhoneNumber));
+            }
+        }
+
 
 
         #endregion PROPERTIES
