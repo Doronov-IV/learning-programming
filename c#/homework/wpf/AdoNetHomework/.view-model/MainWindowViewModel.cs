@@ -1,5 +1,7 @@
 ﻿// Sic parvis magna
+using AdoNetHomework.model.wrappers;
 using AdoNetHomework.Model;
+using AdoNetHomework.Model.Wrappers;
 using AdoNetHomework.Service;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -102,7 +104,7 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Текущий список юзеров для отправки в бд;
         /// </summary>
-        private ObservableCollection<User> _PrimaryUserList;
+        private ObservableCollection<UserTableItem> _PrimaryUserList;
 
 
         /// <summary>
@@ -110,7 +112,7 @@ namespace AdoNetHomework.ViewModel
         /// <br />
         /// Текущий список заказов для отправки в бд;
         /// </summary>
-        private ObservableCollection<Order> _PrimaryOrderList;
+        private ObservableCollection<OrderTableItem> _PrimaryOrderList;
 
 
         /// <summary>
@@ -164,10 +166,43 @@ namespace AdoNetHomework.ViewModel
 
 
 
+        /// <summary>
+        /// User Name input field;
+        /// <br />
+        /// Поле ввода для имени пользователя;
+        /// </summary>
         private string _NameAddUserInputField;
 
-
+        /// <summary>
+        /// User P/N input field;
+        /// <br />
+        /// Поле ввода для номера телефона пользователя;
+        /// </summary>
         private string _PhoneNumberAddUSerInputField;
+
+
+
+
+        /// <summary>
+        /// Order C/N input field;
+        /// <br />
+        /// Поле ввода для номера заказчика в соответствующей таблице;
+        /// </summary>
+        private string _CustomerNumberAddOrderInputField;
+
+        /// <summary>
+        /// Order Sum input field;
+        /// <br />
+        /// Поле ввода для суммы заказа в соответствующей таблице;
+        /// </summary>
+        private string _SummAddOrderInputField;
+
+        /// <summary>
+        /// Order date input field;
+        /// <br />
+        /// Поле ввода для даты в соответствующей таблице;
+        /// </summary>
+        private string _DateAddOrderInputField;
 
 
         #endregion Private references
@@ -202,6 +237,12 @@ namespace AdoNetHomework.ViewModel
             }
         }
 
+
+
+
+        ///
+        /// Add user button fields;
+        ///
 
         /// <summary>
         /// @see private string _NameAddUserInputField;
@@ -240,6 +281,63 @@ namespace AdoNetHomework.ViewModel
 
 
 
+        ///
+        /// Add order button fields;
+        ///
+
+        /// <summary>
+        /// @see private string _CustomerNumberAddOrderInputField;
+        /// </summary>
+        public string CustomerNumberAddOrderInputField
+        {
+            get
+            {
+                return _CustomerNumberAddOrderInputField;
+            }
+            set
+            {
+                _CustomerNumberAddOrderInputField = value;
+                OnPropertyChanged(nameof(CustomerNumberAddOrderInputField));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _SummAddOrderInputField;
+        /// </summary>
+        public string SummAddOrderInputField
+        {
+            get
+            {
+                return _SummAddOrderInputField;
+            }
+            set
+            {
+                _SummAddOrderInputField = value;
+                OnPropertyChanged(nameof(SummAddOrderInputField));
+            }
+        }
+
+
+        /// <summary>
+        /// @see private string _DateAddOrderInputField;
+        /// </summary>
+        public string DateAddOrderInputField
+        {
+            get
+            {
+                return _DateAddOrderInputField;
+            }
+
+            set
+            {
+                _DateAddOrderInputField = value;
+                OnPropertyChanged(nameof(DateAddOrderInputField));
+            }
+        }
+
+
+
 
 
         #region Observable collections
@@ -249,7 +347,7 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// @see private List<User> _PrimaryUserList;
         /// </summary>
-        public ObservableCollection<User> PrimaryUserList
+        public ObservableCollection<UserTableItem> PrimaryUserList
         {
             get
             {
@@ -266,7 +364,7 @@ namespace AdoNetHomework.ViewModel
         /// <summary>
         /// @see private List<Order> _PrimaryOrderList;
         /// </summary>
-        public ObservableCollection<Order> PrimaryOrderList
+        public ObservableCollection<OrderTableItem> PrimaryOrderList
         {
             get
             {
@@ -588,7 +686,7 @@ namespace AdoNetHomework.ViewModel
         /// </summary>
         private void OnUserDataGridDeleteKeyDown()
         {
-            ObservableCollection<User> tempUserList = new ObservableCollection<User>();
+            ObservableCollection<UserTableItem> tempUserList = new ObservableCollection<UserTableItem>();
 
             SqlCommand command;
 
@@ -617,6 +715,8 @@ namespace AdoNetHomework.ViewModel
             }
 
             PrimaryUserList = tempUserList;
+
+            RefreshLists();
         }
 
 
@@ -954,6 +1054,11 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+
+
+
+
+
         /// <summary>
         /// Pull data from db to collection;
         /// <br />
@@ -965,16 +1070,18 @@ namespace AdoNetHomework.ViewModel
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Users", connection);
 
-            User user = new User();
+            UserTableItem user = new UserTableItem();
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    user = new User(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
+                    user = new UserTableItem(Id: reader.GetInt32(0), Name: reader.GetString(1), PhoneNumber: reader.GetString(2));
                     PrimaryUserList.Add(user);
                 }
             }
+
+            RefreshTableItemsNumbers();
         }
 
 
@@ -989,18 +1096,19 @@ namespace AdoNetHomework.ViewModel
 
             SqlCommand command = new SqlCommand($"USE {reservedDbName}; SELECT * FROM Orders", connection);
 
-            Order order = new Order();
+            OrderTableItem order = new OrderTableItem();
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    order = new Order(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
+                    order = new OrderTableItem(id: reader.GetInt32(0), customerId: reader.GetInt32(1), summ: reader.GetSqlDouble(2).Value, DateTimeNow: reader.GetDateTime(3));
                     PrimaryOrderList.Add(order);
                 }
             }
-        }
 
+            RefreshTableItemsNumbers();
+        }
 
 
         /// <summary>
@@ -1012,6 +1120,28 @@ namespace AdoNetHomework.ViewModel
         {
             RefreshUserList();
             RefreshOrderList();
+        }
+
+
+        /// <summary>
+        /// Refresh view-table numbers to avoid id exposing for the user;
+        /// <br />
+        /// Обновить номера значений в таблице представления, чтобы избежать раскрытия id для пользователя;
+        /// </summary>
+        private void RefreshTableItemsNumbers()
+        {
+            int i = 1;
+            foreach (UserTableItem userWrapper in PrimaryUserList)
+            {
+                userWrapper.TableNumber = i++;
+                foreach(OrderTableItem orderWrapper in PrimaryOrderList)
+                {
+                    if (orderWrapper.CustomerId.Equals(userWrapper.Id))
+                    {
+                        orderWrapper.CustomerTableNumber = userWrapper.TableNumber;
+                    }
+                }
+            }
         }
 
 
@@ -1054,8 +1184,8 @@ namespace AdoNetHomework.ViewModel
             ConnectionStatus = "Waiting for connection.";
 
             // Initializing lists;
-            PrimaryUserList = new ObservableCollection<User>();
-            PrimaryOrderList = new ObservableCollection<Order>();
+            PrimaryUserList = new ObservableCollection<UserTableItem>();
+            PrimaryOrderList = new ObservableCollection<OrderTableItem>();
 
             // Adding events for user input handling;
             PrimaryUserList.CollectionChanged += OnUserListCollectionChanged;

@@ -54,7 +54,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// User.Id поле;
         /// </summary>
-        private int _Id;
+        protected int _Id;
 
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// User.Name поле;
         /// </summary>
-        private string _Name;
+        protected string _Name;
 
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// User.PhoneNumber поле;
         /// </summary>
-        private string _PhoneNumber;
+        protected string _PhoneNumber;
 
 
         #endregion Private references

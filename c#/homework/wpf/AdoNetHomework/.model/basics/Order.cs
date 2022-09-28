@@ -50,7 +50,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Идентификатор, первичный ключ для таблицы 'Orders';
         /// </summary>
-        private int _Id;
+        protected int _Id;
 
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Идентификатор клиентов для таблицы 'Orders';
         /// </summary>
-        private int _CustomerId;
+        protected int _CustomerId;
 
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Показатель суммы заказа для таблицы 'Orders';
         /// </summary>
-        private double _Summ;
+        protected double _Summ;
 
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace AdoNetHomework.Model
         /// <br />
         /// Заметка о дате заказа для таблицы 'Orders';
         /// </summary>
-        private DateTime _Date;
+        protected DateTime _Date;
 
 
         #endregion Private references

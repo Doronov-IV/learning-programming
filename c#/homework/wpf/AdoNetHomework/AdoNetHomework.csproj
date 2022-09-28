@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include=".model\basics\Order.cs" />
     <Compile Include=".model\basics\User.cs" />
+    <Compile Include=".model\wrappers\OrderTableItem.cs" />
+    <Compile Include=".model\wrappers\UserTableItem.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
     <Compile Include=".model\service\OrderGenerator.cs" />
     <Compile Include=".model\service\UserGenerator.cs" />
