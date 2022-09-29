@@ -613,11 +613,8 @@ namespace AdoNetHomework.ViewModel
             // try connect;
             try
             {
-                if (IsConnected != false && connectionString == "")
-                {
-                    connectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
-                }
-
+                connectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+                
                 connection = new SqlConnection(connectionString);
 
                 ConnectionStatus = "Connecting .....";
@@ -625,7 +622,6 @@ namespace AdoNetHomework.ViewModel
                 await connection.OpenAsync();
 
                 ToggleConnectionState();
-
                 
 
                 MessageBox.Show($"Connection Established.\nId: {connection.ClientConnectionId}", "Success.", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -676,16 +672,7 @@ namespace AdoNetHomework.ViewModel
             }
             catch (Exception ex)
             {
-                try
-                {
-                    connectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
-
-                    OnConnectButtonClickAsync();
-                }
-                catch (Exception exe)
-                {
-                    MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);  
             }
         }
 

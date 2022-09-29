@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".Readme\**" />
+    <Compile Remove="controls\**" />
+    <Compile Remove="forms\**" />
+    <EmbeddedResource Remove=".Readme\**" />
+    <EmbeddedResource Remove="controls\**" />
+    <EmbeddedResource Remove="forms\**" />
+    <None Remove=".Readme\**" />
+    <None Remove="controls\**" />
+    <None Remove="forms\**" />
+  </ItemGroup>
+
+</Project>
