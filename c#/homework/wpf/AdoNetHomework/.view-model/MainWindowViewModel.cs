@@ -672,7 +672,7 @@ namespace AdoNetHomework.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Something went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);  
+                MessageBox.Show($"Если имя указано правильно, попробуй добавить \".\\\\\" в строку подключения (LOGIC - HANDLERS - View Controls)\nSomething went wrong. Please, try another name.\nIf you are sure of this name, please check your server settings.\n\nException: {ex.Message}.", "Error. Server not found.", MessageBoxButton.OK, MessageBoxImage.Error);  
             }
         }
 
@@ -861,7 +861,7 @@ namespace AdoNetHomework.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Please, enter digital number.", "Wrong Customer Number.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please, enter existing digital number.", "Wrong Customer Number.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
