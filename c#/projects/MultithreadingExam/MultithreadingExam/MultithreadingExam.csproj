@@ -9,15 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove=".Readme\**" />
-    <Compile Remove="controls\**" />
-    <Compile Remove="forms\**" />
-    <EmbeddedResource Remove=".Readme\**" />
-    <EmbeddedResource Remove="controls\**" />
-    <EmbeddedResource Remove="forms\**" />
-    <None Remove=".Readme\**" />
-    <None Remove="controls\**" />
-    <None Remove="forms\**" />
+    <Folder Include="copied-files\" />
   </ItemGroup>
 
 </Project>
