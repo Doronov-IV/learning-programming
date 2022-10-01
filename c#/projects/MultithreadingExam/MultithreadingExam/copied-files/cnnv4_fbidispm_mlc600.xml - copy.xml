@@ -1,0 +1,87 @@
+﻿<?xml version="1.0"?>
+<!-- Canon V4 Printer Driver -->
+<!-- Copyright CANON INC. 2018 -->
+<bidi:Definition xmlns:bidi="http://schemas.microsoft.com/windows/2005/03/printing/bidi">
+  <Schema xmlns:cn="http://www.canon.com/ns/active/wsd" xmlns:nprt="http://schemas.microsoft.com/windows/2006/08/wdp/print">
+    <Property name="Printer">
+      <Property name="Layout">
+        <Property name="InputBins">
+          <!-- CMFP -->
+          <Parameter name="Compact$TrayName$" parameter="TrayName" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry/@nprt:Name">
+            <Value name="MediaSize" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:MediaSize" type="BIDI_STRING" />
+            <Value name="MediaType" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:MediaType" type="BIDI_STRING" />
+            <Value name="MediaColor" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:MediaColor" type="BIDI_STRING" />
+            <Value name="FeedDirection" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:FeedDirection" type="BIDI_STRING" />
+            <Value name="Capacity" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:Capacity" type="BIDI_INT" />
+            <Value name="Level" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/nprt:Level" type="BIDI_INT" />
+            <Value name="TrayType" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/cn:TrayType" type="BIDI_STRING" />
+            <Value name="TrayNumber" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/cn:TrayNumber" type="BIDI_INT" />
+            <Value name="AliasName" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/cn:InputBinAliasNameEntry/cn:InputBinAliasName" type="BIDI_STRING" />
+            <Value name="PaperName" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/cn:PaperName" type="BIDI_STRING" />
+            <Value name="MediaId" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='$TrayName$']/cn:MediaId" type="BIDI_STRING" />
+          </Parameter>
+          <!-- CMFP -->
+          <Property name="CompactStackBypass">
+            <Installed name="Installed" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='StackBypass']" />
+          </Property>
+          <Property name="CompactDrawer1">
+            <Installed name="Installed" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='Drawer1']" />
+          </Property>
+          <Property name="CompactDrawer2">
+            <Installed name="Installed" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='Drawer2']" />
+          </Property>
+          <Property name="CompactDrawer3">
+            <Installed name="Installed" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='Drawer3']" />
+          </Property>
+          <Property name="CompactDrawer4">
+            <Installed name="Installed" drvPrinterEvent="true" query="nprt:PrinterConfiguration" filter="nprt:PrinterConfiguration/nprt:InputBins/nprt:InputBinEntry[@nprt:Name='Drawer4']" />
+          </Property>
+        </Property>
+      </Property>
+      <Property name="Canon">
+        <Property name="OIP">
+          <Property name="Device">
+            <Value name="DeviceModelName" drvPrinterEvent="true" query="cn:Device" filter="cn:Device/cn:DeviceModel" type="BIDI_STRING" />
+            <Value name="ProductType" drvPrinterEvent="true" query="cn:Device" filter="cn:Device/cn:ProductType" type="BIDI_STRING" />
+            <Value name="UserManagementLevel" drvPrinterEvent="true" query="cn:Device" filter="cn:Device/cn:UserManagementLevel" type="BIDI_INT" />
+            <Property name="Status">
+              <Value name="StatusCode" drvPrinterEvent="true" query="cn:Device" filter="cn:Device/cn:Status/cn:StatusCode" type="BIDI_INT" />
+            </Property>
+          </Property>
+          <Property name="Printer">
+            <Property name="Output">
+              <Property name="OutputBins">
+                <Parameter name="OutputBin00$BinNumber$" parameter="BinNumber" query="cn:Printer" filter="cn:Printer/cn:Output/cn:OutputBinInfo/cn:OutputBinInfoEntry/cn:BinNumber">
+                  <Value name="BinName" drvPrinterEvent="true" query="cn:Printer" filter="cn:Printer/cn:Output/cn:OutputBinInfo/cn:OutputBinInfoEntry[cn:BinNumber='$BinNumber$']/cn:BinName" type="BIDI_STRING" />
+                </Parameter>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="Service">
+            <Property name="UserManagementServices">
+              <Parameter name="00$URLId$" parameter="URLId" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[(0&lt;=@cn:Id) ******* (@cn:Id&lt;10)]/@cn:Id">
+                <Value name="URL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[@cn:Id='$URLId$']" type="BIDI_STRING" />
+              </Parameter>
+              <Parameter name="0$URLId$" parameter="URLId" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[(10&lt;=@cn:Id) ******* (@cn:Id&lt;100)]/@cn:Id">
+                <Value name="URL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[@cn:Id='$URLId$']" type="BIDI_STRING" />
+              </Parameter>
+              <Parameter name="$URLId$" parameter="URLId" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[100&lt;=@cn:Id]/@cn:Id">
+                <Value name="URL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[@cn:Id='$URLId$']" type="BIDI_STRING" />
+              </Parameter>
+              <Parameter name="$URLId$" parameter="URLId" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL/@cn:Id">
+                <Value name="URL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL[@cn:Id='$URLId$']" type="BIDI_STRING" />
+              </Parameter>
+              <Value name="UserManagementServiceURL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:UserManagementServices/cn:UserManagementServiceURL" type="BIDI_STRING" />
+            </Property>
+            <Property name="WSDPrintServices">
+              <Parameter name="$URLId$" parameter="URLId" query="cn:Services" filter="cn:Services/cn:WSDPrintServices/cn:WSDPrintServiceURL/@cn:Id">
+                <Value name="URL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:WSDPrintServices/cn:WSDPrintServiceURL[@cn:Id='$URLId$']" type="BIDI_STRING" />
+              </Parameter>
+              <Value name="WSDPrintServiceURL" drvPrinterEvent="true" query="cn:Services" filter="cn:Services/cn:WSDPrintServices/cn:WSDPrintServiceURL" type="BIDI_STRING" />
+            </Property>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+  </Schema>
+</bidi:Definition>

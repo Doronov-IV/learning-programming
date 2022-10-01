@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+* Copyright 2012, The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions *******
+* limitations under the License.
+*/
+-->
+<com.*******roid.internal.widget.ResolverDrawerLayout
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="match_parent"
+    *******roid:maxWidth="@dimen/resolver_max_width"
+    *******roid:maxCollapsedHeight="@dimen/resolver_max_collapsed_height"
+    *******roid:maxCollapsedHeightSmall="56dp"
+    *******roid:id="@id/contentPanel">
+
+    <RelativeLayout
+        *******roid:id="@+id/title_container"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_alwaysShow="true"
+        *******roid:elevation="@dimen/resolver_elevation"
+        *******roid:paddingTop="@dimen/resolver_small_margin"
+        *******roid:paddingStart="@dimen/resolver_edge_margin"
+        *******roid:paddingEnd="@dimen/resolver_edge_margin"
+        *******roid:paddingBottom="@dimen/resolver_title_padding_bottom"
+        *******roid:background="@drawable/bottomsheet_background">
+
+        <TextView
+            *******roid:id="@+id/profile_button"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="48dp"
+            *******roid:layout_marginEnd="8dp"
+            *******roid:visibility="gone"
+            style="?attr/borderlessButtonStyle"
+            *******roid:textAppearance="?attr/textAppearanceButton"
+            *******roid:textColor="?attr/colorAccent"
+            *******roid:gravity="center_vertical"
+            *******roid:layout_alignParentTop="true"
+            *******roid:layout_alignParentEnd="true"
+            *******roid:singleLine="true" />
+
+        <TextView
+            *******roid:id="@+id/title"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_below="@id/profile_button"
+            *******roid:layout_alignParentStart="true"
+            *******roid:textColor="?*******roid:attr/textColorPrimary"
+            *******roid:fontFamily="@*******roid:string/config_headlineFontFamilyMedium"
+            *******roid:textSize="16sp"
+            *******roid:gravity="start|center_vertical" />
+    </RelativeLayout>
+
+    <View
+        *******roid:id="@+id/divider"
+        *******roid:layout_alwaysShow="true"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="1dp"
+        *******roid:background="?attr/colorBackgroundFloating"
+        *******roid:foreground="?attr/dividerVertical" />
+
+    <FrameLayout
+        *******roid:id="@+id/stub"
+        *******roid:visibility="gone"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:background="?attr/colorBackgroundFloating"/>
+
+    <TabHost
+        *******roid:id="@+id/profile_tabhost"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_alignParentTop="true"
+        *******roid:layout_centerHorizontal="true"
+        *******roid:accessibilityTraversalAfter="@id/title"
+        *******roid:background="?attr/colorBackgroundFloating">
+        <LinearLayout
+            *******roid:orientation="vertical"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content">
+            <TabWidget
+                *******roid:id="@*******roid:id/tabs"
+                *******roid:layout_width="match_parent"
+                *******roid:layout_height="wrap_content"
+                *******roid:visibility="gone">
+            </TabWidget>
+            <View
+                *******roid:id="@+id/resolver_tab_divider"
+                *******roid:visibility="gone"
+                *******roid:layout_width="match_parent"
+                *******roid:layout_height="1dp"
+                *******roid:background="?attr/colorBackgroundFloating"
+                *******roid:foreground="?attr/dividerVertical"/>
+            <FrameLayout
+                *******roid:id="@*******roid:id/tabcontent"
+                *******roid:layout_width="match_parent"
+                *******roid:layout_height="wrap_content">
+                <com.*******roid.internal.app.ResolverViewPager
+                    *******roid:id="@+id/profile_pager"
+                    *******roid:layout_width="match_parent"
+                    *******roid:layout_height="wrap_content" />
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+    <LinearLayout
+        *******roid:id="@+id/button_bar_container"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_alwaysShow="true"
+        *******roid:orientation="vertical"
+        *******roid:background="?attr/colorBackgroundFloating"
+        *******roid:layout_ignoreOffset="true">
+        <View
+            *******roid:id="@+id/resolver_button_bar_divider"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="1dp"
+            *******roid:background="?attr/colorBackgroundFloating"
+            *******roid:foreground="?attr/dividerVertical" />
+        <LinearLayout
+            *******roid:id="@+id/button_bar"
+            *******roid:visibility="gone"
+            style="?attr/buttonBarStyle"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_ignoreOffset="true"
+            *******roid:layout_hasNestedScrollIndicator="true"
+            *******roid:gravity="end|center_vertical"
+            *******roid:orientation="horizontal"
+            *******roid:layoutDirection="locale"
+            *******roid:measureWithLargestChild="true"
+            *******roid:paddingTop="@dimen/resolver_button_bar_spacing"
+            *******roid:paddingBottom="@dimen/resolver_button_bar_spacing"
+            *******roid:paddingStart="@dimen/resolver_edge_margin"
+            *******roid:paddingEnd="@dimen/resolver_small_margin"
+            *******roid:elevation="@dimen/resolver_elevation">
+
+            <Button
+                *******roid:id="@+id/button_once"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_gravity="start"
+                *******roid:maxLines="2"
+                style="?attr/buttonBarButtonStyle"
+                *******roid:fontFamily="@*******roid:string/config_headlineFontFamilyMedium"
+                *******roid:layout_height="wrap_content"
+                *******roid:textAllCaps="false"
+                *******roid:enabled="false"
+                *******roid:text="@string/activity_resolver_use_once"
+                *******roid:onClick="onButtonClick" />
+
+            <Button
+                *******roid:id="@+id/button_always"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_gravity="end"
+                *******roid:maxLines="2"
+                style="?attr/buttonBarButtonStyle"
+                *******roid:fontFamily="@*******roid:string/config_headlineFontFamilyMedium"
+                *******roid:textAllCaps="false"
+                *******roid:layout_height="wrap_content"
+                *******roid:enabled="false"
+                *******roid:text="@string/activity_resolver_use_always"
+                *******roid:onClick="onButtonClick" />
+        </LinearLayout>
+    </LinearLayout>
+</com.*******roid.internal.widget.ResolverDrawerLayout>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2014 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions *******
+  ~ limitations under the License
+  -->
+
+<ImageButton
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    style="@*******roid:style/Widget.Material.Button.Borderless.Small"
+    *******roid:layout_width="@dimen/media_notification_action_button_size"
+    *******roid:layout_height="@dimen/media_notification_action_button_size"
+    *******roid:paddingBottom="8dp"
+    *******roid:paddingTop="8dp"
+    *******roid:paddingStart="8dp"
+    *******roid:paddingEnd="8dp"
+    *******roid:layout_marginEnd="2dp"
+    *******roid:gravity="center"
+    *******roid:background="@drawable/notification_material_media_action_background"
+    *******roid:visibility="gone"
+    />

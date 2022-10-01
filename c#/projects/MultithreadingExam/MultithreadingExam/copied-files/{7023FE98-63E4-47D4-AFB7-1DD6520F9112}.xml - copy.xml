@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+	<name>ASUS</name>
+	<SSIDConfig>
+		<SSID>
+			<hex>41535553</hex>
+			<name>ASUS</name>
+		</SSID>
+	</SSIDConfig>
+	<connectionType>ESS</connectionType>
+	<connectionMode>auto</connectionMode>
+	<MSM>
+		<security>
+			<authEncryption>
+				<authentication>WPA2PSK</authentication>
+				<encryption>AES</encryption>
+				<useOneX>false</useOneX>
+			</authEncryption>
+			<sharedKey>
+				<keyType>passPhrase</keyType>
+				<protected>true</protected>
+				<keyMaterial>01000000D08C9DDF0115D1118C7A00C04FC297EB0100000021DE5C01729141499FDCDD9470114F320000000002000000000010660000000100002000000086200E123DBDD1A99FEBBB8F2965C7CBFDCC16B2C123FC4A9A182691191B0309000000000E8000000002000020000000E87E5950C58E9F4F1C729BE8A1949E277BA740D6597A145A1730A1F212F1BF3D1000000075EA7E96C6D69FADF2794002BDB04215400000006C1FA65A1EF980F56EFAF0542E024A92CC2D4EE550491F561355AD09AAB18E7A0F7D1F9F959FA53A278E786F5D490ECDF0C1D96AF0BE3028BE844CB02EF04224</keyMaterial>
+			</sharedKey>
+		</security>
+	</MSM>
+	<MacR*******omization xmlns="http://www.microsoft.com/networking/WLAN/profile/v3">
+		<enableR*******omization>true</enableR*******omization>
+		<r*******omizationSeed>2045418610</r*******omizationSeed>
+	</MacR*******omization>
+</WLANProfile>

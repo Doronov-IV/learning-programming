@@ -1,0 +1,1910 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ConfigurableDomains xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Windows\system32\IntelSSTAPO\ParameterService\configuration-real\Schemas\ConfigurableDomains.xsd" SystemClassName="Audio">
+  <ConfigurableDomain Name="APO_LFX_MFX_GC_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Disable">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Disabled"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="PersonalCall"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Recording">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Recording"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelGainControl"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Disable">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelGainControl">
+          <Component Name="IntelGainControl">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="gain">10</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelGainControl">
+          <Component Name="IntelGainControl">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="gain">10</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Recording">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelGainControl">
+          <Component Name="IntelGainControl">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="gain">10</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelGainControl">
+          <Component Name="IntelGainControl">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="gain">20</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_AGC_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Personal call">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="PersonalCall"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Recording">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Recording"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Disable">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Disabled"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Unchek">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Personal call">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC">
+          <Component Name="AGC">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">5</IntegerParameter>
+            <IntegerParameter Name="ld_add_gain">0</IntegerParameter>
+            <IntegerParameter Name="ld_gain_lo_lim">2048</IntegerParameter>
+            <IntegerParameter Name="ld_gain_up_lim">8192</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_min">-12</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_min">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shli_filt">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_offset">4267</IntegerParameter>
+            <EnumParameter Name="sub_frame_ratio_shifts">Four_sub_frames</EnumParameter>
+            <IntegerParameter Name="far_shift_ri">0</IntegerParameter>
+            <IntegerParameter Name="far_shift_fa">-4</IntegerParameter>
+            <IntegerParameter Name="far_power_center">6144</IntegerParameter>
+            <IntegerParameter Name="far_power_distorted">12288</IntegerParameter>
+            <FixedPointParameter Name="far_over_est_r0">1.19921875</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r1">1.10156250</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r2">1.39843750</FixedPointParameter>
+            <IntegerParameter Name="trigger_shift_ri">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_shift_fa">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_over_est_ratio">768</IntegerParameter>
+            <FixedPointParameter Name="miss_alignment_thresh">4.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="miss_alignment_mult">1.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="fb_coefs">-0.854095458984375 -0.865692138671875 -0.899902343750000 -0.954467773437500 0.752929687500000 0.822265625000000 0.932708740234375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Recording">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC">
+          <Component Name="AGC">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">5</IntegerParameter>
+            <IntegerParameter Name="ld_add_gain">0</IntegerParameter>
+            <IntegerParameter Name="ld_gain_lo_lim">2048</IntegerParameter>
+            <IntegerParameter Name="ld_gain_up_lim">8192</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_min">-12</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_min">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shli_filt">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_offset">2560</IntegerParameter>
+            <EnumParameter Name="sub_frame_ratio_shifts">Four_sub_frames</EnumParameter>
+            <IntegerParameter Name="far_shift_ri">0</IntegerParameter>
+            <IntegerParameter Name="far_shift_fa">-4</IntegerParameter>
+            <IntegerParameter Name="far_power_center">6144</IntegerParameter>
+            <IntegerParameter Name="far_power_distorted">12288</IntegerParameter>
+            <FixedPointParameter Name="far_over_est_r0">1.19921875</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r1">1.10156250</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r2">1.39843750</FixedPointParameter>
+            <IntegerParameter Name="trigger_shift_ri">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_shift_fa">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_over_est_ratio">768</IntegerParameter>
+            <FixedPointParameter Name="miss_alignment_thresh">4.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="miss_alignment_mult">1.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="fb_coefs">-0.854095458984375 -0.865692138671875 -0.899902343750000 -0.954467773437500 0.752929687500000 0.822265625000000 0.932708740234375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Disable">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC">
+          <Component Name="AGC">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">5</IntegerParameter>
+            <IntegerParameter Name="ld_add_gain">1024</IntegerParameter>
+            <IntegerParameter Name="ld_gain_lo_lim">2048</IntegerParameter>
+            <IntegerParameter Name="ld_gain_up_lim">8192</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_min">-12</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_min">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shli_filt">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_offset">2560</IntegerParameter>
+            <EnumParameter Name="sub_frame_ratio_shifts">Four_sub_frames</EnumParameter>
+            <IntegerParameter Name="far_shift_ri">0</IntegerParameter>
+            <IntegerParameter Name="far_shift_fa">-4</IntegerParameter>
+            <IntegerParameter Name="far_power_center">6144</IntegerParameter>
+            <IntegerParameter Name="far_power_distorted">12288</IntegerParameter>
+            <FixedPointParameter Name="far_over_est_r0">1.19921875</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r1">1.10156250</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r2">1.39843750</FixedPointParameter>
+            <IntegerParameter Name="trigger_shift_ri">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_shift_fa">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_over_est_ratio">768</IntegerParameter>
+            <FixedPointParameter Name="miss_alignment_thresh">4.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="miss_alignment_mult">1.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="fb_coefs">-0.854095458984375 -0.865692138671875 -0.899902343750000 -0.954467773437500 0.752929687500000 0.822265625000000 0.932708740234375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Unchek">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC">
+          <Component Name="AGC">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">5</IntegerParameter>
+            <IntegerParameter Name="ld_add_gain">1024</IntegerParameter>
+            <IntegerParameter Name="ld_gain_lo_lim">2048</IntegerParameter>
+            <IntegerParameter Name="ld_gain_up_lim">8192</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_min">-12</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_min">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shli_filt">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_offset">2560</IntegerParameter>
+            <EnumParameter Name="sub_frame_ratio_shifts">Four_sub_frames</EnumParameter>
+            <IntegerParameter Name="far_shift_ri">0</IntegerParameter>
+            <IntegerParameter Name="far_shift_fa">-4</IntegerParameter>
+            <IntegerParameter Name="far_power_center">6144</IntegerParameter>
+            <IntegerParameter Name="far_power_distorted">12288</IntegerParameter>
+            <FixedPointParameter Name="far_over_est_r0">1.19921875</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r1">1.10156250</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r2">1.39843750</FixedPointParameter>
+            <IntegerParameter Name="trigger_shift_ri">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_shift_fa">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_over_est_ratio">768</IntegerParameter>
+            <FixedPointParameter Name="miss_alignment_thresh">4.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="miss_alignment_mult">1.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="fb_coefs">-0.854095458984375 -0.865692138671875 -0.899902343750000 -0.954467773437500 0.752929687500000 0.822265625000000 0.932708740234375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_SER_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Disable">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Disabled"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="PersonalCall"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Recording">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Recording"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Disable">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER">
+          <Component Name="SER">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <EnumParameter Name="sw_flag">SER_2_5</EnumParameter>
+            <FixedPointParameter Name="beta">0.980010986328125</FixedPointParameter>
+            <FixedPointParameter Name="overest">3.000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_level">2.500000000</FixedPointParameter>
+            <FixedPointParameter Name="alpha_dn">0.200012207031250</FixedPointParameter>
+            <FixedPointParameter Name="alpha_up">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">2.00000000000</FixedPointParameter>
+            <FixedPointParameter Name="update_ctr">1.0119628906250</FixedPointParameter>
+            <FixedPointParameter Name="threshold_power">0.0000152587890625</FixedPointParameter>
+            <Component Name="weighting">
+              <FixedPointParameter Name="factors">1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000</FixedPointParameter>
+              <IntegerParameter Name="frequency_b*******s">4 17 49 65 33</IntegerParameter>
+            </Component>
+            <EnumParameter Name="gain_bypass">disable</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER">
+          <Component Name="SER">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <EnumParameter Name="sw_flag">SER_2_5</EnumParameter>
+            <FixedPointParameter Name="beta">0.970001220703125</FixedPointParameter>
+            <FixedPointParameter Name="overest">10.000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_level">2.500000000</FixedPointParameter>
+            <FixedPointParameter Name="alpha_dn">0.200012207031250</FixedPointParameter>
+            <FixedPointParameter Name="alpha_up">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">2.00000000000</FixedPointParameter>
+            <FixedPointParameter Name="update_ctr">1.0119628906250</FixedPointParameter>
+            <FixedPointParameter Name="threshold_power">0.0000152587890625</FixedPointParameter>
+            <Component Name="weighting">
+              <FixedPointParameter Name="factors">1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000</FixedPointParameter>
+              <IntegerParameter Name="frequency_b*******s">4 17 49 65 33</IntegerParameter>
+            </Component>
+            <EnumParameter Name="gain_bypass">disable</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Recording">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER">
+          <Component Name="SER">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <EnumParameter Name="sw_flag">SER_2_5</EnumParameter>
+            <FixedPointParameter Name="beta">0.980010986328125</FixedPointParameter>
+            <FixedPointParameter Name="overest">3.000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_level">2.500000000</FixedPointParameter>
+            <FixedPointParameter Name="alpha_dn">0.200012207031250</FixedPointParameter>
+            <FixedPointParameter Name="alpha_up">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">2.00000000000</FixedPointParameter>
+            <FixedPointParameter Name="update_ctr">1.0119628906250</FixedPointParameter>
+            <FixedPointParameter Name="threshold_power">0.0000152587890625</FixedPointParameter>
+            <Component Name="weighting">
+              <FixedPointParameter Name="factors">1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000</FixedPointParameter>
+              <IntegerParameter Name="frequency_b*******s">4 17 49 65 33</IntegerParameter>
+            </Component>
+            <EnumParameter Name="gain_bypass">disable</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER">
+          <Component Name="SER">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <EnumParameter Name="sw_flag">SER_2_5</EnumParameter>
+            <FixedPointParameter Name="beta">0.980010986328125</FixedPointParameter>
+            <FixedPointParameter Name="overest">3.000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_level">2.500000000</FixedPointParameter>
+            <FixedPointParameter Name="alpha_dn">0.200012207031250</FixedPointParameter>
+            <FixedPointParameter Name="alpha_up">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">2.00000000000</FixedPointParameter>
+            <FixedPointParameter Name="update_ctr">1.0119628906250</FixedPointParameter>
+            <FixedPointParameter Name="threshold_power">0.0000152587890625</FixedPointParameter>
+            <Component Name="weighting">
+              <FixedPointParameter Name="factors">1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000</FixedPointParameter>
+              <IntegerParameter Name="frequency_b*******s">4 17 49 65 33</IntegerParameter>
+            </Component>
+            <EnumParameter Name="gain_bypass">disable</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_NR_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Disable">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Disabled"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="PersonalCall"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Recording">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Recording"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Disable">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR">
+          <Component Name="NR">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">3</IntegerParameter>
+            <FixedPointParameter Name="atten_factor_min_val">0.366210937500000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_zero">1.2207031250000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_no_zero">1.2207031250000</FixedPointParameter>
+            <IntegerParameter Name="nr_shl_ri">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa">-4</IntegerParameter>
+            <IntegerParameter Name="min_stat_len">800</IntegerParameter>
+            <FixedPointParameter Name="atte_ratio">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="correction_value">0.7500000000</FixedPointParameter>
+            <FixedPointParameter Name="thresh_spe_act">1.6250000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_max">3.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_min">0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_no_sp">0.0009765625</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_sp">0.0312500000</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_abs">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_rel">1.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="gain_factor">0.030517578125000</FixedPointParameter>
+            <FixedPointParameter Name="gain_limit">1.00000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR">
+          <Component Name="NR">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">3</IntegerParameter>
+            <FixedPointParameter Name="atten_factor_min_val">0.366210937500000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_zero">1.2207031250000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_no_zero">1.2207031250000</FixedPointParameter>
+            <IntegerParameter Name="nr_shl_ri">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa">-4</IntegerParameter>
+            <IntegerParameter Name="min_stat_len">800</IntegerParameter>
+            <FixedPointParameter Name="atte_ratio">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="correction_value">0.7500000000</FixedPointParameter>
+            <FixedPointParameter Name="thresh_spe_act">1.6250000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_max">3.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_min">0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_no_sp">0.0009765625</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_sp">0.0312500000</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_abs">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_rel">1.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="gain_factor">0.030517578125000</FixedPointParameter>
+            <FixedPointParameter Name="gain_limit">0.70794677734375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Recording">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR">
+          <Component Name="NR">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">3</IntegerParameter>
+            <FixedPointParameter Name="atten_factor_min_val">0.366210937500000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_zero">1.2207031250000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_no_zero">1.2207031250000</FixedPointParameter>
+            <IntegerParameter Name="nr_shl_ri">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa">-4</IntegerParameter>
+            <IntegerParameter Name="min_stat_len">800</IntegerParameter>
+            <FixedPointParameter Name="atte_ratio">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="correction_value">0.7500000000</FixedPointParameter>
+            <FixedPointParameter Name="thresh_spe_act">1.6250000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_max">3.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_min">0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_no_sp">0.0009765625</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_sp">0.0312500000</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_abs">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_rel">1.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="gain_factor">0.030517578125000</FixedPointParameter>
+            <FixedPointParameter Name="gain_limit">1.00000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR">
+          <Component Name="NR">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">3</IntegerParameter>
+            <FixedPointParameter Name="atten_factor_min_val">0.366210937500000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_zero">1.2207031250000</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_no_zero">1.2207031250000</FixedPointParameter>
+            <IntegerParameter Name="nr_shl_ri">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa">-4</IntegerParameter>
+            <IntegerParameter Name="min_stat_len">800</IntegerParameter>
+            <FixedPointParameter Name="atte_ratio">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="correction_value">0.7500000000</FixedPointParameter>
+            <FixedPointParameter Name="thresh_spe_act">1.6250000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_max">3.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_min">0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_no_sp">0.0009765625</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_sp">0.0312500000</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_abs">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_rel">1.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="gain_factor">0.030517578125000</FixedPointParameter>
+            <FixedPointParameter Name="gain_limit">1.00000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_RL_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcEchoReferenceLine/RL"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcEchoReferenceLine/RL">
+          <Component Name="RL">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <FixedPointParameter Name="gain_analog">0.999969482421875</FixedPointParameter>
+            <IntegerParameter Name="aec_delay">16</IntegerParameter>
+            <IntegerParameter Name="ser_delay">101</IntegerParameter>
+            <IntegerParameter Name="agc_delay">324</IntegerParameter>
+            <Component Name="biquad">
+              <EnumParameter Name="order">off</EnumParameter>
+              <Component Name="0">
+                <FixedPointParameter Name="a1">-0.733917236328125</FixedPointParameter>
+                <FixedPointParameter Name="b1">-0.711212158203125</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.629882812500000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.555267333984375</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.879943847656250</FixedPointParameter>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_BF_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelBF"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelBF">
+          <Component Name="IntelBF">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="PBF_SWFlag">0</IntegerParameter>
+            <BitParameterBlock Name="PBF_Flags">
+              <BitParameter Name="Track">0</BitParameter>
+              <BitParameter Name="Follow">0</BitParameter>
+              <BitParameter Name="PerformNR">0</BitParameter>
+              <BitParameter Name="FullB*******NR">0</BitParameter>
+              <BitParameter Name="SmoothMedian">0</BitParameter>
+              <BitParameter Name="DetectClicks">0</BitParameter>
+              <BitParameter Name="VADGain">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="PBF_MicDistanceInMm">100</IntegerParameter>
+            <IntegerParameter Name="PBF_BeamWidthInDegrees">18</IntegerParameter>
+            <IntegerParameter Name="PBF_BeamDirectionInDegrees">0</IntegerParameter>
+            <FixedPointParameter Name="PBF_AttCalcGamma">3.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMinEffectiveGamma">0.020019531250</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMaxEffectiveGamma">5.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMinLevelVadGain">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcLevelRampDown">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcTimeSmoothing">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMAverageStartAlpha">0.299987792968750</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMAverageEndAlpha">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreSignalAlpha">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreNoiseAlpha">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreSignalAvgThresh">0.833312988281250</FixedPointParameter>
+            <FixedPointParameter Name="PBF_NsNoiseAlpha">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_PhaseCorrection">0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000</FixedPointParameter>
+            <IntegerParameter Name="PBF_CdClickTimeInMs">20</IntegerParameter>
+            <FixedPointParameter Name="PBF_CdEnergyRatioLevel">0.500000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdGainCountThreshold">0.500000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdResetEnergyThreshold">0.125000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdFutureParameter">0.000000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_AEC_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Disable">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Disabled"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="PersonalCall"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Recording">
+        <CompoundRule Type="All">
+          <SelectionCriterionRule SelectionCriterion="System.IntelSstApoPresetState" MatchesWhen="Is" Value="Recording"/>
+        </CompoundRule>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcAEC/Aec"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Disable">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcAEC/Aec">
+          <Component Name="Aec">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="aec_1_2">0</BitParameter>
+              <BitParameter Name="aec_1_3">0</BitParameter>
+              <BitParameter Name="aec_1_41">0</BitParameter>
+              <BitParameter Name="aec_1_42">0</BitParameter>
+              <BitParameter Name="aec_1_5">0</BitParameter>
+              <BitParameter Name="aec_1_6">1</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="nr_coeffs_real">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_1">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_2">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_3">100</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_4">50</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_5">50</IntegerParameter>
+            <EnumParameter Name="b_len">LMS_BLEN_2</EnumParameter>
+            <IntegerParameter Name="nr_shl_norm">-9</IntegerParameter>
+            <IntegerParameter Name="x_max_exp">4</IntegerParameter>
+            <FixedPointParameter Name="h_max_lim">0.750000000000000</FixedPointParameter>
+            <FixedPointParameter Name="x_max_lim">0.999969482421875</FixedPointParameter>
+            <FixedPointParameter Name="corr_thres">0.969970703125000</FixedPointParameter>
+            <IntegerParameter Name="sb_meas_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="sb_meas_shl_fa">-8</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_fa">-11</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh">0.001525878906250</FixedPointParameter>
+            <IntegerParameter Name="nr_far_near_shl_ri">-14</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl_fa">0</IntegerParameter>
+            <IntegerParameter Name="factor_near_fa_calc">2</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl">-8</IntegerParameter>
+            <FixedPointParameter Name="far_near_ld_max">4.0000000000</FixedPointParameter>
+            <IntegerParameter Name="x_min_exp">-2</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh1">0.001220703125000</FixedPointParameter>
+            <FixedPointParameter Name="steps_sig_thresh2">0.000457763671875</FixedPointParameter>
+            <IntegerParameter Name="data_shift">0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_attack">-8</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_decay">-4</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_attack">-2</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_decay">-2</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_attack">-1</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_decay">-15</IntegerParameter>
+            <FixedPointParameter Name="st_detector_sensitivity">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="dt_detector_sensitivity">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="st_step_min">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="st_step_max">0.950012207031250</FixedPointParameter>
+            <FixedPointParameter Name="st_step_mult">7.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="dt_step_mult">0.500000000000000</FixedPointParameter>
+            <BitParameterBlock Name="dt_flag_dependency">
+              <BitParameter Name="subb*******_0">1</BitParameter>
+              <BitParameter Name="subb*******_1">0</BitParameter>
+              <BitParameter Name="subb*******_2">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="sub_0_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Personal call">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcAEC/Aec">
+          <Component Name="Aec">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="aec_1_2">0</BitParameter>
+              <BitParameter Name="aec_1_3">0</BitParameter>
+              <BitParameter Name="aec_1_41">0</BitParameter>
+              <BitParameter Name="aec_1_42">0</BitParameter>
+              <BitParameter Name="aec_1_5">0</BitParameter>
+              <BitParameter Name="aec_1_6">1</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="nr_coeffs_real">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_1">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_2">170</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_3">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_4">100</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_5">100</IntegerParameter>
+            <EnumParameter Name="b_len">LMS_BLEN_2</EnumParameter>
+            <IntegerParameter Name="nr_shl_norm">-9</IntegerParameter>
+            <IntegerParameter Name="x_max_exp">4</IntegerParameter>
+            <FixedPointParameter Name="h_max_lim">0.750000000000000</FixedPointParameter>
+            <FixedPointParameter Name="x_max_lim">0.999969482421875</FixedPointParameter>
+            <FixedPointParameter Name="corr_thres">0.969970703125000</FixedPointParameter>
+            <IntegerParameter Name="sb_meas_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="sb_meas_shl_fa">-8</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_fa">-11</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh">0.001525878906250</FixedPointParameter>
+            <IntegerParameter Name="nr_far_near_shl_ri">-14</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl_fa">0</IntegerParameter>
+            <IntegerParameter Name="factor_near_fa_calc">2</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl">-8</IntegerParameter>
+            <FixedPointParameter Name="far_near_ld_max">4.0000000000</FixedPointParameter>
+            <IntegerParameter Name="x_min_exp">-2</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh1">0.001220703125000</FixedPointParameter>
+            <FixedPointParameter Name="steps_sig_thresh2">0.000457763671875</FixedPointParameter>
+            <IntegerParameter Name="data_shift">0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_attack">-8</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_decay">-4</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_attack">-2</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_decay">-2</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_attack">-1</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_decay">-15</IntegerParameter>
+            <FixedPointParameter Name="st_detector_sensitivity">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="dt_detector_sensitivity">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="st_step_min">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="st_step_max">0.950012207031250</FixedPointParameter>
+            <FixedPointParameter Name="st_step_mult">7.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="dt_step_mult">0.500000000000000</FixedPointParameter>
+            <BitParameterBlock Name="dt_flag_dependency">
+              <BitParameter Name="subb*******_0">1</BitParameter>
+              <BitParameter Name="subb*******_1">0</BitParameter>
+              <BitParameter Name="subb*******_2">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="sub_0_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Recording">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcAEC/Aec">
+          <Component Name="Aec">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="aec_1_2">0</BitParameter>
+              <BitParameter Name="aec_1_3">0</BitParameter>
+              <BitParameter Name="aec_1_41">0</BitParameter>
+              <BitParameter Name="aec_1_42">0</BitParameter>
+              <BitParameter Name="aec_1_5">0</BitParameter>
+              <BitParameter Name="aec_1_6">1</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="nr_coeffs_real">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_1">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_2">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_3">100</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_4">50</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_5">50</IntegerParameter>
+            <EnumParameter Name="b_len">LMS_BLEN_2</EnumParameter>
+            <IntegerParameter Name="nr_shl_norm">-9</IntegerParameter>
+            <IntegerParameter Name="x_max_exp">4</IntegerParameter>
+            <FixedPointParameter Name="h_max_lim">0.750000000000000</FixedPointParameter>
+            <FixedPointParameter Name="x_max_lim">0.999969482421875</FixedPointParameter>
+            <FixedPointParameter Name="corr_thres">0.969970703125000</FixedPointParameter>
+            <IntegerParameter Name="sb_meas_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="sb_meas_shl_fa">-8</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_fa">-11</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh">0.001525878906250</FixedPointParameter>
+            <IntegerParameter Name="nr_far_near_shl_ri">-14</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl_fa">0</IntegerParameter>
+            <IntegerParameter Name="factor_near_fa_calc">2</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl">-8</IntegerParameter>
+            <FixedPointParameter Name="far_near_ld_max">4.0000000000</FixedPointParameter>
+            <IntegerParameter Name="x_min_exp">-2</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh1">0.001220703125000</FixedPointParameter>
+            <FixedPointParameter Name="steps_sig_thresh2">0.000457763671875</FixedPointParameter>
+            <IntegerParameter Name="data_shift">0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_attack">-8</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_decay">-4</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_attack">-2</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_decay">-2</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_attack">-1</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_decay">-15</IntegerParameter>
+            <FixedPointParameter Name="st_detector_sensitivity">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="dt_detector_sensitivity">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="st_step_min">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="st_step_max">0.950012207031250</FixedPointParameter>
+            <FixedPointParameter Name="st_step_mult">7.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="dt_step_mult">0.500000000000000</FixedPointParameter>
+            <BitParameterBlock Name="dt_flag_dependency">
+              <BitParameter Name="subb*******_0">1</BitParameter>
+              <BitParameter Name="subb*******_1">0</BitParameter>
+              <BitParameter Name="subb*******_2">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="sub_0_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+      <Configuration Name="Uncheck">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcAEC/Aec">
+          <Component Name="Aec">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="aec_1_2">0</BitParameter>
+              <BitParameter Name="aec_1_3">0</BitParameter>
+              <BitParameter Name="aec_1_41">0</BitParameter>
+              <BitParameter Name="aec_1_42">0</BitParameter>
+              <BitParameter Name="aec_1_5">0</BitParameter>
+              <BitParameter Name="aec_1_6">1</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="nr_coeffs_real">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_1">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_2">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_3">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_4">100</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_5">100</IntegerParameter>
+            <EnumParameter Name="b_len">LMS_BLEN_2</EnumParameter>
+            <IntegerParameter Name="nr_shl_norm">-9</IntegerParameter>
+            <IntegerParameter Name="x_max_exp">4</IntegerParameter>
+            <FixedPointParameter Name="h_max_lim">0.750000000000000</FixedPointParameter>
+            <FixedPointParameter Name="x_max_lim">0.999969482421875</FixedPointParameter>
+            <FixedPointParameter Name="corr_thres">0.969970703125000</FixedPointParameter>
+            <IntegerParameter Name="sb_meas_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="sb_meas_shl_fa">-8</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_fa">-11</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh">0.001525878906250</FixedPointParameter>
+            <IntegerParameter Name="nr_far_near_shl_ri">-14</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl_fa">0</IntegerParameter>
+            <IntegerParameter Name="factor_near_fa_calc">2</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl">-8</IntegerParameter>
+            <FixedPointParameter Name="far_near_ld_max">4.0000000000</FixedPointParameter>
+            <IntegerParameter Name="x_min_exp">-2</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh1">0.001220703125000</FixedPointParameter>
+            <FixedPointParameter Name="steps_sig_thresh2">0.000457763671875</FixedPointParameter>
+            <IntegerParameter Name="data_shift">0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_attack">-8</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_decay">-4</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_attack">-2</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_decay">-2</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_attack">-1</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_decay">-15</IntegerParameter>
+            <FixedPointParameter Name="st_detector_sensitivity">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="dt_detector_sensitivity">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="st_step_min">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="st_step_max">0.950012207031250</FixedPointParameter>
+            <FixedPointParameter Name="st_step_mult">7.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="dt_step_mult">0.500000000000000</FixedPointParameter>
+            <BitParameterBlock Name="dt_flag_dependency">
+              <BitParameter Name="subb*******_0">1</BitParameter>
+              <BitParameter Name="subb*******_1">0</BitParameter>
+              <BitParameter Name="subb*******_2">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="sub_0_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DL_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelDelayLine"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelDelayLine">
+          <Component Name="IntelDelayLine">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <EnumParameter Name="auto_sync">on</EnumParameter>
+            <FloatingPointParameter Name="additional_capture_delay">0</FloatingPointParameter>
+            <FloatingPointParameter Name="additional_reference_delay">12</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_MICEQ_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/MicEqualizer"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/MicEqualizer">
+          <Component Name="MicEqualizer">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="CHANNEL_COUNT">4</FloatingPointParameter>
+            <FloatingPointParameter Name="FIRST_CHANNEL_OFFSET">0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_0Size">257</IntegerParameter>
+            <FloatingPointParameter Name="FIR_0">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_1Size">257</IntegerParameter>
+            <FloatingPointParameter Name="FIR_1">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_2Size">257</IntegerParameter>
+            <FloatingPointParameter Name="FIR_2">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_3Size">257</IntegerParameter>
+            <FloatingPointParameter Name="FIR_3">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_0Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_0">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_1Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_1">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_2Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_2">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_3Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_3">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_TxCNI_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcComfortNoiseInjector/TxCNI"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcComfortNoiseInjector/TxCNI">
+          <Component Name="TxCNI">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <FixedPointParameter Name="noise_gain">0.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_floor">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">0.00000000000</FixedPointParameter>
+            <IntegerParameter Name="m">16</IntegerParameter>
+            <FixedPointParameter Name="env_decay">0.935485839843750</FixedPointParameter>
+            <FixedPointParameter Name="env_attack">0.818695068359375</FixedPointParameter>
+            <FixedPointParameter Name="n_decay">0.990020751953125</FixedPointParameter>
+            <FixedPointParameter Name="n_attack">0.999694824218750</FixedPointParameter>
+            <FixedPointParameter Name="update_ctrl">1.00500488281250</FixedPointParameter>
+            <FixedPointParameter Name="ctr_decay">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_gain_drp">0.001556396484375</FixedPointParameter>
+            <Component Name="biquad">
+              <EnumParameter Name="order">2nd</EnumParameter>
+              <Component Name="stage_0">
+                <FixedPointParameter Name="a1">0.019775390625000</FixedPointParameter>
+                <FixedPointParameter Name="b1">-0.428649902343750</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.008544921875000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.059631347656250</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.050567626953125</FixedPointParameter>
+              </Component>
+              <Component Name="stage_1">
+                <FixedPointParameter Name="a1">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="b1">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.999969482421875</FixedPointParameter>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DRP_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcDynamicRangeProcessor/DRP"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcDynamicRangeProcessor/DRP">
+          <Component Name="DRP">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <EnumParameter Name="mono_flag">mono</EnumParameter>
+            <EnumParameter Name="comp_mode">mono</EnumParameter>
+            <Component Name="b*******">
+              <Component Name="0">
+                <IntegerParameter Name="m_bufflen">20</IntegerParameter>
+                <FixedPointParameter Name="m_inv_bufflen">0.049987792968750</FixedPointParameter>
+                <IntegerParameter Name="m_hp_coeff_exp">6</IntegerParameter>
+                <IntegerParameter Name="m_lp1_coeff">20240</IntegerParameter>
+                <IntegerParameter Name="m_lp2_coeff">1985</IntegerParameter>
+                <IntegerParameter Name="m_lp4_coeff">12893</IntegerParameter>
+                <IntegerParameter Name="m_lp3_coeff">809</IntegerParameter>
+                <IntegerParameter Name="m_l_a">-16640</IntegerParameter>
+                <IntegerParameter Name="m_l_b">-2560</IntegerParameter>
+                <IntegerParameter Name="m_g_comp">0</IntegerParameter>
+                <IntegerParameter Name="um_r_infa">640</IntegerParameter>
+                <IntegerParameter Name="um_r_ab">256</IntegerParameter>
+                <IntegerParameter Name="um_r_b0">128</IntegerParameter>
+                <Component Name="biquad_0">
+                  <FixedPointParameter Name="a1">0.500000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.207092285156250</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.000000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.000000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="a0">-0.414215087890625</FixedPointParameter>
+                </Component>
+                <Component Name="biquad_1">
+                  <FixedPointParameter Name="a1">-0.490722656250000</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.490722656250000</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.388031005859375</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.388031005859375</FixedPointParameter>
+                </Component>
+              </Component>
+              <Component Name="1">
+                <IntegerParameter Name="m_bufflen">20</IntegerParameter>
+                <FixedPointParameter Name="m_inv_bufflen">0.049987792968750</FixedPointParameter>
+                <IntegerParameter Name="m_hp_coeff_exp">6</IntegerParameter>
+                <IntegerParameter Name="m_lp1_coeff">20240</IntegerParameter>
+                <IntegerParameter Name="m_lp2_coeff">1985</IntegerParameter>
+                <IntegerParameter Name="m_lp4_coeff">12893</IntegerParameter>
+                <IntegerParameter Name="m_lp3_coeff">809</IntegerParameter>
+                <IntegerParameter Name="m_l_a">-18985</IntegerParameter>
+                <IntegerParameter Name="m_l_b">-8960</IntegerParameter>
+                <IntegerParameter Name="m_g_comp">0</IntegerParameter>
+                <IntegerParameter Name="um_r_infa">256</IntegerParameter>
+                <IntegerParameter Name="um_r_ab">256</IntegerParameter>
+                <IntegerParameter Name="um_r_b0">256</IntegerParameter>
+                <Component Name="biquad_0">
+                  <FixedPointParameter Name="a1">-0.431915283203125</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.431915283203125</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.221679687500000</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.221679687500000</FixedPointParameter>
+                </Component>
+                <Component Name="biquad_1">
+                  <FixedPointParameter Name="a1">-0.610961914062500</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.610961914062500</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.728057861328125</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.728057861328125</FixedPointParameter>
+                </Component>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DMNR_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcDualMicNoiseReductor/DNR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/ImcVoiceTail/ImcDualMicNoiseReductor/DNR">
+          <Component Name="DNR">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="dnr_1_1">0</BitParameter>
+              <BitParameter Name="dnr_1_2">1</BitParameter>
+              <BitParameter Name="dnr_1_5">1</BitParameter>
+            </BitParameterBlock>
+            <EnumParameter Name="mode">max_dnr_*******_single_channel_noise_estimation</EnumParameter>
+            <FixedPointParameter Name="cross_comp">1.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="smooth">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="scale_ple">1.00000000000000</FixedPointParameter>
+            <FixedPointParameter Name="min_stat_scale">1.00000000000000</FixedPointParameter>
+            <FixedPointParameter Name="diff_smooth">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="threshold">4.0000000000</FixedPointParameter>
+            <Component Name="alpha">
+              <FixedPointParameter Name="ph1">0.899993896484375</FixedPointParameter>
+              <FixedPointParameter Name="np">0.799987792968750</FixedPointParameter>
+              <FixedPointParameter Name="nn">0.750000000000000</FixedPointParameter>
+            </Component>
+            <FixedPointParameter Name="coh_threshold">0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_BWX_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelBWX"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelBWX">
+          <Component Name="IntelBWX">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="BWX_SlopeMethod">1</IntegerParameter>
+            <IntegerParameter Name="BWX_NoiseFilterFreq">9000</IntegerParameter>
+            <IntegerParameter Name="BWX_NoiseFilterOrder">128</IntegerParameter>
+            <IntegerParameter Name="BWX_SignalFilterFreq">7600</IntegerParameter>
+            <IntegerParameter Name="BWX_SignalFilterOrder">128</IntegerParameter>
+            <FloatingPointParameter Name="BWX_Alpha">0.2</FloatingPointParameter>
+            <FloatingPointParameter Name="BWX_NoiseGain">1</FloatingPointParameter>
+            <FloatingPointParameter Name="BWX_ExtSignalGain">1</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DCR_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelDCR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelDCR">
+          <Component Name="IntelDCR">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_PIPELINE_SELECTOR_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/PipelineSelector"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/PipelineSelector">
+          <Component Name="PipelineSelector">
+            <EnumParameter Name="pipeline_type">Default</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_MIC_SELECTION_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelMicSelection"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/AudioPipeline/IntelMicSelection">
+          <Component Name="IntelMicSelection">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="Flags">0</IntegerParameter>
+            <FixedPointParameter Name="OutputChannel0">1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel1">0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel2">0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel3">0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel4">0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel5">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel6">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel7">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_LOOPBACK_CLIENT_DEFAULT" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/LoopbackClient"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_DefaultMode/LoopbackClient">
+          <Component Name="LoopbackClient">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <EnumParameter Name="automatic_gain">on</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_GC_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelGainControl"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelGainControl">
+          <Component Name="IntelGainControl">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="gain">20</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_AGC_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcAutomaticGainControl/AGC">
+          <Component Name="AGC">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">5</IntegerParameter>
+            <IntegerParameter Name="ld_add_gain">3072</IntegerParameter>
+            <IntegerParameter Name="ld_gain_lo_lim">4096</IntegerParameter>
+            <IntegerParameter Name="ld_gain_up_lim">5973</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_min">-12</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_min">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_ri_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa_max">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shli_filt">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_offset">5136</IntegerParameter>
+            <EnumParameter Name="sub_frame_ratio_shifts">Four_sub_frames</EnumParameter>
+            <IntegerParameter Name="far_shift_ri">0</IntegerParameter>
+            <IntegerParameter Name="far_shift_fa">-4</IntegerParameter>
+            <IntegerParameter Name="far_power_center">6144</IntegerParameter>
+            <IntegerParameter Name="far_power_distorted">12288</IntegerParameter>
+            <FixedPointParameter Name="far_over_est_r0">1.00000000</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r1">1.10156250</FixedPointParameter>
+            <FixedPointParameter Name="far_over_est_r2">1.19921875</FixedPointParameter>
+            <IntegerParameter Name="trigger_shift_ri">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_shift_fa">-1</IntegerParameter>
+            <IntegerParameter Name="trigger_over_est_ratio">768</IntegerParameter>
+            <FixedPointParameter Name="miss_alignment_thresh">4.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="miss_alignment_mult">1.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="fb_coefs">-0.854095458984375 -0.865692138671875 -0.899902343750000 -0.954467773437500 0.752929687500000 0.822265625000000 0.932708740234375</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_SER_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcSpectralEchoReduction/SER">
+          <Component Name="SER">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <EnumParameter Name="sw_flag">SER_2_5</EnumParameter>
+            <FixedPointParameter Name="beta">0.980010986328125</FixedPointParameter>
+            <FixedPointParameter Name="overest">30.000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_level">2.500000000</FixedPointParameter>
+            <FixedPointParameter Name="alpha_dn">0.200012207031250</FixedPointParameter>
+            <FixedPointParameter Name="alpha_up">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">2.00000000000</FixedPointParameter>
+            <FixedPointParameter Name="update_ctr">1.0119628906250</FixedPointParameter>
+            <FixedPointParameter Name="threshold_power">0.0000152587890625</FixedPointParameter>
+            <Component Name="weighting">
+              <FixedPointParameter Name="factors">1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000 1.00000000000</FixedPointParameter>
+              <IntegerParameter Name="frequency_b*******s">4 17 49 65 33</IntegerParameter>
+            </Component>
+            <EnumParameter Name="gain_bypass">disable</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_NR_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcNoiseReductor/NR">
+          <Component Name="NR">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">3</IntegerParameter>
+            <FixedPointParameter Name="atten_factor_min_val">0.031616210937500</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_zero">3.9998779296875</FixedPointParameter>
+            <FixedPointParameter Name="ov_est_fac_b*******_no_zero">1.0000000000000</FixedPointParameter>
+            <IntegerParameter Name="nr_shl_ri">-2</IntegerParameter>
+            <IntegerParameter Name="nr_shl_fa">-4</IntegerParameter>
+            <IntegerParameter Name="min_stat_len">800</IntegerParameter>
+            <FixedPointParameter Name="atte_ratio">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="correction_value">0.7500000000</FixedPointParameter>
+            <FixedPointParameter Name="thresh_spe_act">1.6250000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_max">3.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_min">0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_no_sp">0.0009765625</FixedPointParameter>
+            <FixedPointParameter Name="noise_lev_enhanc_incre_sp">0.0312500000</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_abs">31.9990234375</FixedPointParameter>
+            <FixedPointParameter Name="agc_thresh_rel">1.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="gain_factor">0.031616210937500</FixedPointParameter>
+            <FixedPointParameter Name="gain_limit">1.00000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_RL_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcEchoReferenceLine/RL"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcEchoReferenceLine/RL">
+          <Component Name="RL">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <FixedPointParameter Name="gain_analog">0.999969482421875</FixedPointParameter>
+            <IntegerParameter Name="aec_delay">16</IntegerParameter>
+            <IntegerParameter Name="ser_delay">16</IntegerParameter>
+            <IntegerParameter Name="agc_delay">16</IntegerParameter>
+            <Component Name="biquad">
+              <EnumParameter Name="order">off</EnumParameter>
+              <Component Name="0">
+                <FixedPointParameter Name="a1">-0.733917236328125</FixedPointParameter>
+                <FixedPointParameter Name="b1">-0.711212158203125</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.629882812500000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.555267333984375</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.879943847656250</FixedPointParameter>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_BF_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelBF"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelBF">
+          <Component Name="IntelBF">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="PBF_SWFlag">0</IntegerParameter>
+            <BitParameterBlock Name="PBF_Flags">
+              <BitParameter Name="Track">0</BitParameter>
+              <BitParameter Name="Follow">0</BitParameter>
+              <BitParameter Name="PerformNR">0</BitParameter>
+              <BitParameter Name="FullB*******NR">0</BitParameter>
+              <BitParameter Name="SmoothMedian">0</BitParameter>
+              <BitParameter Name="DetectClicks">1</BitParameter>
+              <BitParameter Name="VADGain">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="PBF_MicDistanceInMm">100</IntegerParameter>
+            <IntegerParameter Name="PBF_BeamWidthInDegrees">180</IntegerParameter>
+            <IntegerParameter Name="PBF_BeamDirectionInDegrees">0</IntegerParameter>
+            <FixedPointParameter Name="PBF_AttCalcGamma">3.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMinEffectiveGamma">0.020019531250</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMaxEffectiveGamma">5.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMinLevelVadGain">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcLevelRampDown">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcTimeSmoothing">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMAverageStartAlpha">0.299987792968750</FixedPointParameter>
+            <FixedPointParameter Name="PBF_AttCalcMAverageEndAlpha">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreSignalAlpha">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreNoiseAlpha">0.062500000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_SnreSignalAvgThresh">0.833312988281250</FixedPointParameter>
+            <FixedPointParameter Name="PBF_NsNoiseAlpha">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_PhaseCorrection">0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000</FixedPointParameter>
+            <IntegerParameter Name="PBF_CdClickTimeInMs">20</IntegerParameter>
+            <FixedPointParameter Name="PBF_CdEnergyRatioLevel">0.500000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdGainCountThreshold">0.500000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdResetEnergyThreshold">0.125000000000000</FixedPointParameter>
+            <FixedPointParameter Name="PBF_CdFutureParameter">0.000000000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_AEC_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcAEC/Aec"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcAEC/Aec">
+          <Component Name="Aec">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="aec_1_2">0</BitParameter>
+              <BitParameter Name="aec_1_3">0</BitParameter>
+              <BitParameter Name="aec_1_41">0</BitParameter>
+              <BitParameter Name="aec_1_42">0</BitParameter>
+              <BitParameter Name="aec_1_5">0</BitParameter>
+              <BitParameter Name="aec_1_6">1</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="nr_coeffs_real">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_1">200</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_2">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_3">150</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_4">100</IntegerParameter>
+            <IntegerParameter Name="nr_coeffs_complex_5">100</IntegerParameter>
+            <EnumParameter Name="b_len">LMS_BLEN_2</EnumParameter>
+            <IntegerParameter Name="nr_shl_norm">-9</IntegerParameter>
+            <IntegerParameter Name="x_max_exp">4</IntegerParameter>
+            <FixedPointParameter Name="h_max_lim">0.750000000000000</FixedPointParameter>
+            <FixedPointParameter Name="x_max_lim">0.999969482421875</FixedPointParameter>
+            <FixedPointParameter Name="corr_thres">0.969970703125000</FixedPointParameter>
+            <IntegerParameter Name="sb_meas_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="sb_meas_shl_fa">-8</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_ri">-5</IntegerParameter>
+            <IntegerParameter Name="nr_steps_shl_fa">-11</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh">0.001525878906250</FixedPointParameter>
+            <IntegerParameter Name="nr_far_near_shl_ri">-14</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl_fa">0</IntegerParameter>
+            <IntegerParameter Name="factor_near_fa_calc">2</IntegerParameter>
+            <IntegerParameter Name="nr_far_near_shl">-8</IntegerParameter>
+            <FixedPointParameter Name="far_near_ld_max">4.0000000000</FixedPointParameter>
+            <IntegerParameter Name="x_min_exp">-2</IntegerParameter>
+            <FixedPointParameter Name="steps_sig_thresh1">0.001220703125000</FixedPointParameter>
+            <FixedPointParameter Name="steps_sig_thresh2">0.000457763671875</FixedPointParameter>
+            <IntegerParameter Name="data_shift">0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_attack">-8</IntegerParameter>
+            <IntegerParameter Name="s_sfloor_decay">-4</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_attack">-2</IntegerParameter>
+            <IntegerParameter Name="alpha_smooth_decay">-2</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_attack">-1</IntegerParameter>
+            <IntegerParameter Name="beta_smooth_decay">-15</IntegerParameter>
+            <FixedPointParameter Name="st_detector_sensitivity">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="dt_detector_sensitivity">0.799987792968750</FixedPointParameter>
+            <FixedPointParameter Name="st_step_min">0.350006103515625</FixedPointParameter>
+            <FixedPointParameter Name="st_step_max">0.950012207031250</FixedPointParameter>
+            <FixedPointParameter Name="st_step_mult">7.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="dt_step_mult">0.500000000000000</FixedPointParameter>
+            <BitParameterBlock Name="dt_flag_dependency">
+              <BitParameter Name="subb*******_0">1</BitParameter>
+              <BitParameter Name="subb*******_1">0</BitParameter>
+              <BitParameter Name="subb*******_2">0</BitParameter>
+            </BitParameterBlock>
+            <IntegerParameter Name="sub_0_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_1_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_2_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_3_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_4_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_real">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+            <IntegerParameter Name="sub_5_im">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</IntegerParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DL_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelDelayLine"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelDelayLine">
+          <Component Name="IntelDelayLine">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <EnumParameter Name="auto_sync">on</EnumParameter>
+            <FloatingPointParameter Name="additional_capture_delay">0</FloatingPointParameter>
+            <FloatingPointParameter Name="additional_reference_delay">12</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_MICEQ_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/MicEqualizer"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/MicEqualizer">
+          <Component Name="MicEqualizer">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <FloatingPointParameter Name="CHANNEL_COUNT">4</FloatingPointParameter>
+            <FloatingPointParameter Name="FIRST_CHANNEL_OFFSET">0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_0Size">65</IntegerParameter>
+            <FloatingPointParameter Name="FIR_0">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_1Size">65</IntegerParameter>
+            <FloatingPointParameter Name="FIR_1">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_2Size">65</IntegerParameter>
+            <FloatingPointParameter Name="FIR_2">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="FIR_3Size">65</IntegerParameter>
+            <FloatingPointParameter Name="FIR_3">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_0Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_0">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_1Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_1">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_2Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_2">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+            <IntegerParameter Name="DELTAS_3Size">30</IntegerParameter>
+            <FloatingPointParameter Name="DELTAS_3">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_TxCNI_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcComfortNoiseInjector/TxCNI"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcComfortNoiseInjector/TxCNI">
+          <Component Name="TxCNI">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <FixedPointParameter Name="noise_gain">0.0000000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_floor">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="mult_ctr">0.00000000000</FixedPointParameter>
+            <IntegerParameter Name="m">16</IntegerParameter>
+            <FixedPointParameter Name="env_decay">0.935485839843750</FixedPointParameter>
+            <FixedPointParameter Name="env_attack">0.818695068359375</FixedPointParameter>
+            <FixedPointParameter Name="n_decay">0.990020751953125</FixedPointParameter>
+            <FixedPointParameter Name="n_attack">0.999694824218750</FixedPointParameter>
+            <FixedPointParameter Name="update_ctrl">1.00500488281250</FixedPointParameter>
+            <FixedPointParameter Name="ctr_decay">0.000000000000000</FixedPointParameter>
+            <FixedPointParameter Name="noise_gain_drp">0.001556396484375</FixedPointParameter>
+            <Component Name="biquad">
+              <EnumParameter Name="order">2nd</EnumParameter>
+              <Component Name="stage_0">
+                <FixedPointParameter Name="a1">0.019775390625000</FixedPointParameter>
+                <FixedPointParameter Name="b1">-0.428649902343750</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.008544921875000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.059631347656250</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.050567626953125</FixedPointParameter>
+              </Component>
+              <Component Name="stage_1">
+                <FixedPointParameter Name="a1">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="b1">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="a2">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="b2">0.000000000000000</FixedPointParameter>
+                <FixedPointParameter Name="a0">0.999969482421875</FixedPointParameter>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DRP_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcDynamicRangeProcessor/DRP"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcDynamicRangeProcessor/DRP">
+          <Component Name="DRP">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <EnumParameter Name="mono_flag">mono</EnumParameter>
+            <EnumParameter Name="comp_mode">mono</EnumParameter>
+            <Component Name="b*******">
+              <Component Name="0">
+                <IntegerParameter Name="m_bufflen">20</IntegerParameter>
+                <FixedPointParameter Name="m_inv_bufflen">0.049987792968750</FixedPointParameter>
+                <IntegerParameter Name="m_hp_coeff_exp">6</IntegerParameter>
+                <IntegerParameter Name="m_lp1_coeff">20240</IntegerParameter>
+                <IntegerParameter Name="m_lp2_coeff">1985</IntegerParameter>
+                <IntegerParameter Name="m_lp4_coeff">12893</IntegerParameter>
+                <IntegerParameter Name="m_lp3_coeff">809</IntegerParameter>
+                <IntegerParameter Name="m_l_a">-16640</IntegerParameter>
+                <IntegerParameter Name="m_l_b">-2560</IntegerParameter>
+                <IntegerParameter Name="m_g_comp">0</IntegerParameter>
+                <IntegerParameter Name="um_r_infa">640</IntegerParameter>
+                <IntegerParameter Name="um_r_ab">256</IntegerParameter>
+                <IntegerParameter Name="um_r_b0">128</IntegerParameter>
+                <Component Name="biquad_0">
+                  <FixedPointParameter Name="a1">0.500000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.207092285156250</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.000000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.000000000000000</FixedPointParameter>
+                  <FixedPointParameter Name="a0">-0.414215087890625</FixedPointParameter>
+                </Component>
+                <Component Name="biquad_1">
+                  <FixedPointParameter Name="a1">-0.490722656250000</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.490722656250000</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.388031005859375</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.388031005859375</FixedPointParameter>
+                </Component>
+              </Component>
+              <Component Name="1">
+                <IntegerParameter Name="m_bufflen">20</IntegerParameter>
+                <FixedPointParameter Name="m_inv_bufflen">0.049987792968750</FixedPointParameter>
+                <IntegerParameter Name="m_hp_coeff_exp">6</IntegerParameter>
+                <IntegerParameter Name="m_lp1_coeff">20240</IntegerParameter>
+                <IntegerParameter Name="m_lp2_coeff">1985</IntegerParameter>
+                <IntegerParameter Name="m_lp4_coeff">12893</IntegerParameter>
+                <IntegerParameter Name="m_lp3_coeff">809</IntegerParameter>
+                <IntegerParameter Name="m_l_a">-18985</IntegerParameter>
+                <IntegerParameter Name="m_l_b">-8960</IntegerParameter>
+                <IntegerParameter Name="m_g_comp">0</IntegerParameter>
+                <IntegerParameter Name="um_r_infa">256</IntegerParameter>
+                <IntegerParameter Name="um_r_ab">256</IntegerParameter>
+                <IntegerParameter Name="um_r_b0">256</IntegerParameter>
+                <Component Name="biquad_0">
+                  <FixedPointParameter Name="a1">-0.431915283203125</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.431915283203125</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.221679687500000</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.221679687500000</FixedPointParameter>
+                </Component>
+                <Component Name="biquad_1">
+                  <FixedPointParameter Name="a1">-0.610961914062500</FixedPointParameter>
+                  <FixedPointParameter Name="b1">-0.610961914062500</FixedPointParameter>
+                  <FixedPointParameter Name="a2">0.999969482421875</FixedPointParameter>
+                  <FixedPointParameter Name="b2">0.728057861328125</FixedPointParameter>
+                  <FixedPointParameter Name="a0">0.728057861328125</FixedPointParameter>
+                </Component>
+              </Component>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DMNR_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcDualMicNoiseReductor/DNR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/ImcVoiceTail/ImcDualMicNoiseReductor/DNR">
+          <Component Name="DNR">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <BitParameterBlock Name="sw_flag">
+              <BitParameter Name="dnr_1_1">0</BitParameter>
+              <BitParameter Name="dnr_1_2">1</BitParameter>
+              <BitParameter Name="dnr_1_5">1</BitParameter>
+            </BitParameterBlock>
+            <EnumParameter Name="mode">max_dnr_*******_single_channel_noise_estimation</EnumParameter>
+            <FixedPointParameter Name="cross_comp">1.000000000000</FixedPointParameter>
+            <FixedPointParameter Name="smooth">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="scale_ple">1.00000000000000</FixedPointParameter>
+            <FixedPointParameter Name="min_stat_scale">1.00000000000000</FixedPointParameter>
+            <FixedPointParameter Name="diff_smooth">0.899993896484375</FixedPointParameter>
+            <FixedPointParameter Name="threshold">4.0000000000</FixedPointParameter>
+            <Component Name="alpha">
+              <FixedPointParameter Name="ph1">0.899993896484375</FixedPointParameter>
+              <FixedPointParameter Name="np">0.799987792968750</FixedPointParameter>
+              <FixedPointParameter Name="nn">0.750000000000000</FixedPointParameter>
+            </Component>
+            <FixedPointParameter Name="coh_threshold">0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750 0.799987792968750</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_BWX_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelBWX"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelBWX">
+          <Component Name="IntelBWX">
+            <Component Name="switch">
+              <EnumParameter Name="value">off</EnumParameter>
+            </Component>
+            <IntegerParameter Name="BWX_SlopeMethod">1</IntegerParameter>
+            <IntegerParameter Name="BWX_NoiseFilterFreq">9000</IntegerParameter>
+            <IntegerParameter Name="BWX_NoiseFilterOrder">128</IntegerParameter>
+            <IntegerParameter Name="BWX_SignalFilterFreq">7600</IntegerParameter>
+            <IntegerParameter Name="BWX_SignalFilterOrder">128</IntegerParameter>
+            <FloatingPointParameter Name="BWX_Alpha">0.2</FloatingPointParameter>
+            <FloatingPointParameter Name="BWX_NoiseGain">1</FloatingPointParameter>
+            <FloatingPointParameter Name="BWX_ExtSignalGain">1</FloatingPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_DCR_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelDCR"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelDCR">
+          <Component Name="IntelDCR">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_PIPELINE_SELECTOR_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/PipelineSelector"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/PipelineSelector">
+          <Component Name="PipelineSelector">
+            <EnumParameter Name="pipeline_type">Default</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_MIC_SELECTION_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelMicSelection"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/AudioPipeline/IntelMicSelection">
+          <Component Name="IntelMicSelection">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="Flags">0</IntegerParameter>
+            <FixedPointParameter Name="OutputChannel0">1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel1">0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel2">0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel3">0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel4">0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel5">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel6">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000</FixedPointParameter>
+            <FixedPointParameter Name="OutputChannel7">0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000</FixedPointParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+  <ConfigurableDomain Name="APO_LFX_MFX_LOOPBACK_CLIENT_SPEECH" SequenceAware="false">
+    <Configurations>
+      <Configuration Name="Default">
+        <CompoundRule Type="All"/>
+      </Configuration>
+    </Configurations>
+    <ConfigurableElements>
+      <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/LoopbackClient"/>
+    </ConfigurableElements>
+    <Settings>
+      <Configuration Name="Default">
+        <ConfigurableElement Path="/Audio/AudioDspComm/Microphone/Subpaths/Voice/Modules/IntelSst_Lfx_Mfx_Apo/Subeffects_SpeechMode/LoopbackClient">
+          <Component Name="LoopbackClient">
+            <Component Name="switch">
+              <EnumParameter Name="value">on</EnumParameter>
+            </Component>
+            <IntegerParameter Name="sw_flag">0</IntegerParameter>
+            <EnumParameter Name="automatic_gain">on</EnumParameter>
+          </Component>
+        </ConfigurableElement>
+      </Configuration>
+    </Settings>
+  </ConfigurableDomain>
+</ConfigurableDomains>

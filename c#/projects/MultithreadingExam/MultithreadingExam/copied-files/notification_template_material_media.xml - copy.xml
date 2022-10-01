@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2014 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions *******
+  ~ limitations under the License
+  -->
+
+<com.*******roid.internal.widget.MediaNotificationView
+    *******roid:id="@+id/status_bar_latest_event_content"
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="wrap_content"
+    *******roid:background="#00000000"
+    *******roid:tag="media"
+    >
+    <ImageView *******roid:id="@+id/right_icon"
+        *******roid:layout_width="0dp"
+        *******roid:layout_height="0dp"
+        *******roid:adjustViewBounds="true"
+        *******roid:layout_gravity="top|end"
+        *******roid:scaleType="centerCrop"
+    />
+    <include layout="@layout/notification_template_header"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="@dimen/media_notification_header_height" />
+    <LinearLayout
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:orientation="vertical"
+        *******roid:id="@+id/notification_media_content"
+        >
+        <LinearLayout
+            *******roid:id="@+id/notification_main_column"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:orientation="horizontal"
+            *******roid:layout_marginStart="@dimen/notification_content_margin_start"
+            *******roid:layout_marginTop="@dimen/notification_content_margin_top"
+            *******roid:layout_alignParentTop="true"
+            *******roid:tag="media"
+            >
+            <LinearLayout
+                *******roid:id="@+id/notification_content_container"
+                *******roid:layout_width="match_parent"
+                *******roid:layout_height="wrap_content"
+                *******roid:layout_gravity="fill_vertical"
+                *******roid:layout_weight="1"
+                *******roid:minHeight="@dimen/notification_min_content_height"
+                *******roid:paddingBottom="@dimen/notification_content_margin"
+                *******roid:orientation="vertical"
+                >
+                <include layout="@layout/notification_template_part_line1"/>
+                <include layout="@layout/notification_template_text"/>
+            </LinearLayout>
+            <LinearLayout
+                *******roid:id="@+id/media_actions"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:layout_gravity="top|end"
+                *******roid:layout_marginStart="10dp"
+                *******roid:layoutDirection="ltr"
+                *******roid:orientation="horizontal"
+                >
+                <include
+                    layout="@layout/notification_material_media_action"
+                    *******roid:id="@+id/action0"
+                />
+                <include
+                    layout="@layout/notification_material_media_action"
+                    *******roid:id="@+id/action1"
+                />
+                <include
+                    layout="@layout/notification_material_media_action"
+                    *******roid:id="@+id/action2"
+                />
+            </LinearLayout>
+        </LinearLayout>
+        <ViewStub *******roid:id="@+id/notification_media_seekbar_container"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_alignParentBottom="true"
+        />
+    </LinearLayout>
+</com.*******roid.internal.widget.MediaNotificationView>

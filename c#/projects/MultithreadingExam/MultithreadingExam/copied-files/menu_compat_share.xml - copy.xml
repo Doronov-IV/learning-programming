@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--For all properties see: https://aka.ms/*******roid-menu-resource-->
+<menu xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid">
+
+  <!--Replace *******roid:title="Share" with @string/<your name>-->
+  <item *******roid:id="@+id/action_share"
+        *******roid:title="Share"
+        *******roid:showAsAction="always"
+        *******roid:actionProviderClass="*******roid.widget.ShareActionProvider"
+          />
+</menu>
+
+<!-- Code to implement into Activity:
+
+Android.Widget.ShareActionProvider actionProvider;
+public override bool OnCreateOptionsMenu(IMenu menu)
+{
+  this.MenuInflater.Inflate(Resource.Menu.$safeitemname$, menu);
+
+  var shareItem = menu.FindItem(Resource.Id.action_share);
+  actionProvider = shareItem.ActionProvider.JavaCast<Android.Widget.ShareActionProvider>();
+
+  var intent = new Intent(Intent.ActionSend);
+  intent.SetType("text/plain");
+  intent.PutExtra(Intent.ExtraText, "Time to share some text!");
+
+  actionProvider.SetShareIntent(intent);
+
+
+  return base.OnCreateOptionsMenu(menu);
+}
+
+-->

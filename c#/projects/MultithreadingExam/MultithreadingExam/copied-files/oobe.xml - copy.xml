@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FirstExperience>
+	<oobe>
+		<oem>
+			<registration>
+				<title>
+Bienvenue!
+</title>
+				<subtitle>
+Merci d'avoir acheté cet ordinateur Acer. Entrez dans le monde de  Acer et commencez à explorer. Vous voulez savoir comment? Saisissez votre email pour commencer!
+</subtitle>
+				<customerinfo>
+					<label>
+J'aimerais recevoir des informations de Acer
+</label>
+					<defaultvalue>false</defaultvalue>
+				</customerinfo>
+				<checkbox1>
+					<label>
+Je voudrais rejoindre le Programme d'amélioration de l'expérience utilisateur (User Experience Improvement Program, UEIP) Acer et j'accepte ses conditions.
+</label>
+					<defaultvalue>false</defaultvalue>
+				</checkbox1>
+				<checkbox2>
+					<label>
+J'accepte qu'Acer transmette mon adresse e-mail à McAfee pour créer mon compte et me communiquer des offres et des mises à jour.
+</label>
+					<defaultvalue>false</defaultvalue>
+				</checkbox2>
+				<link1>
+					<label>
+Regardez pourquoi nous vous dem*******ons votre email.
+</label>
+				</link1>
+				<link2>
+					<label>
+Lire la politique de confidentialité
+</label>
+				</link2>
+				<link3>
+					<label>
+Lisez les conditions d'utilisation du Programme d'amélioration de l'expérience utilisateur (User Experience Improvement Program, UEIP) Acer
+</label>
+				</link3>
+			</registration>
+			<logopath>c:\Windows\System32\Oem\logo\OEM_OOBE.png</logopath>
+			<eulafilename>agreement.rtf</eulafilename>
+			<OutOfBoxBackground>true</OutOfBoxBackground>
+		</oem>
+		<defaults>
+			<moveRegionalSettingsAfterLanguage>True</moveRegionalSettingsAfterLanguage>
+			<timezone>Russian St*******ard Time</timezone>
+			<location>203</location>
+			<locale>1049</locale>
+			<keyboard>0419:00000419</keyboard>
+			<adjustForDST>True</adjustForDST>
+			<hideTimeAndDate>false</hideTimeAndDate>
+		</defaults>
+	</oobe>
+</FirstExperience>

@@ -1,0 +1,1091 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<?xml-stylesheet type="text/xsl" href="#stylesheet"?>
+<activity>
+	<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" id="stylesheet" xml:id="stylesheet">
+		<xsl:output method="html"  encoding="utf-16"/>
+		<!-- Don't reprint text nodes within the xsl:stylesheet node -->
+		<xsl:template match="text()"/>
+		<xsl:template match="activity">
+			<head>
+				<title>Activity Monitor Log</title>
+				<style type="text/css">
+					body{ text-align: left; width: 100%;  font-family: Verdana, sans-serif; }
+
+					table{ border: none;  border-collapse: separate;  width: 100%; }
+
+					tr.title td{ font-size: 24px;  font-weight: bold; }
+
+					th{ background: #d0d0d0;  font-weight: bold;  font-size: 10pt;  text-align: left; }
+					tr{ background: #eeeeee}
+					td, th{ font-size: 8pt;  padding: 1px;  border: none; }
+
+					tr.info td{}
+					tr.warning td{background-color:yellow;color:black}
+					tr.error td{background-color:red;color:black}
+
+					span {text-decoration:underline}
+					a:hover{text-transform:uppercase;color: #9090F0;}
+				</style>
+			</head>
+
+			<body>
+				<table>
+					<tr class="title">
+						<td colspan="7">Activity Monitor Log</td>
+					</tr>
+					<tr>
+						<td colspan="2">infos</td>
+						<td colspan="5">
+							<xsl:value-of select="count(entry[type='Information'])"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">warnings</td>
+						<td colspan="5">
+							<xsl:value-of select="count(entry[type='Warning'])"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">errors</td>
+						<td colspan="5">
+							<xsl:value-of select="count(entry[type='Error'])"/>
+						</td>
+					</tr>
+					<tr>
+						<th width="20">#</th>
+						<th width="50">Type</th>
+						<th>Description</th>
+						<th width="280">GUID</th>
+						<th>Hr</th>
+						<th>Source</th>
+						<th>Time (UTC)</th>
+					</tr>
+					<xsl:apply-templates/>
+				</table>
+
+			</body>
+		</xsl:template>
+
+		<xsl:template match="entry">
+			<!-- example 
+
+          <entry>
+            <record>136</record>
+            <time>2004/02/26 00:42:59.706</time>
+            <type>Error</type>
+            <source>Microsoft Visual Studio</source>
+            <description>Loading UI library</description>
+            <guid>{00000000-0000-0000-0000-000000000000}</guid>
+            <hr>800a006f</hr>
+            <path></path>
+        </entry>
+
+        -->
+			<xsl:choose>
+
+				<xsl:when test="type='Information'">
+					<tr id="info" class="info">
+						<td>
+							<xsl:value-of select="record"/>
+						</td>
+						<td></td>
+						<xsl:call-template name="row"/>
+					</tr>
+				</xsl:when>
+
+				<xsl:when test="type='Warning'">
+					<tr id="warning" class="warning">
+						<td>
+							<xsl:value-of select="record"/>
+						</td>
+						<td>Warning</td>
+						<xsl:call-template name="row"/>
+					</tr>
+				</xsl:when>
+
+				<xsl:when test="type='Error'">
+					<tr id="error" class="error">
+						<td>
+							<xsl:value-of select="record"/>
+						</td>
+						<td>ERROR</td>
+						<xsl:call-template name="row"/>
+					</tr>
+				</xsl:when>
+
+			</xsl:choose>
+
+		</xsl:template>
+
+		<xsl:template name="row">
+			<td id="description">
+				<xsl:value-of select="description"/>
+				<xsl:if test="path">
+					<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<xsl:value-of select="path"/>
+				</xsl:if>
+			</td>
+			<td id="guid">
+				<xsl:value-of select="guid"/>
+			</td>
+			<td id="hr">
+				<xsl:value-of select="hr"/>
+			</td>
+			<td>
+				<xsl:value-of select="source"/>
+			</td>
+			<td>
+				<xsl:value-of select="time"/>
+			</td>
+		</xsl:template>
+
+	</xsl:stylesheet>
+
+  <entry>
+    <record>1</record>
+    <time>2022/09/24 11:02:16.019</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Microsoft Visual Studio 2022 version: 17.0.32526.225</description>
+  </entry>
+  <entry>
+    <record>2</record>
+    <time>2022/09/24 11:02:16.019</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Log ID</description>
+    <guid>{201E8E0C-1729-4051-B52F-4A2219D6F36A}</guid>
+  </entry>
+  <entry>
+    <record>3</record>
+    <time>2022/09/24 11:02:16.019</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Running in isolation mode.</description>
+  </entry>
+  <entry>
+    <record>4</record>
+    <time>2022/09/24 11:02:16.025</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Looking for master PkgDef file</description>
+    <path>D:\Microsoft Visual Studio For Programming\Common7\IDE\master.pkgdef</path>
+  </entry>
+  <entry>
+    <record>5</record>
+    <time>2022/09/24 11:02:16.026</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Creating PkgDefCacheNonVolatile</description>
+  </entry>
+  <entry>
+    <record>6</record>
+    <time>2022/09/24 11:02:16.026</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>PkgDefCache flags</description>
+    <hr>00013801</hr>
+  </entry>
+  <entry>
+    <record>7</record>
+    <time>2022/09/24 11:02:16.081</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Double-checking master pkgdef file</description>
+  </entry>
+  <entry>
+    <record>8</record>
+    <time>2022/09/24 11:02:16.083</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>PkgDefManagement initialized</description>
+  </entry>
+  <entry>
+    <record>9</record>
+    <time>2022/09/24 11:02:16.083</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>RootFolder</description>
+    <path>D:\Microsoft Visual Studio For Programming\</path>
+  </entry>
+  <entry>
+    <record>10</record>
+    <time>2022/09/24 11:02:16.083</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>ShellFolder</description>
+    <path>D:\Microsoft Visual Studio For Programming\</path>
+  </entry>
+  <entry>
+    <record>849</record>
+    <time>2022/09/24 11:02:20.056</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>850</record>
+    <time>2022/09/24 11:02:20.058</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>851</record>
+    <time>2022/09/24 11:02:20.061</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>852</record>
+    <time>2022/09/24 11:02:20.063</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>853</record>
+    <time>2022/09/24 11:02:20.065</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>854</record>
+    <time>2022/09/24 11:02:20.067</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\CHROMEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>856</record>
+    <time>2022/09/24 11:02:20.069</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>857</record>
+    <time>2022/09/24 11:02:20.071</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>858</record>
+    <time>2022/09/24 11:02:20.072</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>859</record>
+    <time>2022/09/24 11:02:20.074</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>860</record>
+    <time>2022/09/24 11:02:20.076</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>861</record>
+    <time>2022/09/24 11:02:20.077</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\EDGEDEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>863</record>
+    <time>2022/09/24 11:02:20.080</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>864</record>
+    <time>2022/09/24 11:02:20.081</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>865</record>
+    <time>2022/09/24 11:02:20.083</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>866</record>
+    <time>2022/09/24 11:02:20.085</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>867</record>
+    <time>2022/09/24 11:02:20.087</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>868</record>
+    <time>2022/09/24 11:02:20.088</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>Unable to load extension at: D:\MICROSOFT VISUAL STUDIO FOR PROGRAMMING\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\WEBCLIENT\DIAGNOSTICS\NODE2DEBUGADAPTER\. Exception text: Microsoft.VisualStudio.ExtensionManager.InvalidExtensionManifestException: This VSIX does not apply to any product installed on this machine. The problem could be that the VSIX manifest&apos;s format is not recognized, or that the manifest has been corrupted. ---&gt; System.InvalidOperationException: There is an error in XML document (12, 5). ---&gt; System.Xml.Schema.XmlSchemaValidationException: The element &apos;Identifier&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos; has incomplete content. List of possible elements expected: &apos;SupportedProducts&apos; in namespace &apos;http://schemas.microsoft.com/developer/vsx-schema/2010&apos;.&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.SendValidationEvent(ValidationEventH*******ler eventH*******ler, Object sender, XmlSchemaValidationException e, XmlSeverityType severity)&#x000D;&#x000A;   at System.Xml.Schema.XmlSchemaValidator.InternalValidateEndElement(XmlSchemaInfo schemaInfo, Object typedValue)&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.ProcessEndElementEvent()&#x000D;&#x000A;   at System.Xml.XsdValidatingReader.Read()&#x000D;&#x000A;   at System.Xml.XmlReader.ReadElementString()&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read5_VsixIdentifier(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read12_Vsix(Boolean isNullable, Boolean checkType)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.XmlSerializationReaderVsix.Read13_Vsix()&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadVSIXManifest(XmlReader xmlReader)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   --- End of inner exception stack trace ---&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl.ReadManifest(Stream manifestStream)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ExtensionImpl..ctor(String path)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.InstalledExtensionImpl..ctor(String vsixManifestPath, IEngineHost engineHost, Boolean installedPerMachine, CultureInfo preferredCulture, IList`1 extensionPackVsixIds, IList`1 packageGuids)&#x000D;&#x000A;   at Microsoft.VisualStudio.ExtensionManager.ScanModule.TryLoadExtension(ExtensionLocations location, String fullPath, String normalizedPath, InstalledExtensionImpl&amp; installedExtension, Int32 retryCount, Int32 retryDelay, Int32 attempts).</description>
+  </entry>
+  <entry>
+    <record>1189</record>
+    <time>2022/09/24 11:03:24.501</time>
+    <type>Error</type>
+    <source>Extension Manager</source>
+    <description>&#x0411;&#x043B;&#x043E;&#x043A;&#x0438;&#x0440;&#x043E;&#x0432;&#x043A;&#x0430; &#x0447;&#x0442;&#x0435;&#x043D;&#x0438;&#x044F; &#x043E;&#x0441;&#x0432;&#x043E;&#x0431;&#x043E;&#x0436;&#x0434;&#x0430;&#x0435;&#x0442;&#x0441;&#x044F; &#x0431;&#x0435;&#x0437; &#x0443;&#x0434;&#x0435;&#x0440;&#x0436;&#x0430;&#x043D;&#x0438;&#x044F;. </description>
+    <path>IncompatibilityList - Error in updating registry for incompatible extensions.</path>
+  </entry>
+  <entry>
+    <record>1654</record>
+    <time>2022/09/24 11:04:53.448</time>
+    <type>Error</type>
+    <source>Template provider aggregator</source>
+    <description>System.NullReferenceException: Object reference not set to an instance of an object.&#x000D;&#x000A;   at Microsoft.VisualStudio.TemplateProviders.TemplateProviderSupport.ExceptionLoggingTemplateProviderDecorator.CatchExceptionsFromAsyncEnumerables(TemplateHierarchyNode node)&#x000D;&#x000A;   at Microsoft.VisualStudio.TemplateProviders.TemplateProviderSupport.ExceptionLoggingTemplateProviderDecorator.&lt;GetTemplateTreeAsync&gt;d__6.MoveNext()</description>
+  </entry>
+  <entry>
+    <record>1655</record>
+    <time>2022/09/24 11:04:53.556</time>
+    <type>Error</type>
+    <source>Template provider aggregator</source>
+    <description>System.NullReferenceException: Object reference not set to an instance of an object.&#x000D;&#x000A;   at Microsoft.VisualStudio.TemplateProviders.TemplateProviderSupport.ExceptionLoggingTemplateProviderDecorator.CatchExceptionsFromAsyncEnumerables(TemplateHierarchyNode node)&#x000D;&#x000A;   at Microsoft.VisualStudio.TemplateProviders.TemplateProviderSupport.ExceptionLoggingTemplateProviderDecorator.&lt;GetTemplateTreeAsync&gt;d__6.MoveNext()</description>
+  </entry>
+  <entry>
+    <record>2211</record>
+    <time>2022/09/24 11:13:50.824</time>
+    <type>Error</type>
+    <source>vs/intellicode/repeatededits/exception/FileAndForget/OnePointOneQuickActionTextViewCreationListener/CheckForNewOnePointOneAsync</source>
+    <description>System.ObjectDisposedException: The CancellationTokenSource has been disposed.&#x000D;&#x000A;   at System.Threading.CancellationTokenSource.ThrowObjectDisposedException()&#x000D;&#x000A;   at Microsoft.VisualStudio.IntelliCode.Refactorings.QuickAction.OnePointOneQuickActionTextViewCreationListener.OnePointOneQuickAction.&lt;CheckForNewOnePointOneAsync&gt;d__11.MoveNext()&#x000D;&#x000A;--- End of stack trace from previous location where exception was thrown ---&#x000D;&#x000A;   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()&#x000D;&#x000A;   at System.Runtime.CompilerServices.TaskAwaiter.H*******leNonSuccess*******DebuggerNotification(Task task)&#x000D;&#x000A;   at Microsoft.VisualStudio.IntelliCode.Refactorings.QuickAction.OnePointOneQuickActionTextViewCreationListener.OnePointOneQuickAction.&lt;&lt;Caret_PositionChanged&gt;b__10_0&gt;d.MoveNext()&#x000D;&#x000A;--- End of stack trace from previous location where exception was thrown ---&#x000D;&#x000A;   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()&#x000D;&#x000A;   at System.Runtime.CompilerServices.TaskAwaiter.H*******leNonSuccess*******DebuggerNotification(Task task)&#x000D;&#x000A;   at Microsoft.VisualStudio.Shell.VsTaskLibraryHelper.&lt;&gt;c__DisplayClass35_0.&lt;&lt;File*******Forget&gt;b__0&gt;d.MoveNext()</description>
+  </entry>
+  <entry>
+    <record>2363</record>
+    <time>2022/09/24 11:32:29.302</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2364</record>
+    <time>2022/09/24 11:33:39.949</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2365</record>
+    <time>2022/09/24 11:33:39.949</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2366</record>
+    <time>2022/09/24 11:33:39.949</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2367</record>
+    <time>2022/09/24 11:33:39.949</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2368</record>
+    <time>2022/09/24 11:33:45.093</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2369</record>
+    <time>2022/09/24 11:33:45.093</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2370</record>
+    <time>2022/09/24 11:33:45.093</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2371</record>
+    <time>2022/09/24 11:33:45.093</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2372</record>
+    <time>2022/09/24 11:34:22.674</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2373</record>
+    <time>2022/09/24 11:34:22.674</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2374</record>
+    <time>2022/09/24 11:34:22.674</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2375</record>
+    <time>2022/09/24 11:34:22.674</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2376</record>
+    <time>2022/09/24 11:34:24.405</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2377</record>
+    <time>2022/09/24 11:34:24.405</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2378</record>
+    <time>2022/09/24 11:34:24.405</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2379</record>
+    <time>2022/09/24 11:34:24.405</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2380</record>
+    <time>2022/09/24 11:34:34.189</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2381</record>
+    <time>2022/09/24 11:34:34.189</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2382</record>
+    <time>2022/09/24 11:34:34.189</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2383</record>
+    <time>2022/09/24 11:34:34.189</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2384</record>
+    <time>2022/09/24 11:34:43.031</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2385</record>
+    <time>2022/09/24 11:34:43.031</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2386</record>
+    <time>2022/09/24 11:34:43.032</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2387</record>
+    <time>2022/09/24 11:34:43.032</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2388</record>
+    <time>2022/09/24 11:34:47.238</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2389</record>
+    <time>2022/09/24 11:34:47.238</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2390</record>
+    <time>2022/09/24 11:34:47.238</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2391</record>
+    <time>2022/09/24 11:34:47.238</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2392</record>
+    <time>2022/09/24 11:34:51.163</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2393</record>
+    <time>2022/09/24 11:34:51.163</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2394</record>
+    <time>2022/09/24 11:34:51.163</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2395</record>
+    <time>2022/09/24 11:34:51.163</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2396</record>
+    <time>2022/09/24 11:35:00.053</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2397</record>
+    <time>2022/09/24 11:35:00.053</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2398</record>
+    <time>2022/09/24 11:35:00.053</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2399</record>
+    <time>2022/09/24 11:35:00.053</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2400</record>
+    <time>2022/09/24 11:35:10.550</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2401</record>
+    <time>2022/09/24 11:35:10.550</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2402</record>
+    <time>2022/09/24 11:35:10.550</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2403</record>
+    <time>2022/09/24 11:35:10.550</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2404</record>
+    <time>2022/09/24 11:35:35.061</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2405</record>
+    <time>2022/09/24 11:35:35.061</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2406</record>
+    <time>2022/09/24 11:35:35.061</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2407</record>
+    <time>2022/09/24 11:35:35.061</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2408</record>
+    <time>2022/09/24 11:35:43.269</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2409</record>
+    <time>2022/09/24 11:35:43.269</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2410</record>
+    <time>2022/09/24 11:35:43.269</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2411</record>
+    <time>2022/09/24 11:35:43.269</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2412</record>
+    <time>2022/09/24 11:36:00.825</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2413</record>
+    <time>2022/09/24 11:36:00.825</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2414</record>
+    <time>2022/09/24 11:36:00.825</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2415</record>
+    <time>2022/09/24 11:36:00.825</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2416</record>
+    <time>2022/09/24 11:36:07.170</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2417</record>
+    <time>2022/09/24 11:36:07.170</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2418</record>
+    <time>2022/09/24 11:36:07.171</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2419</record>
+    <time>2022/09/24 11:36:07.171</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2420</record>
+    <time>2022/09/24 11:36:11.893</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2421</record>
+    <time>2022/09/24 11:36:11.893</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2422</record>
+    <time>2022/09/24 11:36:11.893</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2423</record>
+    <time>2022/09/24 11:36:11.893</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2424</record>
+    <time>2022/09/24 11:36:15.589</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2425</record>
+    <time>2022/09/24 11:36:15.589</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2426</record>
+    <time>2022/09/24 11:36:15.589</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2427</record>
+    <time>2022/09/24 11:36:15.589</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2428</record>
+    <time>2022/09/24 11:36:25.158</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2429</record>
+    <time>2022/09/24 11:36:25.158</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2430</record>
+    <time>2022/09/24 11:36:25.158</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2431</record>
+    <time>2022/09/24 11:36:25.158</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2432</record>
+    <time>2022/09/24 11:36:29.306</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2433</record>
+    <time>2022/09/24 11:36:29.306</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2434</record>
+    <time>2022/09/24 11:36:29.306</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2435</record>
+    <time>2022/09/24 11:36:29.306</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2436</record>
+    <time>2022/09/24 11:36:32.637</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2437</record>
+    <time>2022/09/24 11:36:32.637</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2438</record>
+    <time>2022/09/24 11:36:32.637</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2439</record>
+    <time>2022/09/24 11:36:32.637</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2440</record>
+    <time>2022/09/24 11:36:40.380</time>
+    <type>Information</type>
+    <source>window manager</source>
+    <description>Stored pinned views in SUO: </description>
+  </entry>
+  <entry>
+    <record>2441</record>
+    <time>2022/09/24 11:36:50.758</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [Code Analysis Package]</description>
+    <guid>{B20604B0-72BC-4953-BB92-95BF26D30CFA}</guid>
+  </entry>
+  <entry>
+    <record>2442</record>
+    <time>2022/09/24 11:36:51.113</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [Code Analysis Package]</description>
+    <guid>{B20604B0-72BC-4953-BB92-95BF26D30CFA}</guid>
+  </entry>
+  <entry>
+    <record>2443</record>
+    <time>2022/09/24 11:37:01.483</time>
+    <type>Information</type>
+    <source>window manager</source>
+    <description>Stored pinned views in SUO: </description>
+  </entry>
+  <entry>
+    <record>2444</record>
+    <time>2022/09/24 11:37:01.523</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering OnAddVerbInvoked</description>
+  </entry>
+  <entry>
+    <record>2445</record>
+    <time>2022/09/24 11:37:01.523</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering AddItem. Persistence data for item: D:\Git repos\computer-science-learning\c#\homework\wpf\wpf-homeworks\AdoNetHomework\.view-model\controls\MainWindowViewModel.cs</description>
+  </entry>
+  <entry>
+    <record>2446</record>
+    <time>2022/09/24 11:37:01.523</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering TryPromoteItem</description>
+  </entry>
+  <entry>
+    <record>2447</record>
+    <time>2022/09/24 11:37:01.523</time>
+    <type>Information</type>
+    <source>MruList</source>
+    <description>Entering PromoteItemAt ******* found the index of the item to be 0</description>
+  </entry>
+  <entry>
+    <record>2448</record>
+    <time>2022/09/24 11:37:07.376</time>
+    <type>Information</type>
+    <source>window manager</source>
+    <description>Stored pinned views in SUO: </description>
+  </entry>
+  <entry>
+    <record>2449</record>
+    <time>2022/09/24 11:37:07.812</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [VsDebugPresentationPackage,version=17.0.0.0,publicKeyToken=b03f5f7f11d50a3a,culture=neutral]</description>
+    <guid>{BEB01DDF-9D2B-435B-A9E7-76557E2B6B52}</guid>
+  </entry>
+  <entry>
+    <record>2450</record>
+    <time>2022/09/24 11:37:07.927</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [VsDebugPresentationPackage,version=17.0.0.0,publicKeyToken=b03f5f7f11d50a3a,culture=neutral]</description>
+    <guid>{BEB01DDF-9D2B-435B-A9E7-76557E2B6B52}</guid>
+  </entry>
+  <entry>
+    <record>2451</record>
+    <time>2022/09/24 11:37:08.740</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [DiagnosticsHubPackageShim]</description>
+    <guid>{7F2464AE-D49B-4C01-BCDC-55BDD4C18BCF}</guid>
+  </entry>
+  <entry>
+    <record>2452</record>
+    <time>2022/09/24 11:37:08.768</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [DiagnosticsHubPackageShim]</description>
+    <guid>{7F2464AE-D49B-4C01-BCDC-55BDD4C18BCF}</guid>
+  </entry>
+  <entry>
+    <record>2453</record>
+    <time>2022/09/24 11:37:08.870</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [DiagnosticsHubPackage]</description>
+    <guid>{22512D50-40BC-4DEA-89B1-21D70BB4218E}</guid>
+  </entry>
+  <entry>
+    <record>2454</record>
+    <time>2022/09/24 11:37:09.026</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [DiagnosticsHubPackage]</description>
+    <guid>{22512D50-40BC-4DEA-89B1-21D70BB4218E}</guid>
+  </entry>
+  <entry>
+    <record>2455</record>
+    <time>2022/09/24 11:37:10.015</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [CpuSamplingPackage]</description>
+    <guid>{EE921A70-F479-4E6B-8781-7456CD2FED16}</guid>
+  </entry>
+  <entry>
+    <record>2456</record>
+    <time>2022/09/24 11:37:10.072</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [CpuSamplingPackage]</description>
+    <guid>{EE921A70-F479-4E6B-8781-7456CD2FED16}</guid>
+  </entry>
+  <entry>
+    <record>2457</record>
+    <time>2022/09/24 11:37:11.213</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [VSDebugCoreUIPackage]</description>
+    <guid>{D549BC66-C17B-4409-8729-583E60DC0BC1}</guid>
+  </entry>
+  <entry>
+    <record>2458</record>
+    <time>2022/09/24 11:37:11.229</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [VSDebugCoreUIPackage]</description>
+    <guid>{D549BC66-C17B-4409-8729-583E60DC0BC1}</guid>
+  </entry>
+  <entry>
+    <record>2459</record>
+    <time>2022/09/24 11:37:11.496</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [Microsoft SQL Server Data Tools]</description>
+    <guid>{00FEE386-5F9F-4577-99F4-F327FAFC0FB9}</guid>
+  </entry>
+  <entry>
+    <record>2460</record>
+    <time>2022/09/24 11:37:11.851</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>Begin package load [SqlStudio Profile Package]</description>
+    <guid>{00A9524F-427F-46EE-8A20-615C25ECBE6F}</guid>
+  </entry>
+  <entry>
+    <record>2461</record>
+    <time>2022/09/24 11:37:11.884</time>
+    <type>Information</type>
+    <source>VisualStudio</source>
+    <description>End package load [SqlStudio Profile Package]</description>
+    <guid>{00A9524F-427F-46EE-8A20-615C25ECBE6F}</guid>
+  </entry>
+  <entry>
+    <record>2462</record>
+    <time>2022/09/24 11:37:13.487</time>
+    <type>Error</type>
+    <source>VisualStudio</source>
+    <description>SetSite failed for package [Microsoft SQL Server Data Tools]Source: &apos;System.Core&apos; Description: Object reference not set to an instance of an object.&#x000D;&#x000A;System.NullReferenceException: Object reference not set to an instance of an object.&#x000D;&#x000A;   at System.Collections.Generic.HashSet`1.AddIfNotPresent(T value)&#x000D;&#x000A;   at Microsoft.VisualStudio.Data.Tools.Package.Explorers.SqlServerObjectExplorer.SqlServerObjectExplorerContextMenuController.RegisterForComm*******Routing(IOleComm*******Target target)&#x000D;&#x000A;   at Microsoft.VisualStudio.Data.Tools.Package.DesignerServices.DatabaseChangesManager.Initialize()&#x000D;&#x000A;   at System.Threading.Tasks.Task.Execute()&#x000D;&#x000A;--- End of stack trace from previous location where exception was thrown ---&#x000D;&#x000A;   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()&#x000D;&#x000A;   at Microsoft.VisualStudio.Services.VsTask.RethrowException(AggregateException e)&#x000D;&#x000A;   at Microsoft.VisualStudio.Services.VsTask.InternalGetResult(Boolean ignoreUIThreadCheck)</description>
+    <guid>{00FEE386-5F9F-4577-99F4-F327FAFC0FB9}</guid>
+    <hr>80004003 - E_POINTER</hr>
+    <errorinfo></errorinfo>
+  </entry>
+</activity>

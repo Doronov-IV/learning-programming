@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" manifestVersion="1.0">
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" typeName="Service" version="10.0.19041.1865" publicKeyToken="31bf3856ad364e35" />
+      <categoryInstance subcategory="WaaSMedicSvc">
+        <serviceData dependOnService="rpcss" description="@WaaSMedicSvc.dll,-101" displayName="@WaaSMedicSvc.dll,-100" errorControl="normal" imagePath="%systemroot%\system32\svchost.exe -k wusvcs -p" launchProtected="windowsLight" name="WaaSMedicSvc" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeTakeOwnershipPrivilege,SeSecurityPrivilege,SeRestorePrivilege" sidType="unrestricted" start="dem*******" startAfterInstall="none" type="win32ShareProcess">
+          <securityDescriptor name="WAASMEDIC_SERVICE_SDDL" />
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WAASMEDIC_SERVICE_SDDL" sddl="D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOSDRCWDWO;;;WD)" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

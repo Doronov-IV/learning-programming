@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Windows.UI.WebUI.Core.WebUIComm*******BarContract</name>
+  </assembly>
+  <members>
+    <member name="T:Windows.UI.WebUI.Core.IWebUIComm*******BarElement">
+      <summary>**Deprecated.** The interface for the comm******* bar elements.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.IWebUIComm*******BarIcon">
+      <summary>**Deprecated.** The interface for the comm******* bar icons.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.MenuClosedEventH*******ler">
+      <summary>**Deprecated.** Represents the method that will h*******le the MenuClosed event.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.MenuOpenedEventH*******ler">
+      <summary>**Deprecated.** Represents the method that will h*******le the MenuOpened event.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.SizeChangedEventH*******ler">
+      <summary>**Deprecated.** Represents the method that will h*******le the SizeChanged event.</summary>
+      <param name="eventArgs">Provides data when the size of the comm******* bar changes.</param>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******Bar">
+      <summary>**Deprecated.** Represents a comm******* bar.</summary>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.BackgroundColor">
+      <summary>**Deprecated.** Gets or sets the background color of the comm******* bar.</summary>
+      <returns>The background color of the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.ClosedDisplayMode">
+      <summary>**Deprecated.** Gets or sets the closed display mode for the comm******* bar.</summary>
+      <returns>The closed display mode for the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.ForegroundColor">
+      <summary>**Deprecated.** Gets or sets the foreground color of the comm******* bar.</summary>
+      <returns>The foreground color of the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.IsOpen">
+      <summary>**Deprecated.** Gets or sets whether the comm******* bar is open.</summary>
+      <returns>true if the comm******* bar is open; otherwise, false.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.Opacity">
+      <summary>**Deprecated.** Gets or sets the opacity level of the comm******* bar.</summary>
+      <returns>The opacity level of the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.PrimaryComm*******s">
+      <summary>**Deprecated.** Gets the primary comm*******s on the comm******* bar.</summary>
+      <returns>The primary comm*******s on the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.SecondaryComm*******s">
+      <summary>**Deprecated.** Gets the secondary comm*******s on the comm******* bar.</summary>
+      <returns>The secondary comm*******s on the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.Size">
+      <summary>**Deprecated.** Gets the size of the comm******* bar.</summary>
+      <returns>The size of the comm******* bar.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******Bar.Visible">
+      <summary>**Deprecated.** Gets or sets whether the comm******* bar is displayed.</summary>
+      <returns>true if the comm******* bar is visible; otherwise, false.</returns>
+    </member>
+    <member name="E:Windows.UI.WebUI.Core.WebUIComm*******Bar.MenuClosed">
+      <summary>**Deprecated.** Occurs when a menu is closed.</summary>
+    </member>
+    <member name="E:Windows.UI.WebUI.Core.WebUIComm*******Bar.MenuOpened">
+      <summary>**Deprecated.** Occurs when a menu is opened.</summary>
+    </member>
+    <member name="E:Windows.UI.WebUI.Core.WebUIComm*******Bar.SizeChanged">
+      <summary>**Deprecated.** Occurs when the size of the comm******* bar changes.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******Bar.GetForCurrentView">
+      <summary>**Deprecated.** Gets the comm******* bar currently being presented.</summary>
+      <returns>The comm******* bar.</returns>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarBitmapIcon">
+      <summary>**Deprecated.** Represents a Web UI comm******* bar bitmap icon.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarBitmapIcon.#ctor">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarBitmapIcon class.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarBitmapIcon.#ctor(Windows.Foundation.Uri)">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarBitmapIcon class.</summary>
+      <param name="uri">The URI of the bitmap icon.</param>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarBitmapIcon.Uri">
+      <summary>**Deprecated.** Gets or sets the URI of the comm******* bar bitmap icon.</summary>
+      <returns>The URI of the bitmap icon.</returns>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarClosedDisplayMode">
+      <summary>**Deprecated.** Represents the display mode of a closed comm******* bar.</summary>
+    </member>
+    <member name="F:Windows.UI.WebUI.Core.WebUIComm*******BarClosedDisplayMode.Compact">
+      <summary>Compact display mode.</summary>
+    </member>
+    <member name="F:Windows.UI.WebUI.Core.WebUIComm*******BarClosedDisplayMode.Default">
+      <summary>Default display mode.</summary>
+    </member>
+    <member name="F:Windows.UI.WebUI.Core.WebUIComm*******BarClosedDisplayMode.Minimal">
+      <summary>Minimal display mode.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarConfirmationButton">
+      <summary>**Deprecated.** Represents a Web UI comm******* bar confirmation button.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarConfirmationButton.#ctor">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarConfirmationButton class.</summary>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarConfirmationButton.Text">
+      <summary>**Deprecated.** Gets or sets the text of the comm******* bar confirmation button.</summary>
+      <returns>The text of the comm******* bar confirmation button.</returns>
+    </member>
+    <member name="E:Windows.UI.WebUI.Core.WebUIComm*******BarConfirmationButton.ItemInvoked">
+      <summary>**Deprecated.** Occurs when the confirmation button is invoked.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarContract">
+      <summary>
+      </summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton">
+      <summary>**Deprecated.** Represents a comm******* bar button icon.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.#ctor">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarIconButton class.</summary>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.Enabled">
+      <summary>**Deprecated.** Gets or sets if the comm******* bar icon button is enabled.</summary>
+      <returns>true if the comm******* bar icon button is enabled; otherwise, false.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.Icon">
+      <summary>**Deprecated.** Gets or sets the comm******* bar icon button icon.</summary>
+      <returns>The comm******* bar icon button icon.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.IsChecked">
+      <summary>**Deprecated.** Gets or sets if the comm******* bar icon button is checked.</summary>
+      <returns>true if the comm******* bar icon button is checked; otherwise, false.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.IsToggleButton">
+      <summary>**Deprecated.** Gets or sets if the comm******* bar icon button is a toggle button.</summary>
+      <returns>true if the comm******* bar icon button is a toggle button; otherwise, false.</returns>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.Label">
+      <summary>**Deprecated.** Gets or sets the label of the comm******* bar icon button.</summary>
+      <returns>The label of the comm******* bar icon.</returns>
+    </member>
+    <member name="E:Windows.UI.WebUI.Core.WebUIComm*******BarIconButton.ItemInvoked">
+      <summary>**Deprecated.** Occurs when a comm******* bar icon button is invoked.</summary>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarItemInvokedEventArgs">
+      <summary>**Deprecated.** Contains event data about the WebUIComm*******BarIconButton ItemInvoked event.</summary>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarItemInvokedEventArgs.IsPrimaryComm*******">
+      <summary>**Deprecated.** Gets if the invoked comm******* is a primary comm*******.</summary>
+      <returns>true if the comm******* is a primary comm*******; otherwise, false.</returns>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarSizeChangedEventArgs">
+      <summary>**Deprecated.** Contains event data about the WebUIComm*******Bar [SizeChanged](webuicomm*******bar_sizechanged.md) event.</summary>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarSizeChangedEventArgs.Size">
+      <summary>**Deprecated.** Gets the size of the comm******* bar.</summary>
+      <returns>The size of the comm******* bar.</returns>
+    </member>
+    <member name="T:Windows.UI.WebUI.Core.WebUIComm*******BarSymbolIcon">
+      <summary>**Deprecated.** Represents a comm******* bar symbol icon.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarSymbolIcon.#ctor">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarSymbolIcon class.</summary>
+    </member>
+    <member name="M:Windows.UI.WebUI.Core.WebUIComm*******BarSymbolIcon.#ctor(System.String)">
+      <summary>**Deprecated.** Initializes a new instance of the WebUIComm*******BarSymbolIcon class.</summary>
+      <param name="symbol">The symbol icon.</param>
+    </member>
+    <member name="P:Windows.UI.WebUI.Core.WebUIComm*******BarSymbolIcon.Symbol">
+      <summary>**Deprecated.** Gets or sets the symbol of the comm******* bar symbol icon.</summary>
+      <returns>The symbol.</returns>
+    </member>
+  </members>
+</doc>

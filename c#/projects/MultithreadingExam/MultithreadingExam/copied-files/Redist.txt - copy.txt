@@ -1,0 +1,5 @@
+﻿Distributable Code is identified as the following files *******/or all of the files in the following directories:
+
+[installdirectory]\Microsoft.Exchange.WebServices.dll
+[installdirectory]\Microsoft.Exchange.WebServices.Auth.dll
+

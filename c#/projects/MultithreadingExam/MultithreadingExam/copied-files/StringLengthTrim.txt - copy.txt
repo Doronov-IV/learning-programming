@@ -1,0 +1,1 @@
+﻿Get ******* trim the length of a String.

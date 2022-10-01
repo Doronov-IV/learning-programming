@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions *******
+     limitations under the License.
+-->
+
+<LinearLayout
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="wrap_content">
+
+    <RelativeLayout
+        *******roid:id="@+id/time_header"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="match_parent"
+        *******roid:gravity="center"
+        *******roid:paddingStart="?attr/dialogPreferredPadding"
+        *******roid:paddingEnd="?attr/dialogPreferredPadding">
+
+        <LinearLayout
+            *******roid:id="@+id/time_layout"
+            *******roid:layoutDirection="ltr"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_centerHorizontal="true"
+            *******roid:layout_centerVertical="true"
+            *******roid:paddingTop="@dimen/timepicker_radial_picker_top_margin"
+            *******roid:orientation="horizontal">
+
+            <!-- The hour should always be to the left of the separator,
+                 regardless of the current locale's layout direction. -->
+            <com.*******roid.internal.widget.NumericTextView
+                *******roid:id="@+id/hours"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.TimeLabel"
+                *******roid:background="@drawable/time_picker_editable_background"
+                *******roid:singleLine="true"
+                *******roid:ellipsize="none"
+                *******roid:gravity="right"
+                *******roid:focusable="true"
+                *******roid:pointerIcon="h*******"
+                *******roid:nextFocusForward="@+id/minutes" />
+
+            <TextView
+                *******roid:id="@+id/separator"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.TimeLabel"
+                *******roid:importantForAccessibility="no"
+                *******roid:includeFontPadding="false" />
+
+            <!-- The minutes should always be to the right of the separator,
+                 regardless of the current locale's layout direction. -->
+            <com.*******roid.internal.widget.NumericTextView
+                *******roid:id="@+id/minutes"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.TimeLabel"
+                *******roid:background="@drawable/time_picker_editable_background"
+                *******roid:singleLine="true"
+                *******roid:ellipsize="none"
+                *******roid:gravity="left"
+                *******roid:focusable="true"
+                *******roid:pointerIcon="h*******"
+                *******roid:nextFocusForward="@+id/am_label" />
+        </LinearLayout>
+
+        <RadioGroup
+            *******roid:id="@+id/ampm_layout"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_below="@+id/time_layout"
+            *******roid:layout_centerHorizontal="true"
+            *******roid:paddingTop="4dp"
+            *******roid:paddingBottom="4dp"
+            *******roid:orientation="vertical"
+            *******roid:layoutDirection="locale">
+            <RadioButton
+                *******roid:id="@+id/am_label"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:padding="8dp"
+                *******roid:layout_marginBottom="-8dp"
+                *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.AmPmLabel"
+                *******roid:lines="1"
+                *******roid:ellipsize="none"
+                *******roid:focusable="true"
+                *******roid:background="?*******roid:attr/selectableItemBackground"
+                *******roid:includeFontPadding="false"
+                *******roid:nextFocusForward="@+id/pm_label"
+                *******roid:button="@null" />
+            <RadioButton
+                *******roid:id="@+id/pm_label"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:padding="8dp"
+                *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.AmPmLabel"
+                *******roid:lines="1"
+                *******roid:ellipsize="none"
+                *******roid:focusable="true"
+                *******roid:background="?*******roid:attr/selectableItemBackground"
+                *******roid:includeFontPadding="false"
+                *******roid:button="@null" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <TextView
+        *******roid:visibility="gone"
+        *******roid:id="@+id/input_header"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="match_parent"
+        *******roid:gravity="center"
+        *******roid:paddingStart="@dimen/dialog_padding_material"
+        *******roid:paddingEnd="@dimen/dialog_padding_material"
+        *******roid:paddingTop="20dp"
+        *******roid:paddingBottom="20dp"
+        *******roid:includeFontPadding="false"
+        *******roid:textAppearance="@style/TextAppearance.Material.TimePicker.InputHeader"
+        *******roid:text="@string/time_picker_header_text"/>
+
+    <LinearLayout
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:orientation="vertical">
+
+        <*******roid.widget.RadialTimePickerView
+            *******roid:id="@+id/radial_picker"
+            *******roid:layout_width="@dimen/timepicker_radial_picker_dimen"
+            *******roid:layout_height="@dimen/timepicker_radial_picker_dimen"
+            *******roid:layout_gravity="center|fill"
+            *******roid:layout_marginTop="@dimen/timepicker_radial_picker_top_margin"
+            *******roid:layout_marginStart="@dimen/timepicker_radial_picker_horizontal_margin"
+            *******roid:layout_marginEnd="@dimen/timepicker_radial_picker_horizontal_margin"
+            *******roid:layoutDirection="locale" />
+
+        <*******roid.widget.TextInputTimePickerView
+            *******roid:id="@+id/input_mode"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:paddingStart="?attr/dialogPreferredPadding"
+            *******roid:paddingEnd="?attr/dialogPreferredPadding"
+            *******roid:visibility="gone" />
+
+        <LinearLayout
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content">
+            <ImageButton
+                *******roid:id="@+id/toggle_mode"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:layout_gravity="center_vertical"
+                *******roid:layout_marginStart="12dp"
+                *******roid:layout_marginEnd="12dp"
+                *******roid:padding="12dp"
+                *******roid:background="?attr/selectableItemBackgroundBorderless"
+                *******roid:tint="?attr/colorControlNormal"
+                *******roid:src="@drawable/btn_keyboard_key_material"
+                *******roid:contentDescription="@string/time_picker_text_input_mode_description" />
+            <Space
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:layout_weight="1" />
+            <ViewStub
+                *******roid:id="@id/buttonPanel"
+                *******roid:layout="@layout/alert_dialog_button_bar_material"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:layoutDirection="locale" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

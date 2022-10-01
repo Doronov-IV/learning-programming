@@ -1,0 +1,1464 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<iecompatlistdescription>
+    <version>1152921505002052497</version>
+    <ttl>1</ttl>
+    <ua id="IE 10">Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)</ua>
+    <f12ua category="desktop" name="Internet Explorer 11">Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko</f12ua>
+    <f12ua category="desktop" name="Internet Explorer 10">Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)</f12ua>
+    <f12ua category="desktop" name="Internet Explorer 9">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)</f12ua>
+    <f12ua category="desktop" name="Internet Explorer 8">Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)</f12ua>
+    <f12ua category="non-desktop" name="Microsoft Edge - Windows 10 Mobile">Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Mobile Safari/537.36 Edge/15.15063</f12ua>
+    <f12ua category="non-desktop" name="Internet Explorer 11 - Windows Phone 8.1 Update">Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 520) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537</f12ua>
+    <f12ua category="non-desktop" name="Internet Explorer 10 - Windows Phone 8">Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch)</f12ua>
+    <f12ua category="non-desktop" name="Microsoft Edge - Xbox One">Mozilla/5.0 (Windows NT 10.0; Win64; x64; Xbox; Xbox One) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 Edge/14.14310</f12ua>
+    <f12ua category="non-desktop" name="Internet Explorer - Xbox 360">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; Xbox)</f12ua>
+    <f12ua category="other" name="Google Chrome">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36</f12ua>
+    <f12ua category="other" name="Mozilla Firefox">Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0</f12ua>
+    <f12ua category="other" name="Opera">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36 OPR/47.0.2631.80</f12ua>
+    <f12ua category="other" name="Apple Safari (iPad)">Mozilla/5.0 (iPad; CPU OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1</f12ua>
+    <f12ua category="other" name="Bing Bot">Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)</f12ua>
+    <edge ChanceOfRunningEdge="0" />
+    <domain>esic.in</domain>
+    <domain>myfreedom.adp.com</domain>
+    <domain trackingid="17953386">umeeting.huawei.com</domain>
+    <domain trackingid="11499083">vali.vabaerakond.ee</domain>
+    <domain trackingid="9533322">e-dok.rik.ee</domain>
+    <domain trackingid="8884946">ibusinessbanking.aib.ie</domain>
+    <domain trackingid="8885036">ibb.firsttrustbank1.co.uk</domain>
+    <domain trackingid="8884994">ibb.aibgb1.co.uk</domain>
+    <domain trackingid="6415446">rishuybniyapractice.moin.gov.il</domain>
+    <domain trackingid="8360106">studio.clipflair.net</domain>
+    <domain trackingid="6919143">unternehmen.secure.datev.de</domain>
+    <domain trackingid="6415446">rishuybniya.moin.gov.il</domain>
+    <domain trackingid="6415446">rishuybniyatest.moin.gov.il</domain>
+    <domain trackingid="4105679">powersoccer.com</domain>
+    <domain trackingid="1900043">redmondts.microsoft.com</domain>
+    <domain trackingid="3152496">skymoviesonline.sky.com</domain>
+    <domain trackingid="3152496">skygo.it</domain>
+    <domain trackingid="3152496">skygo.com</domain>
+    <domain trackingid="3152496">go.sky.com</domain>
+    <domain trackingid="3152496">www.skysnap.de</domain>
+    <domain trackingid="3152496">skyonline.sky.de</domain>
+    <domain trackingid="3152496">skygo.sky.it</domain>
+    <domain trackingid="3152496">www.skyonline.it</domain>
+    <domain trackingid="3835987">ie.talkgadget.google.com</domain>
+    <domain trackingid="3836030">ie.hangouts.google.com</domain>
+    <domain trackingid="1856843">telewerken.rdw.nl</domain>
+    <domain trackingid="1856843">webmail.tfl.gov.uk</domain>
+    <domain trackingid="2500661">sant*******er.com.mx</domain>
+    <domain trackingid="1019212">s*******t*******ernet.com.br</domain>
+    <domain trackingid="3399186">www2.datev.de</domain>
+    <domain trackingid="3399186">login.datev.de</domain>
+    <domain trackingid="3399186">www.secure.datev.de</domain>
+    <domain trackingid="3399186">secure7.datev.de</domain>
+    <domain trackingid="3399186">secure8.datev.de</domain>
+    <domain trackingid="3399186">secure12.datev.de</domain>
+    <domain trackingid="3399186">secure13.datev.de</domain>
+    <domain trackingid="3399186">secure14.datev.de</domain>
+    <domain trackingid="3399186">secure15.datev.de</domain>
+    <domain trackingid="3551698">bradesco.com.br</domain>
+    <domain trackingid="3551698">shopinvest.com.br</domain>
+    <domain trackingid="3551698">bradesconetempresa.b.br</domain>
+    <domain trackingid="3654484">optionsxpress.com</domain>
+    <domain trackingid="3659824">optionsxpress.com.sg</domain>
+    <domain trackingid="3659860">optionsxpress.com.au</domain>
+    <domain trackingid="5508929">dondisk.co.kr</domain>
+<!-- ESTONIA -->
+    <domain trackingid="3660648">portaal.agri.ee</domain>
+    <domain trackingid="3660665">jvis.agri.ee</domain>
+    <domain trackingid="3660742">vetlab.agri.ee</domain>
+    <domain trackingid="3661453">danskebank.ee</domain>
+    <domain trackingid="3661937">eteenindus.mnt.ee</domain>
+    <domain trackingid="3706800">oksjonikeskus.ee</domain>
+    <domain trackingid="3731484">visiit.ee</domain>
+    <domain trackingid="3732490">epatsient.kliinikum.ee</domain>
+    <domain trackingid="3732509">edoonor.kliinikum.ee</domain>
+    <domain trackingid="3732527">dhs.kliinikum.ee</domain>
+    <domain trackingid="3732547">ehl.kliinikum.ee</domain>
+    <domain trackingid="3775835">alkoreg.agri.ee</domain>
+    <domain trackingid="3775835">apollo.ee</domain>
+    <domain trackingid="3775835">arhivaar.ee</domain>
+    <domain trackingid="3775835">ksrmt.aripaev.ee</domain>
+    <domain trackingid="3775835">paberivaba.ark.ee</domain>
+    <domain trackingid="3775835">arst.ee</domain>
+    <domain trackingid="3775835">server.arvekeskus.ee</domain>
+    <domain trackingid="3775835">auction.ee</domain>
+    <domain trackingid="3775835">audru.ee</domain>
+    <domain trackingid="3775835">net.bigbank.ee</domain>
+    <domain trackingid="3775835">digilugu.ee</domain>
+    <domain trackingid="3775835">kampus.dormitorium.ee</domain>
+    <domain trackingid="3775835">aken.eas.ee</domain>
+    <domain trackingid="3775835">lois.ecaa.ee</domain>
+    <domain trackingid="3775835">eek.ee</domain>
+    <domain trackingid="3775835">ehis.ee</domain>
+    <domain trackingid="3775835">ehr.ee</domain>
+    <domain trackingid="3775835">ee.ekool.eu</domain>
+    <domain trackingid="3775835">*******meladu.elering.ee</domain>
+    <domain trackingid="5391421">sso-idkaart.elion.ee</domain>
+    <domain trackingid="3775835">iseteenindus.elisa.ee</domain>
+    <domain trackingid="3775835">emt.ee</domain>
+    <domain trackingid="3775835">kalaestid.envir.ee</domain>
+    <domain trackingid="3775835">online.epa.ee</domain>
+    <domain trackingid="3775835">eparkimine.ee</domain>
+    <domain trackingid="3775835">arhiiv.err.ee</domain>
+    <domain trackingid="3775835">estfond.eu</domain>
+    <domain trackingid="3775835">etis.ee</domain>
+    <domain trackingid="3775835">eteenus.gaas.ee</domain>
+    <domain trackingid="3775835">koolitus.hitsa.ee</domain>
+    <domain trackingid="3775835">kis.hm.ee</domain>
+    <domain trackingid="3775835">kolga-jaani.ee</domain>
+    <domain trackingid="3775835">juridica.ee</domain>
+    <domain trackingid="3775835">digireg.keskhaigla.ee</domain>
+    <domain trackingid="3775835">eteenus.keskkonnaamet.ee</domain>
+    <domain trackingid="3775835">jats.keskkonnainfo.ee</domain>
+    <domain trackingid="3775835">proto.keskkonnainfo.ee</domain>
+    <domain trackingid="3775835">pakend.keskkonnainfo.ee</domain>
+    <domain trackingid="3775835">foka.keskkonnainfo.ee</domain>
+    <domain trackingid="3775835">sso.keskkonnainfo.ee</domain>
+    <domain trackingid="3775835">kindlustus.ee</domain>
+    <domain trackingid="3775835">kehtna.kovtp.ee</domain>
+    <domain trackingid="3775835">marjamaa.kovtp.ee</domain>
+    <domain trackingid="3775835">nissi.kovtp.ee</domain>
+    <domain trackingid="3775835">saarde.kovtp.ee</domain>
+    <domain trackingid="3775835">i-pank.krediidipank.ee</domain>
+    <domain trackingid="3775835">ekyla.kyla.ee</domain>
+    <domain trackingid="3775835">leia.ee</domain>
+    <domain trackingid="3775835">liiklusvalve.ee</domain>
+    <domain trackingid="3775835">llr.ee</domain>
+    <domain trackingid="3775835">lugeja.ee</domain>
+    <domain trackingid="3775835">medicum.ee</domain>
+    <domain trackingid="3775835">minukool.ee</domain>
+    <domain trackingid="3775835">nagi.ee</domain>
+    <domain trackingid="3775835">nakis.ee</domain>
+    <domain trackingid="3775835">ngo.ee</domain>
+    <domain trackingid="3775835">login.nlib.ee</domain>
+    <domain trackingid="3775835">itcollege.ois.ee</domain>
+    <domain trackingid="3775835">login.omniva.ee</domain>
+    <domain trackingid="3775835">pass.orienteerumine.ee</domain>
+    <domain trackingid="3775835">osale.ee</domain>
+    <domain trackingid="3775835">parkimine.ee</domain>
+    <domain trackingid="3775835">partnercard.net</domain>
+    <domain trackingid="3775835">register.pensionikeskus.ee</domain>
+    <domain trackingid="3775835">petitsioon.ee</domain>
+    <domain trackingid="3775835">dr.regionaalhaigla.ee</domain>
+    <domain trackingid="3775835">e-register.ee</domain>
+    <domain trackingid="3775835">ariregister.rik.ee</domain>
+    <domain trackingid="3775835">ettevotjaportaal.rik.ee</domain>
+    <domain trackingid="3775835">id2.rik.ee</domain>
+    <domain trackingid="3775835">kinnistusraamat.rik.ee</domain>
+    <domain trackingid="3775835">sampopank.ee</domain>
+    <domain trackingid="3775835">klak.sm.ee</domain>
+    <domain trackingid="3775835">smslaen.ee</domain>
+    <domain trackingid="3775835">stardiplats.ee</domain>
+    <domain trackingid="3775835">estat.stat.ee</domain>
+    <domain trackingid="3775835">pai.tallinn.ee</domain>
+    <domain trackingid="3775835">tbb.ee</domain>
+    <domain trackingid="3775835">kt.tele2.ee</domain>
+    <domain trackingid="3775835">service.telema.com</domain>
+    <domain trackingid="3775835">pub.e-tervis.ee</domain>
+    <domain trackingid="3775835">ois.tlu.ee</domain>
+    <domain trackingid="3775835">e-toimik.ee</domain>
+    <domain trackingid="3775835">vmp.e-toimik.ee</domain>
+    <domain trackingid="3775835">toru.ee</domain>
+    <domain trackingid="3775835">tthk.ee</domain>
+    <domain trackingid="3775835">ois.ttu.ee</domain>
+    <domain trackingid="3775835">alumni.ttu.ee</domain>
+    <domain trackingid="3775835">pass.ttu.ee</domain>
+    <domain trackingid="3775835">eelnoud.valitsus.ee</domain>
+    <domain trackingid="3775835">vilj*******i.ee</domain>
+    <domain trackingid="3775835">vilj*******ivald.ee</domain>
+    <domain trackingid="3775835">rakendused.vm.ee</domain>
+    <domain trackingid="3775835">volis.ee</domain>
+    <domain trackingid="3775835">weby.ee</domain>
+    <domain trackingid="3834916">ksk.ois.ee</domain>
+    <domain trackingid="3834922">harjutusvali.mil.ee</domain>
+    <domain trackingid="3834948">ilias.mil.ee</domain>
+    <domain trackingid="3918683">veoseleht.ee</domain>
+    <domain trackingid="3893893">riigiteataja.ee</domain>
+    <domain trackingid="3893885">kesksedhanked.rik.ee</domain>
+    <domain trackingid="3893918">ebr.rik.ee</domain>
+    <domain trackingid="3893874">diatregister.just.ee</domain>
+<!-- END OF ESTONIA -->
+<!-- APAC -->
+    <domain trackingid="7668549">bankofbeijing.com.cn</domain>
+    <domain trackingid="7668549">cmbc.com.cn</domain>
+    <domain trackingid="7668549">spdb.com.cn</domain>
+    <domain trackingid="7668549">hxb.com.cn</domain>
+    <domain trackingid="7668549">cgbchina.com.cn</domain>
+    <domain trackingid="7668549">bank.ecitic.com</domain>
+    <domain trackingid="7668549">bankofshanghai.com</domain>
+    <domain trackingid="7668549">eshop.ccb.com</domain>
+    <domain trackingid="7668549">creditcard.ccb.com</domain>
+    <domain trackingid="7668549">ccb.com</domain>
+    <domain trackingid="7668549">95599.cn</domain>
+    <domain trackingid="7668549">easyabc.95599.cn</domain>
+    <domain trackingid="7668549">boc.cn</domain>
+    <domain trackingid="7668549">abchina.com</domain>
+    <domain trackingid="7668549">bankofchina.com</domain>
+    <domain trackingid="7668549">psbc.com</domain>
+    <domain trackingid="7668549">cib.com.cn</domain>
+    <domain trackingid="7668549">cebbank.com</domain>
+    <domain trackingid="7668549">per.cmbc.com.cn</domain>
+    <domain trackingid="7668549">95559.com.cn</domain>
+    <domain trackingid="6144404">image.yescard.com</domain>
+    <domain trackingid="6143627">shopping.hanacard.co.kr</domain>
+    <domain trackingid="6143627">club1.hanacard.co.kr</domain>
+    <domain trackingid="6143627">travel.hanacard.co.kr</domain>
+    <domain trackingid="6144404">card.hanacard.co.kr</domain>
+    <domain trackingid="6144404">epcard.hanacard.co.kr</domain>
+    <domain trackingid="6144404">pcard.hanacard.co.kr</domain>
+    <domain trackingid="6144404">coll.hanacard.co.kr</domain>
+    <domain trackingid="4787154">ebank.taipeifubon.com.tw</domain>
+    <domain trackingid="4787154">ebank.ubot.com.tw</domain>
+    <domain trackingid="4787154">etrade2.pfcf.com.tw</domain>
+    <domain trackingid="4787154">fbo.fubon.com</domain>
+    <domain trackingid="4787154">futures1.masterlink.com.tw</domain>
+    <domain trackingid="4787154">futures8.masterlink.com.tw</domain>
+    <domain trackingid="4787154">mobile.pscnet.com.tw</domain>
+    <domain trackingid="4787154">mybank.ubot.com.tw</domain>
+    <domain trackingid="4787154">order.firstepay.com</domain>
+    <domain trackingid="4787154">raweb.masterlink.com.tw</domain>
+    <domain trackingid="4787154">sbtrade.pscnet.com.tw</domain>
+    <domain trackingid="4787154">serviceap.pscnet.com.tw</domain>
+    <domain trackingid="4787154">ship.firstepay.com</domain>
+    <domain trackingid="4787154">store.firstepay.com</domain>
+    <domain trackingid="4787154">trade.pscnet.com.tw</domain>
+    <domain trackingid="4787154">wmtrade.pscnet.com.tw</domain>
+    <domain trackingid="4787154">global-ebanking.com</domain>
+    <domain trackingid="4787154">global-ebanking.com.cn</domain>
+    <domain trackingid="4787154">globalmyb2b.com</domain>
+    <domain trackingid="4787154">megaepay.com</domain>
+    <domain trackingid="4787154">megaezgo.com</domain>
+    <domain trackingid="4787154">myb2b.com.tw</domain>
+    <domain trackingid="4640558">ulogishub.com</domain>
+    <domain trackingid="4640558">ulogishub.kr</domain>
+    <domain trackingid="4640558">ulogishub.co.kr</domain>
+    <domain trackingid="4640558">ulogishub.or.kr</domain>
+    <domain trackingid="4640558">ulogis.kr</domain>
+    <domain trackingid="4640558">ulogis.co.kr</domain>
+    <domain trackingid="4640558">ulogis.or.kr</domain>
+    <domain trackingid="4640558">eblkorea.or.kr</domain>
+    <domain trackingid="4640558">utradedocs.or.kr</domain>
+    <domain trackingid="4640558">utradedocs.co.kr</domain>
+    <domain trackingid="4640558">keb.ktnet.com</domain>
+    <domain trackingid="4640558">ibk.ktnet.com</domain>
+    <domain trackingid="4640558">kbstar.ktnet.com</domain>
+    <domain trackingid="4640558">nonghyup.ktnet.com</domain>
+    <domain trackingid="4640558">hanabank.ktnet.com</domain>
+    <domain trackingid="4640558">dgb.ktnet.com</domain>
+    <domain trackingid="4640558">shinhan.ktnet.com</domain>
+    <domain trackingid="4640558">kjbank.ktnet.com</domain>
+    <domain trackingid="4475355">ibki.co.kr</domain>
+    <domain trackingid="4324302">hyosung-capital.co.kr</domain>
+    <domain trackingid="4324302">hyosung-capital.com</domain>
+    <domain trackingid="4324201">gicoms.go.kr</domain>
+    <domain trackingid="4324613">tw.beanfun.com</domain>
+    <domain trackingid="4324613">tw.patch.beanfun.com</domain>
+    <domain trackingid="4324613">tw.event.beanfun.com</domain>
+    <domain trackingid="4324613">tw.keypasco.beanfun.com</domain>
+    <domain trackingid="4324613">tw.playsafecard.beanfun.com</domain>
+    <domain trackingid="4324613">tw.token.beanfun.com</domain>
+    <domain trackingid="4324613">tw.otpsafe.beanfun.com</domain>
+    <domain trackingid="4324613">tw.gamaotp.beanfun.com</domain>
+    <domain trackingid="4324613">tw.fsecure.beanfun.com</domain>
+    <domain trackingid="4324613">tw.newlogin.beanfun.com</domain>
+    <domain trackingid="3674182">letskorail.com</domain>
+    <domain trackingid="3674540">clickplay.hk</domain>
+    <domain trackingid="3674613">clickplay.com.hk</domain>
+    <domain trackingid="3674647">gomovie.com.tw</domain>
+    <domain trackingid="3674687">gomovie.tw</domain>
+    <domain trackingid="3674710">gomovie.asia</domain>
+    <domain trackingid="3674744">movieplus.co.th</domain>
+    <domain trackingid="3674774">iscreen.com.hk</domain>
+    <domain trackingid="3674809">iscreen.hk</domain>
+    <domain trackingid="3706737">hmcib.com</domain>
+    <domain trackingid="3706921">iprovest.com</domain>
+    <domain trackingid="3730853">ssfutures.com</domain>
+    <domain trackingid="3730966">twifi.co.kr</domain>
+    <domain trackingid="3731041">sayclub.com</domain>
+    <domain trackingid="3731047">saycast.com</domain>
+    <domain trackingid="3731115">kibo.or.kr</domain>
+    <domain trackingid="3731135">venturein.or.kr</domain>
+    <domain trackingid="3732917">dongbubank.co.kr</domain>
+    <domain trackingid="3732928">dongbubank.kr</domain>
+    <domain trackingid="3733042">dongbubank.com</domain>
+    <domain trackingid="3733215">dongbubank.biz</domain>
+    <domain trackingid="3733274">dongbubank.net</domain>
+    <domain trackingid="3733312">dongbubank.cn</domain>
+    <domain trackingid="3733379">dongbubank.name</domain>
+    <domain trackingid="3733526">dongbubank.org</domain>
+    <domain trackingid="3745470">educar.co.kr</domain>
+    <domain trackingid="3745520">shinhansavings.com</domain>
+    <domain trackingid="3745553">shinhansavings.co.kr</domain>
+    <domain trackingid="3834665">jungboboho.com</domain>
+    <domain trackingid="5421780">wooriib.com</domain>
+    <domain trackingid="5421868">samsunglife.com</domain>
+    <domain trackingid="5469005">kics.go.kr</domain>
+    <domain trackingid="5469038">sks.co.kr</domain>
+    <domain trackingid="5422241">kpsi.go.kr</domain>
+    <domain trackingid="5422207">kyobo.co.kr</domain>
+    <domain trackingid="5422152">leadcorp.co.kr</domain>
+    <domain trackingid="5422105">lig.co.kr</domain>
+    <domain trackingid="5421932">rushncash.com</domain>
+    <domain trackingid="5421868">samsunglife.com</domain>
+    <domain trackingid="5421836">sbisb.co.kr</domain>
+    <domain trackingid="5438064">beanpole.com</domain>
+    <domain trackingid="5438529">bufs.ac.kr</domain>
+    <domain trackingid="5460809">codigirls.com</domain>
+    <domain trackingid="5467513">culturel*******.co.kr</domain>
+    <domain trackingid="5467781">cyberts.kr</domain>
+    <domain trackingid="5503021">hsc.ac.kr</domain>
+    <domain trackingid="5504209">koreaart.ac.kr</domain>
+    <domain trackingid="5510669">mest.go.kr</domain>
+    <domain trackingid="5519225">nanumkorea.go.kr</domain>
+    <domain trackingid="5483760">snut.ac.kr</domain>
+    <domain trackingid="5484575">trusbill.or.kr</domain>
+    <domain trackingid="5754208">billingone.co.kr</domain>
+    <domain trackingid="5553409">buycard.kr</domain>
+    <domain trackingid="5520348">childschool.mest.go.kr</domain>
+    <domain trackingid="5561060">fineapps.co.kr</domain>
+    <domain trackingid="5754942">keris.signgate.com</domain>
+    <domain trackingid="5754920">kfcert.org</domain>
+    <domain trackingid="5754894">kjbank.com</domain>
+    <domain trackingid="5571513">myangel.co.kr</domain>
+    <domain trackingid="5584411">trusbill.co.kr</domain>
+    <domain trackingid="5754820">trusbill.com</domain>
+    <domain trackingid="5754841">trusbill.net</domain>
+    <domain trackingid="5585147">u-note.co.kr</domain>
+    <domain trackingid="5586113">4insure.or.kr</domain>
+    <domain trackingid="5667386">*******ong.ac.kr</domain>
+    <domain trackingid="5667676">asc.ac.kr</domain>
+    <domain trackingid="5668113">baeumnet.co.kr</domain>
+    <domain trackingid="5668821">betman.co.kr</domain>
+    <domain trackingid="5751966">ex.co.kr</domain>
+    <domain trackingid="5752088">excard.co.kr</domain>
+    <domain trackingid="5752204">ezenedu.com</domain>
+    <domain trackingid="5752371">fcsc.kr</domain>
+    <domain trackingid="5752865">gist.ac.kr</domain>
+    <domain trackingid="5752933">global21.co.kr</domain>
+    <domain trackingid="5753069">gnu.ac.kr</domain>
+    <domain trackingid="5753115">gnue.ac.kr</domain>
+    <domain trackingid="5753633">goedu.kr</domain>
+    <domain trackingid="5521098">hknu.ac.kr</domain>
+    <domain trackingid="5586359">jvision.ac.kr</domain>
+    <domain trackingid="5586402">jwu.ac.kr</domain>
+    <domain trackingid="5586660">kac.ac.kr</domain>
+    <domain trackingid="5568495">k-apt.go.kr</domain>
+    <domain trackingid="5586469">kaywon.ac.kr</domain>
+    <domain trackingid="5586547">kcu.ac</domain>
+    <domain trackingid="5586617">kemco.or.kr</domain>
+    <domain trackingid="5664937">kgrc.ac.kr</domain>
+    <domain trackingid="5665155">khmc.or.kr</domain>
+    <domain trackingid="5667043">kohi.or.kr</domain>
+    <domain trackingid="5511346">kosaf.go.kr</domain>
+    <domain trackingid="5668354">kosin.ac.kr</domain>
+    <domain trackingid="5668422">kpu.ac.kr</domain>
+    <domain trackingid="5668827">kumoh.ac.kr</domain>
+    <domain trackingid="5676340">kyungnam.ac.kr</domain>
+    <domain trackingid="5676904">longtermcare.or.kr</domain>
+    <domain trackingid="5679289">me2disk.com</domain>
+    <domain trackingid="5680015">mimint.co.kr</domain>
+    <domain trackingid="5680567">mmu.ac.kr</domain>
+    <domain trackingid="5568829">mogef.go.kr</domain>
+    <domain trackingid="5683843">mokpo.ac.kr</domain>
+    <domain trackingid="5569103">netan.go.kr</domain>
+    <domain trackingid="5569144">newplus.go.kr</domain>
+    <domain trackingid="5742990">pcts.ac.kr</domain>
+    <domain trackingid="5743179">pnuh.co.kr</domain>
+    <domain trackingid="5741519">sc.ac.kr</domain>
+    <domain trackingid="5742987">seonam.ac.kr</domain>
+    <domain trackingid="5743158">seongin.or.kr</domain>
+    <domain trackingid="5743913">sewc.ac.kr</domain>
+    <domain trackingid="5570066">smtech.go.kr</domain>
+    <domain trackingid="5754467">tdisk.co.kr</domain>
+    <domain trackingid="5572476">portal.customs.go.kr</domain>
+    <domain trackingid="5570559">iros.go.kr</domain>
+    <domain trackingid="5571576">jinrogogo.go.kr</domain>
+    <domain trackingid="5586487">pps.kbs.co.kr</domain>
+    <domain trackingid="5586503">hanaskcard.co.kr</domain>
+    <domain>jungboboho.com</domain>
+    <domain>work.go.kr</domain>
+    <domain>kepco.co.kr</domain>
+    <domain>rthk.org.hk</domain>
+    <domain>d100.net</domain>
+    <domain>sinopac.com</domain>
+    <domain>cdibank.com</domain>
+    <domain>ctbcbank.com</domain>
+    <domain>esunbank.com.tw</domain>
+    <domain>scsb.com.tw</domain>
+    <domain>megabank.com.tw</domain>
+    <domain>kouclo.com</domain>
+    <domain>webatm.post.gov.tw</domain>
+    <domain>vitaedu.com</domain>
+    <domain>tcbbank.com.tw</domain>
+    <domain>kftc.jmikorea.co.kr</domain>
+    <domain>ppurio.com</domain>
+    <domain>joinkfa.com</domain>
+    <domain>wemade.com</domain>
+    <domain>liphop.co.kr</domain>
+    <domain>logii.com</domain>
+    <domain>truefriend.com</domain>
+    <domain>courtauction.go.kr</domain>
+    <domain>freestylezone.co.kr</domain>
+    <domain>galleria.co.kr</domain>
+    <domain>hyundailife.com</domain>
+    <domain>ts202.kr</domain>
+    <domain>203.249.27.73</domain>
+    <domain>ansan.ac.kr</domain>
+    <domain>bloter.net</domain>
+    <domain>choicodi.com</domain>
+    <domain>chungwoon.ac.kr</domain>
+    <domain>cup.ac.kr</domain>
+    <domain>eulji.ac.kr</domain>
+    <domain>fashion.ac.kr</domain>
+    <domain>gachon.ac.kr</domain>
+    <domain>groupon.kr</domain>
+    <domain>gyc.ac.kr</domain>
+    <domain>hanseo.ac.kr</domain>
+    <domain>hbstudy.co.kr</domain>
+    <domain>i-screammall.co.kr</domain>
+    <domain>jihak.co.kr</domain>
+    <domain>kcac.ac.kr</domain>
+    <domain>koreafashion.ac.kr</domain>
+    <domain>miraeasset.com</domain>
+    <domain>modenedu.com</domain>
+    <domain>modetour.com</domain>
+    <domain>momschool.co.kr</domain>
+    <domain>navy.ac.kr</domain>
+    <domain>njoyny.com</domain>
+    <domain>nongshimi.com</domain>
+    <domain>nubigi.co.kr</domain>
+    <domain>nuguya.com</domain>
+    <domain>okcashbag.com</domain>
+    <domain>pro.ac.kr</domain>
+    <domain>segyefn.com</domain>
+    <domain>skdutyfree.com</domain>
+    <domain>sonyunara.com</domain>
+    <domain>speedmate.com</domain>
+    <domain>stuin.ac.kr</domain>
+    <domain>ts2020.kr</domain>
+    <domain>uhs.ac.kr</domain>
+    <domain>webtour.com</domain>
+    <domain>wikitree.co.kr</domain>
+    <domain>winglish.com</domain>
+    <domain>wsu.ac.kr</domain>
+    <domain>yu.ac.kr</domain>
+    <domain>yuhan.ac.kr</domain>
+    <domain>zocbo.com</domain>
+    <domain>cmc.or.kr</domain>
+    <domain>edupot.go.kr</domain>
+    <domain>etrade.co.kr</domain>
+    <domain>gametree.co.kr</domain>
+    <domain>hsbc.co.kr</domain>
+    <domain>koreaexim.go.kr</domain>
+    <domain>muonline.co.kr</domain>
+    <domain trackingid="5782817">aptcms.co.kr</domain>
+    <domain trackingid="5782817">aptcms.kr</domain>
+    <domain trackingid="5782817">aptcms.or.kr</domain>
+    <domain>bankwallet.co.kr</domain>
+    <domain>bankwallet.kr</domain>
+    <domain>bankwallet.or.kr</domain>
+    <domain>billingone.kr</domain>
+    <domain>billingone.or.kr</domain>
+    <domain>buycard.or.kr</domain>
+    <domain>cu.co.kr</domain>
+    <domain>exk.com</domain>
+    <domain>exk.kr</domain>
+    <domain>exk.or.kr</domain>
+    <domain>fineapps.or.kr</domain>
+    <domain>fineapps.org</domain>
+    <domain>gwangju.kr</domain>
+    <domain>homelearn.go.kr</domain>
+    <domain>kcash.co.kr</domain>
+    <domain>kcash.kr</domain>
+    <domain>kcash.or.kr</domain>
+    <domain>kfcert.co.kr</domain>
+    <domain>kfcert.kr</domain>
+    <domain>kfcert.or.kr</domain>
+    <domain>kfisac.kr</domain>
+    <domain>kfisac.or.kr</domain>
+    <domain>kfisac.org</domain>
+    <domain>kftc.kr</domain>
+    <domain>kftc.or.kr</domain>
+    <domain>kftcvan.co.kr</domain>
+    <domain>kftcvan.kr</domain>
+    <domain>kftcvan.or.kr</domain>
+    <domain>kmbstore.co.kr</domain>
+    <domain>kmbstore.com</domain>
+    <domain>kmbstore.kr</domain>
+    <domain>kmbstore.net</domain>
+    <domain>kmbstore.or.kr</domain>
+    <domain>korail.go.kr</domain>
+    <domain>mobisign.co.kr</domain>
+    <domain>mobisign.kr</domain>
+    <domain>mobisign.or.kr</domain>
+    <domain>narabill.co.kr</domain>
+    <domain>narabill.com</domain>
+    <domain>narabill.kr</domain>
+    <domain>narabill.or.kr</domain>
+    <domain>phoneatm.co.kr</domain>
+    <domain>phoneatm.kr</domain>
+    <domain>phoneatm.or.kr</domain>
+    <domain>rk.or.kr</domain>
+    <domain>smartmobilebanking.co.kr</domain>
+    <domain>smartmobilebanking.com</domain>
+    <domain>smartmobilebanking.kr</domain>
+    <domain>smartmobilebanking.net</domain>
+    <domain>smartmobilebanking.or.kr</domain>
+    <domain>trusbill.kr</domain>
+    <domain>varostock.com</domain>
+    <domain>11am.co.kr</domain>
+    <domain>2001outlet.com</domain>
+    <domain>82cook.com</domain>
+    <domain>8seconds.co.kr</domain>
+    <domain>abnkorea.co.kr</domain>
+    <domain>acrofan.com</domain>
+    <domain>acts.ac.kr</domain>
+    <domain>adidas.co.kr</domain>
+    <domain>admeld.com</domain>
+    <domain>af.ac.kr</domain>
+    <domain>aia.co.kr</domain>
+    <domain>airbusan.com</domain>
+    <domain>ajou.ac.kr</domain>
+    <domain>ajoumc.or.kr</domain>
+    <domain>ajoumpa.ac.kr</domain>
+    <domain>aka.co.kr</domain>
+    <domain>akmall.com</domain>
+    <domain>akmembers.com</domain>
+    <domain>albain.co.kr</domain>
+    <domain>allcredit.co.kr</domain>
+    <domain>alljeju.net</domain>
+    <domain>amai.co.kr</domain>
+    <domain>amorepacificmall.com</domain>
+    <domain trackingid="6684194">amoriteaching.co.kr</domain>
+    <domain>anewsa.com</domain>
+    <domain>annakids.co.kr</domain>
+    <domain>annanblue.com</domain>
+    <domain>asea.ac.kr</domain>
+    <domain>aura-j.kr</domain>
+    <domain>baewha.ac.kr</domain>
+    <domain>bankpark.co.kr</domain>
+    <domain>baskinrobbins.co.kr</domain>
+    <domain>bau.ac.kr</domain>
+    <domain>baykoreans.net</domain>
+    <domain>bbodisk.com</domain>
+    <domain>bccard.com</domain>
+    <domain>beautifulon.com</domain>
+    <domain>beginning.kr</domain>
+    <domain>be-happy.co.kr</domain>
+    <domain>bible.ac.kr</domain>
+    <domain>bongjashop.com</domain>
+    <domain>bonus365.com</domain>
+    <domain>breaknews.com</domain>
+    <domain>bsks.ac.kr</domain>
+    <domain>bu.ac.kr</domain>
+    <domain>busan.com</domain>
+    <domain>bustago.or.kr</domain>
+    <domain>canmart.co.kr</domain>
+    <domain>canon-ci.co.kr</domain>
+    <domain>cattoeic.com</domain>
+    <domain>cbs.co.kr</domain>
+    <domain>ccdailynews.com</domain>
+    <domain>cdu.ac.kr</domain>
+    <domain>ch.ac.kr</domain>
+    <domain>cha.ac.kr</domain>
+    <domain>charmbank.co.kr</domain>
+    <domain>chbank.net</domain>
+    <domain>cheesedal.co.kr</domain>
+    <domain>cherrykoko.com</domain>
+    <domain>chevrolet.co.kr</domain>
+    <domain>chicfox.co.kr</domain>
+    <domain>childcare.go.kr</domain>
+    <domain>childu.co.kr</domain>
+    <domain>chocomom.com</domain>
+    <domain>chodang.ac.kr</domain>
+    <domain>chol.com</domain>
+    <domain>chongshin.ac.kr</domain>
+    <domain>chosun.ac.kr</domain>
+    <domain>chungnam.net</domain>
+    <domain>chunho.net</domain>
+    <domain>chunjae.co.kr</domain>
+    <domain>cinelink.co.kr</domain>
+    <domain>ck.ac.kr</domain>
+    <domain>clubbox.co.kr</domain>
+    <domain>cnue.ac.kr</domain>
+    <domain>cnuh.com</domain>
+    <domain>cocoblack.kr</domain>
+    <domain>coocha.co.kr</domain>
+    <domain>coolmessenger.com</domain>
+    <domain>couponmoa.com</domain>
+    <domain>credu.com</domain>
+    <domain>csj.ac.kr</domain>
+    <domain>cuk.edu</domain>
+    <domain>cybermba.com</domain>
+    <domain>cybersejong.ac.kr</domain>
+    <domain>cyc.ac.kr</domain>
+    <domain>daedong.ac.kr</domain>
+    <domain>daekyo.com</domain>
+    <domain>daelim.ac.kr</domain>
+    <domain>dahong.co.kr</domain>
+    <domain>daisomall.co.kr</domain>
+    <domain>danilove.co.kr</domain>
+    <domain>deu.ac.kr</domain>
+    <domain>dgist.ac.kr</domain>
+    <domain>digue.co.kr</domain>
+    <domain>dima.ac.kr</domain>
+    <domain>diskbook.co.kr</domain>
+    <domain>disney.co.kr</domain>
+    <domain>dispatch.co.kr</domain>
+    <domain>dist.ac.kr</domain>
+    <domain>djstudy.or.kr</domain>
+    <domain>djumc.or.kr</domain>
+    <domain>dkc.ac.kr</domain>
+    <domain>dkuh.co.kr</domain>
+    <domain>dnue.ac.kr</domain>
+    <domain>dodol.com</domain>
+    <domain>dodry.net</domain>
+    <domain>dogdrip.net</domain>
+    <domain>dominos.co.kr</domain>
+    <domain>dongguk.edu</domain>
+    <domain>dongnam.ac.kr</domain>
+    <domain>donutbook.co.kr</domain>
+    <domain>doortodoor.co.kr</domain>
+    <domain>doowon.ac.kr</domain>
+    <domain>dream.go.kr</domain>
+    <domain>dreamx.com</domain>
+    <domain>dressee.co.kr</domain>
+    <domain>dsc.ac.kr</domain>
+    <domain>dshw.co.kr</domain>
+    <domain>dsu.ac.kr</domain>
+    <domain>dsuwomen.ac.kr</domain>
+    <domain>du.ac.kr</domain>
+    <domain>dunkindonuts.co.kr</domain>
+    <domain>duunni.com</domain>
+    <domain>ebn.co.kr</domain>
+    <domain>e-campus.co.kr</domain>
+    <domain>eduline.or.kr</domain>
+    <domain>edunet4u.net</domain>
+    <domain>edupen.com</domain>
+    <domain>edurama.co.kr</domain>
+    <domain>edusky.co.kr</domain>
+    <domain>e-educampus.co.kr</domain>
+    <domain>egov.go.kr</domain>
+    <domain>ehyundai.com</domain>
+    <domain>e-kpc.or.kr</domain>
+    <domain>e-learning.ac.kr</domain>
+    <domain>emart.com</domain>
+    <domain>emore.co.kr</domain>
+    <domain>enclean.com</domain>
+    <domain>estudy.or.kr</domain>
+    <domain>eto.co.kr</domain>
+    <domain>etude.co.kr</domain>
+    <domain>eu.ac.kr</domain>
+    <domain>everl*******.com</domain>
+    <domain>f4.co.kr</domain>
+    <domain>fashion-full.com</domain>
+    <domain>fashionmil.com</domain>
+    <domain>filedok.com</domain>
+    <domain>filehon.com</domain>
+    <domain>freesam.com</domain>
+    <domain>fsb.or.kr</domain>
+    <domain>fsf.freestylezone.co.kr</domain>
+    <domain>funfungirl.biz</domain>
+    <domain>gaenso.com</domain>
+    <domain>gamehot.com</domain>
+    <domain>genikids.com</domain>
+    <domain>ghc.ac.kr</domain>
+    <domain trackingid="6685022">golfzon.com</domain>
+    <domain>gomsee.com</domain>
+    <domain>goormpin.co.kr</domain>
+    <domain trackingid="6712185">greenstart.kr</domain>
+    <domain trackingid="5779468">g-school.co.kr</domain>
+    <domain>gsisuper.com</domain>
+    <domain>gsnpoint.com</domain>
+    <domain trackingid="5780018">gtec.ac.kr</domain>
+    <domain>gwangju.go.kr</domain>
+    <domain trackingid="5781254">gweduone.net</domain>
+    <domain>haeseong.hs.kr</domain>
+    <domain>haksacampus.net</domain>
+    <domain>h*******ong.edu</domain>
+    <domain>hanil.ac.kr</domain>
+    <domain trackingid="6685022">hanjin.co.kr</domain>
+    <domain>hanjin.net</domain>
+    <domain>hankyong.ac.kr</domain>
+    <domain>hannam.ac.kr</domain>
+    <domain>hanwharesort.co.kr</domain>
+    <domain>hanzhong.ac.kr</domain>
+    <domain>happymoney.co.kr</domain>
+    <domain>happynh.co.kr</domain>
+    <domain>happypointcard.com</domain>
+    <domain>helloyoonsoo.com</domain>
+    <domain>helovestory.com</domain>
+    <domain>heungkuklife.co.kr</domain>
+    <domain>hhu.ac.kr</domain>
+    <domain>hicardirect.com</domain>
+    <domain>hira.or.kr</domain>
+    <domain>hlc.co.kr</domain>
+    <domain>hollyshop.co.kr</domain>
+    <domain>home-learn.com</domain>
+    <domain>honeykki.com</domain>
+    <domain>hopenet.or.kr</domain>
+    <domain>hoseo.ac.kr</domain>
+    <domain>howon.ac.kr</domain>
+    <domain>howon.or.kr</domain>
+    <domain trackingid="6685022">hrd.go.kr</domain>
+    <domain>hufsjapan.ac.kr</domain>
+    <domain>hydex.net</domain>
+    <domain>hyumc.com</domain>
+    <domain>hyundai-mnsoft.com</domain>
+    <domain>iajou.ac.kr</domain>
+    <domain>i-arden.com</domain>
+    <domain>ichannela.com</domain>
+    <domain>icpc.ac.kr</domain>
+    <domain>icross.co.kr</domain>
+    <domain>idas.ac.kr</domain>
+    <domain>idongbu.com</domain>
+    <domain>ikw.ac.kr</domain>
+    <domain>ilbe.com</domain>
+    <domain>ilogen.com</domain>
+    <domain>ilyo.co.kr</domain>
+    <domain>ilyosisa.co.kr</domain>
+    <domain>imad.co.kr</domain>
+    <domain>imaeil.com</domain>
+    <domain>imath.tv</domain>
+    <domain>imideo.com</domain>
+    <domain>incheon.ac.kr</domain>
+    <domain trackingid="5782370">inet-school.co.kr</domain>
+    <domain>inglife.co.kr</domain>
+    <domain>inhatc.ac.kr</domain>
+    <domain>inje.ac.kr</domain>
+    <domain>innisfree.co.kr</domain>
+    <domain>insvalley.com</domain>
+    <domain>i-scream.co.kr</domain>
+    <domain>iseverance.com</domain>
+    <domain>isherpa.co.kr</domain>
+    <domain>istarbucks.co.kr</domain>
+    <domain>istore.co.kr</domain>
+    <domain>it.co.kr</domain>
+    <domain>itc.ac.kr</domain>
+    <domain>itemmania.kr</domain>
+    <domain>ittoday.co.kr</domain>
+    <domain>iuk.ac.kr</domain>
+    <domain>ivega.co.kr</domain>
+    <domain>jb.ac.kr</domain>
+    <domain>jeiu.ac.kr</domain>
+    <domain>jejuair.net</domain>
+    <domain>jejunu.ac.kr</domain>
+    <domain>jisiklog.com</domain>
+    <domain>joamom.co.kr</domain>
+    <domain>jongro.co.kr</domain>
+    <domain>jongroeclass.co.kr</domain>
+    <domain>jooen.com</domain>
+    <domain>joongboo.com</domain>
+    <domain>joongbu.ac.kr</domain>
+    <domain>joylotto.co.kr</domain>
+    <domain>j-thinkenglish.com</domain>
+    <domain>jucifaci.com</domain>
+    <domain>k1.ac.kr</domain>
+    <domain>k2outdoor.co.kr</domain>
+    <domain>karts.ac.kr</domain>
+    <domain>kbatv.org</domain>
+    <domain>kbcard.com</domain>
+    <domain>kd.ac.kr</domain>
+    <domain>kebikids.com</domain>
+    <domain>khnp.co.kr</domain>
+    <domain>kijeon.ac.kr</domain>
+    <domain>kimpo.ac.kr</domain>
+    <domain>kipo.go.kr</domain>
+    <domain>kiu.ac.kr</domain>
+    <domain>kixx.co.kr</domain>
+    <domain>kjcyber.co.kr</domain>
+    <domain>kma.ac.kr</domain>
+    <domain>knou.ac.kr</domain>
+    <domain>knsu.ac.kr</domain>
+    <domain>knua.ac.kr</domain>
+    <domain>kongstyle.co.kr</domain>
+    <domain>koreabaseball.com</domain>
+    <domain>korea-movie.kr</domain>
+    <domain>kr.msn.com</domain>
+    <domain>kreic.org</domain>
+    <domain>ks.ac.kr</domain>
+    <domain>ksnet.co.kr</domain>
+    <domain>kssedu.com</domain>
+    <domain>ktc.ac.kr</domain>
+    <domain>ktcu.or.kr</domain>
+    <domain>ktschool.co.kr</domain>
+    <domain>kuh.ac.kr</domain>
+    <domain>kumc.or.kr</domain>
+    <domain>kumi.ac.kr</domain>
+    <domain>kumon.co.kr</domain>
+    <domain>kut.ac.kr</domain>
+    <domain>kwangyang.ac.kr</domain>
+    <domain>kwnews.co.kr</domain>
+    <domain>kyeonggi.com</domain>
+    <domain>kyonggi.ac.kr</domain>
+    <domain>kyonggiedu.ac.kr</domain>
+    <domain>kyungmin.ac.kr</domain>
+    <domain>labamba.co.kr</domain>
+    <domain>leejiral.com</domain>
+    <domain>lemite.com</domain>
+    <domain>lgcns.co.kr</domain>
+    <domain>lgfashionshop.com</domain>
+    <domain>lgservice.co.kr</domain>
+    <domain>littleblack.co.kr</domain>
+    <domain>liveen.co.kr</domain>
+    <domain>lottemart.com</domain>
+    <domain>lottemembers.com</domain>
+    <domain>lotteria.com</domain>
+    <domain>lottetown.com</domain>
+    <domain>lotto5.co.kr</domain>
+    <domain>lottomini.co.kr</domain>
+    <domain>lovelyshoes.co.kr</domain>
+    <domain>lycene.co.kr</domain>
+    <domain>lylon.co.kr</domain>
+    <domain>magicbill.co.kr</domain>
+    <domain>marantblue.com</domain>
+    <domain>mediaus.co.kr</domain>
+    <domain>megaenglish.net</domain>
+    <domain>menupan.com</domain>
+    <domain>meosidda.com</domain>
+    <domain>miamasvin.co.kr</domain>
+    <domain>miclub.com</domain>
+    <domain>milkcocoa.co.kr</domain>
+    <domain>minegirls.com</domain>
+    <domain>minsshop.com</domain>
+    <domain>minzzang.co.kr</domain>
+    <domain>miraeasset.co.kr</domain>
+    <domain>mirror.enha.kr</domain>
+    <domain>missc*******y.co.kr</domain>
+    <domain>mjc.ac.kr</domain>
+    <domain>mju.ac.kr</domain>
+    <domain>mmng.kr</domain>
+    <domain>mokwon.ac.kr</domain>
+    <domain>moneypark.kr</domain>
+    <domain>mosf.go.kr</domain>
+    <domain>mospa.go.kr</domain>
+    <domain>motor.ac.kr</domain>
+    <domain>moviejoy.com</domain>
+    <domain>movielock.co.kr</domain>
+    <domain>movitown.co.kr</domain>
+    <domain>mrpizza.co.kr</domain>
+    <domain>mrtong.co.kr</domain>
+    <domain>mssb.co.kr</domain>
+    <domain>mycredit.co.kr</domain>
+    <domain>mydaily.co.kr</domain>
+    <domain>naeil.com</domain>
+    <domain>naingirl.com</domain>
+    <domain>naning9.com</domain>
+    <domain>nclass.co.kr</domain>
+    <domain>nedisk.com</domain>
+    <domain>nemodarak.com</domain>
+    <domain trackingid="6284004">netpoints.co.kr</domain>
+    <domain>netsko.com</domain>
+    <domain>newdaily.co.kr</domain>
+    <domain>newshankuk.com</domain>
+    <domain>nhnnext.org</domain>
+    <domain>nibbuns.co.kr</domain>
+    <domain>nikestore.co.kr</domain>
+    <domain>nlotto.co.kr</domain>
+    <domain>nmc.or.kr</domain>
+    <domain>noonnoppi.com</domain>
+    <domain>nsmall.com</domain>
+    <domain>nsu.ac.kr</domain>
+    <domain>nubizio.co.kr</domain>
+    <domain>obsnews.co.kr</domain>
+    <domain>oclock.co.kr</domain>
+    <domain>odisk.co.kr</domain>
+    <domain>ogage.co.kr</domain>
+    <domain>okjsp.net</domain>
+    <domain>okoutdoor.com</domain>
+    <domain>oliveyoungshop.com</domain>
+    <domain>on2day.co.kr</domain>
+    <domain>open.go.kr</domain>
+    <domain>opinet.co.kr</domain>
+    <domain>oranc.co.kr</domain>
+    <domain>orixsb.co.kr</domain>
+    <domain trackingid="6270410">outback.co.kr</domain>
+    <domain>outdous.com</domain>
+    <domain>paekche.ac.kr</domain>
+    <domain>paik.co.kr</domain>
+    <domain>paris.co.kr</domain>
+    <domain>peper.co.kr</domain>
+    <domain>pinkbanana.co.kr</domain>
+    <domain>pinkelephant.co.kr</domain>
+    <domain>pjenglish.com</domain>
+    <domain>playdb.co.kr</domain>
+    <domain>playtoda.com</domain>
+    <domain>police.ac.kr</domain>
+    <domain>police.go.kr</domain>
+    <domain>polinews.co.kr</domain>
+    <domain trackingid="6284123">pooq.co.kr</domain>
+    <domain>pps.go.kr</domain>
+    <domain>pressian.com</domain>
+    <domain>pufs.ac.kr</domain>
+    <domain>pur-ple.co.kr</domain>
+    <domain>rain.co.kr</domain>
+    <domain>realspeed.kr</domain>
+    <domain>redopin.co.kr</domain>
+    <domain>redpiano.co.kr</domain>
+    <domain>reportshop.co.kr</domain>
+    <domain>reportworld.kr</domain>
+    <domain>riss.kr</domain>
+    <domain>rolf.co.kr</domain>
+    <domain>sac.ac.kr</domain>
+    <domain>saekyung.ac.kr</domain>
+    <domain>samsung.net</domain>
+    <domain>samsungbank.kr</domain>
+    <domain>sangji.ac.kr</domain>
+    <domain>sanwamoney.co.kr</domain>
+    <domain>scau.ac.kr</domain>
+    <domain>schmc.ac.kr</domain>
+    <domain>schoolinfo.go.kr</domain>
+    <domain>scourt.go.kr</domain>
+    <domain>sdc.ac.kr</domain>
+    <domain>seoil.ac.kr</domain>
+    <domain>seojeong.ac.kr</domain>
+    <domain>seoularts.ac.kr</domain>
+    <domain>sharebox.co.kr</domain>
+    <domain>shilladfs.com</domain>
+    <domain>shinsegaepoint.com</domain>
+    <domain>shopmcm.com</domain>
+    <domain>silla.ac.kr</domain>
+    <domain>siteguard.co.kr</domain>
+    <domain>sjcu.ac.kr</domain>
+    <domain>skbroadb*******.com</domain>
+    <domain>skhc.ac.kr</domain>
+    <domain>skhu.ac.kr</domain>
+    <domain>skkumed.ac.kr</domain>
+    <domain>sktelecom.com</domain>
+    <domain>sktmembership.co.kr</domain>
+    <domain>smartconsumer.go.kr</domain>
+    <domain>smartmiraeasset.com</domain>
+    <domain>smileedi.com</domain>
+    <domain>snfeel.co.kr</domain>
+    <domain>snue.ac.kr</domain>
+    <domain>snuh.org</domain>
+    <domain>soccerline.co.kr</domain>
+    <domain>sohae.ac.kr</domain>
+    <domain>soo-a.co.kr</domain>
+    <domain>sroom.co.kr</domain>
+    <domain>ssgdfs.com</domain>
+    <domain>ssu.ac.kr</domain>
+    <domain>ssunny.co.kr</domain>
+    <domain>studyholic.com</domain>
+    <domain>studywill.net</domain>
+    <domain>styleforman.co.kr</domain>
+    <domain>stylen*******a.co.kr</domain>
+    <domain>stylen*******a.com</domain>
+    <domain>styleonme.com</domain>
+    <domain>stylerank.net</domain>
+    <domain>stylet.com</domain>
+    <domain>styletiba.com</domain>
+    <domain>sultang.co.kr</domain>
+    <domain>sunchon.ac.kr</domain>
+    <domain>superfeaturing.com</domain>
+    <domain>syu.ac.kr</domain>
+    <domain>tankdisk.com</domain>
+    <domain>taxbill365.com</domain>
+    <domain>taxsave.go.kr</domain>
+    <domain>tcafe.net</domain>
+    <domain>thefaceshop.com</domain>
+    <domain>theozzang.com</domain>
+    <domain>thiat.com</domain>
+    <domain>ticketlink.co.kr</domain>
+    <domain trackingid="5779895">t-money.co.kr</domain>
+    <domain>todayhumor.co.kr</domain>
+    <domain>tomatobank.co.kr</domain>
+    <domain>tomnrabbit.co.kr</domain>
+    <domain trackingid="6283361">toonil*******.com</domain>
+    <domain>topclick.kr</domain>
+    <domain>topicstock.net</domain>
+    <domain>torren-to.co.kr</domain>
+    <domain trackingid="5781342">tourbaksa.com</domain>
+    <domain>tp.or.kr</domain>
+    <domain>tstore.co.kr</domain>
+    <domain>tu.ac.kr</domain>
+    <domain>tving.com</domain>
+    <domain>tworldshop.co.kr</domain>
+    <domain trackingid="5783085">uc.ac.kr</domain>
+    <domain>unionpress.co.kr</domain>
+    <domain>ut.ac.kr</domain>
+    <domain>utiltop.com</domain>
+    <domain trackingid="5783974">uu.ac.kr</domain>
+    <domain>uuh.ulsan.kr</domain>
+    <domain>visangedu.com</domain>
+    <domain>voracom.net</domain>
+    <domain>wassada.com</domain>
+    <domain>wdu.ac.kr</domain>
+    <domain>webtax21.com</domain>
+    <domain>wegames.net</domain>
+    <domain>whitehouse-down.co.kr</domain>
+    <domain>windyzone.com</domain>
+    <domain>wku.ac.kr</domain>
+    <domain>wo.to</domain>
+    <domain>wonkwang.ac.kr</domain>
+    <domain>wooriwm.com</domain>
+    <domain>woosonginfo.ac.kr</domain>
+    <domain>woosuk.ac.kr</domain>
+    <domain>worldwarz.co.kr</domain>
+    <domain>wow104.co.kr</domain>
+    <domain>www.imideo.com</domain>
+    <domain>www.kthcorp.com</domain>
+    <domain>www.uuoobe.net</domain>
+    <domain>ybmedu.com</domain>
+    <domain>yellowcap.co.kr</domain>
+    <domain>yesol-bank.co.kr</domain>
+    <domain>yit.ac.kr</domain>
+    <domain>yjc.ac.kr</domain>
+    <domain>yjp.ac.kr</domain>
+    <domain>yongin.ac.kr</domain>
+    <domain>yoom.co.kr</domain>
+    <domain>youth.go.kr</domain>
+    <domain>ypbooks.co.kr</domain>
+    <domain>yumc.ac.kr</domain>
+    <domain>zemmaworld.com</domain>
+    <domain>ddc.ac.kr</domain>
+    <domain>eduhansol.com</domain>
+    <domain>edumoa.com</domain>
+    <domain>esero.go.kr</domain>
+    <domain>hanwhalife.com</domain>
+    <domain>homeplus.co.kr</domain>
+    <domain>nambu.ac.kr</domain>
+    <domain>scbank.co.kr</domain>
+    <domain>sunmoon.ac.kr</domain>
+    <domain>ysu.ac.kr</domain>
+    <domain>axa.co.kr</domain>
+    <domain>bagazimuri.com</domain>
+    <domain>bobaedream.co.kr</domain>
+    <domain>busanbank.co.kr</domain>
+    <domain>catholic.ac.kr</domain>
+    <domain>changwon.ac.kr</domain>
+    <domain>chonnam.ac.kr</domain>
+    <domain>chuncheon.go.kr</domain>
+    <domain>cook.ac.kr</domain>
+    <domain>coolenjoy.net</domain>
+    <domain>cs.ac.kr</domain>
+    <domain>csc.ac.kr</domain>
+    <domain>cu.ac.kr</domain>
+    <domain>cuk.ac.kr</domain>
+    <domain>cwnu.ac.kr</domain>
+    <domain>ddu.ac.kr</domain>
+    <domain>dnshop.com</domain>
+    <domain>dongseo.ac.kr</domain>
+    <domain>dpc.ac.kr</domain>
+    <domain>edu109.com</domain>
+    <domain>edupd.com</domain>
+    <domain>e-jejubank.com</domain>
+    <domain>emc.ac.kr</domain>
+    <domain>ergodaum.co.kr</domain>
+    <domain>etoos.com</domain>
+    <domain>eulji.or.kr</domain>
+    <domain>eumc.ac.kr</domain>
+    <domain>flymodel.co.kr</domain>
+    <domain>gisa79.com</domain>
+    <domain>gjue.ac.kr</domain>
+    <domain>global.ac.kr</domain>
+    <domain>gwangju.ac.kr</domain>
+    <domain>hkbank.co.kr</domain>
+    <domain>hywoman.ac.kr</domain>
+    <domain>inha.ac.kr</domain>
+    <domain>itomato.co.kr</domain>
+    <domain>jaeminara.co.kr</domain>
+    <domain>jnu.ac.kr</domain>
+    <domain>kangnam.ac.kr</domain>
+    <domain>kcomwel.or.kr</domain>
+    <domain>kcu.ac.kr</domain>
+    <domain>kongju.ac.kr</domain>
+    <domain>korail.com</domain>
+    <domain>koreapost.go.kr</domain>
+    <domain>kornu.ac.kr</domain>
+    <domain>kunjang.ac.kr</domain>
+    <domain>kw.ac.kr</domain>
+    <domain>kwu.ac.kr</domain>
+    <domain>lgcare.com</domain>
+    <domain>minwon.go.kr</domain>
+    <domain>molit.go.kr</domain>
+    <domain>ocu.ac.kr</domain>
+    <domain>pknu.ac.kr</domain>
+    <domain>romine.co.kr</domain>
+    <domain>roompacker.co.kr</domain>
+    <domain>sdu.ac.kr</domain>
+    <domain>sonatural.co.kr</domain>
+    <domain>sovomall.co.kr</domain>
+    <domain>stu.ac.kr</domain>
+    <domain>sungkyul.ac.kr</domain>
+    <domain>tenstory.co.kr</domain>
+    <domain>thebill.co.kr</domain>
+    <domain>tworld.co.kr</domain>
+    <domain>ulsan.ac.kr</domain>
+    <domain>unist.ac.kr</domain>
+    <domain>world.ac.kr</domain>
+    <domain>ewha.ac.kr</domain>
+    <domain>ehanway.koreanair.com</domain>
+    <domain>hanway.hanjin.co.kr</domain>
+    <domain>hanway.hanjin.net</domain>
+    <domain>hanway.inhauh.com</domain>
+    <domain>hanway.kaltour.com</domain>
+    <domain>hanway.koreanair.com</domain>
+    <domain>ehanway.hanjin.co.kr</domain>
+    <domain>gw.inha.ac.kr</domain>
+    <domain>sinsago.co.kr</domain>
+    <domain>hanjingroup.net</domain>
+    <domain>hanway.e-h*******ex.co.kr</domain>
+    <domain>hanway.inhaim.com</domain>
+    <domain>hanway.kau.ac.kr</domain>
+    <domain>hanway.inhatc.ac.kr</domain>
+    <domain>kas.co.kr</domain>
+    <domain>owa.koreanair.com</domain>
+    <domain>hanway.uniconverse.com</domain>
+    <domain>ssc.ac.kr</domain>
+    <domain>hist.co.kr</domain>
+    <domain>airspon.kbs.co.kr</domain>
+    <domain>bwc.ac.kr</domain>
+    <domain>cufs.ac.kr</domain>
+    <domain>daegu.ac.kr</domain>
+    <domain>esimi.kbs.co.kr</domain>
+    <domain>fashionplus.co.kr</domain>
+    <domain>forum.adobe.com</domain>
+    <domain>hanabank.co.kr</domain>
+    <domain>hipluscard.co.kr</domain>
+    <domain>hrdkorea.or.kr</domain>
+    <domain>icampus.ac.kr</domain>
+    <domain>induk.ac.kr</domain>
+    <domain>ippsoeju.kbs.co.kr</domain>
+    <domain>ippssimi.kbs.co.kr</domain>
+    <domain>jesus.ac.kr</domain>
+    <domain>kbstar.co.kr</domain>
+    <domain>oeju.kbs.co.kr</domain>
+    <domain>qng.co.kr</domain>
+    <domain>smrt.co.kr</domain>
+    <domain>staff.kbs.co.kr</domain>
+    <domain>syntekdev.kbs.co.kr</domain>
+    <domain>team.kbs.co.kr</domain>
+    <domain>vitaminnews.co.kr</domain>
+    <domain>hanaskcard.com</domain>
+    <domain>dongduk.ac.kr</domain>
+    <domain>hyundaicapital.com</domain>
+    <domain>shinhanlife.co.kr</domain>
+    <domain>uplusbox.co.kr</domain>
+    <domain>yesone.go.kr</domain>
+    <domain>afa.ac.kr</domain>
+    <domain>attrangs.co.kr</domain>
+    <domain>com.ne.kr</domain>
+    <domain>honam.ac.kr</domain>
+    <domain>iccu.ac.kr</domain>
+    <domain>imeps.co.kr</domain>
+    <domain>muri.co.kr</domain>
+    <domain>orixsavingsbank.co.kr</domain>
+    <domain>pippin.co.kr</domain>
+    <domain>q-net.or.kr</domain>
+    <domain>fdisk.co.kr</domain>
+    <domain>libro.co.kr</domain>
+    <domain>zumm.co.kr</domain>
+    <domain>cuckoo.co.kr</domain>
+    <domain>joyfile.co.kr</domain>
+    <domain>speedbank.co.kr</domain>
+    <domain>superdown.co.kr</domain>
+<!-- END OF APAC -->
+<!-- BRAZIL -->
+    <domain trackingid="4933823">bradesco.bradesco</domain>
+    <domain trackingid="4933823">paravoce.bradesco</domain>
+    <domain trackingid="4933823">classic.bradesco</domain>
+    <domain trackingid="4933823">internetbanking.bradesco</domain>
+    <domain trackingid="4933823">portal.bradesco</domain>
+    <domain trackingid="4933823">bancodigital.bradesco</domain>
+    <domain trackingid="4933823">digital.bradesco</domain>
+    <domain trackingid="4933823">credito.bradesco</domain>
+    <domain trackingid="4933823">investimentos.bradesco</domain>
+    <domain trackingid="4933823">americanexpress.bradesco</domain>
+    <domain trackingid="4933823">amex.bradesco</domain>
+    <domain trackingid="4933823">seguranca.bradesco</domain>
+    <domain trackingid="4933823">seguros.bradesco</domain>
+    <domain trackingid="4933823">bradespar.bradesco</domain>
+    <domain trackingid="4933823">solucoesrh.bradesco</domain>
+    <domain trackingid="4933823">funcionarios.bradesco</domain>
+    <domain trackingid="4933823">folhadepagamento.bradesco</domain>
+    <domain trackingid="4933823">recursoshumanos.bradesco</domain>
+    <domain trackingid="4933823">franquiasenegocios.bradesco</domain>
+    <domain trackingid="4933823">franquias.bradesco</domain>
+    <domain trackingid="4933823">faleconosco.bradesco</domain>
+    <domain trackingid="4933823">rededeatendimento.bradesco</domain>
+    <domain trackingid="4933823">agoraebra.bradesco</domain>
+    <domain trackingid="4933823">bra.bradesco</domain>
+    <domain trackingid="4933823">descubra.bradesco</domain>
+    <domain trackingid="4933823">revezamentotocha.bradesco</domain>
+    <domain trackingid="4933823">tocha.bradesco</domain>
+    <domain trackingid="4933823">exclusive.bradesco</domain>
+    <domain trackingid="4933823">prime.bradesco</domain>
+    <domain trackingid="4933823">privatebanking.bradesco</domain>
+    <domain trackingid="4933823">private.bradesco</domain>
+    <domain trackingid="4933823">empresasenegocios.bradesco</domain>
+    <domain trackingid="4933823">pessoajuridica.bradesco</domain>
+    <domain trackingid="4933823">empresas.bradesco</domain>
+    <domain trackingid="4933823">corporate.bradesco</domain>
+    <domain trackingid="4933823">capitalizacao.bradesco</domain>
+    <domain trackingid="4933823">cartoes.bradesco</domain>
+    <domain trackingid="4933823">cartao.bradesco</domain>
+    <domain trackingid="4933823">consorcios.bradesco</domain>
+    <domain trackingid="4933823">consorcio.bradesco</domain>
+    <domain trackingid="4933823">abrasuaconta.bradesco</domain>
+    <domain trackingid="4933823">poderpublico.bradesco</domain>
+    <domain trackingid="4933823">bbi.bradesco</domain>
+    <domain trackingid="4933823">bemdtvm.bradesco</domain>
+    <domain trackingid="4933823">cambio.bradesco</domain>
+    <domain trackingid="4933823">celular.bradesco</domain>
+    <domain trackingid="4933823">mobile.bradesco</domain>
+    <domain trackingid="4933823">cidadetran.bradesco</domain>
+    <domain trackingid="4933823">corretora.bradesco</domain>
+    <domain trackingid="4933823">custodia.bradesco</domain>
+    <domain trackingid="4933823">esporteseeducacao.bradesco</domain>
+    <domain trackingid="4933823">europa.bradesco</domain>
+    <domain trackingid="4933823">expresso.bradesco</domain>
+    <domain trackingid="4933823">financiamentos.bradesco</domain>
+    <domain trackingid="4933823">fornecedores.bradesco</domain>
+    <domain trackingid="4933823">imoveis.bradesco</domain>
+    <domain trackingid="4933823">nikkei.bradesco</domain>
+    <domain trackingid="4933823">previdencia.bradesco</domain>
+    <domain trackingid="4933823">promotora.bradesco</domain>
+    <domain trackingid="4933823">agronegocio.bradesco</domain>
+    <domain trackingid="4933823">rural.bradesco</domain>
+    <domain trackingid="4933823">saude.bradesco</domain>
+    <domain trackingid="4933823">universitarios.bradesco</domain>
+    <domain trackingid="4933823">bram.bradesco</domain>
+    <domain trackingid="4933823">assetmanagement.bradesco</domain>
+    <domain trackingid="4933823">clickconta.bradesco</domain>
+    <domain trackingid="4933823">comercioeletronico.bradesco</domain>
+    <domain trackingid="4933823">economiaemdia.bradesco</domain>
+    <domain trackingid="4933823">relacoescominvestidores.bradesco</domain>
+    <domain trackingid="4933823">investidores.bradesco</domain>
+    <domain trackingid="4933823">sustentabilidade.bradesco</domain>
+    <domain trackingid="4933823">creditoimobiliario.bradesco</domain>
+    <domain trackingid="4933823">debitoautomatico.bradesco</domain>
+    <domain trackingid="4933823">cultura.bradesco</domain>
+    <domain trackingid="4933823">next.bradesco</domain>
+    <domain trackingid="4933823">esporte.bradesco</domain>
+    <domain trackingid="4933823">inovacao.bradesco</domain>
+    <domain trackingid="4933823">educacao.bradesco</domain>
+    <domain trackingid="4933823">unibrad.bradesco</domain>
+<!-- END OF BRAZIL -->
+<NTPProviders occurrence="10">
+    <domain>www.bing.com
+        <path exclude="true">/account</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/mapspreview</path>
+        <path exclude="true">/news</path>
+        <path exclude="true">/translator</path>
+        <path exclude="true">/videos</path>
+    </domain>
+    <domain>www.yahoo.com
+        <path exclude="true">/beauty</path>
+        <path exclude="true">/politics</path>
+        <path exclude="true">/movies</path>
+        <path exclude="true">/music</path>
+        <path exclude="true">/food</path>
+        <path exclude="true">/health</path>
+        <path exclude="true">/makers</path>
+        <path exclude="true">/parents</path>
+        <path exclude="true">/style</path>
+        <path exclude="true">/tech</path>
+        <path exclude="true">/travel</path>
+        <path exclude="true">/tv</path>
+    </domain>
+    <domain>www.google.com
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+        <path exclude="true">/voice</path>
+    </domain>
+    <domain>www.google.co.in
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.de
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.co.uk
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.fr
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.co.jp
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.com.br
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.ru
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.es
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.it
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.com.mx
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.com.hk
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.ca
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.com.tr
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.com.au
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>www.google.pl
+        <path exclude="true">/bookmarks</path>
+        <path exclude="true">/calendar</path>
+        <path exclude="true">/finance</path>
+        <path exclude="true">/maps</path>
+        <path exclude="true">/intl</path>
+        <path exclude="true">/shopping</path>
+        <path exclude="true">/trends</path>
+    </domain>
+    <domain>search.yahoo.com</domain>
+    <domain>search.yahoo.co.jp</domain>
+    <domain>www.baidu.com</domain>
+    <domain>www.y*******ex.ru</domain>
+    <domain>www.ask.com</domain>
+    <domain>busca.uol.com.br</domain>
+    <domain>search.aol.com</domain>
+    <domain>www.sogou.com</domain>
+    <domain>www.globo.com/busca</domain>
+    <domain>search.goo.ne.jp</domain>
+    <domain>www.duckduckgo.com</domain>
+    <domain>www.gigablast.com</domain>
+    <domain>www.qwant.com</domain>
+    <domain>www.youdao.com</domain>
+    <domain>search.pch.com</domain>
+    <domain>www.yippy.com/</domain>
+    <domain>www.deeperweb.com</domain>
+    <domain>www.dogpile.com/</domain>
+    <domain>msxml.excite.com</domain>
+    <domain>www.hotbot.com</domain>
+    <domain>www.info.com</domain>
+    <domain>www.ixquick.com</domain>
+    <domain>www.startpage.com</domain>
+    <domain>www.zoo.com</domain>
+    <domain>www.webcrawler.com</domain>
+    <domain>ansearch.com.au</domain>
+    <domain>search.daum.net</domain>
+    <domain>www.egerin.com</domain>
+    <domain>www.leit.is</domain>
+    <domain>www.najdi.si</domain>
+    <domain>search.naver.com</domain>
+    <domain>nova.rambler.ru</domain>
+    <domain>www.sapo.pt/pesquisa</domain>
+    <domain>pesquisa.sapo.cv</domain>
+    <domain>pesquisa.sapo.ao</domain>
+    <domain>pesquisa.sapo.mz</domain>
+    <domain>pesquisa.sapo.tl</domain>
+    <domain>search.seznam.cz</domain>
+    <domain>search.walla.co.il</domain>
+</NTPProviders>
+<AllowExecComm*******Paste>
+    <domain transition="false">live-int.com</domain>
+    <domain transition="false">officeapps.live.com</domain>
+    <domain transition="false">officeapps-df.live.com</domain>
+    <domain transition="false">partner.officewebapps.cn</domain>
+    <domain transition="false">online.office365.us</domain>
+    <domain transition="false">online.office.de</domain>
+    <domain transition="false">docs.google.com</domain>
+    <domain transition="false">drive.google.com</domain>
+    <domain transition="false">visualstudio.com</domain>
+    <domain transition="false">gov.online.office365.us</domain>
+    <domain transition="false">dod.online.office365.us</domain>
+</AllowExecComm*******Paste>
+<TcpFastOpen enable="false">
+    <domain transition="false" exclude="true">google.com</domain>
+    <domain transition="false" exclude="true">facebook.com</domain>
+</TcpFastOpen>
+</iecompatlistdescription>

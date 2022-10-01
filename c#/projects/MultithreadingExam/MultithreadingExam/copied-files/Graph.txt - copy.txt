@@ -1,0 +1,1 @@
+﻿Send data to the computer ******* graph it in Processing. 

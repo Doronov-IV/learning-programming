@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" manifestVersion="1.0">
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" typeName="Service" version="10.0.19041.1566" publicKeyToken="31bf3856ad364e35" />
+      <categoryInstance subcategory="dosvc">
+        <serviceData dependOnService="rpcss" description="@%systemroot%\system32\dosvc.dll,-101" displayName="@%systemroot%\system32\dosvc.dll,-100" errorControl="normal" imagePath="%SystemRoot%\System32\svchost.exe -k NetworkService -p" launchProtected="windowsLight" name="dosvc" objectName="NT Authority\NetworkService" sidType="unrestricted" start="dem*******" type="win32ShareProcess">
+          <securityDescriptor name="DO-SVC-SDDL" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <!-- WNF_DO_POLICY_CHANGED -->
+            <triggerData type="binary" value="7510bca32901c641" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="MACHINE_POLICY_PRESENT" type="GroupPolicyChange" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="DO-SVC-SDDL" sddl="D:(A;;0x0002009D;;;AU)(A;;0x000F01FF;;;BA)(A;;0x000F01FF;;;SY)(A;;0x00020002;;;S-1-5-80-3055155277-3816794035-3994065555-2874236192-2193176987)S:(AU;FA;0x000F01FF;;;WD)" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

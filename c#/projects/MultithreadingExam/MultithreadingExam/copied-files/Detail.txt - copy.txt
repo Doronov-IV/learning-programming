@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <Setting Id="RESUMESETUP" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="OOBPACKAGES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SKIPINSTALLERRUNCHECK" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="KEEPSERVICINGPATH" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ACTION" Value="Uninstall" Source="CommandLine" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ROLE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="PYTHONLICENSEPATH" Value="C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\SQL2019\1049_RUS_LP\x64\1049\PythonLicense.rtf" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SHAREDINSTALLID" Value="18ad9c4a-454a-4c90-b57c-f2ba2fbc88fa" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SUPPRESSPRIVACYSTATEMENTNOTICE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MRCACHEDIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SESSIONID" Value="83c00ea5-2534-43dc-b55f-ad0e7f756cb3" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CORRELATIONID" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SETUPARCHITECTUREMODE" Value="Native" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="CLUSTEREDUPGRADEFEATURES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="FAILPOINTINVOCATIONLIMIT" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILPOINTASNORMALERROR" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILPOINT" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ENU" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLMEDIAPATH" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="RLICENSEPATH" Value="C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\SQL2019\1049_RUS_LP\x64\1049\ROpenLicense.rtf" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="QUIET" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="QUIETSIMPLE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="WORKFLOW" Value="Uninstall" Source="CommandLine" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="LICENSETYPE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="UIMODE" Value="Normal" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FREEEDITIONS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="EXTERNALCOMPONENTS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="BASELINEVERSION" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SETUPLANGUAGE" Value="1049" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="COMPONENTUPDATEPROGRESSMSGFORMATTER" Value="Файлы программы установки SQL Server устанавливаются в систему." Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="COMPONENTUPDATESTATEPROPERTY" Value="Running" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="PROGRESSMESSAGE" Value="Файлы программы установки SQL Server устанавливаются в систему." Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTALLSETUPFILESSTATUSPROPERTY" Value="[COMPONENTUPDATESTATEPROPERTY, Running]" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MEDIASOURCE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MsiPatchMediaPathSecond" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MsiPatchMediaPath" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MsiInstallMediaPath" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SKIPMANAGEDSERVICEACCOUNTVALIDATION" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="STOPPATCHEDSERVICETIMEOUT" Value="1800" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="NOREMOTEREGCACHE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SUPPRESSPAIDEDITIONNOTICE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSTARTUPFLAGS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ALLOWSTANDALONEONSHAREDDISK" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ProductUpdatesFolder" Value="C:\Users\ipv27\AppData\Local\Temp\SQL Server 2019" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="UpdateCategory" Value="DBCC23D9-84E0-4B4D-A8B0-9A736B693F4C" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MUUPDATES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLCUSOURCE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTALLPCUSOURCE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MuTimeout" Value="-1" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MuSearchTimeout" Value="300000" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SEARCHTYPE" Value="Initial" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="CONFIGURATIONFILE" Value="C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\Log\20220922_205952\ConfigurationFile.ini" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="DEBUG" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FEATURES" Value="SQLENGINE" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CLUSTEREDREPAIRFEATURES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="HELP" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INDICATEPROGRESS" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="LOGMARKER" Value="" Source="CommandLine" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="NOMUTEX" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="RULES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="X86" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="TIMESTAMP" Value="20220922_205952" Source="CommandLine" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SKIPRULES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MEDIALAYOUT" Value="None" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CUPIDDISPLAYED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MSIRETRYCOUNT" Value="3" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MSIRETRYINTERVAL" Value="120" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="MSIRETRYRETURNCODE" Value="2, 30, 110, 1314, 1305, 1310, 1316, 1601, 1618, 1619, 1620, 1622, 1631, 1632, 1635, 1636, 1935" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="HIDECONSOLE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="PATCHSQLSUPPORT" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="IGNORESERVICERESTARTSTATE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="CLUSTERPASSIVE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="ENABLERESOLVESOURCEUI" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="CUREBOOTREQUIRED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="PARENTHWND" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="IGNOREFAILEDPATCH" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SLIPSTREAMPATH" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTANCENAME" Value="MSSQLSERVER" Source="UI" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTANCEINSTALLID" Value="9dfce4e1-aca0-48be-822b-190736d94424" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLSHAREDDIR" Value="C:\Program Files\Microsoft SQL Server\" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTALLSQLSHAREDDIR64" Value="C:\Program Files\Microsoft SQL Server\" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTALLSHAREDWOWDIR" Value="C:\Program Files (x86)\Microsoft SQL Server\" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTALLSQLSHAREDDIR32" Value="C:\Program Files (x86)\Microsoft SQL Server\" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="INSTANCEID" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTANCENAMELIST" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLINSTANCEID" Value="MSSQL15.MSSQLSERVER" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="ALLINSTANCES" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="COPYUPGRADESCRIPTS" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTANCEDIR" Value="C:\Program Files\Microsoft SQL Server\" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTANCEDIRSPACE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLSHAREDDIRSPACE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLSHAREDWOWDIRSPACE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SYSTEMDIRSPACE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CLUSTERNODESSTATUS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILOVERCLUSTERDISKS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILOVERCLUSTERGROUP" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CLUSTERPUBLICIPADDRESSES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CLUSTERPUBLICNETWORKSUBNETSPERNODE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="CONFIRMIPDEPENDENCYCHANGE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="FAILOVERCLUSTERIPADDRESSES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="FAILOVERCLUSTERNODES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILOVERCLUSTERROLLOWNERSHIP" Value="2" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ISLOCALNODEACTIVE" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ISACTIVENODEUPGRADED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ISLOCALNODEUPGRADED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="LEGACYNODECOUNT" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="ISPASSIVENODEUPGRADED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="LEGACYNODES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="UPGRADEDNODES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FAILOVERCLUSTERNETWORKNAME" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="AGTSVCACCOUNT" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="AGTSVCPASSWORD" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="AGTSVCSTARTUPTYPE" Value="Manual" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="AGTSVCDISPLAYNAME" Value="Агент SQL Server" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="AGTDOMAINGROUP" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="AGTSVCNAME" Value="AgentConfigurationPublic" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSVCDISPLAYNAME" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLENGINESVCNAME" Value="SqlEngineSetupPublic" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXENABLED" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXBRICKROLE" Value="NonCM" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXNAME" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="COMMFABRICPORT" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="COMMFABRICNETWORKLEVEL" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="COMMFABRICENCRYPTION" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXCMSERVERNAME" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXGUID" Value="00000000-0000-0000-0000-000000000000" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXCMBRICKID" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXCMBRICKGUID" Value="00000000-0000-0000-0000-000000000000" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXCMBRICKCOMMPORT" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXBRICKID" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="MATRIXBRICKGUID" Value="00000000-0000-0000-0000-000000000000" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSVCSTARTUPTYPE" Value="Automatic" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FILESTREAMLEVEL" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="FILESTREAMSHARENAME" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLMAXDOP" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLMAXMEMORY" Value="2147483647" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLMINMEMORY" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="USESQLRECOMMENDEDMEMORYLIMITS" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="RECOMMMENDEDSQLMAXMEMORY" Value="2147483647" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="ENABLERANU" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLCOLLATION" Value="SQL_Latin1_General_CP1_CI_AS" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SAPWD" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSVCACCOUNT" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSVCPASSWORD" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSVCINSTANTFILEINIT" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLSYSADMINACCOUNTS" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SECURITYMODE" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLTEMPDBFILECOUNT" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLTEMPDBFILESIZE" Value="-1" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLTEMPDBFILEGROWTH" Value="-1" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLTEMPDBLOGFILESIZE" Value="-1" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SQLTEMPDBLOGFILEGROWTH" Value="-1" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="INSTALLSQLDATADIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SQLBACKUPDIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SQLUSERDBDIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SQLUSERDBLOGDIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SQLTEMPDBDIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="SQLTEMPDBLOGDIR" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="ADDCURRENTUSERASSQLADMIN" Value="false" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="ROOTDATADIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="SYSTEMDATADIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="DEFAULTDATADIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="DEFAULTLOGDIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="BACKUPDIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="TEMPDBDATADIRECTORIES" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="TEMPDBLOGDIRECTORY" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="TCPENABLED" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="NPENABLED" Value="0" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="BROWSERSVCUSERNAME" Value="NT AUTHORITY\LOCALSERVICE" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="BROWSERSVCPASSWORD" Value="" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="BROWSERSVCSTARTUPTYPE" Value="Disabled" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+  <Setting Id="BROWSERSVCDISPLAYNAME" Value="Обозреватель SQL Server" Source="Default" IsApplicable="true" IsChangeableByUser="false" />
+  <Setting Id="BROWSERSVCNAME" Value="SqlBrowserPublicConfig" Source="Default" IsApplicable="true" IsChangeableByUser="true" />
+</Settings>

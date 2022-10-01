@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" manifestVersion="1.0">
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" typeName="Service" version="10.0.19041.1806" publicKeyToken="31bf3856ad364e35" />
+      <categoryInstance subcategory="wuauserv">
+        <serviceData dependOnService="rpcss" description="@%systemroot%\system32\wuaueng.dll,-106" displayName="@%systemroot%\system32\wuaueng.dll,-105" errorControl="normal" imagePath="%systemroot%\system32\svchost.exe -k netsvcs -p" name="wuauserv" objectName="LocalSystem" requiredPrivileges="SeAuditPrivilege,SeCreateGlobalPrivilege,SeCreatePageFilePrivilege,SeTcbPrivilege,SeAssignPrimaryTokenPrivilege,SeImpersonatePrivilege,SeIncreaseQuotaPrivilege,SeShutdownPrivilege,SeDebugPrivilege,SeBackupPrivilege,SeRestorePrivilege,SeSecurityPrivilege,SeTakeOwnershipPrivilege,SeLoadDriverPrivilege,SeManageVolumePrivilege,SeSystemEnvironmentPrivilege,SeCreateSymbolicLinkPrivilege,SeIncreaseBasePriorityPrivilege" sidType="unrestricted" start="dem*******" type="win32ShareProcess">
+          <securityDescriptor name="Windows-Update-Client-Core-SDDL" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="Windows-Update-Client-Core-SDDL" sddl="D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOSDRCWDWO;;;WD)" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.Entity.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner">
+      <summary>Предоставляет поддержку во время разработки в визуальном конструкторе для элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.#ctor">
+      <summary>Создает новый экземпляр класса <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" />.</summary>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.CanConfigure">
+      <summary>Получает значение, определяющее возможность вызова метода <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure" /> основным приложением разработки.</summary>
+      <returns>Значение <see langword="true" />, если метод <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure" /> может быть вызван, в обратном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.CanRefreshSchema">
+      <summary>Получает значение, определяющее возможность вызова метода <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)" /> основным приложением разработки.</summary>
+      <returns>Значение <see langword="true" />, если метод <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)" /> может быть вызван, в обратном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Comm*******Text">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.Comm*******Text" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.Comm*******Text" />.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure">
+      <summary>Запускает служебную программу конфигурации источника данных на узле разработки.</summary>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.ConnectionString">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.ConnectionString" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.ConnectionString" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.DefaultContainerName">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.DefaultContainerName" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.DefaultContainerName" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.EntitySetName">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntitySetName" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntitySetName" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.EntityTypeFilter">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntityTypeFilter" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntityTypeFilter" />.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.GetView(System.String)">
+      <summary>Получает представление источника данных с указанным именем.</summary>
+      <param name="viewName">Имя возвращаемого представления.</param>
+      <returns>Объект с именем, заданным в параметре <paramref name="viewName" />.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.GetViewNames">
+      <summary>Получает список доступных представлений.</summary>
+      <returns>Коллекция с одним элементом, которая содержит имя "DefaultView".</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Инициализирует конструктор элементов управления и загружает указанный компонент.</summary>
+      <param name="component">Объект <see cref="T:System.ComponentModel.IComponent" /> для инициализации.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.OrderBy">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.OrderBy" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.OrderBy" />.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.PreFilterProperties(System.Collections.IDictionary)">
+      <summary>Используется конструктором для добавления или удаления свойств в сетке свойств или для сокрытия свойств связанного элемента управления.</summary>
+      <param name="properties">Свойства для фильтрации.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)">
+      <summary>Обновляет схему на основе выделенного источника данных.</summary>
+      <param name="preferSilent">При значении <see langword="true" /> все события источника данных будут подавлены до обновления схемы.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Select">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.Select" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.Select" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Where">
+      <summary>Получает или задает свойство <see cref="P:System.Web.UI.WebControls.EntityDataSource.Where" /> элемента управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />.</summary>
+      <returns>Значение свойства <see cref="P:System.Web.UI.WebControls.EntityDataSource.Where" />.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView">
+      <summary>Содержит представление времени разработки для класса <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" />.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.#ctor(System.Web.UI.Design.WebControls.EntityDataSourceDesigner)">
+      <summary>Создает новый экземпляр класса <see cref="T:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView" /> с использованием предоставленного конструктора источников данных.</summary>
+      <param name="owner">Родительский объект <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" />.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanDelete">
+      <summary>Получает значение, которое указывает, поддерживает ли объект <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />, связанный с текущим элементом управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />, удаление.</summary>
+      <returns>
+        <see langword="true" />, если удаление поддерживается; в противном случае — <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanInsert">
+      <summary>Получает значение, которое указывает, поддерживает ли объект <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />, связанный с текущим элементом управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />, вставку.</summary>
+      <returns>
+        <see langword="true" />, если вставка поддерживается; в противном случае — <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanPage">
+      <summary>Получает значение, позволяющее определить, поддерживает ли объект <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />, связанный с текущим элементом управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />, операцию разбиения возвращенных запросом данных по страницам.</summary>
+      <returns>
+        <see langword="true" />, если разбиение по страницам поддерживается; в противном случае — <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanSort">
+      <summary>Получает значение, которое указывает, поддерживает ли объект <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />, сопоставленный текущему элементу управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />, отсортированное представление базового источника данных.</summary>
+      <returns>Значение <see langword="true" />, если сортировка поддерживается, в противном случае — <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanUpdate">
+      <summary>Получает значение, которое указывает, поддерживает ли объект <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />, связанный с текущим элементом управления <see cref="T:System.Web.UI.WebControls.EntityDataSource" />, обновление.</summary>
+      <returns>
+        <see langword="true" />, если обновление поддерживается; в противном случае — <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.GetDesignTimeData(System.Int32,System.Boolean@)">
+      <summary>Получает данные времени разработки, которые соответствуют схеме сопоставленного элемента управления источником данных, с использованием заданного числа строк.</summary>
+      <param name="minimumRows">Минимальное количество возвращаемых строк.</param>
+      <param name="isSampleData">Значение <see langword="true" /> указывает, что возвращенные данные являются примерными; значение  <see langword="false" /> указывает, что возвращенные данные являются фактическими данными.</param>
+      <returns>Данные, которые должны быть отображены во время разработки.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.Schema">
+      <summary>Получает схему, описывающую представление источника данных, представленное текущим объектом представления.</summary>
+      <returns>Объект, который представляет схему.</returns>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" manifestVersion="1.0">
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" typeName="Service" version="10.0.19041.1526" publicKeyToken="31bf3856ad364e35" />
+      <categoryInstance>
+        <serviceData description="@%SystemRoot%\servicing\TrustedInstaller.exe,-101" displayName="@%SystemRoot%\servicing\TrustedInstaller.exe,-100" errorControl="normal" group="ProfSvc_Group" imagePath="%SystemRoot%\servicing\TrustedInstaller.exe" name="TrustedInstaller" objectName="localSystem" sidType="unrestricted" start="dem*******" startAfterInstall="none" type="win32OwnProcess">
+          <securityDescriptor name="TISvcSecurity" />
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="TISvcSecurity" sddl="O:BAG:BAD:(A;CI;GA;;;SY)(A;;0x000201ff;;;BA)(A;;0x0002018d;;;IU)(A;;0x0002018d;;;SU)S:(AU;FASA;WDWO;;;BA)" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

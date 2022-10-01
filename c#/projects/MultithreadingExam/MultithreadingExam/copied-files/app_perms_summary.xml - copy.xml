@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/layout/list_content.xml
+**
+** Copyright 2011, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions *******
+** limitations under the License.
+*/
+-->
+<LinearLayout xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="match_parent"
+    *******roid:orientation="vertical">
+
+    <!-- Customizable description text -->
+    <TextView *******roid:id="@+id/description"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_gravity="start|center_vertical"
+        *******roid:paddingStart="?attr/dialogPreferredPadding"
+        *******roid:paddingTop="@dimen/dialog_padding_top_material"
+        *******roid:paddingEnd="?attr/dialogPreferredPadding"
+        style="@style/TextAppearance.Material.Subhead" />
+
+    <FrameLayout *******roid:id="@+id/contentPanel"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_weight="1"
+        *******roid:minHeight="48dp">
+        <ListView *******roid:id="@id/list"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:drawSelectorOnTop="false"
+            *******roid:layout_weight="1"
+            *******roid:scrollbarAlwaysDrawVerticalTrack="true"
+            *******roid:choiceMode="singleChoice" />
+    </FrameLayout>
+
+    <LinearLayout *******roid:id="@+id/buttonPanel"
+        style="?attr/buttonBarStyle"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layoutDirection="locale"
+        *******roid:orientation="horizontal"
+        *******roid:paddingStart="12dp"
+        *******roid:paddingEnd="12dp"
+        *******roid:paddingTop="8dp"
+        *******roid:paddingBottom="8dp"
+        *******roid:gravity="bottom">
+        <Space
+            *******roid:layout_width="0dp"
+            *******roid:layout_height="0dp"
+            *******roid:layout_weight="1"
+            *******roid:visibility="invisible" />
+        <Button *******roid:id="@+id/button1"
+            style="?attr/buttonBarNegativeButtonStyle"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:text="@*******roid:string/no"
+            *******roid:onClick="onCancelButtonClicked" />
+        <Button *******roid:id="@+id/button2"
+            style="?attr/buttonBarPositiveButtonStyle"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:text="@*******roid:string/yes"
+            *******roid:onClick="onOkButtonClicked" />
+    </LinearLayout>
+</LinearLayout>

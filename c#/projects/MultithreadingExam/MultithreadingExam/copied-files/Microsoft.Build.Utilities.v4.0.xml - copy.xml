@@ -1,0 +1,2003 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Build.Utilities.v4.0</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.Utilities.AppDomainIsolatedTask">
+      <summary>Предоставляет те же возможности, что и класс <see cref="T:Microsoft.Build.Utilities.Task" />, но также наследуется от <see cref="T:System.MarshalByRefObject" />, что позволяет создавать его экземпляр в собственном домене приложения.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor(System.Resources.ResourceManager)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" /> и позволяет производным классам <see cref="T:Microsoft.Build.Utilities.Task" /> регистрировать свои ресурсы.</summary>
+      <param name="taskResources">Ресурсы задачи.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" /> и позволяет производным классам <see cref="T:Microsoft.Build.Utilities.Task" /> регистрировать свои ресурсы, а также указывать префикс для составления ключевых слов справки из имен строковых ресурсов.</summary>
+      <param name="taskResources">Ресурсы задачи.</param>
+      <param name="helpKeywordPrefix">Префикс ключевого слова справки.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.BuildEngine">
+      <summary>Получает или задает интерфейс подсистемы сборки, который доступен для задач.</summary>
+      <returns>Тип <see cref="T:Microsoft.Build.Framework.IBuildEngine" />, который доступен для задач.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.Execute">
+      <summary>Выполняет задачу.</summary>
+      <returns>Значение <see langword="true" /> в случае успешного выполнения; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.HelpKeywordPrefix">
+      <summary>Получает или задает префикс, используемый для составления ключевых слов справки из строковых имен ресурсов.</summary>
+      <returns>Объект <see cref="T:System.String" />, используемый для составления ключевых слов справки. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.HostObject">
+      <summary>Получает или задает экземпляр объекта узла, связанный с производным <see cref="T:Microsoft.Build.Utilities.Task" />.</summary>
+      <returns>Экземпляр объекта узла, <see cref="T:Microsoft.Build.Framework.ITaskHost" />, связанный с производным <see cref="T:Microsoft.Build.Utilities.Task" />. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.InitializeLifetimeService">
+      <summary>При переопределении в производном классе предоставляет задачам неограниченный срок аренды.</summary>
+      <returns>
+        <see langword="null" /> для указания неограниченного времени жизни.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.Log">
+      <summary>Получает экземпляр вспомогательного объекта ведения журнала задач, который содержит методы ведения журнала задач.</summary>
+      <returns>Объект <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" />, содержащий методы ведения журнала задач.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.TaskResources">
+      <summary>Возвращает или задает ресурсы производного объекта <see cref="T:Microsoft.Build.Utilities.Task" />, связанные с языком и региональными параметрами.</summary>
+      <returns>Объект <see cref="T:System.Resources.ResourceManager" />, представляющий собой ресурс производного объекта <see cref="T:Microsoft.Build.Utilities.Task" />, связанный с языком и региональными параметрами. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.AssemblyFoldersExInfo">
+      <summary>Содержит сведения о записях в разделах реестра AssemblyFoldersEx.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AssemblyFoldersExInfo.#ctor(Microsoft.Win32.RegistryHive,Microsoft.Win32.RegistryView,System.String,System.String,System.Version)">
+      <summary>Создает новый экземпляр класса <see langword="AssemblyFoldersExInfo" />.</summary>
+      <param name="hive">Представление куста для использования.</param>
+      <param name="view">Представление реестра для использования.</param>
+      <param name="registryKey">Раздел реестра для компонента.</param>
+      <param name="directoryPath">Путь к папке по умолчанию разделов реестра.</param>
+      <param name="targetFrameworkVersion">Требуемая версия .NET Framework для раздела реестра.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AssemblyFoldersExInfo.DirectoryPath">
+      <summary>Получает или задает папку, найденную по значению по умолчанию раздела реестра.</summary>
+      <returns>Возвращает путь к папке разделов реестра по умолчанию.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AssemblyFoldersExInfo.Hive">
+      <summary>Получает или задает куст реестра.</summary>
+      <returns>Куст реестра.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AssemblyFoldersExInfo.Key">
+      <summary>Получает или задает раздел реестра для компонента.</summary>
+      <returns>Раздел реестра.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AssemblyFoldersExInfo.TargetFrameworkVersion">
+      <summary>Получает или задает целевую версию платформы для раздела реестра.</summary>
+      <returns>Версия целевой платформы.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AssemblyFoldersExInfo.View">
+      <summary>Получает или задает представление реестра.</summary>
+      <returns>Представление реестра.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.CanonicalTrackedInputFiles">
+      <summary>Данный класс является интерпретатором журнала отслеживания файлов для журналов .read. tracking в канонической форме или журналов, которые были помещены в корневую папку (^), чтобы сделать их каноническими</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Конструктор для одного входного исходного файла</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы .read. tlog для анализа</param>
+      <param name="sourceFile">Основной исходный файл, для которого анализируются зависимости</param>
+      <param name="excludedInputPaths">Набор путей, содержащих файлы, которые должны быть пропущены при проверке обновления</param>
+      <param name="outputs">Выходные файлы, создаваемые в результате компиляции этого исходного файла</param>
+      <param name="useMinimalRebuildOptimization">ПРЕДУПРЕЖДЕНИЕ. Для оптимизации с целью достижения минимального объема перепостроения требуется указать абсолютно верные вычисленные выходные данные!</param>
+      <param name="maintainCompositeRootingMarkers">Значение true, чтобы сохранить маркеры составных корней (вариант "несколько-к-одному"), или значение false, чтобы удалить их (варианты "один-к-одному" или "один-ко-нескольким").</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.Boolean,System.Boolean)">
+      <summary>Конструктор для нескольких входных исходных файлов</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы .read. tlog для анализа</param>
+      <param name="sourceFiles">Основные исходные файлы, для которых анализируются зависимости</param>
+      <param name="excludedInputPaths">Набор путей, содержащих файлы, которые должны быть пропущены при проверке обновления</param>
+      <param name="outputs">Выходные файлы, создаваемые в результате компиляции этого набора исходных файлов</param>
+      <param name="useMinimalRebuildOptimization">ПРЕДУПРЕЖДЕНИЕ. Для оптимизации с целью достижения минимального объема перепостроения требуется указать абсолютно верные вычисленные выходные данные!</param>
+      <param name="maintainCompositeRootingMarkers">Значение true, чтобы сохранить маркеры составных корней (вариант "несколько-к-одному"), или значение false, чтобы удалить их (варианты "один-к-одному" или "один-ко-нескольким").</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Конструктор для нескольких входных исходных файлов</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы .read. tlog для анализа</param>
+      <param name="sourceFiles">Основные исходные файлы, для которых анализируются зависимости</param>
+      <param name="excludedInputPaths">Набор путей, содержащих файлы, которые должны быть пропущены при проверке обновления</param>
+      <param name="outputs">Выходные файлы, создаваемые в результате компиляции этого набора исходных файлов</param>
+      <param name="useMinimalRebuildOptimization">ПРЕДУПРЕЖДЕНИЕ. Для оптимизации с целью достижения минимального объема перепостроения требуется указать абсолютно верные вычисленные выходные данные!</param>
+      <param name="maintainCompositeRootingMarkers">Значение true, чтобы сохранить маркеры составных корней (вариант "несколько-к-одному"), или значение false, чтобы удалить их (варианты "один-к-одному" или "один-ко-нескольким").</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Конструктор для нескольких входных исходных файлов</summary>
+      <param name="tlogFiles">Файлы .read. tlog для анализа</param>
+      <param name="sourceFiles">Основные исходные файлы, для которых анализируются зависимости</param>
+      <param name="excludedInputPaths">Набор путей, содержащих файлы, которые должны быть пропущены при проверке обновления</param>
+      <param name="outputs">Выходные файлы, создаваемые в результате компиляции этого набора исходных файлов</param>
+      <param name="useMinimalRebuildOptimization">ПРЕДУПРЕЖДЕНИЕ. Для оптимизации с целью достижения минимального объема перепостроения требуется указать абсолютно верные вычисленные выходные данные!</param>
+      <param name="maintainCompositeRootingMarkers">Значение true, чтобы сохранить маркеры составных корней (вариант "несколько-к-одному"), или значение false, чтобы удалить их (варианты "один-к-одному" или "один-ко-нескольким").</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Конструктор для нескольких входных исходных файлов</summary>
+      <param name="tlogFiles">Файлы .read. tlog для анализа</param>
+      <param name="sourceFiles">Основные исходные файлы, для которых анализируются зависимости</param>
+      <param name="outputs">Выходные файлы, создаваемые в результате компиляции этого набора исходных файлов</param>
+      <param name="useMinimalRebuildOptimization">ПРЕДУПРЕЖДЕНИЕ. Для оптимизации с целью достижения минимального объема перепостроения требуется указать абсолютно верные вычисленные выходные данные!</param>
+      <param name="maintainCompositeRootingMarkers">Значение true, чтобы сохранить маркеры составных корней (вариант "несколько-к-одному"), или значение false, чтобы удалить их (варианты "один-к-одному" или "один-ко-нескольким").</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.ComputeSourcesNeedingCompilation">
+      <summary>Данный метод вычисляет исходные файлы, которые необходимо скомпилировать, на основе выходных файлов и полного графа зависимостей входных данных.</summary>
+      <returns>Массив файлов, которые необходимо скомпилировать</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.ComputeSourcesNeedingCompilation(System.Boolean)">
+      <summary>Данный метод вычисляет исходные файлы, которые необходимо скомпилировать, на основе выходных файлов и полного графа зависимостей входных данных. Также выполняется поиск составных маркеров корня для подкорней, которые могут содержать входные файлы (необязательно).</summary>
+      <param name="searchForSubRootsInCompositeRootingMarkers">Если значение этого параметра равно true, выполняется поиск составных маркеров корня для подкорней.</param>
+      <returns>Массив файлов, которые необходимо скомпилировать</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.DependencyTable">
+      <summary>Получает таблицу зависимостей.</summary>
+      <returns>Таблица зависимостей.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.FileIsExcludedFromDependencyCheck(System.String)">
+      <summary>Проверяет, что указанный файл исключен из проверки отслеживаемых зависимостей.</summary>
+      <param name="fileName">Полный путь к проверяемому файлу</param>
+      <returns>Значение <see langword="true" />, если файл исключен; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+      <param name="correspondingOutput">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="correspondingOutputs">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданного источника и соответствующих ему выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+      <param name="dependencyToRemove">Удаляемая зависимость.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="sources">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="dependencyToRemove">Удаляемая зависимость.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удаляет записи выходного графа для заданных исходных файлов и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntryForSourceRoot(System.String)">
+      <summary>Удаляет запись в графе зависимостей входных данных, соответствующую корню.</summary>
+      <param name="rootingMarker">Удаляемый корень.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.SaveTlog">
+      <summary>Данный метод перезапишет журналы отслеживания из текущей выходной таблицы; новые записи будут отслеживаться.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>Данный метод перезапишет журналы отслеживания из текущей зависимости. После компиляции исходных файлов новые записи будут отслеживаться.</summary>
+      <param name="includeInTLog">Делегат, используемый для определения необходимости включения определенного файла в сжатый журнал отслеживания.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles">
+      <summary>Данный класс является интерпретатором журнала отслеживания файлов для журналов .write. tracking в канонической форме. Канонические журналы .write. должны помещаться в корневую папку, поскольку результаты необходимо связать с входными данными.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Конструктор</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Конструктор</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+      <param name="constructOutputsFromTLogs">Если значение этого параметра равно true, создаются выходные данные из файлов журнала отслеживания.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Конструктор</summary>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputForSourceRoot(System.String,System.String)">
+      <summary>Данный метод добавляет вычисленные выходные данные для заданного исходного раздела в выходной граф</summary>
+      <param name="sourceKey">Исходный файл, для которого необходимо добавить выходные данные</param>
+      <param name="computedOutput">Вычисленные выходные данные для данного исходного раздела.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputsForSourceRoot(System.String,Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Данный метод добавляет вычисленные выходные данные для заданного исходного раздела в выходной граф.</summary>
+      <param name="sourceKey">Источник, для которого необходимо добавить выходные данные.</param>
+      <param name="computedOutputs">Вычисленные выходные данные для данного исходного раздела.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputsForSourceRoot(System.String,System.String[])">
+      <summary>Данный метод добавляет вычисленные выходные данные для заданного исходного раздела в выходной граф.</summary>
+      <param name="sourceKey">Источник, для которого необходимо добавить выходные данные.</param>
+      <param name="computedOutputs">Вычисленные выходные данные для данного исходного раздела.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.DependencyTable">
+      <summary>Получает таблицу зависимостей.</summary>
+      <returns>Таблица зависимостей.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.OutputsForNonCompositeSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Данный метод определяет выходные данные для корня исходного файла (в соответствии с содержимым маркера корня)</summary>
+      <param name="sources">Исходные файлы, для которых необходимо найти выходные данные</param>
+      <returns>Массив выходных данных для исходного файла</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.OutputsForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Данный метод определяет выходные данные для корня исходного файла (в соответствии с содержимым маркера корня).</summary>
+      <param name="sources">Источники, для которых необходимо найти выходные данные.</param>
+      <returns>Массив выходных данных для источника.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.OutputsForSource(Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Этот метод определяет вывод для корня источника (как в содержимом маркера корня), при необходимости выполняя поиск маркеров корня для подкорней, которые могут содержать выходные файлы.</summary>
+      <param name="sources">Источники, для которых необходимо найти выходные данные.</param>
+      <param name="searchForSubRootsInCompositeRootingMarkers">Если значение этого параметра равно true, выполняется поиск составных маркеров корня для подкорней.</param>
+      <returns>Массив выходных данных для источника.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+      <param name="correspondingOutput">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="correspondingOutputs">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданного источника и соответствующих ему выходных данных.</summary>
+      <param name="source">Исходный файл, который должен быть удален из графа</param>
+      <param name="dependencyToRemove">Удаляемая зависимость.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="sources">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="dependencyToRemove">Удаляемая зависимость.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="correspondingOutput">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удалите записи выходного графа для заданных источников и соответствующих им выходных данных.</summary>
+      <param name="source">Исходные файлы, которые должны быть удалены из графа</param>
+      <param name="correspondingOutputs">Выходные данные, соответствующие исходным файлам (используемым для той же обработки файла)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveOutputForSourceRoot(System.String,System.String)">
+      <summary>Удаляет указанные выходные данные из графа зависимостей для заданного исходного файла.</summary>
+      <param name="sourceRoot">Корень исходного файла.</param>
+      <param name="outputPathToRemove">Путь к удаляемым выходным данным</param>
+      <returns>Значение, <see langword="true" /> если выходной путь был удален; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveRootsWithSharedOutputs(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Удаляет корни, имеющие те же выходные данные, что и корень, из графа зависимостей.</summary>
+      <param name="sources">Набор входных данных, образующих удаляемые маркеры корня.</param>
+      <returns>Массив удаленных маркеров корня.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.SaveTlog">
+      <summary>Данный метод перезапишет журналы отслеживания из текущей выходной таблицы. Новые записи будут отслеживаться.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>Данный метод перезапишет журналы отслеживания из текущей выходной таблицы. Новые записи будут отслеживаться.</summary>
+      <param name="includeInTLog">Фильтр зависимостей.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.Comm*******LineBuilder">
+      <summary>Содержит служебные методы для построения командной строки.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.Comm*******LineBuilder" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.#ctor(System.Boolean)">
+      <summary>Конструктор по умолчанию</summary>
+      <param name="quoteHyphensOnComm*******Line">Если значение true, дефисы должны быть заключены в кавычки.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendFileNameIfNotNull(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Добавляет в командную строку имя файла указанного объекта <see cref="T:Microsoft.Build.Framework.ITaskItem" />.</summary>
+      <param name="fileItem">Спецификация элемента задачи для добавления в командную строку. Если данный параметр имеет значение <see langword="null" />, этот метод не выполняет никаких действий.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendFileNameIfNotNull(System.String)">
+      <summary>Добавляет командную строку с именем файла, представленным параметром, путем вставки кавычек при необходимости.</summary>
+      <param name="fileName">Добавляемое имя файла. Если данный параметр имеет значение <see langword="null" />, этот метод не выполняет никаких действий.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendFileNamesIfNotNull(Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Добавляет в командную строку список файлов из указанного массива <see cref="T:Microsoft.Build.Framework.ITaskItem" />, разделенных заданным разделителем.</summary>
+      <param name="fileItems">Добавляемые спецификации элементов задач. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель между спецификациями элементов задач в командной строке.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendFileNamesIfNotNull(System.String[],System.String)">
+      <summary>Добавляет в командную строку список файлов из указанного массива <see langword="string" />, разделенных заданным разделителем.</summary>
+      <param name="fileNames">Добавляемые имена файлов. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель, помещаемый между именами файлов в командной строке.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendFileNameWithQuoting(System.String)">
+      <summary>Добавляет имя файла в командную строку и при необходимости заключает это имя файла в кавычки.</summary>
+      <param name="fileName">Добавляемое имя файла.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendQuotedTextToBuffer(System.Text.StringBuilder,System.String)">
+      <summary>Добавляет данный текст в буфер после первого, при необходимости заключая этот текст в кавычки.</summary>
+      <param name="buffer">Буфер для добавления.</param>
+      <param name="unquotedTextToAppend">Заключаемый в кавычки текст.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSpaceIfNotEmpty">
+      <summary>Добавляет пробел в заданную строку, если строка не пуста.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitch(System.String)">
+      <summary>Добавляет в командную строку указанный переключатель.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Добавляет в командную строку параметр, который принимает спецификацию элемента задачи, выступающую в качестве отдельного строкового параметра.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameter">Параметр-переключатель, добавляемый в командную строку. При необходимости будут добавлены кавычки. Если это значение равно <see langword="null" />, метод не оказывает влияния.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Добавляет в командную строку параметр, который принимает массив спецификаций элементов задачи, выступающих в качестве строковых параметров.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameters">Массив параметров для добавления в командную строку. При необходимости будут добавлены кавычки. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель для отдельных параметров. Это значение может быть пустым, но не может быть <see langword="null" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchIfNotNull(System.String,System.String)">
+      <summary>Добавляет в командную строку переключатель, который принимает массив строковых параметров.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameter">Параметр-переключатель, добавляемый в командную строку. При необходимости будут добавлены кавычки. Если это значение равно <see langword="null" />, метод не оказывает влияния.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchIfNotNull(System.String,System.String[],System.String)">
+      <summary>Добавляет в командную строку аргумент, который принимает массив строковых параметров.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameters">Массив параметров для добавления в командную строку. При необходимости будут добавлены кавычки. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель для отдельных параметров. Это значение может быть пустым, но не может быть <see langword="null" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchUnquotedIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Добавляет в командную строку переключатель, который принимает спецификацию элемента задачи как один строковый параметр, не пытаясь заключить в кавычки этот параметр-переключатель.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameter">Параметр-переключатель, добавляемый в командную строку. Кавычки добавляться не будут. Если это значение равно <see langword="null" />, метод не оказывает влияния.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchUnquotedIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Добавляет в командную строку параметр, который принимает массив спецификаций элементов задачи, выступающих в качестве строковых аргументов, не выполняя попытку заключить аргументы в кавычки.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameters">Массив параметров для добавления в командную строку. Кавычки не будут добавляться. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель для отдельных параметров. Это значение может быть пустым, но не может быть <see langword="null" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchUnquotedIfNotNull(System.String,System.String)">
+      <summary>Добавляет в командную строку аргумент, который принимает один строковый параметр, не пытаясь заключить в кавычки параметр аргумента.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameter">Параметр-переключатель, добавляемый в командную строку. Кавычки добавляться не будут. Если это значение равно <see langword="null" />, метод не оказывает влияния.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendSwitchUnquotedIfNotNull(System.String,System.String[],System.String)">
+      <summary>Добавляет в командную строку переключатель, который принимает массив строковых параметров, не пытаясь заключить параметры-переключатели в кавычки.</summary>
+      <param name="switchName">Имя переключателя, добавляемого в командную строку. Это значение не может быть равно <see langword="null" />.</param>
+      <param name="parameters">Массив параметров для добавления в командную строку. Кавычки не будут добавляться. Если массив имеет значение <see langword="null" />, то этот метод не оказывает влияния.</param>
+      <param name="delimiter">Разделитель для отдельных параметров. Это значение может быть пустым, но не может быть <see langword="null" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendTextUnquoted(System.String)">
+      <summary>Добавляет строку в командную строку без попытки заключить строку в кавычки.</summary>
+      <param name="textToAppend">Строка, добавляемая в командную строку.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.AppendTextWithQuoting(System.String)">
+      <summary>Добавляет строку в командную строку и при необходимости заключает первую в кавычки.</summary>
+      <param name="textToAppend">Строка, добавляемая в командную строку.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Comm*******LineBuilder.Comm*******Line">
+      <summary>Получает экземпляр <see cref="T:System.Text.StringBuilder" />, представляющий командную строку для наследующих классов.</summary>
+      <returns>Объект <see cref="T:System.Text.StringBuilder" /> для наследующих классов.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.IsQuotingRequired(System.String)">
+      <summary>Определяет, следует ли заключать в кавычки указанный строковый аргумент, поскольку он содержит пробелы.</summary>
+      <param name="parameter">Строка, в которой проверяется наличие символов, для которых необходимы кавычки.</param>
+      <returns>Значение <see langword="true" />, если аргумент следует заключать в кавычки. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Comm*******LineBuilder.Length">
+      <summary>Представляет длину командной строки.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.ToString">
+      <summary>Возвращает командную строку в виде строки.</summary>
+      <returns>Объект <see cref="T:System.String" />, представляющий командную строку.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Comm*******LineBuilder.VerifyThrowNoEmbeddedDoubleQuotes(System.String,System.String)">
+      <summary>Возвращает ошибку, если параметр командной строки содержит символ двойной кавычки ("). Поскольку двойные кавычки недопустимы в параметрах командной строки, этот метод помогает предотвратить атаки, осуществляемые путем внедрения параметров.</summary>
+      <param name="switchName">Строка, представляющая имя параметра для сообщения об ошибке.</param>
+      <param name="parameter">Строка, представляющая параметр для поиска двойных кавычек.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.DependencyFilter">
+      <summary>Делегат фильтра зависимостей. Используется в ходе операций сохранения журнала отслеживания, чтобы позволить задачам выборочно удалять зависимости из записанного графа.</summary>
+      <param name="fullPath">Полный путь к файлу зависимостей, который должен быть записан в сжатый журнал отслеживания</param>
+      <returns>Значение, указывающее, должен файл действительно записываться в журнал отслеживания (true) или нет (false)</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.DotNetFrameworkArchitecture">
+      <summary>Используется для указания разрядности целевой платформы .NET Framework для некоторых методов ToolLocationHelper</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Bitness32">
+      <summary>Указывает на 32-разрядную версию .NET Framework</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Bitness64">
+      <summary>Указывает на 64-разрядную версию .NET Framework</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Current">
+      <summary>Указывает разрядность платформы .NET Framework, в которой происходит выполнение.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ExecutableType">
+      <summary>Перечисление, представляющее тип исполняемого файла, заключенного в оболочку программы Tracker.exe</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Managed32Bit">
+      <summary>Управляемый исполняемый файл, особо помеченный как 32-разрядный</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Managed64Bit">
+      <summary>Управляемый исполняемый файл, особо помеченный как 64-разрядный</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.ManagedIL">
+      <summary>Управляемый исполняемый файл без указания его разрядности</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Native32Bit">
+      <summary>32-разрядный исполняемый файл машинного кода</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Native64Bit">
+      <summary>64-разрядный исполняемый файл машинного кода</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.SameAsCurrentProcess">
+      <summary>Использование разрядности исполняемого файла, который выполняется в данный момент.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.FileTracker">
+      <summary>Данный класс содержит служебные функции для инкапсуляции операций запуска и ведения журнала для средства отслеживания</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.CreateRootingMarkerResponseFile(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>На основе набора исходных файлов, представленных в форме интерфейса ITaskItem, создает временный файл ответов, содержащий маркер корня, который соответствует этим исходным файлам.</summary>
+      <param name="sources">Набор исходных файлов.</param>
+      <returns>Путь к файлу ответов.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.CreateRootingMarkerResponseFile(System.String)">
+      <summary>На основе маркера корня создает временный файл ответов, содержащий этот маркер.</summary>
+      <param name="rootMarker">Маркер корня, который необходимо поместить в файл ответов.</param>
+      <returns>Путь к файлу ответов.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EndTrackingContext">
+      <summary>Прекращает отслеживание доступа к файлам.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EnsureFileTrackerOnPath">
+      <summary>Добавляет в начало переменной среды PATH путь к соответствующей сборке FileTracker. Используется для внутрипроцессного отслеживания.</summary>
+      <returns>Прежнее значение переменной среды PATH.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EnsureFileTrackerOnPath(System.String)">
+      <summary>Добавляет в начало переменной среды PATH путь к соответствующей сборке FileTracker. Используется для отслеживания inproc или когда .NET Framework не может находиться в расположении, определяемом переменной PATH.</summary>
+      <param name="rootPath">Корневой путь для FileTracker.dll. Переопределяет toolType, если он указан.</param>
+      <returns>Старое значение PATH.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FileIsExcludedFromDependencies(System.String)">
+      <summary>Проверяет, исключен ли указанный файл из отслеживаемых зависимостей.</summary>
+      <param name="fileName">Полный путь к проверяемому файлу</param>
+      <returns>Значение <see langword="true" />, если файл исключен; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FileIsUnderPath(System.String,System.String)">
+      <summary>Проверяет, находится ли указанный файл по заданному пути</summary>
+      <param name="fileName">Полный путь к проверяемому файлу</param>
+      <param name="path">Путь, по которому может находиться файл.</param>
+      <returns>Значение <see langword="true" />, если файл находится по указанному пути, в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FindTrackerOnPath">
+      <summary>Выполняет поиск в переменной среды %PATH% для обнаружения расположения файла Tracker.exe и возвращает первый соответствующий путь. Соответствующий полный путь к файлу Tracker.exe или NULL, если соответствующий путь не найден.</summary>
+      <returns>Путь к Tracker.exe.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ForceOutOfProcTracking(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Определяет, следует ли использовать внепроцессное отслеживание или будет достаточно внутрипроцессного отслеживания.</summary>
+      <param name="toolType">Тип исполняемого файла отслеживаемого средства</param>
+      <returns>Значение true, если требуется внепроцессное отслеживание, и false в случае достаточности внутрипроцессного отслеживания</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ForceOutOfProcTracking(Microsoft.Build.Utilities.ExecutableType,System.String,System.String)">
+      <summary>Определяет, следует ли использовать внепроцессное отслеживание или будет достаточно внутрипроцессного отслеживания.</summary>
+      <param name="toolType">Тип исполняемого файла отслеживаемого средства</param>
+      <param name="dllName">Отслеживаемое средство.</param>
+      <param name="cancelEventName">Имя события отмены, которое должно прослушиваться средством отслеживания, или NULL в случае отсутствия такого события</param>
+      <returns>Значение true, если требуется внепроцессное отслеживание, и false в случае достаточности внутрипроцессного отслеживания</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Создает строку маркера корня из массива основных исходных файлов ITaskItem.</summary>
+      <param name="source">Основные исходные файлы.</param>
+      <returns>Строка метки.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Создает строку маркера корня из массива основных исходных файлов ITaskItem.</summary>
+      <param name="source">Основные исходные файлы.</param>
+      <param name="output">Выходные файлы.</param>
+      <returns>Строка метки.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Создает строку маркера корня из массива основных исходных файлов ITaskItem.</summary>
+      <param name="sources">Массив ITaskItem основных исходных файлов.</param>
+      <returns>Строка метки.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Создает строку маркера корня из массива основных исходных файлов ITaskItem.</summary>
+      <param name="sources">Массив ITaskItem основных исходных файлов.</param>
+      <param name="outputs">Выходные файлы.</param>
+      <returns>Строка метки.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetFileTrackerPath(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>На основе типа ExecutableType заключенного в оболочку средства и сведений о текущей разрядности вычисляет и возвращает путь к правильной библиотеке FileTracker.dll.</summary>
+      <param name="toolType">Тип ExecutableType заключенного в оболочку средства.</param>
+      <returns>Путь к инструменту.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetFileTrackerPath(Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>На основе типа ExecutableType заключенного в оболочку средства и сведений о текущей разрядности вычисляет и возвращает путь к правильной библиотеке FileTracker.dll.</summary>
+      <param name="toolType">toolType.</param>
+      <param name="rootPath">Корневой путь для FileTracker.dll. Переопределяет toolType, если он указан.</param>
+      <returns>Возвращает <see cref="T:System.String" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetTrackerPath(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>На основе типа ExecutableType заключенного в оболочку средства и сведений о текущей разрядности вычисляет и возвращает путь к правильному файлу Tracker.exe.</summary>
+      <param name="toolType">Тип ExecutableType заключенного в оболочку средства.</param>
+      <returns>Путь к средству отслеживания.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetTrackerPath(Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>На основе типа ExecutableType заключенного в оболочку средства и сведений о текущей разрядности вычисляет и возвращает путь к правильному файлу Tracker.exe.</summary>
+      <param name="toolType">toolType.</param>
+      <param name="rootPath">Корневой путь для Tracker.exe. Переопределяет toolType, если он указан.</param>
+      <returns>Возвращает <see cref="T:System.String" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ResumeTracking">
+      <summary>Возобновляет отслеживание доступа к файлам в текущем контексте отслеживания.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.SetThreadCount(System.Int32)">
+      <summary>Задает глобальное число потоков и назначает это число текущему потоку.</summary>
+      <param name="threadCount">Число потоков.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Запускает процесс для отслеживания команды.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="toolType">Тип исполняемого файла заключенного в оболочку средства</param>
+      <returns>Экземпляр процесса.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>Запускает процесс для отслеживания команды.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы команды</param>
+      <param name="toolType">Тип исполняемого файла заключенного в оболочку средства</param>
+      <param name="rootFiles">Маркер корня</param>
+      <returns>Экземпляр процесса.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String)">
+      <summary>Запускает процесс для отслеживания команды.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="toolType">Тип исполняемого файла заключенного в оболочку средства</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <returns>Экземпляр процесса.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String,System.String)">
+      <summary>Запускает процесс для отслеживания команды.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="toolType">Тип исполняемого файла заключенного в оболочку средства</param>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <returns>Экземпляр процесса</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String,System.String,System.String)">
+      <summary>Запускает процесс для отслеживания команды.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="toolType">Тип исполняемого файла заключенного в оболочку средства</param>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <param name="cancelEventName">Если средством отслеживания должно прослушиваться определенное событие отмены, передайте здесь имя этого события</param>
+      <returns>Экземпляр процесса</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartTrackingContext(System.String,System.String)">
+      <summary>Запускает отслеживание доступа к файлам.</summary>
+      <param name="intermediateDirectory">Каталог, в который записываются файлы журналов отслеживания</param>
+      <param name="taskName">Имя задачи, вызывающей эту функцию, которое используется для определения имен файлов журналов отслеживания</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartTrackingContextWithRoot(System.String,System.String,System.String)">
+      <summary>Запускает отслеживание доступа к файлам с использованием маркера корня в предоставленном файле ответов. Для автоматического создания файла ответов на основе маркера корня вызовите метод FileTracker.CreateRootingMarkerResponseFile.</summary>
+      <param name="intermediateDirectory">Каталог, в который записываются файлы журналов отслеживания</param>
+      <param name="taskName">Имя задачи, вызывающей эту функцию, которое используется для определения имен файлов журналов отслеживания</param>
+      <param name="rootMarkerResponseFile">Маркер корня, содержащийся в файле ответов.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StopTrackingAndCleanup">
+      <summary>Прекращает отслеживание доступа к файлам и удаляет текущие контексты отслеживания.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.SuspendTracking">
+      <summary>Временно приостанавливает отслеживание доступа к файлам в текущем контексте отслеживания.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerArguments(System.String,System.String,System.String,System.String,System.String)">
+      <summary>Данный метод создает правильные аргументы программы Tracker.exe из своих параметров.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <returns>Аргументы в виде строки</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerArguments(System.String,System.String,System.String,System.String,System.String,System.String)">
+      <summary>Данный метод создает правильные аргументы программы Tracker.exe из своих параметров.</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <param name="cancelEventName">Если создано событие отмены, которое должно прослушиваться средством отслеживания, передайте здесь имя этого события</param>
+      <returns>Аргументы в виде строки</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerComm*******Arguments(System.String,System.String)">
+      <summary>Данный метод создает правильные аргументы команды Tracker.exe из своих параметров</summary>
+      <param name="comm*******">Отслеживаемая команда</param>
+      <param name="arguments">Аргументы отслеживаемой команды</param>
+      <returns>Аргументы в виде строки</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerResponseFileArguments(System.String,System.String,System.String)">
+      <summary>Данный метод создает правильные аргументы файла откликов программы Tracker.exe из своих параметров.</summary>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <returns>Аргументы в виде строки</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerResponseFileArguments(System.String,System.String,System.String,System.String)">
+      <summary>Данный метод создает правильные аргументы файла откликов программы Tracker.exe из своих параметров.</summary>
+      <param name="dllName">Имя библиотеки DLL, выполняющей отслеживание</param>
+      <param name="intermediateDirectory">Промежуточный каталог, в который будут записаны журналы отслеживания</param>
+      <param name="rootFiles">Маркер корня</param>
+      <param name="cancelEventName">Если создано событие отмены, которое должно прослушиваться средством отслеживания, передайте здесь имя этого события</param>
+      <returns>Аргументы в виде строки</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.WriteAllTLogs(System.String,System.String)">
+      <summary>Записывает журналы отслеживания для всех контекстов и потоков.</summary>
+      <param name="intermediateDirectory">Каталог, в который записываются файлы журналов отслеживания</param>
+      <param name="taskName">Имя задачи, вызывающей эту функцию, которое используется для определения имен файлов журналов отслеживания</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.WriteContextTLogs(System.String,System.String)">
+      <summary>Записывает журналы отслеживания, соответствующие текущему контексту отслеживания.</summary>
+      <param name="intermediateDirectory">Каталог, в который записываются файлы журналов отслеживания</param>
+      <param name="taskName">Имя задачи, вызывающей эту функцию, которое используется для определения имен файлов журналов отслеживания</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.FlatTrackingData">
+      <summary>Этот класс используется для отслеживания зависимостей файлов во время построения.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Конструктор</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы журналов отслеживания для анализа</param>
+      <param name="skipMissingFiles">Пропуск файлов, не существующих на диске</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Конструктор</summary>
+      <param name="ownerTask">Задача, использующая средство отслеживания файлов</param>
+      <param name="tlogFiles">Файлы журналов отслеживания для анализа</param>
+      <param name="missingFileTimeUtc">Дата и время, которые должны быть записаны для отсутствующего файла.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Конструктор</summary>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+      <param name="tlogFilesToIgnore">Журналы отслеживания, которые должны быть пропущены.</param>
+      <param name="missingFileTimeUtc">Дата и время, которые должны быть записаны для отсутствующего файла.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.DateTime,System.String[],System.Collections.Generic.IDictionary{System.String,System.DateTime})">
+      <summary>Конструктор</summary>
+      <param name="tlogFiles">Интерпретируемые TLOG-файлы.</param>
+      <param name="tlogFilesToIgnore">Пропускаемые TLOG-файлы.</param>
+      <param name="missingFileTimeUtc">Дата и время, которые должны быть записаны для отсутствующего файла.</param>
+      <param name="excludedInputPaths">Набор путей, содержащих пропускаемые файлы, включая подкаталоги.</param>
+      <param name="sharedLastWriteTimeUtcCache">Используемый кэш (может использоваться несколькими экземплярами <c>FlatTrackingData</c>).</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Конструктор</summary>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+      <param name="skipMissingFiles">Пропуск файлов, не существующих на диске</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Конструктор</summary>
+      <param name="tlogFiles">Файлы .write. tlog для анализа</param>
+      <param name="missingFileTimeUtc">Дата и время, которые должны быть записаны для отсутствующего файла.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.DependencyTable">
+      <summary>Получает таблицу зависимостей.</summary>
+      <returns>Таблица зависимостей.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.FileIsExcludedFromDependencyCheck(System.String)">
+      <summary>Возвращает значение <see langword="true" />, если указанный файл исключен из проверки отслеживаемых зависимостей.</summary>
+      <param name="fileName">Имя проверяемого файла.</param>
+      <returns>Значение <see langword="true" />, если файл исключен.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.FinalizeTLogs(System.Boolean,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Сжимает и завершает журналы отслеживания в зависимости от успеха отслеживаемого выполнения.</summary>
+      <param name="trackedOperationsSucceeded">Значение true означает, что отслеживаемые операции завершены успешно.</param>
+      <param name="readTLogNames">Журналы отслеживания, предназначенные для чтения.</param>
+      <param name="writeTLogNames">Журналы отслеживания, в которые необходимо выполнить запись.</param>
+      <param name="trackedFilesToRemoveFromTLogs">Отслеживаемые файлы, которые необходимо удалить из журналов отслеживания.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.GetLastWriteTimeUtc(System.String)">
+      <summary>Возвращает кэшированное значение для последней операции записи файла. Обновляет кэш при первой проверке файла.</summary>
+      <param name="file">Имя файла.</param>
+      <returns>Последнее время записи файла.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.IsUpToDate(Microsoft.Build.Utilities.Task,Microsoft.Build.Utilities.UpToDateCheckType,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Проверяет, указывают ли данные отслеживания на актуальность всех элементов в соответствии с классом UpToDateCheckType.</summary>
+      <param name="hostTask">Задача основного приложения.</param>
+      <param name="upToDateCheckType">Класс UpToDateCheckType</param>
+      <param name="readTLogNames">Массив журналов отслеживания, предназначенных для чтения</param>
+      <param name="writeTLogNames">Массив журналов отслеживания, предназначенных для записи</param>
+      <returns>Значение <see langword="true" />, если все элементы актуальны; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.IsUpToDate(Microsoft.Build.Utilities.TaskLoggingHelper,Microsoft.Build.Utilities.UpToDateCheckType,Microsoft.Build.Utilities.FlatTrackingData,Microsoft.Build.Utilities.FlatTrackingData)">
+      <summary>Проверяет, что состояние является актуальным, в соответствии с данными отслеживания и классом UpToDateCheckType.</summary>
+      <param name="Log">Объект TaskLoggingHelper из задачи основного приложения</param>
+      <param name="upToDateCheckType">Используемый класс UpToDateCheckType</param>
+      <param name="inputs">Структура FlatTrackingData, содержащая входные данные</param>
+      <param name="outputs">Структура FlatTrackingData, содержащая выходные данные</param>
+      <returns>Значение <see langword="true" />, если все элементы актуальны; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.MissingFiles">
+      <summary>Получает или задает отсутствующие файлы, обнаруженные в журнале отслеживания.</summary>
+      <returns>Отсутствующие файлы, обнаруженные в журнале отслеживания.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileName">
+      <summary>Получает или задает путь к самому новому обнаруженному файлу.</summary>
+      <returns>Путь к самому новому обнаруженному файлу видели.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileTime">
+      <summary>Получает или задает время для самого нового обнаруженного файла.</summary>
+      <returns>Время для самого нового обнаруженного файла видели.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileTimeUtc">
+      <summary>Получает или задает время в формате UTC для самого нового обнаруженного файла.</summary>
+      <returns>Время в формате UTC для самого нового обнаруженного файла видели.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogFileName">
+      <summary>Получает или задает путь к самому новому файлу журнала отслеживания.</summary>
+      <returns>Путь к самому новому файлу.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogTime">
+      <summary>Получает или задает время самого нового журнала отслеживания.</summary>
+      <returns>Время самого нового журнала отслеживания.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogTimeUtc">
+      <summary>Получает или задает время самого нового журнала отслеживания в формате UTC.</summary>
+      <returns>Время самого нового журнала отслеживания.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileName">
+      <summary>Получает или задает путь к самому старому обнаруженному файлу.</summary>
+      <returns>Путь к самому старому файлу видели.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileTime">
+      <summary>Получает или задает время для самого старого обнаруженного файла.</summary>
+      <returns>Время для самого старого файла видели.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileTimeUtc">
+      <summary>Получает или задает время в формате UTC для самого старого обнаруженного файла.</summary>
+      <returns>Время в формате UTC для самого старого файла видели.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.SaveTlog">
+      <summary>Данный метод перезаписывает журналы отслеживания из выходной таблицы.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>Данный метод перезапишет журналы отслеживания из текущей таблицы</summary>
+      <param name="includeInTLog">Фильтр зависимостей.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.SkipMissingFiles">
+      <summary>Получает или задает значение, указывающее, следует пропускать или записывать файлы, которые содержатся в журнале отслеживания, но больше не существуют.</summary>
+      <returns>
+        <see langword="true" /> Чтобы пропустить отсутствующие файлы; <see langword="false" /> для их записи.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TlogFiles">
+      <summary>Получает или задает файлы журнала отслеживания, которые поддерживают данную структуру.</summary>
+      <returns>Файлы журнала отслеживания, которые поддерживают данную структуру.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TlogsAvailable">
+      <summary>Получает или задает значение, указывающее, доступны ли на диске все переданные журналы отслеживания.</summary>
+      <returns>
+        <see langword="true" /> Если все журналы отслеживания, которые были переданы, доступны на диске; в противном случае <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TreatRootMarkersAsEntries">
+      <summary>Получает или задает параметр-переключатель, который определяет, следует ли рассматривать корневые маркеры журнала отслеживания как операции доступа к файлам или просто как маркеры.</summary>
+      <returns>Возвращает параметр-переключатель, который определяет, следует ли рассматривать корневые маркеры журнала отслеживания как операции доступа к файлам или просто как маркеры.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.UpdateFileEntryDetails">
+      <summary>Обновление текущего состояния сведений записи для таблицы зависимостей</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.HostObjectInitializationStatus">
+      <summary>Определяет следующее действие для <see cref="T:Microsoft.Build.Utilities.ToolTask" /> после попытки инициализации объекта узла.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.NoActionReturnFailure">
+      <summary>Указывает, что некоторые параметры, переданные задаче, являются недопустимыми и что задача должна быть немедленно завершена с ошибкой.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.NoActionReturnSuccess">
+      <summary>Указывает, что объект узла находится в актуальном состоянии и что никаких дополнительных действий не требуется.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.UseAlternateToolToExecute">
+      <summary>Указывает, что объект узла недоступен, либо объект узла не в состоянии обеспечить поддержку всех функций, необходимых для данной сборки. Следовательно, <see cref="T:Microsoft.Build.Utilities.ToolTask" /> должен воспользоваться альтернативными средствами выполнения сборки, например вызвать программу командной строки.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.UseHostObjectToExecute">
+      <summary>Указывает, что для данной задачи существует подходящий объект узла, который может обеспечить поддержку всех передаваемых параметров и который нужно вызывать для выполнения реальной работы в рамках этой задачи.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.Logger">
+      <summary>При переопределении в производной форме предоставляет функциональные возможности для средств ведения журнала, которые обрабатывают события ядра MSBuild.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.Logger" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.FormatErrorEvent(Microsoft.Build.Framework.BuildErrorEventArgs)">
+      <summary>Создает сообщение об ошибке в формате по умолчанию из объекта <see cref="T:Microsoft.Build.Framework.BuildErrorEventArgs" />.</summary>
+      <param name="args">Аргументы события ошибки.</param>
+      <returns>Строка <see cref="T:System.String" />, представляющая сообщение об ошибке в каноническом формате.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.FormatWarningEvent(Microsoft.Build.Framework.BuildWarningEventArgs)">
+      <summary>Создает сообщение с предупреждением в формате по умолчанию из объекта <see cref="T:Microsoft.Build.Framework.BuildWarningEventArgs" />.</summary>
+      <param name="args">Аргументы события предупреждения.</param>
+      <returns>Строка <see cref="T:System.String" />, представляющая сообщение с предупреждением в каноническом формате.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>При переопределении в производном классе оформляет подписку средства ведения журнала на указанные события.</summary>
+      <param name="eventSource">Доступные события, на которые может подписаться средство ведения журнала.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.IsVerbosityAtLeast(Microsoft.Build.Framework.LoggerVerbosity)">
+      <summary>Определяет, имеет ли свойство <see cref="P:Microsoft.Build.Utilities.Logger.Verbosity" /> текущее значение не менее переданного.</summary>
+      <param name="checkVerbosity">Переданное значение уровня детализации для средства ведения журнала.</param>
+      <returns>Значение <see langword="true" />, если текущее значение уровня детализации для средства ведения журнала не менее переданного значения. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Logger.Parameters">
+      <summary>Получает или задает пользовательские параметры средства ведения журнала.</summary>
+      <returns>Параметры средства ведения журнала. Данное значение может быть <see langword="null" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.Shutdown">
+      <summary>При переопределении в производном классе освобождает ресурсы, выделенные средству ведения журнала во время инициализации или в ходе построения.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Logger.Verbosity">
+      <summary>Получает или задает уровень детализации, используемый для отображения журнала событий.</summary>
+      <returns>Одно из значений перечисления. Значение по умолчанию: <see cref="F:Microsoft.Build.Framework.LoggerVerbosity.Normal" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.MuxLogger">
+      <summary>Представляет средство ведения журнала мультиплексирования. Назначение данного средства ведения журнала состоит в регистрации и отмене регистрации нескольким средствам ведения журналов во время построения. Поддерживает сценарий интегрированной среды разработки Visual Studio, в котором средства ведения журнала регистрируются и отменяют регистрацию для каждого запроса на сборку системы проектов. Одно физическое построение может иметь несколько логических построений, каждое из которых будет иметь собственный набор средств записи в журнал.  
+<see langword="MuxLogger" /> самостоятельно регистрируется в диспетчере сборок как стандартное центральное средство ведения журнала в стиле /l. Получает сообщения от диспетчера построений и маршрутизирует их в нужное средство записи в журнал с учетом логического построения, из которого было получено сообщение.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.#ctor">
+      <summary>Создает новый экземпляр средства ведения журнала мультиплексирования.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>Инициализируйте экземпляр <see langword="MuxLogger" /> с указанным источником событий.</summary>
+      <param name="eventSource">Источник события.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)">
+      <summary>Инициализируйте экземпляр <see langword="MuxLogger" /> с указанным источником событий и заданным максимальным количеством узлов.</summary>
+      <param name="eventSource">Источник события.</param>
+      <param name="maxNodeCount">Максимальное количество узлов.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.MuxLogger.Parameters">
+      <summary>Получает или задает атрибут Parameters, требуемый интерфейсу <see langword="ILogger" />.</summary>
+      <returns>Атрибут Parameters.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.RegisterLogger(System.Int32,Microsoft.Build.Framework.ILogger)">
+      <summary>Регистрирует средство ведения журнала на <see langword="MuxLogger" /> и вызывает событие начавшегося построения, если оно уже было внесено в журнал.</summary>
+      <param name="submissionId">Идентификатор отправки регистрируемого средства ведения журнала.</param>
+      <param name="logger">Регистрируемое средство ведения журнала.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.Shutdown">
+      <summary>Выключает <see langword="MuxLogger" /> и очищает любое состояние.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.MuxLogger.UnregisterLoggers(System.Int32)">
+      <summary>Удаляет указанное средство регистрации в журнале из MuxLogger.</summary>
+      <param name="submissionId">Идентификатор отправки удаляемого средства ведения журнала.</param>
+      <returns>Значение <see langword="true" />, если метод удалил средство ведения журнала; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.MuxLogger.Verbosity">
+      <summary>Получает или задает атрибут Verbosity, требуемый интерфейсу <see langword="ILogger" />.</summary>
+      <returns>Атрибут Verbosity.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ProcessorArchitecture">
+      <summary>Определяет правильное средство в наборе инструментов, которое должен использовать MSBuild, в зависимости от архитектуры процессора в текущей системе.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.AMD64">
+      <summary>Представляет процессор AMD64.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.ARM">
+      <summary>Представляет процессор ARM.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ProcessorArchitecture.CurrentProcessArchitecture">
+      <summary>Получает текущую архитектуру процессора в системе.</summary>
+      <returns>Строка, содержащая значение архитектуры процессора.</returns>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.IA64">
+      <summary>Представляет процессор IA64.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.MSIL">
+      <summary>Представляет код MSIL.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.X86">
+      <summary>Представляет процессор x86.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion">
+      <summary>Указывает версию .NET Framework для использования с методами в <see cref="T:Microsoft.Build.Utilities.ToolLocationHelper" />.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version11">
+      <summary>Задает платформу .NET Framework версии 1.1.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version20">
+      <summary>Указывает .NET Framework версии 2.0.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version30">
+      <summary>Указывает .NET Framework версии 3.0.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version35">
+      <summary>Указывает .NET Framework версии 3.5.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version40">
+      <summary>версия 4.0</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version45">
+      <summary>версия 4.5</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.VersionLatest">
+      <summary>Задает последнюю из выпущенных версий платформы .NET Framework.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TargetPlatformSDK">
+      <summary>Представляет SDK целевой платформы.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TargetPlatformSDK.#ctor(System.String,System.Version,System.String)">
+      <summary>Создает новый экземпляр класса SDK целевой платформы.</summary>
+      <param name="targetPlatformIdentifier">Идентификатор целевой платформы.</param>
+      <param name="targetPlatformVersion">Версия целевой платформы.</param>
+      <param name="path">Путь к SDK целевой платформы.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TargetPlatformSDK.Equals(Microsoft.Build.Utilities.TargetPlatformSDK)">
+      <summary>Обеспечивает равенство между пакетами SDK целевой платформы.</summary>
+      <param name="other">Целевая платформа SDK для сравнения с этим элементом.</param>
+      <returns>Значение <see langword="true" />, если элементы равны; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TargetPlatformSDK.Equals(System.Object)">
+      <summary>Обеспечивает равенство между пакетом SDK целевой платформы и объектом.</summary>
+      <param name="obj">Объект, который требуется сравнить с данным элементом.</param>
+      <returns>Значение <see langword="true" />, если элементы равны; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TargetPlatformSDK.GetHashCode">
+      <summary>Возвращает хэш-код для пакета SDK целевой платформы.</summary>
+      <returns>Хэш-код.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TargetPlatformSDK.Path">
+      <summary>Получает или задает путь к пакету SDK целевой платформы.</summary>
+      <returns>Путь к SDK целевой платформы.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TargetPlatformSDK.TargetPlatformIdentifier">
+      <summary>Получает или задает идентификатор SDK целевой платформы.</summary>
+      <returns>Идентификатор SDK целевой платформы.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TargetPlatformSDK.TargetPlatformVersion">
+      <summary>Получает или задает версию целевой платформы.</summary>
+      <returns>Версия целевой платформы.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.Task">
+      <summary>При переопределении в производной форме предоставляет функциональные возможности для задач.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.Task" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor(System.Resources.ResourceManager)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.Task" /> указанным значением <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" />.</summary>
+      <param name="taskResources">Ресурсы задачи.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.Task" /> с заданными свойствами <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" /> и <see cref="P:Microsoft.Build.Utilities.Task.HelpKeywordPrefix" />.</summary>
+      <param name="taskResources">Ресурсы задачи.</param>
+      <param name="helpKeywordPrefix">Префикс, добавляемый к строковым ресурсам для создания ключевых слов справки.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine">
+      <summary>Получает или задает экземпляр объекта <see cref="T:Microsoft.Build.Framework.IBuildEngine" />, используемого этой задачей.</summary>
+      <returns>Тип <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> доступен для задач.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine2">
+      <summary>Получает экземпляр объекта <see cref="T:Microsoft.Build.Framework.IBuildEngine2" />, используемого этой задачей.</summary>
+      <returns>Тип <see cref="T:Microsoft.Build.Framework.IBuildEngine2" /> доступен для задач.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine3">
+      <summary>Получает экземпляр объекта <see cref="T:Microsoft.Build.Framework.IBuildEngine3" />, используемого этой задачей.</summary>
+      <returns>Тип <see cref="T:Microsoft.Build.Framework.IBuildEngine3" /> доступен для задач.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine4">
+      <summary>Получает экземпляр объекта <see cref="T:Microsoft.Build.Framework.IBuildEngine4" />, используемого этой задачей.</summary>
+      <returns>Тип <see cref="T:Microsoft.Build.Framework.IBuildEngine4" /> доступен для задач.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.Execute">
+      <summary>При переопределении в производном классе выполняет эту задачу.</summary>
+      <returns>Значение <see langword="true" />, если задача выполнена успешно. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.HelpKeywordPrefix">
+      <summary>Получает или задает префикс, используемый для составления ключевых слов справки из имен ресурсов.</summary>
+      <returns>Префикс, используемый для составления ключевых слов справки из имен ресурсов.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.HostObject">
+      <summary>Возвращает или задает объект узла, связанный с задачей.</summary>
+      <returns>Объект узла, связанный с задачей. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.Log">
+      <summary>Возвращает экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" />, содержащий методы ведения журнала задач.</summary>
+      <returns>Объект вспомогательной функции записи.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.TaskResources">
+      <summary>Получает или задает связанные с задачей ресурсы для конкретного языка и региональных параметров.</summary>
+      <returns>Связанные с задачей ресурсы для конкретного языка и региональных параметров. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TaskItem">
+      <summary>Определяет отдельный элемент проекта при передаче в задачу.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskItem" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskItem" /> с использованием указанного источника <see cref="T:Microsoft.Build.Framework.ITaskItem" />.</summary>
+      <param name="sourceItem">Копируемый элемент.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskItem" /> с помощью указанной строки спецификации элемента.</summary>
+      <param name="itemSpec">Спецификация элемента.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(System.String,System.Collections.IDictionary)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskItem" /> с помощью указанной строки спецификации элемента и метаданных.</summary>
+      <param name="itemSpec">Спецификация элемента.</param>
+      <param name="itemMetadata">Пользовательские метаданные для спецификации элемента.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.CloneCustomMetadata">
+      <summary>Клонирует коллекцию пользовательских метаданных для спецификации элемента.</summary>
+      <returns>Объект <see cref="T:System.Collections.IDictionary" />, представляющий копию пользовательских метаданных.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.CopyMetadataTo(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Копирует метаданные спецификации элемента в указанный элемент целевой задачи.</summary>
+      <param name="destinationItem">Элемент, в который этот метод будет копировать метаданные.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.GetMetadata(System.String)">
+      <summary>Извлекает указанные метаданные в элементе.</summary>
+      <param name="metadataName">Имя извлекаемых метаданных.</param>
+      <returns>Объект <see cref="T:System.String" />, представляющий значение метаданных.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.InitializeLifetimeService">
+      <summary>При переопределении в производном классе предоставляет элементам задач неограниченный срок аренды.</summary>
+      <returns>
+        <see langword="null" /> для указания неограниченного времени жизни.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.ItemSpec">
+      <summary>Получает или задает спецификацию элемента.</summary>
+      <returns>Объект <see cref="T:System.String" />, представляющий спецификацию элемента.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.MetadataCount">
+      <summary>Возвращает количество метаданных, заданных в элементе.</summary>
+      <returns>Объект <see cref="T:System.Int32" />, представляющий количество метаданных, заданных в элементе.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.MetadataNames">
+      <summary>Получает имена всех метаданных элемента.</summary>
+      <returns>Коллекция <see cref="T:System.Collections.ICollection" /> имен метаданных.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#CloneCustomMetadataEscaped">
+      <summary>Реализация <see cref="T:Microsoft.Build.Framework.ITaskItem2" />, возвращающая клон метаданных для данного объекта. Возвращаемые значения имеют исходную экранированную форму.</summary>
+      <returns>Клон метаданных с сохраненным экранированием значений.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#EvaluatedIncludeEscaped">
+      <summary>Реализация <see cref="T:Microsoft.Build.Framework.ITaskItem2" />, получающая или задающая значение Include для элемента.  Для элементов на диске это будет путь файла.</summary>
+      <returns>Значение include для элемента.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#GetMetadataValueEscaped(System.String)">
+      <summary>Реализация <see cref="T:Microsoft.Build.Framework.ITaskItem2" />, позволяющая запрашивать значения метаданных для элемента.</summary>
+      <param name="metadataName">Запрашиваемые метаданные.</param>
+      <returns>Экранированное значение метаданных.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#SetMetadataValueLiteral(System.String,System.String)">
+      <summary>Реализация <see cref="T:Microsoft.Build.Framework.ITaskItem2" />, позволяющая задавать часть пользовательских метаданных для элемента. Предполагает, что передаваемое значение не является экранированным, и при необходимости экранирует значение для его сохранения.</summary>
+      <param name="metadataName">Имя метаданных.</param>
+      <param name="metadataValue">Значение метаданных.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.op_Explicit(Microsoft.Build.Utilities.TaskItem)~System.String">
+      <summary>Разрешает явное приведение типа <see cref="T:Microsoft.Build.Utilities.TaskItem" /> к <see cref="T:System.String" /> и возвращает <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> для данного элемента.</summary>
+      <param name="taskItemToCast">Элемент, с которым выполняется операция.</param>
+      <returns>
+        <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> для элемента.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.RemoveMetadata(System.String)">
+      <summary>Удаляет указанные метаданные в элементе.</summary>
+      <param name="metadataName">Имя удаляемых метаданных.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.SetMetadata(System.String,System.String)">
+      <summary>Задает или изменяет значение заданных метаданных для элемента.</summary>
+      <param name="metadataName">Имя метаданных для задания или изменения.</param>
+      <param name="metadataValue">Новое значение метаданных.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.ToString">
+      <summary>Получает спецификацию элемента.</summary>
+      <returns>Объект <see cref="T:System.String" />, представляющий спецификацию элемента.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TaskLoggingHelper">
+      <summary>Предоставляет вспомогательные методы ведения журнала, используемые задачами.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.#ctor(Microsoft.Build.Framework.IBuildEngine,System.String)">
+      <summary>Открытый конструктор, который облегчает запись сообщений в журнал фабриками задач.</summary>
+      <param name="buildEngine">Обработчик построения.</param>
+      <param name="taskName">Имя данной задачи.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.#ctor(Microsoft.Build.Framework.ITask)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" /> и связывает его с указанным экземпляром задачи.</summary>
+      <param name="taskInstance">Задача, содержащая экземпляр этого класса.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.BuildEngine">
+      <summary>Возвращает обработчик сборки, связанный с задачей.</summary>
+      <returns>Объект <see cref="T:Microsoft.Build.Framework.IBuildEngine" />, представляющий экземпляр обработчика сборки, связанный с задачей.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.ExtractMessageCode(System.String,System.String@)">
+      <summary>Извлекает префикс кода сообщения из заданной полной строки сообщения.</summary>
+      <param name="message">Полное сообщения для синтаксического анализа, содержащее префикс кода.</param>
+      <param name="messageWithoutCodePrefix">Сообщение с удаленным префиксом кода.</param>
+      <returns>Префикс кода сообщения, извлекаемый из полной строки сообщения, или значение <see langword="null" />, если код сообщения отсутствует.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.FormatResourceString(System.String,System.Object[])">
+      <summary>Загружает заданную строку ресурса и при необходимости форматирует ее с использованием указанных аргументов.</summary>
+      <param name="resourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="args">Необязательные документы для форматирования загруженной строки.</param>
+      <returns>Форматированная строка.</returns>
+      <exception cref="T:System.ArgumentException">Строковый ресурс, на который указывает <paramref name="resourceName" />, не существует.</exception>
+      <exception cref="T:System.InvalidOperationException">Свойство <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" /> задачи владельца не задано.</exception>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="resourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.FormatString(System.String,System.Object[])">
+      <summary>Форматирует заданную строку, используя указанные аргументы.</summary>
+      <param name="unformatted">Форматируемая строка.</param>
+      <param name="args">Аргументы для форматирования.</param>
+      <returns>Форматированная строка.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="unformatted" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.GetResourceMessage(System.String)">
+      <summary>Получает сообщение из ресурса в библиотеке задач.</summary>
+      <param name="resourceName">Имя ресурса.</param>
+      <returns>Сообщение из ресурса в библиотеке задач.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.HasLoggedErrors">
+      <summary>Получает значение, указывающее, записала ли задача ошибки с помощью этого вспомогательного объекта ведения журнала.</summary>
+      <returns>Значение <see langword="true" />, если задача записала в журнал ошибки с помощью этого вспомогательного объекта ведения журнала; в противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.HelpKeywordPrefix">
+      <summary>Получает или задает префикс, используемый для составления ключевых слов справки из имен ресурсов.</summary>
+      <returns>Префикс, используемый для составления ключевых слов справки из имен ресурсов.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.InitializeLifetimeService">
+      <summary>InitializeLifetimeService вызывается при активации удаленного объекта.  
+Этот метод определяет, какое будет время существования объекта.  
+Потокобезопасный. Однако InitializeLifetimeService и MarkAsInactive должны вызываться только в этом порядке, вместе или не вызываться вообще, причем не более одного раза.</summary>
+      <returns>Объект аренды для управления временем существования этого объекта.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogComm*******Line(Microsoft.Build.Framework.MessageImportance,System.String)">
+      <summary>Заносит в журнал командную строку для базового средства, исполняемого файла или команды оболочки для задачи, используя заданный уровень важности.</summary>
+      <param name="importance">Одно из значений <see cref="T:Microsoft.Build.Framework.MessageImportance" />, указывающее уровень важности командной строки.</param>
+      <param name="comm*******Line">Строка командной строки.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogComm*******Line(System.String)">
+      <summary>Записывает в журнал командную строку для базового средства, исполняемого файла или команды оболочки для задачи.</summary>
+      <param name="comm*******Line">Строка командной строки.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogCriticalMessage(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал важное сообщение, используя указанную строку и другие сведения о сообщении.  
+Потокобезопасный.</summary>
+      <param name="subcategory">Описание типа предупреждения (может иметь значение NULL).</param>
+      <param name="code">Код сообщения (может иметь значение null).</param>
+      <param name="helpKeyword">Ключевое слово справки для интегрированной среды разработки узла (может иметь значение NULL).</param>
+      <param name="file">Путь к файлу, вызвавшему появление сообщения (может иметь значение null).</param>
+      <param name="lineNumber">Строка в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="columnNumber">Столбец в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="endLineNumber">Последняя строка диапазона строк в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="endColumnNumber">Последний столбец диапазона столбцов в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="message">Строка сообщения.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Возникает, когда <paramref name="message" /> принимает значение null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])">
+      <summary>Регистрирует ошибку с заданным сообщением.</summary>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал ошибку, используя заданное сообщение и другие сведения об ошибке.</summary>
+      <param name="subcategory">Описание типа ошибки.</param>
+      <param name="errorCode">Код ошибки.</param>
+      <param name="helpKeyword">Ключевое слово справки, связанное с ошибкой.</param>
+      <param name="file">Путь к файлу, содержащему ошибку.</param>
+      <param name="lineNumber">Строка в файле, где произошла ошибка.</param>
+      <param name="columnNumber">Столбец в файле, где произошла ошибка.</param>
+      <param name="endLineNumber">Последняя строка в файле, где произошла ошибка.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где произошла ошибка.</param>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception)">
+      <summary>Заносит в журнал ошибку, используя сообщение из заданного исключения.</summary>
+      <param name="exception">Записываемое в журнал исключение.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="e" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception,System.Boolean)">
+      <summary>Заносит в журнал ошибку, используя сообщение и при необходимости трассировку стека из заданного исключения.</summary>
+      <param name="exception">Записываемое в журнал исключение</param>
+      <param name="showStackTrace">Значение <see langword="true" />, если нужно включить трассировку стека в запись журнала; в противном случае — значение <see langword="false" />.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="e" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception,System.Boolean,System.Boolean,System.String)">
+      <summary>Регистрирует в журнале ошибку, используя это сообщение и при необходимости трассировку стека из заданного исключения и каких-либо внутренних исключений.</summary>
+      <param name="exception">Записываемое в журнал исключение.</param>
+      <param name="showStackTrace">Значение <see langword="true" />, если нужно включить трассировку стека в запись журнала; в противном случае — значение <see langword="false" />.</param>
+      <param name="showDetail">Значение <see langword="true" /> для регистрации в журнале типов исключений и всех внутренних исключений; в противном случае — значение <see langword="false" />.</param>
+      <param name="file">Имя файла, относящегося к исключению, или <see langword="null" />, если требуется регистрировать в журнале файл проекта.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="e" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromResources(System.String,System.Object[])">
+      <summary>Регистрирует в журнале ошибку, используя заданную строку ресурса.</summary>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromResources(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал ошибку, используя заданную строку ресурса и другие сведения об ошибке.</summary>
+      <param name="subcategoryResourceName">Имя строкового ресурса, описывающего тип ошибки.</param>
+      <param name="errorCode">Код ошибки.</param>
+      <param name="helpKeyword">Ключевое слово справки, связанное с ошибкой.</param>
+      <param name="file">Путь к файлу, содержащему ошибку.</param>
+      <param name="lineNumber">Строка в файле, где произошла ошибка.</param>
+      <param name="columnNumber">Столбец в файле, где произошла ошибка.</param>
+      <param name="endLineNumber">Последняя строка в файле, где произошла ошибка.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где произошла ошибка.</param>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorWithCodeFromResources(System.String,System.Object[])">
+      <summary>Записывает ошибку с кодом ошибки, используя указанную строку ресурсов.</summary>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorWithCodeFromResources(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал ошибку, используя заданную строку ресурса и другие сведения об ошибке.</summary>
+      <param name="subcategoryResourceName">Имя строкового ресурса, описывающего тип ошибки.</param>
+      <param name="file">Путь к файлу, содержащему ошибку.</param>
+      <param name="lineNumber">Строка в файле, где произошла ошибка.</param>
+      <param name="columnNumber">Столбец в файле, где произошла ошибка.</param>
+      <param name="endLineNumber">Последняя строка в файле, где произошла ошибка.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где произошла ошибка.</param>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogExternalProjectFinished(System.String,System.String,System.String,System.Boolean)">
+      <summary>Помогает записывать в журнал пользовательские события сборки <see cref="T:Microsoft.Build.Framework.ExternalProjectFinishedEventArgs" />.</summary>
+      <param name="message">Текстовое сообщение.</param>
+      <param name="helpKeyword">Ключевое слово справки.</param>
+      <param name="projectFile">Имя проекта.</param>
+      <param name="succeeded">Значение <see langword="true" />, чтобы указать, что этот проект был создан успешно; в противном случае — значение <see langword="false" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogExternalProjectStarted(System.String,System.String,System.String,System.String)">
+      <summary>Помогает записывать в журнал пользовательские события сборки <see cref="T:Microsoft.Build.Framework.ExternalProjectStartedEventArgs" />.</summary>
+      <param name="message">Текстовое сообщение.</param>
+      <param name="helpKeyword">Ключевое слово справки.</param>
+      <param name="projectFile">Имя проекта.</param>
+      <param name="targetNames">Конечные объекты сборки. Пустая строка означает целевые объекты по умолчанию.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Регистрирует в журнале сообщение с заданной строкой и важностью.</summary>
+      <param name="importance">Одно из значений из перечисления, указывающее важность сообщения.</param>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Аргументы для форматирования сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])">
+      <summary>Регистрирует в журнале сообщение с заданной строкой.</summary>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Аргументы для форматирования сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Заносит в журнал сообщение, используя указанную строку и другие сведения о сообщении.  
+Потокобезопасный.</summary>
+      <param name="subcategory">Описание типа предупреждения (может иметь значение NULL).</param>
+      <param name="code">Код сообщения (может иметь значение null)</param>
+      <param name="helpKeyword">Ключевое слово справки для интегрированной среды разработки узла (может иметь значение NULL).</param>
+      <param name="file">Путь к файлу, вызвавшему появление сообщения (может иметь значение null).</param>
+      <param name="lineNumber">Строка в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="columnNumber">Столбец в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="endLineNumber">Последняя строка диапазона строк в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="endColumnNumber">Последний столбец диапазона столбцов в файле, вызывающем это сообщение (если недоступен, имеет нулевое значение).</param>
+      <param name="importance">Важность сообщения.</param>
+      <param name="message">Строка сообщения.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Возникает, когда <paramref name="message" /> принимает значение null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromResources(Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Регистрирует в журнале сообщение с заданной строкой ресурса и важностью.</summary>
+      <param name="importance">Одно из значений из перечисления, указывающее важность сообщения.</param>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromResources(System.String,System.Object[])">
+      <summary>Заносит в журнал сообщение с заданной строкой ресурса.</summary>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromText(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Регистрирует в журнале сообщение об ошибке или предупреждение из указанной строки текста.</summary>
+      <param name="lineOfText">Строка текста для регистрации в журнале.</param>
+      <param name="messageImportance">Одно из значений <see cref="T:Microsoft.Build.Framework.MessageImportance" />, указывающее уровень важности командной строки.</param>
+      <returns>Значение <see langword="true" />, если ошибка была зарегистрирована; в противном случае — значение <see langword="false" />.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="lineOfText" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromFile(System.String)">
+      <summary>Регистрирует в журнале ошибки, предупреждения и сообщения для каждой строки текста в заданном файле.</summary>
+      <param name="fileName">Имя файла, сообщения из которого регистрируются в журнале.</param>
+      <returns>Значение <see langword="true" /> указывает, что в журнале была зарегистрирована хотя бы одна ошибка; в противном случае — значение <see langword="false" />.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromFile(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Регистрирует в журнале ошибки, предупреждения и сообщения для каждой строки текста в заданном файле. Также заносит в журнал важность сообщений.</summary>
+      <param name="fileName">Имя файла, сообщения из которого регистрируются в журнале.</param>
+      <param name="messageImportance">Одно из значений из перечисления, указывающее важность зарегистрированных в журнале сообщений.</param>
+      <returns>Значение <see langword="true" /> указывает, что в журнале была зарегистрирована хотя бы одна ошибка; в противном случае — значение <see langword="false" />.</returns>
+      <exception cref="T:System.ArgumentNullException">Вызывается, когда <c>filename</c> имеет значение NULL.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromStream(System.IO.TextReader,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Регистрирует сообщение об ошибке или предупреждение из заданного потока.</summary>
+      <param name="stream">Объект <see cref="T:System.IO.TextReader" />, читающий поток, из которого выполняется запись.</param>
+      <param name="messageImportance">Одно из значений <see cref="T:Microsoft.Build.Framework.MessageImportance" />, указывающее уровень важности командной строки.</param>
+      <returns>Значение <see langword="true" />, если ошибка была зарегистрирована; в противном случае — значение <see langword="false" />.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="stream" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.Object[])">
+      <summary>Регистрирует в журнале предупреждение с указанным сообщением.</summary>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Регистрирует в журнале предупреждение, используя заданное сообщение и другие сведения о предупреждении.</summary>
+      <param name="subcategory">Описание типа предупреждения.</param>
+      <param name="warningCode">Код предупреждения.</param>
+      <param name="helpKeyword">Ключевое слово справки для связи с предупреждением.</param>
+      <param name="file">Путь к файлу, содержащему предупреждение.</param>
+      <param name="lineNumber">Строка в файле, где возникло предупреждение.</param>
+      <param name="columnNumber">Столбец в файле, где возникло предупреждение.</param>
+      <param name="endLineNumber">Последняя строка в файле, где возникло предупреждение.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где возникло предупреждение.</param>
+      <param name="message">Сообщение.</param>
+      <param name="messageArgs">Необязательные аргументы для форматирования строки сообщения.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="message" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromException(System.Exception)">
+      <summary>Регистрирует в журнале предупреждение, используя сообщение из заданного исключения.</summary>
+      <param name="exception">Записываемое в журнал исключение.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="e" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromException(System.Exception,System.Boolean)">
+      <summary>Заносит в журнал предупреждение, используя сообщение и при необходимости трассировку стека из заданного исключения.</summary>
+      <param name="exception">Записываемое в журнал исключение</param>
+      <param name="showStackTrace">Значение <see langword="true" />, если нужно включить трассировку стека в запись журнала; в противном случае — значение <see langword="false" />.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="e" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromResources(System.String,System.Object[])">
+      <summary>Заносит в журнал предупреждение, используя заданную строку ресурса.</summary>
+      <param name="messageResourceName">Имя загружаемого строкового ресурса.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromResources(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал предупреждение, используя заданную строку ресурса и другие сведения о предупреждении.</summary>
+      <param name="subcategoryResourceName">Имя строкового ресурса, описывающего тип предупреждения.</param>
+      <param name="warningCode">Код предупреждения.</param>
+      <param name="helpKeyword">Ключевое слово справки для связи с предупреждением.</param>
+      <param name="file">Путь к файлу, содержащему предупреждение.</param>
+      <param name="lineNumber">Строка в файле, где возникло предупреждение.</param>
+      <param name="columnNumber">Столбец в файле, где возникло предупреждение.</param>
+      <param name="endLineNumber">Последняя строка в файле, где возникло предупреждение.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где возникло предупреждение.</param>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningWithCodeFromResources(System.String,System.Object[])">
+      <summary>Заносит в журнал код предупреждения, используя заданную строку ресурса.</summary>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningWithCodeFromResources(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Заносит в журнал предупреждение с кодом предупреждения, используя заданную строку ресурса и другие сведения о предупреждении.</summary>
+      <param name="subcategoryResourceName">Имя строкового ресурса, описывающего тип предупреждения.</param>
+      <param name="file">Путь к файлу, содержащему предупреждение.</param>
+      <param name="lineNumber">Строка в файле, где возникло предупреждение.</param>
+      <param name="columnNumber">Столбец в файле, где возникло предупреждение.</param>
+      <param name="endLineNumber">Последняя строка в файле, где возникло предупреждение.</param>
+      <param name="endColumnNumber">Последний столбец в файле, где возникло предупреждение.</param>
+      <param name="messageResourceName">Имя строкового ресурса для загрузки.</param>
+      <param name="messageArgs">Аргументы для форматирования загруженной строки.</param>
+      <exception cref="T:System.ArgumentNullException">Свойство <paramref name="messageResourceName" /> имеет значение <see langword="null" />.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.MarkAsInactive">
+      <summary>Уведомляет этот объект <see langword="TaskLoggingHelper" /> о том, что он больше не требуется.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.TaskName">
+      <summary>Получает имя родительской задачи.</summary>
+      <returns>Имя родительской задачи.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.TaskResources">
+      <summary>Получает или задает связанные с языком и региональными параметрами ресурсы, используемые методами ведения журнала.</summary>
+      <returns>
+        <see cref="T:System.Resources.ResourceManager" />, который представляет связанные с языком и региональными параметрами ресурсы, используемые методами ведения журнала. Это значение может быть равно <see langword="null" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ToolLocationHelper">
+      <summary>Предоставляет вспомогательные методы для нахождения файлов и каталогов .NET Framework и пакета SDK для .NET Framework.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.ClearSDKStaticCache">
+      <summary>Очищает кэш appDomain SDK платформы и расширения.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetAssemblyFoldersExInfo(System.String,System.String,System.String,System.String,System.String,System.Reflection.ProcessorArchitecture)">
+      <summary>Получает отсортированный список объектов <see cref="T:Microsoft.Build.Utilities.AssemblyFoldersExInfo" />, содержащих сведения о каталогах, в которых регистрируются сборки сторонних разработчиков. Эти сведения используются при во время построения и разработки.</summary>
+      <param name="registryRoot">Корневое расположение в реестре для целевой платформы. Для .NET это SOFTWARE\MICROSOFT\.NETFramework.</param>
+      <param name="targetFrameworkVersion">Версия целевой платформы (2.0, 3.0, 3.5, 4.0 и т.д.).</param>
+      <param name="registryKeySuffix">Имя папки (AssemblyFoldersEx) может быть также PocketPC\AssemblyFoldersEx или другим.</param>
+      <param name="osVersion">Целевые минимальные и максимальные версии ОС в реестре. Эти значения используются для возвращения только каталогов для версий ОС между минимальным и максимальным объявленными. Если это значение является пустым или равно NULL, фильтрация не выполняется.</param>
+      <param name="platform">GUID целевых платформ. Используется для возвращения только каталогов с совпадающим идентификатором GUID платформы. Если это значение является пустым или равно NULL, фильтрация не выполняется.</param>
+      <param name="targetProcessorArchitecture">Целевая архитектура процессора. Определяет, в каких кустах реестра производится поиск и в каком порядке.</param>
+      <returns>Возвращает список <see langword="AssemblyFoldersExInfo" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDisplayNameForTargetFrameworkDirectory(System.String,System.Runtime.Versioning.FrameworkName)">
+      <summary>Создает отображаемое имя на основе предоставленных сведений о целевой платформе.</summary>
+      <param name="targetFrameworkDirectory">Каталог целевой платформы.</param>
+      <param name="frameworkName">Имя платформы.</param>
+      <returns>Отображаемое имя на основе предоставленных сведений о целевой платформе.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Получает полное имя корневого раздела реестра .NET Framework.</summary>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая полное имя корневого раздела реестра .NET Framework.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkInstallKeyValue(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает имя параметра в разделе <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" />, содержащем путь установки пакета SDK .NET Framework.</summary>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая имя параметра в разделе реестра <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" />, содержащем путь установки пакета SDK .NET Framework.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkInstallKeyValue(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Имя значения GetDotNetFrameworkRootRegistryKey, содержащее корневой путь установки пакета SDK</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, с которой связан запрошенный пакет SDK</param>
+      <returns>Возвращает <see cref="T:System.String" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает полное имя корневого раздела реестра пакета SDK для .NET Framework.</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <returns>Строковое представление корневого раздела реестра, который указывает, где можно найти пакет SDK для .NET Framework.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Возвращает полное имя корневого раздела реестра пакета SDK для платформы .NET Framework.</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, с которой связан запрошенный пакет SDK</param>
+      <returns>Возвращает <see cref="T:System.String" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkVersionFolderPrefix(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Получает префикс папки .NET Framework.</summary>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Префикс папки .NET Framework.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFramework(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает полный путь к корневому каталогу .NET Framework.</summary>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая полный путь к корневому каталогу .NET Framework, или пустая ссылка (<see langword="Nothing" /> в Visual Basic), если целевая версия .NET Framework не установлена.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFramework(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Получает полный путь к корневому каталогу платформы.</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="architecture">Требуемая архитектура или DotNetFrameworkArchitecture.Current для архитектуры, в которой в настоящее время выполняется этот процесс.</param>
+      <returns>Полный путь к корневому каталогу платформы.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает полный путь к файлу в каталоге .NET Framework.</summary>
+      <param name="fileName">Файл, находящийся в каталоге .NET Framework.</param>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая полный путь к указанному файлу, или пустая ссылка (<see langword="Nothing" /> в Visual Basic), если целевая версия .NET Framework не установлена.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Получает полный путь к файлу в корневом каталоге платформы для заданной архитектуры.</summary>
+      <param name="fileName">Имя файла, которое требуется найти в каталоге .NET Framework.</param>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="architecture">Требуемая архитектура или DotNetFrameworkArchitecture.Current для архитектуры, в которой в настоящее время выполняется этот процесс.</param>
+      <returns>Полный путь к файлу в корневом каталоге платформы.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkReferenceAssemblies(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает путь к расположению ссылочных сборок для указанной версии платформы.</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <returns>Строка, содержащая полный путь к папке ссылочных сборок или пустую ссылку (Nothing в Visual Basic), если целевая версия .NET Framework не установлена.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Возвращает полный путь к каталогу \bin пакета SDK для .NET Framework.</summary>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая полный путь к каталогу \bin пакета SDK для .NET Framework, или пустая ссылка (<see langword="Nothing" /> в Visual Basic), если целевая версия пакета SDK для .NET Framework не установлена.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Возвращает путь к каталогу "bin" пакета SDK для платформы .NET Framework.</summary>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, с которой связан запрошенный пакет SDK</param>
+      <returns>Строка пути.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Получает полный путь к файлу в пакете SDK для .NET Framework.</summary>
+      <param name="fileName">Искомый файл в пакете SDK для .NET Framework.</param>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <returns>Строка, содержащая полный путь к каталогу \bin пакета SDK для .NET Framework, или пустая ссылка (<see langword="Nothing" /> в Visual Basic), если целевая версия пакета SDK для .NET Framework не установлена.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Получает полный путь к файлу в пакете SDK для платформы .NET Framework.</summary>
+      <param name="fileName">Имя файла, которое требуется найти в каталоге SDK платформы .NET Framework.</param>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="architecture">Необходимая архитектура запрошенного файла.</param>
+      <returns>Полный путь к файлу в пакете SDK для платформы .NET Framework. Создает ошибку, если не удается найти пакет SDK для платформы .NET Framework.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Получает полный путь к файлу в пакете SDK для платформы .NET Framework. Ошибка, если не удается найти пакет SDK для платформы .NET Framework.</summary>
+      <param name="fileName">Имя файла, которое требуется найти в каталоге SDK платформы .NET Framework.</param>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, связанная с запрошенным пакетом SDK.</param>
+      <returns>Строка пути.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Получает полный путь к файлу в пакете SDK для платформы .NET Framework. Ошибка, если не удается найти пакет SDK для платформы .NET Framework.</summary>
+      <param name="fileName">Имя файла, которое требуется найти в каталоге SDK платформы .NET Framework.</param>
+      <param name="version">Версия целевой платформы .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, связанная с запрошенным пакетом SDK.</param>
+      <param name="architecture">Необходимая архитектура запрошенного файла.</param>
+      <returns>Строка пути.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.Runtime.Versioning.FrameworkName)">
+      <summary>Получает пути к расположению базовых сборок для данной целевой платформы.</summary>
+      <param name="frameworkName">Имя платформы.</param>
+      <returns>Пути к расположению базовых сборок.</returns>
+      <exception cref="T:System.ArgumentNullException">Когда frameworkName имеет значение null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.String,System.Runtime.Versioning.FrameworkName)">
+      <summary>Получает пути к расположению базовых сборок для данной целевой платформы относительно данного корня целевой платформы.</summary>
+      <param name="targetFrameworkRootPath">Корневой каталог, относительно которого вычисляется путь к базовой сборке. Базовые сборки создаются в следующем расположении: путь_к_корню_целевой_платформы\идентификатор_целевой_платформы\версия_целевой_платформы\профиль\профиль_целевой_платформы.</param>
+      <param name="frameworkName">Класс frameworkName, представляющий моникер целевой платформы TargetFrameworkMoniker. Значение этого параметра не может быть равно NULL.</param>
+      <returns>Пути к расположению базовых сборок.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.String,System.String,System.String)">
+      <summary>Возвращает пути к папке базовых сборок для указанной требуемой версии .NET Framework. В данном методе предполагается, что запрошенный путь ReferenceAssemblyRoot будет находиться в каталоге ProgramFiles, заданном параметром Environment.SpecialFolder.ProgramFiles. Кроме того, если платформа .NET Framework или идентификаторы целевой платформы .NET Framework являются видимыми и значением версии целевой платформы targetFrameworkVersion является 2.0, 3.0, 3.5 или 4.0, возвращаются правильно сцепленные пути к базовым сборкам для устаревших версий .NET Framework. В этом сцеплении для построения списка путей к базовым сборкам будут использоваться существующие объекты GetPathToDotNetFrameworkReferenceAssemblies.</summary>
+      <param name="targetFrameworkIdentifier">Идентификатор целевой платформы</param>
+      <param name="targetFrameworkVersion">Версия целевой платформы</param>
+      <param name="targetFrameworkProfile">Профиль целевой платформы</param>
+      <returns>Коллекция расположений базовых сборок.</returns>
+      <exception cref="T:System.ArgumentNullException">Когда frameworkName имеет значение null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToSt*******ardLibraries(System.String,System.String,System.String)">
+      <summary>Возвращает путь к расположению сборок ссылок для стандартных библиотек указанной целевой версии (например, mscorlib). В данном методе предполагается, что запрошенный путь ReferenceAssemblyRoot будет находиться в каталоге ProgramFiles, заданном параметром Environment.SpecialFolder.ProgramFiles. Кроме того, если платформа .NET Framework или идентификаторы целевой платформы .NET Framework являются видимыми и значением версии целевой платформы targetFrameworkVersion является 2.0, 3.0, 3.5 или 4.0, возвращаются правильно сцепленные пути к базовым сборкам для устаревших версий .NET Framework. В этом сцеплении для построения списка путей к базовым сборкам будут использоваться существующие объекты GetPathToDotNetFrameworkReferenceAssemblies.</summary>
+      <param name="targetFrameworkIdentifier">Идентификатор целевой платформы</param>
+      <param name="targetFrameworkVersion">Версия целевой платформы</param>
+      <param name="targetFrameworkProfile">Профиль целевой платформы</param>
+      <returns>Коллекция расположений базовых сборок.</returns>
+      <exception cref="T:System.ArgumentNullException">Когда frameworkName имеет значение null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToSt*******ardLibraries(System.String,System.String,System.String,System.String)">
+      <summary>Возвращает путь к mscorlib и system.dll</summary>
+      <param name="targetFrameworkIdentifier">Идентификатор целевой платформы</param>
+      <param name="targetFrameworkVersion">Версия целевой платформы</param>
+      <param name="targetFrameworkProfile">Профиль целевой платформы</param>
+      <param name="platformTarget">Используется для определения, где требуется искать стандартные библиотеки. Обратите внимание, что этот параметр используется только для .NET Framework 3.5 или ниже.</param>
+      <returns>Коллекция расположений базовых сборок.</returns>
+      <exception cref="T:System.ArgumentNullException">Когда frameworkName имеет значение null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToSystemFile(System.String)">
+      <summary>Возвращает полный путь к файлу в системном каталоге.</summary>
+      <param name="fileName">Файл, расположенный в папке System.</param>
+      <returns>Строка, содержащая полный путь к файлу в системном каталоге.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Возвращает путь к пакету Windows SDK для нужных версий платформы .NET Framework и Visual Studio. Обратите внимание, что это поддерживается только для целевой версии .NET Framework 4.5 и выше.</summary>
+      <param name="version">Целевая версия .NET Framework</param>
+      <param name="visualStudioVersion">Версия Visual Studio, связанная с SDK.</param>
+      <returns>Путь к соответствующему местоположению Windows SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Возвращает путь к файлу в пакете Windows SDK для нужных версий платформы .NET Framework и Visual Studio. Обратите внимание, что это поддерживается только для целевой версии .NET Framework 4.5 и выше.</summary>
+      <param name="fileName">Имя запрашиваемого файла.</param>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <param name="visualStudioVersion">Версия Visual Studio, связанная с SDK.</param>
+      <returns>Путь к соответствующему файлу Windows SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Возвращает путь к файлу в пакете Windows SDK для нужных версий платформы .NET Framework и Visual Studio и нужной архитектуры. Обратите внимание, что это поддерживается только для целевой версии .NET Framework 4.5 и выше.</summary>
+      <param name="fileName">Имя запрашиваемого файла.</param>
+      <param name="version">Целевая версия .NET Framework.</param>
+      <param name="visualStudioVersion">Версия Visual Studio, связанная с запрошенным пакетом SDK.</param>
+      <param name="architecture">Требуемая архитектура итогового файла.</param>
+      <returns>Путь к соответствующему файлу Windows SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.String)">
+      <summary>Получив моникер SDK и целевую платформу, получает путь к корневому каталогу SDK, если он существует.</summary>
+      <param name="sdkMoniker">Моникер для SDK</param>
+      <param name="targetPlatformIdentifier">Идентификатор платформы.</param>
+      <param name="targetPlatformVersion">Версия платформы.</param>
+      <returns>Полный путь к корневому каталогу SDK, если SDL существует в целевой платформе, либо пустая строка, если он не существует.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.String,System.String,System.String)">
+      <summary>Получив SDKName, targetPlatformIdentifier и TargetPlatformVersion, выполняет поиск переданного имени sdk в расположениях по умолчанию sdk.  
+Моникер SDK имеет следующий формат: SDKName, Version=X.X</summary>
+      <param name="sdkMoniker">Имя пакета SDK, для которого требуется определить местоположение установки.</param>
+      <param name="targetPlatformIdentifier">Целевая платформа для поиска пакетов SDK</param>
+      <param name="targetPlatformVersion">Версия целевой платформы для поиска пакетов SDK</param>
+      <param name="diskRoots">Список корневых дисков для поиска SDK</param>
+      <param name="registryRoot">Корень реестра для поиска sdk</param>
+      <returns>Расположение пакета SDK, если он найден; пустая строка, если он не найден</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.Version)">
+      <summary>Получив SDKName, targetPlatformIdentifier и TargetPlatformVersion, выполняет поиск переданного имени sdk в расположениях по умолчанию sdk.  
+Моникер SDK имеет следующий формат: SDKName, Version=X.X</summary>
+      <param name="sdkMoniker">Имя пакета SDK, для которого требуется определить местоположение установки.</param>
+      <param name="targetPlatformIdentifier">Целевая платформа для поиска пакетов SDK</param>
+      <param name="targetPlatformVersion">Версия целевой платформы для поиска пакетов SDK</param>
+      <returns>Расположение пакета SDK, если он найден; пустая строка, если он не найден</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.Version,System.String[],System.String)">
+      <summary>Получив SDKName, targetPlatformIdentifier и TargetPlatformVersion, выполняет поиск переданного имени sdk в расположениях по умолчанию sdk.  
+Моникер SDK имеет следующий формат: SDKName, Version=X.X</summary>
+      <param name="sdkMoniker">Имя пакета SDK, для которого требуется определить местоположение установки.</param>
+      <param name="targetPlatformIdentifier">Целевая платформа для поиска пакетов SDK</param>
+      <param name="targetPlatformVersion">Версия целевой платформы для поиска пакетов SDK</param>
+      <param name="diskRoots">Список корневых дисков для поиска SDK</param>
+      <param name="registryRoot">Корень реестра для поиска sdk</param>
+      <returns>Расположение пакета SDK, если он найден; пустая строка, если он не найден</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocations(System.String,System.Version)">
+      <summary>Возвращает список пакетов SDK, установленных на компьютере для данной целевой платформы</summary>
+      <param name="targetPlatformIdentifier">Целевая платформа для поиска пакетов SDK</param>
+      <param name="targetPlatformVersion">Версия целевой платформы для поиска пакетов SDK</param>
+      <returns>IDictionary установленных SDK и их расположение. Расположение установки K:SDKName V:SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocations(System.String[],System.String,System.String,System.Version)">
+      <summary>Возвращает список пакетов SDK, установленных на компьютере для данной целевой платформы</summary>
+      <param name="diskRoots">Массив мест на диске для поиска SDK</param>
+      <param name="registryRoot">Корневое расположение в реестре для поиска sdk</param>
+      <param name="targetPlatformIdentifier">Целевая платформа для поиска пакетов SDK</param>
+      <param name="targetPlatformVersion">Версия целевой платформы для поиска пакетов SDK</param>
+      <returns>IDictionary установленных SDK и их расположение. Расположение установки K:SDKName V:SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformSDKLocation(System.String,System.String)">
+      <summary>С учетом идентификатора целевой платформы и версии целевой платформы ищет расположения SDK по умолчанию для пакета SDK этой целевой платформы.</summary>
+      <param name="targetPlatformIdentifier">Целевая платформа, для которой требуется найти SDK.</param>
+      <param name="targetPlatformVersion">Версия целевой платформы, для которой требуется найти SDK.</param>
+      <returns>Расположение пакета SDK или пустой строки, если он не найден.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformSDKLocation(System.String,System.String,System.String,System.String)">
+      <summary>С учетом идентификатора целевой платформы и версии целевой платформы ищет расположения SDK по умолчанию для пакета SDK этой целевой платформы.</summary>
+      <param name="targetPlatformIdentifier">Целевая платформа, для которой требуется найти SDK.</param>
+      <param name="targetPlatformVersion">Версия целевой платформы, для которой требуется найти SDK.</param>
+      <param name="diskRoots">Массив корневых дисков, в котором требуется выполнить поиск SDK.</param>
+      <param name="registryRoot">Корень реестра, в котором нужно искать SDK.</param>
+      <returns>Расположение пакета SDK или пустой строки, если он не найден.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformSDKLocation(System.String,System.Version)">
+      <summary>С учетом идентификатора целевой платформы и версии целевой платформы ищет расположения SDK по умолчанию для пакета SDK этой целевой платформы.</summary>
+      <param name="targetPlatformIdentifier">Целевая платформа, для которой требуется найти SDK.</param>
+      <param name="targetPlatformVersion">Версия целевой платформы, для которой требуется найти SDK.</param>
+      <returns>Расположение пакета SDK или пустой строки, если он не найден.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformSDKLocation(System.String,System.Version,System.String[],System.String)">
+      <summary>С учетом идентификатора целевой платформы и версии целевой платформы ищет расположения SDK по умолчанию для пакета SDK этой целевой платформы.</summary>
+      <param name="targetPlatformIdentifier">Целевая платформа, для которой требуется найти SDK.</param>
+      <param name="targetPlatformVersion">Версия целевой платформы, для которой требуется найти SDK.</param>
+      <param name="diskRoots">Массив корневых дисков, в котором требуется выполнить поиск SDK.</param>
+      <param name="registryRoot">Корень реестра, в котором нужно искать SDK.</param>
+      <returns>Расположение пакета SDK или пустой строки, если он не найден.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetProgramFilesReferenceAssemblyRoot">
+      <summary>Получает корневое расположение каталога базовых сборок в каталоге файлов программ.</summary>
+      <returns>Корневое расположение каталога базовых сборок.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKDesignTimeFolders(System.String)">
+      <summary>Возвращает список папок SDK, содержащих файлы времени разработки SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK должна содержать папку времени разработки.</param>
+      <returns>Список папок для использования для поиска файлов во время разработки в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKDesignTimeFolders(System.String,System.String,System.String)">
+      <summary>Возвращает список папок SDK, содержащих файлы времени разработки SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK должна содержать папку времени разработки.</param>
+      <param name="targetConfiguration">Конфигурация, для которой предназначен пакета SDK. Это "Debug" или "Retail".</param>
+      <param name="targetArchitecture">Целевая архитектура пакета SDK.</param>
+      <returns>Список папок для использования для поиска файлов во время разработки в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKRedistFolders(System.String)">
+      <summary>Получение списка папок SDK, содержащих файлы redist для SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK должна содержать папку распространяемого пакета.</param>
+      <returns>Список папок для использования для поиска файлов Redist в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKRedistFolders(System.String,System.String,System.String)">
+      <summary>Получение списка папок SDK, содержащих файлы redist для SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK должна содержать папку распространяемого пакета.</param>
+      <param name="targetConfiguration">Конфигурация, для которой предназначен пакета SDK. Это "Debug" или "Retail".</param>
+      <param name="targetArchitecture">Целевая архитектура пакета SDK.</param>
+      <returns>Список папок для использования для поиска файлов Redist в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKReferenceFolders(System.String)">
+      <summary>Получение списка папок SDK, содержащих ссылки для SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK.</param>
+      <returns>Список папок для использования для поиска ссылок в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSDKReferenceFolders(System.String,System.String,System.String)">
+      <summary>Получение списка папок SDK, содержащих ссылки для SDK в указанном корневом каталоге SDK. Компоненты списка располагаются в порядке, который должен использоваться при поиске ссылок.</summary>
+      <param name="sdkRoot">Корневая папка для пакета SDK.</param>
+      <param name="targetConfiguration">Конфигурация, для которой предназначен пакета SDK. Это "Debug" или "Retail".</param>
+      <param name="targetArchitecture">Целевая архитектура пакета SDK.</param>
+      <returns>Список папок для использования для поиска ссылок в пакете SDK, в порядке, который необходимо использовать для поиска.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSupportedTargetFrameworks">
+      <summary>Получает список поддерживаемых моникеров целевой платформы.</summary>
+      <returns>Список поддерживаемых моникеров целевой платформы.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetTargetPlatformSdks">
+      <summary>Возвращает список пакетов SDK целевой платформы на компьютере.</summary>
+      <returns>Список SDK целевой платформы, Item1: TargetPlatformName Item2: версия SDK Item3: путь к корню пакета SDK</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetTargetPlatformSdks(System.String[],System.String)">
+      <summary>Возвращает список пакетов SDK целевой платформы на компьютере.</summary>
+      <param name="diskRoots">Список расположений дисков для поиска пакетов SDK платформы.</param>
+      <param name="registryRoot">Расположение корня реестра для поиска пакетов SDK платформы.</param>
+      <returns>Список пакетов SDK целевой платформы.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.HighestVersionOfTargetFrameworkIdentifier(System.String,System.String)">
+      <summary>Получает самую новую версию моникера целевой платформы на основе идентификатора.</summary>
+      <param name="targetFrameworkRootDirectory">Корневой каталог целевой платформы.</param>
+      <param name="frameworkIdentifier">Идентификатор платформы.</param>
+      <returns>Самая новая версия моникера целевой платформы на основе идентификатора. Этот метод позволяет найти только полные платформы и не возвращает профили.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolLocationHelper.PathToSystem">
+      <summary>Возвращает полный путь к системному каталогу.</summary>
+      <returns>Строка, содержащая путь к системному каталогу.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ToolTask">
+      <summary>При переопределении в производной форме предоставляет функциональные возможности для задачи, которая служит оболочкой для программы командной строки.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.ToolTask" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor(System.Resources.ResourceManager)">
+      <summary>Выполняет инициализацию нового экземпляра класса <see cref="T:Microsoft.Build.Utilities.ToolTask" /> с заданным объектом <see cref="T:System.Resources.ResourceManager" />.</summary>
+      <param name="taskResources">Объект <see cref="T:System.Resources.ResourceManager" /> для ресурсов задачи.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.Build.Utilities.ToolTask" /> с заданным объектом <see cref="T:System.Resources.ResourceManager" /> и префиксом ключевого слова справки.</summary>
+      <param name="taskResources">Объект <see cref="T:System.Resources.ResourceManager" /> для ресурсов задачи.</param>
+      <param name="helpKeywordPrefix">Ключевое слово справки, используемое для сообщений, которые создаются задачей.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.CallHostObjectToExecute">
+      <summary>Вызывает объект узла, выполняющий действия для задачи.</summary>
+      <returns>Значение <see langword="true" />, если метод был выполнен успешно. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.Cancel">
+      <summary>Отменяет выполняющий задачу процесс путем запроса на корректное завершение работы. По истечении краткого промежутка времени принудительно прекращает работу процесса.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.DeleteTempFile(System.String)">
+      <summary>Удаляет указанный временный файл.</summary>
+      <param name="fileName">Имя временного файла для удаления.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EchoOff">
+      <summary>Получает или задает значение, указывающее, отключено ли отображение командной строки.</summary>
+      <returns>
+        <see langword="true" /> Если выключено echo командной строки; в противном случае <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EnvironmentOverride">
+      <summary>Получает набор пар "имя-значение" для переменных среды. Предназначено для переопределения в пользовательском классе задач (производном от ToolTask) с целью возвращения новых или измененных переменных среды для создания контекста выполнения соответствующего средства.</summary>
+      <returns>Набор переменных среды. Каждый ключ словаря представляет собой имя переменной среды для переопределения, а значение словаря является значение, задаваемое для этой переменной среды. Реализация по умолчанию environmentoverride возвращает <see langword="null" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EnvironmentVariables">
+      <summary>Массив разделенных символами равенства пар переменных среды, которые должны быть переданы в созданный исполняемый файл в дополнение к обычному блоку среды (или частично переопределяя его).</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.Execute">
+      <summary>Запускает исполняемый файл с заданными параметрами задачи.</summary>
+      <returns>Значение <see langword="true" />, если задача запущена успешно. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.ExecuteTool(System.String,System.String,System.String)">
+      <summary>Создает временный RSP-файл ответа и запускает исполняемый файл.</summary>
+      <param name="pathToTool">Путь к исполняемому файлу.</param>
+      <param name="responseFileComm*******s">Аргументы командной строки, помещаемые в RSP-файл.</param>
+      <param name="comm*******LineComm*******s">Аргументы командной строки, передаваемые непосредственно исполняемому файлу.</param>
+      <returns>Код выхода, возвращаемый исполняемым файлом. Если задача занесла в журнал ошибки, но исполняемый файл вернул код выхода 0, этот метод возвращает значение -1.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ExitCode">
+      <summary>Получает код выхода, возвращаемый исполняемым файлом.</summary>
+      <returns>Код выхода, возвращаемый исполняемым файлом. Если задача занесла в журнал ошибки, но исполняемый файл вернул код выхода 0, этот метод возвращает значение -1.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateComm*******LineComm*******s">
+      <summary>Возвращает строковое значение, содержащее аргументы командной строки, передаваемые непосредственно исполняемому файлу.</summary>
+      <returns>Строковое значение, содержащее аргументы командной строки, передаваемые непосредственно исполняемому файлу.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateFullPathToTool">
+      <summary>Возвращает полный путь к исполняемому файлу.</summary>
+      <returns>Полный путь к исполняемому файлу.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateResponseFileComm*******s">
+      <summary>Возвращает строковое значение, содержащее аргументы командной строки, добавляемые в RSP-файл ответа перед запуском исполняемого файла.</summary>
+      <returns>Строковое значение, содержащее аргументы командной строки, добавляемые в RSP-файл ответа перед запуском исполняемого файла.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetProcessStartInfo(System.String,System.String,System.String)">
+      <summary>Инициализирует сведения, необходимые для создания процесса, выполняющего средство.</summary>
+      <param name="pathToTool">Путь к инструменту.</param>
+      <param name="comm*******LineComm*******s">Команды командной строки.</param>
+      <param name="responseFileSwitch">Параметр файла ответов.</param>
+      <returns>Сведения, необходимые для запуска процесса.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetResponseFileSwitch(System.String)">
+      <summary>Возвращает параметр командной строки, используемый исполняемым файлом для задания RSP-файла ответа.</summary>
+      <param name="responseFilePath">Полный путь к временному RSP-файлу.</param>
+      <returns>Параметр командной строки, используемый исполняемым файлом для задания RSP-файла ответа.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetWorkingDirectory">
+      <summary>Возвращает каталог, в котором запускается исполняемый файл.</summary>
+      <returns>Каталог, в котором запускается исполняемый файл, или пустая ссылка (<see langword="Nothing" /> в Visual Basic), если исполняемый файл должен запускаться в текущем каталоге.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.H*******leTaskExecutionErrors">
+      <summary>Обрабатывает ошибки выполнения, вызванные исполняемым файлом.</summary>
+      <returns>Значение <see langword="true" />, если метод запущен успешно. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.HasLoggedErrors">
+      <summary>Указывает, зарегистрированы ли задачей ToolTask какие-либо ошибки</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.InitializeHostObject">
+      <summary>Инициализирует объект узла задачи.</summary>
+      <returns>Состояние <see cref="T:Microsoft.Build.Utilities.HostObjectInitializationStatus" /> объекта узла.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogEventsFromTextOutput(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Выполняет синтаксический анализ строки текста, чтобы определить наличие ошибок и предупреждений в каноническом формате.</summary>
+      <param name="singleLine">Строка текста, передаваемая в метод для синтаксического анализа.</param>
+      <param name="messageImportance">Значение <see cref="T:Microsoft.Build.Framework.MessageImportance" />, указывающее уровень важности, с которым сообщение заносится в журнал.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogPathToTool(System.String,System.String)">
+      <summary>Заносит в журнал имя программы и путь для всех зарегистрированных средствах ведения журнала.</summary>
+      <param name="toolName">Имя исполняемого файла.</param>
+      <param name="pathToTool">Путь к исполняемому файлу.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.LogSt*******ardErrorAsError">
+      <summary>Указывает, должны ли все сообщения, полученные в стандартном потоке ошибок, регистрироваться как ошибки.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogToolComm*******(System.String)">
+      <summary>Заносит в журнал начальную точку выполнения для всех зарегистрированных средствах ведения журнала.</summary>
+      <param name="message">Описательное сообщение, передаваемое в средства ведения журнала, обычно это командная строка с параметрами.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ResponseFileEncoding">
+      <summary>Получает кодировку <see cref="T:System.Text.Encoding" /> файла ответа.</summary>
+      <returns>Кодировка <see cref="T:System.Text.Encoding" /> файла ответа.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.ResponseFileEscape(System.String)">
+      <summary>Переопределяемый метод создания escape-последовательности с использованием содержимого файла ответа.</summary>
+      <param name="responseString">Строка отклика.</param>
+      <returns>Строка отклика.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.SkipTaskExecution">
+      <summary>Указывает, следует ли пропустить выполнение задачи.</summary>
+      <returns>Значение <see langword="true" />, чтобы пропустить выполнение задачи, и значение <see langword="false" /> в противном случае.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardErrorEncoding">
+      <summary>Задает кодировку <see cref="T:System.Text.Encoding" /> стандартного потока ошибок задачи.</summary>
+      <returns>Кодировка <see cref="T:System.Text.Encoding" /> файла ответа.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardErrorImportance">
+      <summary>Параметр задачи: степень важности, с которой текст из стандартного потока ошибок следует регистрировать в журнале.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardErrorImportanceToUse">
+      <summary>Получает значение фактической важности, при котором стандартные сообщения об ошибках записываются в журнал.</summary>
+      <returns>Значение фактической важности, при какие стандартную ошибку записываются сообщения.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardErrorLoggingImportance">
+      <summary>Получает уровень важности <see cref="T:Microsoft.Build.Framework.MessageImportance" />, с которым ошибки заносятся в журнал.</summary>
+      <returns>Уровень важности <see cref="T:Microsoft.Build.Framework.MessageImportance" />, с которым ошибки заносятся в журнал.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardOutputEncoding">
+      <summary>Получает кодировку <see cref="T:System.Text.Encoding" /> стандартного выходного потока задачи.</summary>
+      <returns>Кодировка <see cref="T:System.Text.Encoding" /> файла ответа.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardOutputImportance">
+      <summary>Параметр задачи: Степень важности, с которой текст из стандартного выходного потока следует регистрировать в журнале.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardOutputImportanceToUse">
+      <summary>Получает значение фактической важности, при котором стандартные выходные сообщения записываются в журнал.</summary>
+      <returns>Фактической важности, при котором стандартные выходные сообщения записываются в журнал.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.St*******ardOutputLoggingImportance">
+      <summary>Получает уровень важности <see cref="T:Microsoft.Build.Framework.MessageImportance" />, с которым ошибки заносятся в журнал.</summary>
+      <returns>Уровень важности <see cref="T:Microsoft.Build.Framework.MessageImportance" />, с которым ошибки заносятся в журнал.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.TaskProcessTerminationTimeout">
+      <summary>Время ожидания завершения задачи перед ее удалением. Указывается в миллисекундах.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.Timeout">
+      <summary>Получает или задает интервал времени, по истечении которого прекращается работа исполняемого модуля задачи.</summary>
+      <returns>Интервал времени ожидания, в миллисекундах.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolCanceled">
+      <summary>Используется для подачи сигнала при удалении средства.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolExe">
+      <summary>Этот свойство может задаваться проектами для переопределения свойства ToolName задачи. Для запрещения этого действия свойство может переопределяться задачами.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolName">
+      <summary>Получает имя исполняемого файла для запуска.</summary>
+      <returns>Имя исполняемого файла для запуска.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolPath">
+      <summary>Получает или задает путь к исполняемому файлу для запуска.</summary>
+      <returns>Путь к файлу для запуска.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.UseComm*******Processor">
+      <summary>Получает или задает значение, указывающее, будет ли ToolTask создавать пакетный файл для командной строки и выполнять его с использованием процессора команд вместо того, чтобы выполнять команду напрямую.</summary>
+      <returns>
+        <see langword="true" /> Если задача средство создайте пакетный файл для командной строки и выполнит его с использованием процессора команд; <see langword="false" /> Если ToolTask выполнит команду напрямую.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.ValidateParameters">
+      <summary>Показывает, все ли параметры задачи являются допустимыми.</summary>
+      <returns>Значение <see langword="true" />, если все параметры задачи являются допустимыми. В противном случае — значение <see langword="false" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.YieldDuringToolExecution">
+      <summary>Получает или задает значение, указывающее, будет ли задача приостанавливать узел во время выполнения средства.</summary>
+      <returns>
+        <see langword="true" /> Если задача отдает узел во время выполнения средства; в противном случае <see langword="false" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TrackedDependencies">
+      <summary>Данный класс содержит служебные функции, помогающие при отслеживании зависимостей</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TrackedDependencies.Exp*******Wildcards(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Расширение подстановочных знаков в списке элементов.</summary>
+      <param name="exp*******">Массив элементов, предназначенных для расширения.</param>
+      <returns>Массив расширенных элементов</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.UpToDateCheckType">
+      <summary>Возможные поддерживаемые типы проверки обновления</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputNewerThanOutput">
+      <summary>Входные данные являются более новыми, чем выходные данные</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputNewerThanTracking">
+      <summary>Входные данные являются более новыми, чем данные отслеживания</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputOrOutputNewerThanTracking">
+      <summary>Входные или выходные данные являются более новыми, чем данные отслеживания</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.VisualStudioVersion">
+      <summary>Используется для указания версии Visual Studio, из которой следует выбрать связанные средства для некоторых методов ToolLocationHelper</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.Version100">
+      <summary>Visual Studio 2010 и пакет обновления 1 (SP1)</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.Version110">
+      <summary>Visual Studio 2012</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.VersionLatest">
+      <summary>Последняя версия, доступная в момент выпуска</summary>
+    </member>
+  </members>
+</doc>

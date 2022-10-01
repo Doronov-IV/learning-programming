@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    
+    <!-- Various locale-specific string resources for Contacts -->
+    <string-array name="common_nicknames"></string-array>
+    <string name="common_name_prefixes"></string>
+    <string name="common_name_suffixes"></string>
+    <string name="common_last_name_prefixes"></string>
+    <string name="common_name_conjunctions"></string>
+</resources>

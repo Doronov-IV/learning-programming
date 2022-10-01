@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/layout/simple_spinner_item.xml
+**
+** Copyright 2008, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions ******* 
+** limitations under the License.
+*/
+-->
+
+<LinearLayout xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid" 
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="?*******roid:attr/listPreferredItemHeight"
+    *******roid:orientation="horizontal"
+    *******roid:gravity="center_vertical"
+    *******roid:baselineAligned="false"
+    >
+    
+    <TwoLineListItem
+        *******roid:paddingTop="2dip"
+        *******roid:paddingBottom="2dip"
+        *******roid:layout_width="0dip"
+        *******roid:layout_weight="1"
+        *******roid:layout_height="wrap_content"
+        *******roid:mode="twoLine" >
+    
+        <TextView
+            *******roid:id="@*******roid:id/text1"
+            style="?*******roid:attr/dropDownItemStyle"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceLargePopupMenu"
+            *******roid:singleLine="true"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content" />
+    
+        <TextView
+            *******roid:id="@*******roid:id/text2"
+            style="?*******roid:attr/dropDownItemStyle"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceSmallPopupMenu"
+            *******roid:textColor="#323232"
+            *******roid:singleLine="true"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_below="@*******roid:id/text1"
+            *******roid:layout_alignStart="@*******roid:id/text1" />
+    
+    </TwoLineListItem>
+
+</LinearLayout>

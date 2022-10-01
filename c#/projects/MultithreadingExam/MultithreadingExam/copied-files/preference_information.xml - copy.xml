@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions *******
+     limitations under the License.
+-->
+
+<!-- Layout for a Preference in a PreferenceActivity. The
+     Preference is able to place a specific widget for its particular
+     type in the "widget_frame" layout. -->
+<LinearLayout xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid" 
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="wrap_content"
+    *******roid:minHeight="?*******roid:attr/listPreferredItemHeight"
+    *******roid:gravity="center_vertical"
+    *******roid:paddingStart="@dimen/preference_item_padding_side"
+    *******roid:paddingEnd="?*******roid:attr/scrollbarSize">
+
+    <LinearLayout
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="match_parent"
+        *******roid:minWidth="@dimen/preference_icon_minWidth"
+        *******roid:gravity="center"
+        *******roid:orientation="horizontal">
+        <ImageView
+            *******roid:id="@+*******roid:id/icon"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_gravity="center"
+            *******roid:paddingEnd="@dimen/preference_item_padding_inner" />
+    </LinearLayout>
+
+    <RelativeLayout
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_weight="1"
+        *******roid:paddingEnd="@dimen/preference_item_padding_inner"
+        *******roid:paddingTop="6dip"
+        *******roid:paddingBottom="6dip">
+
+        <TextView *******roid:id="@+*******roid:id/title"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:singleLine="true"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceMedium"
+            *******roid:textColor="?*******roid:attr/textColorSecondary" />
+            
+        <TextView *******roid:id="@+*******roid:id/summary"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_below="@*******roid:id/title"
+            *******roid:layout_alignStart="@*******roid:id/title"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceSmall"
+            *******roid:textColor="?*******roid:attr/textColorSecondary"
+            *******roid:maxLines="10" />
+
+    </RelativeLayout>
+
+    <!-- Preference should place its actual preference widget here. -->
+    <LinearLayout *******roid:id="@+*******roid:id/widget_frame"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="match_parent"
+        *******roid:gravity="center_vertical"
+        *******roid:orientation="vertical" />
+
+</LinearLayout>

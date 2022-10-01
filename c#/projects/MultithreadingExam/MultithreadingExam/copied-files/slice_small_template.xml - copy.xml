@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions *******
+     limitations under the License.
+-->
+<LinearLayout
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="wrap_content"
+    *******roid:minHeight="?*******roid:attr/listPreferredItemHeightSmall"
+    *******roid:gravity="center_vertical"
+    *******roid:paddingStart="?*******roid:attr/listPreferredItemPaddingStart"
+    *******roid:paddingEnd="?*******roid:attr/listPreferredItemPaddingEnd"
+    *******roid:background="?*******roid:attr/activatedBackgroundIndicator"
+    *******roid:clipToPadding="false">
+
+    <LinearLayout
+        *******roid:id="@*******roid:id/icon_frame"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_marginStart="-4dp"
+        *******roid:gravity="start|center_vertical"
+        *******roid:orientation="horizontal"
+        *******roid:paddingEnd="12dp"
+        *******roid:paddingTop="4dp"
+        *******roid:paddingBottom="4dp"/>
+
+    <LinearLayout
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_weight="1"
+        *******roid:gravity="center_vertical"
+        *******roid:orientation="vertical">
+
+        <TextView *******roid:id="@*******roid:id/title"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:maxLines="2"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceListItem" />
+
+        <TextView *******roid:id="@*******roid:id/summary"
+            *******roid:layout_width="wrap_content"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_alignStart="@*******roid:id/title"
+            *******roid:textAppearance="?*******roid:attr/textAppearanceListItemSecondary"
+            *******roid:textColor="?*******roid:attr/textColorSecondary"
+            *******roid:maxLines="10" />
+
+    </LinearLayout>
+
+    <LinearLayout *******roid:id="@*******roid:id/widget_frame"
+        *******roid:layout_width="wrap_content"
+        *******roid:layout_height="wrap_content"
+        *******roid:gravity="end|center_vertical"
+        *******roid:orientation="horizontal" />
+
+</LinearLayout>

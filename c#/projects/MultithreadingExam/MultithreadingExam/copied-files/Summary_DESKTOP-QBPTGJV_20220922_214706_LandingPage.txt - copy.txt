@@ -1,0 +1,49 @@
+﻿Overall summary:
+  Final result:                  Passed
+  Exit code (Decimal):           0
+  Start time:                    2022-09-22 21:47:07
+  End time:                      2022-09-23 00:28:54
+  Requested action:              L*******ingPage
+
+Machine Properties:
+  Machine name:                  DESKTOP-QBPTGJV
+  Machine processor count:       4
+  OS version:                    Майкрософт Windows 10 Домашняя для одного языка (10.0.19044)
+  OS service pack:               
+  OS region:                     United States
+  OS language:                   русский (Россия)
+  OS architecture:               x64
+  Process architecture:          64 Bit
+  OS clustered:                  No
+
+Package properties:
+  Description:                   Microsoft SQL Server 2019 
+  ProductName:                   SQL Server 2019
+  Type:                          RTM
+  Version:                       15
+  SPLevel:                       0
+  Installation location:         D:\SQL Server\Developer_ENU\x64\setup\
+  Installation edition:          
+
+User Input Settings:
+  ACTION:                        L*******ingPage
+  CONFIGURATIONFILE:             
+  ENU:                           true
+  HELP:                          false
+  IACCEPTPYTHONLICENSETERMS:     false
+  IACCEPTROPENLICENSETERMS:      false
+  IACKNOWLEDGEENTCALLIMITS:      false
+  INDICATEPROGRESS:              false
+  MRCACHEDIRECTORY:              
+  QUIET:                         false
+  QUIETSIMPLE:                   false
+  SUPPRESSPAIDEDITIONNOTICE:     false
+  SUPPRESSPRIVACYSTATEMENTNOTICE: false
+  UIMODE:                        Normal
+  X86:                           false
+
+  Configuration file:            C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\Log\20220922_214706\ConfigurationFile.ini
+
+Rules with failures or warnings:
+
+Rules report file:               The rule result report file is not available.

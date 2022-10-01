@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pointer-icon xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:bitmap="@drawable/pointer_top_left_diagonal_double_arrow"
+    *******roid:hotSpotX="11dp"
+    *******roid:hotSpotY="11dp" />

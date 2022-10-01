@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StringTable>
+	<String ID="GroupSysHealth">Intégrité du système</String>
+	<String ID="RuleSysHealthCpu">Utilisation processeur</String>
+	<String ID="RuleSysHealthDisk">Utilisation disque</String>
+	<String ID="RuleSysHealthInsertConfig">Insérer la table de configuration dans le rapport final</String>
+	<String ID="RuleSysHealthMemory">Utilisation mémoire</String>
+	<String ID="RuleSysHealthNetwork">Utilisation du réseau</String>
+	<String ID="RuleSysHealthInsert">Insertion de la table d’intégrité du système</String>
+	<String ID="RuleSysHealthRptDisplay">Niveau d’affichage du rapport</String>
+	<String ID="SysHealthDetailCpuBusy">Charge processeur élevée. Examinez les processus principaux.</String>
+	<String ID="SysHealthDetailCpuIdle">Charge processeur basse.</String>
+	<String ID="SysHealthDetailCpuNormal">Charge processeur normale.</String>
+	<String ID="SysHealthDetailDskBusy">Le nombre d’E/S disque est supérieur à 500 (opérations de lecture/écriture) par seconde sur le disque {disknumber}.</String>
+	<String ID="SysHealthDetailDskIdle">Le nombre d’E/S disque est inférieur à 100 (opérations de lecture/écriture) par seconde sur le disque {disknumber}.</String>
+	<String ID="SysHealthDetailDskNormal">Le nombre d’E/S disque est compris entre 100 et 500 (opérations de lecture/écriture) par seconde sur le disque {disknumber}.</String>
+	<String ID="SysHealthDetailMemBusy">{prettyavailablemem} Mo disponibles.</String>
+	<String ID="SysHealthDetailMemIdle">{prettyavailablemem} Mo disponibles.</String>
+	<String ID="SysHealthDetailMemNormal">{prettyavailablemem} Mo disponibles.</String>
+	<String ID="SysHealthDetailNetBusy">La carte réseau la plus chargée a dépassé 60 %.</String>
+	<String ID="SysHealthDetailNetIdle">La carte réseau la plus chargée est inférieure à 15 %.</String>
+	<String ID="SysHealthDetailNetNormal">La carte réseau la plus chargée est comprise entre 15 % et 60 %.</String>
+	<String ID="SysHealthDetailDskNote">Opérations de lecture {diskr}/s + opérations d’écriture {diskw}/s</String>
+	<String ID="SysHealthDetailNetNote">Carte réseau {netin} utilisant {prttotalbits} et d’une capacité de {prtb*******width}.</String>
+	<String ID="SysHealthStateBusy">Occupé</String>
+	<String ID="SysHealthStateIdle">Inactif</String>
+	<String ID="SysHealthStateNormal">Normale</String>
+</StringTable>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions *******
+  ~ limitations under the License
+  -->
+
+<set xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:shareInterpolator="false"
+    *******roid:hasRoundedCorners="true"
+    *******roid:showWallpaper="true">
+
+    <alpha
+        *******roid:fromAlpha="1.0"
+        *******roid:toAlpha="1"
+        *******roid:fillEnabled="true"
+        *******roid:fillBefore="true"
+        *******roid:fillAfter="true"
+        *******roid:interpolator="@interpolator/linear"
+        *******roid:startOffset="67"
+        *******roid:duration="283"/>
+
+    <translate
+        *******roid:fromXDelta="0"
+        *******roid:toXDelta="105%"
+        *******roid:fillEnabled="true"
+        *******roid:fillBefore="true"
+        *******roid:fillAfter="true"
+        *******roid:interpolator="@interpolator/aggressive_ease"
+        *******roid:startOffset="50"
+        *******roid:duration="383"/>
+
+    <scale
+        *******roid:fromXScale="1.0"
+        *******roid:toXScale="0.95"
+        *******roid:fromYScale="1.0"
+        *******roid:toYScale="0.95"
+        *******roid:fillEnabled="true"
+        *******roid:fillBefore="true"
+        *******roid:fillAfter="true"
+        *******roid:pivotX="50%"
+        *******roid:pivotY="50%"
+        *******roid:interpolator="@interpolator/fast_out_slow_in"
+        *******roid:duration="283"/>
+
+    <!-- This is needed to keep the animation running while task_open_enter completes -->
+    <alpha
+        *******roid:fromAlpha="1.0"
+        *******roid:toAlpha="1.0"
+        *******roid:duration="600"/>
+</set>

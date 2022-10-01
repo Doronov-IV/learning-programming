@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Subsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="../../Schemas/Subsystem.xsd"
+    Name="AudioDspComm" Type="AUDIODSPCOMM" Endianness="Little" Mapping="DeviceId:func_01&amp;ven_10ec&amp;dev_0255&amp;subsys_10251094&amp;rev_1000">
+
+    <ComponentLibrary>
+
+        <!-- IGK IP blocks definitions -->
+        <xi:include href = "intel/SwitchParam.xml"/>
+
+        <!-- APO -->
+        <!-- APO Voice -->
+        <xi:include href = "intel/AcousticEchoCanceler.xml"/>
+        <xi:include href="intel/Biquad.xml"/>
+        <xi:include href="intel/ImcAEC.xml"/>
+        <xi:include href="intel/alphaParameterBlockNR.xml"/>
+        <xi:include href="intel/biquadParameterBlockRL.xml"/>
+        <xi:include href="intel/biquadParameterBlockTxCNI.xml"/>
+        <xi:include href="intel/weightingParameterBlockSER.xml"/>
+        <xi:include href="intel/b*******ParameterBlockDRP.xml"/>
+        <xi:include href="intel/b*******ArrayParameterBlockDRP.xml"/>
+        <xi:include href="intel/AutomaticGainControlVoice.xml"/>
+        <xi:include href="intel/ImcAutomaticGainControl.xml"/>
+        <xi:include href="intel/ComfortNoiseInjector_V1_2.xml"/>
+        <xi:include href="intel/ImcComfortNoiseInjector.xml"/>
+        <xi:include href="intel/DualMicrophoneNoiseReduction.xml"/>
+        <xi:include href="intel/ImcDualMicNoiseReductor.xml"/>
+        <xi:include href="intel/DynamicRangeProcessor.xml"/>
+        <xi:include href="intel/ImcDynamicRangeProcessor.xml"/>
+        <xi:include href="intel/NoiseReduction.xml"/>
+        <xi:include href="intel/ImcNoiseReductor.xml"/>
+        <xi:include href="intel/ReferenceLine.xml"/>
+        <xi:include href="intel/ImcEchoReferenceLine.xml"/>
+        <xi:include href="intel/SpectralEchoReduction.xml"/>
+        <xi:include href="intel/ImcSpectralEchoReduction.xml"/>
+        <xi:include href="intel/ImcVoiceTail.xml"/>
+        <xi:include href="intel/IntelBF.xml"/>
+        <xi:include href="intel/IntelBWX.xml"/>
+        <xi:include href="intel/IntelDCR.xml"/>
+        <xi:include href="intel/IntelDelayLine.xml"/>
+        <xi:include href="intel/IntelGainControl.xml"/>
+        <xi:include href="intel/IntelMicSelection.xml"/>
+        <xi:include href="intel/MicEqualizer.xml"/>
+        <xi:include href="intel/PipelineSelector.xml"/>
+        <xi:include href="intel/LoopbackClient.xml"/>
+        <xi:include href="intel/AudioPipeline.xml"/>
+        <xi:include href="intel/VoiceSettings.xml"/>
+
+        <!-- APO Speech -->
+        <xi:include href="intel/AgcModule.xml"/>
+        <xi:include href="intel/MbGeoUca.xml"/>
+        <xi:include href="intel/MbGeoUla.xml"/>
+        <xi:include href="intel/BfGaEngine.xml"/>
+        <xi:include href="intel/BfGdEngine.xml"/>
+        <xi:include href="intel/BfModule.xml"/>
+        <xi:include href="intel/DcrModule.xml"/>
+        <xi:include href="intel/DrvEngine.xml"/>
+        <xi:include href="intel/DrvModule.xml"/>
+        <xi:include href="intel/GainModule.xml"/>
+        <xi:include href="intel/MicSelModule.xml"/>
+        <xi:include href="intel/NoiseEstModule.xml"/>
+        <xi:include href="intel/RssModule.xml"/>
+        <xi:include href="intel/SpmModule.xml"/>
+        <xi:include href="intel/VadModule.xml"/>
+        <xi:include href="intel/SpeechFFPipeline.xml"/>
+        <xi:include href="intel/AudioPipelineFF.xml"/>
+        <xi:include href="intel/SpeechSettings.xml"/>
+
+        <xi:include href="intel/IntelSSTAPO.xml"/>
+
+        <!-- FW -->
+        <xi:include href="intel/ImcFIR.xml"/>
+        <xi:include href="intel/IntelSstMicSel.xml"/>
+        <xi:include href="intel/IntelSstMicEqFw.xml"/>
+        <xi:include href="intel/PBF.xml"/>
+        <xi:include href="intel/IntelSstSpeech.xml"/>
+        <xi:include href="intel/IntelSstObject.xml"/>
+        <xi:include href="intel/IntelSstFw.xml"/>
+        <!-- This assumes that APO is installed on the same audio endpoint that exposes the SPATIALF FW module -->
+        <ComponentType Name="MICROPHONE_ENDPOINT" Mapping="EndpointName:rtmicinwave">
+<!--            <ParameterBlock Name="Modules" Mapping="Modules">
+                <Component Name="IntelSst_Efx_Apo" Type="IntelSSTAPOFF" Mapping="ModuleInstance:0"/>
+            </ParameterBlock>-->
+            <ParameterBlock Name="Subpaths" Mapping="Subpaths">
+                <ParameterBlock Name="Speech" Mapping="Mode:Speech">
+<!--                    <ParameterBlock Name="Modules">
+                        <Component Name="IntelSst_SPATIALF" Type="IntelSstFw" Mapping="ModuleInstance:0"/>
+                    </ParameterBlock>-->
+                </ParameterBlock>
+                <ParameterBlock Name="Voice" Mapping="Mode:Voice">
+                    <ParameterBlock Name="Modules">
+                        <Component Name="IntelSst_Lfx_Mfx_Apo" Type="IntelSSTAPOFF" Mapping="ModuleInstance:0"/>
+                    </ParameterBlock>
+                    <ParameterBlock Name="Subpaths" Mapping="Subpaths">
+                        <ParameterBlock Name="Stream" Mapping="Stream">
+<!--                            <ParameterBlock Name="Modules">
+                                <Component Name="IntelSst_Sfx_Apo" Type="IntelSSTAPOFF" Mapping="ModuleInstance:0"/>
+                            </ParameterBlock>-->
+                        </ParameterBlock>
+                    </ParameterBlock>
+                </ParameterBlock>
+            </ParameterBlock>
+        </ComponentType>
+    </ComponentLibrary>
+
+    <InstanceDefinition>
+        <Component Name="Microphone" Type="MICROPHONE_ENDPOINT"/>
+    </InstanceDefinition>   
+</Subsystem>
+

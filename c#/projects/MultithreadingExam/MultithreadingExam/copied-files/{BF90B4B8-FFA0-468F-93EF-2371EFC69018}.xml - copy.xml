@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+	<name>AndroidAP_6511</name>
+	<SSIDConfig>
+		<SSID>
+			<hex>416E64726F696441505F36353131</hex>
+			<name>AndroidAP_6511</name>
+		</SSID>
+	</SSIDConfig>
+	<connectionType>ESS</connectionType>
+	<connectionMode>manual</connectionMode>
+	<MSM>
+		<security>
+			<authEncryption>
+				<authentication>WPA2PSK</authentication>
+				<encryption>AES</encryption>
+				<useOneX>false</useOneX>
+			</authEncryption>
+			<sharedKey>
+				<keyType>passPhrase</keyType>
+				<protected>true</protected>
+				<keyMaterial>01000000D08C9DDF0115D1118C7A00C04FC297EB01000000A34CAB93C364AC42AB3E4874CADA76E9000000000200000000001066000000010000200000008A075C9253C3C517C8E878356850572143F137329B123D2DFBAB5C20F902DEEF000000000E8000000002000020000000A1004DA6F70817DA955589DBAE9B1FA985B694490019B9A87FABF3B6A98C4CB8100000008E106CCAE30D160BDC0757CBDC275DB740000000C3556BE567A7569CEF1EE070EDBE1F1D3C702D74E4F27C9974497954BDA278AFAC325C71EE403E7FA59E486C405CFE95AA3B60E43BBF581F34E84FD1D778011E</keyMaterial>
+			</sharedKey>
+		</security>
+	</MSM>
+	<MacR*******omization xmlns="http://www.microsoft.com/networking/WLAN/profile/v3">
+		<enableR*******omization>false</enableR*******omization>
+		<r*******omizationSeed>2068754033</r*******omizationSeed>
+	</MacR*******omization>
+</WLANProfile>

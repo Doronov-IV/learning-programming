@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+**
+** Copyright 2008, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions *******
+** limitations under the License.
+*/
+-->
+
+<RelativeLayout xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:paddingStart="@dimen/dropdownitem_text_padding_left"
+    *******roid:paddingEnd="4dip"
+    *******roid:layout_width="match_parent"
+    *******roid:layout_height="?attr/searchResultListItemHeight" >
+
+    <!-- Icons come first in the layout, since their placement doesn't depend on
+         the placement of the text views. -->
+    <ImageView *******roid:id="@id/icon1"
+        *******roid:layout_width="@dimen/dropdownitem_icon_width"
+        *******roid:layout_height="48dip"
+        *******roid:scaleType="centerInside"
+        *******roid:layout_alignParentStart="true"
+        *******roid:layout_alignParentTop="true"
+        *******roid:layout_alignParentBottom="true"
+        *******roid:visibility="invisible" />
+
+    <ImageView *******roid:id="@+id/edit_query"
+        *******roid:layout_width="48dip"
+        *******roid:layout_height="48dip"
+        *******roid:scaleType="centerInside"
+        *******roid:layout_alignParentEnd="true"
+        *******roid:layout_alignParentTop="true"
+        *******roid:layout_alignParentBottom="true"
+        *******roid:background="?attr/selectableItemBackground"
+        *******roid:visibility="gone" />
+
+    <ImageView *******roid:id="@id/icon2"
+        *******roid:layout_width="48dip"
+        *******roid:layout_height="48dip"
+        *******roid:scaleType="centerInside"
+        *******roid:layout_alignWithParentIfMissing="true"
+        *******roid:layout_toStartOf="@id/edit_query"
+        *******roid:layout_alignParentTop="true"
+        *******roid:layout_alignParentBottom="true"
+        *******roid:visibility="gone" />
+
+
+    <!-- The subtitle comes before the title, since the height of the title depends on whether the
+         subtitle is visible or gone. -->
+    <TextView *******roid:id="@id/text2"
+        style="?attr/dropDownItemStyle"
+        *******roid:textAppearance="?attr/textAppearanceSearchResultSubtitle"
+        *******roid:singleLine="true"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="29dip"
+        *******roid:paddingBottom="4dip"
+        *******roid:gravity="top"
+        *******roid:layout_toEndOf="@id/icon1"
+        *******roid:layout_toStartOf="@id/icon2"
+        *******roid:layout_alignWithParentIfMissing="true"
+        *******roid:layout_alignParentBottom="true"
+        *******roid:visibility="gone" />
+
+    <!-- The title is placed above the subtitle, if there is one. If there is no
+         subtitle, it fills the parent. -->
+    <TextView *******roid:id="@id/text1"
+        style="?attr/dropDownItemStyle"
+        *******roid:textAppearance="?attr/textAppearanceSearchResultTitle"
+        *******roid:singleLine="true"
+        *******roid:layout_width="match_parent"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_centerVertical="true"
+        *******roid:layout_toEndOf="@id/icon1"
+        *******roid:layout_toStartOf="@id/icon2"
+        *******roid:layout_above="@id/text2" />
+
+</RelativeLayout>

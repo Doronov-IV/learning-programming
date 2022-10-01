@@ -1,0 +1,206 @@
+﻿[3284](I)[13:23:41.050]:[GBFT] ProcessH*******le: Called
+[3284](I)[13:23:41.052]:[GBFT] ProcessH*******le: Returning h*******le(2756)
+[1EE4](I)[13:23:41.052]:[BCSFT] SingletonInitialize: Called
+[2D9C](I)[13:23:41.053]:[WTLM] Initialize: Called
+[2D9C](E)[13:23:41.053]:[WTLM] wil::wnf_query data not published
+[2D9C](I)[13:23:41.054]:[WTLM] Initialize: Returning
+[3284](I)[13:23:41.061]:[ATMFT] InitializeAsync: Called
+[1BB4](I)[13:23:41.062]:[ATMFT] CaptureCurrentTarget: Called
+[1BB4](I)[13:23:41.062]:[ATMFT] CaptureCurrentTarget: GetGUIThreadInfo hwndFocus(2557064), hwndRoot(00000000003807CC)
+[1BB4](I)[13:23:41.062]:[ATMFT] CaptureCurrentTarget: Setting new target to hwndRoot(00000000003807CC)
+[1BB4](I)[13:23:41.062]:[ATMFT] SetTarget: Called hwnd(00000000003807CC)
+[1BB4](I)[13:23:41.062]:[ATMFT] IsProcessFse: Called
+[1EE4](I)[13:23:41.068]:[BCSFT] SingletonInitialize: Returning
+[1BB4](I)[13:23:41.080]:[ATMFT] IsProcessFse: ApplicationPresentationMode returned mode(0)
+[1BB4](I)[13:23:41.080]:[ATMFT] IsProcessFse: Returning (0)
+[1BB4](I)[13:23:41.080]:[ATMFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[1BB4](E)[13:23:41.080]:[WIL] AppTargetManagerFT::GetWindowTextFromHwnd: GetWindowTextW failed, hr=0x800700CB [D:\a\_work\1\s\Source\GameBarFTServer\AppTarget\AppTargetManagerFT.cpp:747]
+[1BB4](I)[13:23:41.080]:[ATMFT] IsWindowFullscreenOnMonitor: Called. hwnd(00000000003807CC)
+[1BB4](I)[13:23:41.080]:[ATMFT] IsWindowFullscreenOnMonitor: Returning 0.
+[1BB4](I)[13:23:41.080]:[ATMFT] SetTarget: image(xrEngine.exe), aumId(), input(1), IsFse(0), IsFullscreen(0), class(#32770)
+[1BB4](I)[13:23:41.080]:[ATMFT] SetTarget: Returning
+[1BB4](I)[13:23:41.080]:[ATMFT] CaptureCurrentTarget: Returning
+[1BB4](I)[13:23:41.080]:[ATMFT] InitializeAsync: Returning
+[1EE4](I)[13:23:41.084]:[BCSFT] StartBcastService: Called
+[1EE4](I)[13:23:41.098]:[BCSFT] StartBcastService: Returning
+[1BB4](I)[13:23:41.119]:[ATMFT] Target: Called. Returning current m_targetInfo
+[1EE4](I)[13:23:41.146]:[GCSFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[1EE4](I)[13:23:41.163]:[ATMFT] StopTargetTrackingAsync: Called
+[1EE4](I)[13:23:41.163]:[ATMFT] UninitTargetTrackingAsync: Called
+[1EE4](I)[13:23:41.163]:[ATMFT] UninitTargetTrackingAsync: Already unregistered. Returning
+[1EE4](I)[13:23:41.163]:[ATMFT] UninitDispatcherQueueControllerAsync: Called
+[1EE4](I)[13:23:41.163]:[ATMFT] UninitDispatcherQueueControllerAsync: Returning
+[1EE4](I)[13:23:41.163]:[ATMFT] StopTargetTrackingAsync: Returning
+[1BB4](I)[13:23:41.175]:[ATMFT] StartTargetTrackingAsync: Called
+[1BB4](I)[13:23:41.175]:[ATMFT] InitTargetTrackingAsync: Called
+[3B44](I)[13:23:41.178]:[ATMFT] CaptureCurrentTarget: Called
+[3B44](I)[13:23:41.178]:[ATMFT] CaptureCurrentTarget: GetGUIThreadInfo hwndFocus(2557064), hwndRoot(00000000003807CC)
+[3B44](I)[13:23:41.179]:[ATMFT] CaptureCurrentTarget: Setting new target to hwndRoot(00000000003807CC)
+[3B44](I)[13:23:41.179]:[ATMFT] SetTarget: Called hwnd(00000000003807CC)
+[3B44](I)[13:23:41.179]:[ATMFT] IsProcessFse: Called
+[3B44](I)[13:23:41.185]:[ATMFT] IsProcessFse: ApplicationPresentationMode returned mode(0)
+[3B44](I)[13:23:41.185]:[ATMFT] IsProcessFse: Returning (0)
+[3B44](I)[13:23:41.185]:[ATMFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[3B44](E)[13:23:41.185]:[WIL] AppTargetManagerFT::GetWindowTextFromHwnd: GetWindowTextW failed, hr=0x800700CB [D:\a\_work\1\s\Source\GameBarFTServer\AppTarget\AppTargetManagerFT.cpp:747]
+[3B44](I)[13:23:41.185]:[ATMFT] IsWindowFullscreenOnMonitor: Called. hwnd(00000000003807CC)
+[3B44](I)[13:23:41.185]:[ATMFT] IsWindowFullscreenOnMonitor: Returning 0.
+[3B44](I)[13:23:41.185]:[ATMFT] SetTarget: image(xrEngine.exe), aumId(), input(1), IsFse(0), IsFullscreen(0), class(#32770)
+[3B44](I)[13:23:41.185]:[ATMFT] SetTarget: Returning
+[3B44](I)[13:23:41.185]:[ATMFT] CaptureCurrentTarget: Returning
+[3B44](I)[13:23:41.185]:[ATMFT] InitTargetTrackingAsync: Returning
+[1BB4](I)[13:23:41.187]:[ATMFT] StartTargetTrackingAsync: Returning
+[1EE4](I)[13:23:41.194]:[ATMFT] Target: Called. Returning current m_targetInfo
+[1BB4](I)[13:23:41.217]:[ATMFT] StopTargetTrackingAsync: Called
+[1BB4](I)[13:23:41.217]:[ATMFT] UninitTargetTrackingAsync: Called
+[3B44](I)[13:23:41.217]:[ATMFT] UninitTargetTrackingAsync: Returning
+[2424](I)[13:23:41.218]:[ATMFT] UninitDispatcherQueueControllerAsync: Called
+[1EE4](I)[13:23:41.227]:[ATMFT] UninitDispatcherQueueControllerAsync: Returning
+[1EE4](I)[13:23:41.227]:[ATMFT] StopTargetTrackingAsync: Returning
+[2D9C](I)[13:23:41.235]:[ATMFT] StartTargetTrackingAsync: Called
+[2D9C](I)[13:23:41.235]:[ATMFT] InitTargetTrackingAsync: Called
+[25C8](I)[13:23:41.237]:[ATMFT] CaptureCurrentTarget: Called
+[25C8](I)[13:23:41.237]:[ATMFT] CaptureCurrentTarget: GetGUIThreadInfo hwndFocus(2557064), hwndRoot(00000000003807CC)
+[25C8](I)[13:23:41.238]:[ATMFT] CaptureCurrentTarget: Setting new target to hwndRoot(00000000003807CC)
+[25C8](I)[13:23:41.238]:[ATMFT] SetTarget: Called hwnd(00000000003807CC)
+[25C8](I)[13:23:41.238]:[ATMFT] IsProcessFse: Called
+[25C8](I)[13:23:41.243]:[ATMFT] IsProcessFse: ApplicationPresentationMode returned mode(0)
+[25C8](I)[13:23:41.243]:[ATMFT] IsProcessFse: Returning (0)
+[25C8](I)[13:23:41.243]:[ATMFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[25C8](E)[13:23:41.244]:[WIL] AppTargetManagerFT::GetWindowTextFromHwnd: GetWindowTextW failed, hr=0x800700CB [D:\a\_work\1\s\Source\GameBarFTServer\AppTarget\AppTargetManagerFT.cpp:747]
+[25C8](I)[13:23:41.244]:[ATMFT] IsWindowFullscreenOnMonitor: Called. hwnd(00000000003807CC)
+[25C8](I)[13:23:41.244]:[ATMFT] IsWindowFullscreenOnMonitor: Returning 0.
+[25C8](I)[13:23:41.244]:[ATMFT] SetTarget: image(xrEngine.exe), aumId(), input(1), IsFse(0), IsFullscreen(0), class(#32770)
+[25C8](I)[13:23:41.244]:[ATMFT] SetTarget: Returning
+[25C8](I)[13:23:41.244]:[ATMFT] CaptureCurrentTarget: Returning
+[25C8](I)[13:23:41.244]:[ATMFT] InitTargetTrackingAsync: Returning
+[2D9C](I)[13:23:41.244]:[ATMFT] StartTargetTrackingAsync: Returning
+[2424](I)[13:23:41.245]:[ATMFT] Target: Called. Returning current m_targetInfo
+[2424](I)[13:23:41.463]:[AMFT] Instance: called
+[2424](I)[13:23:41.463]:[AMFT] Instance: creating new
+[2424](I)[13:23:41.463]:[AMFT] InitAsync: called
+[2424](I)[13:23:41.466]:[AMFT] InitAsync: created device enumerator
+[2424](I)[13:23:41.475]:[AMFT] InitAsync: registered for endpoint notifications
+[2424](I)[13:23:41.475]:[AMFT] PopulateAudioOutputDevicesMapAsync: called
+[2424](I)[13:23:41.475]:[AMFT] PopulateAudioInputDevicesMapAsync: called
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: found [2] items in endpoint collection
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: index [0] in endpoint collection
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: retrieved endpoint (Hresult: 0x00000000)
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: index [1] in endpoint collection
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: retrieved endpoint (Hresult: 0x00000000)
+[2D9C](I)[13:23:41.477]:[AMFT] PopulateAudioOutputDevicesMapAsync: index [0] in endpoint vector
+[2D9C](I)[13:23:41.477]:[AO] Init: called
+[2D9C](I)[13:23:41.483]:[AO] Init: registered for session notifications
+[1EE4](I)[13:23:41.487]:[AMFT] PopulateAudioInputDevicesMapAsync: found [2] items in endpoint collection
+[1EE4](I)[13:23:41.487]:[AI] Init: called
+[1EE4](I)[13:23:41.488]:[AI] Init: returning
+[1EE4](I)[13:23:41.488]:[AICD] Init: called
+[1EE4](I)[13:23:41.488]:[AICD] Init: returning
+[1EE4](I)[13:23:41.488]:[AI] Init: called
+[1EE4](I)[13:23:41.488]:[AI] Init: returning
+[1EE4](I)[13:23:41.488]:[AICD] Init: called
+[1EE4](I)[13:23:41.488]:[AICD] Init: returning
+[1EE4](I)[13:23:41.488]:[AMFT] PopulateAudioInputDevicesMapAsync: returning
+[2D9C](I)[13:23:41.490]:[AS] Init: called
+[2D9C](I)[13:23:41.490]:[AS] Init: registered for audio session notifications
+[2D9C](I)[13:23:41.490]:[AS] Init: returning
+[2D9C](I)[13:23:41.490]:[AO] Init: returning
+[2D9C](I)[13:23:41.490]:[AMFT] PopulateAudioOutputDevicesMapAsync: added AOD to map [Динамики (Realtek High Definition Audio)]
+[2D9C](I)[13:23:41.490]:[AOCD] Init: called
+[2D9C](I)[13:23:41.491]:[AOCD] Init: returning
+[2D9C](I)[13:23:41.491]:[AMFT] PopulateAudioOutputDevicesMapAsync: added AOCD to map [Динамики (Realtek High Definition Audio)]
+[2D9C](I)[13:23:41.491]:[AMFT] PopulateAudioOutputDevicesMapAsync: index [1] in endpoint vector
+[2D9C](I)[13:23:41.491]:[AO] Init: called
+[2D9C](I)[13:23:41.492]:[AO] Init: registered for session notifications
+[2D9C](I)[13:23:41.494]:[AS] Init: called
+[2D9C](I)[13:23:41.494]:[AS] Init: registered for audio session notifications
+[2D9C](I)[13:23:41.591]:[AS] Init: returning
+[2D9C](I)[13:23:41.591]:[AS] Init: called
+[2D9C](I)[13:23:41.591]:[AS] Init: registered for audio session notifications
+[2D9C](I)[13:23:41.592]:[AS] Init: returning
+[2D9C](I)[13:23:41.592]:[AO] Init: returning
+[2D9C](I)[13:23:41.592]:[AMFT] PopulateAudioOutputDevicesMapAsync: added AOD to map [Динамики (2- USB Audio Device)]
+[2D9C](I)[13:23:41.592]:[AOCD] Init: called
+[2D9C](I)[13:23:41.592]:[AOCD] Init: returning
+[2D9C](I)[13:23:41.592]:[AMFT] PopulateAudioOutputDevicesMapAsync: added AOCD to map [Динамики (2- USB Audio Device)]
+[2D9C](I)[13:23:41.592]:[AMFT] PopulateAudioOutputDevicesMapAsync: returning
+[2D9C](I)[13:23:41.592]:[AMFT] InitAsync: returning
+[2424](I)[13:23:41.592]:[AMFT] Instance: returning
+[1EE4](I)[13:23:52.130]:[AS] Init: called
+[1EE4](I)[13:23:52.130]:[AS] Init: registered for audio session notifications
+[1EE4](I)[13:23:52.143]:[AS] Init: returning
+[25C8](I)[13:23:53.111]:[ATMFT] OnWinEvent: Called. event(0x00000003), hwnd(00000000003607D8), image(xrEngine.exe)
+[1EE4](I)[13:23:53.111]:[ATMFT] OnWinEvent: EVENT_SYSTEM_FOREGROUND/MINIMIZEEND: Setting new target
+[1EE4](I)[13:23:53.111]:[ATMFT] SetTarget: Called hwnd(00000000003607D8)
+[1EE4](I)[13:23:53.111]:[ATMFT] IsProcessFse: Called
+[25C8](I)[13:23:53.117]:[ATMFT] OnWinEvent: Called. event(0x00008005), hwnd(00000000003607D8), image(xrEngine.exe)
+[1EE4](I)[13:23:53.133]:[ATMFT] IsProcessFse: ApplicationPresentationMode returned mode(0)
+[1EE4](I)[13:23:53.133]:[ATMFT] IsProcessFse: Returning (0)
+[1EE4](I)[13:23:53.134]:[ATMFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[1EE4](I)[13:23:53.134]:[ATMFT] IsWindowFullscreenOnMonitor: Called. hwnd(00000000003607D8)
+[1EE4](I)[13:23:53.134]:[ATMFT] IsWindowFullscreenOnMonitor: Returning 0.
+[1EE4](I)[13:23:53.134]:[ATMFT] SetTarget: image(xrEngine.exe), aumId(), input(1), IsFse(0), IsFullscreen(0), class(_XRAY_1.5)
+[1EE4](I)[13:23:53.134]:[ATMFT] SetTarget: Returning
+[1EE4](I)[13:23:53.134]:[ATMFT] OnWinEvent: Returning
+[2D9C](I)[13:23:53.136]:[ATMFT] Target: Called. Returning current m_targetInfo
+[1EE4](I)[13:23:53.138]:[GCSFT] GetAumIdFromProcess: GetApplicationUserModelId failed (0x00003D57). Returning empty string
+[2D9C](I)[13:23:53.391]:[BCSFT] StartBcastService: Called
+[2D9C](I)[13:23:53.492]:[BCSFT] StartBcastService: Returning
+[0CBC](I)[13:28:40.735]:[ATMFT] StopTargetTrackingAsync: Called
+[0CBC](I)[13:28:40.735]:[ATMFT] UninitTargetTrackingAsync: Called
+[25C8](I)[13:28:40.735]:[ATMFT] UninitTargetTrackingAsync: Returning
+[3508](I)[13:28:40.735]:[ATMFT] UninitDispatcherQueueControllerAsync: Called
+[3508](I)[13:28:40.735]:[ATMFT] UninitDispatcherQueueControllerAsync: Returning
+[3508](I)[13:28:40.735]:[ATMFT] StopTargetTrackingAsync: Returning
+[3508](I)[13:28:40.737]:[ATMFT] StopTargetTrackingAsync: Called
+[3508](I)[13:28:40.737]:[ATMFT] UninitTargetTrackingAsync: Called
+[3508](I)[13:28:40.737]:[ATMFT] UninitTargetTrackingAsync: Already unregistered. Returning
+[3508](I)[13:28:40.737]:[ATMFT] UninitDispatcherQueueControllerAsync: Called
+[3508](I)[13:28:40.737]:[ATMFT] UninitDispatcherQueueControllerAsync: Returning
+[3508](I)[13:28:40.737]:[ATMFT] StopTargetTrackingAsync: Returning
+[3508](I)[13:28:40.743]:[AMFT] PerformFinalReleaseAsync: called
+[1600](I)[13:28:40.743]:[AMFT] PerformShutdown: called
+[1600](I)[13:28:40.744]:[AMFT] PerformShutdown: unregistered from endpoint notifications
+[1600](I)[13:28:40.744]:[AO] PerformShutdown: called
+[1600](I)[13:28:40.744]:[AO] PerformShutdown: called
+[1600](I)[13:28:40.744]:[AMFT] PerformShutdown: unregistered endpoint callbacks
+[1600](I)[13:28:40.744]:[AMFT] PerformShutdown: returning
+[1600](I)[13:28:40.744]:[AMFT] PerformFinalReleaseAsync: returning
+[1600](I)[13:28:40.744]:[AO] UnregisterCallbacks: unregistered from session notifications
+[1600](I)[13:28:40.744]:[AO] UnregisterCallbacks: unregistered from control change notifications
+[1600](I)[13:28:40.744]:[AO] PerformShutdown: returning
+[1600](I)[13:28:40.744]:[AO] PerformFinalReleaseAsync: called
+[0CBC](I)[13:28:40.744]:[AS] PerformShutdown: called
+[3508](I)[13:28:40.744]:[AO] UnregisterCallbacks: unregistered from session notifications
+[3508](I)[13:28:40.744]:[AO] UnregisterCallbacks: unregistered from control change notifications
+[3508](I)[13:28:40.744]:[AO] PerformShutdown: returning
+[3508](I)[13:28:40.744]:[AO] PerformFinalReleaseAsync: called
+[1600](I)[13:28:40.744]:[AS] UnregisterCallback: unregistered from audio session notifications
+[1600](I)[13:28:40.744]:[AS] PerformShutdown: returning
+[1600](I)[13:28:40.744]:[AS] PerformFinalReleaseAsync: called
+[1600](I)[13:28:40.744]:[AS] PerformShutdown: called
+[1600](I)[13:28:40.744]:[AS] PerformShutdown: called
+[1600](I)[13:28:40.744]:[AS] PerformShutdown: called
+[0CBC](I)[13:28:40.744]:[AO] PerformFinalReleaseAsync: returning
+[11E8](I)[13:28:40.745]:[AS] UnregisterCallback: unregistered from audio session notifications
+[11E8](I)[13:28:40.745]:[AS] PerformShutdown: returning
+[11E8](I)[13:28:40.745]:[AS] PerformFinalReleaseAsync: called
+[11E8](I)[13:28:40.745]:[AS] UnregisterCallback: unregistered from audio session notifications
+[11E8](I)[13:28:40.745]:[AS] PerformShutdown: returning
+[11E8](I)[13:28:40.745]:[AS] UnregisterCallback: unregistered from audio session notifications
+[11E8](I)[13:28:40.745]:[AS] PerformShutdown: returning
+[3508](I)[13:28:40.745]:[AS] PerformFinalReleaseAsync: called
+[1600](I)[13:28:40.745]:[AO] PerformFinalReleaseAsync: returning
+[1600](I)[13:28:40.746]:[AS] PerformFinalReleaseAsync: called
+[11E8](I)[13:28:40.746]:[AS] PerformFinalReleaseAsync: returning
+[3508](I)[13:28:40.747]:[AS] PerformFinalReleaseAsync: returning
+[0CBC](I)[13:28:40.747]:[AS] PerformFinalReleaseAsync: returning
+[1600](I)[13:28:40.747]:[AS] PerformFinalReleaseAsync: returning
+[0CBC](I)[13:28:40.758]:[ATMFT] ShutdownAsync: Called
+[0CBC](I)[13:28:40.759]:[ATMFT] ShutdownAsync: Shutdown exclusive lock obtained. Proceeding with shutdown...
+[0CBC](I)[13:28:40.759]:[ATMFT] UninitTargetTrackingAsync: Called
+[0CBC](I)[13:28:40.759]:[ATMFT] UninitTargetTrackingAsync: Already unregistered. Returning
+[0CBC](I)[13:28:40.759]:[ATMFT] UninitDispatcherQueueControllerAsync: Called
+[0CBC](I)[13:28:40.759]:[ATMFT] UninitDispatcherQueueControllerAsync: Returning
+[0CBC](I)[13:28:40.759]:[ATMFT] ShutdownAsync: Returning
+[1A40](I)[13:28:41.184]:[GAMEBARFTSERVER] Unregistering objects for shutdown
+[1A40](I)[13:28:41.184]:[GAMEBARFTSERVER] Shutting down tracing

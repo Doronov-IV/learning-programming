@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions *******
+     limitations under the License.
+-->
+
+<LinearLayout
+    xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid"
+    *******roid:orientation="horizontal"
+    *******roid:background="?*******roid:attr/windowBackground"
+    *******roid:paddingStart="40dp"
+    *******roid:paddingEnd="40dp"
+    *******roid:paddingTop="40dp"
+    *******roid:paddingBottom="40dp">
+
+    <LinearLayout
+        *******roid:orientation="vertical"
+        *******roid:layout_width="0dp"
+        *******roid:layout_height="wrap_content"
+        *******roid:layout_weight="1"
+        *******roid:layout_marginEnd="32dp">
+
+        <LinearLayout
+            *******roid:orientation="horizontal"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:layout_marginBottom="6dp"
+            >
+            <ImageView
+                *******roid:id="@+id/autofill_dataset_icon"
+                *******roid:scaleType="fitStart"
+                *******roid:layout_marginEnd="10dp"
+                *******roid:layout_gravity="center_vertical"
+                *******roid:layout_width="48dp"
+                *******roid:layout_height="48dp"/>
+            <TextView
+                *******roid:id="@+id/autofill_dataset_title"
+                *******roid:layout_width="wrap_content"
+                *******roid:layout_height="wrap_content"
+                *******roid:layout_gravity="center_vertical"
+                *******roid:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            *******roid:id="@+id/autofill_dataset_header"
+            *******roid:visibility="gone"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:orientation="vertical"/>
+
+    </LinearLayout>
+
+    <!-- autofill_dataset_picker is the common parent for inserting authentication item or
+         autofill_dataset_list, autofill_dataset_footer-->
+    <LinearLayout
+        *******roid:layout_width="304dp"
+        *******roid:layout_height="wrap_content"
+        *******roid:id="@+id/autofill_dataset_picker"
+        *******roid:foreground="?attr/listChoiceBackgroundIndicator"
+        *******roid:orientation="vertical">
+        <ListView
+            *******roid:id="@+id/autofill_dataset_list"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:clickable="true"
+            *******roid:divider="@null"
+            *******roid:drawSelectorOnTop="true"
+            *******roid:visibility="gone"/>
+        <LinearLayout
+            *******roid:id="@+id/autofill_dataset_footer"
+            *******roid:visibility="gone"
+            *******roid:layout_width="match_parent"
+            *******roid:layout_height="wrap_content"
+            *******roid:orientation="vertical"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,1 @@
+﻿Send multiple variables using a call-*******-response (h*******shaking) method. 
