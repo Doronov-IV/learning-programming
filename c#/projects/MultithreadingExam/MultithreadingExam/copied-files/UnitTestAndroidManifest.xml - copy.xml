@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid" *******roid:versionCode="1" *******roid:versionName="1.0" package="$safeprojectname$.$safeprojectname$">
-	<uses-sdk />
-	<application *******roid:label="$safeprojectname$"></application>
-</manifest>

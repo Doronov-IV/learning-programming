@@ -1,1 +1,0 @@
-﻿Read an analog input pin, map the result, ******* then use that data to dim or brighten an LED. 

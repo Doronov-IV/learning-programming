@@ -1,5 +1,0 @@
-﻿GeForce Experience kräver data för att konfigurera ditt grafikkort och dina spelinställningar för bästa möjliga upplevelse av spelet och dess innehåll. Vi behöver information om din PC:s hårdvara, mjukvara för spel och för att skapa innehåll (inkl. inställningar, användning och hur bra de kör), funktionsanvändning för GeForce Experience och geografisk region. 
-
-Vi använder dessa data för att konfigurera dina spelinställningar, tillh*******ahålla programvaruuppdateringar, leverera nya funktioner såsom verktyg för att spela in och sända spel och använda koder för gratisspel.
-
-Vår sekretesspolicy anger vilka data vi samlar in, varför vi samlar in dem och vad vi gör med dem. Vi säljer aldrig dina data. 

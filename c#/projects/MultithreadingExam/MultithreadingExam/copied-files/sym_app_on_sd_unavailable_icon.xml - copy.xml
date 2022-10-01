@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:*******roid="http://schemas.*******roid.com/apk/res/*******roid">
-    <background *******roid:drawable="@drawable/sym_def_app_icon_background" />
-    <foreground>
-        <bitmap *******roid:src="@mipmap/sym_def_app_icon_foreground"/>
-    </foreground>
-</adaptive-icon>

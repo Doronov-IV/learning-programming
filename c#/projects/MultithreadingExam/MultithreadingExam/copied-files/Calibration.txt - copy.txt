@@ -1,1 +1,0 @@
-﻿Define a maximum ******* minimum for expected analog sensor values. 

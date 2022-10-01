@@ -1,1 +1,0 @@
-﻿Opens a new window in the Arduino IDE ******* reprograms the Leonardo with a simple blink program.

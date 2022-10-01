@@ -1,1 +1,0 @@
-﻿Reads a byte from the serial port, ******* sends back a keystroke. 

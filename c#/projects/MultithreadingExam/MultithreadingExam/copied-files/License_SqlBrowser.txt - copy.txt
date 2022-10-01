@@ -1,4 +1,0 @@
-﻿MICROSOFT SQL SERVER BROWSER FOR MICROSOFT SQL SERVER 2019
-PLEASE NOTE: Refer to your license terms for Microsoft SQL Server software (the “software”) to identify the entity licensing this supplement to you ******* for support information. You may use a copy of this supplement with each validly licensed copy of the software. You may not use the supplement if you do not have a license for the software. The license terms for the software apply to your use of this supplement.
-
-
