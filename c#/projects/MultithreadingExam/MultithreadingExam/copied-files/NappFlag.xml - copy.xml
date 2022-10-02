@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xNappFlag xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Settings>
+    <Status>OOBE</Status>
+    <ShowConsole>false</ShowConsole>
+    <Flow>FactoryFlow</Flow>
+    <SystemDriveOS>Windows10</SystemDriveOS>
+    <UILanguage>ru-RU</UILanguage>
+    <W7_ResotreOS*******RetainUserData_RemoveFolderList>
+      <string>C:\Recovery</string>
+      <string>C:\Windows</string>
+      <string>C:\Program Files</string>
+      <string>C:\Program Files (x86)</string>
+      <string>C:\ProgramData</string>
+      <string>C:\OEM</string>
+      <string>C:\BOOK</string>
+      <string>C:\Intel</string>
+      <string>C:\MSOCACHE</string>
+      <string>C:\USERS</string>
+      <string>C:\PerfLogs</string>
+      <string>C:\Acer</string>
+      <string>C:\boot</string>
+    </W7_ResotreOS*******RetainUserData_RemoveFolderList>
+    <W7_ResotreOS*******RetainUserData_RemoveFileList>
+      <string>C:\Desktop.ini</string>
+      <string>C:\boot.ini</string>
+      <string>C:\bootmgr</string>
+      <string>C:\pagefile.sys</string>
+    </W7_ResotreOS*******RetainUserData_RemoveFileList>
+  </Settings>
+  <ESP_DriveLetter>E</ESP_DriveLetter>
+  <ESP_DriveLabel>ESP</ESP_DriveLabel>
+  <OS_DriveLetter>C</OS_DriveLetter>
+  <OS_DriveLabelList>
+    <string>OS</string>
+    <string>Acer</string>
+    <string>Packard Bell</string>
+    <string>Gateway</string>
+    <string>Founder</string>
+    <string>eMachines</string>
+    <string>Windows</string>
+  </OS_DriveLabelList>
+  <Recovery_DriveLetter>R</Recovery_DriveLetter>
+  <RecoveryLabel>Recovery</RecoveryLabel>
+  <PBR_DriveLetter>M</PBR_DriveLetter>
+  <PBR_DriveLabel>Push Button Reset</PBR_DriveLabel>
+  <Restore_USB2D_DriveLetter>U</Restore_USB2D_DriveLetter>
+  <Restore_SCD2D_DriveLetter>Z</Restore_SCD2D_DriveLetter>
+  <IsCompactOS>true</IsCompactOS>
+</xNappFlag>

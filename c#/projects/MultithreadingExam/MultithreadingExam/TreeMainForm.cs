@@ -59,10 +59,21 @@ namespace SPExam
 
 
 
+        private static readonly AutoResetEvent AutoProgressBarSwitch = new AutoResetEvent(true);
+
+
         private static readonly object locker = new object();
 
 
+        private static List<Task> TaskListWaitAll = new List<Task>();
+
+
+
+
+
         private int progressFileCounter = 0;
+
+        private int overallProgressFileCounter = 0;
 
 
         /// <summary>
@@ -76,11 +87,10 @@ namespace SPExam
 
             // memory;
             forbiddenWords = new List<string>();
+            TaskListWaitAll = new List<Task>();
             TokenSource = new CancellationTokenSource();
 
             // preparations;
-            //Scan();
-            progressBar1.Maximum = overallFileAmount;
             progressBar1.Step = 1;
             ShowStatisticsButton.Visible = false;
         }
@@ -92,18 +102,21 @@ namespace SPExam
         /// <br />
         /// Сканировать всю систему;
         /// </summary>
-        public void Scan()
+        public async Task ScanAllAsync()
         {
-            mainTreeView.Nodes.Clear();
             try
             {
                 foreach (DriveInfo drive in DriveInfo.GetDrives())
                 {
-                    TreeNode driveNode = new TreeNode(drive.Name);
-                    driveNode.Tag = drive;
-                    GetChildNode(driveNode, drive.Name);
+                    await Task.Run(() =>
+                    {
+                        foreach (DirectoryInfo dir in drive.RootDirectory.GetDirectories())
+                        {
+                            ScanDirectoryAsync(dir);
+                        }
+                    });
 
-                    UpdateTreeView(driveNode);
+                    overallProgressFileCounter += drive.RootDirectory.GetFiles().Length;
                 }
             }
             catch (Exception) { }
@@ -116,76 +129,37 @@ namespace SPExam
         /// <br />
         /// Сканировать директорию;
         /// </summary>
-        private void Scan(DirectoryInfo info)
+        private async Task ScanDirectoryAsync(DirectoryInfo info)
         {
             try
             {
-                foreach (DirectoryInfo dirInfo in info.GetDirectories())
+                await Task.Run(() =>
                 {
-                    overallFileAmount += dirInfo.GetFiles().Length;
-                    Scan(dirInfo);
+                    try
+                    {
+                        foreach (DirectoryInfo dirInfo in info.GetDirectories())
+                        {
+                            overallProgressFileCounter += dirInfo.GetFiles().Length;
+
+                            ScanDirectoryAsync(dirInfo);
+                        }
+                    }
+                    catch { }
+                });
+
+                try
+                {
+                    if (info.GetDirectories().Count() == 0)
+                    {
+                        overallProgressFileCounter += info.GetFiles().Length;
+                    }
                 }
+                catch { }
             }
             catch (Exception) { }
         }
 
 
-
-        /// <summary>
-        /// Update tree view model;
-        /// <br />
-        /// Обновить модель tree view;
-        /// </summary>
-        /// <param name="driveNode">
-        /// Tree view node;
-        /// <br />
-        /// Нода "tree view";
-        /// </param>
-        private void UpdateTreeView(TreeNode driveNode)
-        {
-            if (mainTreeView.InvokeRequired)
-                mainTreeView.Invoke(new Action<TreeNode>(UpdateTreeView), driveNode);
-            else
-                mainTreeView.Nodes.Add(driveNode);
-        }
-
-
-        /// <summary>
-        /// Get child node of the passed one;
-        /// <br />
-        /// Получить дочернюю ноду для передаваемой ноды;
-        /// </summary>
-        private void GetChildNode(TreeNode driveNode, string path)
-        {
-            try
-            {
-                string[] dirs = Directory.GetDirectories(path);
-                string[] files = Directory.GetFiles(path);
-                if (dirs.Length == 0 && files.Length == 0) return;
-
-
-                foreach (string dir in dirs)
-                {
-                    TreeNode dirNode = new TreeNode();
-                    dirNode.Text = dir.Remove(0, dir.LastIndexOf("\\") + 1);
-                    dirNode.Tag = dir;
-
-                    GetChildNode(dirNode, dir);
-                    driveNode.Nodes.Add(dirNode);
-                }
-
-                foreach (string file in files)
-                {
-                    TreeNode fileNode = new TreeNode();
-                    fileNode.Text = file.Remove(0, file.LastIndexOf("\\") + 1);
-                    fileNode.Tag = file;
-                                        
-                    driveNode.Nodes.Add(fileNode);
-                }
-
-            }
-            catch (Exception) { }
-        }
 
 
         /// <summary>
@@ -196,6 +170,8 @@ namespace SPExam
         private async void OnSearchButtonClickAsync(object sender, EventArgs e)
         {
             ClearCopyFolder();
+            await ScanAllAsync();
+            progressBar1.Maximum = overallProgressFileCounter;
             if (forbiddenWords.Count == 0)
             {
                 forbiddenWords.AddRange(new string[1] { "and"});
@@ -236,7 +212,6 @@ namespace SPExam
             string[] str = new string[0];
             int nReplacesCounter;
 
-            List<bool> regexMathList;
             try
             {
                 DirectoryInfo[] directories = di.GetDirectories();
@@ -309,7 +284,7 @@ namespace SPExam
 
                                 if (progressBar1.InvokeRequired) Invoke(() =>
                                 {
-                                    //progressBar1.PerformStep();
+                                    progressBar1.PerformStep();
                                     label1.Text = progressFileCounter.ToString();
                                 });
                             });

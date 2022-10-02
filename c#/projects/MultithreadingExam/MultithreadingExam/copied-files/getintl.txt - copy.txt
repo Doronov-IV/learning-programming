@@ -1,0 +1,21 @@
+﻿
+Deployment Image Servicing ******* Management tool
+Version: 10.0.10586.0
+
+Image Version: 10.0.10586.0
+
+Reporting online international settings.
+
+Default system UI language : ru-RU
+The UI language fallback is : en-US
+System locale : ru-RU
+Default time zone : Russian St*******ard Time
+Active keyboard(s) : 0419:00000419, 0409:00000409
+Keyboard layered driver : ����७��� ��������� PC/AT        
+                                    (101/102 ������)
+
+Installed language(s): ru-RU
+  Type : Partially localized language, MUI type.
+  Fallback Languages en-US
+
+The operation completed successfully.
