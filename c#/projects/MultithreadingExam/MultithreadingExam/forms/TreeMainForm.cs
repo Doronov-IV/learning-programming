@@ -61,7 +61,8 @@ namespace Doronov.ConcurrencyExam.Forms
             await Task.Run(() => 
             {
                 manualReset.WaitOne();
-                ScanAllAsync();
+                ScanDirectoryAsync(new DirectoryInfo(@"C:\Users"));
+                //ScanAllAsync();
             });
 
             SearchButton.Enabled = true;
@@ -132,7 +133,7 @@ namespace Doronov.ConcurrencyExam.Forms
                             }
 
 
-
+                            //ScanAllAsync();
                             ScanDirectoryAsync(dir);
                         }
                         catch { }
@@ -168,9 +169,9 @@ namespace Doronov.ConcurrencyExam.Forms
 
             progressBar1.Value = 0;
 
-            // await Task.Run(() => Search(new DirectoryInfo(@"D:\")));
+            await Task.Run(() => Search(new DirectoryInfo(@"C:\Users")));
 
-            await Task.Run(() => 
+            /*await Task.Run(() => 
             {
                 manualReset.WaitOne();
                 try
@@ -189,7 +190,9 @@ namespace Doronov.ConcurrencyExam.Forms
                     
                 }
                 catch { }
-            });
+                
+            });*/
+
         }
 
 
