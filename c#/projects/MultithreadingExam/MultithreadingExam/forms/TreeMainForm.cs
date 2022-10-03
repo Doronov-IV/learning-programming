@@ -1,4 +1,3 @@
-using Doronov.ConcurrencyExam.Service;
 using System.Runtime;
 
 namespace Doronov.ConcurrencyExam.Forms
@@ -14,47 +13,15 @@ namespace Doronov.ConcurrencyExam.Forms
         /// <br />
         /// ;
         /// </summary>
-        private List<FileStatistics> totalStatistics;
-
-        /// <summary>
-        /// ;
-        /// <br />
-        /// ;
-        /// </summary>
         private List<string> forbiddenWords;
-
-        /// <summary>
-        /// ;
-        /// <br />
-        /// ;
-        /// </summary>
-        private Dictionary<string, int> wordCounterPairs;
-
-        /// <summary>
-        /// ;
-        /// <br />
-        /// ;
-        /// </summary>
-        private List<string> TopWords;
-
-        /// <summary>
-        /// ;
-        /// <br />
-        /// ;
-        /// </summary>
-        private int overallFileAmount = 0;
 
         #endregion PROPERTIES
 
 
-
-        private static readonly CancellationTokenSource TokenSource = new CancellationTokenSource();
-
-
-        private static readonly CancellationToken CurrentCancellationToken = TokenSource.Token;
-
-
         private static readonly ManualResetEvent manualReset = new ManualResetEvent(false);
+
+
+        private static readonly string ReportFileName = "../../../copied-files/!REPORT.rep";
 
 
         private static readonly object locker = new object();
@@ -80,7 +47,6 @@ namespace Doronov.ConcurrencyExam.Forms
 
             // preparations;
             progressBar1.Step = 1;
-            ShowStatisticsButton.Visible = false;
 
             SearchButton.Enabled = false;
 
@@ -213,13 +179,10 @@ namespace Doronov.ConcurrencyExam.Forms
                     {
                         foreach (DriveInfo drive in DriveInfo.GetDrives())
                         {
-                            //Task.Run(() =>
-                            //{
                             foreach (DirectoryInfo folder in drive.RootDirectory.GetDirectories())
                             {
                                 Search(folder);
                             }
-                            //}, CurrentCancellationToken);
                         }
                     }
                     catch { }
@@ -227,11 +190,6 @@ namespace Doronov.ConcurrencyExam.Forms
                 }
                 catch { }
             });
-
-            //ar topWords = wordCounterPairs.OrderBy(u => u.Value);
-
-            ShowStatisticsButton.Visible = true;
-            CreateStatisticsReportFile();
         }
 
 
@@ -324,7 +282,11 @@ namespace Doronov.ConcurrencyExam.Forms
                                             {
                                                 try
                                                 {
-                                                    System.IO.File.WriteAllLines($"../../../copied-files/{file.Name} - copy{file.Extension}", str, Encoding.UTF8);
+                                                    if (file.FullName != ReportFileName)
+                                                    {
+                                                        System.IO.File.WriteAllLines($"../../../copied-files/{file.Name} - copy{file.Extension}", str, Encoding.UTF8);
+                                                        System.IO.File.AppendAllText(ReportFileName, $"{file.Name}, word: {word}.\n", Encoding.UTF8);
+                                                    }
                                                 }
                                                 catch { }
                                             }
@@ -427,22 +389,6 @@ namespace Doronov.ConcurrencyExam.Forms
             }
         }
 
-
-        /// <summary>
-        /// Create statistics report;
-        /// <br />
-        /// Создать отчёт статистики;
-        /// </summary>
-        private void CreateStatisticsReportFile()
-        {
-            //List<string> report = new List<string>();
-            //totalStatistics.ForEach(str => report.Add("File Name: " + str.FileInfo.Name + ", Path: " + str.FileInfo.FullName + ", replaces: " + str.Counter));
-            //report.Add("\n\n\n" + "Top popular words: ");
-            //TopWords.ForEach(word => report.Add("\t" + word));
-
-            //System.IO.File.WriteAllLines($"{DriveInfo.GetDrives()[1].RootDirectory}/ProjectReport.txt", report, Encoding.UTF8);
-        }
-
         /// <summary>
         /// Open file button click handler;
         /// <br />
@@ -450,9 +396,20 @@ namespace Doronov.ConcurrencyExam.Forms
         /// </summary>
         private void OnOpenFileButtonClick(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.InitialDirectory = @"C:\";
-            fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            try
+            {
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.InitialDirectory = @"C:\";
+                fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    forbiddenWords = System.IO.File.ReadAllLines(fileDialog.FileName).ToList();
+                }
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("Unable to open your file." + "\nException: " +ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OnStopButtonClick(object sender, EventArgs e)
@@ -468,6 +425,24 @@ namespace Doronov.ConcurrencyExam.Forms
                 manualReset.Set();
                 IsRunnin = true;
                 StopButton.Text = "Stop";
+            }
+        }
+
+        private void TreeMainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnClearFolderButtonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(@"../../../copied-files");
+                directoryInfo.GetFiles().ToList().ForEach(file => file.Delete());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to clear your directory." + "\nException: " + ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -1,62 +1,24 @@
-﻿A Simple Chat Server Example
+﻿# Prism.Core 
 
-INTRODUCTION
-============
-This directory contains a very simple chat server, the server takes input from a
-socket ("user") ******* sends it to all other connected sockets ("users") along with
-the provided name the user was asked for when first connecting.
+Thank you for installing Prism 8.1!
 
-The server was written to demonstrate the asynchronous I/O API in JDK 7. 
-The sample assumes the reader has some familiarity with the subject matter.
+## Help Support Prism
 
-SETUP
-=====
+While Prism is, ******* will continue to be totally free to download, Open Source is not free. If you or your company have the resources, please consider becoming a GitHub Sponsor. GitHub Sponsorships help to make Open Source Development more sustainable. Depending on your Sponsorship Tier, you may also get access to some great benefits on Sponsor Connect (https://sponsorconnect.dev) including:
 
-The server must be built with version 7 (or later) of the JDK.
-The server is built with:
+- The Sponsor Only Discord server
+- CI Packages for Prism (get bug fixes as they are merged!)
+- Training available ONLY to sponsors on Sponsor Connect
 
-    % mkdir build
-    % javac -source 7 -target 7 -d build *.java
+https://xam.dev/sponsorbrian
+https://xam.dev/sponsordan
 
-EXECUTION
-=========
+## Support & FAQ
 
-    % java -classpath build ChatServer [-port <port number>]
+1) Support: Prism is distributed under the MIT License this means "AS IS", WITHOUT WARRANTY OF ANY KIND. If you require code level support, architectural guidance, or custom builds of Prism, please reach out at https://avantipoint.com/contact to inquire about Enterprise support options.
 
-    Usage:  ChatServer [options]
-        options:
-            -port port      port number
-                default: 5000
+2) Community Support: GitHub issues are not the place to ask questions, these are reserved for feature requests ******* legitimate bug reports. You are free to ask questions on Stack Overflow however the Prism team does not monitor questions posted there. We do encourage you to post questions using GitHub Discussions on the main Prism repo. If you see a question that you know the answer to please pay it forward ******* help other developers that may just be starting out. https://github.com/PrismLibrary/Prism/discussions
 
-CLIENT EXECUTION
-================
+3) Reporting Bugs: If you believe you have encountered a bug, please be sure to search the open ******* closed issues as you may find the issue has already been fixed as ******* is awaiting release. If you find that you have a new issue, please create a new project that focuses on ONLY the necessary steps to reproduce the issue you are facing. Issues that are opened which do not have a sample app reproducing the issue will be closed. In addition to this being required by the Prism team, this is just good etiquette for any Open Source project. Additionally we ask that you do not try to be an Archaeologist, trying to comment on PR's, commits ******* issues from long ago, if there is a legitimate issue, open a new issue referencing what you need to reference. Archaeologists will be ignored.
 
-No client binary is included in the sample.
-Connections can be made using for example the telnet comm ******* or any program
-that supports a raw TCP connection to a port.
-
-SOURCE CODE OVERVIEW
-====================
-ChatServer is the main class, it handles the startup ******* handles incoming
-connections on the listening sockets. It keeps a list of connected client
- ******* provides methods for sending a message to them.
-
-Client represents a connected user, it provides methods for reading/writing
-from/to the underlying socket. It also contains a buffer of input read from
-the user.
-
-DataReader provides the interface of the two states a user can
-be in. Waiting for a name ( ******* not receiving any messages while doing so, implemented
-by NameReader) ******* waiting for messages from the user (implemented by MessageReader).
-
-ClientReader contains the "main loop" for a connected client. 
-
-NameReader is the initial state for a new client, it sends the user a string and
-waits for a response before changing the state to MessageReader.
-
-MessageReader is the main state for a client, it checks for new messages to send to
-other clients ******* reads messages from the client.
-
-FINALLY
-=======
-This is a sample: it is not production quality ******* isn't optimized for performance.
+4) Samples: Currently the Prism team maintains a wide variety of samples for WPF ******* Xamarin.Forms. If you would like to help give back, ******* help build out a samples repo for Uno Platform, WinUI, or .NET Maui please contact the Prism team via Twitter or Discord.

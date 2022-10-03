@@ -21,7 +21,7 @@ namespace Doronov.ConcurrencyExam.Main
         [STAThread]
         static void Main()
         {
-            const string appName = "SPExam";
+            const string appName = "MultithreadingExam";
             bool createdNew;
 
             mutex = new Mutex(true, appName, out createdNew);
