@@ -1,4 +1,4 @@
-﻿namespace SPExam
+﻿namespace Doronov.ConcurrencyExam.Forms
 {
     partial class TreeMainForm
     {

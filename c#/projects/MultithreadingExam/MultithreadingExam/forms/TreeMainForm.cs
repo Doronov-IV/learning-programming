@@ -1,10 +1,6 @@
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Text;
-using static System.Net.WebRequestMethods;
-using System.Diagnostics;
+using Doronov.ConcurrencyExam.Service;
 
-namespace SPExam
+namespace Doronov.ConcurrencyExam.Forms
 {
     public partial class TreeMainForm : Form
     {
