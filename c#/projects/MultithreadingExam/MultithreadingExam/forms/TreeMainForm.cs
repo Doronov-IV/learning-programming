@@ -1,4 +1,5 @@
 using Doronov.ConcurrencyExam.Service;
+using System.Runtime;
 
 namespace Doronov.ConcurrencyExam.Forms
 {
@@ -43,33 +44,26 @@ namespace Doronov.ConcurrencyExam.Forms
         /// </summary>
         private int overallFileAmount = 0;
 
-        /// <summary>
-        /// ;
-        /// <br />
-        /// ;
-        /// </summary>
-        private CancellationTokenSource TokenSource;
-
-
         #endregion PROPERTIES
 
 
 
-        private static readonly AutoResetEvent AutoProgressBarSwitch = new AutoResetEvent(true);
+        private static readonly CancellationTokenSource TokenSource = new CancellationTokenSource();
+
+
+        private static readonly CancellationToken CurrentCancellationToken = TokenSource.Token;
+
+
+        private static readonly ManualResetEvent manualReset = new ManualResetEvent(false);
 
 
         private static readonly object locker = new object();
 
+        private static int progressFileCounter = 0;
 
-        private static List<Task> TaskListWaitAll = new List<Task>();
+        private static int overallProgressFileCounter = 0;
 
-
-
-
-
-        private int progressFileCounter = 0;
-
-        private int overallProgressFileCounter = 0;
+        private static bool IsRunnin = false;
 
 
         /// <summary>
@@ -83,12 +77,28 @@ namespace Doronov.ConcurrencyExam.Forms
 
             // memory;
             forbiddenWords = new List<string>();
-            TaskListWaitAll = new List<Task>();
-            TokenSource = new CancellationTokenSource();
 
             // preparations;
             progressBar1.Step = 1;
             ShowStatisticsButton.Visible = false;
+
+            SearchButton.Enabled = false;
+
+            manualReset.Set();
+        }
+
+
+        private async void OnScanButtonClickAsync(object sender, EventArgs e)
+        {
+            IsRunnin = true;
+
+            await Task.Run(() => 
+            {
+                manualReset.WaitOne();
+                ScanAllAsync();
+            });
+
+            SearchButton.Enabled = true;
         }
 
 
@@ -106,13 +116,16 @@ namespace Doronov.ConcurrencyExam.Forms
                 {
                     await Task.Run(() =>
                     {
-                        foreach (DirectoryInfo dir in drive.RootDirectory.GetDirectories())
-                        {
-                            ScanDirectoryAsync(dir);
-                        }
-                    });
+                        manualReset.WaitOne();
 
-                    overallProgressFileCounter += drive.RootDirectory.GetFiles().Length;
+                        try
+                        {
+                            ScanDirectoryAsync(drive.RootDirectory);
+                        }
+                        catch { }
+                        
+
+                    });
                 }
             }
             catch (Exception) { }
@@ -127,33 +140,45 @@ namespace Doronov.ConcurrencyExam.Forms
         /// </summary>
         private async Task ScanDirectoryAsync(DirectoryInfo info)
         {
-            try
+            await Task.Run(() =>
             {
-                await Task.Run(() =>
-                {
-                    try
-                    {
-                        foreach (DirectoryInfo dirInfo in info.GetDirectories())
-                        {
-                            overallProgressFileCounter += dirInfo.GetFiles().Length;
-
-                            ScanDirectoryAsync(dirInfo);
-                        }
-                    }
-                    catch { }
-                });
-
+                manualReset.WaitOne();
                 try
                 {
-                    if (info.GetDirectories().Count() == 0)
+                    foreach (DirectoryInfo dir in info.GetDirectories())
                     {
-                        overallProgressFileCounter += info.GetFiles().Length;
+                        try
+                        {
+                            foreach (FileInfo file in dir.GetFiles())
+                            {
+                                if (file.Extension == ".txt" || file.Extension == ".xml")
+                                {
+                                    if (dir.Name != "copied-files") overallProgressFileCounter += 1;
+                                }
+                            }
+
+                            if (label2.InvokeRequired)
+                            {
+                                Invoke(() =>
+                                {
+                                    label2.Text = overallProgressFileCounter.ToString();
+                                });
+                            }
+
+
+
+                            ScanDirectoryAsync(dir);
+                        }
+                        catch { }
                     }
+
+                    //Task.WhenAll(info.GetDirectories().AsParallel().Select(dir => ScanDirectoryAsync(dir)));
                 }
                 catch { }
-            }
-            catch (Exception) { }
+
+            });
         }
+    
 
 
 
@@ -166,7 +191,8 @@ namespace Doronov.ConcurrencyExam.Forms
         private async void OnSearchButtonClickAsync(object sender, EventArgs e)
         {
             ClearCopyFolder();
-            await ScanAllAsync();
+            IsRunnin = true;
+            progressFileCounter = 0;
             progressBar1.Maximum = overallProgressFileCounter;
             if (forbiddenWords.Count == 0)
             {
@@ -174,17 +200,33 @@ namespace Doronov.ConcurrencyExam.Forms
                 //forbiddenWords.ForEach(word => wordCounterPairs.Add(word, 0));
             }
 
-            overallFileAmount = 0;
             progressBar1.Value = 0;
 
             // await Task.Run(() => Search(new DirectoryInfo(@"D:\")));
 
-            await Task.Run(() => { 
-                foreach (var a in new DirectoryInfo(@"C:\").GetDirectories())
+            await Task.Run(() => 
+            {
+                manualReset.WaitOne();
+                try
                 {
-                    Search(a);
+                    try
+                    {
+                        foreach (DriveInfo drive in DriveInfo.GetDrives())
+                        {
+                            //Task.Run(() =>
+                            //{
+                            foreach (DirectoryInfo folder in drive.RootDirectory.GetDirectories())
+                            {
+                                Search(folder);
+                            }
+                            //}, CurrentCancellationToken);
+                        }
+                    }
+                    catch { }
+                    
                 }
-                });
+                catch { }
+            });
 
             //ar topWords = wordCounterPairs.OrderBy(u => u.Value);
 
@@ -223,9 +265,10 @@ namespace Doronov.ConcurrencyExam.Forms
                         {
                         if (file.Extension == ".txt" || file.Extension == ".xml")
                         {
+                            if (di.Name != "copied-files") progressFileCounter++;
                             await Task.Run(() =>
                             {
-                                progressFileCounter++;
+                                manualReset.WaitOne();
                                 bool isFound = false;
                                 // читает файл по пути
                                 try
@@ -237,16 +280,27 @@ namespace Doronov.ConcurrencyExam.Forms
                                 {
                                     Task.Run(() =>
                                     {
+                                        manualReset.WaitOne();
                                         try
                                         {
                                             isFound = false;
                                             for (int i = 0; i < str.Count(); i++)
                                             {
-                                                if (Regex.IsMatch(str[i], word, RegexOptions.IgnoreCase & RegexOptions.Compiled))
+                                                isFound = false;
+                                                if
+                                                (
+                                                        Regex.IsMatch(str[i], " " + word + " ", RegexOptions.IgnoreCase & RegexOptions.Compiled) 
+                                                    || (Regex.IsMatch(str[i], word + " ", RegexOptions.IgnoreCase & RegexOptions.Compiled))
+                                                    || (Regex.IsMatch(str[i], " " + word + ",", RegexOptions.IgnoreCase & RegexOptions.Compiled))
+                                                    || (Regex.IsMatch(str[i], " " + word + ".", RegexOptions.IgnoreCase & RegexOptions.Compiled))
+                                                )
                                                 {
                                                     var compareString = str[i];
 
-                                                    str[i] = str[i].Replace(word, "*******", comparisonType: StringComparison.OrdinalIgnoreCase);
+                                                    str[i] = str[i].Replace(" " + word + " ", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
+                                                    str[i] = str[i].Replace( word + " ", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
+                                                    str[i] = str[i].Replace(" " + word + ",", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
+                                                    str[i] = str[i].Replace(" " + word + ".", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
 
                                                     if (!compareString.Equals(str[i]))
                                                     {
@@ -263,6 +317,7 @@ namespace Doronov.ConcurrencyExam.Forms
 
 
 
+
                                         if (isFound)
                                         {
                                             lock (locker)
@@ -274,16 +329,25 @@ namespace Doronov.ConcurrencyExam.Forms
                                                 catch { }
                                             }
                                         }
+                                        
 
                                     });
                                 }
+                               
 
-                                if (progressBar1.InvokeRequired) Invoke(() =>
+                                try
                                 {
-                                    progressBar1.PerformStep();
-                                    label1.Text = progressFileCounter.ToString();
-                                });
+                                    if (progressBar1.InvokeRequired) Invoke(() =>
+                                    {
+                                        progressBar1.PerformStep();
+                                        label1.Text = progressFileCounter.ToString();
+                                    });
+                                }
+                                    
+                                catch { }
                             });
+
+
                         }
 
 
@@ -389,10 +453,22 @@ namespace Doronov.ConcurrencyExam.Forms
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.InitialDirectory = @"C:\";
             fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+        }
 
-            //if (fileDialog.ShowDialog() == DialogResult.OK) forbiddenWords = System.IO.File.ReadAllLines(fileDialog.FileName).ToList();
-            //forbiddenWords.ForEach(word => wordCounterPairs.Add(word, 0));
-            //Scan();
+        private void OnStopButtonClick(object sender, EventArgs e)
+        {
+            if (IsRunnin)
+            {
+                manualReset.Reset();
+                IsRunnin = false;
+                StopButton.Text = "Resume";
+            }
+            else
+            {
+                manualReset.Set();
+                IsRunnin = true;
+                StopButton.Text = "Stop";
+            }
         }
     }
 }
