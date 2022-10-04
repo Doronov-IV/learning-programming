@@ -41,7 +41,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(713, 386);
+            this.SearchButton.Location = new System.Drawing.Point(521, 415);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(75, 23);
             this.SearchButton.TabIndex = 1;
@@ -52,14 +52,14 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(33, 428);
+            this.progressBar1.Location = new System.Drawing.Point(12, 415);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(506, 10);
+            this.progressBar1.Size = new System.Drawing.Size(422, 23);
             this.progressBar1.TabIndex = 3;
             // 
             // OpenCopyFolderButton
             // 
-            this.OpenCopyFolderButton.Location = new System.Drawing.Point(672, 22);
+            this.OpenCopyFolderButton.Location = new System.Drawing.Point(12, 31);
             this.OpenCopyFolderButton.Name = "OpenCopyFolderButton";
             this.OpenCopyFolderButton.Size = new System.Drawing.Size(116, 22);
             this.OpenCopyFolderButton.TabIndex = 6;
@@ -69,7 +69,7 @@
             // 
             // OpenFileButton
             // 
-            this.OpenFileButton.Location = new System.Drawing.Point(672, 104);
+            this.OpenFileButton.Location = new System.Drawing.Point(12, 72);
             this.OpenFileButton.Name = "OpenFileButton";
             this.OpenFileButton.Size = new System.Drawing.Size(116, 23);
             this.OpenFileButton.TabIndex = 7;
@@ -80,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(562, 22);
+            this.label1.Location = new System.Drawing.Point(268, 334);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 15);
             this.label1.TabIndex = 8;
@@ -88,7 +88,7 @@
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(713, 357);
+            this.StopButton.Location = new System.Drawing.Point(602, 415);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(75, 23);
             this.StopButton.TabIndex = 9;
@@ -98,7 +98,7 @@
             // 
             // ScanButton
             // 
-            this.ScanButton.Location = new System.Drawing.Point(713, 415);
+            this.ScanButton.Location = new System.Drawing.Point(440, 415);
             this.ScanButton.Name = "ScanButton";
             this.ScanButton.Size = new System.Drawing.Size(75, 23);
             this.ScanButton.TabIndex = 10;
@@ -109,7 +109,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(458, 22);
+            this.label2.Location = new System.Drawing.Point(164, 334);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 15);
             this.label2.TabIndex = 11;
@@ -117,7 +117,7 @@
             // 
             // ClearFolderButton
             // 
-            this.ClearFolderButton.Location = new System.Drawing.Point(672, 50);
+            this.ClearFolderButton.Location = new System.Drawing.Point(164, 30);
             this.ClearFolderButton.Name = "ClearFolderButton";
             this.ClearFolderButton.Size = new System.Drawing.Size(116, 23);
             this.ClearFolderButton.TabIndex = 12;
@@ -129,7 +129,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(690, 450);
             this.Controls.Add(this.ClearFolderButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ScanButton);

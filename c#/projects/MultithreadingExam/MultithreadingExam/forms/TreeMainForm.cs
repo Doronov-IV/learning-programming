@@ -8,6 +8,8 @@ namespace Doronov.ConcurrencyExam.Forms
 
         #region PROPERTIES
 
+
+
         /// <summary>
         /// ;
         /// <br />
@@ -15,53 +17,83 @@ namespace Doronov.ConcurrencyExam.Forms
         /// </summary>
         private List<string> forbiddenWords;
 
-        #endregion PROPERTIES
 
-
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
         private static readonly ManualResetEvent manualReset = new ManualResetEvent(false);
 
 
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
         private static readonly string ReportFileName = "../../../copied-files/!REPORT.rep";
 
 
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
         private static readonly object locker = new object();
-
-        private static int progressFileCounter = 0;
-
-        private static int overallProgressFileCounter = 0;
-
-        private static bool IsRunnin = false;
 
 
         /// <summary>
-        /// Default constructor;
+        /// ;
         /// <br />
-        /// Конструктор по умолчанию;
+        /// ;
         /// </summary>
-        public TreeMainForm()
-        {
-            InitializeComponent();
-
-            // memory;
-            forbiddenWords = new List<string>();
-
-            // preparations;
-            progressBar1.Step = 1;
-
-            SearchButton.Enabled = false;
-
-            manualReset.Set();
-        }
+        private static int progressFileCounter = 0;
 
 
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
+        private static int overallProgressFileCounter = 0;
+
+
+        /// <summary>
+        /// ;
+        /// <br />
+        /// ;
+        /// </summary>
+        private static bool IsRunnin = false;
+
+
+
+        #endregion PROPERTIES
+
+
+
+
+
+        #region HANDLERS
+
+
+        /// <summary>
+        /// Scan Button click handler;
+        /// <br />
+        /// Хендлер клика по кнопке "Scan";
+        /// </summary>
         private async void OnScanButtonClickAsync(object sender, EventArgs e)
         {
             IsRunnin = true;
 
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
                 manualReset.WaitOne();
+                // Searching all system takes too long on ITStep computers, the teacher said this folder is enough;
+                // for now, this is ok. we cannot use await inside of another one;
                 ScanDirectoryAsync(new DirectoryInfo(@"C:\Users"));
+
+                //
+                //
                 //ScanAllAsync();
             });
 
@@ -71,106 +103,40 @@ namespace Doronov.ConcurrencyExam.Forms
 
 
         /// <summary>
-        /// Scan all the system;
-        /// <br />
-        /// Сканировать всю систему;
-        /// </summary>
-        public async Task ScanAllAsync()
-        {
-            try
-            {
-                foreach (DriveInfo drive in DriveInfo.GetDrives())
-                {
-                    await Task.Run(() =>
-                    {
-                        manualReset.WaitOne();
-
-                        try
-                        {
-                            ScanDirectoryAsync(drive.RootDirectory);
-                        }
-                        catch { }
-                        
-
-                    });
-                }
-            }
-            catch (Exception) { }
-        }
-
-
-
-        /// <summary>
-        /// Scan directory;
-        /// <br />
-        /// Сканировать директорию;
-        /// </summary>
-        private async Task ScanDirectoryAsync(DirectoryInfo info)
-        {
-            await Task.Run(() =>
-            {
-                manualReset.WaitOne();
-                try
-                {
-                    foreach (DirectoryInfo dir in info.GetDirectories())
-                    {
-                        try
-                        {
-                            foreach (FileInfo file in dir.GetFiles())
-                            {
-                                if (file.Extension == ".txt" || file.Extension == ".xml")
-                                {
-                                    if (dir.Name != "copied-files") overallProgressFileCounter += 1;
-                                }
-                            }
-
-                            if (label2.InvokeRequired)
-                            {
-                                Invoke(() =>
-                                {
-                                    label2.Text = overallProgressFileCounter.ToString();
-                                });
-                            }
-
-
-                            //ScanAllAsync();
-                            ScanDirectoryAsync(dir);
-                        }
-                        catch { }
-                    }
-
-                    //Task.WhenAll(info.GetDirectories().AsParallel().Select(dir => ScanDirectoryAsync(dir)));
-                }
-                catch { }
-
-            });
-        }
-    
-
-
-
-
-        /// <summary>
         /// Search button async click handler;
         /// <br />
-        /// Ассинхронный(?) обработчик нажатия на кнопку "Поиск";
+        /// Асинхронный(?) обработчик нажатия на кнопку "Поиск";
         /// </summary>
         private async void OnSearchButtonClickAsync(object sender, EventArgs e)
         {
+            // clear the 'copied-files' folder so that it won't stack up;
             ClearCopyFolder();
+
+            // Change flag for stop/resume button;
             IsRunnin = true;
+
+            // set current progressbar score to zero;
             progressFileCounter = 0;
+            progressBar1.Value = progressFileCounter;
+
+            // max progressbar score;
             progressBar1.Maximum = overallProgressFileCounter;
+
+            // if the lisft of words is empty, add something
             if (forbiddenWords.Count == 0)
             {
-                forbiddenWords.AddRange(new string[1] { "and"});
-                //forbiddenWords.ForEach(word => wordCounterPairs.Add(word, 0));
+                forbiddenWords.AddRange(new string[1] { "and" });
             }
 
-            progressBar1.Value = 0;
 
+
+            // Searching all system takes too long on ITStep computers, the teacher said this folder is enough;
             await Task.Run(() => Search(new DirectoryInfo(@"C:\Users")));
 
+
+
+            // Unlock this if you want to search all the filesystem;
+            //
             /*await Task.Run(() => 
             {
                 manualReset.WaitOne();
@@ -196,6 +162,164 @@ namespace Doronov.ConcurrencyExam.Forms
         }
 
 
+
+        /// <summary>
+        /// Copy folder button click handler;
+        /// <br />
+        /// Хендлер клика по кнопке "Открыть папку копий";
+        /// </summary>
+        private void OnOpenCopyFolderButtonClick(object sender, EventArgs e)
+        {
+            DirectoryInfo info = new DirectoryInfo(@"../../../copied-files");
+            try
+            {
+                Process.Start("explorer", info.FullName);
+            }
+            catch (Exception ex)
+            {
+                Directory.CreateDirectory(info.FullName);
+                Process.Start("explorer", info.FullName);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Open file button click handler;
+        /// <br />
+        /// Хендлер клика кнопки "открыть файл";
+        /// </summary>
+        private void OnOpenFileButtonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.InitialDirectory = @"C:\";
+                fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    forbiddenWords = System.IO.File.ReadAllLines(fileDialog.FileName).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to open your file." + "\nException: " + ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        private void OnStopButtonClick(object sender, EventArgs e)
+        {
+            if (IsRunnin)
+            {
+                manualReset.Reset();
+                IsRunnin = false;
+                StopButton.Text = "Resume";
+            }
+            else
+            {
+                manualReset.Set();
+                IsRunnin = true;
+                StopButton.Text = "Stop";
+            }
+        }
+
+
+        private void OnClearFolderButtonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(@"../../../copied-files");
+                directoryInfo.GetFiles().ToList().ForEach(file => file.Delete());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to clear your directory." + "\nException: " + ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        #endregion HANDLERS
+
+
+
+        /// <summary>
+        /// Scan all the system;
+        /// <br />
+        /// Сканировать всю систему;
+        /// </summary>
+        public async Task ScanAllAsync()
+        {
+            try
+            {
+                foreach (DriveInfo drive in DriveInfo.GetDrives())
+                {
+                    await Task.Run(() =>
+                    {
+                        manualReset.WaitOne();
+
+                        try
+                        {
+                            ScanDirectoryAsync(drive.RootDirectory);
+                        }
+                        catch { }
+
+
+                    });
+                }
+            }
+            catch (Exception) { }
+        }
+
+
+
+        /// <summary>
+        /// Scan directory;
+        /// <br />
+        /// Сканировать директорию;
+        /// </summary>
+        private async Task ScanDirectoryAsync(DirectoryInfo info)
+        {
+            await Task.Run(() =>
+            {
+                // Add manual reset event to this method;
+                manualReset.WaitOne();
+                try
+                {
+                    foreach (DirectoryInfo dir in info.GetDirectories())
+                    {
+                        try
+                        {
+                            foreach (FileInfo file in dir.GetFiles())
+                            {
+                                if (file.Extension == ".txt" || file.Extension == ".xml")
+                                {
+                                    if (dir.Name != "copied-files") overallProgressFileCounter += 1;
+                                }
+                            }
+
+                            if (label2.InvokeRequired)
+                            {
+                                Invoke(() =>
+                                {
+                                    label2.Text = overallProgressFileCounter.ToString();
+                                });
+                            }
+
+                            // It's ok, we cannot call one await inside of another. I guess it will be called automatically;
+                            ScanDirectoryAsync(dir);
+                        }
+                        catch { }
+                    }
+                }
+                catch { }
+            });
+        }
+
+
+
+
         /// <summary>
         /// Search the directory;
         /// <br />
@@ -208,6 +332,7 @@ namespace Doronov.ConcurrencyExam.Forms
         /// </param>
         private async void Search(DirectoryInfo di)
         {
+            // It's an old algorythm and I almost haven't changed it;
             string[] str = new string[0];
             int nReplacesCounter;
 
@@ -215,15 +340,18 @@ namespace Doronov.ConcurrencyExam.Forms
             {
                 DirectoryInfo[] directories = di.GetDirectories();
 
+                // scan all directories in a current one untill we get to the very bottom;
+                // dunnow if this works. the tests say it does work;
                 Parallel.ForEach(directories, Search);
 
+                // if there's no directories left;
                 if (directories.Count() == 0 || di.GetFiles().Count() > 0)
                 {
                     nReplacesCounter = 0;
                     FileInfo[] files = di.GetFiles();
 
-                        foreach (FileInfo file in files)
-                        {
+                    foreach (FileInfo file in files)
+                    {
                         if (file.Extension == ".txt" || file.Extension == ".xml")
                         {
                             if (di.Name != "copied-files") progressFileCounter++;
@@ -241,6 +369,7 @@ namespace Doronov.ConcurrencyExam.Forms
                                 {
                                     Task.Run(() =>
                                     {
+                                        // Add manual reset event to this method;
                                         manualReset.WaitOne();
                                         try
                                         {
@@ -248,9 +377,12 @@ namespace Doronov.ConcurrencyExam.Forms
                                             for (int i = 0; i < str.Count(); i++)
                                             {
                                                 isFound = false;
+
+                                                // if we search for mathes just as it is, w/o " " and/or "," etc; we will find uncensored words
+                                                // in parts of some other words. For example: word "and" will be found in the word "Android" and etc.
                                                 if
                                                 (
-                                                        Regex.IsMatch(str[i], " " + word + " ", RegexOptions.IgnoreCase & RegexOptions.Compiled) 
+                                                        Regex.IsMatch(str[i], " " + word + " ", RegexOptions.IgnoreCase & RegexOptions.Compiled)
                                                     || (Regex.IsMatch(str[i], word + " ", RegexOptions.IgnoreCase & RegexOptions.Compiled))
                                                     || (Regex.IsMatch(str[i], " " + word + ",", RegexOptions.IgnoreCase & RegexOptions.Compiled))
                                                     || (Regex.IsMatch(str[i], " " + word + ".", RegexOptions.IgnoreCase & RegexOptions.Compiled))
@@ -258,8 +390,9 @@ namespace Doronov.ConcurrencyExam.Forms
                                                 {
                                                     var compareString = str[i];
 
+                                                    // yeah, unfortunatelly, we'll have to copy-paste it;
                                                     str[i] = str[i].Replace(" " + word + " ", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
-                                                    str[i] = str[i].Replace( word + " ", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
+                                                    str[i] = str[i].Replace(word + " ", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
                                                     str[i] = str[i].Replace(" " + word + ",", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
                                                     str[i] = str[i].Replace(" " + word + ".", " ******* ", comparisonType: StringComparison.OrdinalIgnoreCase);
 
@@ -271,16 +404,14 @@ namespace Doronov.ConcurrencyExam.Forms
                                                 }
                                             }
                                         }
-                                        catch (Exception exce)
-                                        {
+                                        catch { }
 
-                                        }
-
-
-
-
+                                        // If the uncensored word is found in a string of a file;
                                         if (isFound)
                                         {
+                                            // it writes down info about it in a log file and also copies the found file itself;
+                                            // to do this, we need to lock the output files. otherwise it won't just throw an exception,
+                                            // but it would not work at all.
                                             lock (locker)
                                             {
                                                 try
@@ -294,12 +425,13 @@ namespace Doronov.ConcurrencyExam.Forms
                                                 catch { }
                                             }
                                         }
-                                        
+
 
                                     });
                                 }
-                               
 
+
+                                // this stuff we need to use win forms controls in whatever thread we are in right now.
                                 try
                                 {
                                     if (progressBar1.InvokeRequired) Invoke(() =>
@@ -308,7 +440,7 @@ namespace Doronov.ConcurrencyExam.Forms
                                         label1.Text = progressFileCounter.ToString();
                                     });
                                 }
-                                    
+
                                 catch { }
                             });
 
@@ -316,37 +448,11 @@ namespace Doronov.ConcurrencyExam.Forms
                         }
 
 
-                        }
-
-
-
-
-                    return;
+                    }
 
                 }
             }
             catch (Exception) { }
-        }
-
-
-        /// <summary>
-        /// Show search statistics;
-        /// <br />
-        /// Показать статистику поиска;
-        /// </summary>
-        private void ShowStatistics()
-        {
-            
-        }
-
-        /// <summary>
-        /// Statistics button click handler;
-        /// <br />
-        /// Хендлер клика по кнопке "Статистика";
-        /// </summary>
-        private void OnStatisticsButtonClick(object sender, EventArgs e)
-        {
-            ShowStatistics();
         }
 
 
@@ -372,81 +478,44 @@ namespace Doronov.ConcurrencyExam.Forms
         }
 
 
-
-        /// <summary>
-        /// Copy folder button click handler;
-        /// <br />
-        /// Хендлер клика по кнопке "Открыть папку копий";
-        /// </summary>
-        private void OnOpenCopyFolderButtonClick(object sender, EventArgs e)
-        {
-            DirectoryInfo info = new DirectoryInfo(@"../../../copied-files");
-            try 
-            { 
-            Process.Start("explorer", info.FullName);
-            }
-            catch (Exception ex)
-            {
-                Directory.CreateDirectory(info.FullName);
-                Process.Start("explorer", info.FullName);
-            }
-        }
-
-        /// <summary>
-        /// Open file button click handler;
-        /// <br />
-        /// Хендлер клика кнопки "открыть файл";
-        /// </summary>
-        private void OnOpenFileButtonClick(object sender, EventArgs e)
-        {
-            try
-            {
-                OpenFileDialog fileDialog = new OpenFileDialog();
-                fileDialog.InitialDirectory = @"C:\";
-                fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                if (fileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    forbiddenWords = System.IO.File.ReadAllLines(fileDialog.FileName).ToList();
-                }
-            }
-            catch (Exception ex) 
-            {
-                MessageBox.Show("Unable to open your file." + "\nException: " +ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void OnStopButtonClick(object sender, EventArgs e)
-        {
-            if (IsRunnin)
-            {
-                manualReset.Reset();
-                IsRunnin = false;
-                StopButton.Text = "Resume";
-            }
-            else
-            {
-                manualReset.Set();
-                IsRunnin = true;
-                StopButton.Text = "Stop";
-            }
-        }
-
         private void TreeMainForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void OnClearFolderButtonClick(object sender, EventArgs e)
+
+
+
+
+        #region CONSTRUCTION
+
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public TreeMainForm()
         {
-            try
-            {
-                DirectoryInfo directoryInfo = new DirectoryInfo(@"../../../copied-files");
-                directoryInfo.GetFiles().ToList().ForEach(file => file.Delete());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unable to clear your directory." + "\nException: " + ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // default stuff;
+            InitializeComponent();
+
+            // memory;
+            forbiddenWords = new List<string>();
+
+            // preparations;
+            progressBar1.Step = 1;
+
+            // make a hint for yourself to click 'Scan' before 'Search';
+            SearchButton.Enabled = false;
+
+            // unblock reset event;
+            manualReset.Set();
         }
+
+
+
+        #endregion CONSTRUCTION
     }
 }
