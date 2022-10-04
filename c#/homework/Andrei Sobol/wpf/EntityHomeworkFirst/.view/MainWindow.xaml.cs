@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StepOne
+namespace EntityHomeworkFirst
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,6 +23,8 @@ namespace StepOne
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }

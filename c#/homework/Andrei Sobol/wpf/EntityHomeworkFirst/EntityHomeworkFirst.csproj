@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	 <StartupObject>EntityHomeworkFirst.App</StartupObject>
+  </PropertyGroup>
+
+
+
+	<ItemGroup>
+		<ApplicationDefinition Include=".view\App.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</ApplicationDefinition>
+		<Compile Include=".view-model\MainWindowViewModel.cs" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="Prism.Core" Version="8.1.97" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+		<Page Include=".view\MainWindow.xaml" />
+	</ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
-﻿<Application x:Class="StepOne.App"
+﻿<Application x:Class="EntityHomeworkFirst.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:StepOne"
+             xmlns:local="clr-namespace:EntityHomeworkFirst"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
