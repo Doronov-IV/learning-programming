@@ -24,7 +24,7 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Content="Fill Database" Name="FillButton" Height="30" Width="80" Grid.Column="5" Grid.Row="5"/>
+        <Button Content="Fill Database" Command="{Binding FillCommand}" Name="FillButton" Height="30" Width="80" Grid.Column="5" Grid.Row="5"/>
     </Grid>
 
 

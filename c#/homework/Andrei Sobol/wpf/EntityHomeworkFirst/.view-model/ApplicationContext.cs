@@ -15,7 +15,7 @@ namespace EntityHomeworkFirst.ViewModel
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DoronovIV;Database=DoronovEntityNetCore;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.\DoronovIV;Database=DoronovEntityNetCore;Trusted_Connection=True;");
         }
 
 
@@ -34,10 +34,17 @@ namespace EntityHomeworkFirst.ViewModel
         #region CONSTRUCTION
 
 
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
         public ApplicationContext()
         {
             Database.EnsureCreated();
         }
+
 
 
         #endregion CONSTRUCTION
