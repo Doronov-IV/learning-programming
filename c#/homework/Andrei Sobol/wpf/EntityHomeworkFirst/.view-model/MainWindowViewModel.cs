@@ -83,6 +83,9 @@ namespace EntityHomeworkFirst.ViewModel
         public DelegateCommand FillCommand { get; }
 
 
+        public DelegateCommand ClearCommand { get; }
+
+
         #endregion COMMANDS
 
 
@@ -103,6 +106,8 @@ namespace EntityHomeworkFirst.ViewModel
             VMEventHandler = new ViewModelEventHandling();
 
             FillCommand = new DelegateCommand(VMEventHandler.OnFillButtonClick);
+
+            ClearCommand = new DelegateCommand(VMEventHandler.OnClearButtonClick);
 
         }
 

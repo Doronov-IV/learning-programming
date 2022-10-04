@@ -29,6 +29,23 @@ namespace EntityHomeworkFirst.ViewModel.Handling
         }
 
 
+        public void OnClearButtonClick()
+        {
+            try
+            {
+                using (ApplicationContext context = new ApplicationContext())
+                {
+                    context.Orders.RemoveRange(context.Orders);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         #endregion HANDLERS
 
 
