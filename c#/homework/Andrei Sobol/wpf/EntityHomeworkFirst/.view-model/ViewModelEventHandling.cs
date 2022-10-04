@@ -17,7 +17,7 @@ namespace EntityHomeworkFirst.ViewModel.Handling
                 {
                     Order orderOne = new Order() { Summ = 5.7 };
                     Order orderTwo = new Order() { Summ = 5.5 };
-
+                    
                     context.Orders.AddRange(orderOne, orderTwo);
                     context.SaveChanges();
                 }
