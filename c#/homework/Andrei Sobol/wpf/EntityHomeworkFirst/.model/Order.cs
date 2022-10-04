@@ -17,7 +17,7 @@ namespace EntityHomeworkFirst.Model
 
         public double Summ { get; set; }
 
-        public string? Date { get; set; }
+        public string Date { get; set; } = null!;
 
     }
 }
