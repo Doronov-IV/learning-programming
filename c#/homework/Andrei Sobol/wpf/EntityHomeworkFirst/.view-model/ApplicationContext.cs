@@ -42,6 +42,7 @@ namespace EntityHomeworkFirst.ViewModel
         /// </summary>
         public ApplicationContext()
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
