@@ -8,6 +8,13 @@
 	 <StartupObject>EntityHomeworkFirst.App</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="readme\**" />
+    <EmbeddedResource Remove="readme\**" />
+    <None Remove="readme\**" />
+    <Page Remove="readme\**" />
+  </ItemGroup>
+
 
 
 	<ItemGroup>
@@ -17,17 +24,12 @@
 		<Compile Include=".model\Order.cs" />
 		<Compile Include=".view-model\ApplicationContext.cs" />
 		<Compile Include=".view-model\MainWindowViewModel.cs" />
+		<Compile Include=".view-model\ViewModelEventHandling.cs" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
 		<PackageReference Include="Prism.Core" Version="8.1.97" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
 		<Page Include=".view\MainWindow.xaml" />
-	</ItemGroup>
-
-
-
-	<ItemGroup>
-	  <Folder Include="readme\" />
 	</ItemGroup>
 
 </Project>

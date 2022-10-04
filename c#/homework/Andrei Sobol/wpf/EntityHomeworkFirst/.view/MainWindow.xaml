@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EntityHomeworkFirst"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="First Entity Homework" Height="350" Width="600">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Content="Fill Database" Name="FillButton" Height="30" Width="80" Grid.Column="5" Grid.Row="5"/>
     </Grid>
+
+
+
+
+
 </Window>

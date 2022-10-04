@@ -1373,6 +1373,7 @@ namespace AdoNetHomework.ViewModel
         }
 
 
+
         #endregion CONSTRUCTION
 
 
