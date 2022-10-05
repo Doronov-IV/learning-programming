@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNetHomework", "AdoNetHomework\AdoNetHomework.csproj", "{802E8073-0843-4640-B340-006A28342E4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityHomeworkFirst", "EntityHomeworkFirst\EntityHomeworkFirst.csproj", "{54C4F082-7E3C-40D4-A2E1-5162A2BD4C98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityHomeworkFirst", "EntityHomeworkFirst\EntityHomeworkFirst.csproj", "{54C4F082-7E3C-40D4-A2E1-5162A2BD4C98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityHomeworkSecond", "EntityHomeworkSecond\EntityHomeworkSecond.csproj", "{E26FEA51-4108-4323-9301-BF2201FAFDC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{54C4F082-7E3C-40D4-A2E1-5162A2BD4C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54C4F082-7E3C-40D4-A2E1-5162A2BD4C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54C4F082-7E3C-40D4-A2E1-5162A2BD4C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26FEA51-4108-4323-9301-BF2201FAFDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26FEA51-4108-4323-9301-BF2201FAFDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26FEA51-4108-4323-9301-BF2201FAFDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26FEA51-4108-4323-9301-BF2201FAFDC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

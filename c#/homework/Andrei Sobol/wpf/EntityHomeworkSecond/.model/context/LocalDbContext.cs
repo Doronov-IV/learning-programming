@@ -1,12 +1,16 @@
-﻿using EntityHomeworkFirst.Model;
+﻿using EntityHomeworkSecond.Model.Configs;
+using EntityHomeworkSecond.Model.Entities;
 
-namespace EntityHomeworkFirst.ViewModel
+namespace EntityHomeworkSecond.Model.Context
 {
-    public class ApplicationContext : DbContext
+    public class LocalDbContext : DbContext
     {
 
 
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Student> Students { get; set; } = null!;
+
+
+        public DbSet<Student> Cards { get; set; } = null!;
 
 
 
@@ -22,7 +26,8 @@ namespace EntityHomeworkFirst.ViewModel
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>().HasKey(o => o.Id);
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new CardConfiguration());
         }
 
 
@@ -31,24 +36,16 @@ namespace EntityHomeworkFirst.ViewModel
 
 
 
-        #region CONSTRUCTION
-
-
-
         /// <summary>
         /// Default constructor;
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ApplicationContext()
+        public LocalDbContext()
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
-
-
-        #endregion CONSTRUCTION
 
     }
 }

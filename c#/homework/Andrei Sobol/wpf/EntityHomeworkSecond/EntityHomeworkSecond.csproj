@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<StartupObject>EntityHomeworkSecond.App</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="readme\**" />
+    <EmbeddedResource Remove="readme\**" />
+    <None Remove="readme\**" />
+    <Page Remove="readme\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include=".model\configs\CardConfiguration.cs" />
+    <Compile Include=".model\configs\StudentConfiguration.cs" />
+    <Compile Include=".model\context\LocalDbContext.cs" />
+    <Compile Include=".model\entities\Card.cs" />
+    <Compile Include=".model\entities\Student.cs" />
+    <Compile Include=".view-model\MainWindowViewModel.cs" />
+    <Compile Include=".view\App.xaml.cs" />
+    <Compile Include=".view\MainWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include=".view\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <Page Include=".view\MainWindow.xaml" />
+  </ItemGroup>
+
+
+	<!--ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup-->
+
+</Project>
