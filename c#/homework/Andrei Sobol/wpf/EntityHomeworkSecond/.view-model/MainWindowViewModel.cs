@@ -10,6 +10,8 @@ global using System.Collections.ObjectModel;
 
 using EntityHomeworkSecond.Model;
 using Prism.Commands;
+using EntityHomeworkSecond.Model.Context;
+using EntityHomeworkSecond.Model.Entities;
 
 namespace EntityHomeworkSecond.ViewModel
 {
@@ -44,7 +46,67 @@ namespace EntityHomeworkSecond.ViewModel
 
 
 
-        // next region;
+        #region COMMANDS
+
+
+        public DelegateCommand FillDatabaseClickCommand { get; }
+
+
+        #endregion COMMANDS
+
+
+
+        #region HANDLING
+
+
+        private void OnFillDatabaseClick()
+        {
+            using (LocalDbContext context = new())
+            {
+                try
+                {
+                    Card card1;
+                    Card card2;
+
+                    Student student1 = new() { FirstName = "John", LastName = "von Neumann", Birthay = "28/12/1903", PhoneNumber = "88005553535" };
+                    Student student2 = new() { FirstName = "Ada", LastName = "Lovelace", Birthay = "10/12/1815", PhoneNumber = "88005553534" };
+
+                    card1 = new() { Student = student1 };
+                    card2 = new() { Student = student2 };
+
+                    student1.Card = card1;
+                    student2.Card = card2;
+
+                    context.Students.AddRange(student1, student2);
+                    context.Cards.AddRange(card1, card2);
+                    context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        #endregion HANDLING
+
+
+
+
+
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public MainWindowViewModel()
+        {
+            FillDatabaseClickCommand = new DelegateCommand(OnFillDatabaseClick);
+        }
+
 
 
     }

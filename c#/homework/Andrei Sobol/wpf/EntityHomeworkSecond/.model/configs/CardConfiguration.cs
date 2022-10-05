@@ -14,6 +14,8 @@ namespace EntityHomeworkSecond.Model.Configs
         {
             cardBuilder.HasKey(card => card.Id);
             cardBuilder.Property(card => card.SerialNumber).IsRequired();
+
+            //cardBuilder.HasOne(c => c.Student).WithOne(s => s.Card).HasForeignKey<Student>(s => s.Id);
         }
 
 

@@ -13,6 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+using EntityHomeworkSecond.ViewModel;
+
+
 namespace EntityHomeworkSecond
 {
     /// <summary>
@@ -23,6 +27,8 @@ namespace EntityHomeworkSecond
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }

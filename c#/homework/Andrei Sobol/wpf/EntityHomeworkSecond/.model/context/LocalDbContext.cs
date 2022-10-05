@@ -10,7 +10,7 @@ namespace EntityHomeworkSecond.Model.Context
         public DbSet<Student> Students { get; set; } = null!;
 
 
-        public DbSet<Student> Cards { get; set; } = null!;
+        public DbSet<Card> Cards { get; set; } = null!;
 
 
 
@@ -26,8 +26,11 @@ namespace EntityHomeworkSecond.Model.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new StudentConfiguration());
-            modelBuilder.ApplyConfiguration(new CardConfiguration());
+            //modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            //modelBuilder.ApplyConfiguration(new CardConfiguration());
+            modelBuilder.Entity<Student>().HasKey(s => s.Id);
+            modelBuilder.Entity<Card>().HasKey(c => c.Id);
+            modelBuilder.Entity<Card>().HasOne(c => c.Student).WithOne(s => s.Card).HasForeignKey<Card>(c => c.SerialNumber);
         }
 
 
