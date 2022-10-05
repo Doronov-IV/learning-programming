@@ -108,7 +108,6 @@ namespace EntityHomeworkFirst.ViewModel
             FillCommand = new DelegateCommand(VMEventHandler.OnFillButtonClick);
 
             ClearCommand = new DelegateCommand(VMEventHandler.OnClearButtonClick);
-
         }
 
 

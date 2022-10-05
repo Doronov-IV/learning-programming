@@ -13,7 +13,7 @@ namespace EntityHomeworkFirst.Migrations
                 table: "Orders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "gfhgfghd",
+                defaultValue: $"{DateTime.Now.ToString()}",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true);

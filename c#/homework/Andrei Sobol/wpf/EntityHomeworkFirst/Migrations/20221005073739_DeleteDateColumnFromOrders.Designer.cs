@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityHomeworkFirst.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221004151737_MakeDateNotNullable")]
-    partial class MakeDateNotNullable
+    [Migration("20221005073739_DeleteDateColumnFromOrders")]
+    partial class DeleteDateColumnFromOrders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
