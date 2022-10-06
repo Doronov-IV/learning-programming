@@ -68,17 +68,21 @@ namespace EntityHomeworkSecond.ViewModel
                     Card card1;
                     Card card2;
 
+                    Card card3;
+
                     Student student1 = new() { FirstName = "John", LastName = "von Neumann", Birthay = "28/12/1903", PhoneNumber = "88005553535" };
                     Student student2 = new() { FirstName = "Ada", LastName = "Lovelace", Birthay = "10/12/1815", PhoneNumber = "88005553534" };
 
                     card1 = new() { Student = student1 };
                     card2 = new() { Student = student2 };
+                    // Проверил, не запушилось, потому что ссылка на студента повторяется;
+                    card3 = new() { Student = student2 };
 
                     student1.Card = card1;
                     student2.Card = card2;
 
                     context.Students.AddRange(student1, student2);
-                    context.Cards.AddRange(card1, card2);
+                    context.Cards.AddRange(card1, card2, card3);
                     context.SaveChanges();
                 }
                 catch (Exception ex)
