@@ -11,7 +11,7 @@
 
 
   <ItemGroup>
-	 <Compile Include=".view-model\handlers\MainWindowViewModelHandlers.cs" />
+	 <Compile Include=".view-model\handlers\MainWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\states\MainWindowViewModelState.cs" />
 	 <Compile Include=".view-model\vm%27s\MainWindowViewModel.cs" />
 	 <Compile Include=".view\App.xaml.cs" />
