@@ -11,6 +11,9 @@
 
 
   <ItemGroup>
+	 <Compile Include=".model\basics\ExplorerClient.cs" />
+	 <Compile Include=".model\basics\ExplorerService.cs" />
+	 <Compile Include=".model\basics\ServiceUser.cs" />
 	 <Compile Include=".view-model\handlers\MainWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\states\MainWindowViewModelState.cs" />
 	 <Compile Include=".view-model\vm%27s\MainWindowViewModel.cs" />
