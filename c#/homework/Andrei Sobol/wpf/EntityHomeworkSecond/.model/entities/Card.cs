@@ -15,7 +15,7 @@ namespace EntityHomeworkSecond.Model.Entities
         public int SerialNumber { get; set; }
 
 
-        public Student? Student { get; set; }
+        public Student Student { get; set; } = null!;
 
 
     }

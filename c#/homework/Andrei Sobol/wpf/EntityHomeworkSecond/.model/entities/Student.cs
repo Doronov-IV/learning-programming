@@ -22,7 +22,7 @@
         public string? PhoneNumber { get; set; }
 
 
-        public Card? Card { get; set; }
+        public Card Card { get; set; } = null!;
 
     }
 }
