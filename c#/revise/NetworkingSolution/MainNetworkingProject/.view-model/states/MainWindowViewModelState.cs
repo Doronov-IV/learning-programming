@@ -1,8 +1,9 @@
-﻿
-
-namespace MainNetworkingProject.ViewModel.States
+﻿namespace MainNetworkingProject.ViewModel
 {
-    public class MainWindowViewModelState
+    public partial class MainWindowViewModel
     {
+        public class MainWindowViewModelState
+        {
+        }
     }
 }

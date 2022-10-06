@@ -1,18 +1,28 @@
-﻿using MainNetworkingProject.ViewModel.Handlers;
-using MainNetworkingProject.ViewModel.States;
-using System.ComponentModel;
-
-namespace MainNetworkingProject.ViewModel
+﻿namespace MainNetworkingProject.ViewModel
 {
     /// <summary>
     /// ;
     /// <br />
     /// ;
     /// </summary>
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public partial class MainWindowViewModel : INotifyPropertyChanged
     {
 
+
+
         #region PROPERTIES
+
+
+        /// <summary>
+        /// @see public MainWindowViewModelState State;
+        /// </summary>
+        private MainWindowViewModelState _State;
+
+
+        /// <summary>
+        /// @see public MainWindowViewModelHandler Handler;
+        /// </summary>
+        private MainWindowViewModelHandler _Handler;
 
 
         /// <summary>
@@ -20,18 +30,6 @@ namespace MainNetworkingProject.ViewModel
         /// <br />
         /// Состояние вьюмодели;
         /// </summary>
-        private MainWindowViewModelState _State;
-
-
-        /// <summary>
-        /// Handler of the viewmodel;
-        /// <br />
-        /// Хендлер вьюмодели;
-        /// </summary>
-        private MainWindowViewModelHandler _Handler;
-
-
-
         public MainWindowViewModelState State
         {
             get { return _State; }
@@ -43,7 +41,25 @@ namespace MainNetworkingProject.ViewModel
         }
 
 
+        /// <summary>
+        /// Handler of the viewmodel;
+        /// <br />
+        /// Хендлер вьюмодели;
+        /// </summary>
+        public MainWindowViewModelHandler Handler
+        {
+            get { return _Handler; }
+            set
+            {
+                _Handler = value;
+                OnPropertyChanged(nameof(Handler));
+            }
+        }
+
+
         #endregion PROPERTIES
+
+
 
 
 
@@ -54,14 +70,16 @@ namespace MainNetworkingProject.ViewModel
 
 
 
-
-
         #endregion COMMANDS
 
 
 
 
+
+
         #region CONSTRUCTION
+
+
 
 
         /// <summary>
@@ -71,8 +89,41 @@ namespace MainNetworkingProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-
+             // Assosiated members definition;
+            _State = new();
+            _Handler = new();
         }
+
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
+
+
 
 
         #endregion CONSTRUCTION
