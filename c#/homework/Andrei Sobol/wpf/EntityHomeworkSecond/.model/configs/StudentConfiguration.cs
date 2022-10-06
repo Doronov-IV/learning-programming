@@ -18,7 +18,7 @@ namespace EntityHomeworkSecond.Model.Configs
             studentBuilder.Property(stu => stu.Birthay).HasMaxLength(10);
             studentBuilder.Property(stu => stu.PhoneNumber).HasMaxLength(14).IsRequired();
 
-            studentBuilder.HasOne(s => s.Card).WithOne(c => c.Student).HasForeignKey<Card>(c => c.SerialNumber);
+            studentBuilder.HasOne(s => s.Card).WithOne(c => c.Student);
         }
 
 
