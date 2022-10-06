@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityHomeworkSecond.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20221006073939_Add-migration ChangeTablesLink")]
-    partial class AddmigrationChangeTablesLink
+    [Migration("20221006081134_SetProperTablesLink")]
+    partial class SetProperTablesLink
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,18 +52,23 @@ namespace EntityHomeworkSecond.Migrations
 
                     b.Property<string>("Birthay")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
                     b.HasKey("Id");
 
@@ -83,7 +88,8 @@ namespace EntityHomeworkSecond.Migrations
 
             modelBuilder.Entity("EntityHomeworkSecond.Model.Entities.Student", b =>
                 {
-                    b.Navigation("Card");
+                    b.Navigation("Card")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
