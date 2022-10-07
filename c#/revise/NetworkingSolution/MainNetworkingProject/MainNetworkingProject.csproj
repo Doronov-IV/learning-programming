@@ -14,12 +14,26 @@
 	 <Compile Include=".model\basics\ExplorerClient.cs" />
 	 <Compile Include=".model\basics\ExplorerService.cs" />
 	 <Compile Include=".model\basics\ServiceUser.cs" />
-	 <Compile Include=".view-model\handlers\MainWindowViewModelHandler.cs" />
-	 <Compile Include=".view-model\states\MainWindowViewModelState.cs" />
-	 <Compile Include=".view-model\vm%27s\MainWindowViewModel.cs" />
+	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModelHandler.cs" />
+	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
+	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
+	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModelState.cs" />
+	 <Compile Include=".view-model\MainWindow\MainWindowViewModelState.cs" />
+	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelState.cs" />
+	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModel.cs" />
+	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
+	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModel.cs" />
 	 <Compile Include=".view\App.xaml.cs" />
+	 <Compile Include=".view\ClientWindow.xaml.cs" />
 	 <Compile Include=".view\MainWindow.xaml.cs" />
+	 <Compile Include=".view\ServiceWindow.xaml.cs" />
+	 <Page Include=".view\ClientWindow.xaml">
+	   <Generator>MSBuild:Compile</Generator>
+	 </Page>
     <Page Include=".view\MainWindow.xaml" />
+    <Page Include=".view\ServiceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <ApplicationDefinition Include=".view\App.xaml">
 		<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 		<SubType>Designer</SubType>

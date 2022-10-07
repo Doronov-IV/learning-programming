@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace MainNetworkingProject.Model.Basics
+﻿namespace MainNetworkingProject.Model.Basics
 {
     public class ServiceUser
     {

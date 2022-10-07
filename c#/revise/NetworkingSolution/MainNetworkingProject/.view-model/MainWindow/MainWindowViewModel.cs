@@ -1,9 +1,9 @@
-﻿namespace MainNetworkingProject.ViewModel
+﻿namespace MainNetworkingProject.ViewModel.MainWindow
 {
     /// <summary>
-    /// ;
+    /// View-model of the main window;
     /// <br />
-    /// ;
+    /// Вью-модель основного окна;
     /// </summary>
     public partial class MainWindowViewModel : INotifyPropertyChanged
     {

@@ -1,4 +1,4 @@
-﻿namespace MainNetworkingProject.ViewModel
+﻿namespace MainNetworkingProject.ViewModel.MainWindow
 {
     public partial class MainWindowViewModel
     {

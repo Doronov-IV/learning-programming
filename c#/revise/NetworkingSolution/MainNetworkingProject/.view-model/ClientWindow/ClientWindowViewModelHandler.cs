@@ -1,27 +1,25 @@
-﻿namespace MainNetworkingProject.ViewModel
+﻿namespace MainNetworkingProject.ViewModel.ClientWindow
 {
-    public partial class MainWindowViewModel
+    public partial class ClientWindowViewModel
     {
-        public class MainWindowViewModelHandler : INotifyPropertyChanged
+        public class ClientWindowViewModelHandler : INotifyPropertyChanged
         {
 
 
-            #region HANDLERS
-
-
-
-
-
-            #endregion HANDLERS
-
-
-
-
-
-
-
-
             #region CONSTRUCTION
+
+
+
+
+            /// <summary>
+            /// Default constructor;
+            /// <br />
+            /// Конструктор по умолчанию;
+            /// </summary>
+            public ClientWindowViewModelHandler()
+            {
+
+            }
 
 
 
@@ -52,17 +50,6 @@
             #endregion Property changed
 
 
-
-
-            /// <summary>
-            /// Default constructor;
-            /// <br />
-            /// Конструктор по умолчанию;
-            /// </summary>
-            public MainWindowViewModelHandler()
-            {
-
-            }
 
 
 
