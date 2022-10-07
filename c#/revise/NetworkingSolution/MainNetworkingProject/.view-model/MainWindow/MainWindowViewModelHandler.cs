@@ -14,21 +14,15 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             public async void OnLaunchClientButtonClickAsync()
             {
-                
-                    MainNetworkingProject.view.ClientWindow client = new();
-                    client.Show();
-                    System.Windows.Threading.Dispatcher.Run();
-                
+                MainNetworkingProject.view.ClientWindow client = new();
+                client.Show();
             }
 
 
             public async void OnLaunchServiceButtonClickAsync()
             {
-                
-                    MainNetworkingProject.view.ServiceWindow server = new();
-                    server.Show();
-                    System.Windows.Threading.Dispatcher.Run();
-                
+                MainNetworkingProject.view.ServiceWindow server = new();
+                server.Show();
             }
 
 

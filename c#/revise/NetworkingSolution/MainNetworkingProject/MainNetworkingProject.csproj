@@ -20,7 +20,6 @@
 	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModelState.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelState.cs" />
-	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelState.cs" />
 	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModel.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
 	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModel.cs" />

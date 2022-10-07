@@ -15,7 +15,7 @@ namespace MainNetworkingProject.Model.Basics
         public static Socket? ClientSocket { get; private set; }
         public static List<ServiceUser> ClientList { get; set; } = null!;
 
-        public delegate void ServiceOutputDelegate(ref string sOutputMessage);
+        public delegate void ServiceOutputDelegate(string sOutputMessage);
 
         public event ServiceOutputDelegate GetServiceOutput;
 
@@ -30,14 +30,6 @@ namespace MainNetworkingProject.Model.Basics
         #region API - public Contract
 
 
-
-        private void PrintDebugMessage()
-        {
-            string s = $"This shit will never work. Get back to the console.";
-            GetServiceOutput.Invoke(ref s);
-        }
-
-
         /// <summary>
         /// Run server;
         /// <br />
@@ -45,14 +37,11 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public void Run()
         {
-            PrintDebugMessage();
-
             Server.Bind(iPEndPoint);
 
             Server.Listen(int.MaxValue);
 
-            string s = $"Service is listenning.";
-            GetServiceOutput.Invoke(ref s);
+            GetServiceOutput.Invoke($"Service is listenning.");
 
             while (true)
             {
@@ -72,8 +61,7 @@ namespace MainNetworkingProject.Model.Basics
 
                 ClientList.Add(currentServiceUser);
 
-                s = $"{currentServiceUser.UserName} enters chat.";
-                GetServiceOutput.Invoke(ref s);
+                GetServiceOutput.Invoke($"{currentServiceUser.UserName} enters chat.");
             }
         }
 
@@ -98,8 +86,7 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                string s = "User Disconnected.";
-                GetServiceOutput.Invoke(ref s);
+                GetServiceOutput.Invoke("User Disconnected.");
             } 
         }
 
@@ -123,11 +110,10 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                string s = "User Disconnected.";
-                GetServiceOutput.Invoke(ref s);
+                GetServiceOutput.Invoke("User Disconnected.");
             }
-            string ss = $"{User.UserName} says: " + userMessageStringBuilder.ToString();
-            GetServiceOutput.Invoke(ref ss);
+
+            GetServiceOutput.Invoke($"{User.UserName} says: " + userMessageStringBuilder.ToString());
             SendEveryone($"{User.UserName}: " + userMessageStringBuilder.ToString());
         }
 
@@ -152,7 +138,6 @@ namespace MainNetworkingProject.Model.Basics
             iPEndPoint = new(IPAddress.Any, 7999);
             Server = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             ClientList = new();
-            
         }
 
 

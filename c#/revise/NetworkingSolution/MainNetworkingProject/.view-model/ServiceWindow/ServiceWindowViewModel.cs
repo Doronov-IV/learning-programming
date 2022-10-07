@@ -11,17 +11,6 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         #region PROPERTIES
 
 
-        private ServiceWindowViewModelState _State;
-        public ServiceWindowViewModelState State
-        {
-            get { return _State; }
-            set
-            {
-                _State = value;
-                OnPropertyChanged(nameof(State));
-            }
-        }
-
         private ServiceWindowViewModelHandler _Handler;
         public ServiceWindowViewModelHandler Handler
         {
@@ -47,21 +36,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         }
 
 
-        public string _Text;
 
-        public string Text 
-        {
-            get { return _Text; }
-            set
-            {
-                _Text = value;
-                OnPropertyChanged(Text);
-            }
-        }
-
-
-
-        public static readonly object ServiceLogLock = new object();
 
         private AsyncObservableCollection<string> _ServiceLog;
 
@@ -105,15 +80,11 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         /// </summary>
         public ServiceWindowViewModel()
         {
-            //_State = new();
-            _Handler = new(this);
             _Service = new();
-            Service.GetServiceOutput += OnServiceOutput;
+            _Handler = new(this);
             _ServiceLog = new();
 
-            ServiceLog.Add("Test.");
-
-            RunServiceCommand = new(OnRunButtonClick);
+            RunServiceCommand = new(Handler.OnRunButtonClick);
         }
 
 
@@ -151,36 +122,6 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         #endregion CONSTRUCTION
 
 
-
-
-
-
-
-        #region REF
-
-
-        public ExplorerService service = new();
-
-
-        public void OnServiceOutput(ref string sServiceOutput)
-        {
-            Text = new string(sServiceOutput);
-            ServiceLog.Add(sServiceOutput);
-        }
-
-
-        public void OnRunButtonClick()
-        {
-            new Thread(() =>
-            {
-                Service.Run();
-            }).Start();
-        }
-
-
-
-
-        #endregion REF
 
 
 

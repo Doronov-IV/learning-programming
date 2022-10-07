@@ -1,4 +1,6 @@
-﻿namespace MainNetworkingProject.ViewModel.ServiceWindow
+﻿using System.Threading;
+
+namespace MainNetworkingProject.ViewModel.ServiceWindow
 {
     public partial class ServiceWindowViewModel
     {
@@ -23,7 +25,6 @@
 
             public void OnServiceOutput(string sServiceOutput)
             {
-                ViewModelRef.Text = sServiceOutput;
                 ViewModelRef.ServiceLog.Add(sServiceOutput);       
             }
 
@@ -37,7 +38,8 @@
 
             public void OnRunButtonClick()
             {
-                ViewModelRef.State.Service.Run();
+                Thread runninThread = new Thread(ViewModelRef.Service.Run);
+                runninThread.Start();
             }
 
 
@@ -57,9 +59,9 @@
             /// </summary>
             public ServiceWindowViewModelHandler(ServiceWindowViewModel ViewModelReference)
             {
-                //ViewModelRef = ViewModelReference;
+                ViewModelRef = ViewModelReference;
 
-                //ViewModelRef.State.Service.GetServiceOutput += OnServiceOutput;
+                ViewModelRef.Service.GetServiceOutput += OnServiceOutput;
             }
 
 
