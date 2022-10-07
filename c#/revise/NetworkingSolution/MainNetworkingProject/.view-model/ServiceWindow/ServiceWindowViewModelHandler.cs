@@ -59,7 +59,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             /// </summary>
             public ServiceWindowViewModelHandler(ServiceWindowViewModel ViewModelReference)
             {
-                ViewModelRef = ViewModelReference;
+                _ViewModelRef = ViewModelReference;
 
                 ViewModelRef.Service.GetServiceOutput += OnServiceOutput;
             }

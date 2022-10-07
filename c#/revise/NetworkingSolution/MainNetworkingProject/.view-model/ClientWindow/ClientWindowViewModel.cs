@@ -1,24 +1,12 @@
-﻿namespace MainNetworkingProject.ViewModel.ClientWindow
+﻿using MainNetworkingProject.Model.Basics;
+
+namespace MainNetworkingProject.ViewModel.ClientWindow
 {
     public partial class ClientWindowViewModel : INotifyPropertyChanged
     {
 
 
         #region PROPERTIES
-
-
-
-        private ClientWindowViewModelState _State;
-
-        public ClientWindowViewModelState State
-        {
-            get { return _State; }
-            set
-            {
-                _State = value;
-                OnPropertyChanged(nameof(State));
-            }
-        }
 
 
 
@@ -36,6 +24,46 @@
 
 
 
+        private List<string> _ChatLog;
+
+        public List<string> ChatLog
+        {
+            get { return _ChatLog; }
+            set
+            {
+                _ChatLog = value;
+                OnPropertyChanged(nameof(ChatLog));
+            }
+        }
+
+
+
+        private string _UserMessage;
+
+        public string UserMessage
+        {
+            get { return _UserMessage; }
+            set
+            {
+                UserMessage = value;
+                OnPropertyChanged(nameof(UserMessage));
+            }
+        }
+
+        private ServiceUser _User;
+
+
+        public ServiceUser User
+        {
+            get { return _User; }
+            set
+            {
+                _User = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
+
+
         #endregion PROPERTIES
 
 
@@ -45,6 +73,9 @@
 
 
         public DelegateCommand SendMessageCommand { get; }
+
+
+        public DelegateCommand ConnectCommand { get; }
 
 
         #endregion COMMANDS
@@ -65,7 +96,6 @@
         /// </summary>
         public ClientWindowViewModel()
         {
-            _State = new();
             _Handler = new();
         }
 

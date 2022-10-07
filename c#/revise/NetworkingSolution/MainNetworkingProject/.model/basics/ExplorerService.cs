@@ -12,7 +12,6 @@ namespace MainNetworkingProject.Model.Basics
         public static IPEndPoint iPEndPoint { get; set; } = null!;
         public static Socket Server { get; set; } = null!;
         public static Socket Client { get; set; } = null!;
-        public static Socket? ClientSocket { get; private set; }
         public static List<ServiceUser> ClientList { get; set; } = null!;
 
         public delegate void ServiceOutputDelegate(string sOutputMessage);

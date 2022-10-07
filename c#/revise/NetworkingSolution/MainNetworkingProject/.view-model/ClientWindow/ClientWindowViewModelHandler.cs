@@ -8,13 +8,32 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
         {
 
 
+            private ClientWindowViewModel _ViewModelReference;
+
+
+            public ClientWindowViewModel ViewModelReference
+            {
+                get { return _ViewModelReference; }
+                set
+                {
+                    _ViewModelReference = value;
+                    OnPropertyChanged(nameof(ViewModelReference));
+                }
+            }
+
+
+
+
             #region HANDLERS
 
 
             public void SendMessage()
             {
-                ExplorerClient explorerClient = new();
-
+                if (ViewModelReference.UserMessage != "" && null != ViewModelReference.UserMessage)
+                {
+                    byte[] binMessage = Encoding.Unicode.GetBytes(ViewModelReference.UserMessage);
+                    ViewModelReference.User.UserSocket?.Send(binMessage);
+                }
             }
 
 
