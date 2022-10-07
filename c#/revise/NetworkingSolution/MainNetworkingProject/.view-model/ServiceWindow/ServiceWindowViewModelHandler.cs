@@ -5,6 +5,31 @@
         public class ServiceWindowViewModelHandler : INotifyPropertyChanged
         {
 
+            private ServiceWindowViewModel _ViewModelRef;
+
+            public ServiceWindowViewModel ViewModelRef
+            {
+                get { return _ViewModelRef; }
+                set
+                {
+                    _ViewModelRef = value;
+                    OnPropertyChanged(nameof(ViewModelRef));
+                }
+            }
+
+
+            #region OUTPUT
+
+
+            public void OnServiceOutput(string sServiceOutput)
+            {
+                ViewModelRef.State.ServiceLog.Add(sServiceOutput);       
+            }
+
+
+            #endregion OUTPUT
+
+
 
             #region CONSTRUCTION
 
@@ -18,7 +43,18 @@
             /// </summary>
             public ServiceWindowViewModelHandler()
             {
+                ViewModelRef.State.Service.GetServiceOutput += OnServiceOutput;
+            }
 
+
+            /// <summary>
+            /// Outer class reference constructor;
+            /// <br />
+            /// Конструктор для передачи ссылки на внешний класс;
+            /// </summary>
+            public ServiceWindowViewModelHandler(ServiceWindowViewModel ViewModelReference) : this()
+            {
+                ViewModelRef = ViewModelReference;
             }
 
 

@@ -1,6 +1,6 @@
 ﻿using MainNetworkingProject.ViewModel.ServiceWindow;
 
-namespace MainNetworkingProject.View
+namespace MainNetworkingProject.view
 {
     /// <summary>
     /// Interaction logic for ServiceWindow.xaml

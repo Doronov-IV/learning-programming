@@ -1,9 +1,35 @@
-﻿namespace MainNetworkingProject.ViewModel.ServiceWindow
+﻿using MainNetworkingProject.Model.Basics;
+
+namespace MainNetworkingProject.ViewModel.ServiceWindow
 {
     public partial class ServiceWindowViewModel
     {
         public class ServiceWindowViewModelState : INotifyPropertyChanged
         {
+
+            private ExplorerService _Service;
+
+            public ExplorerService Service
+            {
+                get { return _Service; }
+                set 
+                {
+                    _Service = value;
+                    OnPropertyChanged(nameof(Service));
+                }
+            }
+
+            private List<string> _ServiceLog;
+
+            public List<string> ServiceLog
+            {
+                get { return _ServiceLog; }
+                set
+                {
+                    _ServiceLog = value;
+                    OnPropertyChanged(nameof(ServiceLog));
+                }
+            }
 
 
             #region CONSTRUCTION

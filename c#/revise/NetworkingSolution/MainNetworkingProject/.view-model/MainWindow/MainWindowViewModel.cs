@@ -1,4 +1,6 @@
-﻿namespace MainNetworkingProject.ViewModel.MainWindow
+﻿using Prism.Commands;
+
+namespace MainNetworkingProject.ViewModel.MainWindow
 {
     /// <summary>
     /// View-model of the main window;
@@ -67,7 +69,8 @@
         #region COMMANDS
 
 
-
+        public DelegateCommand LaunchClientCommand { get; }
+        public DelegateCommand LaunchServiceCommand { get; }
 
 
         #endregion COMMANDS
@@ -92,6 +95,9 @@
              // Assosiated members definition;
             _State = new();
             _Handler = new();
+
+            LaunchClientCommand = new(Handler.OnLaunchClientButtonClickAsync);
+            LaunchServiceCommand = new(Handler.OnLaunchServiceButtonClickAsync);
         }
 
 

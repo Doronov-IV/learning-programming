@@ -5,6 +5,24 @@
         xmlns:local="clr-namespace:MainNetworkingProject"
         Title="Main Window Title" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="Launch Client" Command="{Binding LaunchClientCommand}" Grid.Column="5" Margin="20" Grid.Row="5"/>
+        <Button Content="Launch Service" Command="{Binding LaunchServiceCommand}" Grid.Column="4" Margin="20" Grid.Row="5"/>
     </Grid>
 </Window>

@@ -18,7 +18,10 @@ global using System.Windows.Media.Imaging;
 global using System.Windows.Navigation;
 global using System.Windows.Shapes;
 
-using MainNetworkingProject.View;
+global using Prism.Commands;
+
+using MainNetworkingProject.view;
+using MainNetworkingProject;
 using MainNetworkingProject.ViewModel.MainWindow;
 
 namespace MainNetworkingProject

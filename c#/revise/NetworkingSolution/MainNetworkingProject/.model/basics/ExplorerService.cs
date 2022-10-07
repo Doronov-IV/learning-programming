@@ -15,6 +15,10 @@ namespace MainNetworkingProject.Model.Basics
         public static Socket? ClientSocket { get; private set; }
         public static List<ServiceUser> ClientList { get; set; } = null!;
 
+        public delegate void ServiceOutputDelegate(string sOutputMessage);
+
+        public event ServiceOutputDelegate GetServiceOutput;
+
 
         #endregion PROPERTIES - forming the State of an Object
 
@@ -76,7 +80,7 @@ namespace MainNetworkingProject.Model.Basics
             {
                 byte[] binMessage = Encoding.UTF8.GetBytes(Message);
 
-                ClientList.ForEach(client => client.UserSocket.Send(binMessage));
+                ClientList.ForEach(client => client.UserSocket?.Send(binMessage));
             }
             catch (Exception ex)
             {
@@ -88,7 +92,7 @@ namespace MainNetworkingProject.Model.Basics
 
         private void JoinChat(ServiceUser User)
         {
-            StringBuilder stringbuilder = new();
+            StringBuilder userMessageStringBuilder = new();
 
             try
             {
@@ -98,7 +102,7 @@ namespace MainNetworkingProject.Model.Basics
                 {
                     User.UserSocket?.Receive(binData);
 
-                    stringbuilder.Append(Encoding.UTF8.GetString(binData));
+                    userMessageStringBuilder.Append(Encoding.UTF8.GetString(binData));
 
                 } while (User.UserSocket?.Available > 0);
             }
@@ -106,6 +110,9 @@ namespace MainNetworkingProject.Model.Basics
             {
                 MessageBox.Show("User Disconnected.", "Disconnect", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
+
+            GetServiceOutput.Invoke($"{User.UserName} says: " + userMessageStringBuilder.ToString());
+            SendEveryone($"{User.UserName}: " + userMessageStringBuilder.ToString());
         }
 
 

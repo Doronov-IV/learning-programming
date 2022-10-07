@@ -1,9 +1,25 @@
-﻿namespace MainNetworkingProject.ViewModel.ClientWindow
+﻿using MainNetworkingProject.Model.Basics;
+
+namespace MainNetworkingProject.ViewModel.ClientWindow
 {
     public partial class ClientWindowViewModel
     {
         public class ClientWindowViewModelHandler : INotifyPropertyChanged
         {
+
+
+            #region HANDLERS
+
+
+            public void SendMessage()
+            {
+                ExplorerClient explorerClient = new();
+
+            }
+
+
+            #endregion HANDLERS
+
 
 
             #region CONSTRUCTION

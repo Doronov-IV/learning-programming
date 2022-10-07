@@ -4,6 +4,35 @@
     {
 
 
+        #region PROPERTIES
+
+
+        private ServiceWindowViewModelState _State;
+        public ServiceWindowViewModelState State
+        {
+            get { return _State; }
+            set
+            {
+                _State = value;
+                OnPropertyChanged(nameof(State));
+            }
+        }
+
+        private ServiceWindowViewModelHandler _Handler;
+        public ServiceWindowViewModelHandler Handler
+        {
+            get { return _Handler; }
+            set
+            {
+                _Handler = value;
+                OnPropertyChanged(nameof(Handler));
+            }
+        }
+
+
+        #endregion PROPERTIES
+
+
 
 
         #region COMMANDS
@@ -30,7 +59,10 @@
         /// </summary>
         public ServiceWindowViewModel()
         {
+            _State = new();
+            _Handler = new(this);
 
+             
         }
 
 

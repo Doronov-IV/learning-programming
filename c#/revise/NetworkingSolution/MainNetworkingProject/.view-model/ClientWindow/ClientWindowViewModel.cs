@@ -4,12 +4,47 @@
     {
 
 
+        #region PROPERTIES
+
+
+
+        private ClientWindowViewModelState _State;
+
+        public ClientWindowViewModelState State
+        {
+            get { return _State; }
+            set
+            {
+                _State = value;
+                OnPropertyChanged(nameof(State));
+            }
+        }
+
+
+
+        private ClientWindowViewModelHandler _Handler;
+
+        public ClientWindowViewModelHandler Handler
+        {
+            get { return _Handler; }
+            set
+            {
+                _Handler = value;
+                OnPropertyChanged(nameof(Handler));
+            }
+        }
+
+
+
+        #endregion PROPERTIES
+
+
 
 
         #region COMMANDS
 
 
-
+        public DelegateCommand SendMessageCommand { get; }
 
 
         #endregion COMMANDS
@@ -30,7 +65,10 @@
         /// </summary>
         public ClientWindowViewModel()
         {
+            _State = new();
+            _Handler = new();
 
+            //SendMessageCommand = new();
         }
 
 

@@ -1,4 +1,7 @@
-﻿namespace MainNetworkingProject.ViewModel.MainWindow
+﻿using MainNetworkingProject.view;
+using System.Threading;
+
+namespace MainNetworkingProject.ViewModel.MainWindow
 {
     public partial class MainWindowViewModel
     {
@@ -9,7 +12,30 @@
             #region HANDLERS
 
 
+            public async void OnLaunchClientButtonClickAsync()
+            {
+                Thread ClientThread = new Thread(() =>
+                {
+                    MainNetworkingProject.view.ClientWindow client = new();
+                    client.Show();
+                    System.Windows.Threading.Dispatcher.Run();
+                });
+                ClientThread.SetApartmentState(ApartmentState.STA);
+                ClientThread.Start();
+            }
 
+
+            public async void OnLaunchServiceButtonClickAsync()
+            {
+                Thread ServiceThread = new Thread(() =>
+                {
+                    MainNetworkingProject.view.ServiceWindow server = new();
+                    server.Show();
+                    System.Windows.Threading.Dispatcher.Run();
+                });
+                ServiceThread.SetApartmentState(ApartmentState.STA);
+                ServiceThread.Start();
+            }
 
 
             #endregion HANDLERS
@@ -17,6 +43,13 @@
 
 
 
+            #region LOGIC
+
+
+
+
+
+            #endregion LOGIC
 
 
 

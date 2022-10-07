@@ -1,6 +1,7 @@
 ﻿using MainNetworkingProject.ViewModel.MainWindow;
+using MainNetworkingProject.view;
 
-namespace MainNetworkingProject.View
+namespace MainNetworkingProject
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

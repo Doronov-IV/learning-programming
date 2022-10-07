@@ -6,6 +6,41 @@
         {
 
 
+            #region PROPERTIES
+
+
+            private List<string> _ChatLog;
+
+            public List<string> ChatLog
+            {
+                get { return _ChatLog; }
+                set
+                {
+                    _ChatLog = value;
+                    OnPropertyChanged(nameof(ChatLog));
+                }
+            }
+
+
+
+            private string _UserMessage;
+
+            public string UserMessage
+            {
+                get { return _UserMessage; }
+                set
+                {
+                    UserMessage = value;
+                    OnPropertyChanged(nameof(UserMessage));
+                }
+            }
+
+
+            #endregion PROPERTIES
+
+
+
+
             #region CONSTRUCTION
 
 
@@ -18,7 +53,7 @@
             /// </summary>
             public ClientWindowViewModelState()
             {
-
+                _ChatLog = new();
             }
 
 
