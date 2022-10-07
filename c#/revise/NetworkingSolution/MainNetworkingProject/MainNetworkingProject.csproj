@@ -11,6 +11,7 @@
 
 
   <ItemGroup>
+	 <Compile Include=".model\basics\AsyncObservableCollection.cs" />
 	 <Compile Include=".model\basics\ExplorerClient.cs" />
 	 <Compile Include=".model\basics\ExplorerService.cs" />
 	 <Compile Include=".model\basics\ServiceUser.cs" />

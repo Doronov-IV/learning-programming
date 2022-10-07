@@ -37,10 +37,7 @@
 
             public void OnRunButtonClick()
             {
-                Task.Run(() =>
-                {
-                    ViewModelRef.State.Service.Run();
-                });
+                ViewModelRef.State.Service.Run();
             }
 
 

@@ -1,4 +1,5 @@
 ﻿using MainNetworkingProject.Model.Basics;
+using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace MainNetworkingProject.ViewModel.ServiceWindow
@@ -60,9 +61,11 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
 
 
 
-        private List<string> _ServiceLog;
+        public static readonly object ServiceLogLock = new object();
 
-        public List<string> ServiceLog
+        private AsyncObservableCollection<string> _ServiceLog;
+
+        public AsyncObservableCollection<string> ServiceLog
         {
             get { return _ServiceLog; }
             set
@@ -159,9 +162,9 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         public ExplorerService service = new();
 
 
-        public void OnServiceOutput(string sServiceOutput)
+        public void OnServiceOutput(ref string sServiceOutput)
         {
-            Text = sServiceOutput;
+            Text = new string(sServiceOutput);
             ServiceLog.Add(sServiceOutput);
         }
 
