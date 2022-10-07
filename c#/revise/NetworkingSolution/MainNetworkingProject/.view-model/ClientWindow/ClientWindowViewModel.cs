@@ -67,8 +67,6 @@
         {
             _State = new();
             _Handler = new();
-
-            //SendMessageCommand = new();
         }
 
 

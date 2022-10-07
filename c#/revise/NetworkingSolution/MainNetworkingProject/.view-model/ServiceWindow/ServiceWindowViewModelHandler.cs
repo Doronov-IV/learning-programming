@@ -23,11 +23,28 @@
 
             public void OnServiceOutput(string sServiceOutput)
             {
-                ViewModelRef.State.ServiceLog.Add(sServiceOutput);       
+                ViewModelRef.Text = sServiceOutput;
+                ViewModelRef.ServiceLog.Add(sServiceOutput);       
             }
 
 
             #endregion OUTPUT
+
+
+
+            #region CONTROLS
+
+
+            public void OnRunButtonClick()
+            {
+                Task.Run(() =>
+                {
+                    ViewModelRef.State.Service.Run();
+                });
+            }
+
+
+            #endregion CONTROLS
 
 
 
@@ -37,24 +54,15 @@
 
 
             /// <summary>
-            /// Default constructor;
-            /// <br />
-            /// Конструктор по умолчанию;
-            /// </summary>
-            public ServiceWindowViewModelHandler()
-            {
-                ViewModelRef.State.Service.GetServiceOutput += OnServiceOutput;
-            }
-
-
-            /// <summary>
             /// Outer class reference constructor;
             /// <br />
             /// Конструктор для передачи ссылки на внешний класс;
             /// </summary>
-            public ServiceWindowViewModelHandler(ServiceWindowViewModel ViewModelReference) : this()
+            public ServiceWindowViewModelHandler(ServiceWindowViewModel ViewModelReference)
             {
-                ViewModelRef = ViewModelReference;
+                //ViewModelRef = ViewModelReference;
+
+                //ViewModelRef.State.Service.GetServiceOutput += OnServiceOutput;
             }
 
 

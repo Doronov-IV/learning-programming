@@ -22,8 +22,10 @@
         </Grid.ColumnDefinitions>
         <ListBox 
             Name="ConsoleLogListBox" Margin="10"
-            d:ItemsSource="{d:SampleData ItemCount=5}"
-            Grid.Column="1" Grid.Row="1" FontFamily="Consolas" Background="Black" Foreground="#FF009600" />
+            ItemsSource="{Binding ServiceLog, Mode=TwoWay}"
+            Grid.Column="1" Grid.Row="1" FontFamily="Consolas" Background="Black" Foreground="#FF007800" />
+        <Button Command="{Binding RunServiceCommand}" Content="Run" Grid.Column="3" Margin="10" Grid.Row="2"/>
+        <Label Grid.Column="1" Content="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="480"/>
 
 
 

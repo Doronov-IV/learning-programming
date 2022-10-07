@@ -1,4 +1,7 @@
-﻿namespace MainNetworkingProject.ViewModel.ServiceWindow
+﻿using MainNetworkingProject.Model.Basics;
+using System.Threading;
+
+namespace MainNetworkingProject.ViewModel.ServiceWindow
 {
     public partial class ServiceWindowViewModel : INotifyPropertyChanged
     {
@@ -30,6 +33,46 @@
         }
 
 
+        private ExplorerService _Service;
+
+        public ExplorerService Service
+        {
+            get { return _Service; }
+            set
+            {
+                _Service = value;
+                OnPropertyChanged(nameof(Service));
+            }
+        }
+
+
+        public string _Text;
+
+        public string Text 
+        {
+            get { return _Text; }
+            set
+            {
+                _Text = value;
+                OnPropertyChanged(Text);
+            }
+        }
+
+
+
+        private List<string> _ServiceLog;
+
+        public List<string> ServiceLog
+        {
+            get { return _ServiceLog; }
+            set
+            {
+                _ServiceLog = value;
+                OnPropertyChanged(nameof(ServiceLog));
+            }
+        }
+
+
         #endregion PROPERTIES
 
 
@@ -38,7 +81,7 @@
         #region COMMANDS
 
 
-
+        public DelegateCommand RunServiceCommand { get; }
 
 
         #endregion COMMANDS
@@ -59,10 +102,15 @@
         /// </summary>
         public ServiceWindowViewModel()
         {
-            _State = new();
+            //_State = new();
             _Handler = new(this);
+            _Service = new();
+            Service.GetServiceOutput += OnServiceOutput;
+            _ServiceLog = new();
 
-             
+            ServiceLog.Add("Test.");
+
+            RunServiceCommand = new(OnRunButtonClick);
         }
 
 
@@ -98,6 +146,38 @@
 
 
         #endregion CONSTRUCTION
+
+
+
+
+
+
+
+        #region REF
+
+
+        public ExplorerService service = new();
+
+
+        public void OnServiceOutput(string sServiceOutput)
+        {
+            Text = sServiceOutput;
+            ServiceLog.Add(sServiceOutput);
+        }
+
+
+        public void OnRunButtonClick()
+        {
+            new Thread(() =>
+            {
+                Service.Run();
+            }).Start();
+        }
+
+
+
+
+        #endregion REF
 
 
 

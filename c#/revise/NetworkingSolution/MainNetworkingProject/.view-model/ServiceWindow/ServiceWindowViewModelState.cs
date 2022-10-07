@@ -32,6 +32,10 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             }
 
 
+
+
+
+
             #region CONSTRUCTION
 
 
@@ -44,7 +48,8 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             /// </summary>
             public ServiceWindowViewModelState()
             {
-
+                _Service = new();
+                _ServiceLog = new();
             }
 
 

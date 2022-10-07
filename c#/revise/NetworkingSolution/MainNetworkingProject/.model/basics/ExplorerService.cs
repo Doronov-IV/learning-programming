@@ -41,6 +41,8 @@ namespace MainNetworkingProject.Model.Basics
 
             Server.Listen(int.MaxValue);
 
+            GetServiceOutput.Invoke($"Service is listenning.");
+
             while (true)
             {
                 Client = Server.Accept();
@@ -59,7 +61,7 @@ namespace MainNetworkingProject.Model.Basics
 
                 ClientList.Add(currentServiceUser);
 
-                MessageBox.Show($"{currentServiceUser.UserName} enters the chat.","User entered your channel", MessageBoxButton.OK, MessageBoxImage.Information);
+                GetServiceOutput.Invoke($"{currentServiceUser.UserName} enters chat.");
             }
         }
 
@@ -84,7 +86,7 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                MessageBox.Show("User Disconnected.","Disconnect",MessageBoxButton.OK, MessageBoxImage.Stop);
+                GetServiceOutput.Invoke("User Disconnected.");
             } 
         }
 
@@ -108,7 +110,7 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                MessageBox.Show("User Disconnected.", "Disconnect", MessageBoxButton.OK, MessageBoxImage.Stop);
+                GetServiceOutput.Invoke("User Disconnected.");
             }
 
             GetServiceOutput.Invoke($"{User.UserName} says: " + userMessageStringBuilder.ToString());
@@ -133,9 +135,10 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public ExplorerService()
         {
-            iPEndPoint = new(IPAddress.Any, 8000);
+            iPEndPoint = new(IPAddress.Any, 7999);
             Server = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             ClientList = new();
+            //GetServiceOutput.Invoke("Service created.");
         }
 
 
