@@ -26,11 +26,11 @@ namespace Tools.ClassExtensions
         /// <param name="compareType">Comparison type;<br />Тип сравнения;</param>
         /// <param name="compareValues">An array of strings to compare;<br />Массив строк к сравнению;</param>
         /// <returns>True if at least one is equal, othervise false;<br />True, если хотя бы одна строка совпадает, иначе false;</returns>
-        public static bool CompareMultiple(string data, StringComparison compareType, params string[] compareValues)
+        public static bool CompareMultiple(string sourceString, StringComparison compareType, params string[] compareValues)
         {
             foreach (string s in compareValues)
             {
-                if (data.Equals(s, compareType))
+                if (sourceString.Equals(s, compareType))
                 {
                     return true;
                 }
