@@ -7,29 +7,42 @@ using System.Threading.Tasks;
 
 namespace MainNetworkingProject.Model.Basics
 {
-    public class ServiceHub
+    public class ServiceHub : INotifyPropertyChanged
     {
         /// <summary>
         /// Список пользователей
         /// </summary>
-        private static List<Client> _users = null!;
+        private List<ReversedClient> _users = null!;
 
         /// <summary>
         /// Прослушивает подключения от TCP-клиентов сети.
         /// </summary>
-        private static TcpListener _listener = null!;
+        private TcpListener _listener = null!;
+
+
+        private bool _isRunning;
+
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                OnPropertyChanged(nameof(IsRunning));
+            }
+        }
 
 
 
         public delegate void ServiceOutputDelegate(string sOutputMessage);
 
-        public static event ServiceOutputDelegate SendServiceOutput;
+        public event ServiceOutputDelegate SendServiceOutput;
 
 
 
-        public static void Run()
+        public void Run()
         {
-            _users = new List<Client>();
+            _users = new List<ReversedClient>();
 
             /*IP сервера (локальный IP адрес пк (Localhost 127.0.0.1)) и порт сервера
              * IPAddress: Предоставляет IP-адрес.*/
@@ -44,14 +57,13 @@ namespace MainNetworkingProject.Model.Basics
 
             while (true)
             {
-                var client = new Client(_listener.AcceptTcpClient());//AcceptTcpClient(): Принимает ожидающий запрос на подключение.
-                client.SendServiceOutput += PassOutputMessage;
+                var client = new ReversedClient(_listener.AcceptTcpClient(), this);//AcceptTcpClient(): Принимает ожидающий запрос на подключение.
                 _users.Add(client);//Добавление ного клиента в список пользователей
                 BroadcastConnection();/*Broadcast the connextion to everyone on the server: Раздать соединение всем на сервере*/
             }
         }
 
-        public static void BroadcastConnection()
+        public void BroadcastConnection()
         {
             foreach (var user in _users)
             {
@@ -66,7 +78,7 @@ namespace MainNetworkingProject.Model.Basics
                 }
             }
         }
-        public static void BroadcastMessage(string message)
+        public void BroadcastMessage(string message)
         {
             //рассылка отправленного сообщения всем пользователям
             foreach (var user in _users)
@@ -78,7 +90,7 @@ namespace MainNetworkingProject.Model.Basics
             }
         }
 
-        public static void BroadcastDisconnect(string uid)
+        public void BroadcastDisconnect(string uid)
         {
             var disconnectedUser = _users.Where(x => x.UID.ToString() == uid).FirstOrDefault(); disconnectedUser = null!;
             _users.Remove(disconnectedUser);//Удаление отключенного клиента из списка пользователей
@@ -93,7 +105,7 @@ namespace MainNetworkingProject.Model.Basics
             BroadcastMessage($"[{disconnectedUser.UserName}] Disconnected!");//отправка всем сообщения с информацией о том что пользователь отключился
         }
 
-        public static void PassOutputMessage(string sMessage)
+        public void PassOutputMessage(string sMessage)
         {
             SendServiceOutput.Invoke(sMessage);
         }
@@ -107,7 +119,36 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public ServiceHub()
         {
-            _users = new List<Client>(); 
+            _users = new List<ReversedClient>();
         }
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
+
     }
 }

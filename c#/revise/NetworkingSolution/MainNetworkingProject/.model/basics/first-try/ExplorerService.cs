@@ -42,12 +42,12 @@ namespace MainNetworkingProject.Model.Basics
 
             while (true)
             {
-                /*var Client = Server.AcceptTcpClientAsync();
+                /*var ReversedClient = Server.AcceptTcpClientAsync();
 
-                using (NetworkStream stream = Client.GetStream())
+                using (NetworkStream stream = ReversedClient.GetStream())
                 {
                     // Wrap client binMessage into ServiceUser object;
-                    ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = Client };
+                    ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = ReversedClient };
 
                     ClientList.Add(currentServiceUser);
 
@@ -71,7 +71,7 @@ namespace MainNetworkingProject.Model.Basics
             using (NetworkStream stream = tcpClient.GetStream())
             {
                 // Wrap client binMessage into ServiceUser object;
-                ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = Client };
+                ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = ReversedClient };
 
                 ClientList.Add(currentServiceUser);
 

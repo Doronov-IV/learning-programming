@@ -8,7 +8,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         public class ServiceWindowViewModelHandler : INotifyPropertyChanged
         {
 
-            private static ServiceWindowViewModel _ViewModelRef;
+            private ServiceWindowViewModel _ViewModelRef;
 
             public ServiceWindowViewModel ViewModelRef
             {
@@ -24,9 +24,9 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             #region OUTPUT
 
 
-            public static void OnServiceOutput(string sServiceOutput)
+            public void OnServiceOutput(string sServiceOutput)
             {
-                _ViewModelRef.ServiceLog.Add(sServiceOutput);       
+                ViewModelRef.ServiceLog.Add(sServiceOutput);       
             }
 
 
@@ -39,7 +39,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
 
             public void OnRunButtonClick()
             {
-                Thread runninThread = new Thread(ServiceHub.Run);
+                Thread runninThread = new Thread(ViewModelRef.Service.Run);
                 runninThread.Start();
             }
 
@@ -62,7 +62,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             {
                 _ViewModelRef = ViewModelReference;
 
-                ServiceHub.SendServiceOutput += OnServiceOutput;
+                ViewModelRef.Service.SendServiceOutput += OnServiceOutput;
             }
 
 
