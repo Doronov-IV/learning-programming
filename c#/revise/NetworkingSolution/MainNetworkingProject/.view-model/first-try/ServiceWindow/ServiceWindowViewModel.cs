@@ -26,9 +26,9 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         }
 
 
-        private ExplorerService _Service;
+        private ServiceHub _Service;
 
-        public ExplorerService Service
+        public ServiceHub Service
         {
             get { return _Service; }
             set
