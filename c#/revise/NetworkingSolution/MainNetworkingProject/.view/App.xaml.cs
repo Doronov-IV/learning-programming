@@ -9,6 +9,7 @@ global using System.Net;
 global using System.Net.Sockets;
 
 global using System.Windows;
+global using System.IO;
 global using System.Windows.Controls;
 global using System.Windows.Data;
 global using System.Windows.Documents;

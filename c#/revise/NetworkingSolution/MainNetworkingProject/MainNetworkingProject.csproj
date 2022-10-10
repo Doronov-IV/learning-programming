@@ -12,9 +12,11 @@
 
   <ItemGroup>
 	 <Compile Include=".model\basics\AsyncObservableCollection.cs" />
-	 <Compile Include=".model\basics\ExplorerClient.cs" />
-	 <Compile Include=".model\basics\ExplorerService.cs" />
-	 <Compile Include=".model\basics\ServiceUser.cs" />
+	 <Compile Include=".model\basics\first-try\ExplorerClient.cs" />
+	 <Compile Include=".model\basics\first-try\ExplorerService.cs" />
+	 <Compile Include=".model\basics\first-try\ServiceUser.cs" />
+	 <Compile Include=".model\basics\second-try\PacketBuilder.cs" />
+	 <Compile Include=".model\basics\second-try\ReversedService.cs" />
 	 <Compile Include=".view-model\ClientWindow\ClientWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
