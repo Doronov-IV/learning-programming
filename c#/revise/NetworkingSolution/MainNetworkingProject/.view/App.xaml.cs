@@ -20,6 +20,8 @@ global using System.Windows.Navigation;
 global using System.Windows.Shapes;
 
 global using Prism.Commands;
+global using Tools.Interfaces;
+global using Tools.Collections.Generic;
 
 using MainNetworkingProject.view;
 using MainNetworkingProject;

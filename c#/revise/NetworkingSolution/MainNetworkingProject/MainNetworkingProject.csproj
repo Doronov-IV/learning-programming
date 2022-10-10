@@ -11,7 +11,6 @@
 
 
   <ItemGroup>
-	 <Compile Include=".to-dll\AsyncObservableCollection.cs" />
 	 <Compile Include=".model\basics\first-try\ExplorerClient.cs" />
 	 <Compile Include=".model\basics\first-try\ExplorerService.cs" />
 	 <Compile Include=".model\basics\first-try\ServiceUser.cs" />
@@ -22,7 +21,6 @@
 	 <Compile Include=".model\basics\second-try\model-related\UserModel.cs" />
 	 <Compile Include=".model\basics\second-try\viewmodel-related\RelayCommand.cs" />
 	 <Compile Include=".model\basics\second-try\viewmodel-related\ServiceHub.cs" />
-	 <Compile Include=".to-dll\IPendingOutput.cs" />
 	 <Compile Include=".view-model\first-try\ClientWindow\ClientWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\second-try\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
@@ -52,6 +50,18 @@
 
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include=".to-dll\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
