@@ -12,22 +12,22 @@ namespace MainNetworkingProject.Model.Basics
         /// <summary>
         /// Список пользователей
         /// </summary>
-        private List<Client> _users = null!;
+        private static List<Client> _users = null!;
 
         /// <summary>
         /// Прослушивает подключения от TCP-клиентов сети.
         /// </summary>
-        private TcpListener _listener = null!;
+        private static TcpListener _listener = null!;
 
 
 
         public delegate void ServiceOutputDelegate(string sOutputMessage);
 
-        public event ServiceOutputDelegate SendServiceOutput;
+        public static event ServiceOutputDelegate SendServiceOutput;
 
 
 
-        public void Run()
+        public static void Run()
         {
             _users = new List<Client>();
 
@@ -51,7 +51,7 @@ namespace MainNetworkingProject.Model.Basics
             }
         }
 
-        public void BroadcastConnection()
+        public static void BroadcastConnection()
         {
             foreach (var user in _users)
             {
@@ -66,7 +66,7 @@ namespace MainNetworkingProject.Model.Basics
                 }
             }
         }
-        public void BroadcastMessage(string message)
+        public static void BroadcastMessage(string message)
         {
             //рассылка отправленного сообщения всем пользователям
             foreach (var user in _users)
@@ -78,7 +78,7 @@ namespace MainNetworkingProject.Model.Basics
             }
         }
 
-        public void BroadcastDisconnect(string uid)
+        public static void BroadcastDisconnect(string uid)
         {
             var disconnectedUser = _users.Where(x => x.UID.ToString() == uid).FirstOrDefault(); disconnectedUser = null!;
             _users.Remove(disconnectedUser);//Удаление отключенного клиента из списка пользователей
@@ -93,7 +93,7 @@ namespace MainNetworkingProject.Model.Basics
             BroadcastMessage($"[{disconnectedUser.UserName}] Disconnected!");//отправка всем сообщения с информацией о том что пользователь отключился
         }
 
-        public void PassOutputMessage(string sMessage)
+        public static void PassOutputMessage(string sMessage)
         {
             SendServiceOutput.Invoke(sMessage);
         }
@@ -107,7 +107,7 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public ServiceHub()
         {
-
+            _users = new List<Client>(); 
         }
     }
 }

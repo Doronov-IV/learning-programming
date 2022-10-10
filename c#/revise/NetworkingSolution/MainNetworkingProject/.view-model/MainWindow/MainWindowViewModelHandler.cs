@@ -14,7 +14,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             public async void OnLaunchClientButtonClickAsync()
             {
-                MainNetworkingProject.view.ClientWindow client = new();
+                MainNetworkingProject.view.ReversedClientWindow client = new();
                 client.Show();
             }
 

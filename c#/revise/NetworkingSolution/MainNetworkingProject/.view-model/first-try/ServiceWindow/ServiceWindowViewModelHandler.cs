@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using MainNetworkingProject.Model.Basics;
+using System.Threading;
 
 namespace MainNetworkingProject.ViewModel.ServiceWindow
 {
@@ -7,7 +8,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         public class ServiceWindowViewModelHandler : INotifyPropertyChanged
         {
 
-            private ServiceWindowViewModel _ViewModelRef;
+            private static ServiceWindowViewModel _ViewModelRef;
 
             public ServiceWindowViewModel ViewModelRef
             {
@@ -23,9 +24,9 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             #region OUTPUT
 
 
-            public void OnServiceOutput(string sServiceOutput)
+            public static void OnServiceOutput(string sServiceOutput)
             {
-                ViewModelRef.ServiceLog.Add(sServiceOutput);       
+                _ViewModelRef.ServiceLog.Add(sServiceOutput);       
             }
 
 
@@ -38,7 +39,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
 
             public void OnRunButtonClick()
             {
-                Thread runninThread = new Thread(ViewModelRef.Service.Run);
+                Thread runninThread = new Thread(ServiceHub.Run);
                 runninThread.Start();
             }
 
@@ -61,7 +62,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             {
                 _ViewModelRef = ViewModelReference;
 
-                ViewModelRef.Service.SendServiceOutput += OnServiceOutput;
+                ServiceHub.SendServiceOutput += OnServiceOutput;
             }
 
 
