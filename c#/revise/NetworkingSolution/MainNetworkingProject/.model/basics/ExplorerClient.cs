@@ -98,6 +98,19 @@ namespace MainNetworkingProject.Model.Basics
 
 
 
+        public void Run()
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    ReadMessage();
+                }
+            });
+        }
+
+
+
 
 
         #region CONSTRUCTION

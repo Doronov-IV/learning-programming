@@ -64,6 +64,21 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
         }
 
 
+
+        private ExplorerClient _ExplorerClient;
+
+
+        public ExplorerClient ExplorerClient
+        {
+            get { return _ExplorerClient; }
+            set
+            {
+                _ExplorerClient = value;
+                OnPropertyChanged(nameof(ExplorerClient));
+            }
+        }
+
+
         #endregion PROPERTIES
 
 
