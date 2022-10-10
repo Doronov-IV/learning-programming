@@ -31,9 +31,25 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
             {
                 if (ViewModelReference.UserMessage != "" && null != ViewModelReference.UserMessage)
                 {
-                    byte[] binMessage = Encoding.Unicode.GetBytes(ViewModelReference.UserMessage);
-                    ViewModelReference.User.UserSocket?.Send(binMessage);
+                    ViewModelReference.MainExplorerClient.UserMessage = ViewModelReference.UserMessage;
+                    ViewModelReference.MainExplorerClient.SendMessage();
                 }
+            }
+
+
+
+
+            public void UpdateChatLog()
+            {
+                ViewModelReference.ChatLog = ViewModelReference.MainExplorerClient.ChatLog;
+            }
+
+
+
+            public void Connect()
+            {
+                ViewModelReference.MainExplorerClient.Connect();
+                ViewModelReference.MainExplorerClient.Run();
             }
 
 
@@ -51,9 +67,9 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
             /// <br />
             /// Конструктор по умолчанию;
             /// </summary>
-            public ClientWindowViewModelHandler()
+            public ClientWindowViewModelHandler(ClientWindowViewModel ViewModelReference)
             {
-
+                _ViewModelReference = ViewModelReference;
             }
 
 

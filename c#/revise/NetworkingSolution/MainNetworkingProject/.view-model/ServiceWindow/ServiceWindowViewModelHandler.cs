@@ -61,7 +61,7 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             {
                 _ViewModelRef = ViewModelReference;
 
-                ViewModelRef.Service.GetServiceOutput += OnServiceOutput;
+                ViewModelRef.Service.SendServiceOutput += OnServiceOutput;
             }
 
 

@@ -13,7 +13,7 @@ namespace MainNetworkingProject.Model.Basics
 
 
 
-        public static IPEndPoint iPEndPoint { get; set; } = null!;
+        public static IPEndPoint IpEndPoint { get; set; } = null!;
         public static Socket Server { get; set; } = null!;
 
 
@@ -39,7 +39,7 @@ namespace MainNetworkingProject.Model.Basics
             get { return _UserMessage; }
             set
             {
-                UserMessage = value;
+                _UserMessage = value;
             }
         }
 
@@ -60,12 +60,23 @@ namespace MainNetworkingProject.Model.Basics
 
 
 
+
+
+        public delegate void OnUserMessageRecieved();
+
+
+        public event OnUserMessageRecieved UpdateChatLog;
+
+
+
+
+
         public void SendMessage()
         {
             if (UserMessage != "" && null != UserMessage)
             {
                 byte[] binMessage = Encoding.Unicode.GetBytes(UserMessage);
-                User.UserSocket?.Send(binMessage);
+                Server.Send(binMessage);
             }
         }
 
@@ -93,6 +104,7 @@ namespace MainNetworkingProject.Model.Basics
                 while (Server.Available > 0);
 
                 ChatLog.Add(MessageStringBuilder.ToString());
+                UpdateChatLog.Invoke();
             }
         }
 
@@ -110,6 +122,11 @@ namespace MainNetworkingProject.Model.Basics
         }
 
 
+        public void Connect()
+        {
+            Server.Connect(IpEndPoint);
+        }
+
 
 
 
@@ -124,8 +141,10 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public ExplorerClient()
         {
-            iPEndPoint = new(IPAddress.Parse("127.0.0.1"), 7999);
+            IpEndPoint = new(IPAddress.Parse("10.61.140.35"), 7999);
             _User = new() { UserSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP), UserName = "user_unknown" };
+            Server = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            ChatLog = new();
         }
 
 

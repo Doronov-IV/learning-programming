@@ -10,13 +10,13 @@ namespace MainNetworkingProject.Model.Basics
 
 
         public static IPEndPoint iPEndPoint { get; set; } = null!;
-        public static Socket Server { get; set; } = null!;
+        public static TcpListener Server { get; set; } = null!;
         public static Socket Client { get; set; } = null!;
         public static List<ServiceUser> ClientList { get; set; } = null!;
 
         public delegate void ServiceOutputDelegate(string sOutputMessage);
 
-        public event ServiceOutputDelegate GetServiceOutput;
+        public event ServiceOutputDelegate SendServiceOutput;
 
 
         #endregion PROPERTIES - forming the State of an Object
@@ -36,32 +36,53 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public void Run()
         {
-            Server.Bind(iPEndPoint);
+            Server.Start();
 
-            Server.Listen(int.MaxValue);
-
-            GetServiceOutput.Invoke($"Service is listenning.");
+            SendServiceOutput.Invoke($"Service is listenning.");
 
             while (true)
             {
-                Client = Server.Accept();
+                /*var Client = Server.AcceptTcpClientAsync();
 
-                byte[] ClientName = new byte[256];
+                using (NetworkStream stream = Client.GetStream())
+                {
+                    // Wrap client binMessage into ServiceUser object;
+                    ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = Client };
 
-                Client?.Receive(ClientName);
+                    ClientList.Add(currentServiceUser);
 
+                    SendServiceOutput.Invoke($"{currentServiceUser.UserName.Trim()} enters chat.");
+
+                    Task.Run(() =>
+                    {
+                        JoinChat(currentServiceUser);
+                    });
+                }
+
+                    SendFeedbackToUser($"You are connected.");*/
+            }
+        }
+
+
+
+        public async Task Accept(TcpClient tcpClient)
+        {
+            /*
+            using (NetworkStream stream = tcpClient.GetStream())
+            {
                 // Wrap client binMessage into ServiceUser object;
                 ServiceUser currentServiceUser = new() { UserName = Encoding.UTF8.GetString(ClientName), UserSocket = Client };
+
+                ClientList.Add(currentServiceUser);
+
+                SendServiceOutput.Invoke($"{currentServiceUser.UserName.Trim()} enters chat.");
 
                 Task.Run(() =>
                 {
                     JoinChat(currentServiceUser);
                 });
-
-                ClientList.Add(currentServiceUser);
-
-                GetServiceOutput.Invoke($"{currentServiceUser.UserName} enters chat.");
             }
+            */
         }
 
 
@@ -85,8 +106,23 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                GetServiceOutput.Invoke("User Disconnected.");
+                SendServiceOutput.Invoke("User Disconnected.");
             } 
+        }
+
+
+        private void SendFeedbackToUser(string Message)
+        {
+            try
+            {
+                byte[] binMessage = Encoding.UTF8.GetBytes(Message);
+
+                Client.Send(binMessage);
+            }
+            catch (Exception ex)
+            {
+                SendServiceOutput.Invoke("User Disconnected.");
+            }
         }
 
 
@@ -94,6 +130,8 @@ namespace MainNetworkingProject.Model.Basics
         private void JoinChat(ServiceUser User)
         {
             StringBuilder userMessageStringBuilder = new();
+
+            SendFeedbackToUser($"You've joined chat.");
 
             try
             {
@@ -109,11 +147,11 @@ namespace MainNetworkingProject.Model.Basics
             }
             catch (Exception ex)
             {
-                GetServiceOutput.Invoke("User Disconnected.");
+                SendServiceOutput.Invoke("User Disconnected.");
             }
 
-            GetServiceOutput.Invoke($"{User.UserName} says: " + userMessageStringBuilder.ToString());
-            SendEveryone($"{User.UserName}: " + userMessageStringBuilder.ToString());
+            SendServiceOutput.Invoke($"{User.UserName} says: " + userMessageStringBuilder.ToString().Trim());
+            SendEveryone($"{User.UserName}: " + userMessageStringBuilder.ToString().Trim());
         }
 
 
@@ -134,8 +172,8 @@ namespace MainNetworkingProject.Model.Basics
         /// </summary>
         public ExplorerService()
         {
-            iPEndPoint = new(IPAddress.Any, 7999);
-            Server = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            iPEndPoint = new(IPAddress.Parse("10.61.140.35"), 7999);
+            //Server = new();
             ClientList = new();
         }
 

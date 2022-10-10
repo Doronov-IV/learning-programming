@@ -1,4 +1,5 @@
 ﻿using MainNetworkingProject.Model.Basics;
+using System.Collections.ObjectModel;
 
 namespace MainNetworkingProject.ViewModel.ClientWindow
 {
@@ -24,9 +25,9 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
 
 
 
-        private List<string> _ChatLog;
+        private ObservableCollection<string> _ChatLog;
 
-        public List<string> ChatLog
+        public ObservableCollection<string> ChatLog
         {
             get { return _ChatLog; }
             set
@@ -45,7 +46,7 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
             get { return _UserMessage; }
             set
             {
-                UserMessage = value;
+                _UserMessage = value;
                 OnPropertyChanged(nameof(UserMessage));
             }
         }
@@ -65,16 +66,16 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
 
 
 
-        private ExplorerClient _ExplorerClient;
+        private ExplorerClient _MainExplorerClient;
 
 
-        public ExplorerClient ExplorerClient
+        public ExplorerClient MainExplorerClient
         {
-            get { return _ExplorerClient; }
+            get { return _MainExplorerClient; }
             set
             {
-                _ExplorerClient = value;
-                OnPropertyChanged(nameof(ExplorerClient));
+                _MainExplorerClient = value;
+                OnPropertyChanged(nameof(MainExplorerClient));
             }
         }
 
@@ -91,6 +92,8 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
 
 
         public DelegateCommand ConnectCommand { get; }
+
+
 
 
         #endregion COMMANDS
@@ -111,7 +114,13 @@ namespace MainNetworkingProject.ViewModel.ClientWindow
         /// </summary>
         public ClientWindowViewModel()
         {
-            _Handler = new();
+            _ChatLog = new();
+            _MainExplorerClient = new();
+            _Handler = new(this);
+            MainExplorerClient.UpdateChatLog += Handler.UpdateChatLog;
+
+            ConnectCommand = new(Handler.Connect);
+            SendMessageCommand = new(Handler.SendMessage);
         }
 
 

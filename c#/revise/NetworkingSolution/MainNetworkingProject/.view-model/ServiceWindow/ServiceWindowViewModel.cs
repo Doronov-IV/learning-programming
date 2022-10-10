@@ -88,6 +88,8 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             _ServiceLog = new();
 
             RunServiceCommand = new(Handler.OnRunButtonClick);
+
+
         }
 
 
