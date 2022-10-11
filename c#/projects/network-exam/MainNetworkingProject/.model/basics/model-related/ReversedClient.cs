@@ -62,7 +62,7 @@
 
         void Process()
         {
-            SendServiceOutput.Invoke($"[{DateTime.Now}]: User has connected with the name: {UserName}.");
+            SendServiceOutput.Invoke($"[{DateTime.Now}]: ReversedClient has connected with the userName: {UserName}");
 
             while (true)
             {
@@ -73,8 +73,8 @@
                     {
                         case 5://case 5 так как мы ранее присвоили отправке сообщений код операции равный 5
                             var msg = _packetReader.ReadMessage();
-                            SendServiceOutput.Invoke($"[{DateTime.Now}]: User {UserName} says: {msg}");
-                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}]: {UserName}: {msg}");
+                            SendServiceOutput.Invoke($"[{DateTime.Now}]: Message received! {msg}");
+                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}]: [{UserName}]: {msg}");
                             break;
                         default:
                             break;
@@ -82,7 +82,7 @@
                 }
                 catch (Exception)
                 {
-                    SendServiceOutput.Invoke($"[{UserName} ({UID.ToString()})]: Disconnected!");//сообщение об отключении от сервера клиента
+                    SendServiceOutput.Invoke($"[{UID.ToString()}]: Disconnected!");//сообщение об отключении от сервера клиента
                     StaticServiceHub.BroadcastDisconnect(UID.ToString());
                     ClientSocket.Close();//Удаление клиента и закрытие подключения.  Close(): Удаляет данный экземпляр TcpClient и запрашивает закрытие базового подключения TCP.
                     break;

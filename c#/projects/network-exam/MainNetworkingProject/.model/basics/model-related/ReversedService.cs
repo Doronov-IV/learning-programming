@@ -86,10 +86,17 @@ namespace MainNetworkingProject.Model.Basics
         /// <param name="message">Сообщение</param>
         public void SendMessageToServer(string message)
         {
-            var messagePacket = new PacketBuilder();
-            messagePacket.WriteOpCode(5);//присваиваем написанию сообщения код операции равный 5
-            messagePacket.WriteMessage(message);
-            _client.Client.Send(messagePacket.GetPacketBytes());//отправляем массив байт из сообщения
+            try
+            {
+                var messagePacket = new PacketBuilder();
+                messagePacket.WriteOpCode(5);//присваиваем написанию сообщения код операции равный 5
+                messagePacket.WriteMessage(message);
+                _client.Client.Send(messagePacket.GetPacketBytes());//отправляем массив байт из сообщения
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"You haven't connected yet.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 

@@ -12,6 +12,7 @@ namespace MainNetworkingProject.ViewModel
         #region PROPERTIES - Object State
 
 
+
         private ObservableCollection<UserModel> _Users;
 
 
@@ -31,6 +32,7 @@ namespace MainNetworkingProject.ViewModel
 
         private ObservableCollection<string> _Messages;
 
+
         /// <summary>
         /// Обозреваемая коллекция из сообщений
         /// </summary>
@@ -43,7 +45,6 @@ namespace MainNetworkingProject.ViewModel
                 OnPropertyChanged(nameof(Messages));
             }
         }
-
 
 
         private string _UserName;
@@ -59,12 +60,12 @@ namespace MainNetworkingProject.ViewModel
                 _UserName = value;
                 OnPropertyChanged(nameof(UserName));
             }
-
         }
 
 
 
         private string _Message;
+
 
         /// <summary>
         /// Свойство: Сообщение
@@ -105,66 +106,6 @@ namespace MainNetworkingProject.ViewModel
 
 
         #endregion COMMANDS - Prism Commands
-
-
-
-
-        #region CONSTRUCTION - Object Lifetime
-
-
-        /// <summary>
-        /// Default constructor;
-        /// <br />
-        /// Конструктор по умолчанию;
-        /// </summary>
-        public ReversedClientWindowViewModel()
-        {
-            Users = new ObservableCollection<UserModel>();
-            Messages = new ObservableCollection<string>();
-            _server = new();
-
-            
-            _server.connectedEvent += ConnectUser;//подключение нового пользователя
-            _server.msgReceivedEvent += RecieveMessage;//получение сообщения
-            _server.userDisconnectEvent += RemoveUser;//отключение пользователя
-
-            //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполниться.
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => !string.IsNullOrEmpty(UserName));
-
-            //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполниться.
-            SendMessageCommand = new RelayCommand(o => SendMessage(), o => !string.IsNullOrEmpty(Message));
-        }
-
-
-
-        #region Property changed
-
-
-        /// <summary>
-        /// Propery changed event handler;
-        /// <br />
-        /// Делегат-обработчик события 'property changed';
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-
-        /// <summary>
-        /// Handler-method of the 'property changed' delegate;
-        /// <br />
-        /// Метод-обработчик делегата 'property changed';
-        /// </summary>
-        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
-        private void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-
-        #endregion Property changed
-
-
-
-        #endregion CONSTRUCTION - Object Lifetime
 
 
 
@@ -231,11 +172,74 @@ namespace MainNetworkingProject.ViewModel
         private void SendMessage()
         {
             _server.SendMessageToServer(Message);
-            Message = new string("");
+            Message = "";
         }
 
 
         #endregion LOGIC - internal behavior
+
+
+
+
+        #region CONSTRUCTION - Object Lifetime
+
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public ReversedClientWindowViewModel()
+        {
+            Users = new ObservableCollection<UserModel>();
+            Messages = new ObservableCollection<string>();
+            _server = new();
+
+            _server.connectedEvent += ConnectUser;//подключение нового пользователя
+            _server.msgReceivedEvent += RecieveMessage;//получение сообщения
+            _server.userDisconnectEvent += RemoveUser;//отключение пользователя
+
+            //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполнится.
+            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
+
+            //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполнится.
+            SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
+        }
+
+
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
+
+
+
+        #endregion CONSTRUCTION - Object Lifetime
+
 
 
     }
