@@ -39,7 +39,7 @@
                     Command="{Binding ConnectToServerCommand}" Margin="0,53,0,0" HorizontalAlignment="Center" Width="185" Height="20" VerticalAlignment="Top"/>
 
         <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
-        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,90,0,10" Width="185" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,90,0,20" Width="185" Grid.RowSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!--Привязка текста к имени пользователя-->
@@ -51,17 +51,17 @@
         <!--StackPanel: Выравнивает дочерние элементы в одну линию, ориентированную горизонтально или вертикально.-->
 
         <!--привязка-->
-        <ListView Height="499"
-                      ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="668" Grid.Column="1" Margin="10,21,0,0" Grid.RowSpan="2"/>
+        <ListView Height="489"
+                      ItemsSource="{Binding Messages}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="668" Grid.Column="1" Margin="10,0,0,20" Grid.RowSpan="2"/>
         <TextBox
                     Grid.Column="1"
                     Grid.Row="2"
-                         Text="{Binding Message, Mode=TwoWay}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
+                         Text="{Binding Message, Mode=TwoWay}" Margin="10,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="604"/>
         <Button Width="48"
                     Grid.Column="1"
                     Grid.Row="2"
                         Content="Send"
-                        Command="{Binding SendMessageCommand}" Margin="579,10,48,10"/>
+                        Command="{Binding SendMessageCommand}" Margin="630,10,34,10"/>
         <!--привязка-->
     </Grid>
 </Window>

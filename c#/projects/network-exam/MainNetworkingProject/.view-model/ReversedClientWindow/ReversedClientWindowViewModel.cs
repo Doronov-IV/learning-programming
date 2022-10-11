@@ -205,8 +205,8 @@ namespace MainNetworkingProject.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
-            Users = new ObservableCollection<UserModel>();
-            Messages = new ObservableCollection<string>();
+            _Users = new ObservableCollection<UserModel>();
+            _Messages = new ObservableCollection<string>();
             _server = new();
 
             _server.connectedEvent += ConnectUser;//подключение нового пользователя
