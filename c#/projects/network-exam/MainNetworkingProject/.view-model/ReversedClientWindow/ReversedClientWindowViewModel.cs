@@ -94,13 +94,19 @@ namespace MainNetworkingProject.ViewModel
         #region COMMANDS - Prism Commands
 
 
+
         /// <summary>
-        /// Команда для подключения к серверу
+        /// ;
+        /// <br />
+        /// ;
         /// </summary>
         public RelayCommand ConnectToServerCommand { get; set; }
 
+
         /// <summary>
-        /// Команда для отправки сообщения
+        /// ;
+        /// <br />
+        /// ;
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
 
@@ -122,7 +128,8 @@ namespace MainNetworkingProject.ViewModel
         {
             var uid = _server.PacketReader.ReadMessage();
             var user = Users.Where(x => x.UID == uid).FirstOrDefault();
-            user = null!;
+
+            //foreach (var user in )
             Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
         }
 
@@ -173,6 +180,13 @@ namespace MainNetworkingProject.ViewModel
         {
             _server.SendMessageToServer(Message);
             Message = "";
+        }
+
+
+
+        public void CommenceDisconnect(object? sender, CancelEventArgs args)
+        {
+            _server.Disconnect();
         }
 
 

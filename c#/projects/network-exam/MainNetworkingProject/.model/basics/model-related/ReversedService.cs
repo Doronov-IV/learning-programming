@@ -80,6 +80,22 @@ namespace MainNetworkingProject.Model.Basics
         }
 
 
+
+
+        /// <summary>
+        /// Disconnect client from service;
+        /// <br />
+        /// Отключить клиент от сервиса;
+        /// </summary>
+        public void Disconnect()
+        {
+            if (_client.Connected)
+            {
+                _client.Close();
+            }
+        }
+
+
         /// <summary>
         /// Отправка сообщения на сервер
         /// </summary>
@@ -119,10 +135,18 @@ namespace MainNetworkingProject.Model.Basics
         {
             Task.Run(() =>
             {
+                byte opCode = 0;
                 while (true)
                 {
                     //код операции;
-                    var opCode = PacketReader.ReadByte();
+                    try
+                    {
+                        opCode = PacketReader.ReadByte();
+                    }
+                    catch (Exception e)
+                    {
+                        userDisconnectEvent?.Invoke();
+                    }
                     switch (opCode)
                     {
 

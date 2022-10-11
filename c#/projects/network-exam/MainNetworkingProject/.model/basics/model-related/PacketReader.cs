@@ -1,4 +1,6 @@
-﻿namespace MainNetworkingProject.Model.Basics
+﻿using System.Windows.Interop;
+
+namespace MainNetworkingProject.Model.Basics
 {
     public class PacketReader : BinaryReader
     {
@@ -21,12 +23,20 @@
 
         public string ReadMessage()
         {
-            byte[] msgBuffer;
-            var length = ReadInt32();
-            msgBuffer = new byte[length];
-            _NetworkStream.Read(msgBuffer, 0, length);
+            string msg = "";
+            try
+            {
+                byte[] msgBuffer;
+                var length = ReadInt32();
+                msgBuffer = new byte[length];
+                _NetworkStream.Read(msgBuffer, 0, length);
 
-            var msg = Encoding.ASCII.GetString(msgBuffer);
+                msg = Encoding.UTF8.GetString(msgBuffer);
+            }
+            catch
+            {
+
+            }
             return msg;
         }
 

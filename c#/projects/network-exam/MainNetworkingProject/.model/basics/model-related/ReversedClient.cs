@@ -1,4 +1,6 @@
-﻿namespace MainNetworkingProject.Model.Basics
+﻿using Tools.Interfaces;
+
+namespace MainNetworkingProject.Model.Basics
 {
 
     /// <summary>
@@ -29,9 +31,9 @@
         private static ServiceHub StaticServiceHub = null!;
 
 
-        public delegate void ServiceOutputDelegate(string sOutputMessage);
+        public delegate void PendOutputDelegate(string sOutputMessage);
 
-        public event ServiceOutputDelegate SendServiceOutput;
+        public event PendOutputDelegate SendOutput;
 
 
 
@@ -43,7 +45,7 @@
         {
             ReversedClient.StaticServiceHub = serviceHub;
 
-            SendServiceOutput += serviceHub.PassOutputMessage;
+            SendOutput += serviceHub.PassOutputMessage;
 
             ClientSocket = client;
 
@@ -62,7 +64,7 @@
 
         void Process()
         {
-            SendServiceOutput.Invoke($"[{DateTime.Now}]: ReversedClient has connected with the userName: {UserName}");
+            SendOutput.Invoke($"[{DateTime.Now}] user has connected with the name: {UserName}");
 
             while (true)
             {
@@ -71,18 +73,18 @@
                     var opCode = _packetReader.ReadByte();
                     switch (opCode)
                     {
-                        case 5://case 5 так как мы ранее присвоили отправке сообщений код операции равный 5
+                        case 5:
                             var msg = _packetReader.ReadMessage();
-                            SendServiceOutput.Invoke($"[{DateTime.Now}]: Message received! {msg}");
-                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}]: [{UserName}]: {msg}");
+                            SendOutput.Invoke($"[{DateTime.Now}] user {UserName} says: {msg}");
+                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {UserName}: {msg}");
                             break;
                         default:
                             break;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    SendServiceOutput.Invoke($"[{UID.ToString()}]: Disconnected!");//сообщение об отключении от сервера клиента
+                    SendOutput.Invoke($"User {UserName} (id = {UID.ToString()}) has disconnected!");//сообщение об отключении от сервера клиента
                     StaticServiceHub.BroadcastDisconnect(UID.ToString());
                     ClientSocket.Close();//Удаление клиента и закрытие подключения.  Close(): Удаляет данный экземпляр TcpClient и запрашивает закрытие базового подключения TCP.
                     break;

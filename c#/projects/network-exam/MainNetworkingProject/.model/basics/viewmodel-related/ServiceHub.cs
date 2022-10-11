@@ -44,16 +44,9 @@ namespace MainNetworkingProject.Model.Basics
         {
             _users = new List<ReversedClient>();
 
-            /*IP сервера (локальный IP адрес пк (Localhost 127.0.0.1)) и порт сервера
-             * IPAddress: Предоставляет IP-адрес.*/
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
 
-
-            /*Метод Start инициализирует базовый Socketобъект, привязывает его к локальной конечной точке и ожидает входящих попыток подключения.
-             *При получении Start запроса на подключение метод помещается в очередь и продолжает прослушивать дополнительные запросы до вызова Stop метода. 
-             *Если TcpListener запрос на подключение будет получен после того, как он уже поставил в очередь максимальное количество подключений, 
-             *он создаст SocketException запрос на подключение на клиенте.*/
-            _listener.Start(); //Запускает ожидание входящих запросов на подключение.
+            _listener.Start();
 
             while (true)
             {
@@ -92,7 +85,7 @@ namespace MainNetworkingProject.Model.Basics
 
         public void BroadcastDisconnect(string uid)
         {
-            var disconnectedUser = _users.Where(x => x.UID.ToString() == uid).FirstOrDefault(); disconnectedUser = null!;
+            var disconnectedUser = _users.Where(x => x.UID.ToString() == uid).FirstOrDefault();
             _users.Remove(disconnectedUser);//Удаление отключенного клиента из списка пользователей
             foreach (var user in _users)
             {
@@ -102,7 +95,7 @@ namespace MainNetworkingProject.Model.Basics
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
             }
 
-            BroadcastMessage($"[{disconnectedUser.UserName}] Disconnected!");//отправка всем сообщения с информацией о том что пользователь отключился
+            BroadcastMessage($"{disconnectedUser.UserName} Disconnected!");//отправка всем сообщения с информацией о том что пользователь отключился
         }
 
         public void PassOutputMessage(string sMessage)

@@ -26,6 +26,10 @@ namespace MainNetworkingProject.view
             InitializeComponent();
 
             DataContext = new ReversedClientWindowViewModel();
+
+            var viewModelRef = DataContext as ReversedClientWindowViewModel;
+
+            Closing += viewModelRef.CommenceDisconnect;
         }
     }
 }
