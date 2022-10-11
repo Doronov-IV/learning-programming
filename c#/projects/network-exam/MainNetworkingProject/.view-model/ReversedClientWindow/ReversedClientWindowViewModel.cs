@@ -13,19 +13,14 @@ namespace MainNetworkingProject.ViewModel
 
 
         /// <summary>
-        /// Observable list of users;
-        /// <br />
-        /// Обозреваемый список пользователей;
+        /// Обозреваемая коллекция из моделей пользователя
         /// </summary>
-        public ObservableCollection<UserModel> UserList { get; set; }
-
+        public ObservableCollection<UserModel> Users { get; set; }
 
         /// <summary>
-        /// Observable list of messages;
-        /// <br />
-        /// Обозреваемый список сообщений;
+        /// Обозреваемая коллекция из сообщений
         /// </summary>
-        public ObservableCollection<string> MessageList { get; set; }
+        public ObservableCollection<string> Messages { get; set; }
 
 
         /// <summary>
@@ -53,17 +48,12 @@ namespace MainNetworkingProject.ViewModel
 
 
         /// <summary>
-        /// Service connection;
-        /// <br />
-        /// Подключение к сервису;
+        /// Команда для подключения к серверу
         /// </summary>
         public RelayCommand ConnectToServerCommand { get; set; }
 
-
         /// <summary>
-        /// Sending message;
-        /// <br />
-        /// Отправка сообщения;
+        /// Команда для отправки сообщения
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
 
@@ -83,18 +73,18 @@ namespace MainNetworkingProject.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
-            UserList = new ObservableCollection<UserModel>();
-            MessageList = new ObservableCollection<string>();
+            Users = new ObservableCollection<UserModel>();
+            Messages = new ObservableCollection<string>();
             _server = new();
 
             _server.connectedEvent += ConnectUser;//подключение нового пользователя
             _server.msgReceivedEvent += RecieveMessage;//получение сообщения
             _server.userDisconnectEvent += RemoveUser;//отключение пользователя
 
-            // check if the user name is present;
+            //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполниться.
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => !string.IsNullOrEmpty(UserName));
 
-            // check if the message is not empty
+            //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполниться.
             SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
         }
 
@@ -115,9 +105,9 @@ namespace MainNetworkingProject.ViewModel
         private void RemoveUser()
         {
             var uid = _server.PacketReader.ReadMessage();
-            var user = UserList.Where(x => x.UID == uid).FirstOrDefault();
+            var user = Users.Where(x => x.UID == uid).FirstOrDefault();
             user = null!;
-            Application.Current.Dispatcher.Invoke(() => UserList.Remove(user)); // removing disconnected user;
+            Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
         }
 
 
@@ -129,8 +119,9 @@ namespace MainNetworkingProject.ViewModel
         private void RecieveMessage()
         {
             var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => MessageList.Add(msg)); // adding it to the observable collection;
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
         }
+
 
 
         /// <summary>
@@ -154,9 +145,9 @@ namespace MainNetworkingProject.ViewModel
             
              */
 
-            if (!UserList.Any(x => x.UID == user.UID))
+            if (!Users.Any(x => x.UID == user.UID))
             {
-                Application.Current.Dispatcher.Invoke(() => UserList.Add(user));
+                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
             }
         }
 
