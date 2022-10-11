@@ -31,7 +31,7 @@
             UpdateSourceTrigger: Односторонняя привязка от источника к приемнику практически мгновенно изменяет свойство приемника
             PropertyChanged: источник привязки обновляется сразу после обновления свойства в приемнике-->
         <TextBox
-                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Margin="0,21,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Center" Width="185"/>
+                     Text="{Binding UserName, Mode=TwoWay}" Margin="0,21,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Center" Width="185"/>
 
         <!--Кнопка для подключения клиента к серверу-->
         <Button
@@ -52,11 +52,11 @@
 
         <!--привязка-->
         <ListView Height="433"
-                      ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="633" Grid.Column="1" Margin="10,21,0,0" Grid.RowSpan="2"/>
+                      ItemsSource="{Binding Messages, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="633" Grid.Column="1" Margin="10,21,0,0" Grid.RowSpan="2"/>
         <TextBox
                     Grid.Column="1"
                     Grid.Row="2"
-                         Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
+                         Text="{Binding Message, Mode=TwoWay}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
         <Button Width="48"
                     Grid.Column="1"
                     Grid.Row="2"

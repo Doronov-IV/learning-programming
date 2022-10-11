@@ -28,21 +28,56 @@ namespace MainNetworkingProject.ViewModel
             }
         }
 
+
+        private ObservableCollection<string> _Messages;
+
         /// <summary>
         /// Обозреваемая коллекция из сообщений
         /// </summary>
-        public ObservableCollection<string> Messages { get; set; }
+        public ObservableCollection<string> Messages 
+        {
+            get { return _Messages; }
+            set
+            {
+                _Messages = value;
+                OnPropertyChanged(nameof(Messages));
+            }
+        }
 
+
+
+        private string _UserName;
 
         /// <summary>
         /// Свойство: Имя пользователя
         /// </summary>
-        public string UserName { get; set; } = null!;
+        public string UserName 
+        {
+            get { return _UserName; }
+            set
+            {
+                _UserName = value;
+                OnPropertyChanged(nameof(UserName));
+            }
+
+        }
+
+
+
+        private string _Message;
 
         /// <summary>
         /// Свойство: Сообщение
         /// </summary>
-        public string Message { get; set; } = null!;
+        public string Message 
+        {
+            get { return _Message; }
+            set
+            {
+                _Message = value;
+                OnPropertyChanged(nameof(Message));
+            }
+        }
 
         /// <summary>
         /// Экземпляр класса Сервер
@@ -88,6 +123,7 @@ namespace MainNetworkingProject.ViewModel
             Messages = new ObservableCollection<string>();
             _server = new();
 
+            
             _server.connectedEvent += ConnectUser;//подключение нового пользователя
             _server.msgReceivedEvent += RecieveMessage;//получение сообщения
             _server.userDisconnectEvent += RemoveUser;//отключение пользователя
