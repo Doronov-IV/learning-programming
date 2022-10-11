@@ -13,14 +13,19 @@ namespace MainNetworkingProject.ViewModel
 
 
         /// <summary>
-        /// Обозреваемая коллекция из моделей пользователя
+        /// Observable list of users;
+        /// <br />
+        /// Обозреваемый список пользователей;
         /// </summary>
-        public ObservableCollection<UserModel> Users { get; set; }
+        public ObservableCollection<UserModel> UserList { get; set; }
+
 
         /// <summary>
-        /// Обозреваемая коллекция из сообщений
+        /// Observable list of messages;
+        /// <br />
+        /// Обозреваемый список сообщений;
         /// </summary>
-        public ObservableCollection<string> Messages { get; set; }
+        public ObservableCollection<string> MessageList { get; set; }
 
 
         /// <summary>
@@ -48,12 +53,17 @@ namespace MainNetworkingProject.ViewModel
 
 
         /// <summary>
-        /// Команда для подключения к серверу
+        /// Service connection;
+        /// <br />
+        /// Подключение к сервису;
         /// </summary>
         public RelayCommand ConnectToServerCommand { get; set; }
 
+
         /// <summary>
-        /// Команда для отправки сообщения
+        /// Sending message;
+        /// <br />
+        /// Отправка сообщения;
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
 
@@ -73,18 +83,18 @@ namespace MainNetworkingProject.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
-            Users = new ObservableCollection<UserModel>();
-            Messages = new ObservableCollection<string>();
+            UserList = new ObservableCollection<UserModel>();
+            MessageList = new ObservableCollection<string>();
             _server = new();
 
             _server.connectedEvent += ConnectUser;//подключение нового пользователя
             _server.msgReceivedEvent += RecieveMessage;//получение сообщения
             _server.userDisconnectEvent += RemoveUser;//отключение пользователя
 
-            //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполниться.
+            // check if the user name is present;
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => !string.IsNullOrEmpty(UserName));
 
-            //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполниться.
+            // check if the message is not empty
             SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
         }
 
@@ -105,9 +115,9 @@ namespace MainNetworkingProject.ViewModel
         private void RemoveUser()
         {
             var uid = _server.PacketReader.ReadMessage();
-            var user = Users.Where(x => x.UID == uid).FirstOrDefault();
+            var user = UserList.Where(x => x.UID == uid).FirstOrDefault();
             user = null!;
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
+            Application.Current.Dispatcher.Invoke(() => UserList.Remove(user)); // removing disconnected user;
         }
 
 
@@ -119,9 +129,8 @@ namespace MainNetworkingProject.ViewModel
         private void RecieveMessage()
         {
             var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
+            Application.Current.Dispatcher.Invoke(() => MessageList.Add(msg)); // adding it to the observable collection;
         }
-
 
 
         /// <summary>
@@ -145,9 +154,9 @@ namespace MainNetworkingProject.ViewModel
             
              */
 
-            if (!Users.Any(x => x.UID == user.UID))
+            if (!UserList.Any(x => x.UID == user.UID))
             {
-                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
+                Application.Current.Dispatcher.Invoke(() => UserList.Add(user));
             }
         }
 
