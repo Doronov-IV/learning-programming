@@ -56,7 +56,7 @@
         <TextBox
                     Grid.Column="1"
                     Grid.Row="2"
-                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
+                         Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
         <Button Width="48"
                     Grid.Column="1"
                     Grid.Row="2"

@@ -5,17 +5,28 @@ using MainNetworkingProject.Model.Basics;
 
 namespace MainNetworkingProject.ViewModel
 {
-    public class ReversedClientWindowViewModel
+    public class ReversedClientWindowViewModel : INotifyPropertyChanged
     {
 
 
         #region PROPERTIES - Object State
 
 
+        private ObservableCollection<UserModel> _Users;
+
+
         /// <summary>
         /// Обозреваемая коллекция из моделей пользователя
         /// </summary>
-        public ObservableCollection<UserModel> Users { get; set; }
+        public ObservableCollection<UserModel> Users 
+        {
+            get { return _Users; }
+            set
+            {
+                _Users = value;
+                OnPropertyChanged(nameof(Users));
+            }
+        }
 
         /// <summary>
         /// Обозреваемая коллекция из сообщений
@@ -85,8 +96,36 @@ namespace MainNetworkingProject.ViewModel
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => !string.IsNullOrEmpty(UserName));
 
             //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполниться.
-            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
+            SendMessageCommand = new RelayCommand(o => SendMessage(), o => !string.IsNullOrEmpty(Message));
         }
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
 
 
         #endregion CONSTRUCTION - Object Lifetime
@@ -149,6 +188,14 @@ namespace MainNetworkingProject.ViewModel
             {
                 Application.Current.Dispatcher.Invoke(() => Users.Add(user));
             }
+        }
+
+
+
+        private void SendMessage()
+        {
+            _server.SendMessageToServer(Message);
+            Message = new string("");
         }
 
 
