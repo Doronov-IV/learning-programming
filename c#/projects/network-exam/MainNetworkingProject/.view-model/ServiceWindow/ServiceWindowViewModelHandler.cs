@@ -41,10 +41,26 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
             {
                 Thread runninThread = new Thread(ViewModelRef.Service.Run);
                 runninThread.Start();
+                ToggleConnectionState();
             }
 
 
             #endregion CONTROLS
+
+
+
+            #region LOGIC
+
+
+            private void ToggleConnectionState()
+            {
+                bool bTemp = _ViewModelRef.IsRunning;
+                _ViewModelRef.IsRunning = _ViewModelRef.IsNotRunning;
+                _ViewModelRef.IsNotRunning = bTemp;
+            }
+
+
+            #endregion LOGIC
 
 
 

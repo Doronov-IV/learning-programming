@@ -110,6 +110,9 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         /// </summary>
         public ServiceWindowViewModel()
         {
+            _IsRunning = false;
+            _IsNotRunning = true;
+
             _Service = new();
             _Handler = new(this);
             _ServiceLog = new();
