@@ -48,27 +48,34 @@ namespace MainNetworkingProject.Model.Basics
         /// <param name="userName">Имя пользователя</param>
         public void ConnectToServer(string userName)
         {
-            //Если клиент не подключен
-            if (!_client.Connected)
+            try
             {
-                //Подключение клиента к IP адресу (Localhost 127.0.0.1) и порту
-                _client.Connect("127.0.0.1", 7891);
-                //GetStream(): Возвращает объект NetworkStream, используемый для отправки и получения данных.
-                PacketReader = new(_client.GetStream());
-
-                if (!string.IsNullOrEmpty(userName))
+                //Если клиент не подключен
+                if (!_client.Connected)
                 {
-                    var connectPacket = new PacketBuilder();
+                    //Подключение клиента к IP адресу (Localhost 127.0.0.1) и порту
+                    _client.Connect("127.0.0.1", 7891);
+                    //GetStream(): Возвращает объект NetworkStream, используемый для отправки и получения данных.
+                    PacketReader = new(_client.GetStream());
 
-                    connectPacket.WriteOpCode(0);
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        var connectPacket = new PacketBuilder();
+
+                        connectPacket.WriteOpCode(0);
 
 
-                    connectPacket.WriteMessage(userName);
+                        connectPacket.WriteMessage(userName);
 
-                    _client.Client.Send(connectPacket.GetPacketBytes());
+                        _client.Client.Send(connectPacket.GetPacketBytes());
+                    }
+
+                    ReadPackets();
                 }
-
-                ReadPackets();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"It seems that the server is down for now.\nPlease, try connect later.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -54,6 +54,33 @@ namespace MainNetworkingProject.ViewModel.ServiceWindow
         }
 
 
+        private bool _IsRunning;
+
+        private bool _IsNotRunning;
+
+
+        public bool IsRunning
+        {
+            get { return _IsRunning; }
+            set
+            {
+                _IsRunning = value;
+                OnPropertyChanged(nameof(IsRunning));
+            }
+        }
+
+
+        public bool IsNotRunning
+        {
+            get { return _IsNotRunning; }
+            set
+            {
+                _IsNotRunning = value;
+                OnPropertyChanged(nameof(IsNotRunning));
+            }
+        }
+
+
         #endregion PROPERTIES
 
 

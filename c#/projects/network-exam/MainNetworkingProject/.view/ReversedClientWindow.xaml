@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainNetworkingProject.view"
         mc:Ignorable="d"
-        Title="ReversedClientWindow" Height="450" Width="800">
+        Title="ReversedClientWindow" Height="600" Width="950">
     <!--Это наиболее мощный и часто используемый контейнер, напоминающий обычную таблицу. 
     Он содержит столбцы и строки, количество которых задает разработчик. 
     Для определения строк используется свойство RowDefinitions, 
@@ -14,54 +14,54 @@
 
         <!--Ширина столбцов сетки-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="269*"/>
+            <RowDefinition Height="216*"/>
+            <RowDefinition Height="49*"/>
+        </Grid.RowDefinitions>
 
         <!--Определяет область, в которой можно упорядочивать дочерние элементы
         горизонтально либо вертикально относительно друг друга.-->
-        <DockPanel>
 
-            <!--Текстовое поле принимающее имя пользователя
+        <!--Текстовое поле принимающее имя пользователя
             UpdateSourceTrigger: Односторонняя привязка от источника к приемнику практически мгновенно изменяет свойство приемника
             PropertyChanged: источник привязки обновляется сразу после обновления свойства в приемнике-->
-            <TextBox Height="25"
-                     DockPanel.Dock="Top"
-                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox
+                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Margin="0,21,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Center" Width="185"/>
 
-            <!--Кнопка для подключения клиента к серверу-->
-            <Button Height="25"
-                    DockPanel.Dock="Top"
+        <!--Кнопка для подключения клиента к серверу-->
+        <Button
                     Content="Connect"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding ConnectToServerCommand}" Margin="0,53,0,0" HorizontalAlignment="Center" Width="185" Height="20" VerticalAlignment="Top"/>
 
-            <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
-            <ListView ItemsSource="{Binding Users}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <!--Привязка текста к имени пользователя-->
-                        <TextBlock Text="{Binding UserName}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </DockPanel>
+        <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,90,0,10" Width="185" Grid.RowSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!--Привязка текста к имени пользователя-->
+                    <TextBlock Text="{Binding UserName}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <!--StackPanel: Выравнивает дочерние элементы в одну линию, ориентированную горизонтально или вертикально.-->
-        <StackPanel Grid.Column="1">
-            <ListView Height="380"
-                      ItemsSource="{Binding Messages}"/>
 
-            <!--привязка-->
-            <StackPanel Orientation="Horizontal">
-                <TextBox Height="55"
-                         Width="545"
-                         VerticalContentAlignment="Center"
-                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Width="55"
+        <!--привязка-->
+        <ListView Height="433"
+                      ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="633" Grid.Column="1" Margin="10,21,0,0" Grid.RowSpan="2"/>
+        <TextBox
+                    Grid.Column="1"
+                    Grid.Row="2"
+                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="32,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510"/>
+        <Button Width="48"
+                    Grid.Column="1"
+                    Grid.Row="2"
                         Content="Send"
-                        Command="{Binding SendMessageCommand}"/>
-            </StackPanel>
-
-        </StackPanel>
+                        Command="{Binding SendMessageCommand}" Margin="579,10,48,10"/>
+        <!--привязка-->
     </Grid>
 </Window>
