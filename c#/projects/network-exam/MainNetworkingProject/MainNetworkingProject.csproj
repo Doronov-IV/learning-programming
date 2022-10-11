@@ -11,24 +11,19 @@
 
 
   <ItemGroup>
-	 <Compile Include=".model\basics\first-try\ExplorerClient.cs" />
-	 <Compile Include=".model\basics\first-try\ExplorerService.cs" />
-	 <Compile Include=".model\basics\first-try\ServiceUser.cs" />
-	 <Compile Include=".model\basics\second-try\model-related\PacketBuilder.cs" />
-	 <Compile Include=".model\basics\second-try\model-related\PacketReader.cs" />
-	 <Compile Include=".model\basics\second-try\model-related\ReversedClient.cs" />
-	 <Compile Include=".model\basics\second-try\model-related\ReversedService.cs" />
-	 <Compile Include=".model\basics\second-try\model-related\UserModel.cs" />
-	 <Compile Include=".model\basics\second-try\viewmodel-related\RelayCommand.cs" />
-	 <Compile Include=".model\basics\second-try\viewmodel-related\ServiceHub.cs" />
-	 <Compile Include=".view-model\first-try\ClientWindow\ClientWindowViewModelHandler.cs" />
+	 <Compile Include=".model\basics\model-related\PacketBuilder.cs" />
+	 <Compile Include=".model\basics\model-related\PacketReader.cs" />
+	 <Compile Include=".model\basics\model-related\ReversedClient.cs" />
+	 <Compile Include=".model\basics\model-related\ReversedService.cs" />
+	 <Compile Include=".model\basics\model-related\UserModel.cs" />
+	 <Compile Include=".model\basics\viewmodel-related\RelayCommand.cs" />
+	 <Compile Include=".model\basics\viewmodel-related\ServiceHub.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
-	 <Compile Include=".view-model\second-try\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
-	 <Compile Include=".view-model\first-try\ServiceWindow\ServiceWindowViewModelHandler.cs" />
+	 <Compile Include=".view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
+	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelState.cs" />
-	 <Compile Include=".view-model\first-try\ClientWindow\ClientWindowViewModel.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
-	 <Compile Include=".view-model\first-try\ServiceWindow\ServiceWindowViewModel.cs" />
+	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModel.cs" />
 	 <Compile Include=".view\App.xaml.cs" />
 	 <Compile Include=".view\MainWindow.xaml.cs" />
 	 <Compile Include=".view\ReversedClientWindow.xaml.cs" />
