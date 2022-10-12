@@ -40,7 +40,6 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                         process.StartInfo.Arguments = "-noexit";
                         process.StartInfo.CreateNoWindow = false;
                         process.Start();
-                        process.WaitForExit();
                     }
                 });
             }
