@@ -1,0 +1,63 @@
+﻿<Window x:Class="ReversedClient.client_view.ReversedClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReversedClient.client_view"
+        mc:Ignorable="d"
+        Title="ReversedClientWindow" Height="600" Width="950">
+    <Grid>
+
+        <!--Ширина столбцов сетки-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="269*"/>
+            <RowDefinition Height="216*"/>
+            <RowDefinition Height="49*"/>
+        </Grid.RowDefinitions>
+
+        <!--Определяет область, в которой можно упорядочивать дочерние элементы
+        горизонтально либо вертикально относительно друг друга.-->
+
+        <!--Текстовое поле принимающее имя пользователя
+            UpdateSourceTrigger: Односторонняя привязка от источника к приемнику практически мгновенно изменяет свойство приемника
+            PropertyChanged: источник привязки обновляется сразу после обновления свойства в приемнике-->
+        <TextBox
+                     Text="{Binding UserName}" Margin="0,21,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Center" Width="185"/>
+
+        <!--Кнопка для подключения клиента к серверу-->
+        <Button     IsEnabled="True"
+                    Content="Connect"
+                    Command="{Binding ConnectToServerCommand}" Margin="0,53,0,0" HorizontalAlignment="Center" Width="185" Height="20" VerticalAlignment="Top"/>
+
+        <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,90,0,20" Width="185" Grid.RowSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!--Привязка текста к имени пользователя-->
+                    <TextBlock Text="{Binding UserName}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--StackPanel: Выравнивает дочерние элементы в одну линию, ориентированную горизонтально или вертикально.-->
+
+        <!--привязка-->
+        <ListView Height="489"
+                      ItemsSource="{Binding Messages}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="668" Grid.Column="1" Margin="10,0,0,20" Grid.RowSpan="2"/>
+        <TextBox
+                    Grid.Column="1"
+                    Grid.Row="2"
+                         Text="{Binding Message, Mode=TwoWay}" Margin="10,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="604"/>
+        <Button Width="48"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                        Content="Send"
+                        Command="{Binding SendMessageCommand}" Margin="630,10,34,10"/>
+        <!--привязка-->
+    </Grid>
+</Window>

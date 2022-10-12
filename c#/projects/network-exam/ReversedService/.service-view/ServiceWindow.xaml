@@ -1,0 +1,33 @@
+﻿<Window x:Class="ReversedService.service_view.ServiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReversedService.service_view"
+        mc:Ignorable="d"
+        Title="ServiceWindow" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox 
+            Name="ConsoleLogListBox" Margin="10"
+            ItemsSource="{Binding Path=ServiceLog, Mode=TwoWay}"
+            Grid.Column="1" Grid.Row="1" FontFamily="Consolas" Background="Black" Foreground="#FF008C00" />
+            <Button Command="{Binding RunServiceCommand}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Run" Grid.Column="3" Margin="10" Grid.Row="2"/>
+
+
+
+        </Grid>
+    </Grid>
+</Window>

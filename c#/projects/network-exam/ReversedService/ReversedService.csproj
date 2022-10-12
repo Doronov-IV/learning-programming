@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+	  <StartupObject>ReversedService.App</StartupObject>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include=".service-model\auxiliary\PacketBuilder.cs" />
+    <Compile Include=".service-model\auxiliary\PacketReader.cs" />
+    <Compile Include=".service-model\basics\ReversedClient.cs" />
+    <Compile Include=".service-model\wrappers\ServiceHub.cs" />
+    <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
+    <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
+    <Compile Include=".service-view\App.xaml.cs" />
+    <Compile Include=".service-view\ServiceWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include=".service-view\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include=".service-view\ServiceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
