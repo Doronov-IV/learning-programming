@@ -11,30 +11,12 @@
 
 
   <ItemGroup>
-	 <Compile Include=".model\aixiliary\PacketBuilder.cs" />
-	 <Compile Include=".model\aixiliary\PacketReader.cs" />
-	 <Compile Include=".model\basics\ReversedClient.cs" />
-	 <Compile Include=".model\basics\ReversedService.cs" />
-	 <Compile Include=".model\basics\UserModel.cs" />
-	 <Compile Include=".model\aixiliary\RelayCommand.cs" />
-	 <Compile Include=".model\wrappers\ServiceHub.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
-	 <Compile Include=".view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
-	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelState.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
-	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModel.cs" />
 	 <Compile Include=".view\App.xaml.cs" />
 	 <Compile Include=".view\MainWindow.xaml.cs" />
-	 <Compile Include=".view\ReversedClientWindow.xaml.cs" />
-	 <Compile Include=".view\ServiceWindow.xaml.cs" />
     <Page Include=".view\MainWindow.xaml" />
-    <Page Include=".view\ReversedClientWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include=".view\ServiceWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <ApplicationDefinition Include=".view\App.xaml">
 		<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 		<SubType>Designer</SubType>
