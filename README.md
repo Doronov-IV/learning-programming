@@ -18,14 +18,17 @@ The roadmap is:
 Console:
 1) 'C++ procedural'
 	– syntax and basic algorythms; (~ 6 months)
+
 2) 'OOP via C++'
 	– introduction to OOP, basic patterns; (~ 6 months)
+
 3) 'Introduction to C#'
-	– basic .NET concepts; (~3 months)
+	– basic .NET concepts; (~ 3 months)
 
 Visual:
 4) 'Win Forms + WPF' as well as 'Ado Net + EFC'
-	– an introduction to Visual interfaces; (~3 months)
+	– an introduction to Visual interfaces; (~ 3 months)
+
 5) 'Concurrency & Network programming'
 	– brief basics; (~ 1 months)
 
