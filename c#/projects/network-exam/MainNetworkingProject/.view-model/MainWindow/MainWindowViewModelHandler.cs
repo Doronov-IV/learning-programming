@@ -1,5 +1,6 @@
 ﻿
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
@@ -8,7 +9,6 @@ namespace MainNetworkingProject.ViewModel.MainWindow
     {
         public class MainWindowViewModelHandler : INotifyPropertyChanged
         {
-
 
             #region HANDLERS
 
@@ -22,22 +22,27 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
-                    process.WaitForExit();
                 }
             }
 
 
             public async void OnLaunchServiceButtonClickAsync()
             {
-                using (var process = new Process())
+                await Task.Run(() =>
                 {
-                    process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
-                    process.StartInfo.Arguments = "-noexit";
-                    process.StartInfo.CreateNoWindow = false;
-                    process.Start();
-                    process.WaitForExit();
-                }
+                    var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
+                    dupeProcess?.Kill();
+
+                    using (var process = new Process())
+                    {
+                        process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
+                        process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
+                        process.StartInfo.Arguments = "-noexit";
+                        process.StartInfo.CreateNoWindow = false;
+                        process.Start();
+                        process.WaitForExit();
+                    }
+                });
             }
 
 
