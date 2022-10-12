@@ -43,14 +43,16 @@
         /// <param name="msg">Текст ообщения</param>
         public void WriteMessage(string msg)
         {
+            var unicodeMessage = Encoding.UTF8.GetBytes(msg);
+
             //длинна сообщения
-            var msgLenght = msg.Length;
+            var msgLenght = unicodeMessage.Length;
 
             //получение массива байт
             _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
             //преобразование символов из сообщения в последовательность байт
-            _memoryStream.Write(Encoding.ASCII.GetBytes(msg));
+            _memoryStream.Write(unicodeMessage);
         }
 
         /// <summary>
