@@ -27,6 +27,7 @@ global using Prism.Commands;
 
 
 using ReversedService.service_view;
+using System.Runtime.CompilerServices;
 
 namespace ReversedService
 {

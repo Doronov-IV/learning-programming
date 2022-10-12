@@ -1,5 +1,4 @@
 ﻿using MainNetworkingProject.ViewModel.MainWindow;
-using MainNetworkingProject.view;
 
 namespace MainNetworkingProject
 {

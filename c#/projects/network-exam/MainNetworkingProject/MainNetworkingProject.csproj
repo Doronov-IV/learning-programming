@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <Folder Include=".to-dll\" />
+    <Folder Include=".projects\" />
   </ItemGroup>
 
 

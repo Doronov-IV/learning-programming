@@ -1,4 +1,5 @@
-﻿using MainNetworkingProject.view;
+﻿
+using System.Diagnostics;
 using System.Threading;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
@@ -14,15 +15,29 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             public async void OnLaunchClientButtonClickAsync()
             {
-                MainNetworkingProject.view.ReversedClientWindow client = new();
-                client.Show();
+                using (var process = new Process())
+                {
+                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
+                    process.StartInfo.Arguments = "-noexit";
+                    process.StartInfo.CreateNoWindow = false;
+                    process.Start();
+                    process.WaitForExit();
+                }
             }
 
 
             public async void OnLaunchServiceButtonClickAsync()
             {
-                MainNetworkingProject.view.ServiceWindow server = new();
-                server.Show();
+                using (var process = new Process())
+                {
+                    process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
+                    process.StartInfo.Arguments = "-noexit";
+                    process.StartInfo.CreateNoWindow = false;
+                    process.Start();
+                    process.WaitForExit();
+                }
             }
 
 

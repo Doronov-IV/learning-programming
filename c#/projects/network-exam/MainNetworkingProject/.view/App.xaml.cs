@@ -25,7 +25,6 @@ global using Tools.Formatting;
 
 global using Prism.Commands;
 
-using MainNetworkingProject.view;
 using MainNetworkingProject;
 using MainNetworkingProject.ViewModel.MainWindow;
 
