@@ -2,6 +2,11 @@
 
 namespace MainNetworkingProject.Model.Basics
 {
+    /// <summary>
+    /// A service that manages both connections and reading/writing data on lower level;
+    /// <br />
+    /// Сервис, который отвечает за подключения и чтение/запись данных на более низком уровне;
+    /// </summary>
     public class ReversedService
     {
 
@@ -9,28 +14,50 @@ namespace MainNetworkingProject.Model.Basics
         #region PROPERTIES - public & private Properties
 
 
+
         /// <summary>
-        /// Предоставляет клиентские подключения для сетевых служб протокола TCP.
+        /// Provides client connections fo the service;
+        /// <br />
+        /// Предоставляет клиенские подключения для сервиса;
         /// </summary>
         private TcpClient _client;
 
 
-        public PacketReader PacketReader;
 
         /// <summary>
-        /// событие подключения
+        /// An auxiliary object to make reading/writing messages easier;
+        /// <br />
+        /// Вспомогательный объект, который необходим, чтобы упростить чтение/запись сообщений;
+        /// </summary>
+        public PacketReader PacketReader;
+
+
+
+        /// <summary>
+        /// User connection Event;
+        /// <br />
+        /// Событие подключения пользователя;
         /// </summary>
         public event Action connectedEvent;
 
+
+
         /// <summary>
-        /// событие получения сообщения
+        /// Message recievment event;
+        /// <br />
+        /// Событие получения сообщения;
         /// </summary>
         public event Action msgReceivedEvent;
 
+
+
         /// <summary>
-        /// событие отключения пользователя от сервера
+        /// User disconnection event;
+        /// <br />
+        /// Событие отключения пользователя;
         /// </summary>
         public event Action userDisconnectEvent;
+
 
 
         #endregion PROPERTIES - public & private Properties
@@ -42,10 +69,17 @@ namespace MainNetworkingProject.Model.Basics
         #region API - public Behavior
 
 
+
         /// <summary>
-        /// Подключение к серверу
+        /// Connect user to the service;
+        /// <br />
+        /// Подключить пользователя к сервису;
         /// </summary>
-        /// <param name="userName">Имя пользователя</param>
+        /// <param name="userName">
+        /// The nickname of the user chosen on login;
+        /// <br />
+        /// Никнейм, который пользователь выбрал на логине;
+        /// </param>
         public void ConnectToServer(string userName)
         {
             try
@@ -53,9 +87,10 @@ namespace MainNetworkingProject.Model.Basics
                 //Если клиент не подключен
                 if (!_client.Connected)
                 {
-                    //Подключение клиента к IP адресу (Localhost 127.0.0.1) и порту
+                    /// 
+                    /// - Client connection [!]
+                    ///
                     _client.Connect("127.0.0.1", 7891);
-                    //GetStream(): Возвращает объект NetworkStream, используемый для отправки и получения данных.
                     PacketReader = new(_client.GetStream());
 
                     if (!string.IsNullOrEmpty(userName))
@@ -81,7 +116,6 @@ namespace MainNetworkingProject.Model.Basics
 
 
 
-
         /// <summary>
         /// Disconnect client from service;
         /// <br />
@@ -96,10 +130,17 @@ namespace MainNetworkingProject.Model.Basics
         }
 
 
+
         /// <summary>
-        /// Отправка сообщения на сервер
+        /// Send user's message to the service;
+        /// <br />
+        /// Отправить сообщение пользователя на сервис;
         /// </summary>
-        /// <param name="message">Сообщение</param>
+        /// <param name="message">
+        /// User's message;
+        /// <br />
+        /// Сообщение пользователя;
+        /// </param>
         public void SendMessageToServer(string message)
         {
             try
@@ -116,6 +157,7 @@ namespace MainNetworkingProject.Model.Basics
         }
 
 
+
         #endregion API - public Behavior
 
 
@@ -127,9 +169,9 @@ namespace MainNetworkingProject.Model.Basics
 
 
         /// <summary>
-        /// ;
+        /// Read the incomming packet. A packet is a specific message, sent by ServiceHub to handle different actions;
         /// <br />
-        /// ;
+        /// Прочитать входящий пакет. Пакет - это специальное сообщение, отправленное объектом "ServiceHub", чтобы структурировать обработку разных событий;
         /// </summary>
         private void ReadPackets()
         {
@@ -151,15 +193,15 @@ namespace MainNetworkingProject.Model.Basics
                     {
 
                         case 1:
-                            connectedEvent?.Invoke();// подключение клиента;
+                            connectedEvent?.Invoke();// client connection;
                             break;
 
                         case 5:
-                            msgReceivedEvent?.Invoke(); // получение сообщения;
+                            msgReceivedEvent?.Invoke(); // message recieved;
                             break;
 
                         case 10:
-                            userDisconnectEvent?.Invoke();// отключение клиента от сервера;
+                            userDisconnectEvent?.Invoke();// client disconnection;
                             break;
 
                         default:
@@ -169,6 +211,7 @@ namespace MainNetworkingProject.Model.Basics
                 }
             });
         }
+
 
 
         #endregion LOGIC - internal Behavior
@@ -192,6 +235,7 @@ namespace MainNetworkingProject.Model.Basics
 
 
         #endregion CONSTRUCTION - Object Lifetime
+
 
 
     }
