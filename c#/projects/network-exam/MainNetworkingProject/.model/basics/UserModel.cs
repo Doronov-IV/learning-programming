@@ -8,13 +8,19 @@ namespace MainNetworkingProject.Model.Basics
 {
     public class UserModel
     {
+
         /// <summary>
-        /// Имя пользователя
+        /// User name;
+        /// <br />
+        /// Имя пользователя;
         /// </summary>
         public string UserName { get; set; } = null!;
 
+
         /// <summary>
-        /// Идентификатор пользователя
+        /// User's unique id;
+        /// <br />
+        /// Уникальный идентификатор пользователя;
         /// </summary>
         public string UID { get; set; } = null!;
 

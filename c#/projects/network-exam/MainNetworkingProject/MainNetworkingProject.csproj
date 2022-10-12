@@ -11,13 +11,13 @@
 
 
   <ItemGroup>
-	 <Compile Include=".model\basics\model-related\PacketBuilder.cs" />
-	 <Compile Include=".model\basics\model-related\PacketReader.cs" />
-	 <Compile Include=".model\basics\model-related\ReversedClient.cs" />
-	 <Compile Include=".model\basics\model-related\ReversedService.cs" />
-	 <Compile Include=".model\basics\model-related\UserModel.cs" />
-	 <Compile Include=".model\basics\viewmodel-related\RelayCommand.cs" />
-	 <Compile Include=".model\basics\viewmodel-related\ServiceHub.cs" />
+	 <Compile Include=".model\aixiliary\PacketBuilder.cs" />
+	 <Compile Include=".model\aixiliary\PacketReader.cs" />
+	 <Compile Include=".model\basics\ReversedClient.cs" />
+	 <Compile Include=".model\basics\ReversedService.cs" />
+	 <Compile Include=".model\basics\UserModel.cs" />
+	 <Compile Include=".model\aixiliary\RelayCommand.cs" />
+	 <Compile Include=".model\wrappers\ServiceHub.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
 	 <Compile Include=".view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
 	 <Compile Include=".view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
