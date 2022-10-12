@@ -16,6 +16,7 @@ my real place in this life. Anyway nvm .........
 The roadmap is:
 
 Console:
+
 1) 'C++ procedural'
 	– syntax and basic algorythms; (~ 6 months)
 
@@ -26,6 +27,7 @@ Console:
 	– basic .NET concepts; (~ 3 months)
 
 Visual:
+
 4) 'Win Forms + WPF' as well as 'Ado Net + EFC'
 	– an introduction to Visual interfaces; (~ 3 months)
 
