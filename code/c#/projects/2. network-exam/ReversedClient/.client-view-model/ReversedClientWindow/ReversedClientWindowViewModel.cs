@@ -39,6 +39,9 @@ namespace ReversedClient.ViewModel
         }
 
 
+        /// <summary>
+        /// @see public ObservableCollection<string> Messages;
+        /// </summary>
         private ObservableCollection<string> _Messages;
 
 
@@ -56,10 +59,16 @@ namespace ReversedClient.ViewModel
         }
 
 
+        /// <summary>
+        /// @see public string UserName;
+        /// </summary>
         private string _UserName;
 
+
         /// <summary>
-        /// Свойство: Имя пользователя
+        /// The name of the user to connect;
+        /// <br />
+        /// Имя пользователя, для подключения;
         /// </summary>
         public string UserName 
         {
@@ -89,16 +98,24 @@ namespace ReversedClient.ViewModel
             }
         }
 
+
         /// <summary>
-        /// Экземпляр класса Сервер
+        /// @see public ReversedService Server;
         /// </summary>
         private ReversedService _server;
 
+
+        /// <summary>
+        /// An instance of a 'ReversedService';
+        /// <br />
+        /// Экземпляр класса "ReversedService";
+        /// </summary>
         public ReversedService Server
         {
             get { return _server; }
             set { _server = value; }
         }
+
 
 
         #endregion PROPERTIES - Object State
@@ -136,6 +153,7 @@ namespace ReversedClient.ViewModel
         #region LOGIC - internal behavior
 
 
+
         /// <summary>
         /// Remove a user from the client list;
         /// <br />
@@ -149,6 +167,7 @@ namespace ReversedClient.ViewModel
             //foreach (var user in )
             Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
         }
+
 
 
         /// <summary>
@@ -193,6 +212,16 @@ namespace ReversedClient.ViewModel
 
 
 
+        /// <summary>
+        /// Send a message to the service;
+        /// <br />
+        /// Is needed to nullify the chat message field after sending;
+        /// <br />
+        /// <br />
+        /// Отправить сообщение на сервис;
+        /// <br />
+        /// Необходимо, чтобы стереть сообщение после отправкиж
+        /// </summary>
         private void SendMessage()
         {
             _server.SendMessageToServer(Message);
@@ -201,10 +230,14 @@ namespace ReversedClient.ViewModel
 
 
 
+        /// <summary>
+        /// [?] To be revued;
+        /// </summary>
         public void CommenceDisconnect(object? sender, CancelEventArgs args)
         {
             _server.Disconnect();
         }
+
 
 
         #endregion LOGIC - internal behavior

@@ -10,6 +10,12 @@ namespace ReversedClient.ViewModel
         #region PROPERTIES
 
 
+
+        /// <summary>
+        /// A reference for the main file;
+        /// <br />
+        /// Ссылка на основной файл;
+        /// </summary>
         private ReversedClientWindowViewModel _CurrentViewModelReference;
 
 
@@ -21,6 +27,12 @@ namespace ReversedClient.ViewModel
         #region HANDLERS
 
 
+
+        /// <summary>
+        /// Handle the 'Sign In' button;
+        /// <br />
+        /// Обработать клик по кнопке 'Sign In';
+        /// </summary>
         public void OnSignInButtonClick()
         {
             try
@@ -34,7 +46,7 @@ namespace ReversedClient.ViewModel
                 //
                 ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
                 clientLoginWindow?.Close();
-                // ------------------------------
+                // ===============================
             }
             catch (Exception ex)
             {
