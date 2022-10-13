@@ -27,13 +27,14 @@ namespace ReversedClient.ViewModel
             {
                 _CurrentViewModelReference.Server.ConnectToServer(_CurrentViewModelReference.UserName);
 
-                // [!] In this particular order;
+                //// [!] In this particular order;
+                //
                 ReversedClientWindow clientChatWindow = new();
                 clientChatWindow.Show();
                 //
                 ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
                 clientLoginWindow?.Close();
-                //
+                // ------------------------------
             }
             catch (Exception ex)
             {
