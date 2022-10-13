@@ -82,35 +82,29 @@ namespace ReversedClient.Model.Basics
         /// </param>
         public void ConnectToServer(string userName)
         {
-            try
+            //Если клиент не подключен
+            if (!_client.Connected)
             {
-                //Если клиент не подключен
-                if (!_client.Connected)
+                /// 
+                /// - Client connection [!]
+                ///
+                _client.Connect("127.0.0.1", 7891);
+                PacketReader = new(_client.GetStream());
+
+                if (!string.IsNullOrEmpty(userName))
                 {
-                    /// 
-                    /// - Client connection [!]
-                    ///
-                    _client.Connect("127.0.0.1", 7891);
-                    PacketReader = new(_client.GetStream());
+                    var connectPacket = new PacketBuilder();
 
-                    if (!string.IsNullOrEmpty(userName))
-                    {
-                        var connectPacket = new PacketBuilder();
+                    connectPacket.WriteOpCode(0);
 
-                        connectPacket.WriteOpCode(0);
+                    connectPacket.WriteMessage(userName);
 
-                        connectPacket.WriteMessage(userName);
-
-                        _client.Client.Send(connectPacket.GetPacketBytes());
-                    }
-
-                    ReadPackets();
+                    _client.Client.Send(connectPacket.GetPacketBytes());
                 }
+
+                ReadPackets();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"It seems that the server is down for now.\nPlease, try connect later.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
 
 

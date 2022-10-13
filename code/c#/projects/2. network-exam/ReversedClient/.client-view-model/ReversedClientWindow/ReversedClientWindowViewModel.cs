@@ -222,6 +222,9 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
+            _UserName = string.Empty;
+            _Message = string.Empty;
+
             _Users = new ObservableCollection<UserModel>();
             _Messages = new ObservableCollection<string>();
             _server = new();
@@ -240,7 +243,6 @@ namespace ReversedClient.ViewModel
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => 1 == 1);
         }
-
 
 
 

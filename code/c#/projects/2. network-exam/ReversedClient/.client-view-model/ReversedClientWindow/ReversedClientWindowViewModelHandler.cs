@@ -23,15 +23,22 @@ namespace ReversedClient.ViewModel
 
         public void OnSignInButtonClick()
         {
-            _CurrentViewModelReference.Server.ConnectToServer(_CurrentViewModelReference.UserName);
+            try
+            {
+                _CurrentViewModelReference.Server.ConnectToServer(_CurrentViewModelReference.UserName);
 
-            // [!] In this particular order;
-            ReversedClientWindow clientChatWindow = new();
-            clientChatWindow.Show();
-            //
-            ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
-            clientLoginWindow?.Close();
-            //
+                // [!] In this particular order;
+                ReversedClientWindow clientChatWindow = new();
+                clientChatWindow.Show();
+                //
+                ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
+                clientLoginWindow?.Close();
+                //
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unable to connect.\n\nException: {ex.Message}", "Exception intercepted", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 

@@ -8,8 +8,8 @@
         Title="ClientLoginWindow" Height="450" Width="400">
     <Grid>
         <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="{Binding UserName}" VerticalAlignment="Top" Width="120"/>
-        <TextBox Style="{StaticResource PasswordTextBox}" HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" Text="{Binding UserPassword}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Other users will see your login-nickname" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top"/>
+        <TextBox Style="{StaticResource PasswordTextBox}" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
+        <Label Content="Other users will see your login-nickname." HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top"/>
         <Button Content="Sign In" Command="{Binding SignInButtonClickCommand}" HorizontalAlignment="Center" Margin="0,179,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
 
     </Grid>
