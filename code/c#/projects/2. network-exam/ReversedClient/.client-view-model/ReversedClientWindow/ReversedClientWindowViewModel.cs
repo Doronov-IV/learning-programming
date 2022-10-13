@@ -228,17 +228,15 @@ namespace ReversedClient.ViewModel
             _Messages = new ObservableCollection<string>();
             _server = new();
 
-            _server.connectedEvent += ConnectUser;
-            _server.msgReceivedEvent += RecieveMessage;//получение сообщения
-            _server.userDisconnectEvent += RemoveUser;//отключение пользователя
+            _server.connectedEvent += ConnectUser;          // user connection;
+            _server.msgReceivedEvent += RecieveMessage;    // message receipt;
+            _server.userDisconnectEvent += RemoveUser;    // user disconnection;
 
 
-            //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполнится.
+
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
 
-            //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполнится.
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
-
 
             SignInButtonClickCommand = new(o => OnSignInButtonClick(), o => 1 == 1);
 

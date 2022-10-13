@@ -14,8 +14,6 @@
     <Compile Include=".client-model\aixiliary\RelayCommand.cs" />
     <Compile Include=".client-model\basics\ReversedService.cs" />
     <Compile Include=".client-model\basics\UserModel.cs" />
-    <Compile Include=".client-view-model\ClientLoginWindow\ClientWindowViewModel.cs" />
-    <Compile Include=".client-view-model\ClientLoginWindow\ClientWindowViewModelHandler.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
     <Compile Include=".client-view\App.xaml.cs" />
     <Compile Include=".client-view\ClientLoginWindow.xaml.cs" />
