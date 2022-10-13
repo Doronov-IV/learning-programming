@@ -36,6 +36,13 @@
     <Page Include=".client-view\ReversedClientWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include=".properties\PasswordTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".properties\LoginTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

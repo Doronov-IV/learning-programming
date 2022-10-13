@@ -20,9 +20,11 @@ namespace ReversedClient.ViewModel
         {
             ReversedClientWindow clientChatWindow = new();
             _ReversedViewModelReference = clientChatWindow.DataContext as ReversedClientWindowViewModel;
+
             _ReversedViewModelReference.UserName = _ViewModelReference.UserName;
             _ViewModelReference.Server.ConnectToServer(_ReversedViewModelReference.UserName);
             clientChatWindow.Show();
+
             ClientLoginWindow clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
             clientLoginWindow.Close();
         }

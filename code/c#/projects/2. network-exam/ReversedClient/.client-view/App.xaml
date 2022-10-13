@@ -5,6 +5,12 @@
              StartupUri="ClientLoginWindow.xaml"
 			 ShutdownMode="OnLastWindowClose">
     <Application.Resources>
-		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../.properties/LoginTextBox.xaml"/>
+                <ResourceDictionary Source="../.properties/PasswordTextBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
