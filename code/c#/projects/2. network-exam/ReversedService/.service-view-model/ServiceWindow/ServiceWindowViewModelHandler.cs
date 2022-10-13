@@ -48,8 +48,7 @@ namespace ReversedService.ViewModel.ServiceWindow
 
             public void OnCancelServiceButtonClick()
             {
-                var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
-                dupeProcess?.Kill();
+                Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
             }
 
 

@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using ReversedClient.client_view;
+using System.Windows;
 
 using ReversedClient.Model.Basics;
+using System.Reflection.Metadata;
 
 namespace ReversedClient.ViewModel
 {
@@ -10,10 +11,17 @@ namespace ReversedClient.ViewModel
     {
 
 
+
         #region PROPERTIES - Object State
 
 
 
+        private ReversedClientWindowViewModelHandler _Handler;
+
+
+        /// <summary>
+        /// @see public ObservableCollection<UserModel> Users;
+        /// </summary>
         private ObservableCollection<UserModel> _Users;
 
 
@@ -86,9 +94,11 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private ReversedService _server;
 
-
-
-        private ReversedClientWindowViewModel _ReversedViewModelReference;
+        public ReversedService Server
+        {
+            get { return _server; }
+            set { _server = value; }
+        }
 
 
         #endregion PROPERTIES - Object State
@@ -197,18 +207,6 @@ namespace ReversedClient.ViewModel
         }
 
 
-        public void OnSignInButtonClick()
-        {
-            _server.ConnectToServer(UserName);
-
-            ReversedClientWindow clientChatWindow = new();
-            clientChatWindow.Show();
-
-            ClientLoginWindow clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
-            clientLoginWindow.Close();
-        }
-
-
         #endregion LOGIC - internal behavior
 
 
@@ -232,15 +230,15 @@ namespace ReversedClient.ViewModel
             _server.msgReceivedEvent += RecieveMessage;    // message receipt;
             _server.userDisconnectEvent += RemoveUser;    // user disconnection;
 
+            _Handler = new(this);
 
-
+            // may be obsolete. tests needed;
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
 
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
 
-            SignInButtonClickCommand = new(o => OnSignInButtonClick(), o => 1 == 1);
-
-
+            // we need to manage windows right after we connect;
+            SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => 1 == 1);
         }
 
 

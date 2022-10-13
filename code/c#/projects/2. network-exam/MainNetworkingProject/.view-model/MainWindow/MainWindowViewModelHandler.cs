@@ -30,8 +30,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 await Task.Run(() =>
                 {
-                    var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
-                    dupeProcess?.Kill();
+                    Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
 
                     using (var process = new Process())
                     {
