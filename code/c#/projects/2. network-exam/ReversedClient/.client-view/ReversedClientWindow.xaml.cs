@@ -11,7 +11,11 @@ namespace ReversedClient.client_view
         {
             InitializeComponent();
 
-            DataContext = new ReversedClientWindowViewModel();
+            ClientLoginWindow clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
+
+            ReversedClientWindowViewModel context = clientLoginWindow.DataContext as ReversedClientWindowViewModel;
+
+            DataContext = context;
         }
     }
 }

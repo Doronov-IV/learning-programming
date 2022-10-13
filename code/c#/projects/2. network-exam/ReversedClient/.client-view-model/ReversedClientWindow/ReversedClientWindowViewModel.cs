@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using ReversedClient.client_view;
 
 using ReversedClient.Model.Basics;
 
@@ -86,6 +87,10 @@ namespace ReversedClient.ViewModel
         private ReversedService _server;
 
 
+
+        private ReversedClientWindowViewModel _ReversedViewModelReference;
+
+
         #endregion PROPERTIES - Object State
 
 
@@ -109,6 +114,8 @@ namespace ReversedClient.ViewModel
         /// ;
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
+
+        public RelayCommand SignInButtonClickCommand { get; }
 
 
         #endregion COMMANDS - Prism Commands
@@ -190,6 +197,18 @@ namespace ReversedClient.ViewModel
         }
 
 
+        public void OnSignInButtonClick()
+        {
+            _server.ConnectToServer(UserName);
+
+            ReversedClientWindow clientChatWindow = new();
+            clientChatWindow.Show();
+
+            ClientLoginWindow clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
+            clientLoginWindow.Close();
+        }
+
+
         #endregion LOGIC - internal behavior
 
 
@@ -209,14 +228,21 @@ namespace ReversedClient.ViewModel
             _Messages = new ObservableCollection<string>();
             _server = new();
 
+            _server.connectedEvent += ConnectUser;
             _server.msgReceivedEvent += RecieveMessage;//получение сообщения
             _server.userDisconnectEvent += RemoveUser;//отключение пользователя
+
 
             //Команда подключения к серверу. Если имя пользователя не будет введено в текстовое поле, то команда не выполнится.
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
 
             //Команда для отправки сообщения. Если сообщение не будет введено в текстовое поле, то команда не выполнится.
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
+
+
+            SignInButtonClickCommand = new(o => OnSignInButtonClick(), o => 1 == 1);
+
+
         }
 
 

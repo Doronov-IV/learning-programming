@@ -11,7 +11,7 @@ namespace ReversedClient.client_view
         {
             InitializeComponent();
 
-            DataContext = new ClientWindowViewModel();
+            DataContext = new ReversedClientWindowViewModel();
         }
     }
 }

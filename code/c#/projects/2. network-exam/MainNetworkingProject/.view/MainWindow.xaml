@@ -24,6 +24,6 @@
         </Grid.RowDefinitions>
         <Button Content="Launch Client" Command="{Binding LaunchClientCommand}" Grid.Column="5" Margin="20" Grid.Row="5"/>
         <Button Content="Launch Service" Command="{Binding LaunchServiceCommand}" Grid.Column="4" Margin="20" Grid.Row="5"/>
-        <Button Content="Kill Service" Command="{Binding KillServiceCommand}" Margin="20" Grid.Row="5"/>
+        <Button Content="Cancel Service" Command="{Binding KillServiceCommand}" Margin="20" Grid.Row="5"/>
     </Grid>
 </Window>

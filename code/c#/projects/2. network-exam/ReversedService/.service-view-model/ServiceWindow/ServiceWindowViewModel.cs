@@ -91,6 +91,8 @@ namespace ReversedService.ViewModel.ServiceWindow
 
         public DelegateCommand RunServiceCommand { get; }
 
+        public DelegateCommand KillServiceCommand { get; }
+
 
         #endregion COMMANDS
 
@@ -118,6 +120,7 @@ namespace ReversedService.ViewModel.ServiceWindow
             _ServiceLog = new();
 
             RunServiceCommand = new(Handler.OnRunButtonClick);
+            KillServiceCommand = new(Handler.OnCancelServiceButtonClick);
 
 
         }
