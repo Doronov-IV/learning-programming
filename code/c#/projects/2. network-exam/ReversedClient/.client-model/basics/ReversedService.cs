@@ -99,7 +99,6 @@ namespace ReversedClient.Model.Basics
 
                         connectPacket.WriteOpCode(0);
 
-
                         connectPacket.WriteMessage(userName);
 
                         _client.Client.Send(connectPacket.GetPacketBytes());

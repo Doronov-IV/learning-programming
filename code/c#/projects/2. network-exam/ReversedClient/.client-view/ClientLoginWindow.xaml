@@ -1,0 +1,18 @@
+﻿<Window x:Class="ReversedClient.client_view.ClientLoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReversedClient.client_view"
+        mc:Ignorable="d"
+        Title="ClientLoginWindow" Height="450" Width="400">
+    <Grid>
+        <TextBox HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="{Binding UserName}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="*Login:" ToolTip="Other users will see this nickname" HorizontalAlignment="Left" Margin="78,76,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" Text="{Binding UserPassword}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Password: " HorizontalAlignment="Left" Margin="64,116,0,0" VerticalAlignment="Top"/>
+        <Label Content="* Other users will see this login-nickname" HorizontalAlignment="Left" Margin="64,276,0,0" VerticalAlignment="Top"/>
+        <Button Content="Sign In" Command="{Binding SignInButtonClickCommand}" HorizontalAlignment="Center" Margin="0,174,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
+
+    </Grid>
+</Window>

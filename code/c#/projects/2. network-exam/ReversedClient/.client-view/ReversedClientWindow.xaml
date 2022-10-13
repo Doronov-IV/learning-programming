@@ -26,16 +26,11 @@
         <!--Текстовое поле принимающее имя пользователя
             UpdateSourceTrigger: Односторонняя привязка от источника к приемнику практически мгновенно изменяет свойство приемника
             PropertyChanged: источник привязки обновляется сразу после обновления свойства в приемнике-->
-        <TextBox
-                     Text="{Binding UserName}" Margin="0,21,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Center" Width="185"/>
 
         <!--Кнопка для подключения клиента к серверу-->
-        <Button     IsEnabled="True"
-                    Content="Connect"
-                    Command="{Binding ConnectToServerCommand}" Margin="0,53,0,0" HorizontalAlignment="Center" Width="185" Height="20" VerticalAlignment="Top"/>
 
         <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
-        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,90,0,20" Width="185" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Center" Margin="0,54,0,20" Width="185" Grid.RowSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!--Привязка текста к имени пользователя-->
@@ -58,6 +53,7 @@
                     Grid.Row="2"
                         Content="Send"
                         Command="{Binding SendMessageCommand}" Margin="630,10,34,10"/>
+        <Label Content="Members" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
         <!--привязка-->
     </Grid>
 </Window>

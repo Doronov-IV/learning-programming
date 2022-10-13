@@ -152,7 +152,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Подключить нового пользователя;
         /// </summary>
-        private void ConnectUser()
+        public void ConnectUser()
         {
             // create new user instance;
             var user = new UserModel
@@ -209,7 +209,6 @@ namespace ReversedClient.ViewModel
             _Messages = new ObservableCollection<string>();
             _server = new();
 
-            _server.connectedEvent += ConnectUser;//подключение нового пользователя
             _server.msgReceivedEvent += RecieveMessage;//получение сообщения
             _server.userDisconnectEvent += RemoveUser;//отключение пользователя
 

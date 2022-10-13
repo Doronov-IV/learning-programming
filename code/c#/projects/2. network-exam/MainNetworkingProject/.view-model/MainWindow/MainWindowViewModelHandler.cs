@@ -45,6 +45,21 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             }
 
 
+
+            public void OnKillServiceButtonClick()
+            {
+                try
+                {
+                    var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
+                    dupeProcess?.Kill();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"The service is unavailable or down.\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+
             #endregion HANDLERS
 
 

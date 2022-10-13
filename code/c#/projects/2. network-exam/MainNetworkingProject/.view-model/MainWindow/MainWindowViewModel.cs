@@ -71,6 +71,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
         public DelegateCommand LaunchClientCommand { get; }
         public DelegateCommand LaunchServiceCommand { get; }
+        public DelegateCommand KillServiceCommand { get; }
 
 
         #endregion COMMANDS
@@ -98,6 +99,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             LaunchClientCommand = new(Handler.OnLaunchClientButtonClickAsync);
             LaunchServiceCommand = new(Handler.OnLaunchServiceButtonClickAsync);
+            KillServiceCommand = new(Handler.OnKillServiceButtonClick);
         }
 
 
