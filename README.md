@@ -1,5 +1,9 @@
 An archive for old and a workspace for new projects and exercises on my educational path.
 
+[!] If someone happens to get here: I'm from Russia and sometimes I need to write
+some code for Russian-speaking folks to look at. Although I often try to write in 
+both langs to keep my brain fit.
+
 	TL;DR:
 
 My whole life was a battle for tiny bits of motivation due to my mental disorder.
@@ -32,7 +36,7 @@ Visual:
 	– an introduction to Visual interfaces; (~ 3 months)
 
 5) 'Concurrency & Network programming'
-	– brief basics; (~ 1 months)
+	– brief basics; (~ 1 month)
 
 
 At this point, both my groupmates and me, we all realised that most
@@ -41,7 +45,9 @@ of the useful things have passed. Our top teachers have also left.
 Apart from this, our course should have gone through:
 
 – Frontend: HTML, CSS, JS;
-– ASP.NET: back & front;
-– Teamworking;
-– PHP (?);
 
+– Teamworking;
+
+– ASP.NET: back & front;
+
+– PHP (?);
