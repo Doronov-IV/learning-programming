@@ -16,9 +16,9 @@
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="151*"/>
-            <RowDefinition Height="387*"/>
-            <RowDefinition Height="46*"/>
+            <RowDefinition Height="149*"/>
+
+            <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
 
         <!--Определяет область, в которой можно упорядочивать дочерние элементы
@@ -31,7 +31,7 @@
         <!--Кнопка для подключения клиента к серверу-->
 
         <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
-        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,25" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2" Foreground="#E50A0A0A" FontFamily="Century">
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,20" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#E50A0A0A" FontFamily="Century">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!--Привязка текста к имени пользователя-->
@@ -44,7 +44,7 @@
 
         <!--привязка-->
         <ListView
-                      ItemsSource="{Binding Messages}" Margin="20,31,20,25" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2" Foreground="#FF0A0A0A" FontFamily="Book Antiqua"/>
+                      ItemsSource="{Binding Messages}" Margin="20,31,20,20" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0A0A0A" FontFamily="Book Antiqua"/>
         <TextBox 
             Style="{StaticResource SendMessageTextBox}" Text="{Binding Message}" 
             Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
