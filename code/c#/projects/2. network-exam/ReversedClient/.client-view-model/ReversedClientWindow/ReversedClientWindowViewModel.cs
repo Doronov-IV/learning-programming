@@ -45,6 +45,19 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private string _TheMembersString;
+
+        public string TheMembersString
+        {
+            get { return _TheMembersString; }
+            set
+            {
+                _TheMembersString = value;
+                OnPropertyChanged(nameof(TheMembersString));
+            }
+        }
+
+
         /// <summary>
         /// @see public ObservableCollection<string> Messages;
         /// </summary>
@@ -277,6 +290,8 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
+            _TheMembersString = "member";
+
             _UserName = string.Empty;
             _Message = string.Empty;
 
@@ -289,6 +304,8 @@ namespace ReversedClient.ViewModel
             _server.userDisconnectEvent += RemoveUser;    // user disconnection;
 
             _Handler = new(this);
+
+            _Users.CollectionChanged += _Handler.OnUsersCollectionChanged;
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);

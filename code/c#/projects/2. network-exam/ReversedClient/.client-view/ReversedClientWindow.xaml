@@ -44,10 +44,10 @@
 
         <!--привязка-->
         <ListView
-                      ItemsSource="{Binding Messages}" Margin="20,31,20,25" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2" Foreground="#FF0A0A0A" FontFamily="Javanese Text"/>
-        <TextBox Style="{StaticResource SendMessageTextBox}"
-                    Grid.Column="1" Grid.Row="2"
-                 Margin="20,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
+                      ItemsSource="{Binding Messages}" Margin="20,31,20,25" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2" Foreground="#FF0A0A0A" FontFamily="Book Antiqua"/>
+        <TextBox 
+            Style="{StaticResource SendMessageTextBox}" Text="{Binding Message}" 
+            Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
         <Button
                     Grid.Column="1"
                     Grid.Row="2"
@@ -56,7 +56,7 @@
         <Label
             Content="{Binding Users.Count}" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" FontFamily="Century" Foreground="#E50A0A0A" Height="24" Width="31"/>
         <Label
-            Content="members" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Century"/>
+            Content="{Binding TheMembersString}" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Century" Height="24" Width="89"/>
         <!--привязка-->
     </Grid>
 </Window>

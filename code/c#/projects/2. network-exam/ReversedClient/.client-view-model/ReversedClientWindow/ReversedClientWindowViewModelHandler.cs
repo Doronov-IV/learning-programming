@@ -57,6 +57,12 @@ namespace ReversedClient.ViewModel
         }
 
 
+        public void OnUsersCollectionChanged(object? sender, EventArgs e)
+        {
+            if (_CurrentViewModelReference.Users.Count > 1) _CurrentViewModelReference.TheMembersString = "members";
+            else _CurrentViewModelReference.TheMembersString = "member";
+        }
+
         #endregion HANDLERS
 
 

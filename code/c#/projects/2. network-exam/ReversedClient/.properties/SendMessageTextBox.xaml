@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="TextBox">
                     <Border CornerRadius="3"
                             Background="LightGray">
-                        
+
                         <Grid>
                             <TextBox VerticalAlignment="Stretch"
                                      VerticalContentAlignment="Center"
@@ -28,13 +28,13 @@
                                 </TextBox.InputBindings>
                             </TextBox>
 
-                            
+
                             <TextBlock IsHitTestVisible="False"
-                                       Text="Type something...."
+                                       Text="Message"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
-                                       Foreground="DarkGray">
+                                       Foreground="Black">
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
@@ -43,20 +43,20 @@
                                             <DataTrigger Binding="{Binding Message, ElementName=SendMessageTextBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-                                            
+
                                         </Style.Triggers>
 
                                     </Style>
                                 </TextBlock.Style>
-                                
+
                             </TextBlock>
-                            
+
                         </Grid>
                     </Border>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>
