@@ -5,11 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApiExplorer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition>
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <ListView HorizontalAlignment="Left" Height="591" Margin="10,0,0,0" VerticalAlignment="Center" Width="594" ItemsSource="{Binding ListOfProperties}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Load" Command="{Binding LoadCommand}" HorizontalAlignment="Left" Margin="935,601,0,0" VerticalAlignment="Top" Height="23" Width="55"/>
     </Grid>
 </Window>
