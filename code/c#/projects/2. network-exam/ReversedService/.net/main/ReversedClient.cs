@@ -1,5 +1,6 @@
-﻿
-namespace ReversedService.Model.Basics
+﻿using ReversedService.Net.Auxiliary;
+
+namespace ReversedService.Net.Main
 {
 
     /// <summary>

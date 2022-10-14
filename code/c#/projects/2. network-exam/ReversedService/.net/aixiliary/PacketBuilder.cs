@@ -1,4 +1,4 @@
-﻿namespace ReversedService.Model.Basics
+﻿namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;
@@ -12,7 +12,9 @@
 
 
         /// <summary>
-        /// Поток, резервным хранилищем которого является память;
+        /// A reference to the stream instance (in this case, client stream);
+        /// <br />
+        /// Ссылка на экземпляр стрима (в данном случае, стим клиента);
         /// </summary>
         MemoryStream _memoryStream;
 
@@ -26,21 +28,31 @@
 
 
         /// <summary>
-        /// Записывает байт в текущее положение текущего потока;
+        /// Write operation code to the stream;
+        /// <br />
+        /// Передать код операции в стрим;
         /// </summary>
-        /// <param name="opCode"></param>
+        /// <param name="opCode">
+        /// Operation code;
+        /// <br />
+        /// Код операции;
+        /// </param>
         public void WriteOpCode(byte opCode)
         {
             _memoryStream.WriteByte(opCode);
         }
 
+        
         /// <summary>
-        /// Write(ReadOnlySpan<Byte>): Записать последовательность байтов, содержащихся в source, 
-        /// в текущий поток в памяти и перемещает текущую позицию внутри этого потока в памяти на число записанных байтов;
-        /// 
-        /// 'BitConverter': Преобразует базовые типы данных в массив байтов, а массив байтов — в базовые типы данных;
+        /// Write binary message;
+        /// <br />
+        /// Записать сообщение в бинарном виде;
         /// </summary>
-        /// <param name="msg">Текст ообщения</param>
+        /// <param name="msg">
+        /// Message text;
+        /// <br />
+        /// Текст сообщения;
+        /// </param>
         public void WriteMessage(string msg)
         {
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
@@ -55,10 +67,17 @@
             _memoryStream.Write(unicodeMessage);
         }
 
+
         /// <summary>
-        /// получение массива байт пакета
+        /// Get all packet bytes including code, message length and the message itself;
+        /// <br />
+        /// Получить байты пакета, включая код, длину сообщения и само сообщение;
         /// </summary>
-        /// <returns>Массив байт</returns>
+        /// <returns>
+        /// Packet in a byte array;
+        /// <br />
+        /// Содержимое пакета в виде массова байтов;
+        /// </returns>
         public byte[] GetPacketBytes()
         {
             return _memoryStream.ToArray();

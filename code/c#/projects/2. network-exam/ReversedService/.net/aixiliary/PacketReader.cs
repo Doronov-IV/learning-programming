@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Net.Sockets;
-using System.Windows.Interop;
+﻿using System.Windows.Interop;
 
-namespace ReversedService.Model.Basics
+namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;
@@ -71,6 +69,7 @@ namespace ReversedService.Model.Basics
         #region CONSTRUCTION
 
 
+
         /// <summary>
         /// Parametrised constructor;
         /// <br />
@@ -85,6 +84,7 @@ namespace ReversedService.Model.Basics
         {
             _NetworkStream = networkStream;
         }
+
 
 
         #endregion CONSTRUCTION

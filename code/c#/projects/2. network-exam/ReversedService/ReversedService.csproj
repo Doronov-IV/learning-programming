@@ -9,10 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".service-model\auxiliary\PacketBuilder.cs" />
-    <Compile Include=".service-model\auxiliary\PacketReader.cs" />
-    <Compile Include=".service-model\basics\ReversedClient.cs" />
-    <Compile Include=".service-model\wrappers\ServiceHub.cs" />
+    <Compile Include=".net\aixiliary\PacketBuilder.cs" />
+    <Compile Include=".net\aixiliary\PacketReader.cs" />
+    <Compile Include=".net\aixiliary\RelayCommand.cs" />
+    <Compile Include=".net\main\ReversedClient.cs" />
+    <Compile Include=".net\main\ServiceHub.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
     <Compile Include=".service-view\App.xaml.cs" />
@@ -36,6 +37,10 @@
     <Reference Include="Toolbox">
       <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".service-model\" />
   </ItemGroup>
 
 </Project>

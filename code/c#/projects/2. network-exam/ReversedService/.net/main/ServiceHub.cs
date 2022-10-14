@@ -1,11 +1,6 @@
-﻿using ReversedService.Model.Basics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReversedService.Net.Auxiliary;
 
-namespace ReversedService.Model.Basics
+namespace ReversedService.Net.Main
 {
     /// <summary>
     /// A wrapper on 'ReversedService' object. Unlike one, it's responsible for user notification, rather than connections;

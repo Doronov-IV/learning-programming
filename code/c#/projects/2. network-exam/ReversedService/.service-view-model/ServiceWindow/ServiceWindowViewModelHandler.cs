@@ -1,4 +1,4 @@
-﻿using ReversedService.Model.Basics;
+﻿using ReversedService.Net.Main;
 using System.Threading;
 
 namespace ReversedService.ViewModel.ServiceWindow
