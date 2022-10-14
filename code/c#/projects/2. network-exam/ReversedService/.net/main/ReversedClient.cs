@@ -17,15 +17,20 @@ namespace ReversedService.Net.Main
 
 
         /// <summary>
-        /// Имя пользователя
+        /// The name of a user, aka login and nickname;
+        /// <br />
+        /// Имя пользователя, так же логин и никнейм;
         /// </summary>
-        public string UserName { get; set; }
+        public string CurrentUserName { get; set; }
 
 
         /// <summary>
-        /// Свойство: User ID. Структура Guid представляет глобальный уникальный идентификатор (GUID).
+        /// Grants a global id (in form of four hexadecimal values);
+        /// <br />
+        /// Предоставляет глобальный идентификатор;
         /// </summary>
-        public Guid UID { get; set; }
+        public Guid CurrentUID { get; set; }
+
 
 
         /// <summary>
@@ -67,6 +72,9 @@ namespace ReversedService.Net.Main
         /// </param>
         public delegate void PendOutputDelegate(string sOutputMessage);
 
+        /// <summary>
+        /// @see public delegate void PendOutputDelegate(string sOutputMessage);
+        /// </summary>
         public event PendOutputDelegate SendOutput;
 
 
@@ -88,7 +96,7 @@ namespace ReversedService.Net.Main
         private void Process()
         {
             // we invoke it here cause we cannot do this in the constructor while delegate object is still not initialized;
-            SendOutput.Invoke($"[{DateTime.Now}] user has connected with the name: {UserName}");
+            SendOutput.Invoke($"[{DateTime.Now}] user has connected with the name: {CurrentUserName}");
 
             while (true)
             {
@@ -99,8 +107,8 @@ namespace ReversedService.Net.Main
                     {
                         case 5:
                             var msg = _packetReader.ReadMessage();
-                            SendOutput.Invoke($"[{DateTime.Now}] user {UserName} says: {msg}");
-                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {UserName}: {msg}");
+                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg}");
+                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg}");
                             break;
                         default:
                             break;
@@ -108,8 +116,8 @@ namespace ReversedService.Net.Main
                 }
                 catch (Exception ex)
                 {
-                    SendOutput.Invoke($"User {UserName} (id = {UID.ToString()}) has disconnected!");
-                    StaticServiceHub.BroadcastDisconnect(UID.ToString());
+                    SendOutput.Invoke($"User {CurrentUserName} (id = {CurrentUID.ToString()}) has disconnected!");
+                    StaticServiceHub.BroadcastDisconnect(CurrentUID.ToString());
                     ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
                     break;
 
@@ -128,7 +136,7 @@ namespace ReversedService.Net.Main
 
 
         /// <summary>
-        /// Parametrized constructor;
+        /// Parametrised constructor;
         /// <br />
         /// Конструктор с параметрами;
         /// </summary>
@@ -151,14 +159,14 @@ namespace ReversedService.Net.Main
             ClientSocket = client;
 
             //Генерация нового идентификатора пользователя при каждом создании экземляра клиента
-            UID = Guid.NewGuid();
+            CurrentUID = Guid.NewGuid();
 
             _packetReader = new PacketReader(ClientSocket.GetStream());
 
             var opCode = _packetReader.ReadByte();
 
             //имени пользователя присваивается прочитанная строка
-            UserName = _packetReader.ReadMessage();
+            CurrentUserName = _packetReader.ReadMessage();
 
             Task.Run(() => Process());
         }

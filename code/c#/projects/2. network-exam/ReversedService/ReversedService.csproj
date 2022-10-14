@@ -28,6 +28,7 @@
     <ApplicationDefinition Include=".service-view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Content Include=".service-model\readme.txt" />
     <Page Include=".service-view\ServiceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -37,10 +38,6 @@
     <Reference Include="Toolbox">
       <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include=".service-model\" />
   </ItemGroup>
 
 </Project>

@@ -122,8 +122,8 @@ namespace ReversedService.Net.Main
 
                     var broadcastPacket = new PacketBuilder();
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
-                    broadcastPacket.WriteMessage(usr.UserName);
-                    broadcastPacket.WriteMessage(usr.UID.ToString());
+                    broadcastPacket.WriteMessage(usr.CurrentUserName);
+                    broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }
             }
@@ -163,7 +163,7 @@ namespace ReversedService.Net.Main
         /// </param>
         public void BroadcastDisconnect(string uid)
         {
-            var disconnectedUser = _UserList.Where(x => x.UID.ToString() == uid).FirstOrDefault();
+            var disconnectedUser = _UserList.Where(x => x.CurrentUID.ToString() == uid).FirstOrDefault();
             _UserList.Remove(disconnectedUser);            // removing user;
             foreach (var user in _UserList)
             {
@@ -173,7 +173,7 @@ namespace ReversedService.Net.Main
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
             }
 
-            BroadcastMessage($"{disconnectedUser.UserName} Disconnected!");
+            BroadcastMessage($"{disconnectedUser.CurrentUserName} Disconnected!");
         }
 
 
