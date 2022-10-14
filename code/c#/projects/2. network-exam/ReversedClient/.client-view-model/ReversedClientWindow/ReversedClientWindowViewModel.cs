@@ -7,6 +7,11 @@ using ReversedClient.Net.Auxiliary;
 
 namespace ReversedClient.ViewModel
 {
+    /// <summary>
+    /// A view-model for the client window;
+    /// <br />
+    /// Вью-модель для окна клиента;
+    /// </summary>
     public class ReversedClientWindowViewModel : INotifyPropertyChanged
     {
 
@@ -128,21 +133,24 @@ namespace ReversedClient.ViewModel
 
 
         /// <summary>
-        /// ;
-        /// <br />
-        /// ;
+        /// [?] To be revied, may be obsolete;
         /// </summary>
         public RelayCommand ConnectToServerCommand { get; set; }
 
-
         /// <summary>
-        /// ;
+        /// A command to handle the 'Send' button click;
         /// <br />
-        /// ;
+        /// Команда для обработки нажатия кнопки "Отправить";
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
 
+        /// <summary>
+        /// A command to handle the 'Sign In' button click;
+        /// <br />
+        /// Команда для обработки нажатия кнопки "Войти";
+        /// </summary>
         public RelayCommand SignInButtonClickCommand { get; }
+
 
 
         #endregion COMMANDS - Prism Commands
