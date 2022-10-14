@@ -39,6 +39,7 @@ namespace ReversedClient.ViewModel
             set
             {
                 _Users = value;
+
                 OnPropertyChanged(nameof(Users));
             }
         }
@@ -82,6 +83,19 @@ namespace ReversedClient.ViewModel
             {
                 _UserName = value;
                 OnPropertyChanged(nameof(UserName));
+            }
+        }
+
+
+        private string _WindowHeaderString;
+
+        public string WindowHeaderString
+        {
+            get { return _WindowHeaderString; }
+            set
+            {
+                _WindowHeaderString = value;
+                OnPropertyChanged(nameof(WindowHeaderString));
             }
         }
 

@@ -39,8 +39,10 @@ namespace ReversedClient.ViewModel
             {
                 _CurrentViewModelReference.Server.ConnectToServer(_CurrentViewModelReference.UserName);
 
+
                 //// [!] In this particular order;
                 //
+                _CurrentViewModelReference.WindowHeaderString = _CurrentViewModelReference.UserName + " - common chat";
                 ReversedClientWindow clientChatWindow = new();
                 clientChatWindow.Show();
                 //
