@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using ReversedClient.client_view;
+﻿using ReversedClient.client_view;
 using System.Windows;
 
 using ReversedClient.Model.Basics;
-using System.Reflection.Metadata;
+using ReversedClient.Net.Main;
+using ReversedClient.Net.Auxiliary;
 
 namespace ReversedClient.ViewModel
 {

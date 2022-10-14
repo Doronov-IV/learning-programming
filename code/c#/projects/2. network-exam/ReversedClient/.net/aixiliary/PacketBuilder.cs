@@ -1,4 +1,4 @@
-﻿namespace ReversedClient.Model.Basics
+﻿namespace ReversedClient.Net.Auxiliary
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;

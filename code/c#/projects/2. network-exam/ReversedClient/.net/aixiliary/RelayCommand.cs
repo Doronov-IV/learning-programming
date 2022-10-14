@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReversedClient.Model.Basics
+namespace ReversedClient.Net.Auxiliary
 {
     public class RelayCommand : ICommand
     {

@@ -18,6 +18,9 @@ global using System.Windows.Media;
 global using System.Windows.Media.Imaging;
 global using System.Windows.Navigation;
 global using System.Windows.Shapes;
+global using System.Collections.ObjectModel;
+global using System.Reflection.Metadata;
+global using System.Security.Cryptography.X509Certificates;
 
 global using Tools.Interfaces;
 global using Tools.Collections.Generic;

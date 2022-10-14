@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using ReversedClient.Net.Auxiliary;
 
-namespace ReversedClient.Model.Basics
+namespace ReversedClient.Net.Main
 {
     /// <summary>
     /// A service that manages both connections and reading/writing data on lower level;
@@ -12,6 +12,40 @@ namespace ReversedClient.Model.Basics
 
 
         #region PROPERTIES - public & private Properties
+
+
+
+        //
+        // EndPoint
+        //
+
+        /// <summary>
+        /// Current service EndPoint;
+        /// <br />
+        /// Текущий эндпоинт сервиса;
+        /// </summary>
+        private IPEndPoint ourEndPoint = new(localHostIpAddress, 7891);
+
+
+        /// <summary>
+        /// Localhost address;
+        /// <br />
+        /// Адрес локалхоста;
+        /// </summary>
+        private static IPAddress localHostIpAddress = IPAddress.Parse("127.0.0.1");
+
+
+        /// <summary>
+        /// A field you can insert your address into;
+        /// <br />
+        /// Поле, в которое вы можете вписать свой адрес;
+        /// </summary>
+        private static IPAddress otherHostIpAddress = IPAddress.Parse("127.0.0.1");
+
+        //
+        // /EndPoint
+        //
+
 
 
 
@@ -88,7 +122,7 @@ namespace ReversedClient.Model.Basics
                 /// 
                 /// - Client connection [!]
                 ///
-                _client.Connect("127.0.0.1", 7891);
+                _client.Connect(ourEndPoint);
                 PacketReader = new(_client.GetStream());
 
                 if (!string.IsNullOrEmpty(userName))
@@ -198,7 +232,7 @@ namespace ReversedClient.Model.Basics
                             break;
 
                         default:
-                            MessageBox.Show("Operation code out of [1,5,10]. This is a debug message.", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Operation code out of [1,5,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }

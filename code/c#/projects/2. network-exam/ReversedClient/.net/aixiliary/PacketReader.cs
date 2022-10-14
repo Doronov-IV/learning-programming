@@ -1,6 +1,6 @@
 ﻿using System.Windows.Interop;
 
-namespace ReversedClient.Model.Basics
+namespace ReversedClient.Net.Auxiliary
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;
@@ -69,6 +69,7 @@ namespace ReversedClient.Model.Basics
         #region CONSTRUCTION
 
 
+
         /// <summary>
         /// Parametrised constructor;
         /// <br />
@@ -83,6 +84,7 @@ namespace ReversedClient.Model.Basics
         {
             _NetworkStream = networkStream;
         }
+
 
 
         #endregion CONSTRUCTION
