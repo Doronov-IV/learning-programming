@@ -8,7 +8,6 @@
         Title="{Binding WindowHeaderString}" Height="600" Width="750">
     <Grid Background="#FFFAFAFA">
 
-        <!--Ширина столбцов сетки-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
@@ -21,28 +20,15 @@
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
 
-        <!--Определяет область, в которой можно упорядочивать дочерние элементы
-        горизонтально либо вертикально относительно друг друга.-->
-
-        <!--Текстовое поле принимающее имя пользователя
-            UpdateSourceTrigger: Односторонняя привязка от источника к приемнику практически мгновенно изменяет свойство приемника
-            PropertyChanged: источник привязки обновляется сразу после обновления свойства в приемнике-->
-
-        <!--Кнопка для подключения клиента к серверу-->
-
-        <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
         <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,20" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#E50A0A0A" FontFamily="Bookman Old Style">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <!--Привязка текста к имени пользователя-->
                     <TextBlock Text="{Binding UserName}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <!--StackPanel: Выравнивает дочерние элементы в одну линию, ориентированную горизонтально или вертикально.-->
 
-        <!--привязка-->
         <ListView
                       ItemsSource="{Binding Messages}" Margin="20,31,20,20" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
         <TextBox 
@@ -57,6 +43,5 @@
             Content="{Binding Users.Count}" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" FontFamily="Bookman Old Style" Foreground="#E50A0A0A" Height="24" Width="31"/>
         <Label
             Content="{Binding TheMembersString}" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Bookman Old Style" Height="24" Width="89"/>
-        <!--привязка-->
     </Grid>
 </Window>
