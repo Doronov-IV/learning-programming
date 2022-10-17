@@ -31,7 +31,7 @@
         <!--Кнопка для подключения клиента к серверу-->
 
         <!--Привязка списка к элементам обозреваемой коллекции из пользователей-->
-        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,20" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#E50A0A0A" FontFamily="Century">
+        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,20" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#E50A0A0A" FontFamily="Bookman Old Style">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!--Привязка текста к имени пользователя-->
@@ -44,7 +44,7 @@
 
         <!--привязка-->
         <ListView
-                      ItemsSource="{Binding Messages}" Margin="20,31,20,20" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0A0A0A" FontFamily="Book Antiqua"/>
+                      ItemsSource="{Binding Messages}" Margin="20,31,20,20" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
         <TextBox 
             Style="{StaticResource SendMessageTextBox}" Text="{Binding Message}" 
             Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
@@ -54,9 +54,9 @@
                         Content="Send"
                         Command="{Binding SendMessageCommand}" Margin="482,12,20,12"/>
         <Label
-            Content="{Binding Users.Count}" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" FontFamily="Century" Foreground="#E50A0A0A" Height="24" Width="31"/>
+            Content="{Binding Users.Count}" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" FontFamily="Bookman Old Style" Foreground="#E50A0A0A" Height="24" Width="31"/>
         <Label
-            Content="{Binding TheMembersString}" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Century" Height="24" Width="89"/>
+            Content="{Binding TheMembersString}" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Bookman Old Style" Height="24" Width="89"/>
         <!--привязка-->
     </Grid>
 </Window>
