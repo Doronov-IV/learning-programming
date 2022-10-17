@@ -9,14 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include=".model\configs\CardConfiguration.cs" />
+    <Compile Include=".model\configs\StudentConfiguration.cs" />
+    <Compile Include=".model\context\CurrentDatabaseContext.cs" />
+    <Compile Include=".model\entities\Card.cs" />
+    <Compile Include=".model\entities\Student.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
     <Compile Include=".view-model\MainWindowViewModelHandler.cs" />
     <Compile Include=".view\App.xaml.cs" />
     <Compile Include=".view\MainWindow.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include=".model\" />
   </ItemGroup>
 
   <ItemGroup>
