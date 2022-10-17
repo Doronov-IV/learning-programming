@@ -46,6 +46,8 @@ namespace EntityHomeworkSecond.ViewModel
 
 
 
+
+
         #region COMMANDS
 
 
@@ -53,6 +55,8 @@ namespace EntityHomeworkSecond.ViewModel
 
 
         #endregion COMMANDS
+
+
 
 
 
