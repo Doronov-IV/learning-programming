@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="readme\**" />
-    <EmbeddedResource Remove="readme\**" />
-    <None Remove="readme\**" />
-    <Page Remove="readme\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include=".model\configs\CardConfiguration.cs" />
     <Compile Include=".model\configs\StudentConfiguration.cs" />
     <Compile Include=".model\context\LocalDbContext.cs" />
@@ -38,6 +31,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <Page Include=".view\MainWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="readme\" />
   </ItemGroup>
 
 

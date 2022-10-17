@@ -1,0 +1,10 @@
+1. start + 
+2. split +
+3. nuget +
+4. create +
+5. add-debug
+6. add-debug
+...
+n. complete
+n+1. check commentaries
+release
