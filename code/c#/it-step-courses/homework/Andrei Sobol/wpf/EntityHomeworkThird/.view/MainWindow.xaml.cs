@@ -1,4 +1,6 @@
-﻿namespace EntityHomeworkThird
+﻿using EntityHomeworkThird.ViewModel;
+
+namespace EntityHomeworkThird
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
