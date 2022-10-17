@@ -4,10 +4,10 @@ An archive for old and a workspace for new projects and exercises on my educatio
 some code for Russian-speaking folks to look at. Although I often try to write in 
 both langs to keep my brain fit.
 
-	TL;DR:
+	TL;DR
 
 My whole life was a battle for tiny bits of motivation due to my mental disorder.
-It tried learning IT in a Russian university but to no luck.
+It tried learning IT at a Russian university but to no luck.
 
 It was 2021 that I've started a full-time "Software Development" course at our local
 kind of private facility and I was surprised both by the community itself and
@@ -50,4 +50,6 @@ Apart from this, our course should have gone through:
 
 – ASP.NET: back & front;
 
-– PHP (?);
+– Java (from scratch) (?)
+
+– PHP (???);
