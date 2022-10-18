@@ -55,15 +55,14 @@
         /// </param>
         public void WriteMessage(string msg)
         {
+            // the most important thing is: to code message to utf BEFORE we calculate its length;
+
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
-            //длинна сообщения
             var msgLenght = unicodeMessage.Length;
 
-            //получение массива байт
             _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
-            //преобразование символов из сообщения в последовательность байт
             _memoryStream.Write(unicodeMessage);
         }
 

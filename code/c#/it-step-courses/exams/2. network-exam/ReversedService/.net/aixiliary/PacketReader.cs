@@ -1,4 +1,5 @@
-﻿using System.Windows.Interop;
+﻿using System.Data;
+using System.Windows.Interop;
 
 namespace ReversedService.Net.Auxiliary
 {
@@ -53,7 +54,7 @@ namespace ReversedService.Net.Auxiliary
             }
             catch
             {
-
+                throw new DataException();
             }
             return msg;
         }
