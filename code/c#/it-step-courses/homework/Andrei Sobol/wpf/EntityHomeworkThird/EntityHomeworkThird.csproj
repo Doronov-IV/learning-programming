@@ -38,4 +38,10 @@
     <Page Include=".view\MainWindow.xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

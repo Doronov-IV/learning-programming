@@ -135,8 +135,6 @@ namespace EntityHomeworkThird.ViewModel
         /// </summary>
         public void OnConnectButtonClick()
         {
-            _ViewModelReference.ConnectionStatus = $"Connecting ...";
-
             MainWindowViewModel.ConnectionString = $"Server=.\\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
@@ -147,9 +145,7 @@ namespace EntityHomeworkThird.ViewModel
 
                     connection.Close();
 
-                    _ViewModelReference.ConnectionStatus = $"Connected to \"{_ViewModelReference.ServerName}\".";
-
-                    _ViewModelReference.ToggleConnection();
+                    _ViewModelReference.ConnectionStatus.Toggle();
 
                     MainWindowViewModel.ConnectionString = $@"Server=.\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
                 }

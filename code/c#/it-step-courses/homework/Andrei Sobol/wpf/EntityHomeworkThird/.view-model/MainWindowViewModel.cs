@@ -1,4 +1,5 @@
-﻿using EntityHomeworkThird.Model.Context;
+﻿using Tools.Connection;
+using EntityHomeworkThird.Model.Context;
 using Prism.Commands;
 
 namespace EntityHomeworkThird.ViewModel
@@ -23,7 +24,7 @@ namespace EntityHomeworkThird.ViewModel
         /// <br />
         /// Строка подключения для команд "ado net", (см. Handler);
         /// </summary>
-        public static string ConnectionString;
+        public static string ConnectionString = "";
 
 
         /// <summary>
@@ -48,102 +49,20 @@ namespace EntityHomeworkThird.ViewModel
         }
 
 
+        private CustomConnectionStatus _ConnectionStatus;
 
-        #endregion PROPERTIES
-
-
-
-
-
-
-        #region DB CONNECTION STATUS
-
-
-
-        /// <summary>
-        /// @see public bool IsConnected;
-        /// </summary>
-        private bool _IsConnected;
-
-
-        /// <summary>
-        /// True if connected, otherwise false;
-        /// <br />
-        /// "True" если подключено, иначе "false";
-        /// </summary>
-        public bool IsConnected
-        {
-            get { return _IsConnected; }
-            set
-            {
-                _IsConnected = value;
-                OnPropertyChanged(nameof(IsConnected));
-            }
-        }
-
-
-        /// <summary>
-        /// @see public bool IsNotConnected;
-        /// </summary>
-        private bool _IsNotConnected;
-
-
-        /// <summary>
-        /// True if NOT connected, otherwise false;
-        /// <br />
-        /// "True" если НЕ подключено, иначе "false";
-        /// </summary>
-        public bool IsNotConnected
-        {
-            get { return _IsNotConnected; }
-            set
-            {
-                _IsNotConnected = value;
-                OnPropertyChanged(nameof(IsNotConnected));
-            }
-        }
-
-
-        /// <summary>
-        /// @see public string ConnectionStatus;
-        /// </summary>
-        private string _ConnectionStatus;
-
-
-        /// <summary>
-        /// Verbose connection status string;
-        /// <br />
-        /// Строка развёрнутого статуса подключения;
-        /// </summary>
-        public string ConnectionStatus
+        public CustomConnectionStatus ConnectionStatus
         {
             get { return _ConnectionStatus; }
             set
             {
                 _ConnectionStatus = value;
-                OnPropertyChanged(nameof(ConnectionStatus));
             }
         }
 
 
-        /// <summary>
-        /// Invert the connection flags;
-        /// <br />
-        /// Инвертировать флаги подключения;
-        /// </summary>
-        public void ToggleConnection()
-        {
-            var bTemp = IsConnected;
-            IsConnected = IsNotConnected;
-            IsNotConnected = bTemp;
-        }
 
-
-
-        #endregion DB CONNECTION STATUS
-
-
-
+        #endregion PROPERTIES
         
 
 
@@ -221,16 +140,9 @@ namespace EntityHomeworkThird.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            ConnectionString = "";   
-            _ServerName = "";
-
-            _ConnectionStatus = "Waiting";
-
-            _IsConnected = false;
-            _IsNotConnected = true;
-
+            _ConnectionStatus = new();
             _Handler = new(this);
-
+            _ServerName = "";
             FillCommand = new(_Handler.OnFillButtonClick);
             ClearCommand = new(_Handler.OnClearButtonClick);
             ConnectCommand = new(_Handler.OnConnectButtonClick);
