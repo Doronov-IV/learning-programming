@@ -37,6 +37,11 @@ namespace EntityHomeworkThird.ViewModel
         #region HANDLERS
 
 
+        /// <summary>
+        /// Fill button click event handler;
+        /// <br />
+        /// Обработчик нажатия кнопки "Fill";
+        /// </summary>
         public void OnFillButtonClick()
         {
             using (CurrentDatabaseContext context = new())
@@ -81,12 +86,18 @@ namespace EntityHomeworkThird.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Database insertion failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
 
 
+
+        /// <summary>
+        /// Clear button click event handler;
+        /// <br />
+        /// Обработчик нажатия кнопки "Clear";
+        /// </summary>
         public void OnClearButtonClick()
         {
             using (CurrentDatabaseContext context = new())
@@ -95,7 +106,7 @@ namespace EntityHomeworkThird.ViewModel
                 {
                     // Здесь я пробовал сделать через контекст, но SSMS затупил и не отображал изменения в базе;
                     // Понял это уже когда переделал через команды бывшего ADO;
-                    using (SqlConnection adoConnection = new(_ViewModelReference.ConnectionString))
+                    using (SqlConnection adoConnection = new(MainWindowViewModel.ConnectionString))
                     {
                         adoConnection.Open();
 
@@ -110,7 +121,41 @@ namespace EntityHomeworkThird.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Database clearance failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Connect button click event handler;
+        /// <br />
+        /// Обработчик нажатия кнопки "Connect";
+        /// </summary>
+        public void OnConnectButtonClick()
+        {
+            _ViewModelReference.ConnectionStatus = $"Connecting ...";
+
+            MainWindowViewModel.ConnectionString = $"Server=.\\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+
+            using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    connection.Close();
+
+                    _ViewModelReference.ConnectionStatus = $"Connected to \"{_ViewModelReference.ServerName}\".";
+
+                    _ViewModelReference.ToggleConnection();
+
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Connection failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

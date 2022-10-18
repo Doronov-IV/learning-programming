@@ -23,7 +23,29 @@ namespace EntityHomeworkThird.ViewModel
         /// <br />
         /// Строка подключения для команд "ado net", (см. Handler);
         /// </summary>
-        public string ConnectionString { get; set; }
+        public static string ConnectionString;
+
+
+        /// <summary>
+        /// @see public string ServerName;
+        /// </summary>
+        private string _ServerName;
+
+
+        /// <summary>
+        /// The name of the MSSQL Server;
+        /// <br />
+        /// Имя SQL-сёрвера;
+        /// </summary>
+        public string ServerName
+        {
+            get { return _ServerName; }
+            set
+            {
+                _ServerName = value;
+                OnPropertyChanged(nameof(ServerName));
+            }
+        }
 
 
 
@@ -33,11 +55,22 @@ namespace EntityHomeworkThird.ViewModel
 
 
 
+
         #region DB CONNECTION STATUS
 
 
+
+        /// <summary>
+        /// @see public bool IsConnected;
+        /// </summary>
         private bool _IsConnected;
 
+
+        /// <summary>
+        /// True if connected, otherwise false;
+        /// <br />
+        /// "True" если подключено, иначе "false";
+        /// </summary>
         public bool IsConnected
         {
             get { return _IsConnected; }
@@ -49,8 +82,17 @@ namespace EntityHomeworkThird.ViewModel
         }
 
 
+        /// <summary>
+        /// @see public bool IsNotConnected;
+        /// </summary>
         private bool _IsNotConnected;
 
+
+        /// <summary>
+        /// True if NOT connected, otherwise false;
+        /// <br />
+        /// "True" если НЕ подключено, иначе "false";
+        /// </summary>
         public bool IsNotConnected
         {
             get { return _IsNotConnected; }
@@ -62,7 +104,34 @@ namespace EntityHomeworkThird.ViewModel
         }
 
 
-        private void ToggleConnection()
+        /// <summary>
+        /// @see public string ConnectionStatus;
+        /// </summary>
+        private string _ConnectionStatus;
+
+
+        /// <summary>
+        /// Verbose connection status string;
+        /// <br />
+        /// Строка развёрнутого статуса подключения;
+        /// </summary>
+        public string ConnectionStatus
+        {
+            get { return _ConnectionStatus; }
+            set
+            {
+                _ConnectionStatus = value;
+                OnPropertyChanged(nameof(ConnectionStatus));
+            }
+        }
+
+
+        /// <summary>
+        /// Invert the connection flags;
+        /// <br />
+        /// Инвертировать флаги подключения;
+        /// </summary>
+        public void ToggleConnection()
         {
             var bTemp = IsConnected;
             IsConnected = IsNotConnected;
@@ -75,7 +144,7 @@ namespace EntityHomeworkThird.ViewModel
 
 
 
-
+        
 
 
 
@@ -152,13 +221,19 @@ namespace EntityHomeworkThird.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            ConnectionString = "";   
+            _ServerName = "";
+
+            _ConnectionStatus = "Waiting";
+
             _IsConnected = false;
-            ConnectionString = $"Server=.\\DoronovIV;Database = master;Trusted_Connection=true;Encrypt=false";
+            _IsNotConnected = true;
 
             _Handler = new(this);
 
             FillCommand = new(_Handler.OnFillButtonClick);
             ClearCommand = new(_Handler.OnClearButtonClick);
+            ConnectCommand = new(_Handler.OnConnectButtonClick);
         }
 
 
