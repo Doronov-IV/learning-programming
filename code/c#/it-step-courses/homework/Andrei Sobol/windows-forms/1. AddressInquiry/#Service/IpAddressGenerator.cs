@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 
 using Spectre.Console;
-using Tools.FileReader;
 
 namespace AddressInquiry.Service
 {
@@ -40,8 +39,7 @@ namespace AddressInquiry.Service
         /// <returns>List of adresses;<br />Лист адресов;</returns>
         public static List<string> GetAddressList()
         {
-            FileReader reader = new FileReader();
-            var AddressList = reader.ReadList("#Data/Addresses.txt");
+            var AddressList = File.ReadAllLines("#Data/Addresses.txt").ToList();
             return AddressList;
         }
 

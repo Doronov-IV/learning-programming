@@ -22,6 +22,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".controls\Program.cs" />
+    <Compile Include=".forms\PrimaryForm.cs" />
+    <Compile Include=".forms\PrimaryForm.Designer.cs" />
+    <Compile Include=".forms\SecondaryForm.cs" />
+    <Compile Include=".forms\SecondaryForm.Designer.cs" />
+    <Compile Include=".service\FileSystemPointer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".resources\CopyPathIcon.png" />
+    <Content Include=".resources\DeletionIcon.png" />
+    <Content Include=".resources\OpenIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include=".forms\PrimaryForm.resx" />
+    <EmbeddedResource Include=".forms\SecondaryForm.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
     <Reference Include="tools">
       <HintPath>..\..\..\tools\precompiled-dll\tools.dll</HintPath>
     </Reference>
