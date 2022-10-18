@@ -1,4 +1,5 @@
 ﻿using EntityHomeworkThird.Model.Context;
+using Prism.Commands;
 
 namespace EntityHomeworkThird.ViewModel
 {
@@ -17,19 +18,96 @@ namespace EntityHomeworkThird.ViewModel
         private MainWindowViewModelHandler _Handler;
 
 
+        /// <summary>
+        /// A connection string for ado net instructions (see Handler);
+        /// <br />
+        /// Строка подключения для команд "ado net", (см. Handler);
+        /// </summary>
+        public string ConnectionString { get; set; }
+
+
+
         #endregion PROPERTIES
 
 
 
 
 
-        #region API
+        #region DB CONNECTION STATUS
 
 
-        //
+        private bool _IsConnected;
+
+        public bool IsConnected
+        {
+            get { return _IsConnected; }
+            set
+            {
+                _IsConnected = value;
+                OnPropertyChanged(nameof(IsConnected));
+            }
+        }
 
 
-        #endregion API
+        private bool _IsNotConnected;
+
+        public bool IsNotConnected
+        {
+            get { return _IsNotConnected; }
+            set
+            {
+                _IsNotConnected = value;
+                OnPropertyChanged(nameof(IsNotConnected));
+            }
+        }
+
+
+        private void ToggleConnection()
+        {
+            var bTemp = IsConnected;
+            IsConnected = IsNotConnected;
+            IsNotConnected = bTemp;
+        }
+
+
+
+        #endregion DB CONNECTION STATUS
+
+
+
+
+
+
+
+        #region COMMANDS
+
+
+        /// <summary>
+        /// Fill database button command;
+        /// <br />
+        /// Команда заполнить базу;
+        /// </summary>
+        public DelegateCommand FillCommand { get; }
+
+
+        /// <summary>
+        /// Clear database tables contents command;
+        /// <br />
+        /// Команда очистить содержимое таблиц в б/д;
+        /// </summary>
+        public DelegateCommand ClearCommand { get; }
+
+
+        /// <summary>
+        /// Connect to database command;
+        /// <br />
+        /// Команда подключения к бд;
+        /// </summary>
+        public DelegateCommand ConnectCommand { get; }
+
+
+        #endregion COMMANDS
+
 
 
 
@@ -74,12 +152,13 @@ namespace EntityHomeworkThird.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            _IsConnected = false;
+            ConnectionString = $"Server=.\\DoronovIV;Database = master;Trusted_Connection=true;Encrypt=false";
+
             _Handler = new(this);
 
-            using (CurrentDatabaseContext context = new())
-            {
-
-            }
+            FillCommand = new(_Handler.OnFillButtonClick);
+            ClearCommand = new(_Handler.OnClearButtonClick);
         }
 
 

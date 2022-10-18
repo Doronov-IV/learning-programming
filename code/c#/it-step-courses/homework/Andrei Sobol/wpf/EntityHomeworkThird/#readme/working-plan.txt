@@ -2,11 +2,10 @@
 2. split +
 3. nuget +
 4. create +
-5. add-debug
-6. add-debug
-...
-n. complete
-n+1. check comments
+5. add-debug +
+6. fix button commands +
+7. fix connection in all projects
+8. check for comments
 release
 
 a. setup interfaces in the dll 

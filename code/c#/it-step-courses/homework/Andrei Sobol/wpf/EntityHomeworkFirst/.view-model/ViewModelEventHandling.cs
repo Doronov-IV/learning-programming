@@ -11,33 +11,31 @@ namespace EntityHomeworkFirst.ViewModel.Handling
 
         public void OnFillButtonClick()
         {
-            try
+            using (ApplicationContext context = new ApplicationContext())
             {
-                using (ApplicationContext context = new ApplicationContext())
-                {
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                Order order1 = new() { Summ = 1.5, Date = "02.02.2002" };
+                Order order2 = new() { Summ = 1.7, Date = "02.02.2003" };
+
+                context.Orders.AddRange(order1, order2);
+
+                var a = context.SaveChanges();
             }
         }
 
 
         public void OnClearButtonClick()
         {
-            try
+            using (ApplicationContext context = new ApplicationContext())
             {
-                using (ApplicationContext context = new ApplicationContext())
+                try
                 {
                     context.Orders.RemoveRange(context.Orders);
                     context.SaveChanges();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Something went wrong.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
