@@ -21,6 +21,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            
+            
+            <!-- Erzatz-console listview -->
             <ListBox 
             Name="ConsoleLogListBox" Margin="10,10,10,10"
             ItemsSource="{Binding Path=ServiceLog, Mode=TwoWay}"

@@ -6,42 +6,100 @@
         xmlns:local="clr-namespace:ReversedClient.client_view"
         mc:Ignorable="d"
         Title="{Binding WindowHeaderString}" Height="600" Width="750">
+    
     <Grid Background="#FFFAFAFA">
 
+        
+        <!--#region Grid layout-->
+        
         <Grid.ColumnDefinitions>
+            
             <ColumnDefinition Width="*"/>
+            
             <ColumnDefinition Width="3*"/>
+            
         </Grid.ColumnDefinitions>
 
+        
+        
         <Grid.RowDefinitions>
 
             <RowDefinition Height="149*"/>
 
             <RowDefinition Height="13*"/>
+            
         </Grid.RowDefinitions>
 
-        <ListView ItemsSource="{Binding Users}" HorizontalAlignment="Left" Margin="15,60,0,20" Width="154" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#E50A0A0A" FontFamily="Bookman Old Style">
+        <!--#endregion Grid layout-->
+
+
+        
+        <!--#region Listviews-->
+        
+        <ListView 
+                  ItemsSource="{Binding Users}" HorizontalAlignment="Left" 
+                Margin="15,60,0,20" Width="154" Background="{x:Null}" 
+              BorderBrush="{x:Null}" Foreground="#E50A0A0A" 
+            FontFamily="Bookman Old Style">
+            
+            
             <ListView.ItemTemplate>
+                
                 <DataTemplate>
+                    
                     <TextBlock Text="{Binding UserName}"/>
+                    
                 </DataTemplate>
+                
             </ListView.ItemTemplate>
+            
+            
         </ListView>
 
 
         <ListView
-                      ItemsSource="{Binding Messages}" Margin="20,31,20,20" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
+                  ItemsSource="{Binding Messages}" Margin="20,31,20,20" 
+                Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="1" 
+              Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
+        
+        <!--#endregion Listviews-->
+        
+        
+        
+        <!--#region Bottom controls-->
+        
         <TextBox 
-            Style="{StaticResource SendMessageTextBox}" Text="{Binding Message}" 
-            Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
+                Style="{StaticResource SendMessageTextBox}" 
+              Text="{Binding Message}" 
+            Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19"
+          VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
+        
         <Button
-                    Grid.Column="1"
-                    Grid.Row="2"
-                        Content="Send"
-                        Command="{Binding SendMessageCommand}" Margin="482,12,20,12"/>
+                Grid.Column="1" Grid.Row="2"
+              Content="Send" Command="{Binding SendMessageCommand}" 
+            Margin="482,12,20,12"/>
+
+        <!--#endregion Bottom controls-->
+        
+        
+        
+        <!--#region Labels-->
+        
         <Label
-            Content="{Binding Users.Count}" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" FontFamily="Bookman Old Style" Foreground="#E50A0A0A" Height="24" Width="31"/>
+              Content="{Binding Users.Count}" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Margin="15,31,0,0" 
+          FontFamily="Bookman Old Style" Foreground="#E50A0A0A" 
+        Height="24" Width="31"/>
+        
         <Label
-            Content="{Binding TheMembersString}" HorizontalAlignment="Left" Margin="51,31,0,0" VerticalAlignment="Top" Background="#FFFAFAFA" Foreground="#E50A0A0A" FontFamily="Bookman Old Style" Height="24" Width="89"/>
+            Content="{Binding TheMembersString}" HorizontalAlignment="Left" 
+          VerticalAlignment="Top" Margin="51,31,0,0" 
+        Background="#FFFAFAFA" Foreground="#E50A0A0A" 
+      FontFamily="Bookman Old Style" Height="24" Width="89"/>
+        
+        <!--#endregion Labels-->
+        
+        
     </Grid>
+    
 </Window>
