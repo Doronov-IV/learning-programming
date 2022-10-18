@@ -11,6 +11,7 @@ namespace EntityHomeworkThird.ViewModel
         #region PROPERTIES
 
 
+
         /// <summary>
         /// Handler is a file with all event handler methods;
         /// <br />
@@ -49,8 +50,17 @@ namespace EntityHomeworkThird.ViewModel
         }
 
 
+        /// <summary>
+        /// @see public CustomConnectionStatus ConnectionStatus;
+        /// </summary>
         private CustomConnectionStatus _ConnectionStatus;
 
+
+        /// <summary>
+        /// A set of flags providing view with connection info;
+        /// <br />
+        /// Набор флагов для информирования вида;
+        /// </summary>
         public CustomConnectionStatus ConnectionStatus
         {
             get { return _ConnectionStatus; }
@@ -99,8 +109,6 @@ namespace EntityHomeworkThird.ViewModel
 
 
 
-
-
         #region CONSTRUCTION
 
 
@@ -143,6 +151,7 @@ namespace EntityHomeworkThird.ViewModel
             _ConnectionStatus = new();
             _Handler = new(this);
             _ServerName = "";
+
             FillCommand = new(_Handler.OnFillButtonClick);
             ClearCommand = new(_Handler.OnClearButtonClick);
             ConnectCommand = new(_Handler.OnConnectButtonClick);
