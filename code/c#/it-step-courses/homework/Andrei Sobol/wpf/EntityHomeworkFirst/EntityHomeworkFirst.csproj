@@ -27,7 +27,6 @@
 		<Compile Include=".view\MainWindow.xaml.cs" />
 		<Compile Include=".view-model\ApplicationContext.cs" />
 		<Compile Include=".view-model\MainWindowViewModel.cs" />
-		<Compile Include=".view-model\ViewModelEventHandling.cs" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9" />

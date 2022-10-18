@@ -1,5 +1,6 @@
 ﻿using EntityHomeworkSecond.Model.Configs;
 using EntityHomeworkSecond.Model.Entities;
+using EntityHomeworkSecond.ViewModel;
 
 namespace EntityHomeworkSecond.Model.Context
 {
@@ -19,7 +20,7 @@ namespace EntityHomeworkSecond.Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\DoronovIV;Database=DoronovEntityCore;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(MainWindowViewModel.ConnectionString);
         }
 
 

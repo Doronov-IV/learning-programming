@@ -12,6 +12,8 @@ using EntityHomeworkSecond.Model;
 using Prism.Commands;
 using EntityHomeworkSecond.Model.Context;
 using EntityHomeworkSecond.Model.Entities;
+using Tools.Connection;
+using Microsoft.Data.SqlClient;
 
 namespace EntityHomeworkSecond.ViewModel
 {
@@ -19,30 +21,63 @@ namespace EntityHomeworkSecond.ViewModel
     {
 
 
-        #region Property changed
+
+        #region PROPERTIES
 
 
         /// <summary>
-        /// Propery changed event handler;
-        /// <br />
-        /// Делегат-обработчик события 'property changed';
+        /// @see public CustomConnectionStatus ConnectionStatus;
         /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private CustomConnectionStatus _ConnectionStatus;
 
 
         /// <summary>
-        /// Handler-method of the 'property changed' delegate;
+        /// A set of flags providing view with connection info;
         /// <br />
-        /// Метод-обработчик делегата 'property changed';
+        /// Набор флагов для информирования вида;
         /// </summary>
-        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
-        private void OnPropertyChanged(string propName)
+        public CustomConnectionStatus ConnectionStatus
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            get { return _ConnectionStatus; }
+            set
+            {
+                _ConnectionStatus = value;
+            }
         }
 
 
-        #endregion Property changed
+
+        /// <summary>
+        /// A connection string for ado net instructions (see Handler);
+        /// <br />
+        /// Строка подключения для команд "ado net", (см. Handler);
+        /// </summary>
+        public static string ConnectionString = "";
+
+
+        /// <summary>
+        /// @see public string ServerName;
+        /// </summary>
+        private string _ServerName;
+
+
+        /// <summary>
+        /// The name of the MSSQL Server;
+        /// <br />
+        /// Имя SQL-сёрвера;
+        /// </summary>
+        public string ServerName
+        {
+            get { return _ServerName; }
+            set
+            {
+                _ServerName = value;
+                OnPropertyChanged(nameof(ServerName));
+            }
+        }
+
+
+        #endregion PROPERTIES
 
 
 
@@ -51,7 +86,20 @@ namespace EntityHomeworkSecond.ViewModel
         #region COMMANDS
 
 
+        /// <summary>
+        /// Fill database command;
+        /// <br />
+        /// Команда заполнения бд;
+        /// </summary>
         public DelegateCommand FillDatabaseClickCommand { get; }
+
+
+        /// <summary>
+        /// Connect to database command;
+        /// <br />
+        /// Команда подключения к бд;
+        /// </summary>
+        public DelegateCommand ConnectCommand { get; }
 
 
         #endregion COMMANDS
@@ -63,6 +111,12 @@ namespace EntityHomeworkSecond.ViewModel
         #region HANDLING
 
 
+
+        /// <summary>
+        /// Fill button click event handler;
+        /// <br />
+        /// Обработчик ивента нажатия на кнопку "Fill";
+        /// </summary>
         private void OnFillDatabaseClick()
         {
             using (LocalDbContext context = new())
@@ -97,10 +151,69 @@ namespace EntityHomeworkSecond.ViewModel
         }
 
 
+        /// <summary>
+        /// Connect button click event handler;
+        /// <br />
+        /// Обработчик ивента нажатия на кнопку "Connect";
+        /// </summary>
+        private void OnConnectButtonClick()
+        {
+            MainWindowViewModel.ConnectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+
+            using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    connection.Close();
+
+                    ConnectionStatus.Toggle();
+
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{ServerName};Database = DoronovEFCsecond;Trusted_Connection=true;Encrypt=false";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Connection failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
         #endregion HANDLING
 
 
 
+
+        #region CONSTRUCTION
+
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
 
 
 
@@ -112,9 +225,14 @@ namespace EntityHomeworkSecond.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            _ConnectionStatus = new();
+
             FillDatabaseClickCommand = new DelegateCommand(OnFillDatabaseClick);
+            ConnectCommand = new(OnConnectButtonClick);
         }
 
+
+        #endregion CONSTRUCTION
 
 
     }

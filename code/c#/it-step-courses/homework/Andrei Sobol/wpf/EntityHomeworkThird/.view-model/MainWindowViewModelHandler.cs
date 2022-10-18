@@ -147,7 +147,7 @@ namespace EntityHomeworkThird.ViewModel
 
                     _ViewModelReference.ConnectionStatus.Toggle();
 
-                    MainWindowViewModel.ConnectionString = $@"Server=.\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{_ViewModelReference.ServerName};Database = DoronovEFCthird;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {

@@ -12,21 +12,22 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Height="25" Command="{Binding FillDatabaseClickCommand}"
+        <Button Height="25" Command="{Binding FillDatabaseClickCommand}" Visibility="{Binding ConnectionStatus.IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
             Grid.Column="6" Content="Fill Database" HorizontalAlignment="Center" Margin="10" Grid.Row="6" VerticalAlignment="Center"/>
+
+
+        <Button Grid.Column="0" Grid.Row="0" x:Name="ConnectButton" Content="Connect" Command ="{Binding ConnectCommand}" IsEnabled="{Binding ConnectionStatus.IsNotConnected}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin ="10,75,0,0" Padding="5" Height="25" Width="58"/>
+        <TextBox IsEnabled="{Binding ConnectionStatus.IsNotConnected}" Width="100" Height="20"
+            ToolTipService.ToolTip="Server Name" Grid.Column="0" Grid.Row="0" x:Name="ServerNameTextBox" Text ="{Binding ServerName, Mode=TwoWay}" Margin="10,45,0,0" TextWrapping="Wrap" RenderTransformOrigin="1.07,0.643" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label x:Name="ConnectionStatusLabel" Content="{Binding ConnectionStatus.Narrative}" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Height="25" Width="147"/>
+
     </Grid>
 </Window>
