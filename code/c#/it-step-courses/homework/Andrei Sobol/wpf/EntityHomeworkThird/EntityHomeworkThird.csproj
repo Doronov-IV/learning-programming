@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <Compile Include=".model\configs\CardConfiguration.cs" />
+    <Compile Include=".model\configs\MarkConfiguration.cs" />
     <Compile Include=".model\configs\StudentConfiguration.cs" />
+    <Compile Include=".model\configs\SubjectConfiguration.cs" />
     <Compile Include=".model\context\CurrentDatabaseContext.cs" />
     <Compile Include=".model\entities\Card.cs" />
+    <Compile Include=".model\entities\Mark.cs" />
     <Compile Include=".model\entities\Student.cs" />
+    <Compile Include=".model\entities\Subject.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
     <Compile Include=".view-model\MainWindowViewModelHandler.cs" />
     <Compile Include=".view\App.xaml.cs" />

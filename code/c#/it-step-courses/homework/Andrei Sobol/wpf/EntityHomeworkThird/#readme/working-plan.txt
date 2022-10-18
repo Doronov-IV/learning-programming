@@ -6,5 +6,7 @@
 6. add-debug
 ...
 n. complete
-n+1. check commentaries
+n+1. check comments
 release
+
+a. setup interfaces in the dll 
