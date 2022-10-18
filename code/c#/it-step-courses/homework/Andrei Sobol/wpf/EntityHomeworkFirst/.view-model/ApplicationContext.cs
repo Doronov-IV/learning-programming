@@ -1,4 +1,5 @@
 ﻿using EntityHomeworkFirst.Model;
+using EntityHomeworkFirst.ViewModel;
 
 namespace EntityHomeworkFirst.ViewModel
 {
@@ -6,16 +7,21 @@ namespace EntityHomeworkFirst.ViewModel
     {
 
 
-        public DbSet<Order> Orders { get; set; }
+        /// <summary>
+        /// An Orders table contents;
+        /// <br />
+        /// Содержимое таблицы "Orders";
+        /// </summary>
+        public DbSet<Order> Orders { get; set; } = null!;
 
 
 
-        #region CONTEXT
+        #region CONTEXT OVERRIDES
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\DoronovIV;Database=DoronovEntityCore;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(MainWindowViewModel.ConnectionString);
         }
 
 
@@ -26,7 +32,7 @@ namespace EntityHomeworkFirst.ViewModel
         }
 
 
-        #endregion CONTEXT
+        #endregion CONTEXT OVERRIDES
 
 
 
@@ -42,7 +48,6 @@ namespace EntityHomeworkFirst.ViewModel
         /// </summary>
         public ApplicationContext()
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

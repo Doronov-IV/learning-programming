@@ -9,9 +9,9 @@ global using Microsoft.EntityFrameworkCore;
 global using System.Collections.ObjectModel;
 
 using EntityHomeworkFirst.Model;
-using EntityHomeworkFirst.ViewModel.Handling;
 using Prism.Commands;
 using System.Data.SqlClient;
+using Tools.Connection;
 
 namespace EntityHomeworkFirst.ViewModel
 {
@@ -22,10 +22,17 @@ namespace EntityHomeworkFirst.ViewModel
         #region PROPERTIES
 
 
+        /// <summary>
+        /// @see public ObservableCollection<Order> OrderList;
+        /// </summary>
         private ObservableCollection<Order> _OrderList;
 
 
-
+        /// <summary>
+        /// The list of orders;
+        /// <br />
+        /// Список заказов;
+        /// </summary>
         public ObservableCollection<Order> OrderList
         {
             get
@@ -36,6 +43,59 @@ namespace EntityHomeworkFirst.ViewModel
             {
                 _OrderList = value;
                 OnPropertyChanged(nameof(OrderList));
+            }
+        }
+
+
+
+        /// <summary>
+        /// @see public CustomConnectionStatus ConnectionStatus;
+        /// </summary>
+        private CustomConnectionStatus _ConnectionStatus;
+
+
+        /// <summary>
+        /// A set of flags providing view with connection info;
+        /// <br />
+        /// Набор флагов для информирования вида;
+        /// </summary>
+        public CustomConnectionStatus ConnectionStatus
+        {
+            get { return _ConnectionStatus; }
+            set
+            {
+                _ConnectionStatus = value;
+            }
+        }
+
+
+
+        /// <summary>
+        /// A connection string for ado net instructions (see Handler);
+        /// <br />
+        /// Строка подключения для команд "ado net", (см. Handler);
+        /// </summary>
+        public static string ConnectionString = "";
+
+
+        /// <summary>
+        /// @see public string ServerName;
+        /// </summary>
+        private string _ServerName;
+
+
+        /// <summary>
+        /// The name of the MSSQL Server;
+        /// <br />
+        /// Имя SQL-сёрвера;
+        /// </summary>
+        public string ServerName
+        {
+            get { return _ServerName; }
+            set
+            {
+                _ServerName = value;
+                OnPropertyChanged(nameof(ServerName));
             }
         }
 
@@ -52,6 +112,9 @@ namespace EntityHomeworkFirst.ViewModel
 
 
         public DelegateCommand ClearCommand { get; }
+
+
+        public DelegateCommand ConnectCommand { get; }
 
 
         #endregion COMMANDS
@@ -98,7 +161,7 @@ namespace EntityHomeworkFirst.ViewModel
                     {
                         adoConnection.Open();
 
-                        string comandText = "USE DoronovEntityCoreFirst DELETE FROM Orders;";
+                        string comandText = "USE DoronovEFCfirst DELETE FROM Orders;";
 
                         SqlCommand command = new(comandText, adoConnection);
 
@@ -110,6 +173,35 @@ namespace EntityHomeworkFirst.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Database clearance failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Connect button click event handler;
+        /// <br />
+        /// Обработчик нажатия кнопки "Connect";
+        /// </summary>
+        public void OnConnectButtonClick()
+        {
+            MainWindowViewModel.ConnectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+
+            using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    connection.Close();
+
+                    ConnectionStatus.Toggle();
+
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{ServerName};Database = DoronovEFCfirst;Trusted_Connection=true;Encrypt=false";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Connection failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -162,11 +254,17 @@ namespace EntityHomeworkFirst.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            OrderList = new ObservableCollection<Order>();
+            _ConnectionStatus = new();
+
+            _ServerName = "";
+
+            _OrderList = new ObservableCollection<Order>();
 
             FillCommand = new DelegateCommand(OnFillButtonClick);
 
             ClearCommand = new DelegateCommand(OnClearButtonClick);
+
+            ConnectCommand = new(OnConnectButtonClick);
         }
 
 

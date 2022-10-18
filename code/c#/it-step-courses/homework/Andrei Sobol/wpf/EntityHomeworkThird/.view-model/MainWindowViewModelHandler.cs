@@ -110,7 +110,7 @@ namespace EntityHomeworkThird.ViewModel
                     {
                         adoConnection.Open();
 
-                        string comandText = "USE DoronovEntityCoreThird DELETE FROM Marks; DELETE FROM Subjects; DELETE FROM Cards; DELETE FROM Students;";
+                        string comandText = "USE DoronovEFCthird DELETE FROM Marks; DELETE FROM Subjects; DELETE FROM Cards; DELETE FROM Students;";
 
                         SqlCommand command = new(comandText, adoConnection);
 
