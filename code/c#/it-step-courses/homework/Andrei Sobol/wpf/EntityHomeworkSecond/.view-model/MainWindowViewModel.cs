@@ -158,7 +158,8 @@ namespace EntityHomeworkSecond.ViewModel
         /// </summary>
         private void OnConnectButtonClick()
         {
-            MainWindowViewModel.ConnectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            // Если нет подключения, воткните после "Server=" символы ".\\";
+            MainWindowViewModel.ConnectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
             {
@@ -169,12 +170,12 @@ namespace EntityHomeworkSecond.ViewModel
                     connection.Close();
 
                     ConnectionStatus.Toggle();
-
-                    MainWindowViewModel.ConnectionString = $@"Server=.\{ServerName};Database = DoronovEFCsecond;Trusted_Connection=true;Encrypt=false";
+                    // Если не работает Entity, воткните после "Server=" символы ".\";
+                    MainWindowViewModel.ConnectionString = $@"Server={ServerName};Database = DoronovEFCsecond;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Connection failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Connection failed. (location: .view-model/'main-vm'/OnConnectButtonClick)\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

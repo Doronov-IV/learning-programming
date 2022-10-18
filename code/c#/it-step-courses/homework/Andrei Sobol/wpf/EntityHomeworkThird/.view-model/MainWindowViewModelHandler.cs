@@ -135,7 +135,8 @@ namespace EntityHomeworkThird.ViewModel
         /// </summary>
         public void OnConnectButtonClick()
         {
-            MainWindowViewModel.ConnectionString = $"Server=.\\{_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            // Если нет подключения, воткните после "Server=" символы ".\\";
+            MainWindowViewModel.ConnectionString = $"Server={_ViewModelReference.ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
             {
@@ -147,11 +148,12 @@ namespace EntityHomeworkThird.ViewModel
 
                     _ViewModelReference.ConnectionStatus.Toggle();
 
-                    MainWindowViewModel.ConnectionString = $@"Server=.\{_ViewModelReference.ServerName};Database = DoronovEFCthird;Trusted_Connection=true;Encrypt=false";
+                    // Если не работает Entity, воткните после "Server=" символы ".\";
+                    MainWindowViewModel.ConnectionString = $@"Server={_ViewModelReference.ServerName};Database = DoronovEFCthird;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Connection failed.\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Connection failed. (location .view-model/Handler/OnConnectButtonClick)\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
