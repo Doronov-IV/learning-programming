@@ -25,7 +25,10 @@ namespace Doronov.SystemProgramming
         #region API - public Contract
 
 
-        // write your code here ...
+        public void Run()
+        {
+
+        }
 
 
         #endregion API - public Contract

@@ -139,12 +139,22 @@ namespace ReversedService.Net.Main
         /// <param name="message"></param>
         public void BroadcastMessage(string message)
         {
-            //рассылка отправленного сообщения всем пользователям
             foreach (var user in _UserList)
             {
                 var msgPacket = new PacketBuilder();
                 msgPacket.WriteOpCode(5);
                 msgPacket.WriteMessage(message);
+                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+            }
+        }
+
+        public void BroadcastFile(FileInfo info)
+        {
+            foreach (var user in _UserList)
+            {
+                var msgPacket = new PacketBuilder();
+                msgPacket.WriteOpCode(6);
+                msgPacket.WriteFile(info);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
             }
         }

@@ -57,14 +57,25 @@
         {
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
-            //длинна сообщения
             var msgLenght = unicodeMessage.Length;
 
-            //получение массива байт
             _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
-            //преобразование символов из сообщения в последовательность байт
             _memoryStream.Write(unicodeMessage);
+        }
+
+        public void WriteMessage(FileInfo info)
+        {
+            if (File.Exists(info.FullName))
+            {
+                var binFile = File.ReadAllBytes(info.FullName);
+
+                var fileLength = binFile.Length;
+
+                _memoryStream.Write(BitConverter.GetBytes(fileLength));
+
+                _memoryStream.Write(binFile);
+            }
         }
 
 

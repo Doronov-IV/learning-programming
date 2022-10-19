@@ -1,6 +1,7 @@
-﻿using System.Windows.Interop;
+﻿using System.Data;
+using System.Windows.Interop;
 
-namespace ReversedClient.Net.Auxiliary
+namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;
@@ -53,9 +54,29 @@ namespace ReversedClient.Net.Auxiliary
             }
             catch
             {
-
+                throw new DataException();
             }
             return msg;
+        }
+
+        public FileInfo ReadFile()
+        {
+            FileInfo info = null;
+            try
+            {
+                byte[] msgBuffer;
+                var length = ReadInt32();
+                length *= 2;
+                msgBuffer = new byte[length];
+                _NetworkStream.Read(msgBuffer, 0, length);
+                File.WriteAllBytes($"../../../.files/{new Guid()}.png", msgBuffer);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return info;
         }
 
 

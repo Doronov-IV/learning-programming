@@ -42,4 +42,8 @@
 			<HintPath>..\..\tools\precompiled-dll\tools.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include=".files\" />
+	</ItemGroup>
 </Project>

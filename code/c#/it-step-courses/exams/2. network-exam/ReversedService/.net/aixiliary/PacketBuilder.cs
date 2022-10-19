@@ -66,6 +66,27 @@
             _memoryStream.Write(unicodeMessage);
         }
 
+        /// <summary>
+        /// Write binary message;
+        /// <br />
+        /// Записать сообщение в бинарном виде;
+        /// </summary>
+        /// <param name="msg">
+        /// Message text;
+        /// <br />
+        /// Текст сообщения;
+        /// </param>
+        public void WriteFile(FileInfo info)
+        {
+            var binFile = File.ReadAllBytes(info.FullName);
+
+            var msgLenght = binFile.Length;
+
+            _memoryStream.Write(BitConverter.GetBytes(msgLenght));
+
+            _memoryStream.Write(binFile);
+        }
+
 
         /// <summary>
         /// Get all packet bytes including code, message length and the message itself;

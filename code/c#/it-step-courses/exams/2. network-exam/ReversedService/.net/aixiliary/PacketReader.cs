@@ -59,6 +59,26 @@ namespace ReversedService.Net.Auxiliary
             return msg;
         }
 
+        public FileInfo ReadFile()
+        {
+            FileInfo info = null;
+            try
+            {
+                byte[] msgBuffer;
+                var length = ReadInt32();
+                length *= 5;
+                msgBuffer = new byte[length];
+                _NetworkStream.Read(msgBuffer);
+                File.WriteAllBytes($"../../../.files/{new Guid()}.png", msgBuffer);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return info;
+        }
+
 
 
         #endregion API

@@ -131,10 +131,23 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private FileInfo _UserFile;
+
+        public FileInfo UserFile
+        {
+            get { return _UserFile; }
+            set
+            {
+                _UserFile = value;
+                OnPropertyChanged(nameof(UserFile));
+            }
+        }
+
+
         /// <summary>
         /// @see public ReversedService Server;
         /// </summary>
-        private ReversedService _server;
+        private ReversedClient.Net.Main.ReversedService _server;
 
 
         /// <summary>
@@ -142,7 +155,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Экземпляр класса "ReversedService";
         /// </summary>
-        public ReversedService Server
+        public ReversedClient.Net.Main.ReversedService Server
         {
             get { return _server; }
             set { _server = value; }
@@ -170,6 +183,8 @@ namespace ReversedClient.ViewModel
         /// Команда для обработки нажатия кнопки "Отправить";
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
+
+        public RelayCommand SendFileCommand { get; set; }
 
         /// <summary>
         /// A command to handle the 'Sign In' button click;
@@ -214,6 +229,13 @@ namespace ReversedClient.ViewModel
         {
             var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
             Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
+        }
+
+
+        private void RecieveFile()
+        {
+            var file = _server.PacketReader.ReadFile();
+            Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
         }
 
 
@@ -263,6 +285,12 @@ namespace ReversedClient.ViewModel
             Message = "";
         }
 
+        private void SendFile()
+        {
+            UserFile = new(fileName: @"C:\Users\Student PCE\source\repos\Doronov-IV\computer-science-learning\pics\photos\totalen-haram.jpg");
+            _server.SendFileToServer(UserFile);
+        }
+
 
 
         /// <summary>
@@ -299,8 +327,9 @@ namespace ReversedClient.ViewModel
             _Messages = new ObservableCollection<string>();
             _server = new();
 
-            _server.connectedEvent += ConnectUser;          // user connection;
-            _server.msgReceivedEvent += RecieveMessage;    // message receipt;
+            _server.connectedEvent += ConnectUser;           // user connection;
+            _server.msgReceivedEvent += RecieveMessage;     // message receipt;
+            _server.fileReceivedEvent += RecieveFile;      // file receipt;
             _server.userDisconnectEvent += RemoveUser;    // user disconnection;
 
             _Handler = new(this);
@@ -311,6 +340,8 @@ namespace ReversedClient.ViewModel
             ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
 
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
+
+            SendFileCommand = new RelayCommand(o => SendFile(), o => 1 == 1);
 
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => 1 == 1);

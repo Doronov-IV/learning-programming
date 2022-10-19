@@ -1,4 +1,5 @@
 ﻿using ReversedClient.Net.Auxiliary;
+using ReversedService.Net.Auxiliary;
 
 namespace ReversedClient.Net.Main
 {
@@ -82,6 +83,9 @@ namespace ReversedClient.Net.Main
         /// Событие получения сообщения;
         /// </summary>
         public event Action msgReceivedEvent;
+
+
+        public event Action fileReceivedEvent;
 
 
 
@@ -173,9 +177,25 @@ namespace ReversedClient.Net.Main
             try
             {
                 var messagePacket = new PacketBuilder();
-                messagePacket.WriteOpCode(5);//присваиваем написанию сообщения код операции равный 5
+                messagePacket.WriteOpCode(5);
                 messagePacket.WriteMessage(message);
-                _client.Client.Send(messagePacket.GetPacketBytes());//отправляем массив байт из сообщения
+                _client.Client.Send(messagePacket.GetPacketBytes());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"You haven't connected yet.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        public void SendFileToServer(FileInfo info)
+        {
+            try
+            {
+                var messagePacket = new PacketBuilder();
+                messagePacket.WriteOpCode(6);
+                messagePacket.WriteMessage(info);
+                _client.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
             {
@@ -225,6 +245,10 @@ namespace ReversedClient.Net.Main
 
                         case 5:
                             msgReceivedEvent?.Invoke(); // message recieved;
+                            break;
+
+                        case 6:
+                            fileReceivedEvent?.Invoke(); // file  recieved;
                             break;
 
                         case 10:

@@ -110,6 +110,11 @@ namespace ReversedService.Net.Main
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg}");
                             StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg}");
                             break;
+                        case 6:
+                            var file = _packetReader.ReadFile();
+                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent an image.");
+                            StaticServiceHub.BroadcastFile(file);
+                            break;
                         default:
                             break;
                     }
