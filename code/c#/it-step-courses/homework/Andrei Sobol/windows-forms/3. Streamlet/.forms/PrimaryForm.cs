@@ -127,7 +127,11 @@ namespace Streamlet.Forms
         /// </param>
         private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
         {
+            if (listView == null || DirectoryPointer == null) return;
+
             ActiveListView = listView;
+
+            ActivePointer = DirectoryPointer;
 
             ListViewItem escapeItem = new ListViewItem(GoUpEscapeString);
 
@@ -175,6 +179,21 @@ namespace Streamlet.Forms
             else
             {
                 MoveUp(listView, ref DirectoryPointer);
+            }
+        }
+
+
+        private void OnPrimaryFormKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                        OnAnyListViewSelectedItemChanged(ActiveListView, ref ActivePointer);
+                    break;
+
+                    case Keys.Escape:
+                        MoveUp(ActiveListView, ref ActivePointer);
+                    break;
             }
         }
 
@@ -306,7 +325,7 @@ namespace Streamlet.Forms
         /// </param>
         private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
         {
-            if (DirectoryPointer != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
+            if (DirectoryPointer != null && DirectoryPointer.CurrentDirectory != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
             ShowDirectoryContents(ListView, DirectoryPointer);
         }
 
@@ -372,6 +391,8 @@ namespace Streamlet.Forms
         /// </param>
         private void ShowDrives(ListView listView)
         {
+            if (listView == null) return;
+
             var driveList = DriveInfo.GetDrives();
 
             listView.Items.Clear();
@@ -496,7 +517,7 @@ namespace Streamlet.Forms
             // 'esc';
             else if (e.KeyCode == Keys.Escape)
             {
-                specificTextBox.Text = "aaa";
+                specificTextBox.Text = "\'/\\]%";
                 OnAnyAddressTextBoxLeave(listView, specificTextBox, ref ptr);
             }
         }
@@ -723,6 +744,64 @@ namespace Streamlet.Forms
 
 
 
+        #region Module : Middle icon buttons
+
+
+        private void OnCopyRightButtonClick(object sender, EventArgs e)
+        {
+            if (LeftListView.SelectedItems != null && LeftListView.SelectedItems.Count != 0)
+            {
+                foreach (ListViewItem itemName in LeftListView.SelectedItems)
+                {
+                    foreach (var file in LeftWindowPointer.CurrentDirectory.GetFiles())
+                    {
+                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{RightWindowPointer.CurrentDirectory.FullName}\\{file.Name}");
+                    }
+
+                    foreach (var dir in LeftWindowPointer.CurrentDirectory.GetDirectories())
+                    {
+                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, RightWindowPointer.CurrentDirectory.FullName);
+                    }
+                }
+
+                ShowDirectoryContents(LeftListView, LeftWindowPointer);
+
+                ShowDirectoryContents(RightListView, RightWindowPointer);
+            }
+        }
+
+
+
+        private void OnCopyLeftButtonClick(object sender, EventArgs e)
+        {
+            if (RightListView.SelectedItems != null && RightListView.SelectedItems.Count != 0)
+            {
+                foreach (ListViewItem itemName in RightListView.SelectedItems)
+                {
+                    foreach (var file in RightWindowPointer.CurrentDirectory.GetFiles())
+                    {
+                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{LeftWindowPointer.CurrentDirectory.FullName}\\{file.Name}");
+                    }
+
+                    foreach (var dir in RightWindowPointer.CurrentDirectory.GetDirectories())
+                    {
+                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, LeftWindowPointer.CurrentDirectory.FullName);
+                    }
+                }
+
+                ShowDirectoryContents(LeftListView, LeftWindowPointer);
+
+                ShowDirectoryContents(RightListView, RightWindowPointer);
+            }
+        }
+
+
+        #endregion Module : Middle icon buttons
+
+
+
+
+
 
         #region PROPERTIES
 
@@ -757,6 +836,14 @@ namespace Streamlet.Forms
         /// Ссылка на активный лист-бокс;
         /// </summary>
         private ListView ActiveListView;
+
+
+        /// <summary>
+        /// A reference to the pointer of the focused listview;
+        /// <br />
+        /// Ссылка на файловый указатель активного листбокса;
+        /// </summary>
+        private FileSystemPointer ActivePointer;
 
 
         /// <summary>
@@ -824,6 +911,8 @@ namespace Streamlet.Forms
         {
 
         }
+
+
 
 
 

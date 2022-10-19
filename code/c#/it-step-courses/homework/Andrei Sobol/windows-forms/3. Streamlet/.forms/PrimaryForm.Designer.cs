@@ -155,6 +155,7 @@
             this.LeftListView.UseCompatibleStateImageBehavior = false;
             this.LeftListView.View = System.Windows.Forms.View.Details;
             this.LeftListView.DoubleClick += new System.EventHandler(this.OnLeftListViewMouseDoubleClick);
+            this.LeftListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnPrimaryFormKeyDown);
             // 
             // LeftNameColumn
             // 
@@ -214,6 +215,7 @@
             this.RightListView.TabIndex = 8;
             this.RightListView.UseCompatibleStateImageBehavior = false;
             this.RightListView.View = System.Windows.Forms.View.Details;
+            this.RightListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnPrimaryFormKeyDown);
             this.RightListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnRightListViewMouseDoubleClick);
             // 
             // RightNameColumn
@@ -244,6 +246,7 @@
             this.MoveRightButton.Size = new System.Drawing.Size(35, 30);
             this.MoveRightButton.TabIndex = 9;
             this.MoveRightButton.UseVisualStyleBackColor = true;
+            this.MoveRightButton.Click += new System.EventHandler(this.OnCopyRightButtonClick);
             // 
             // MoveLeftButton
             // 
@@ -253,6 +256,7 @@
             this.MoveLeftButton.Size = new System.Drawing.Size(35, 30);
             this.MoveLeftButton.TabIndex = 10;
             this.MoveLeftButton.UseVisualStyleBackColor = true;
+            this.MoveLeftButton.Click += new System.EventHandler(this.OnCopyLeftButtonClick);
             // 
             // PrimaryForm
             // 
@@ -272,6 +276,7 @@
             this.Name = "PrimaryForm";
             this.Text = "Streamlet";
             this.Load += new System.EventHandler(this.OnPrimaryFormLoad);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnPrimaryFormKeyDown);
             this.TopMenuToolStrip.ResumeLayout(false);
             this.TopMenuToolStrip.PerformLayout();
             this.MiddleToolStrip.ResumeLayout(false);
