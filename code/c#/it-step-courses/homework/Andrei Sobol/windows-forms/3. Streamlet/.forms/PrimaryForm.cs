@@ -61,8 +61,8 @@ namespace Streamlet.Forms
         {
             if (LeftListView.SelectedItems != null)
             {
-                OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
-                LeftAddressTextBox.Text = LeftWindowPointer?.CurrentDirectory?.FullName;
+                OnAnyListViewSelectedItemChanged(_LeftWindow);
+                _LeftWindow.ExplorerAddressBox.Text = _LeftWindow.ExplorerFilePointer?.CurrentDirectory?.FullName;
             }
         }
 
@@ -76,8 +76,8 @@ namespace Streamlet.Forms
         {
             if (RightListView.SelectedItems != null)
             {
-                OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
-                RightAddressTextBox.Text = RightWindowPointer?.CurrentDirectory?.FullName;
+                OnAnyListViewSelectedItemChanged(_RightWindow);
+                _RightWindow.ExplorerAddressBox.Text = _RightWindow.ExplorerFilePointer?.CurrentDirectory?.FullName;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnLeftListViewSelectedValueChanged(object sender, EventArgs e)
         {
-            OnAnyListViewSelectedItemChanged(LeftListView, ref LeftWindowPointer);
+            OnAnyListViewSelectedItemChanged(_LeftWindow);
         }
 
 
@@ -100,7 +100,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnRighttListViewSelectedValueChanged(object sender, EventArgs e)
         {
-            OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
+            OnAnyListViewSelectedItemChanged(_RightWindow);
         }
 
         #endregion Specific Handlers - Pairs of handlers one for each side
@@ -125,43 +125,44 @@ namespace Streamlet.Forms
         /// <br />
         /// Соответствующий указатель файловой системы;
         /// </param>
-        private void OnAnyListViewSelectedItemChanged(ListView listView, ref FileSystemPointer DirectoryPointer)
+        private void OnAnyListViewSelectedItemChanged(ExplorerWindow currentExplorerWindow)
         {
-            if (listView == null || DirectoryPointer == null) return;
+            if (!currentExplorerWindow.Initialized) return;
 
-            ActiveListView = listView;
-
-            ActivePointer = DirectoryPointer;
+            _ActiveWindow = currentExplorerWindow;
 
             ListViewItem escapeItem = new ListViewItem(GoUpEscapeString);
 
             bool bIsEscapeStringDebugFlag = false, bDirectoryFlag = false;
 
-            foreach (ListViewItem unit in listView.SelectedItems)
+            foreach (ListViewItem unit in currentExplorerWindow.ExplorerListView.SelectedItems)
             {
                 if (unit.ToString().Contains(escapeItem.ToString())) bIsEscapeStringDebugFlag = true;
             }
 
             if (bIsEscapeStringDebugFlag == false)
             {
-                if (DirectoryPointer.CurrentDirectory == null) 
+                if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory == null) 
                 {
-                    MoveDown(listView, ref DirectoryPointer);
+                    MoveDown(currentExplorerWindow);
                     return;
                 }
 
                 else
                 {
 
-                    foreach (DirectoryInfo unit in DirectoryPointer.CurrentDirectory.GetDirectories())
+                    foreach (DirectoryInfo unit in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (listView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                        if (currentExplorerWindow.ExplorerListView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
                     }
 
-                    if (bDirectoryFlag) MoveDown(listView, ref DirectoryPointer);
+                    if (bDirectoryFlag) MoveDown(currentExplorerWindow);
                     else
                     {
-                        FileInfo fileToOpen = DirectoryPointer.CurrentDirectory.GetFiles().ToList().Find(unit => unit.Name == listView.SelectedItems[0].Text);
+                        FileInfo fileToOpen = currentExplorerWindow.ExplorerFilePointer.CurrentDirectory
+                            .GetFiles()
+                            .ToList()
+                            .Find(unit => unit.Name == currentExplorerWindow.ExplorerListView.SelectedItems[0].Text);
 
                         // if it is a text file;
                         if (StringExtension.CompareMultiple(
@@ -178,7 +179,7 @@ namespace Streamlet.Forms
             }
             else
             {
-                MoveUp(listView, ref DirectoryPointer);
+                MoveUp(currentExplorerWindow);
             }
         }
 
@@ -188,11 +189,11 @@ namespace Streamlet.Forms
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                        OnAnyListViewSelectedItemChanged(ActiveListView, ref ActivePointer);
+                        OnAnyListViewSelectedItemChanged(_ActiveWindow);
                     break;
 
                     case Keys.Escape:
-                        MoveUp(ActiveListView, ref ActivePointer);
+                        MoveUp(_ActiveWindow);
                     break;
             }
         }
@@ -222,7 +223,7 @@ namespace Streamlet.Forms
         /// <br />
         /// Соответствующий указатель файловой системы;
         /// </param>
-        private void MoveDown(ListView listView, ref FileSystemPointer DirectoryPointer)
+        private void MoveDown(ExplorerWindow currentExplorerWindow)
         {
             bool bDebugFlag = false;
 
@@ -272,7 +273,7 @@ namespace Streamlet.Forms
 
                 foreach (var item in machineDriveInfo)
                 {
-                    foreach (var unit in listView.SelectedItems)
+                    foreach (var unit in currentExplorerWindow?.ExplorerListView?.SelectedItems)
                     {
                         if (unit.ToString().Contains(item.Name)) selectedDrive = item;
                     }
@@ -280,21 +281,21 @@ namespace Streamlet.Forms
 
                 if (null != selectedDrive)
                 {
-                    DirectoryPointer.NextDirectory(selectedDrive.RootDirectory);
-                    ShowDirectoryContents(listView, DirectoryPointer);
+                    currentExplorerWindow?.ExplorerFilePointer?.NextDirectory(selectedDrive.RootDirectory);
+                    ShowDirectoryContents(currentExplorerWindow);
                 }
                 else
                 {
-                    foreach (DirectoryInfo generalItem in DirectoryPointer.CurrentDirectory.GetDirectories())
+                    foreach (DirectoryInfo generalItem in currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.GetDirectories())
                     {
-                        foreach (ListViewItem selectedItem in listView.SelectedItems)
+                        foreach (ListViewItem selectedItem in currentExplorerWindow?.ExplorerListView?.SelectedItems)
                         {
                             bDebugFlag = generalItem.Name.Equals(selectedItem.Text);
 
                             if (bDebugFlag)
                             {
-                                DirectoryPointer.NextDirectory(generalItem);
-                                ShowDirectoryContents(listView, DirectoryPointer);
+                                currentExplorerWindow?.ExplorerFilePointer.NextDirectory(generalItem);
+                                ShowDirectoryContents(currentExplorerWindow);
                                 break;
                             }
                         }
@@ -303,7 +304,7 @@ namespace Streamlet.Forms
             }
             catch (System.UnauthorizedAccessException ex)
             {
-                ShowFailMessage(listView);
+                ShowFailMessage(currentExplorerWindow);
             }
         }
 
@@ -318,15 +319,16 @@ namespace Streamlet.Forms
         /// <br />
         /// Listview в котором отобразить;
         /// </param>
-        /// <param name="DirectoryPointer">
+        /// <param name="ExplorerPointer">
         /// Respective directory pointer;
         /// <br />
         /// Соответствующий указатель файловой системы;
         /// </param>
-        private void MoveUp(ListView ListView, ref FileSystemPointer DirectoryPointer)
+        private void MoveUp(ExplorerWindow currentExplorerWindow)
         {
-            if (DirectoryPointer != null && DirectoryPointer.CurrentDirectory != null) DirectoryPointer.NextDirectory(DirectoryPointer.CurrentDirectory.Parent);
-            ShowDirectoryContents(ListView, DirectoryPointer);
+            if (currentExplorerWindow.ExplorerFilePointer != null && currentExplorerWindow.ExplorerFilePointer.CurrentDirectory != null)
+                currentExplorerWindow.ExplorerFilePointer.NextDirectory(currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory?.Parent);
+            ShowDirectoryContents(currentExplorerWindow);
         }
 
 
@@ -345,36 +347,36 @@ namespace Streamlet.Forms
         /// <br />
         /// Соответствующий указатель файловой системы;
         /// </param>
-        private void ShowDirectoryContents(ListView listView, FileSystemPointer DirectoryPointer)
+        private void ShowDirectoryContents(ExplorerWindow currentExplorerWindow)
         {
             try
             {
-                if (DirectoryPointer?.CurrentDirectory != null)
+                if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory != null)
                 {
-                    listView.Items.Clear();
-                    listView.Items.Add(new ListViewItem(GoUpEscapeString));
-                    DirectoryPointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
+                    currentExplorerWindow.ExplorerListView.Items.Clear();
+                    currentExplorerWindow.ExplorerListView.Items.Add(new ListViewItem(GoUpEscapeString));
+                    currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
                     {
                         ListViewItem item = new ListViewItem(unit.Name);
                         item.SubItems.Add(unit.Extension);
                         item.SubItems.Add("");
                         item.SubItems.Add(unit.LastWriteTime.ToShortDateString());
-                        listView.Items.Add(item);
+                        currentExplorerWindow.ExplorerListView.Items.Add(item);
                     });
-                    DirectoryPointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
+                    currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
                     {
                         ListViewItem item = new ListViewItem(unit.Name);
                         item.SubItems.Add(unit.Extension);
                         item.SubItems.Add(unit.Length.ToString());
                         item.SubItems.Add(unit.LastWriteTime.ToShortDateString());
-                        listView.Items.Add(item);
+                        currentExplorerWindow.ExplorerListView.Items.Add(item);
                     });
                 }
-                else ShowDrives(listView);
+                else ShowDrives(currentExplorerWindow);
             }
             catch (System.UnauthorizedAccessException ex)
             {
-                ShowFailMessage(listView);
+                ShowFailMessage(currentExplorerWindow);
             }
         }
 
@@ -389,13 +391,13 @@ namespace Streamlet.Forms
         /// <br />
         /// Listview в котором отобразить;
         /// </param>
-        private void ShowDrives(ListView listView)
+        private void ShowDrives(ExplorerWindow currentExplorerWindow)
         {
-            if (listView == null) return;
+            if (!currentExplorerWindow.Initialized) return;
 
             var driveList = DriveInfo.GetDrives();
 
-            listView.Items.Clear();
+            currentExplorerWindow?.ExplorerListView?.Items.Clear();
 
             if (machineDriveInfo.Count == 0) machineDriveInfo.AddRange(driveList);
 
@@ -406,7 +408,7 @@ namespace Streamlet.Forms
                 LVItem.SubItems.Add("");
                 LVItem.SubItems.Add("");
 
-                listView.Items.Add(LVItem);
+                currentExplorerWindow?.ExplorerListView?.Items.Add(LVItem);
             }
         }
 
@@ -421,14 +423,14 @@ namespace Streamlet.Forms
         /// <br />
         /// Listview в котором отобразить;
         /// </param>
-        private void ShowFailMessage(ListView listView)
+        private void ShowFailMessage(ExplorerWindow currentExplorerWindow)
         {
-            listView.Items.Clear();
-            listView.Items.Add(GoUpEscapeString);
-            listView.Items.Add("\n");
-            listView.Items.Add("\tAccess denied.\n");
-            listView.Items.Add("\n");
-            listView.Items.Add("\t\t[ .. ]  to leave....");
+            currentExplorerWindow?.ExplorerListView?.Items.Clear();
+            currentExplorerWindow?.ExplorerListView?.Items.Add(GoUpEscapeString);
+            currentExplorerWindow?.ExplorerListView?.Items.Add("\n");
+            currentExplorerWindow?.ExplorerListView?.Items.Add("\tAccess denied.\n");
+            currentExplorerWindow?.ExplorerListView?.Items.Add("\n");
+            currentExplorerWindow?.ExplorerListView?.Items.Add("\t\t[ .. ]  to leave....");
         }
 
 
@@ -457,7 +459,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnLeftAddressTextBoxLeave(object sender, EventArgs e)
         {
-            OnAnyAddressTextBoxLeave(LeftListView, LeftAddressTextBox, ref LeftWindowPointer);
+            OnAnyAddressTextBoxLeave(_LeftWindow);
         }
 
         /// <summary>
@@ -467,7 +469,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnRightAddressTextBoxLeave(object sender, EventArgs e)
         {
-            OnAnyAddressTextBoxLeave(RightListView, RightAddressTextBox, ref RightWindowPointer);
+            OnAnyAddressTextBoxLeave(_RightWindow);
         }
 
 
@@ -479,7 +481,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnLeftAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            OnAnyListBoxKeyDown(LeftListView, LeftAddressTextBox, ref LeftWindowPointer, e);
+            OnAnyListBoxKeyDown(_LeftWindow, e);
         }
 
         /// <summary>
@@ -489,7 +491,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnRightAddressTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            OnAnyListBoxKeyDown(RightListView, RightAddressTextBox, ref RightWindowPointer, e);
+            OnAnyListBoxKeyDown(_RightWindow, e);
         }
 
 
@@ -510,15 +512,15 @@ namespace Streamlet.Forms
         /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
         /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
         /// <param name="e">Key pressed;<br/>Нажатая клавиша;</param>
-        private void OnAnyListBoxKeyDown(ListView listView, TextBox specificTextBox, ref FileSystemPointer ptr, KeyEventArgs e)
+        private void OnAnyListBoxKeyDown(ExplorerWindow currentExplorerWindow, KeyEventArgs e)
         {
             // 'enter';
-            if (e.KeyCode == Keys.Enter) OnAnyAddressTextBoxLeave(listView, specificTextBox, ref ptr);
+            if (e.KeyCode == Keys.Enter) OnAnyAddressTextBoxLeave(currentExplorerWindow);
             // 'esc';
             else if (e.KeyCode == Keys.Escape)
             {
-                specificTextBox.Text = "\'/\\]%";
-                OnAnyAddressTextBoxLeave(listView, specificTextBox, ref ptr);
+                currentExplorerWindow.ExplorerAddressBox.Text = "\'/\\]%";
+                OnAnyAddressTextBoxLeave(currentExplorerWindow);
             }
         }
 
@@ -530,24 +532,24 @@ namespace Streamlet.Forms
         /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
         /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
         /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
-        private void OnAnyAddressTextBoxLeave(ListView listView, TextBox specificTextBox, ref FileSystemPointer specificPointer)
+        private void OnAnyAddressTextBoxLeave(ExplorerWindow currentExplorerWindow)
         {
-            string sText = specificTextBox.Text;
+            string sText = currentExplorerWindow.ExplorerAddressBox.Text;
 
             if (File.Exists(sText) && sText.EndsWith(".txt"))
             {
-                specificPointer.NextDirectory(new FileInfo(sText).Directory);
+                currentExplorerWindow.ExplorerFilePointer.NextDirectory(new FileInfo(sText).Directory);
                 var a = new SecondaryForm();
                 a.Show();
             }
             else if (Directory.Exists(sText))
             {
-                specificPointer.NextDirectory(new DirectoryInfo(sText));
-                ShowDirectoryContents(listView, specificPointer);
+                currentExplorerWindow.ExplorerFilePointer.NextDirectory(new DirectoryInfo(sText));
+                ShowDirectoryContents(currentExplorerWindow);
             }
             else
             {
-                specificTextBox.Text = specificPointer.CurrentDirectory?.FullName;
+                currentExplorerWindow.ExplorerAddressBox.Text = currentExplorerWindow.ExplorerFilePointer.CurrentDirectory?.FullName;
             }
         }
 
@@ -572,9 +574,9 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnOpenToolClick(object sender, EventArgs e)
         {
-            if (ActiveListView?.SelectedItems != null)
+            if (_ActiveWindow?.ExplorerListView?.SelectedItems != null)
             {
-                if (ActiveListView == LeftListView) OnLeftListViewMouseDoubleClick(sender, e);
+                if (_ActiveWindow == _LeftWindow) OnLeftListViewMouseDoubleClick(sender, e);
                 else OnRightListViewMouseDoubleClick(sender, e);
             }
             
@@ -588,15 +590,15 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnCopyPathToolClick(object sender, EventArgs e)
         {
-            if (ActiveListView?.SelectedItems != null)
+            if (_ActiveWindow?.ExplorerListView.SelectedItems != null)
             {
                 string CopyToClipboardString = "Error. Debug message.";
 
-                if (ActiveListView == LeftListView) 
-                    CopyToClipboardString = GetItemPathForAnyActiveListView(LeftListView, LeftWindowPointer);
+                if (_ActiveWindow == _LeftWindow) 
+                    CopyToClipboardString = GetItemPathForAnyActiveListView(_LeftWindow);
 
                 else
-                    CopyToClipboardString = GetItemPathForAnyActiveListView(RightListView, RightWindowPointer);
+                    CopyToClipboardString = GetItemPathForAnyActiveListView(_RightWindow);
 
 
                 System.Windows.Forms.Clipboard.SetText(CopyToClipboardString);
@@ -611,7 +613,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnDeleteToolClick(object sender, EventArgs e)
         {
-            if (ActiveListView?.SelectedItems != null)
+            if (_ActiveWindow?.ExplorerListView.SelectedItems != null)
             {
                 DialogResult result =  
                     MessageBox.Show("Do you really want to delete the item(s)?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -619,16 +621,16 @@ namespace Streamlet.Forms
                 if (result == DialogResult.No) return;
                 else
                 {
-                    if (ActiveListView == LeftListView)
+                    if (_ActiveWindow == _LeftWindow)
                     {
-                        if (TryDeleteItems(LeftListView, LeftWindowPointer))
-                            ShowDirectoryContents(LeftListView, LeftWindowPointer);
+                        if (TryDeleteItems(_LeftWindow))
+                            ShowDirectoryContents(_LeftWindow);
                     }
 
                     else
                     {
-                        if (TryDeleteItems(RightListView, RightWindowPointer))
-                            ShowDirectoryContents(RightListView, RightWindowPointer);
+                        if (TryDeleteItems(_RightWindow))
+                            ShowDirectoryContents(_RightWindow);
                     }
                 }
             }
@@ -646,18 +648,18 @@ namespace Streamlet.Forms
         /// <param name="listView">Specific source listview;<br />Listview-источник;</param>
         /// <param name="specificPointer">Respective f.s.p.;<br />Соответствующий указатель;</param>
         /// <returns></returns>
-        private string GetItemPathForAnyActiveListView(ListView listView, FileSystemPointer specificPointer)
+        private string GetItemPathForAnyActiveListView(ExplorerWindow currentExplorerWindow)
         {
             string sRes = "";
 
-            string selectedItemName = listView.SelectedItems[0].Text;
+            string selectedItemName = currentExplorerWindow.ExplorerListView.SelectedItems[0].Text;
 
-            foreach (var dir in specificPointer.CurrentDirectory.GetDirectories())
+            foreach (var dir in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
             {
                 if (dir.Name.Contains(selectedItemName)) sRes = dir.FullName;
             }
 
-            foreach (var file in specificPointer.CurrentDirectory.GetFiles())
+            foreach (var file in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
             {
                 if (file.Name.Contains(selectedItemName)) sRes = file.FullName;
             }
@@ -667,7 +669,7 @@ namespace Streamlet.Forms
 
 
 
-        private bool TryDeleteItems(ListView listView, FileSystemPointer specificPointer)
+        private bool TryDeleteItems(ExplorerWindow currentExplorerWindow)
         {
             bool bRes = false;
 
@@ -675,12 +677,12 @@ namespace Streamlet.Forms
 
 
             // for all selected files;
-            foreach (var item in listView.SelectedItems)
+            foreach (var item in currentExplorerWindow.ExplorerListView.SelectedItems)
             {
                 isItemAlreadyDeleted = false;
 
                 // for all directories;
-                foreach (var dir in specificPointer.CurrentDirectory.GetDirectories())
+                foreach (var dir in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                 {
                     // if target is a directory;
                     if (item.ToString().Contains(dir.Name))
@@ -706,7 +708,7 @@ namespace Streamlet.Forms
                 if (false == isItemAlreadyDeleted)
                 {
                     // for all files;
-                    foreach (var file in specificPointer.CurrentDirectory.GetFiles())
+                    foreach (var file in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
                         // if there's a match;
                         if (item.ToString().Contains(file.Name))
@@ -753,20 +755,20 @@ namespace Streamlet.Forms
             {
                 foreach (ListViewItem itemName in LeftListView.SelectedItems)
                 {
-                    foreach (var file in LeftWindowPointer.CurrentDirectory.GetFiles())
+                    foreach (var file in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
-                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{RightWindowPointer.CurrentDirectory.FullName}\\{file.Name}");
+                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{_RightWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
                     }
 
-                    foreach (var dir in LeftWindowPointer.CurrentDirectory.GetDirectories())
+                    foreach (var dir in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, RightWindowPointer.CurrentDirectory.FullName);
+                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, _RightWindow.ExplorerFilePointer.CurrentDirectory.FullName);
                     }
                 }
 
-                ShowDirectoryContents(LeftListView, LeftWindowPointer);
+                ShowDirectoryContents(_LeftWindow);
 
-                ShowDirectoryContents(RightListView, RightWindowPointer);
+                ShowDirectoryContents(_RightWindow);
             }
         }
 
@@ -778,20 +780,20 @@ namespace Streamlet.Forms
             {
                 foreach (ListViewItem itemName in RightListView.SelectedItems)
                 {
-                    foreach (var file in RightWindowPointer.CurrentDirectory.GetFiles())
+                    foreach (var file in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
-                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{LeftWindowPointer.CurrentDirectory.FullName}\\{file.Name}");
+                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{_LeftWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
                     }
 
-                    foreach (var dir in RightWindowPointer.CurrentDirectory.GetDirectories())
+                    foreach (var dir in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, LeftWindowPointer.CurrentDirectory.FullName);
+                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, _LeftWindow.ExplorerFilePointer.CurrentDirectory.FullName);
                     }
                 }
 
-                ShowDirectoryContents(LeftListView, LeftWindowPointer);
+                ShowDirectoryContents(_LeftWindow);
 
-                ShowDirectoryContents(RightListView, RightWindowPointer);
+                ShowDirectoryContents(_RightWindow);
             }
         }
 
@@ -815,43 +817,18 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// A file-system pointer for the left list;
-        /// <br />
-        /// Указатель файловой системы для левого списка;
-        /// </summary>
-        private FileSystemPointer LeftWindowPointer = new FileSystemPointer();
-
-
-        /// <summary>
-        /// A file-system pointer for the right list;
-        /// <br />
-        /// Указатель файловой системы для правого списка;
-        /// </summary>
-        private FileSystemPointer RightWindowPointer = new FileSystemPointer();
-
-
-        /// <summary>
-        /// A reference to the focused list box;
-        /// <br />
-        /// Ссылка на активный лист-бокс;
-        /// </summary>
-        private ListView ActiveListView;
-
-
-        /// <summary>
-        /// A reference to the pointer of the focused listview;
-        /// <br />
-        /// Ссылка на файловый указатель активного листбокса;
-        /// </summary>
-        private FileSystemPointer ActivePointer;
-
-
-        /// <summary>
         /// Auxiliary list of all drives of a current system;
         /// <br />
         /// Вспомогательный список дисков данной системы;
         /// </summary>
         private List<DriveInfo> machineDriveInfo;
+
+
+        private ExplorerWindow _LeftWindow;
+
+        private ExplorerWindow _RightWindow;
+
+        private ExplorerWindow _ActiveWindow;
 
 
         #endregion PROPERTIES
@@ -872,8 +849,8 @@ namespace Streamlet.Forms
             
             machineDriveInfo = new List<DriveInfo>();
 
-            LeftListView.AllowDrop = true;
-            RightListView.AllowDrop = true;
+            _LeftWindow = new ExplorerWindow(LeftListView, new FileSystemPointer(), LeftAddressTextBox);
+            _RightWindow = new ExplorerWindow(RightListView, new FileSystemPointer(), RightAddressTextBox);
         }
 
 
@@ -886,9 +863,9 @@ namespace Streamlet.Forms
         {
             LeftListView.Groups.Clear();
 
-            ShowDirectoryContents(LeftListView, LeftWindowPointer);
+            ShowDirectoryContents(_LeftWindow);
 
-            ShowDirectoryContents(RightListView, RightWindowPointer);
+            ShowDirectoryContents(_RightWindow);
         }
 
 
