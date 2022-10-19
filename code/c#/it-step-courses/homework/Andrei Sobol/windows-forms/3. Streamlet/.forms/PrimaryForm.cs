@@ -127,7 +127,7 @@ namespace Streamlet.Forms
         /// </param>
         private void OnAnyListViewSelectedItemChanged(ExplorerWindow currentExplorerWindow)
         {
-            if (!currentExplorerWindow.Initialized) return;
+            if (!(currentExplorerWindow != null && currentExplorerWindow.Initialized)) return;
 
             _ActiveWindow = currentExplorerWindow;
 
@@ -156,7 +156,10 @@ namespace Streamlet.Forms
                         if (currentExplorerWindow.ExplorerListView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
                     }
 
-                    if (bDirectoryFlag) MoveDown(currentExplorerWindow);
+                    if (bDirectoryFlag)
+                    {
+                        MoveDown(currentExplorerWindow);
+                    }
                     else
                     {
                         FileInfo fileToOpen = currentExplorerWindow.ExplorerFilePointer.CurrentDirectory
@@ -295,6 +298,7 @@ namespace Streamlet.Forms
                             if (bDebugFlag)
                             {
                                 currentExplorerWindow?.ExplorerFilePointer.NextDirectory(generalItem);
+                                currentExplorerWindow.ExplorerAddressBox.Text = currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName;
                                 ShowDirectoryContents(currentExplorerWindow);
                                 break;
                             }
@@ -326,8 +330,11 @@ namespace Streamlet.Forms
         /// </param>
         private void MoveUp(ExplorerWindow currentExplorerWindow)
         {
-            if (currentExplorerWindow.ExplorerFilePointer != null && currentExplorerWindow.ExplorerFilePointer.CurrentDirectory != null)
+            if (currentExplorerWindow.ExplorerFilePointer!= null && currentExplorerWindow.ExplorerFilePointer.CurrentDirectory != null)
+            {
                 currentExplorerWindow.ExplorerFilePointer.NextDirectory(currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory?.Parent);
+                currentExplorerWindow.ExplorerAddressBox.Text = currentExplorerWindow.ExplorerFilePointer?.CurrentDirectory?.FullName;
+            }
             ShowDirectoryContents(currentExplorerWindow);
         }
 
@@ -616,7 +623,7 @@ namespace Streamlet.Forms
             if (_ActiveWindow?.ExplorerListView.SelectedItems != null)
             {
                 DialogResult result =  
-                    MessageBox.Show("Do you really want to delete the item(s)?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    MessageBox.Show("Do you really want to delete the item(s)?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.No) return;
                 else
@@ -694,7 +701,7 @@ namespace Streamlet.Forms
                         }
                         catch (Exception e)
                         {
-                            MessageBox.Show($"You cannot delete this item ({dir.Name}).\n\n{e.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"You cannot delete this item ({dir.Name}).\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                         // then we don't need to check if it's a file;
@@ -720,7 +727,7 @@ namespace Streamlet.Forms
                             }
                             catch (Exception e)
                             {
-                                MessageBox.Show($"You cannot delete this item ({file.Name}).\n\n{e.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show($"You cannot delete this item ({file.Name}).\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
                             // then we don't need to check if it's a file;
@@ -757,12 +764,38 @@ namespace Streamlet.Forms
                 {
                     foreach (var file in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
-                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{_RightWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
+                        if (file.Name.Equals(itemName.Text))
+                        {
+                            try
+                            {
+                                // Здесь почему-то експешн не ловится;
+                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                    File.Move(file.FullName, $"{_RightWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
+                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
                     }
 
                     foreach (var dir in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, _RightWindow.ExplorerFilePointer.CurrentDirectory.FullName);
+                        if (dir.Name.Equals(itemName.Text))
+                        {
+                            try
+                            {
+                                // Здесь почему-то експешн не ловится;
+                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                    Directory.Move(dir.FullName, _RightWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
+                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
                     }
                 }
 
@@ -782,12 +815,35 @@ namespace Streamlet.Forms
                 {
                     foreach (var file in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
-                        if (file.Name.Equals(itemName.Text)) File.Move(file.FullName, $"{_LeftWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
+                        if (file.Name.Equals(itemName.Text))
+                        {
+                            try
+                            {
+                                // Здесь почему-то експешн не ловится;
+                                if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                    File.Move(file.FullName, $"{_LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName}\\{file.Name}");
+                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
                     }
 
                     foreach (var dir in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (dir.Name.Equals(itemName.Text)) Directory.Move(dir.FullName, _LeftWindow.ExplorerFilePointer.CurrentDirectory.FullName);
+                        try
+                        {
+                            // Здесь почему-то експешн не ловится;
+                            if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                Directory.Move(dir.FullName, _LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
+                            else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
 
