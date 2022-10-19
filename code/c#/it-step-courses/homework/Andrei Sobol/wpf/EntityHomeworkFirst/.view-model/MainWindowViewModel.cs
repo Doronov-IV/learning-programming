@@ -186,7 +186,7 @@ namespace EntityHomeworkFirst.ViewModel
         public void OnConnectButtonClick()
         {
             // Если нет подключения, воткните после "Server=" символы ".\\";
-            MainWindowViewModel.ConnectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            MainWindowViewModel.ConnectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
             {
@@ -199,7 +199,7 @@ namespace EntityHomeworkFirst.ViewModel
                     ConnectionStatus.Toggle();
 
                     // Если не работает Entity, воткните после "Server=" символы ".\";
-                    MainWindowViewModel.ConnectionString = $@"Server={ServerName};Database = DoronovEFCfirst;Trusted_Connection=true;Encrypt=false";
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{ServerName};Database = DoronovEFCfirst;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {
