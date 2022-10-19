@@ -49,6 +49,8 @@
             this.RightExtColumn = new System.Windows.Forms.ColumnHeader();
             this.RightSizeColumn = new System.Windows.Forms.ColumnHeader();
             this.RightDateColumn = new System.Windows.Forms.ColumnHeader();
+            this.MoveRightButton = new System.Windows.Forms.Button();
+            this.MoveLeftButton = new System.Windows.Forms.Button();
             this.TopMenuToolStrip.SuspendLayout();
             this.MiddleToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -63,32 +65,33 @@
             this.SettingsToolStripMenuItem});
             this.TopMenuToolStrip.Location = new System.Drawing.Point(0, 0);
             this.TopMenuToolStrip.Name = "TopMenuToolStrip";
-            this.TopMenuToolStrip.Size = new System.Drawing.Size(1382, 28);
+            this.TopMenuToolStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.TopMenuToolStrip.Size = new System.Drawing.Size(1209, 24);
             this.TopMenuToolStrip.TabIndex = 1;
             this.TopMenuToolStrip.Text = "menuStrip2";
             // 
             // FilesToolStripMenuItem
             // 
             this.FilesToolStripMenuItem.Name = "FilesToolStripMenuItem";
-            this.FilesToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
+            this.FilesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.FilesToolStripMenuItem.Text = "Файлы";
             // 
             // SelectionToolStripMenuItem
             // 
             this.SelectionToolStripMenuItem.Name = "SelectionToolStripMenuItem";
-            this.SelectionToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
+            this.SelectionToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.SelectionToolStripMenuItem.Text = "Выделение";
             // 
             // ViewToolStripMenuItem
             // 
             this.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem";
-            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
+            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.ViewToolStripMenuItem.Text = "Вид";
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.SettingsToolStripMenuItem.Text = "Настройки";
             // 
             // MiddleToolStrip
@@ -98,9 +101,9 @@
             this.OpenTool,
             this.CopyPathTool,
             this.DeleteTool});
-            this.MiddleToolStrip.Location = new System.Drawing.Point(0, 28);
+            this.MiddleToolStrip.Location = new System.Drawing.Point(0, 24);
             this.MiddleToolStrip.Name = "MiddleToolStrip";
-            this.MiddleToolStrip.Size = new System.Drawing.Size(1382, 27);
+            this.MiddleToolStrip.Size = new System.Drawing.Size(1209, 27);
             this.MiddleToolStrip.TabIndex = 2;
             this.MiddleToolStrip.Text = "toolStrip1";
             this.MiddleToolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MiddleToolStrip_ItemClicked);
@@ -111,7 +114,7 @@
             this.OpenTool.Image = global::Streamlet.Properties.Resources.OpenIcon;
             this.OpenTool.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenTool.Name = "OpenTool";
-            this.OpenTool.Size = new System.Drawing.Size(29, 24);
+            this.OpenTool.Size = new System.Drawing.Size(24, 24);
             this.OpenTool.Text = "Open";
             this.OpenTool.Click += new System.EventHandler(this.OnOpenToolClick);
             // 
@@ -121,7 +124,7 @@
             this.CopyPathTool.Image = global::Streamlet.Properties.Resources.CopyPathIcon;
             this.CopyPathTool.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CopyPathTool.Name = "CopyPathTool";
-            this.CopyPathTool.Size = new System.Drawing.Size(29, 24);
+            this.CopyPathTool.Size = new System.Drawing.Size(24, 24);
             this.CopyPathTool.Text = "Copy Path";
             this.CopyPathTool.Click += new System.EventHandler(this.OnCopyPathToolClick);
             // 
@@ -131,21 +134,23 @@
             this.DeleteTool.Image = global::Streamlet.Properties.Resources.DeletionIcon;
             this.DeleteTool.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DeleteTool.Name = "DeleteTool";
-            this.DeleteTool.Size = new System.Drawing.Size(29, 24);
+            this.DeleteTool.Size = new System.Drawing.Size(24, 24);
             this.DeleteTool.Text = "Delete";
             this.DeleteTool.Click += new System.EventHandler(this.OnDeleteToolClick);
             // 
             // LeftListView
             // 
+            this.LeftListView.AllowDrop = true;
             this.LeftListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.LeftNameColumn,
             this.LeftExtColumn,
             this.LeftSizeColumn,
             this.LeftDateColumn});
             this.LeftListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LeftListView.Location = new System.Drawing.Point(12, 110);
+            this.LeftListView.Location = new System.Drawing.Point(10, 82);
+            this.LeftListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LeftListView.Name = "LeftListView";
-            this.LeftListView.Size = new System.Drawing.Size(650, 731);
+            this.LeftListView.Size = new System.Drawing.Size(569, 549);
             this.LeftListView.TabIndex = 7;
             this.LeftListView.UseCompatibleStateImageBehavior = false;
             this.LeftListView.View = System.Windows.Forms.View.Details;
@@ -154,7 +159,7 @@
             // LeftNameColumn
             // 
             this.LeftNameColumn.Text = "Name";
-            this.LeftNameColumn.Width = 240;
+            this.LeftNameColumn.Width = 200;
             // 
             // LeftExtColumn
             // 
@@ -174,9 +179,10 @@
             // LeftAddressTextBox
             // 
             this.LeftAddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LeftAddressTextBox.Location = new System.Drawing.Point(12, 68);
+            this.LeftAddressTextBox.Location = new System.Drawing.Point(10, 51);
+            this.LeftAddressTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LeftAddressTextBox.Name = "LeftAddressTextBox";
-            this.LeftAddressTextBox.Size = new System.Drawing.Size(650, 30);
+            this.LeftAddressTextBox.Size = new System.Drawing.Size(569, 26);
             this.LeftAddressTextBox.TabIndex = 5;
             this.LeftAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnLeftAddressTextBoxKeyDown);
             this.LeftAddressTextBox.Leave += new System.EventHandler(this.OnLeftAddressTextBoxLeave);
@@ -184,24 +190,27 @@
             // RightAddressTextBox
             // 
             this.RightAddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RightAddressTextBox.Location = new System.Drawing.Point(745, 68);
+            this.RightAddressTextBox.Location = new System.Drawing.Point(652, 51);
+            this.RightAddressTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RightAddressTextBox.Name = "RightAddressTextBox";
-            this.RightAddressTextBox.Size = new System.Drawing.Size(625, 30);
+            this.RightAddressTextBox.Size = new System.Drawing.Size(547, 26);
             this.RightAddressTextBox.TabIndex = 6;
             this.RightAddressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnRightAddressTextBoxKeyDown);
             this.RightAddressTextBox.Leave += new System.EventHandler(this.OnRightAddressTextBoxLeave);
             // 
             // RightListView
             // 
+            this.RightListView.AllowDrop = true;
             this.RightListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.RightNameColumn,
             this.RightExtColumn,
             this.RightSizeColumn,
             this.RightDateColumn});
             this.RightListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RightListView.Location = new System.Drawing.Point(745, 110);
+            this.RightListView.Location = new System.Drawing.Point(652, 82);
+            this.RightListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RightListView.Name = "RightListView";
-            this.RightListView.Size = new System.Drawing.Size(625, 731);
+            this.RightListView.Size = new System.Drawing.Size(547, 549);
             this.RightListView.TabIndex = 8;
             this.RightListView.UseCompatibleStateImageBehavior = false;
             this.RightListView.View = System.Windows.Forms.View.Details;
@@ -210,7 +219,7 @@
             // RightNameColumn
             // 
             this.RightNameColumn.Text = "Name";
-            this.RightNameColumn.Width = 240;
+            this.RightNameColumn.Width = 200;
             // 
             // RightExtColumn
             // 
@@ -227,17 +236,39 @@
             this.RightDateColumn.Text = "Date";
             this.RightDateColumn.Width = 120;
             // 
+            // MoveRightButton
+            // 
+            this.MoveRightButton.Image = global::Streamlet.Properties.Resources.RightMoveIcon;
+            this.MoveRightButton.Location = new System.Drawing.Point(597, 302);
+            this.MoveRightButton.Name = "MoveRightButton";
+            this.MoveRightButton.Size = new System.Drawing.Size(35, 30);
+            this.MoveRightButton.TabIndex = 9;
+            this.MoveRightButton.UseVisualStyleBackColor = true;
+            // 
+            // MoveLeftButton
+            // 
+            this.MoveLeftButton.Image = global::Streamlet.Properties.Resources.LeftMoveIcon;
+            this.MoveLeftButton.Location = new System.Drawing.Point(597, 356);
+            this.MoveLeftButton.Name = "MoveLeftButton";
+            this.MoveLeftButton.Size = new System.Drawing.Size(35, 30);
+            this.MoveLeftButton.TabIndex = 10;
+            this.MoveLeftButton.UseVisualStyleBackColor = true;
+            // 
             // PrimaryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1382, 853);
+            this.ClientSize = new System.Drawing.Size(1209, 640);
+            this.Controls.Add(this.MoveLeftButton);
+            this.Controls.Add(this.MoveRightButton);
             this.Controls.Add(this.RightListView);
             this.Controls.Add(this.RightAddressTextBox);
             this.Controls.Add(this.LeftAddressTextBox);
             this.Controls.Add(this.LeftListView);
             this.Controls.Add(this.MiddleToolStrip);
             this.Controls.Add(this.TopMenuToolStrip);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "PrimaryForm";
             this.Text = "Streamlet";
             this.Load += new System.EventHandler(this.OnPrimaryFormLoad);
@@ -277,5 +308,7 @@
         private ColumnHeader RightExtColumn;
         private ColumnHeader RightSizeColumn;
         private ColumnHeader RightDateColumn;
+        private Button MoveRightButton;
+        private Button MoveLeftButton;
     }
 }

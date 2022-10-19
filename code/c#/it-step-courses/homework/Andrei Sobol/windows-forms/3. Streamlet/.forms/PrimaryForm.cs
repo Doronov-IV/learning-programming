@@ -103,7 +103,6 @@ namespace Streamlet.Forms
             OnAnyListViewSelectedItemChanged(RightListView, ref RightWindowPointer);
         }
 
-
         #endregion Specific Handlers - Pairs of handlers one for each side
 
 
@@ -785,6 +784,9 @@ namespace Streamlet.Forms
             InitializeComponent();
             
             machineDriveInfo = new List<DriveInfo>();
+
+            LeftListView.AllowDrop = true;
+            RightListView.AllowDrop = true;
         }
 
 
@@ -816,6 +818,14 @@ namespace Streamlet.Forms
         {
 
         }
+
+
+        private void LeftListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
 
 
 
