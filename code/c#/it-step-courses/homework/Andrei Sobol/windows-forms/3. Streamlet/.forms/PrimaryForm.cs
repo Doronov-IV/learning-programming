@@ -103,6 +103,7 @@ namespace Streamlet.Forms
             OnAnyListViewSelectedItemChanged(_RightWindow);
         }
 
+
         #endregion Specific Handlers - Pairs of handlers one for each side
 
 
@@ -153,7 +154,10 @@ namespace Streamlet.Forms
 
                     foreach (DirectoryInfo unit in currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        if (currentExplorerWindow.ExplorerListView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                        if (currentExplorerWindow.ExplorerListView.SelectedItems.Count != 0)
+                        {
+                            if (currentExplorerWindow.ExplorerListView.SelectedItems[0].Text == unit.Name) bDirectoryFlag = true;
+                        }
                     }
 
                     if (bDirectoryFlag)
@@ -168,14 +172,17 @@ namespace Streamlet.Forms
                             .Find(unit => unit.Name == currentExplorerWindow.ExplorerListView.SelectedItems[0].Text);
 
                         // if it is a text file;
-                        if (StringExtension.CompareMultiple(
-                            sourceString: fileToOpen.Extension,
-                            compareType: StringComparison.OrdinalIgnoreCase,
-                            compareValues: new string[] { ".txt", ".html", ".xml", ".doc" }))
+                        if (File.Exists(fileToOpen?.FullName)) 
                         {
-                            // then open it in a new form;
-                            SecondaryForm textEditorForm = new SecondaryForm(fileToOpen);
-                            textEditorForm.Show();
+                            if (StringExtension.CompareMultiple(
+                                sourceString: fileToOpen.Extension,
+                                compareType: StringComparison.OrdinalIgnoreCase,
+                                compareValues: new string[] { ".txt", ".html", ".xml", ".doc" }))
+                            {
+                                // then open it in a new form;
+                                SecondaryForm textEditorForm = new SecondaryForm(fileToOpen);
+                                textEditorForm.Show();
+                            }
                         }
                     }
                 }
@@ -187,17 +194,33 @@ namespace Streamlet.Forms
         }
 
 
+        /// <summary>
+        /// Key down event handler;
+        /// <br />
+        /// Обработчик события нажатия на клавишу;
+        /// </summary>
         private void OnPrimaryFormKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                        OnAnyListViewSelectedItemChanged(_ActiveWindow);
-                    break;
+                    OnAnyListViewSelectedItemChanged(_ActiveWindow);
+                break;
 
-                    case Keys.Escape:
-                        MoveUp(_ActiveWindow);
-                    break;
+
+                case Keys.Escape:
+                    MoveUp(_ActiveWindow);
+                break;
+
+
+                case Keys.Right:
+                    OnCopyRightButtonClick(new(), new());
+                break;
+
+
+                case Keys.Left:
+                    OnCopyLeftButtonClick(new(), new());
+                break;
             }
         }
 
@@ -361,7 +384,11 @@ namespace Streamlet.Forms
                 if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory != null)
                 {
                     currentExplorerWindow.ExplorerListView.Items.Clear();
+
+                    // Add escape pattern;
                     currentExplorerWindow.ExplorerListView.Items.Add(new ListViewItem(GoUpEscapeString));
+
+                    // directories;
                     currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories().ToList().ForEach(unit =>
                     {
                         ListViewItem item = new ListViewItem(unit.Name);
@@ -370,6 +397,8 @@ namespace Streamlet.Forms
                         item.SubItems.Add(unit.LastWriteTime.ToShortDateString());
                         currentExplorerWindow.ExplorerListView.Items.Add(item);
                     });
+
+                    // files;
                     currentExplorerWindow.ExplorerFilePointer.CurrentDirectory.GetFiles().ToList().ForEach(unit =>
                     {
                         ListViewItem item = new ListViewItem(unit.Name);
@@ -451,12 +480,12 @@ namespace Streamlet.Forms
 
 
 
-
         #region Module : Address TextBoxes 
 
 
 
         #region Specific Handlers (see ListViews region)
+
 
 
         /// <summary>
@@ -502,6 +531,7 @@ namespace Streamlet.Forms
         }
 
 
+
         #endregion Specific Handlers (see ListViews region)
 
 
@@ -511,14 +541,20 @@ namespace Streamlet.Forms
 
 
         /// <summary>
-        /// When any address box gets some key pressed;
+        /// Any address box key down handler;
         /// <br />
-        /// Когда в любой строке нажата клавиша;
+        /// Обработчик нажатия для всех адресных строк;
         /// </summary>
-        /// <param name="listView">The exact listbox;<br/>Конкретный листбокс;</param>
-        /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
-        /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
-        /// <param name="e">Key pressed;<br/>Нажатая клавиша;</param>
+        /// <param name="currentExplorerWindow">
+        /// Passed explorer window;
+        /// <br />
+        /// Передаваемое проводниковое окно;
+        /// </param>
+        /// <param name="e">
+        /// Key pressed;
+        /// <br />
+        /// Нажатая кнопка;
+        /// </param>
         private void OnAnyListBoxKeyDown(ExplorerWindow currentExplorerWindow, KeyEventArgs e)
         {
             // 'enter';
@@ -531,14 +567,27 @@ namespace Streamlet.Forms
             }
         }
 
+
         /// <summary>
         /// When any address box gets inactive;
         /// <br />
         /// Когда уйдёт фокус с любой адресной строки;
         /// </summary>
-        /// <param name="listBox">The exact listbox;<br/>Конкретный листбокс;</param>
-        /// <param name="specificTextBox">The very address box;<br/>Конкретный адрес бокс;</param>
-        /// <param name="ptr">Respective custom file pointer;<br/>Соответствующий указатель файловой системы;</param>
+        /// <param name="listBox">
+        /// The exact listbox;
+        /// <br/>
+        /// Конкретный листбокс;
+        /// </param>
+        /// <param name="specificTextBox">
+        /// The very address box;
+        /// <br/>
+        /// Конкретный адрес бокс;
+        /// </param>
+        /// <param name="ptr">
+        /// Respective custom file pointer;
+        /// <br/>
+        /// Соответствующий указатель файловой системы;
+        /// </param>
         private void OnAnyAddressTextBoxLeave(ExplorerWindow currentExplorerWindow)
         {
             string sText = currentExplorerWindow.ExplorerAddressBox.Text;
@@ -570,8 +619,8 @@ namespace Streamlet.Forms
 
 
 
-
         #region Module : Icon ToolStrip
+
 
 
         /// <summary>
@@ -675,7 +724,21 @@ namespace Streamlet.Forms
         }
 
 
-
+        /// <summary>
+        /// Try and delete selected listview items;
+        /// <br />
+        /// Попробовать удалить пункты из listview;
+        /// </summary>
+        /// <param name="currentExplorerWindow">
+        /// Current window;
+        /// <br />
+        /// Текущее окно;
+        /// </param>
+        /// <returns>
+        /// True if no exception, otherwise false;
+        /// <br />
+        /// "True" если нет эксепшена, иначе "false";
+        /// </returns>
         private bool TryDeleteItems(ExplorerWindow currentExplorerWindow)
         {
             bool bRes = false;
@@ -752,76 +815,66 @@ namespace Streamlet.Forms
 
 
 
-
         #region Module : Middle icon buttons
 
 
+
+        /// <summary>
+        /// Copy to right button;
+        /// <br />
+        /// Кнопка копировать направо;
+        /// </summary>
         private void OnCopyRightButtonClick(object sender, EventArgs e)
         {
-            if (LeftListView.SelectedItems != null && LeftListView.SelectedItems.Count != 0)
-            {
-                foreach (ListViewItem itemName in LeftListView.SelectedItems)
-                {
-                    foreach (var file in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
-                    {
-                        if (file.Name.Equals(itemName.Text))
-                        {
-                            try
-                            {
-                                // Здесь почему-то експешн не ловится;
-                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    File.Move(file.FullName, $"{_RightWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
-                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-
-                    foreach (var dir in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
-                    {
-                        if (dir.Name.Equals(itemName.Text))
-                        {
-                            try
-                            {
-                                // Здесь почему-то експешн не ловится;
-                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    Directory.Move(dir.FullName, _RightWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
-                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
-
-                ShowDirectoryContents(_LeftWindow);
-
-                ShowDirectoryContents(_RightWindow);
-            }
+            OnAnyCopyButtonClick(_RightWindow);
         }
 
 
-
+        /// <summary>
+        /// Copy to left button;
+        /// <br />
+        /// Кнопка копировать налево;
+        /// </summary>
         private void OnCopyLeftButtonClick(object sender, EventArgs e)
         {
-            if (RightListView.SelectedItems != null && RightListView.SelectedItems.Count != 0)
+            OnAnyCopyButtonClick(_LeftWindow);
+        }
+
+
+        /// <summary>
+        /// Copy buttons click handler;
+        /// <br />
+        /// Хендлер нажатия копирующих кнопок;
+        /// </summary>
+        /// <param name="currentExplorerWindow">
+        /// Corresponding explorer window;
+        /// <br />
+        /// Соответствующее окно проводника;
+        /// </param>
+        private void OnAnyCopyButtonClick(ExplorerWindow currentExplorerWindow)
+        {
+            // выделение противоположного окна;
+            ExplorerWindow oppositeWindow = new();
+
+            if (_RightWindow == currentExplorerWindow) oppositeWindow = _LeftWindow;
+
+            else oppositeWindow = _RightWindow;
+
+
+            // копирование элементов;
+            if (oppositeWindow.ExplorerListView.SelectedItems != null && oppositeWindow.ExplorerListView.SelectedItems.Count != 0)
             {
-                foreach (ListViewItem itemName in RightListView.SelectedItems)
+                foreach (ListViewItem itemName in oppositeWindow.ExplorerListView.SelectedItems)
                 {
-                    foreach (var file in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
+                    foreach (var file in oppositeWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
                     {
                         if (file.Name.Equals(itemName.Text))
                         {
                             try
                             {
                                 // Здесь почему-то експешн не ловится;
-                                if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    File.Move(file.FullName, $"{_LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName}\\{file.Name}");
+                                if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                    File.Move(file.FullName, $"{currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName}\\{file.Name}");
                                 else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                             catch
@@ -831,27 +884,32 @@ namespace Streamlet.Forms
                         }
                     }
 
-                    foreach (var dir in _RightWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
+                    foreach (var dir in oppositeWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-                        try
+                        if (dir.Name.Equals(itemName.Text))
                         {
-                            // Здесь почему-то експешн не ловится;
-                            if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                Directory.Move(dir.FullName, _LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
-                            else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            try
+                            {
+                                // Здесь почему-то експешн не ловится;
+                                if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory != null)
+                                    Directory.Move(dir.FullName, currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
+                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
 
-                ShowDirectoryContents(_LeftWindow);
+                ShowDirectoryContents(currentExplorerWindow);
 
-                ShowDirectoryContents(_RightWindow);
+                ShowDirectoryContents(oppositeWindow);
+
             }
         }
+
 
 
         #endregion Module : Middle icon buttons
@@ -861,7 +919,9 @@ namespace Streamlet.Forms
 
 
 
+
         #region PROPERTIES
+
 
 
         /// <summary>
@@ -880,18 +940,40 @@ namespace Streamlet.Forms
         private List<DriveInfo> machineDriveInfo;
 
 
+        /// <summary>
+        /// Left listview window;
+        /// <br />
+        /// Левое проводниковое окно;
+        /// </summary>
         private ExplorerWindow _LeftWindow;
 
+
+        /// <summary>
+        /// Right listview window;
+        /// <br />
+        /// Правое проводниковое окно;
+        /// </summary>
         private ExplorerWindow _RightWindow;
 
+
+        /// <summary>
+        /// Active listview window;
+        /// <br />
+        /// Активное проводниковое окно;
+        /// </summary>
         private ExplorerWindow _ActiveWindow;
+
 
 
         #endregion PROPERTIES
 
 
 
+
+
+
         #region CONSTRUCTION
+
 
 
         /// <summary>
@@ -903,11 +985,14 @@ namespace Streamlet.Forms
         {
             InitializeComponent();
             
-            machineDriveInfo = new List<DriveInfo>();
+            machineDriveInfo = new();
 
-            _LeftWindow = new ExplorerWindow(LeftListView, new FileSystemPointer(), LeftAddressTextBox);
-            _RightWindow = new ExplorerWindow(RightListView, new FileSystemPointer(), RightAddressTextBox);
+            _ActiveWindow = new();
+
+            _LeftWindow = new ExplorerWindow(LeftListView, new(), LeftAddressTextBox);
+            _RightWindow = new ExplorerWindow(RightListView, new(), RightAddressTextBox);
         }
+
 
 
         /// <summary>
@@ -925,13 +1010,16 @@ namespace Streamlet.Forms
         }
 
 
+
         #endregion CONSTRUCTION
 
 
 
 
 
+
         #region Trash bin - A Codespace for auto-generated methods for disposal
+
 
 
         private void MiddleToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -944,13 +1032,6 @@ namespace Streamlet.Forms
         {
 
         }
-
-
-
-
-
-
-
 
 
 
