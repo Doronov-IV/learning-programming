@@ -12,8 +12,8 @@
     <Compile Include=".client-model\UserModel.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
     <Compile Include=".properties\dialogs\IDialogService.cs" />
-    <Compile Include=".net\aixiliary\PacketBuilder.cs" />
-    <Compile Include=".net\aixiliary\PacketReader.cs" />
+    <Compile Include=".net\aixiliary\PackageBuilder.cs" />
+    <Compile Include=".net\aixiliary\PackageReader.cs" />
     <Compile Include=".net\aixiliary\RelayCommand.cs" />
     <Compile Include=".net\main\ReversedService.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />

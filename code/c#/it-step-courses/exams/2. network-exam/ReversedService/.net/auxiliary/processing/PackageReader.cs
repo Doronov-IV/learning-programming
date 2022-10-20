@@ -1,14 +1,14 @@
 ﻿using System.Data;
 using System.Windows.Interop;
 
-namespace ReversedClient.Net.Auxiliary
+namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;
     /// <br />
     /// Вспомогательный объект, который помогает читать данные из стримов;
     /// </summary>
-    public class PacketReader : BinaryReader
+    public class PackageReader : BinaryReader
     {
 
 
@@ -66,8 +66,10 @@ namespace ReversedClient.Net.Auxiliary
             {
                 byte[] fileBuffer;
                 byte[] nameBuffer;
+
                 int fileLength = ReadInt32();
                 int nameLength = ReadInt32();
+
                 nameBuffer = new byte[nameLength];
                 fileBuffer = new byte[fileLength];
 
@@ -108,7 +110,7 @@ namespace ReversedClient.Net.Auxiliary
         /// <br />
         /// Экземпляр стрима TCP-клиента, чтобы воспользоваться конструктором базового класса;
         /// </param>
-        public PacketReader(NetworkStream networkStream) : base(networkStream)
+        public PackageReader(NetworkStream networkStream) : base(networkStream)
         {
             _NetworkStream = networkStream;
         }

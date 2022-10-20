@@ -120,7 +120,7 @@ namespace ReversedService.Net.Main
                 foreach (var usr in _UserList)
                 {
 
-                    var broadcastPacket = new PacketBuilder();
+                    var broadcastPacket = new PackageBuilder();
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
                     broadcastPacket.WriteMessage(usr.CurrentUserName);
                     broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
@@ -141,7 +141,7 @@ namespace ReversedService.Net.Main
         {
             foreach (var user in _UserList)
             {
-                var msgPacket = new PacketBuilder();
+                var msgPacket = new PackageBuilder();
                 msgPacket.WriteOpCode(5);
                 msgPacket.WriteMessage(message);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
@@ -152,7 +152,7 @@ namespace ReversedService.Net.Main
         {
             foreach (var user in _UserList)
             {
-                var msgPacket = new PacketBuilder();
+                var msgPacket = new PackageBuilder();
                 msgPacket.WriteOpCode(6);
                 msgPacket.WriteFile(info);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
@@ -177,7 +177,7 @@ namespace ReversedService.Net.Main
             _UserList.Remove(disconnectedUser);            // removing user;
             foreach (var user in _UserList)
             {
-                var broadcastPacket = new PacketBuilder();
+                var broadcastPacket = new PackageBuilder();
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
                 broadcastPacket.WriteMessage(uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());

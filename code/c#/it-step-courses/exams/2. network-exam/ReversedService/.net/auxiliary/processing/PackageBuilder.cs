@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using System.Windows.Interop;
 
-namespace ReversedClient.Net.Auxiliary
+namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;
     /// По сути, осуществляет передачу данных между клиентом и сервером;
     /// </summary>
-    public class PacketBuilder
+    public class PackageBuilder
     {
 
 
@@ -22,6 +22,7 @@ namespace ReversedClient.Net.Auxiliary
 
 
         #endregion PROPERTIES
+
 
 
 
@@ -57,36 +58,53 @@ namespace ReversedClient.Net.Auxiliary
         /// </param>
         public void WriteMessage(string msg)
         {
+            // the most important thing is: to code message to utf BEFORE we calculate its length;
+
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
-            _memoryStream.Write(BitConverter.GetBytes(unicodeMessage.Length));
+            var msgLenght = unicodeMessage.Length;
+
+            _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
             _memoryStream.Write(unicodeMessage);
         }
 
-        public void WriteMessage(FileInfo info)
+        /// <summary>
+        /// Write binary message;
+        /// <br />
+        /// Записать сообщение в бинарном виде;
+        /// </summary>
+        /// <param name="msg">
+        /// Message text;
+        /// <br />
+        /// Текст сообщения;
+        /// </param>
+        public void WriteFile(FileInfo info)
         {
-            var binFile = File.ReadAllBytes(info.FullName);
+            if (info != null)
+            {
+                var binFile = File.ReadAllBytes(info.FullName);
 
-            string sFileName = info.Name;
+                string sFileName = info.Name;
 
-            var binFileName = Encoding.UTF8.GetBytes(sFileName);
+                var binFileName = Encoding.UTF8.GetBytes(sFileName);
 
-            // lengths
+                // lengths
 
-            var fileNameLen = BitConverter.GetBytes(binFileName.Length);
+                var fileNameLen = BitConverter.GetBytes(binFileName.Length);
 
-            var binFileLen = BitConverter.GetBytes(binFile.Length);
+                var binFileLen = BitConverter.GetBytes(binFile.Length);
 
-            _memoryStream.Write(binFileLen);
+                _memoryStream.Write(binFileLen);
 
-            _memoryStream.Write(fileNameLen);
+                _memoryStream.Write(fileNameLen);
 
-            // strings
+                // strings
 
-            _memoryStream.Write(binFileName);
+                _memoryStream.Write(binFileName);
 
-            _memoryStream.Write(binFile);
+                _memoryStream.Write(binFile);
+            }
         }
 
 
@@ -119,7 +137,7 @@ namespace ReversedClient.Net.Auxiliary
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public PacketBuilder()
+        public PackageBuilder()
         {
             _memoryStream = new MemoryStream();
         }

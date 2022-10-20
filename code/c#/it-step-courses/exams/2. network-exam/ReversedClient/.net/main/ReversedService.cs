@@ -63,7 +63,7 @@ namespace ReversedClient.Net.Main
         /// <br />
         /// Вспомогательный объект, который необходим, чтобы упростить чтение/запись сообщений;
         /// </summary>
-        public PacketReader PacketReader;
+        public PackageReader PacketReader;
 
 
 
@@ -130,7 +130,7 @@ namespace ReversedClient.Net.Main
 
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    var connectPacket = new PacketBuilder();
+                    var connectPacket = new PackageBuilder();
 
                     connectPacket.WriteOpCode(0);
 
@@ -175,7 +175,7 @@ namespace ReversedClient.Net.Main
         {
             try
             {
-                var messagePacket = new PacketBuilder();
+                var messagePacket = new PackageBuilder();
                 messagePacket.WriteOpCode(5);
                 messagePacket.WriteMessage(message);
                 _client.Client.Send(messagePacket.GetPacketBytes());
@@ -187,11 +187,12 @@ namespace ReversedClient.Net.Main
         }
 
 
+
         public void SendFileToServer(FileInfo info)
         {
             try
             {
-                var messagePacket = new PacketBuilder();
+                var messagePacket = new PackageBuilder();
                 messagePacket.WriteOpCode(6);
                 messagePacket.WriteMessage(info);
                 _client.Client.Send(messagePacket.GetPacketBytes());

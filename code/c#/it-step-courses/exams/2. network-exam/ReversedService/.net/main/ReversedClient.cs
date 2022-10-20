@@ -46,7 +46,7 @@ namespace ReversedService.Net.Main
         /// <br />
         /// Объект, который предоставляет помощь в чтении/записи сообщений;
         /// </summary>
-        PacketReader _packetReader;
+        PackageReader _packetReader;
 
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace ReversedService.Net.Main
             //Генерация нового идентификатора пользователя при каждом создании экземляра клиента
             CurrentUID = Guid.NewGuid();
 
-            _packetReader = new PacketReader(ClientSocket.GetStream());
+            _packetReader = new PackageReader(ClientSocket.GetStream());
 
             var opCode = _packetReader.ReadByte();
 
