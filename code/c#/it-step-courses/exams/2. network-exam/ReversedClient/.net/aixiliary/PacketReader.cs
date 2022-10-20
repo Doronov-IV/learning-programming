@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Windows.Interop;
 
-namespace ReversedService.Net.Auxiliary
+namespace ReversedClient.Net.Auxiliary
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;
@@ -65,17 +65,18 @@ namespace ReversedService.Net.Auxiliary
             try
             {
                 byte[] fileBuffer;
-                byte[] formatBuffer;
+                byte[] nameBuffer;
                 int fileLength = ReadInt32();
-                int formatLength = ReadInt32();
-                formatBuffer = new byte[formatLength];
+                int nameLength = ReadInt32();
+                nameBuffer = new byte[nameLength];
                 fileBuffer = new byte[fileLength];
 
-                _NetworkStream.Read(formatBuffer, 0, formatLength);
-                var formatString = Encoding.UTF8.GetString(formatBuffer);
+                _NetworkStream.Read(nameBuffer, 0, nameLength);
+                var nameString = Encoding.UTF8.GetString(nameBuffer);
 
+                info = new FileInfo($"../../../.files/{UserName} {nameString}");
                 _NetworkStream.Read(fileBuffer, 0, fileLength);
-                File.WriteAllBytes($"../../../.files/{UserName} {new Guid()}{formatString}", fileBuffer);
+                File.WriteAllBytes(info.FullName, fileBuffer);
             }
             catch (Exception)
             {

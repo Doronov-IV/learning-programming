@@ -1,5 +1,4 @@
 ﻿using ReversedClient.Net.Auxiliary;
-using ReversedService.Net.Auxiliary;
 
 namespace ReversedClient.Net.Main
 {

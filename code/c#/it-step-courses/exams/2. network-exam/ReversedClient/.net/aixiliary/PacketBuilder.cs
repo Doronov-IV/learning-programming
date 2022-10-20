@@ -68,29 +68,23 @@ namespace ReversedClient.Net.Auxiliary
         {
             var binFile = File.ReadAllBytes(info.FullName);
 
-            string sFileFormat = string.Empty;
+            string sFileName = info.Name;
 
-            for (int i = info.FullName.Length - 1, iSize = 0; i > iSize; --i)
-            {
-                sFileFormat += info.FullName[i];
-                if (info.FullName[i] == '.') break;
-            }
+            var binFileName = Encoding.UTF8.GetBytes(sFileName);
 
-            var a = sFileFormat.Reverse().ToArray();
+            // lengths
 
-            sFileFormat = new string(a);
-
-            var fileFormatMessage = Encoding.UTF8.GetBytes(sFileFormat);
-
-            var formatLen = BitConverter.GetBytes(fileFormatMessage.Length);
+            var fileNameLen = BitConverter.GetBytes(binFileName.Length);
 
             var binFileLen = BitConverter.GetBytes(binFile.Length);
 
             _memoryStream.Write(binFileLen);
 
-            _memoryStream.Write(formatLen);
+            _memoryStream.Write(fileNameLen);
 
-            _memoryStream.Write(fileFormatMessage);
+            // strings
+
+            _memoryStream.Write(binFileName);
 
             _memoryStream.Write(binFile);
         }
