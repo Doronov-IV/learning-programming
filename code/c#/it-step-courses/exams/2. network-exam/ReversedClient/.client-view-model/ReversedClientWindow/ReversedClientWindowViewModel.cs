@@ -234,7 +234,7 @@ namespace ReversedClient.ViewModel
 
         private void RecieveFile()
         {
-            var file = _server.PacketReader.ReadFile();
+            var file = _server.PacketReader.ReadFile(UserName);
             Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
         }
 
@@ -287,7 +287,7 @@ namespace ReversedClient.ViewModel
 
         private void SendFile()
         {
-            UserFile = new(fileName: @"C:\Users\Student PCE\source\repos\Doronov-IV\computer-science-learning\pics\photos\totalen-haram.jpg");
+            UserFile = new(fileName: @"C:\Users\i.doronov\Desktop\khleb-salo-vodka.jpg");
             _server.SendFileToServer(UserFile);
         }
 

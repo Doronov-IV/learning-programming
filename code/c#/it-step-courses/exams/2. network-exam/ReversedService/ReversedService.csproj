@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".net\aixiliary\PacketBuilder.cs" />
-    <Compile Include=".net\aixiliary\PacketReader.cs" />
-    <Compile Include=".net\aixiliary\RelayCommand.cs" />
+    <Compile Include=".net\auxiliary\PacketBuilder.cs" />
+    <Compile Include=".net\auxiliary\PacketReader.cs" />
+    <Compile Include=".net\auxiliary\RelayCommand.cs" />
     <Compile Include=".net\main\ReversedClient.cs" />
     <Compile Include=".net\main\ServiceHub.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />

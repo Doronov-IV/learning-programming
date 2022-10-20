@@ -59,7 +59,7 @@ namespace ReversedService.Net.Auxiliary
             return msg;
         }
 
-        public FileInfo ReadFile()
+        public FileInfo ReadFile(string UserName)
         {
             FileInfo info = null;
             try
@@ -69,7 +69,7 @@ namespace ReversedService.Net.Auxiliary
                 length *= 2;
                 msgBuffer = new byte[length];
                 _NetworkStream.Read(msgBuffer, 0, length);
-                File.WriteAllBytes($"../../../.files/{new Guid()}.png", msgBuffer);
+                File.WriteAllBytes($"../../../.files/{UserName} {new Guid()}.png", msgBuffer);
             }
             catch (Exception)
             {

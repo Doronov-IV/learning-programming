@@ -826,55 +826,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnCopyRightButtonClick(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             OnAnyCopyButtonClick(_RightWindow);
-=======
-            if (LeftListView.SelectedItems != null && LeftListView.SelectedItems.Count != 0)
-            {
-                foreach (ListViewItem itemName in LeftListView.SelectedItems)
-                {
-                    foreach (var file in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetFiles())
-                    {
-                        if (file.Name.Equals(itemName.Text))
-                        {
-                            try
-                            {
-                                // Здесь почему-то експешн не ловится;
-                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    File.Move(file.FullName, $"{_RightWindow.ExplorerFilePointer.CurrentDirectory.FullName}\\{file.Name}");
-                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-
-                    foreach (var dir in _LeftWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
-                    {
-                        if (dir.Name.Equals(itemName.Text))
-                        {
-                            try
-                            {
-                                // Здесь почему-то експешн не ловится;
-                                if (_RightWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    Directory.Move(dir.FullName, _RightWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
-                                else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
-
-                ShowDirectoryContents(_LeftWindow);
-
-                ShowDirectoryContents(_RightWindow);
-            }
->>>>>>> 120dde61350467bd6efef33f1c6e2b85597d099c
         }
 
 
@@ -921,13 +873,9 @@ namespace Streamlet.Forms
                             try
                             {
                                 // Здесь почему-то експешн не ловится;
-<<<<<<< HEAD
                                 if (currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory != null)
                                     File.Move(file.FullName, $"{currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName}\\{file.Name}");
-=======
-                                if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                    File.Move(file.FullName, $"{_LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName}\\{file.Name}");
->>>>>>> 120dde61350467bd6efef33f1c6e2b85597d099c
+
                                 else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                             catch
@@ -939,7 +887,6 @@ namespace Streamlet.Forms
 
                     foreach (var dir in oppositeWindow.ExplorerFilePointer.CurrentDirectory.GetDirectories())
                     {
-<<<<<<< HEAD
                         if (dir.Name.Equals(itemName.Text))
                         {
                             try
@@ -953,18 +900,6 @@ namespace Streamlet.Forms
                             {
                                 MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-=======
-                        try
-                        {
-                            // Здесь почему-то експешн не ловится;
-                            if (_LeftWindow?.ExplorerFilePointer?.CurrentDirectory != null)
-                                Directory.Move(dir.FullName, _LeftWindow?.ExplorerFilePointer?.CurrentDirectory.FullName);
-                            else MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Current destination path is unavailable. Please, choose another one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
->>>>>>> 120dde61350467bd6efef33f1c6e2b85597d099c
                         }
                     }
                 }
