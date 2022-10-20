@@ -59,18 +59,25 @@ namespace ReversedService.Net.Auxiliary
             return msg;
         }
 
-        public FileInfo ReadFile()
+        public FileInfo ReadFile(string UserName)
         {
             FileInfo info = null;
             try
             {
-                byte[] msgBuffer;
-                var length = ReadInt32();
-                msgBuffer = new byte[length];
-                _NetworkStream.Read(msgBuffer);
-                string fileName = $"../../../.files/{new Guid()}.png";
-                File.WriteAllBytes(fileName, msgBuffer);
-                info = new FileInfo(fileName);
+                byte[] fileBuffer;
+                byte[] formatBuffer;
+                int fileLength = ReadInt32();
+                int formatLength = ReadInt32();
+                formatBuffer = new byte[formatLength];
+                fileBuffer = new byte[fileLength];
+
+                _NetworkStream.Read(formatBuffer, 0, formatLength);
+                var formatString = Encoding.UTF8.GetString(formatBuffer);
+
+                _NetworkStream.Read(fileBuffer, 0, fileLength);
+                info = new FileInfo($"../../../.files/{UserName} {new Guid()}{formatString}");
+
+                File.WriteAllBytes(info.FullName, fileBuffer);
             }
             catch (Exception)
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReversedClient.ViewModel.ReversedClientWindow
+namespace ReversedClient.Properties
 {
     public interface IDialogService
     {

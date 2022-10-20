@@ -4,7 +4,7 @@ using System.Windows;
 using ReversedClient.Model.Basics;
 using ReversedClient.Net.Main;
 using ReversedClient.Net.Auxiliary;
-using ReversedClient.ViewModel.ReversedClientWindow;
+using ReversedClient.Properties;
 
 namespace ReversedClient.ViewModel
 {

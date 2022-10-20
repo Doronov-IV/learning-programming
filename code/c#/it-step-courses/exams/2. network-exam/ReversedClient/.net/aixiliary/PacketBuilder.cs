@@ -1,4 +1,6 @@
-﻿namespace ReversedClient.Net.Auxiliary
+﻿using System.Linq;
+
+namespace ReversedClient.Net.Auxiliary
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;
@@ -57,25 +59,40 @@
         {
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
-            var msgLenght = unicodeMessage.Length;
-
-            _memoryStream.Write(BitConverter.GetBytes(msgLenght));
+            _memoryStream.Write(BitConverter.GetBytes(unicodeMessage.Length));
 
             _memoryStream.Write(unicodeMessage);
         }
 
         public void WriteMessage(FileInfo info)
         {
-            if (File.Exists(info.FullName))
+            var binFile = File.ReadAllBytes(info.FullName);
+
+            string sFileFormat = string.Empty;
+
+            for (int i = info.FullName.Length - 1, iSize = 0; i > iSize; --i)
             {
-                var binFile = File.ReadAllBytes(info.FullName);
-
-                var fileLength = binFile.Length;
-
-                _memoryStream.Write(BitConverter.GetBytes(fileLength));
-
-                _memoryStream.Write(binFile);
+                sFileFormat += info.FullName[i];
+                if (info.FullName[i] == '.') break;
             }
+
+            var a = sFileFormat.Reverse().ToArray();
+
+            sFileFormat = new string(a);
+
+            var fileFormatMessage = Encoding.UTF8.GetBytes(sFileFormat);
+
+            var formatLen = BitConverter.GetBytes(fileFormatMessage.Length);
+
+            var binFileLen = BitConverter.GetBytes(binFile.Length);
+
+            _memoryStream.Write(binFileLen);
+
+            _memoryStream.Write(formatLen);
+
+            _memoryStream.Write(fileFormatMessage);
+
+            _memoryStream.Write(binFile);
         }
 
 

@@ -64,11 +64,18 @@ namespace ReversedService.Net.Auxiliary
             FileInfo info = null;
             try
             {
-                byte[] msgBuffer;
-                var length = ReadInt32();
-                msgBuffer = new byte[length];
-                _NetworkStream.Read(msgBuffer, 0, length);
-                File.WriteAllBytes($"../../../.files/{UserName} {new Guid()}.png", msgBuffer);
+                byte[] fileBuffer;
+                byte[] formatBuffer;
+                int fileLength = ReadInt32();
+                int formatLength = ReadInt32();
+                formatBuffer = new byte[formatLength];
+                fileBuffer = new byte[fileLength];
+
+                _NetworkStream.Read(formatBuffer, 0, formatLength);
+                var formatString = Encoding.UTF8.GetString(formatBuffer);
+
+                _NetworkStream.Read(fileBuffer, 0, fileLength);
+                File.WriteAllBytes($"../../../.files/{UserName} {new Guid()}{formatString}", fileBuffer);
             }
             catch (Exception)
             {

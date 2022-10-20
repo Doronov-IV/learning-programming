@@ -111,7 +111,7 @@ namespace ReversedService.Net.Main
                             StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg}");
                             break;
                         case 6:
-                            var file = _packetReader.ReadFile();
+                            var file = _packetReader.ReadFile(UserName: CurrentUserName);
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent an image.");
                             StaticServiceHub.BroadcastFile(file);
                             break;

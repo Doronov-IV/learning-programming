@@ -1,4 +1,6 @@
-﻿namespace ReversedService.Net.Auxiliary
+﻿using System.Windows.Interop;
+
+namespace ReversedService.Net.Auxiliary
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;
@@ -78,13 +80,36 @@
         /// </param>
         public void WriteFile(FileInfo info)
         {
-            var binFile = File.ReadAllBytes(info.FullName);
+            if (info != null)
+            {
+                var binFile = File.ReadAllBytes(info.FullName);
 
-            var msgLenght = binFile.Length;
+                string sFileFormat = string.Empty;
 
-            _memoryStream.Write(BitConverter.GetBytes(msgLenght));
+                for (int i = info.FullName.Length - 1, iSize = 0; i > iSize; --i)
+                {
+                    sFileFormat += info.FullName[i];
+                    if (info.FullName[i] == '.') break;
+                }
 
-            _memoryStream.Write(binFile);
+                var a = sFileFormat.Reverse().ToArray();
+
+                sFileFormat = new string(a);
+
+                var fileFormatMessage = Encoding.UTF8.GetBytes(sFileFormat);
+
+                var formatLen = BitConverter.GetBytes(fileFormatMessage.Length);
+
+                var binFileLen = BitConverter.GetBytes(binFile.Length);
+
+                _memoryStream.Write(binFileLen);
+
+                _memoryStream.Write(formatLen);
+
+                _memoryStream.Write(fileFormatMessage);
+
+                _memoryStream.Write(binFile);
+            }
         }
 
 
