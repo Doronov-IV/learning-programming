@@ -4,6 +4,7 @@ using System.Windows;
 using ReversedClient.Model.Basics;
 using ReversedClient.Net.Main;
 using ReversedClient.Net.Auxiliary;
+using ReversedClient.ViewModel.ReversedClientWindow;
 
 namespace ReversedClient.ViewModel
 {
@@ -162,6 +163,8 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private IDialogService _DialogService;
+
 
         #endregion PROPERTIES - Object State
 
@@ -192,6 +195,9 @@ namespace ReversedClient.ViewModel
         /// Команда для обработки нажатия кнопки "Войти";
         /// </summary>
         public RelayCommand SignInButtonClickCommand { get; }
+
+
+        public RelayCommand SelectFileCommand { get; }
 
 
 
@@ -268,6 +274,22 @@ namespace ReversedClient.ViewModel
         }
 
 
+        public void SelectFile()
+        {
+            try
+            {
+                if (_DialogService.OpenFileDialog())
+                {
+                    UserFile = new(_DialogService.FilePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                _DialogService.ShowMessage(ex.Message);
+            }
+        }
+
+
 
         /// <summary>
         /// Send a message to the service;
@@ -287,7 +309,7 @@ namespace ReversedClient.ViewModel
 
         private void SendFile()
         {
-            UserFile = new(fileName: @"C:\Users\i.doronov\Desktop\khleb-salo-vodka.jpg");
+            if (UserFile.FullName != "")
             _server.SendFileToServer(UserFile);
         }
 
@@ -318,6 +340,8 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
+            _DialogService = new AttachFileDialogService();
+
             _TheMembersString = "member";
 
             _UserName = string.Empty;
@@ -342,6 +366,8 @@ namespace ReversedClient.ViewModel
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
 
             SendFileCommand = new RelayCommand(o => SendFile(), o => 1 == 1);
+
+            SelectFileCommand = new RelayCommand(o => SelectFile(), o => 1 == 1);
 
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => 1 == 1);

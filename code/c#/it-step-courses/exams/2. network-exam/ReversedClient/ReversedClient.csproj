@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
+    <Compile Include=".client-view-model\ReversedClientWindow\AttachFileDialogService.cs" />
+    <Compile Include=".client-view-model\ReversedClientWindow\IDialogService.cs" />
     <Compile Include=".net\aixiliary\PacketBuilder.cs" />
     <Compile Include=".net\aixiliary\PacketReader.cs" />
     <Compile Include=".net\aixiliary\RelayCommand.cs" />

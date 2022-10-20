@@ -43,7 +43,7 @@ namespace ReversedClient.ViewModel
                 //// [!] In this particular order;
                 //
                 _CurrentViewModelReference.WindowHeaderString = _CurrentViewModelReference.UserName + " - common chat";
-                ReversedClientWindow clientChatWindow = new();
+                ReversedClient.client_view.ReversedClientWindow clientChatWindow = new();
                 clientChatWindow.Show();
                 //
                 ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
