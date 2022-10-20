@@ -66,7 +66,6 @@ namespace ReversedService.Net.Auxiliary
             {
                 byte[] msgBuffer;
                 var length = ReadInt32();
-                length *= 2;
                 msgBuffer = new byte[length];
                 _NetworkStream.Read(msgBuffer, 0, length);
                 File.WriteAllBytes($"../../../.files/{UserName} {new Guid()}.png", msgBuffer);
