@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Windows.Interop;
+using ReversedService.Net.Auxiliary.Packages;
 
 namespace ReversedService.Net.Auxiliary
 {
@@ -45,12 +46,16 @@ namespace ReversedService.Net.Auxiliary
             string msg = "";
             try
             {
-                byte[] msgBuffer;
-                var length = ReadInt32();
-                msgBuffer = new byte[length];
-                _NetworkStream.Read(msgBuffer, 0, length);
+                //byte[] msgBuffer;
+                //var length = ReadInt32();
+                //msgBuffer = new byte[length];
+                //_NetworkStream.Read(msgBuffer, 0, length);
+                //
+                //msg = Encoding.UTF8.GetString(msgBuffer);
 
-                msg = Encoding.UTF8.GetString(msgBuffer);
+                TextMessagePackage package = new TextMessagePackage(_NetworkStream.Length);
+                
+
             }
             catch
             {

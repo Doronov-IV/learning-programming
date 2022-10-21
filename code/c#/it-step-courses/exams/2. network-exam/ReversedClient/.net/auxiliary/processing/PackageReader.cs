@@ -66,8 +66,10 @@ namespace ReversedClient.Net.Auxiliary
             {
                 byte[] fileBuffer;
                 byte[] nameBuffer;
+
                 int fileLength = ReadInt32();
                 int nameLength = ReadInt32();
+
                 nameBuffer = new byte[nameLength];
                 fileBuffer = new byte[fileLength];
 

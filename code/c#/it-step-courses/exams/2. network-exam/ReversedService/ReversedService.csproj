@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".net\auxiliary\packages\FilePackage.cs" />
+    <Compile Include=".net\auxiliary\packages\FileMessagePackage.cs" />
+    <Compile Include=".net\auxiliary\packages\MessagePackage.cs" />
     <Compile Include=".net\auxiliary\packages\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />

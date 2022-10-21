@@ -12,7 +12,7 @@ namespace Range
     /// <br />
     /// Порядок: Sender, Reciever, Message.
     /// </summary>
-    public class TextMessagePackage
+    public class TextMessagePackage : MessagePackage
     {
 
 
@@ -20,95 +20,26 @@ namespace Range
 
 
 
-        #region TEXT
+        #region UNSERIALIZED
 
-
-        /// <inheritdoc cref="Sender"/>
-        private string _sender;
-
-        /// <summary>
-        /// Sender nickname.
-        /// <br />
-        /// Никнейм отправителя.
-        /// </summary>
-        public string Sender
-        {
-            get { return _sender; }
-            set { _sender = value; }
-        }
-
-
-
-        /// <inheritdoc cref="Reciever"/>
-        private string _reciever;
-
-        /// <summary>
-        /// Reciever nickname.
-        /// <br />
-        /// Никнейм получателя.
-        /// </summary>
-        public string Reciever
-        {
-            get { return _reciever; }
-            set { _reciever = value; }
-        }
-
-
-        /// <inheritdoc cref="Message"/>
-        private string _Message;
 
         /// <summary>
         /// A text message string.
         /// <br />
         /// Строка текстового(?) сообщения.
         /// </summary>
-        public string Message
+        public override object? Message
         {
-            get { return _Message; }
-            set { _Message = value; }
+            get { return _message as string; }
+            set { _message = value; }
         }
 
 
-        #endregion TEXT
-
-
-
-        #region BINARY
-
-
-        /// <inheritdoc cref="Data"/>
-        private byte[]? _Data;
-
-
-        /// <summary>
-        /// A raw array of bytes.
-        /// <br />
-        /// Простой массив байтов.
-        /// </summary>
-        public byte[]? Data
-        {
-            get { return _Data; }
-            set { _Data = value; }
-        }
-
-
-        #endregion BINARY
+        #endregion UNSERIALIZED
 
 
 
         #region BOOLEAN
-
-
-
-        /// <summary>
-        /// 'True' if 'Data' is not null, otherwise 'false'.
-        /// <br />
-        /// "True", если Data не "null", иначе "false".
-        /// </summary>
-        public bool Assembled
-        {
-            get { return _Data != null; }
-        }
 
 
         /// <summary>
@@ -116,9 +47,9 @@ namespace Range
         /// <br />
         /// "True", если свойства инициализированы, иначе "false".
         /// </summary>
-        public bool Initialized
+        public override bool Initialized
         {
-            get { return _sender != string.Empty && _Message != string.Empty && _reciever != string.Empty; }
+            get { return _sender != string.Empty && (_message != null && _message as string != string.Empty) && _reciever != string.Empty; }
         }
 
 
@@ -146,35 +77,40 @@ namespace Range
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public byte[] Assemble()
+        public override byte[] Assemble()
         {
-            List<byte> lRes = new();
+            byte[] aRes = default;
+
+            if (Initialized)
+            {
+                List<byte> lRes = new();
 
 
-            byte[] binSender = Encoding.UTF8.GetBytes(_sender);
+                byte[] binSender = Encoding.UTF8.GetBytes(_sender);
 
-            byte[] binReciever = Encoding.UTF8.GetBytes(_reciever);
+                byte[] binReciever = Encoding.UTF8.GetBytes(_reciever);
 
-            byte[] binMessage = Encoding.UTF8.GetBytes(_Message);
-
-
-            byte[] binSenderLength = BitConverter.GetBytes(binSender.Length);
-            lRes.AddRange(binSenderLength);
-
-            byte[] binRecieverLength = BitConverter.GetBytes(binReciever.Length);
-            lRes.AddRange(binRecieverLength);
-
-            byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
-            lRes.AddRange(binMessageLength);
+                byte[] binMessage = Encoding.UTF8.GetBytes(_message as string);
 
 
-            lRes.AddRange(binSender);
-            lRes.AddRange(binReciever);
-            lRes.AddRange(binMessage);
+                byte[] binSenderLength = BitConverter.GetBytes(binSender.Length);
+                lRes.AddRange(binSenderLength);
 
-            byte[] aRes = lRes.ToArray();
+                byte[] binRecieverLength = BitConverter.GetBytes(binReciever.Length);
+                lRes.AddRange(binRecieverLength);
 
-            _Data = aRes;
+                byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
+                lRes.AddRange(binMessageLength);
+
+
+                lRes.AddRange(binSender);
+                lRes.AddRange(binReciever);
+                lRes.AddRange(binMessage);
+
+                aRes = lRes.ToArray();
+
+                _Data = aRes;
+            }
 
             return aRes;
         }
@@ -186,7 +122,7 @@ namespace Range
         /// <br />
         /// Десериализовать массив байтов, представленный свойством "Data".
         /// </summary>
-        public void Disassemble()
+        public override (string Sender, string Reciever, object Message) Disassemble()
         {
             if (_Data != null)
             {
@@ -219,11 +155,13 @@ namespace Range
 
                         _reciever = Encoding.UTF8.GetString(binReciever);
 
-                        _Message = Encoding.UTF8.GetString(binMessage);
+                        _message = Encoding.UTF8.GetString(binMessage);
                     }
                 }
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (Text Message Package)");
+
+            return (Sender, Reciever, Message as string);
         }
 
 
@@ -260,7 +198,7 @@ namespace Range
         {
             _sender = sender;
             _reciever = reciever;
-            _Message = message;
+            _message = message;
 
             Assemble();
         }
@@ -274,6 +212,10 @@ namespace Range
         /// </summary>
         public TextMessagePackage()
         {
+            _sender = string.Empty;
+            _reciever = string.Empty;
+            _message = string.Empty;
+
             _Data = null;
         }
 

@@ -4,17 +4,41 @@ namespace Range
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            TextMessagePackage AssembledMessage = new ("Mario", "Luigi", "It's me, Mario!");
+            TryFilePackage();
+        }
 
-            TextMessagePackage UnassembledMessage = new();
 
-            UnassembledMessage.Data = AssembledMessage.Data;
+        public static void TryFilePackage()
+        {
+            FileMessagePackage AssembledFileMessage = new("Mario", "Luigi", new("C:\\Users\\i.doronov\\Desktop\\khleb-salo-vodka.jpg"));
 
-            UnassembledMessage.Disassemble();
+            FileMessagePackage UnassembledFileMessage = new();
 
-            Console.WriteLine(UnassembledMessage.Message);
+            UnassembledFileMessage.Data = AssembledFileMessage.Data;
+
+            UnassembledFileMessage.Disassemble();
+
+            Console.WriteLine($"Sender: {UnassembledFileMessage.Sender}");
+            Console.WriteLine($"Reciever: {UnassembledFileMessage.Reciever}");
+            Console.WriteLine($"Message: {UnassembledFileMessage.FileName}");
+        }
+
+
+        public static void TryTextPackage()
+        {
+            TextMessagePackage AssembledTextMessage = new("Mario", "Luigi", "It's me, Mario!");
+
+            TextMessagePackage UnassembledTextMessage = new();
+
+            UnassembledTextMessage.Data = AssembledTextMessage.Data;
+
+            UnassembledTextMessage.Disassemble();
+
+            Console.WriteLine($"Sender: {UnassembledTextMessage.Sender}");
+            Console.WriteLine($"Reciever: {UnassembledTextMessage.Reciever}");
+            Console.WriteLine($"Message: {UnassembledTextMessage.Message}");
         }
     }
 }
