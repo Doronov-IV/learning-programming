@@ -79,6 +79,22 @@ namespace ReversedService.Net.Auxiliary
             return msg;
         }
 
+
+        /// <summary>
+        /// Read a file from network stream.
+        /// <br />
+        /// Прочитать файл из сетевого стрима.
+        /// </summary>
+        /// <param name="UserName">
+        /// A name of reciever-user.
+        /// <br />
+        /// Имя получателя.
+        /// </param>
+        /// <returns>
+        /// Recieved fileinfo.
+        /// <br />
+        /// Переданый файл.
+        /// </returns>
         public FileInfo ReadFile(string UserName)
         {
             FileInfo info = null;

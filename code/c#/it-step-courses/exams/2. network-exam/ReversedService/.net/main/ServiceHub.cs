@@ -31,9 +31,7 @@ namespace ReversedService.Net.Main
         private TcpListener _Listener = null!;
 
 
-        /// <summary>
-        /// @see public bool IsRunning;
-        /// </summary>
+        /// <inheritdoc cref="IsRunning"/>
         private bool _isRunning;
 
 
@@ -69,9 +67,7 @@ namespace ReversedService.Net.Main
         public delegate void ServiceOutputDelegate(string sOutputMessage);
 
 
-        /// <summary>
-        /// @see public delegate void ServiceOutputDelegate(string sOutputMessage);
-        /// </summary>
+        /// <inheritdoc cref="ServiceOutputDelegate"/>
         public event ServiceOutputDelegate SendServiceOutput;
 
 
@@ -149,6 +145,23 @@ namespace ReversedService.Net.Main
             }
         }
 
+
+
+        /// <summary>
+        /// Send file to all clients.
+        /// <br />
+        /// Разослать файл всем клиентам.
+        /// </summary>
+        /// <param name="info">
+        /// Broadcasted file.
+        /// <br />
+        /// Транслируемый файл.
+        /// </param>
+        /// <param name="SenderId">
+        /// The id of the sender-user.
+        /// <br />
+        /// Идентификатор отправителя.
+        /// </param>
         public void BroadcastFile(FileInfo info, Guid SenderId)
         {
             foreach (var user in _UserList)
@@ -194,11 +207,15 @@ namespace ReversedService.Net.Main
 
 
         /// <summary>
-        /// Pass the message out to another object that might have the ability to output this message;
+        /// Pass the message out to another object that might have the ability to output this message.
         /// <br />
-        /// Передать сообщение другому объекту, который может иметь возможность вывести его куда-нибудь;
+        /// Передать сообщение другому объекту, который может иметь возможность вывести его куда-нибудь.
         /// </summary>
-        /// <param name="sMessage"></param>
+        /// <param name="sMessage">
+        /// Message text.
+        /// <br />
+        /// Текст сообщения.
+        /// </param>
         public void PassOutputMessage(string sMessage)
         {
             SendServiceOutput.Invoke(sMessage);

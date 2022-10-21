@@ -79,6 +79,7 @@ namespace ReversedService.Net.Auxiliary
             //*/
         }
 
+
         /// <summary>
         /// Write binary message;
         /// <br />
@@ -135,6 +136,7 @@ namespace ReversedService.Net.Auxiliary
 
 
         #endregion API
+
 
 
 

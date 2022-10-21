@@ -373,8 +373,6 @@ namespace ReversedClient.ViewModel
 
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => placeholder);
 
-            //SendFileCommand = new RelayCommand(o => SendFile(), o => placeholder);
-
             SelectFileCommand = new RelayCommand(o => SelectFile(), o => placeholder);
 
             // we need to manage windows right after we connect;
