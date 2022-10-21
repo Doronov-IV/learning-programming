@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Range
+namespace Range.Main
 {
     /// <summary>
     /// Order: sender, reciever, filename, file. Every argument is prefixed with its length.
@@ -291,7 +291,7 @@ namespace Range
             _sender = string.Empty;
             _reciever = string.Empty;
             _message = string.Empty;
-            _fileName= string.Empty;
+            _fileName = string.Empty;
 
             _Data = null;
         }

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Range
+namespace Range.Main
 {
     /// <summary>
     /// A string to binary text message compiler.
@@ -49,7 +49,7 @@ namespace Range
         /// </summary>
         public override bool Initialized
         {
-            get { return _sender != string.Empty && (_message != null && _message as string != string.Empty) && _reciever != string.Empty; }
+            get { return _sender != string.Empty && _message != null && _message as string != string.Empty && _reciever != string.Empty; }
         }
 
 
