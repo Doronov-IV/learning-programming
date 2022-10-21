@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Windows.Interop;
 using ReversedService.Net.Auxiliary.Packages;
 
@@ -46,16 +48,29 @@ namespace ReversedService.Net.Auxiliary
             string msg = "";
             try
             {
-                //byte[] msgBuffer;
-                //var length = ReadInt32();
-                //msgBuffer = new byte[length];
-                //_NetworkStream.Read(msgBuffer, 0, length);
-                //
-                //msg = Encoding.UTF8.GetString(msgBuffer);
+                ///*
+                byte[] msgBuffer;
+                var length = ReadInt32();
+                msgBuffer = new byte[length];
+                _NetworkStream.Read(msgBuffer, 0, length);
 
-                TextMessagePackage package = new TextMessagePackage(_NetworkStream.Length);
-                
+                msg = Encoding.UTF8.GetString(msgBuffer);
+                //*/
 
+                /*
+                List<byte> byteList = new();
+
+                while (_NetworkStream.DataAvailable)
+                {
+                    byteList.Add((byte)_NetworkStream.ReadByte());
+                }
+
+                TextMessagePackage package = new TextMessagePackage(byteList.Count);
+
+                package.Data = byteList.ToArray();
+
+                msg = package.Disassemble().Message as string;
+                */
             }
             catch
             {

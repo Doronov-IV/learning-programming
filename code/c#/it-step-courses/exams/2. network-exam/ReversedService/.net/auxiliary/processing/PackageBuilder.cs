@@ -1,4 +1,5 @@
-﻿using System.Windows.Interop;
+﻿using ReversedService.Net.Auxiliary.Packages;
+using System.Windows.Interop;
 
 namespace ReversedService.Net.Auxiliary
 {
@@ -60,6 +61,14 @@ namespace ReversedService.Net.Auxiliary
         {
             // the most important thing is: to code message to utf BEFORE we calculate its length;
 
+            /*
+            TextMessagePackage package = new TextMessagePackage("place_holder", "place_holder", msg);
+
+            _memoryStream.Write(package.Data);
+            */
+
+            
+            ///*
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
             var msgLenght = unicodeMessage.Length;
@@ -67,6 +76,7 @@ namespace ReversedService.Net.Auxiliary
             _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
             _memoryStream.Write(unicodeMessage);
+            //*/
         }
 
         /// <summary>

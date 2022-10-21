@@ -5,6 +5,7 @@ using ReversedClient.Model.Basics;
 using ReversedClient.Net.Main;
 using ReversedClient.Net.Auxiliary;
 using ReversedClient.Properties;
+using System.Windows.Interop;
 
 namespace ReversedClient.ViewModel
 {
@@ -254,7 +255,7 @@ namespace ReversedClient.ViewModel
         public void ConnectUser()
         {
             // create new user instance;
-            var user = new UserModel
+            var user = new UserModel()
             {
                 UserName = _server.PacketReader.ReadMessage(),
                 UID = _server.PacketReader.ReadMessage(),
@@ -270,6 +271,7 @@ namespace ReversedClient.ViewModel
             if (!Users.Any(x => x.UID == user.UID))
             {
                 Application.Current.Dispatcher.Invoke(() => Users.Add(user));
+                Application.Current.Dispatcher.Invoke(() => Messages.Add($"{user.UserName} joins chat."));
             }
         }
 
@@ -360,17 +362,19 @@ namespace ReversedClient.ViewModel
 
             _Users.CollectionChanged += _Handler.OnUsersCollectionChanged;
 
+            bool placeholder = true;
+
             // may be obsolete. tests needed;
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => 1 == 1);
+            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => placeholder);
 
-            SendMessageCommand = new RelayCommand(o => SendMessage(), o => 1 == 1);
+            SendMessageCommand = new RelayCommand(o => SendMessage(), o => placeholder);
 
-            SendFileCommand = new RelayCommand(o => SendFile(), o => 1 == 1);
+            SendFileCommand = new RelayCommand(o => SendFile(), o => placeholder);
 
-            SelectFileCommand = new RelayCommand(o => SelectFile(), o => 1 == 1);
+            SelectFileCommand = new RelayCommand(o => SelectFile(), o => placeholder);
 
             // we need to manage windows right after we connect;
-            SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => 1 == 1);
+            SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => placeholder);
         }
 
 

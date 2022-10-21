@@ -100,9 +100,9 @@ namespace ReversedService.Net.Main
 
             while (true)
             {
-                var client = new ReversedClient(_Listener.AcceptTcpClient(), this);//AcceptTcpClient(): Принимает ожидающий запрос на подключение.
-                _UserList.Add(client);//Добавление ного клиента в список пользователей
-                BroadcastConnection();/*Broadcast the connextion to everyone on the server: Раздать соединение всем на сервере*/
+                var client = new ReversedClient(_Listener.AcceptTcpClient(), this);
+                _UserList.Add(client);
+                BroadcastConnection();
             }
         }
 
@@ -124,6 +124,7 @@ namespace ReversedService.Net.Main
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
                     broadcastPacket.WriteMessage(usr.CurrentUserName);
                     broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
+
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }
             }
@@ -148,14 +149,18 @@ namespace ReversedService.Net.Main
             }
         }
 
-        public void BroadcastFile(FileInfo info)
+        public void BroadcastFile(FileInfo info, Guid SenderId)
         {
             foreach (var user in _UserList)
             {
-                var msgPacket = new PackageBuilder();
-                msgPacket.WriteOpCode(6);
-                msgPacket.WriteFile(info);
-                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+                // to prevent sending file to the sender;
+                if (user.CurrentUID != SenderId)
+                {
+                    var msgPacket = new PackageBuilder();
+                    msgPacket.WriteOpCode(6);
+                    msgPacket.WriteFile(info);
+                    user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+                }
             }
         }
 

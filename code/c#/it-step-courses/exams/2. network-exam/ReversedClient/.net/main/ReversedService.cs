@@ -194,7 +194,7 @@ namespace ReversedClient.Net.Main
             {
                 var messagePacket = new PackageBuilder();
                 messagePacket.WriteOpCode(6);
-                messagePacket.WriteMessage(info);
+                messagePacket.WriteFile(info);
                 _client.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
@@ -256,7 +256,7 @@ namespace ReversedClient.Net.Main
                             break;
 
                         default:
-                            MessageBox.Show("Operation code out of [1,5,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }
