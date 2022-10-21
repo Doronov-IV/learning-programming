@@ -83,10 +83,8 @@
         <Button 
                   Height="20" Width="70"
                 Content="Attach File" Command="{Binding SelectFileCommand}" 
-              HorizontalAlignment="Right" Margin="0,12,110,0" 
+              HorizontalAlignment="Right" Margin="0,12,10,0" 
             Grid.Row="1" VerticalAlignment="Top"/>
-
-        <Button Command="{Binding SendFileCommand}" Content="Send File" HorizontalAlignment="Left" Margin="114,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70"/>
 
         <!--#endregion Bottom controls-->
 

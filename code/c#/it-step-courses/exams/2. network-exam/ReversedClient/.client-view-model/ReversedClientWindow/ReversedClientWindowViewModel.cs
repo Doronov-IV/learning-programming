@@ -305,14 +305,17 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void SendMessage()
         {
-            _server.SendMessageToServer(Message);
-            Message = "";
-        }
+            if (Message != string.Empty)
+            {
+                _server.SendMessageToServer(Message);
+                Message = string.Empty;
+            }
 
-        private void SendFile()
-        {
-            if (UserFile.FullName != "")
-            _server.SendFileToServer(UserFile);
+            if (UserFile != null)
+            {
+                _server.SendFileToServer(UserFile);
+                UserFile = null;
+            }
         }
 
 
@@ -342,6 +345,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
+            _UserFile = null;
             _DialogService = new AttachFileDialogService();
 
             _TheMembersString = "member";
@@ -369,7 +373,7 @@ namespace ReversedClient.ViewModel
 
             SendMessageCommand = new RelayCommand(o => SendMessage(), o => placeholder);
 
-            SendFileCommand = new RelayCommand(o => SendFile(), o => placeholder);
+            //SendFileCommand = new RelayCommand(o => SendFile(), o => placeholder);
 
             SelectFileCommand = new RelayCommand(o => SelectFile(), o => placeholder);
 
