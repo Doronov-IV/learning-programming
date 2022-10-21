@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
+    <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
     <Compile Include=".net\auxiliary\packages\FileMessagePackage.cs" />
     <Compile Include=".net\auxiliary\packages\MessagePackage.cs" />
     <Compile Include=".net\auxiliary\packages\TextMessagePackage.cs" />
@@ -20,7 +21,6 @@
     <Compile Include=".properties\dialogs\IDialogService.cs" />
     <Compile Include=".net\main\ReversedService.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
-    <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
     <Compile Include=".client-view\App.xaml.cs" />
     <Compile Include=".client-view\ClientLoginWindow.xaml.cs" />
     <Compile Include=".client-view\ReversedClientWindow.xaml.cs" />

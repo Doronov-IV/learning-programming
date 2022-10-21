@@ -14,7 +14,7 @@ namespace ReversedClient.ViewModel
     /// <br />
     /// Вью-модель для окна клиента;
     /// </summary>
-    public class ReversedClientWindowViewModel : INotifyPropertyChanged
+    public partial class ReversedClientWindowViewModel : INotifyPropertyChanged
     {
 
 
@@ -22,18 +22,13 @@ namespace ReversedClient.ViewModel
         #region PROPERTIES - Object State
 
 
-
-        private ReversedClientWindowViewModelHandler _Handler;
-
-
-        /// <summary>
-        /// @see public ObservableCollection<UserModel> Users;
-        /// </summary>
+        /// <inheritdoc cref="Users"/>
         private ObservableCollection<UserModel> _Users;
 
-
         /// <summary>
-        /// Обозреваемая коллекция из моделей пользователя
+        /// The Users observable collection.
+        /// <br />
+        /// Обозреваемая коллекция пользователей.
         /// </summary>
         public ObservableCollection<UserModel> Users 
         {
@@ -47,8 +42,16 @@ namespace ReversedClient.ViewModel
         }
 
 
+
+
+        /// <inheritdoc cref="TheMembersString"/>
         private string _TheMembersString;
 
+        /// <summary>
+        /// The 'Members' string.
+        /// <br />
+        /// Надпись "Участники".
+        /// </summary>
         public string TheMembersString
         {
             get { return _TheMembersString; }
@@ -60,14 +63,17 @@ namespace ReversedClient.ViewModel
         }
 
 
-        /// <summary>
-        /// @see public ObservableCollection<string> Messages;
-        /// </summary>
+
+
+
+        /// <inheritdoc cref="Messages"/>
         private ObservableCollection<string> _Messages;
 
 
         /// <summary>
-        /// Обозреваемая коллекция из сообщений
+        /// Message history observable collection.
+        /// <br />
+        /// Обозреваемая коллекция сообщений.
         /// </summary>
         public ObservableCollection<string> Messages 
         {
@@ -80,10 +86,11 @@ namespace ReversedClient.ViewModel
         }
 
 
-        /// <summary>
-        /// @see public string UserName;
-        /// </summary>
-        private string _UserName;
+
+
+
+        /// <inheritdoc cref="UserName"/>
+        private string _userName;
 
 
         /// <summary>
@@ -93,64 +100,74 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public string UserName 
         {
-            get { return _UserName; }
+            get { return _userName; }
             set
             {
-                _UserName = value;
+                _userName = value;
                 OnPropertyChanged(nameof(UserName));
             }
         }
 
 
-        private string _WindowHeaderString;
+        /// <inheritdoc cref="WindowHeaderString"/>
+        private string _windowHeaderString;
 
+        /// <summary>
+        /// The header of the wpf window. Corrensponds to the user name.
+        /// <br />
+        /// Заголовок окна. Соответствует имени пользователя.
+        /// </summary>
         public string WindowHeaderString
         {
-            get { return _WindowHeaderString; }
+            get { return _windowHeaderString; }
             set
             {
-                _WindowHeaderString = value;
+                _windowHeaderString = value;
                 OnPropertyChanged(nameof(WindowHeaderString));
             }
         }
 
 
 
-        private string _Message;
-
+        /// <inheritdoc cref="Message"/>
+        private string _message;
 
         /// <summary>
-        /// Свойство: Сообщение
+        /// Message input string.
+        /// <br />
+        /// Строка ввода сообщения.
         /// </summary>
         public string Message 
         {
-            get { return _Message; }
+            get { return _message; }
             set
             {
-                _Message = value;
+                _message = value;
                 OnPropertyChanged(nameof(Message));
             }
         }
 
+        /// <inheritdoc cref="UserFile"/>
+        private FileInfo _userFile;
 
-        private FileInfo _UserFile;
-
+        /// <summary>
+        /// The file attached to the user message.
+        /// <br />
+        /// Файл, прикреплённый к пользовательскому сообщению.
+        /// </summary>
         public FileInfo UserFile
         {
-            get { return _UserFile; }
+            get { return _userFile; }
             set
             {
-                _UserFile = value;
+                _userFile = value;
                 OnPropertyChanged(nameof(UserFile));
             }
         }
 
 
-        /// <summary>
-        /// @see public ReversedService Server;
-        /// </summary>
+        /// <inheritdoc cref="Server"/>
         private ReversedClient.Net.Main.ReversedService _server;
-
 
         /// <summary>
         /// An instance of a 'ReversedService';
@@ -164,6 +181,12 @@ namespace ReversedClient.ViewModel
         }
 
 
+
+        /// <summary>
+        /// The service of the file selection dialog.
+        /// <br />
+        /// Сервис диалога выбора файла.
+        /// </summary>
         private IDialogService _DialogService;
 
 
@@ -177,160 +200,45 @@ namespace ReversedClient.ViewModel
 
 
         /// <summary>
-        /// [?] To be revied, may be obsolete;
+        /// [?] To be revied, may be obsolete.
         /// </summary>
         public RelayCommand ConnectToServerCommand { get; set; }
 
+
         /// <summary>
-        /// A command to handle the 'Send' button click;
+        /// A command to handle the 'Send' button click.
         /// <br />
-        /// Команда для обработки нажатия кнопки "Отправить";
+        /// Команда для обработки нажатия кнопки "Отправить".
         /// </summary>
         public RelayCommand SendMessageCommand { get; set; }
 
-        public RelayCommand SendFileCommand { get; set; }
 
         /// <summary>
-        /// A command to handle the 'Sign In' button click;
+        /// A command to handle the sending file.
         /// <br />
-        /// Команда для обработки нажатия кнопки "Войти";
+        /// Команда для обработки отправки файла.
+        /// </summary>
+        public RelayCommand SendFileCommand { get; set; }
+
+
+        /// <summary>
+        /// A command to handle the 'Sign In' button click.
+        /// <br />
+        /// Команда для обработки нажатия кнопки "Войти".
         /// </summary>
         public RelayCommand SignInButtonClickCommand { get; }
 
 
+        /// <summary>
+        /// A command for the 'Attach file' button.
+        /// <br />
+        /// Команда для кнопки "Attach file".
+        /// </summary>
         public RelayCommand SelectFileCommand { get; }
 
 
 
         #endregion COMMANDS - Prism Commands
-
-
-
-
-        #region LOGIC - internal behavior
-
-
-
-        /// <summary>
-        /// Remove a user from the client list;
-        /// <br />
-        /// Удалить пользователя из списка клиентов;
-        /// </summary>
-        private void RemoveUser()
-        {
-            var uid = _server.PacketReader.ReadMessage();
-            var user = Users.Where(x => x.UID == uid).FirstOrDefault();
-
-            //foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
-        }
-
-
-
-        /// <summary>
-        /// Recieve user message;
-        /// <br />
-        /// Получить сообщение от пользователя;
-        /// </summary>
-        private void RecieveMessage()
-        {
-            var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
-        }
-
-
-        private void RecieveFile()
-        {
-            var file = _server.PacketReader.ReadFile(UserName);
-            Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
-        }
-
-
-
-        /// <summary>
-        /// Connect new user;
-        /// <br />
-        /// Подключить нового пользователя;
-        /// </summary>
-        public void ConnectUser()
-        {
-            // create new user instance;
-            var user = new UserModel()
-            {
-                UserName = _server.PacketReader.ReadMessage(),
-                UID = _server.PacketReader.ReadMessage(),
-            };
-
-            /*
-             
-           [!] In case there's no such user in collection we add them manualy;
-            To prevent data duplication;
-            
-             */
-
-            if (!Users.Any(x => x.UID == user.UID))
-            {
-                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
-                Application.Current.Dispatcher.Invoke(() => Messages.Add($"{user.UserName} joins chat."));
-            }
-        }
-
-
-        public void SelectFile()
-        {
-            try
-            {
-                if (_DialogService.OpenFileDialog())
-                {
-                    UserFile = new(_DialogService.FilePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                _DialogService.ShowMessage(ex.Message);
-            }
-        }
-
-
-
-        /// <summary>
-        /// Send a message to the service;
-        /// <br />
-        /// Is needed to nullify the chat message field after sending;
-        /// <br />
-        /// <br />
-        /// Отправить сообщение на сервис;
-        /// <br />
-        /// Необходимо, чтобы стереть сообщение после отправкиж
-        /// </summary>
-        private void SendMessage()
-        {
-            if (Message != string.Empty)
-            {
-                _server.SendMessageToServer(Message);
-                Message = string.Empty;
-            }
-
-            if (UserFile != null)
-            {
-                _server.SendFileToServer(UserFile);
-                UserFile = null;
-            }
-        }
-
-
-
-        /// <summary>
-        /// [?] To be revued;
-        /// </summary>
-        public void CommenceDisconnect(object? sender, CancelEventArgs args)
-        {
-            _server.Disconnect();
-        }
-
-
-
-        #endregion LOGIC - internal behavior
 
 
 
@@ -345,13 +253,13 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
-            _UserFile = null;
+            _userFile = null;
             _DialogService = new AttachFileDialogService();
 
             _TheMembersString = "member";
 
-            _UserName = string.Empty;
-            _Message = string.Empty;
+            _userName = string.Empty;
+            _message = string.Empty;
 
             _Users = new ObservableCollection<UserModel>();
             _Messages = new ObservableCollection<string>();
@@ -362,9 +270,7 @@ namespace ReversedClient.ViewModel
             _server.fileReceivedEvent += RecieveFile;      // file receipt;
             _server.userDisconnectEvent += RemoveUser;    // user disconnection;
 
-            _Handler = new(this);
-
-            _Users.CollectionChanged += _Handler.OnUsersCollectionChanged;
+            _Users.CollectionChanged += OnUsersCollectionChanged;
 
             bool placeholder = true;
 
@@ -376,7 +282,7 @@ namespace ReversedClient.ViewModel
             SelectFileCommand = new RelayCommand(o => SelectFile(), o => placeholder);
 
             // we need to manage windows right after we connect;
-            SignInButtonClickCommand = new(o => _Handler.OnSignInButtonClick(), o => placeholder);
+            SignInButtonClickCommand = new(o => OnSignInButtonClick(), o => placeholder);
         }
 
 

@@ -1,25 +1,148 @@
 ﻿using ReversedClient.client_view;
+using ReversedClient.Model.Basics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ReversedClient.ViewModel
 {
-    public class ReversedClientWindowViewModelHandler
+    public partial class ReversedClientWindowViewModel
     {
 
 
 
-        #region PROPERTIES
+
+        #region LOGIC - internal behavior
 
 
 
         /// <summary>
-        /// A reference for the main file;
+        /// Remove a user from the client list;
         /// <br />
-        /// Ссылка на основной файл;
+        /// Удалить пользователя из списка клиентов;
         /// </summary>
-        private ReversedClientWindowViewModel _CurrentViewModelReference;
+        private void RemoveUser()
+        {
+            var uid = _server.PacketReader.ReadMessage();
+            var user = Users.Where(x => x.UID == uid).FirstOrDefault();
+
+            //foreach (var user in )
+            Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
+        }
 
 
-        #endregion PROPERTIES
+
+        /// <summary>
+        /// Recieve user message;
+        /// <br />
+        /// Получить сообщение от пользователя;
+        /// </summary>
+        private void RecieveMessage()
+        {
+            var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
+        }
+
+
+
+        /// <summary>
+        /// Recieve a file from the network stream.
+        /// <br />
+        /// Получить файл из сетевого стрима.
+        /// </summary>
+        private void RecieveFile()
+        {
+            var file = _server.PacketReader.ReadFile(UserName);
+            Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
+        }
+
+
+
+        /// <summary>
+        /// Connect new user;
+        /// <br />
+        /// Подключить нового пользователя;
+        /// </summary>
+        public void ConnectUser()
+        {
+            // create new user instance;
+            var user = new UserModel()
+            {
+                UserName = _server.PacketReader.ReadMessage(),
+                UID = _server.PacketReader.ReadMessage(),
+            };
+
+            /*
+             
+           [!] In case there's no such user in collection we add them manualy;
+            To prevent data duplication;
+            
+             */
+
+            if (!Users.Any(x => x.UID == user.UID))
+            {
+                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
+                Application.Current.Dispatcher.Invoke(() => Messages.Add($"{user.UserName} joins chat."));
+            }
+        }
+
+
+
+        /// <summary>
+        /// Open file dialog to choose a file to send.
+        /// <br />
+        /// Открыть файловый диалог, чтобы выбрать файл к отправке.
+        /// </summary>
+        public void SelectFile()
+        {
+            try
+            {
+                if (_DialogService.OpenFileDialog())
+                {
+                    UserFile = new(_DialogService.FilePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                _DialogService.ShowMessage(ex.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Send a message to the service;
+        /// <br />
+        /// Is needed to nullify the chat message field after sending;
+        /// <br />
+        /// <br />
+        /// Отправить сообщение на сервис;
+        /// <br />
+        /// Необходимо, чтобы стереть сообщение после отправкиж
+        /// </summary>
+        private void SendMessage()
+        {
+            if (Message != string.Empty)
+            {
+                _server.SendMessageToServer(Message);
+                Message = string.Empty;
+            }
+
+            if (UserFile != null)
+            {
+                _server.SendFileToServer(UserFile);
+                Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
+                UserFile = null;
+            }
+        }
+
+
+
+        #endregion LOGIC - internal behavior
+
+
 
 
 
@@ -37,12 +160,12 @@ namespace ReversedClient.ViewModel
         {
             try
             {
-                _CurrentViewModelReference.Server.ConnectToServer(_CurrentViewModelReference.UserName);
+                Server.ConnectToServer(UserName);
 
 
                 //// [!] In this particular order;
                 //
-                _CurrentViewModelReference.WindowHeaderString = _CurrentViewModelReference.UserName + " - common chat";
+                WindowHeaderString = UserName + " - common chat";
                 ReversedClient.client_view.ReversedClientWindow clientChatWindow = new();
                 clientChatWindow.Show();
                 //
@@ -57,32 +180,22 @@ namespace ReversedClient.ViewModel
         }
 
 
+
+        /// <summary>
+        /// Users collection changed handler.
+        /// <br />
+        /// Обработчик изменения коллекции пользователей.
+        /// </summary>
         public void OnUsersCollectionChanged(object? sender, EventArgs e)
         {
-            if (_CurrentViewModelReference.Users.Count > 1) _CurrentViewModelReference.TheMembersString = "members";
-            else _CurrentViewModelReference.TheMembersString = "member";
+            if (Users.Count > 1) TheMembersString = "members";
+            else TheMembersString = "member";
         }
+
+
 
         #endregion HANDLERS
 
-
-
-
-        #region CONSTRUCTION
-
-
-        /// <summary>
-        /// Default constructor;
-        /// <br />
-        /// Конструктор по умолчанию;
-        /// </summary>
-        public ReversedClientWindowViewModelHandler(ReversedClientWindowViewModel CurrentViewModelReference)
-        {
-            _CurrentViewModelReference = CurrentViewModelReference;
-        }
-
-
-        #endregion CONSTRUCTION
 
 
 
