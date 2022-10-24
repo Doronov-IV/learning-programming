@@ -73,7 +73,6 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         {
             // service ".files" folder;
             DirectoryInfo serviceFileDirectory = new("..\\..\\..\\..\\ReversedService\\.files");
-
             foreach (FileInfo file in serviceFileDirectory.GetFiles())
             {   
                 try
@@ -83,9 +82,21 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 catch { }
             }
 
+
+            // service "Downloads" folder;
+            DirectoryInfo downloadsDirectory = new("..\\..\\..\\..\\ReversedService\\Downloads");
+            foreach (FileInfo file in downloadsDirectory.GetFiles())
+            {
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch { }
+            }
+
+
             // clients ".files" folder;
             DirectoryInfo clientFileDirectory = new("..\\..\\..\\..\\ReversedClient\\.files");
-
             foreach (FileInfo file in clientFileDirectory.GetFiles())
             {
                 try

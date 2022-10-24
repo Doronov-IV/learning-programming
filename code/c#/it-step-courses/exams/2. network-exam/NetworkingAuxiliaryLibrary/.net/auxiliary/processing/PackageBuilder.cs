@@ -93,7 +93,11 @@ namespace NetworkingAuxiliaryLibrary.Processing
         {
             if (info != null)
             {
-                var binFile = File.ReadAllBytes(info.FullName);
+                FileMessagePackage package = new FileMessagePackage("place_holder", "place_holder", info);
+
+                _memoryStream.Write(package.Data);
+
+                /* var binFile = File.ReadAllBytes(info.FullName);
 
                 string sFileName = info.Name;
 
@@ -114,6 +118,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
                 _memoryStream.Write(binFileName);
 
                 _memoryStream.Write(binFile);
+                */
             }
         }
 
