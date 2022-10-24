@@ -71,21 +71,9 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         /// </summary>
         public void OnClearFoldersButtonClick()
         {
-            // service ".files" folder;
-            DirectoryInfo serviceFileDirectory = new("..\\..\\..\\..\\ReversedService\\.files");
-            foreach (FileInfo file in serviceFileDirectory.GetFiles())
-            {   
-                try
-                {
-                    File.Delete(file.FullName);
-                }
-                catch { }
-            }
-
-
             // service "Downloads" folder;
-            DirectoryInfo downloadsDirectory = new("..\\..\\..\\..\\ReversedService\\Downloads");
-            foreach (FileInfo file in downloadsDirectory.GetFiles())
+            DirectoryInfo serviceDownloadsDirectory = new("..\\..\\..\\..\\ReversedService\\Downloads");
+            foreach (FileInfo file in serviceDownloadsDirectory.GetFiles())
             {
                 try
                 {
@@ -95,9 +83,9 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             }
 
 
-            // clients ".files" folder;
-            DirectoryInfo clientFileDirectory = new("..\\..\\..\\..\\ReversedClient\\.files");
-            foreach (FileInfo file in clientFileDirectory.GetFiles())
+            // client "Downloads" folder;
+            DirectoryInfo clientDownloadsDirectory = new("..\\..\\..\\..\\ReversedClient\\Downloads");
+            foreach (FileInfo file in clientDownloadsDirectory.GetFiles())
             {
                 try
                 {
