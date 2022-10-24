@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".net\auxiliary\packages\FileMessagePackage.cs" />
-    <Compile Include=".net\auxiliary\packages\MessagePackage.cs" />
-    <Compile Include=".net\auxiliary\packages\TextMessagePackage.cs" />
+    <Compile Remove=".net\auxiliary\packages\**" />
+    <EmbeddedResource Remove=".net\auxiliary\packages\**" />
+    <None Remove=".net\auxiliary\packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include=".net\auxiliary\packs\FileMessagePackage.cs" />
+    <Compile Include=".net\auxiliary\packs\MessagePackage.cs" />
+    <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
   </ItemGroup>
