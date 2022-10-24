@@ -1,4 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.ClientService;
+﻿using NetworkingAuxiliaryLibrary.Packages;
 using System.Text;
 
 namespace NetworkingAuxiliaryLibrary.Processing
@@ -61,14 +61,14 @@ namespace NetworkingAuxiliaryLibrary.Processing
         {
             // the most important thing is: to code message to utf BEFORE we calculate its length;
 
-            /*
+            ///*
             TextMessagePackage package = new TextMessagePackage("place_holder", "place_holder", msg);
 
             _memoryStream.Write(package.Data);
-            */
+            //*/
 
 
-            ///*
+            /*
             var unicodeMessage = Encoding.UTF8.GetBytes(msg);
 
             var msgLenght = unicodeMessage.Length;
@@ -76,7 +76,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
             _memoryStream.Write(BitConverter.GetBytes(msgLenght));
 
             _memoryStream.Write(unicodeMessage);
-            //*/
+            */
         }
 
         /// <summary>

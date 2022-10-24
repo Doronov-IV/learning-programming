@@ -1,6 +1,6 @@
 ﻿using ReversedClient.client_view;
 using System.Windows;
-
+using Debug.Net;
 using ReversedClient.Model.Basics;
 using ReversedClient.Properties;
 using System.Windows.Interop;

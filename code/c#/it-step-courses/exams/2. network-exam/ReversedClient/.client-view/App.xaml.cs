@@ -29,7 +29,6 @@ global using Tools.Toolbox;
 
 global using NetworkingAuxiliaryLibrary.Packages;
 global using NetworkingAuxiliaryLibrary.Processing;
-global using NetworkingAuxiliaryLibrary.ClientService;
 
 global using Prism.Commands;
 

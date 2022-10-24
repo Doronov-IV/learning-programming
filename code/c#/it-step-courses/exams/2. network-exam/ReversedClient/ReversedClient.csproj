@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
+    <Compile Include=".net\ReversedService.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
     <Compile Include=".properties\dialogs\IDialogService.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />
@@ -62,6 +63,11 @@
 
 	<ItemGroup>
 	  <Folder Include=".files\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
 	</ItemGroup>
 
 </Project>

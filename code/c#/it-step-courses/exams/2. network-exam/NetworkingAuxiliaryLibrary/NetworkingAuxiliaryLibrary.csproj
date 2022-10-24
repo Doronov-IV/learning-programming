@@ -12,14 +12,15 @@
     <Compile Include=".net\auxiliary\packages\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
-    <Compile Include=".net\main\ReversedClient.cs" />
-    <Compile Include=".net\main\ReversedService.cs" />
-    <Compile Include=".net\main\ServiceHub.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".net\main\" />
   </ItemGroup>
 
 </Project>

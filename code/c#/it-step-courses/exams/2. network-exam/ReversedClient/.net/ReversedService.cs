@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows;
 
-namespace NetworkingAuxiliaryLibrary.ClientService
+namespace Debug.Net
 {
     /// <summary>
     /// A service that manages both connections and reading/writing data on lower level;
@@ -142,7 +142,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Никнейм, который пользователь выбрал на логине;
         /// </param>
-        public void ConnectToServer(string userName)
+        public async void ConnectToServer(string userName)
         {
             //Если клиент не подключен
             if (!_client.Connected)
@@ -150,7 +150,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 /// 
                 /// - Client connection [!]
                 ///
-                _client.Connect(ourEndPoint);
+                await _client.ConnectAsync(ourEndPoint);
                 PacketReader = new(_client.GetStream());
 
                 if (!string.IsNullOrEmpty(userName))
@@ -200,36 +200,36 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </param>
         public void SendMessageToServer(string message)
         {
+            var messagePacket = new PackageBuilder();
+            messagePacket.WriteOpCode(5);
+            messagePacket.WriteMessage(message);
             try
             {
-                var messagePacket = new PackageBuilder();
-                messagePacket.WriteOpCode(5);
-                messagePacket.WriteMessage(message);
                 _client.Client.Send(messagePacket.GetPacketBytes());
-                messagePacket = new();
             }
             catch (Exception ex)
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
+            messagePacket = new();
         }
 
 
 
         public void SendFileToServer(FileInfo info)
         {
+            var messagePacket = new PackageBuilder();
+            messagePacket.WriteOpCode(6);
+            messagePacket.WriteFile(info);
             try
             {
-                var messagePacket = new PackageBuilder();
-                messagePacket.WriteOpCode(6);
-                messagePacket.WriteFile(info);
-                _client.Client.Send(messagePacket.GetPacketBytes());
-                messagePacket = new();
+                _client.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
             }
             catch (Exception ex)
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
+            messagePacket = new();
         }
 
 

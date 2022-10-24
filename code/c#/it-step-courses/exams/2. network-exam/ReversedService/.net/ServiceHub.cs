@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Processing;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 
@@ -144,9 +143,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             msgPacket.WriteMessage(message);
             foreach (var user in _UserList)
             {
-                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
             }
-            msgPacket = new();
         }
 
 
@@ -176,7 +174,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 // to prevent sending file to the sender;
                 if (user.CurrentUID != SenderId)
                 {
-                    user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+                    user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
                 }
             }
             msgPacket = new();
@@ -206,7 +204,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 broadcastPacket.WriteMessage(uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
             }
-            broadcastPacket = new();
 
             BroadcastMessage($"{disconnectedUser.CurrentUserName} Disconnected!");
         }

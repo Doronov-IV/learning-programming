@@ -44,6 +44,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
 
 
+        /// <summary>
+        /// Kill service process (obsolete but needed to be kept anyway).
+        /// <br />
+        /// Отменить процесс сервиса (устарел, но необходимо оставить в любом случае).
+        /// </summary>
         public void OnKillServiceButtonClick()
         {
             try
@@ -67,7 +72,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         public void OnClearFoldersButtonClick()
         {
             // service ".files" folder;
-            DirectoryInfo serviceFileDirectory = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedService\\.files");
+            DirectoryInfo serviceFileDirectory = new("..\\..\\..\\..\\ReversedService\\.files");
 
             foreach (FileInfo file in serviceFileDirectory.GetFiles())
             {   
@@ -79,7 +84,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             }
 
             // clients ".files" folder;
-            DirectoryInfo clientFileDirectory = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedClient\\.files");
+            DirectoryInfo clientFileDirectory = new("..\\..\\..\\..\\ReversedClient\\.files");
 
             foreach (FileInfo file in clientFileDirectory.GetFiles())
             {

@@ -1,4 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Processing;
+﻿using NetworkingAuxiliaryLibrary.ClientService;
 using System.Net.Sockets;
 
 namespace NetworkingAuxiliaryLibrary.ClientService

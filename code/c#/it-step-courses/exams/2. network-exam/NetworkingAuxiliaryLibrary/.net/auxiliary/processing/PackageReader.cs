@@ -48,29 +48,32 @@ namespace NetworkingAuxiliaryLibrary.Processing
             string msg = "";
             try
             {
-                ///*
+                /*
                 byte[] msgBuffer;
                 var length = ReadInt32();
                 msgBuffer = new byte[length];
                 _NetworkStream.Read(msgBuffer, 0, length);
 
                 msg = Encoding.UTF8.GetString(msgBuffer);
-                //*/
+                */
 
-                /*
+                ///*
                 List<byte> byteList = new();
 
-                while(_NetworkStream.DataAvailable)
+                int i = 0;
+                int packageLength = ReadInt32();
+
+                while(i++ < packageLength)
                 {
                     byteList.Add((byte)_NetworkStream.ReadByte());
                 }
 
-                TextMessagePackage package = new TextMessagePackage(byteList.Count);
+                TextMessagePackage package = new TextMessagePackage(byteList.ToArray());
 
                 package.Data = byteList.ToArray();
 
                 msg = package.Disassemble().Message as string;
-                */
+                //*/
             }
             catch
             {
