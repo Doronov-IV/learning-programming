@@ -7,6 +7,7 @@ using ReversedClient.Net.Auxiliary;
 using ReversedClient.Properties;
 using System.Windows.Interop;
 
+
 namespace ReversedClient.ViewModel
 {
     /// <summary>

@@ -1,8 +1,10 @@
-﻿using ReversedClient.Net.Auxiliary.Packages;
+﻿using NetworkingAuxiliaryLibrary.Packages;
 using System.Data;
-using System.Windows.Interop;
+using System.Net.Sockets;
+using System.Text;
+using System.Windows;
 
-namespace ReversedClient.Net.Auxiliary
+namespace NetworkingAuxiliaryLibrary.Processing
 {
     /// <summary>
     /// An auxiliary object that helps reading data from streams;

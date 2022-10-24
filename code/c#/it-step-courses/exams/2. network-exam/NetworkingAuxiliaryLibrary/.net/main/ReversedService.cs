@@ -1,6 +1,9 @@
-﻿using ReversedClient.Net.Auxiliary;
+﻿using NetworkingAuxiliaryLibrary.Processing;
+using System.Net;
+using System.Net.Sockets;
+using System.Windows;
 
-namespace ReversedClient.Net.Main
+namespace NetworkingAuxiliaryLibrary.ClientService
 {
     /// <summary>
     /// A service that manages both connections and reading/writing data on lower level;
@@ -97,6 +100,28 @@ namespace ReversedClient.Net.Main
 
 
 
+
+
+        /// <summary>
+        /// A delegate for transeffring output to other objects;
+        /// <br />
+        /// Делегат для передачи аутпута другим объектам;
+        /// </summary>
+        /// <param name="sOutputMessage">
+        /// A message that we want to see somewhere (в данном случае, в консоли сервера и в пользовательском клиенте);
+        /// <br />
+        /// Сообщение, которое мы хотим где-то увидеть (в данном случае, в консоли сервера и в пользовательском клиенте);
+        /// </param>
+        public delegate void PendOutputDelegate(string sOutputMessage);
+
+        /// <summary>
+        /// @see public delegate void PendOutputDelegate(string sOutputMessage);
+        /// </summary>
+        public event PendOutputDelegate SendOutput;
+
+
+
+
         #endregion PROPERTIES - public & private Properties
 
 
@@ -182,7 +207,7 @@ namespace ReversedClient.Net.Main
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"You haven't connected yet.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
         }
 
@@ -199,7 +224,7 @@ namespace ReversedClient.Net.Main
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"You haven't connected yet.\n\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
         }
 
@@ -256,7 +281,7 @@ namespace ReversedClient.Net.Main
                             break;
 
                         default:
-                            MessageBox.Show("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.");
                             break;
                     }
                 }

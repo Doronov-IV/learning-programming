@@ -9,14 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".net\auxiliary\packages\FileMessagePackage.cs" />
-    <Compile Include=".net\auxiliary\packages\MessagePackage.cs" />
-    <Compile Include=".net\auxiliary\packages\TextMessagePackage.cs" />
-    <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
-    <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
-    <Compile Include=".net\auxiliary\processing\RelayCommand.cs" />
-    <Compile Include=".net\main\ReversedClient.cs" />
-    <Compile Include=".net\main\ServiceHub.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
     <Compile Include=".service-view\App.xaml.cs" />
@@ -48,5 +40,6 @@
 
 	<ItemGroup>
 	  <Folder Include=".files\" />
+	  <Folder Include=".net\" />
 	</ItemGroup>
 </Project>

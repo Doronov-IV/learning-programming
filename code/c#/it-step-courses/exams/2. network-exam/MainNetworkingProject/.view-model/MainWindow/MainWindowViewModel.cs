@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Tools.Toolbox;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
 {
@@ -79,6 +80,51 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
 
 
+        #region XTRACTION
+
+
+
+
+
+        #endregion XTRACTION
+
+
+
+        private void ExtractLibraries()
+        {
+            try
+            {
+                /// Toolbox
+
+                // target;
+                FileInfo dllTargetInfo = new(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.dll");
+                // destination (precomplied dll folder);
+                List<DirectoryInfo> toolsExtractorDestinations = new();
+                toolsExtractorDestinations.Add(new DirectoryInfo(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\tools\precompiled-dll"));
+                // extracting;
+                LibraryExtractor toolsLibraryExtractor = new(dllTargetInfo, toolsExtractorDestinations);
+                toolsLibraryExtractor.Extract();
+
+
+                /// NET
+
+                // target;
+                FileInfo targetInfo = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\" +
+        "it-step-courses\\exams\\2. network-exam\\NetworkingAuxiliaryLibrary\\bin\\Debug\\net6.0\\NetworkingAuxiliaryLibrary.dll");
+                // destination 1 (client);
+                List<DirectoryInfo> extractorDestinations = new();
+                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
+                    "\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedClient\\.net"));
+                // destination 2 (service);
+                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
+        "\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedService\\.net"));
+                // extracting;
+                LibraryExtractor networkingLibraryExtractor = new(targetInfo, extractorDestinations);
+                networkingLibraryExtractor.Extract();
+            }
+            catch { }
+        }
+
 
 
         #region CONSTRUCTION
@@ -93,7 +139,9 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         /// </summary>
         public MainWindowViewModel()
         {
-             // Assosiated members definition;
+            ExtractLibraries();
+
+            // Assosiated members definition;
             _State = new();
             _Handler = new();
 

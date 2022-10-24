@@ -1,7 +1,7 @@
-﻿using ReversedClient.Net.Auxiliary.Packages;
-using System.Windows.Interop;
+﻿using NetworkingAuxiliaryLibrary.ClientService;
+using System.Text;
 
-namespace ReversedClient.Net.Auxiliary
+namespace NetworkingAuxiliaryLibrary.Processing
 {
     /// <summary>
     /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;

@@ -1,6 +1,9 @@
-﻿using ReversedService.Net.Auxiliary;
+﻿using NetworkingAuxiliaryLibrary.Processing;
+using System.ComponentModel;
+using System.Net;
+using System.Net.Sockets;
 
-namespace ReversedService.Net.Main
+namespace NetworkingAuxiliaryLibrary.ClientService
 {
     /// <summary>
     /// A wrapper on 'ReversedService' object. Unlike one, it's responsible for user notification, rather than connections;

@@ -25,6 +25,7 @@ global using System.Security.Cryptography.X509Certificates;
 global using Tools.Interfaces;
 global using Tools.Collections.Generic;
 global using Tools.Formatting;
+global using Toolbox.Tools;
 
 global using Prism.Commands;
 

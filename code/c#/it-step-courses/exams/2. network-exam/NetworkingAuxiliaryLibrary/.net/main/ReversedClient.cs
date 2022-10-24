@@ -1,6 +1,7 @@
-﻿using ReversedService.Net.Auxiliary;
+﻿using NetworkingAuxiliaryLibrary.Processing;
+using System.Net.Sockets;
 
-namespace ReversedService.Net.Main
+namespace NetworkingAuxiliaryLibrary.ClientService
 {
 
     /// <summary>
