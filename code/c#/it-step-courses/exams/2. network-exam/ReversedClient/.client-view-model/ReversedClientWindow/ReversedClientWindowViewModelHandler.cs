@@ -139,6 +139,12 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private void ConnectToService()
+        {
+            _server.ConnectToServer(UserName);
+        }
+
+
 
         #endregion LOGIC - internal behavior
 

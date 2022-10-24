@@ -118,8 +118,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 foreach (var usr in _UserList)
                 {
-
                     var broadcastPacket = new PackageBuilder();
+
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
                     broadcastPacket.WriteMessage(usr.CurrentUserName);
                     broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
@@ -139,13 +139,14 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <param name="message"></param>
         public void BroadcastMessage(string message)
         {
+            var msgPacket = new PackageBuilder();
+            msgPacket.WriteOpCode(5);
+            msgPacket.WriteMessage(message);
             foreach (var user in _UserList)
             {
-                var msgPacket = new PackageBuilder();
-                msgPacket.WriteOpCode(5);
-                msgPacket.WriteMessage(message);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
             }
+            msgPacket = new();
         }
 
 
@@ -167,17 +168,18 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </param>
         public void BroadcastFile(FileInfo info, Guid SenderId)
         {
+            var msgPacket = new PackageBuilder();
+            msgPacket.WriteOpCode(6);
+            msgPacket.WriteFile(info);
             foreach (var user in _UserList)
             {
                 // to prevent sending file to the sender;
                 if (user.CurrentUID != SenderId)
                 {
-                    var msgPacket = new PackageBuilder();
-                    msgPacket.WriteOpCode(6);
-                    msgPacket.WriteFile(info);
                     user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
                 }
             }
+            msgPacket = new();
         }
 
 
@@ -196,13 +198,15 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         {
             var disconnectedUser = _UserList.Where(x => x.CurrentUID.ToString() == uid).FirstOrDefault();
             _UserList.Remove(disconnectedUser);            // removing user;
+
+            var broadcastPacket = new PackageBuilder();
             foreach (var user in _UserList)
             {
-                var broadcastPacket = new PackageBuilder();
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
                 broadcastPacket.WriteMessage(uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
             }
+            broadcastPacket = new();
 
             BroadcastMessage($"{disconnectedUser.CurrentUserName} Disconnected!");
         }

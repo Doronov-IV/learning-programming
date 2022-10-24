@@ -64,6 +64,7 @@ namespace Tools.Toolbox
         /// </summary>
         public void Extract()
         {
+            string targetFileNewPath = string.Empty;
             // if target and destinatons are not null;
             if (_target != null && _destinations != null)
             {
@@ -73,16 +74,11 @@ namespace Tools.Toolbox
                     // copy targer file to the destinatons;
                     foreach (var dir in Destinations)
                     {
+                        targetFileNewPath = dir.FullName + @"\" + Target?.Name;
                         if (dir.Exists)
                         {
-                            try
-                            {
-                                File.Copy(Target?.FullName, dir.FullName + "/" + Target?.Name);
-                            }
-                            catch (Exception)
-                            {
-
-                            }
+                            if (File.Exists(targetFileNewPath)) File.Delete(targetFileNewPath);
+                            File.Copy(Target?.FullName, targetFileNewPath);
                         }
                     }
                 }

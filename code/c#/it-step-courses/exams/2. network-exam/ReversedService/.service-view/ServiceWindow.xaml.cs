@@ -14,5 +14,11 @@ namespace ReversedService.service_view
 
             DataContext = new ServiceWindowViewModel();
         }
+
+
+        public void OnWindowClosing(object? sender, CancelEventArgs args)
+        {
+            Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
+        }
     }
 }

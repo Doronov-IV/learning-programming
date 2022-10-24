@@ -25,6 +25,10 @@ global using Tools.Interfaces;
 global using Tools.Collections.Generic;
 global using Tools.Formatting;
 
+global using NetworkingAuxiliaryLibrary.Packages;
+global using NetworkingAuxiliaryLibrary.Processing;
+global using NetworkingAuxiliaryLibrary.ClientService;
+
 global using Prism.Commands;
 
 using ReversedService.service_view;

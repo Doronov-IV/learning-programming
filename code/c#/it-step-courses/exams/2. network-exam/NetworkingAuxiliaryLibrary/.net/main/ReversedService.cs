@@ -162,6 +162,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     connectPacket.WriteMessage(userName);
 
                     _client.Client.Send(connectPacket.GetPacketBytes());
+
+                    connectPacket = new();
                 }
 
                 ReadPackets();
@@ -204,6 +206,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 messagePacket.WriteOpCode(5);
                 messagePacket.WriteMessage(message);
                 _client.Client.Send(messagePacket.GetPacketBytes());
+                messagePacket = new();
             }
             catch (Exception ex)
             {
@@ -221,6 +224,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 messagePacket.WriteOpCode(6);
                 messagePacket.WriteFile(info);
                 _client.Client.Send(messagePacket.GetPacketBytes());
+                messagePacket = new();
             }
             catch (Exception ex)
             {

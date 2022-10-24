@@ -2,8 +2,6 @@
 using System.Windows;
 
 using ReversedClient.Model.Basics;
-using ReversedClient.Net.Main;
-using ReversedClient.Net.Auxiliary;
 using ReversedClient.Properties;
 using System.Windows.Interop;
 
@@ -168,14 +166,14 @@ namespace ReversedClient.ViewModel
 
 
         /// <inheritdoc cref="Server"/>
-        private ReversedClient.Net.Main.ReversedService _server;
+        private ReversedService _server;
 
         /// <summary>
         /// An instance of a 'ReversedService';
         /// <br />
         /// Экземпляр класса "ReversedService";
         /// </summary>
-        public ReversedClient.Net.Main.ReversedService Server
+        public ReversedService Server
         {
             get { return _server; }
             set { _server = value; }
@@ -203,7 +201,7 @@ namespace ReversedClient.ViewModel
         /// <summary>
         /// [?] To be revied, may be obsolete.
         /// </summary>
-        public RelayCommand ConnectToServerCommand { get; set; }
+        public DelegateCommand ConnectToServerCommand { get; set; }
 
 
         /// <summary>
@@ -211,7 +209,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Команда для обработки нажатия кнопки "Отправить".
         /// </summary>
-        public RelayCommand SendMessageCommand { get; set; }
+        public DelegateCommand SendMessageCommand { get; set; }
 
 
         /// <summary>
@@ -219,7 +217,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Команда для обработки отправки файла.
         /// </summary>
-        public RelayCommand SendFileCommand { get; set; }
+        public DelegateCommand SendFileCommand { get; set; }
 
 
         /// <summary>
@@ -227,7 +225,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Команда для обработки нажатия кнопки "Войти".
         /// </summary>
-        public RelayCommand SignInButtonClickCommand { get; }
+        public DelegateCommand SignInButtonClickCommand { get; }
 
 
         /// <summary>
@@ -235,7 +233,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Команда для кнопки "Attach file".
         /// </summary>
-        public RelayCommand SelectFileCommand { get; }
+        public DelegateCommand SelectFileCommand { get; }
 
 
 
@@ -276,14 +274,14 @@ namespace ReversedClient.ViewModel
             bool placeholder = true;
 
             // may be obsolete. tests needed;
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer(UserName), o => placeholder);
+            ConnectToServerCommand = new (ConnectToService);
 
-            SendMessageCommand = new RelayCommand(o => SendMessage(), o => placeholder);
+            SendMessageCommand = new (SendMessage);
 
-            SelectFileCommand = new RelayCommand(o => SelectFile(), o => placeholder);
+            SelectFileCommand = new (SelectFile);
 
             // we need to manage windows right after we connect;
-            SignInButtonClickCommand = new(o => OnSignInButtonClick(), o => placeholder);
+            SignInButtonClickCommand = new(OnSignInButtonClick);
         }
 
 
