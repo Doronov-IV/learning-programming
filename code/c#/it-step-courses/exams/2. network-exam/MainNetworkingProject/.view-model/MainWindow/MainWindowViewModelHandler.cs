@@ -7,122 +7,93 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 {
     public partial class MainWindowViewModel
     {
-        public class MainWindowViewModelHandler : INotifyPropertyChanged
+
+
+        #region HANDLERS
+
+
+        public async void OnLaunchClientButtonClickAsync()
         {
-
-            #region HANDLERS
-
-
-            public async void OnLaunchClientButtonClickAsync()
+            using (var process = new Process())
             {
+                process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
+                process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
+                process.StartInfo.Arguments = "-noexit";
+                process.StartInfo.CreateNoWindow = false;
+                process.Start();
+            }
+        }
+
+
+        public async void OnLaunchServiceButtonClickAsync()
+        {
+            await Task.Run(() =>
+            {
+                Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
+
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
+                    process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
                 }
-            }
+            });
+        }
 
 
-            public async void OnLaunchServiceButtonClickAsync()
+
+        public void OnKillServiceButtonClick()
+        {
+            try
             {
-                await Task.Run(() =>
-                {
-                    Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
+                var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
+                dupeProcess?.Kill();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"The service is unavailable or down.\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-                    using (var process = new Process())
-                    {
-                        process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
-                        process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
-                        process.StartInfo.Arguments = "-noexit";
-                        process.StartInfo.CreateNoWindow = false;
-                        process.Start();
-                    }
-                });
+
+
+        /// <summary>
+        /// Clear service and clients' files folders.
+        /// <br />
+        /// Очистить папаки ".files" клиентов и сервиса.
+        /// </summary>
+        public void OnClearFoldersButtonClick()
+        {
+            // service ".files" folder;
+            DirectoryInfo serviceFileDirectory = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedService\\.files");
+
+            foreach (FileInfo file in serviceFileDirectory.GetFiles())
+            {   
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch { }
             }
 
+            // clients ".files" folder;
+            DirectoryInfo clientFileDirectory = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedClient\\.files");
 
-
-            public void OnKillServiceButtonClick()
+            foreach (FileInfo file in clientFileDirectory.GetFiles())
             {
                 try
                 {
-                    var dupeProcess = Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService");
-                    dupeProcess?.Kill();
+                    File.Delete(file.FullName);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"The service is unavailable or down.\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                catch { }
             }
-
-
-            #endregion HANDLERS
-
-
-
-
-            #region LOGIC
-
-
-
-
-
-            #endregion LOGIC
-
-
-
-
-            #region CONSTRUCTION
-
-
-
-
-            #region Property changed
-
-
-            /// <summary>
-            /// Propery changed event handler;
-            /// <br />
-            /// Делегат-обработчик события 'property changed';
-            /// </summary>
-            public event PropertyChangedEventHandler? PropertyChanged;
-
-
-            /// <summary>
-            /// Handler-method of the 'property changed' delegate;
-            /// <br />
-            /// Метод-обработчик делегата 'property changed';
-            /// </summary>
-            /// <param name="propName">The name of the property;<br />Имя свойства;</param>
-            private void OnPropertyChanged(string propName)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-            }
-
-
-            #endregion Property changed
-
-
-
-
-            /// <summary>
-            /// Default constructor;
-            /// <br />
-            /// Конструктор по умолчанию;
-            /// </summary>
-            public MainWindowViewModelHandler()
-            {
-
-            }
-
-
-
-            #endregion CONSTRUCTION
-
-
         }
+
+
+        #endregion HANDLERS
+
+
     }
 }

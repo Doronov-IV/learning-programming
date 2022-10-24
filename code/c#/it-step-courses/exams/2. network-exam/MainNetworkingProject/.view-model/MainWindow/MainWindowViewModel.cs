@@ -13,66 +13,13 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
 
 
-        #region PROPERTIES
-
-
-        /// <summary>
-        /// @see public MainWindowViewModelState State;
-        /// </summary>
-        private MainWindowViewModelState _State;
-
-
-        /// <summary>
-        /// @see public MainWindowViewModelHandler Handler;
-        /// </summary>
-        private MainWindowViewModelHandler _Handler;
-
-
-        /// <summary>
-        /// State of the viewmodel;
-        /// <br />
-        /// Состояние вьюмодели;
-        /// </summary>
-        public MainWindowViewModelState State
-        {
-            get { return _State; }
-            set
-            {
-                _State = value;
-                OnPropertyChanged(nameof(State));
-            }
-        }
-
-
-        /// <summary>
-        /// Handler of the viewmodel;
-        /// <br />
-        /// Хендлер вьюмодели;
-        /// </summary>
-        public MainWindowViewModelHandler Handler
-        {
-            get { return _Handler; }
-            set
-            {
-                _Handler = value;
-                OnPropertyChanged(nameof(Handler));
-            }
-        }
-
-
-        #endregion PROPERTIES
-
-
-
-
-
-
         #region COMMANDS
 
 
         public DelegateCommand LaunchClientCommand { get; }
         public DelegateCommand LaunchServiceCommand { get; }
         public DelegateCommand KillServiceCommand { get; }
+        public DelegateCommand ClearFoldersCommand { get; }
 
 
         #endregion COMMANDS
@@ -80,16 +27,15 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
 
 
+
         #region XTRACTION
 
 
-
-
-
-        #endregion XTRACTION
-
-
-
+        /// <summary>
+        /// Extract networking and tools libraries.
+        /// <br />
+        /// Вытянуть файлы библиотек "tools" и "networking".
+        /// </summary>
         private void ExtractLibraries()
         {
             try
@@ -126,6 +72,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
+        #endregion XTRACTION
+
+
+
+
 
         #region CONSTRUCTION
 
@@ -141,13 +92,10 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         {
             ExtractLibraries();
 
-            // Assosiated members definition;
-            _State = new();
-            _Handler = new();
-
-            LaunchClientCommand = new(Handler.OnLaunchClientButtonClickAsync);
-            LaunchServiceCommand = new(Handler.OnLaunchServiceButtonClickAsync);
-            KillServiceCommand = new(Handler.OnKillServiceButtonClick);
+            LaunchClientCommand = new(OnLaunchClientButtonClickAsync);
+            LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);
+            KillServiceCommand = new(OnKillServiceButtonClick);
+            ClearFoldersCommand = new(OnClearFoldersButtonClick);
         }
 
 

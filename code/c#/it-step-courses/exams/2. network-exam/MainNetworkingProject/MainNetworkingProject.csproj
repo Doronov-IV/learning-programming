@@ -12,7 +12,6 @@
 
   <ItemGroup>
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
-	 <Compile Include=".view-model\MainWindow\MainWindowViewModelState.cs" />
 	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
 	 <Compile Include=".view\App.xaml.cs" />
 	 <Compile Include=".view\MainWindow.xaml.cs" />
