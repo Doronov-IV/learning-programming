@@ -12,7 +12,12 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         #region HANDLERS
 
 
-        public async void OnLaunchClientButtonClickAsync()
+        /// <summary>
+        /// Launch client button click event handler.
+        /// <br />
+        /// Обработчик нажатия кнопки "запустить клиент".
+        /// </summary>
+        public void OnLaunchClientButtonClick()
         {
             using (var process = new Process())
             {
@@ -25,6 +30,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
+        /// <summary>
+        /// Launch service button click event handler.
+        /// <br />
+        /// Обработчик нажатия кнопки "запустить сёрвис".
+        /// </summary>
         public async void OnLaunchServiceButtonClickAsync()
         {
             await Task.Run(() =>
@@ -41,7 +51,6 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 }
             });
         }
-
 
 
         /// <summary>
