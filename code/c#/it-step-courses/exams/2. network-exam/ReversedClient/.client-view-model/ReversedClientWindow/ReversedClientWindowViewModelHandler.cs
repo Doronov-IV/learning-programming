@@ -41,7 +41,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveMessage()
         {
-            var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
+            string msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
             Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
         }
 
@@ -54,8 +54,9 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveFile()
         {
-            var file = _server.PacketReader.ReadFile(UserName);
+            _server.PacketReader.ReadFile(UserName);
             Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
 

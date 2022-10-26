@@ -113,7 +113,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                             break;
                         case 6:
                             var file = _packetReader.ReadFile(UserName: CurrentUserName);
-                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent an image.");
+                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a file.");
                             StaticServiceHub.BroadcastFile(file, CurrentUID);
                             break;
                         default:

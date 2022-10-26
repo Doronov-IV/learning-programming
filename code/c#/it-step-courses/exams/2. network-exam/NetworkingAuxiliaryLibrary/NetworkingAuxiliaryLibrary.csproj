@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove=".net\auxiliary\packages\**" />
+    <Compile Remove=".net\main\**" />
     <EmbeddedResource Remove=".net\auxiliary\packages\**" />
+    <EmbeddedResource Remove=".net\main\**" />
     <None Remove=".net\auxiliary\packages\**" />
+    <None Remove=".net\main\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +26,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include=".net\main\" />
   </ItemGroup>
 
 </Project>

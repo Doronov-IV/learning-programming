@@ -146,7 +146,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public abstract byte[] Assemble();
+        public abstract void Assemble();
 
 
 

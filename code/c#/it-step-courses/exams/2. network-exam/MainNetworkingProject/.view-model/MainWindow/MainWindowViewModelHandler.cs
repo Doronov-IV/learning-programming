@@ -1,5 +1,4 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -28,8 +27,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
+                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Release/net6.0-windows/ReversedClient.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Release/net6.0-windows";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
@@ -51,8 +50,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../ReversedService/bin/Debug/net6.0-windows/ReversedService.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Debug/net6.0-windows";
+                    process.StartInfo.FileName = "../../../../ReversedService/bin/Release/net6.0-windows/ReversedService.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Release/net6.0-windows";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
@@ -78,7 +77,6 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 MessageBox.Show($"The service is unavailable or down.\nException: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
 
         /// <summary>

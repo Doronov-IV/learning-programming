@@ -62,21 +62,9 @@ namespace NetworkingAuxiliaryLibrary.Processing
             // the most important thing is: to code message to utf BEFORE we calculate its length;
 
             ///*
-            TextMessagePackage package = new TextMessagePackage("place_holder", "place_holder", msg);
+            TextMessagePackage package = new TextMessagePackage("placeholder", "placeholder", msg);
 
             _memoryStream.Write(package.Data);
-            //*/
-
-
-            /*
-            var unicodeMessage = Encoding.UTF8.GetBytes(msg);
-
-            var msgLenght = unicodeMessage.Length;
-
-            _memoryStream.Write(BitConverter.GetBytes(msgLenght));
-
-            _memoryStream.Write(unicodeMessage);
-            */
         }
 
         /// <summary>
@@ -93,32 +81,9 @@ namespace NetworkingAuxiliaryLibrary.Processing
         {
             if (info != null)
             {
-                FileMessagePackage package = new FileMessagePackage("place_holder", "place_holder", info);
+                FileMessagePackage package = new FileMessagePackage("placeholder", "placeholder", info);
 
                 _memoryStream.Write(package.Data);
-
-                /* var binFile = File.ReadAllBytes(info.FullName);
-
-                string sFileName = info.Name;
-
-                var binFileName = Encoding.UTF8.GetBytes(sFileName);
-
-                // lengths
-
-                var fileNameLen = BitConverter.GetBytes(binFileName.Length);
-
-                var binFileLen = BitConverter.GetBytes(binFile.Length);
-
-                _memoryStream.Write(binFileLen);
-
-                _memoryStream.Write(fileNameLen);
-
-                // strings
-
-                _memoryStream.Write(binFileName);
-
-                _memoryStream.Write(binFile);
-                */
             }
         }
 

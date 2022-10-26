@@ -50,6 +50,14 @@ namespace NetworkingAuxiliaryLibrary.Packages
         }
 
 
+        /// <summary>
+        /// The default download path for file deserializing from the network.
+        /// <br />
+        /// Путь скачанного из сети файла по умолчанию.
+        /// </summary>
+        private static string _defaultDownloadsPath = "../../../Downloads";
+
+
         #endregion UNSERIALIZED
 
 
@@ -93,14 +101,12 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public override byte[] Assemble()
+        public override void Assemble()
         {
-            byte[] aRes = default;
-
             if (Initialized)
             {
                 List<byte> lRes = new();
-
+                List<byte[]> arraysForDisposal = new();
 
                 byte[] binSender = Encoding.UTF8.GetBytes(_sender);
 
@@ -109,8 +115,19 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 byte[] binFileName = Encoding.UTF8.GetBytes(_fileName);
 
                 var fileRef = Message as FileInfo;
-                byte[] binMessage = File.ReadAllBytes(fileRef.FullName);
+                //byte[] binFile = File.ReadAllBytes(fileRef.FullName);
+                byte[] binFile = new byte[fileRef.Length];
 
+                using (FileStream fileStream = new(fileRef.FullName, FileMode.Open))
+                {
+                    using (BinaryReader reader = new(fileStream))
+                    {
+                        reader.Read(binFile);
+                    }
+                    fileStream.Close();
+                }
+
+                
 
                 byte[] binSenderLength = BitConverter.GetBytes(binSender.Length);
                 lRes.AddRange(binSenderLength);
@@ -121,23 +138,21 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 byte[] binFileNameLength = BitConverter.GetBytes(binFileName.Length);
                 lRes.AddRange(binFileNameLength);
 
-                byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
+                byte[] binMessageLength = BitConverter.GetBytes(binFile.Length);
                 lRes.AddRange(binMessageLength);
-
 
                 lRes.AddRange(binSender);
                 lRes.AddRange(binReciever);
                 lRes.AddRange(binFileName);
-                lRes.AddRange(binMessage);
+                lRes.AddRange(binFile);
 
                 lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
 
-                aRes = lRes.ToArray();
+                _Data = lRes.ToArray();
 
-                _Data = aRes;
+                binFile = null;
+                lRes = null;
             }
-
-            return aRes;
         }
 
 
@@ -164,7 +179,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// </exception>
         public override (string Sender, string Reciever, object Message) Disassemble()
         {
-            return Disassemble("../../../Downloads");
+            return Disassemble("default", "default");
         }
 
 
@@ -175,30 +190,36 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// Десериализовать "Data".
         /// </summary>
         /// <param name="desiredFileDownloadPath">
-        /// A filepath you want to use to save transfered file.
+        /// A filepath you want to use to save transfered file. [!] You can choose default path by passing "default" to it.
         /// <br />
-        /// Путь, который вы бы хотели использовать, для сохранения файла.
+        /// Путь, который вы бы хотели использовать, для сохранения файла. [!] Вы можете выбрать путь по умолчанию, передав "default" сюда.
         /// </param>
         /// <returns>
         /// A tuple including Sender, Reciever and Message fileinfo;
         /// <br />
         /// Кортеж, включающий в себя отправителя, получателя и сообщение в виде файла;
         /// </returns>
-        public (string Sender, string Reciever, object Message) Disassemble(string desiredFileDownloadPath)
+        public (string Sender, string Reciever, object Message) Disassemble(string desiredFileDownloadPath, string recieverName)
         {
+            if (desiredFileDownloadPath.Equals("default")) desiredFileDownloadPath = _defaultDownloadsPath;
+
             if (_Data != null)
             {
                 using (MemoryStream memoryStream = new MemoryStream(_Data))
                 {
                     using (BinaryReader binReader = new BinaryReader(memoryStream, Encoding.UTF8, false))
                     {
+
+                        int messageLength = binReader.ReadInt32();
+
                         int senderLength = binReader.ReadInt32();
 
                         int recieverLength = binReader.ReadInt32();
 
                         int fileNameLength = binReader.ReadInt32();
 
-                        int messageLength = binReader.ReadInt32();
+                        int fileLength = binReader.ReadInt32();
+
 
 
                         byte[] binSender = new byte[senderLength];
@@ -207,7 +228,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                         byte[] binFileName = new byte[fileNameLength];
 
-                        byte[] binMessage = new byte[messageLength];
+                        byte[] binMessage = new byte[fileLength];
 
 
                         memoryStream.Read(binSender, 0, senderLength);
@@ -216,7 +237,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                         memoryStream.Read(binFileName, 0, fileNameLength);
 
-                        memoryStream.Read(binMessage, 0, messageLength);
+                        memoryStream.Read(binMessage, 0, fileLength);
 
 
                         _sender = Encoding.UTF8.GetString(binSender);
@@ -229,9 +250,26 @@ namespace NetworkingAuxiliaryLibrary.Packages
                         string dirName = $"{desiredFileDownloadPath}";
                         if (!Directory.Exists(Sender)) Directory.CreateDirectory(dirName);
 
-                        string messagePath = $"{dirName}/{_fileName}";
+                        string messagePath = $@"{dirName}\{recieverName} {_fileName}";
                         _message = new FileInfo(messagePath);
-                        File.WriteAllBytes(messagePath, binMessage);
+
+                        FileInfo messageFileRef = _message as FileInfo;
+
+                        //File.WriteAllBytes(messagePath, binFile);
+
+                        using (var fileStream = new FileStream(messageFileRef.FullName, FileMode.OpenOrCreate))
+                        {
+                            using (var binWriter = new BinaryWriter(fileStream))
+                            {
+                                binWriter.Write(binMessage);
+                            }
+                        }
+
+                        binSender = null;
+                        binReciever = null;
+                        binFileName = null;
+                        binMessage = null;
+
                     }
                 }
             }

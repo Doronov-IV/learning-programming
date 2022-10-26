@@ -77,10 +77,8 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public override byte[] Assemble()
-        {
-            byte[] aRes = default;
-
+        public override void Assemble()
+        { 
             if (Initialized)
             {
                 List<byte> lRes = new();
@@ -109,12 +107,11 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                 lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
 
-                aRes = lRes.ToArray();
+                _Data = lRes.ToArray();
 
-                _Data = aRes;
+                lRes.Clear();
+                lRes = null;
             }
-
-            return aRes;
         }
 
 

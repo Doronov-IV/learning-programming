@@ -162,15 +162,12 @@ namespace Debug.Net
                     connectPacket.WriteMessage(userName);
 
                     _client.Client.Send(connectPacket.GetPacketBytes());
-
-                    connectPacket = new();
                 }
 
                 ReadPackets();
             }
             
         }
-
 
 
         /// <summary>
@@ -185,7 +182,6 @@ namespace Debug.Net
                 _client.Close();
             }
         }
-
 
 
         /// <summary>
@@ -211,14 +207,22 @@ namespace Debug.Net
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
-            messagePacket = new();
         }
 
 
-
+        /// <summary>
+        /// Send file to the service.
+        /// <br />
+        /// Отправить файл на сервис.
+        /// </summary>
+        /// <param name="info">
+        /// Attached file.
+        /// <br />
+        /// Прикреплённый файл.
+        /// </param>
         public void SendFileToServer(FileInfo info)
         {
-            var messagePacket = new PackageBuilder();
+            PackageBuilder messagePacket = new();
             messagePacket.WriteOpCode(6);
             messagePacket.WriteFile(info);
             try
@@ -229,7 +233,7 @@ namespace Debug.Net
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
-            messagePacket = new();
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
 

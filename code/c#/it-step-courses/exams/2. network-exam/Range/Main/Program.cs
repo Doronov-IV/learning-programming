@@ -1,4 +1,5 @@
 ﻿using System;
+using NetworkingAuxiliaryLibrary.Packages;
 
 namespace Range.Main
 {
@@ -6,13 +7,39 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            TryFilePackage();
+            OuterMethod();
         }
 
 
+
+        #region CLOSURE
+
+
+        protected static void OuterMethod()
+        {
+            int variable = 5;
+
+            var inner = () =>
+            {
+                variable++;
+                Console.WriteLine(variable);
+            };
+
+            inner();
+
+            Console.WriteLine(variable);
+        }
+
+        #endregion CLOSURE
+
+
+
+
+        #region PACKAGES
+
         public static void TryFilePackage()
         {
-            FileMessagePackage AssembledFileMessage = new("Mario", "Luigi", new("C:\\Users\\i.doronov\\Desktop\\khleb-salo-vodka.jpg"));
+            FileMessagePackage AssembledFileMessage = new("Mario", "Luigi", new("C:\\Users\\i.doronov\\Desktop\\VirtualBox-7.0.2-154219-Win.exe"));
 
             FileMessagePackage UnassembledFileMessage = new();
 
@@ -23,6 +50,9 @@ namespace Range.Main
             Console.WriteLine($"Sender: {UnassembledFileMessage.Sender}");
             Console.WriteLine($"Reciever: {UnassembledFileMessage.Reciever}");
             Console.WriteLine($"Message: {UnassembledFileMessage.FileName}");
+
+            UnassembledFileMessage = null;
+            AssembledFileMessage = null;
         }
 
 
@@ -40,5 +70,10 @@ namespace Range.Main
             Console.WriteLine($"Reciever: {UnassembledTextMessage.Reciever}");
             Console.WriteLine($"Message: {UnassembledTextMessage.Message}");
         }
+
+
+        #endregion PACKAGES
+    
+    
     }
 }

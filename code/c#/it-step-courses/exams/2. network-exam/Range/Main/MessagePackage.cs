@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Range.Main
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
     /// An entity providing basic logic for message;
@@ -67,7 +67,6 @@ namespace Range.Main
             get { return _message; }
             set { _message = value; }
         }
-
 
         #endregion UNSERIALIZED
 
@@ -147,7 +146,7 @@ namespace Range.Main
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public abstract byte[] Assemble();
+        public abstract void Assemble();
 
 
 

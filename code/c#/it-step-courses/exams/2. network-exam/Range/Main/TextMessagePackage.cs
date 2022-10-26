@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Range.Main
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
     /// A string to binary text message compiler.
@@ -49,7 +49,7 @@ namespace Range.Main
         /// </summary>
         public override bool Initialized
         {
-            get { return _sender != string.Empty && _message != null && _message as string != string.Empty && _reciever != string.Empty; }
+            get { return _sender != string.Empty && (_message != null && _message as string != string.Empty) && _reciever != string.Empty; }
         }
 
 
@@ -77,10 +77,8 @@ namespace Range.Main
         /// <br />
         /// Полностью собранный масств байтов.
         /// </returns>
-        public override byte[] Assemble()
-        {
-            byte[] aRes = default;
-
+        public override void Assemble()
+        { 
             if (Initialized)
             {
                 List<byte> lRes = new();
@@ -94,25 +92,26 @@ namespace Range.Main
 
 
                 byte[] binSenderLength = BitConverter.GetBytes(binSender.Length);
-                lRes.AddRange(binSenderLength);
 
                 byte[] binRecieverLength = BitConverter.GetBytes(binReciever.Length);
-                lRes.AddRange(binRecieverLength);
 
                 byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
-                lRes.AddRange(binMessageLength);
 
+                lRes.AddRange(binSenderLength);
+                lRes.AddRange(binRecieverLength);
+                lRes.AddRange(binMessageLength);
 
                 lRes.AddRange(binSender);
                 lRes.AddRange(binReciever);
                 lRes.AddRange(binMessage);
 
-                aRes = lRes.ToArray();
+                lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
 
-                _Data = aRes;
+                _Data = lRes.ToArray();
+
+                lRes.Clear();
+                lRes = null;
             }
-
-            return aRes;
         }
 
 
@@ -201,6 +200,23 @@ namespace Range.Main
             _message = message;
 
             Assemble();
+        }
+
+        
+
+        /// <summary>
+        /// Constructor with the length of the stream.
+        /// <br />
+        /// Конструктор с размером стрима.
+        /// </summary>
+        /// <param name="streamLength">
+        /// The number of bytes in the stream.
+        /// <br />
+        /// Число байтов в стриме.
+        /// </param>
+        public TextMessagePackage(byte[] Data)
+        {
+            _Data = Data;
         }
 
 

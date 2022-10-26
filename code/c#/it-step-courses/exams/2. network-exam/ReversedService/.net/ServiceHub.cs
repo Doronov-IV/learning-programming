@@ -96,9 +96,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             _Listener.Start();
 
+            ReversedClient client;
+
             while (true)
             {
-                var client = new ReversedClient(_Listener.AcceptTcpClient(), this);
+                client = new ReversedClient(_Listener.AcceptTcpClient(), this);
                 _UserList.Add(client);
                 BroadcastConnection();
             }
@@ -113,12 +115,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void BroadcastConnection()
         {
+            var broadcastPacket = new PackageBuilder();
             foreach (var user in _UserList)
             {
                 foreach (var usr in _UserList)
                 {
-                    var broadcastPacket = new PackageBuilder();
-
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
                     broadcastPacket.WriteMessage(usr.CurrentUserName);
                     broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
@@ -169,15 +170,31 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(6);
             msgPacket.WriteFile(info);
+
+            var bytes = msgPacket.GetPacketBytes();
+            const int bufferSize = 4096;
+            byte[] buffer;
             foreach (var user in _UserList)
             {
                 // to prevent sending file to the sender;
                 if (user.CurrentUID != SenderId)
                 {
-                    user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
+                    if (bytes.Length > bufferSize)
+                    {
+                        using (MemoryStream stream = new(bytes))
+                        {
+                            while(stream.Position != stream.Length)
+                            {
+                                buffer = new byte[bufferSize];
+                                stream.Read(buffer, 0, bufferSize);
+                                user.ClientSocket.Client.Send(buffer, SocketFlags.Partial);
+                            }
+                        }
+                    }
+                    else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
                 }
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
             }
-            msgPacket = new();
         }
 
 
@@ -202,7 +219,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
                 broadcastPacket.WriteMessage(uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
-                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
             BroadcastMessage($"{disconnectedUser.CurrentUserName} Disconnected!");

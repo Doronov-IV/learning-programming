@@ -39,72 +39,25 @@ namespace NetworkingAuxiliaryLibrary.Processing
 
 
         /// <summary>
-        /// Read message from TCP-client network stream;
+        /// Read bytes from the stream and return raw array of bytes.
         /// <br />
-        /// Считать сообщения из стрима TCP-клиента;
+        /// Считать байты из стрима и вернуть массив из этих байтов.
         /// </summary>
-        public string ReadMessage()
+        /// <returns>
+        /// The array of bytes (that then have to be assigned to the corresponding package and dissasembled).
+        /// <br />
+        /// Массив байтов (который затем должен быть присвоен соответствующему пакету и расшифрован).
+        /// </returns>
+        /// <exception cref="DataException">
+        /// An error that occures when package sends wrong message length was passed to the stream.
+        /// <br />
+        /// Ошибка, которая возникает в случае, когда пакетом в стрим была передана неправильная длина сообщения.
+        /// </exception>
+        private byte[] ReadMessageBytes()
         {
-            string msg = "";
+            byte[] bRes = null;
             try
             {
-                /*
-                byte[] msgBuffer;
-                var length = ReadInt32();
-                msgBuffer = new byte[length];
-                _NetworkStream.Read(msgBuffer, 0, length);
-
-                msg = Encoding.UTF8.GetString(msgBuffer);
-                */
-
-                ///*
-                List<byte> byteList = new();
-
-                int i = 0;
-                int packageLength = ReadInt32();
-
-                while(i++ < packageLength)
-                {
-                    byteList.Add((byte)_NetworkStream.ReadByte());
-                }
-
-                TextMessagePackage package = new TextMessagePackage(byteList.ToArray());
-
-                package.Data = byteList.ToArray();
-
-                msg = package.Disassemble().Message as string;
-                //*/
-            }
-            catch
-            {
-                throw new DataException();
-            }
-            return msg;
-        }
-
-        public FileInfo ReadFile(string UserName)
-        {
-            FileInfo info = null;
-            try
-            {
-                /*
-                byte[] fileBuffer;
-                byte[] nameBuffer;
-
-                int fileLength = ReadInt32();
-                int nameLength = ReadInt32();
-
-                nameBuffer = new byte[nameLength];
-                fileBuffer = new byte[fileLength];
-
-                _NetworkStream.Read(nameBuffer, 0, nameLength);
-                var nameString = Encoding.UTF8.GetString(nameBuffer);
-
-                info = new FileInfo($"../../../.files/{UserName} {nameString}");
-                _NetworkStream.Read(fileBuffer, 0, fileLength);
-                File.WriteAllBytes(info.FullName, fileBuffer);
-                */
-
                 List<byte> byteList = new();
 
                 int i = 0;
@@ -115,17 +68,78 @@ namespace NetworkingAuxiliaryLibrary.Processing
                     byteList.Add((byte)_NetworkStream.ReadByte());
                 }
 
-                FileMessagePackage package = new FileMessagePackage(byteList.ToArray());
+                bRes = byteList.ToArray();
 
-                package.Data = byteList.ToArray();
-
-                info = package.Disassemble().Message as FileInfo;
+                byteList.Clear();
             }
-            catch (Exception)
+            catch 
             {
-
-                throw;
+                throw new DataException();
             }
+
+            return bRes;
+        }
+
+
+        /// <summary>
+        /// Read (text) message from the network stream.
+        /// <br />
+        /// Считать сообщение (текстовое) из сетевого стрима.
+        /// </summary>
+        /// <returns>
+        /// The text of the message in a line.
+        /// <br />
+        /// Текст сообщения в виде строки.
+        /// </returns>
+        public string ReadMessage()
+        {
+            string msg = "";
+
+            byte[] tempArray = ReadMessageBytes();
+
+            TextMessagePackage package = new TextMessagePackage(tempArray);
+
+            package.Data = tempArray;
+
+            // this warning is unnecessary. the action is completely safe;
+            msg = package.Disassemble().Message as string;
+
+            _NetworkStream.Flush();
+
+            return msg;
+        }
+
+        
+        /// <summary>
+        /// Read file from the network stream.
+        /// <br />
+        /// Считать файл из сетевого стрима.
+        /// </summary>
+        /// <param name="UserName">
+        /// Name of the reciever.
+        /// <br />
+        /// Имя получателя.
+        /// </param>
+        /// <returns>
+        /// The info of the file read.
+        /// <br />
+        /// Информация о считанном файле.
+        /// </returns>
+        public FileInfo ReadFile(string UserName)
+        {
+            FileInfo info = null;
+
+            byte[] tempArray = ReadMessageBytes();
+
+            FileMessagePackage package = new FileMessagePackage(tempArray);
+
+            package.Data = tempArray;
+
+            // this warning is unnecessary. the action is completely safe;
+            info = package.Disassemble("default", UserName).Message as FileInfo;
+
+            _NetworkStream.Flush();
+
             return info;
         }
 
