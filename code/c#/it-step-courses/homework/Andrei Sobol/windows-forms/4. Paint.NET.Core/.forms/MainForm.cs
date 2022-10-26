@@ -9,6 +9,37 @@ namespace Paint.NET.Core.Forms
     {
 
 
+        #region Module: Top Toolstrip Buttons
+
+
+        /// <summary>
+        /// Handle the instruments button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке "Instruments".
+        /// </summary>
+        private void OnShowInstrumentsButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+
+        #endregion Module: Top Toolstrip Buttons
+
+
+
+
+
+        #region PROPERTIES
+
+
+        //
+
+
+        #endregion PROPERTIES
+
+
+
+
         #region CONSTRUCTION
 
 
@@ -21,6 +52,9 @@ namespace Paint.NET.Core.Forms
         {
             InitializeComponent();
 
+            Button button = new Button();
+            InstrumentsListView.Items.Add(new ListViewItem);
+
             Show();
 
             Graphics? graphics = CreateGraphics();
@@ -28,11 +62,13 @@ namespace Paint.NET.Core.Forms
             graphics.DrawRectangle(new(Color.Black, 3), 50f,50f,100f,100f);
 
             graphics.Dispose();
+
+            
         }
 
 
+
+
         #endregion CONSTRUCTION
-
-
     }
 }
