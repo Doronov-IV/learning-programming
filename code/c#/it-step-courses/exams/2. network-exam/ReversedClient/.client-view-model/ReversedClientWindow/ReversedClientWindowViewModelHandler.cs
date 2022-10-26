@@ -133,7 +133,7 @@ namespace ReversedClient.ViewModel
 
             if (UserFile != null)
             {
-                _server.SendFileToServer(UserFile);
+                _server.SendFileToServerAsync(UserFile);
                 Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
                 UserFile = null;
             }

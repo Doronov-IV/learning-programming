@@ -220,20 +220,44 @@ namespace Debug.Net
         /// <br />
         /// Прикреплённый файл.
         /// </param>
-        public void SendFileToServer(FileInfo info)
+        public async void SendFileToServerAsync(FileInfo info)
         {
             PackageBuilder messagePacket = new();
             messagePacket.WriteOpCode(6);
             messagePacket.WriteFile(info);
+
+            var bytes = messagePacket.GetPacketBytes();
+            const int bufferSize = 4096;
+            byte[] buffer;
             try
             {
-                _client.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
+                if (bytes.Length > bufferSize)
+                {
+                    await Task.Run(() =>
+                    {
+                        using (MemoryStream stream = new(bytes))
+                        {
+                            while (stream.Position != stream.Length)
+                            {
+                                buffer = new byte[bufferSize];
+                                stream.Read(buffer, 0, bufferSize);
+                                _client.Client.Send(buffer, SocketFlags.Partial);
+                            }
+                        }
+                    });
+                }
+                else _client.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
             }
             catch (Exception ex)
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
+
             }
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+            finally
+            {
+                messagePacket = null;
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+            }
         }
 
 
