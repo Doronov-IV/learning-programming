@@ -92,7 +92,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         {
             ExtractLibraries();
 
-            LaunchClientCommand = new(OnLaunchClientButtonClick);
+            LaunchClientCommand = new(OnLaunchClientButtonClickAsync);
             LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);
             KillServiceCommand = new(OnKillServiceButtonClick);
             ClearFoldersCommand = new(OnClearFoldersButtonClick);

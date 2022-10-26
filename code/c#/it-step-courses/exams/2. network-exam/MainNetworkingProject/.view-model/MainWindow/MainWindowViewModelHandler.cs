@@ -5,6 +5,11 @@ using System.Threading;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
 {
+    /// <summary>
+    /// The main window view-model.
+    /// <br />
+    /// Вью-модель основного окна (main window).
+    /// </summary>
     public partial class MainWindowViewModel
     {
 
@@ -17,16 +22,19 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         /// <br />
         /// Обработчик нажатия кнопки "запустить клиент".
         /// </summary>
-        public void OnLaunchClientButtonClick()
+        public async void OnLaunchClientButtonClickAsync()
         {
-            using (var process = new Process())
+            await Task.Run(() =>
             {
-                process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
-                process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
-                process.StartInfo.Arguments = "-noexit";
-                process.StartInfo.CreateNoWindow = false;
-                process.Start();
-            }
+                using (var process = new Process())
+                {
+                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Debug/net6.0-windows/ReversedClient.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Debug/net6.0-windows";
+                    process.StartInfo.Arguments = "-noexit";
+                    process.StartInfo.CreateNoWindow = false;
+                    process.Start();
+                }
+            });
         }
 
 
