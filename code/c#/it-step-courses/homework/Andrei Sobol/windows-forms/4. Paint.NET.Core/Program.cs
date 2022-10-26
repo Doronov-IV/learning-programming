@@ -1,3 +1,5 @@
+using Paint.NET.Core.Forms;
+
 namespace Paint.NET.Core
 {
     internal static class Program

@@ -1,4 +1,4 @@
-﻿namespace Paint.NET.Core
+﻿namespace Paint.NET.Core.Forms
 {
     partial class MainForm
     {
