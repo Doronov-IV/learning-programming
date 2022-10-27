@@ -44,6 +44,7 @@
             this.ColorButton = new System.Windows.Forms.Button();
             this.MainColorDialog = new System.Windows.Forms.ColorDialog();
             this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -55,6 +56,10 @@
             this.MainPictureBox.Image = global::Paint.NET.Core.Properties.Resources.blank;
             this.MainPictureBox.Name = "MainPictureBox";
             this.MainPictureBox.TabStop = false;
+            this.MainPictureBox.Click += new System.EventHandler(this.MainPictureBox_Click);
+            this.MainPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnMainPictureBoxPaint);
+            this.MainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseDown);
+            this.MainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseUp);
             // 
             // menuStrip1
             // 
@@ -84,11 +89,13 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.OnSaveButtonClick);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             resources.ApplyResources(this.saveAsToolStripMenuItem, "saveAsToolStripMenuItem");
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.OnSaveAsFileButtonClick);
             // 
             // viewToolStripMenuItem
             // 
@@ -175,5 +182,6 @@
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private OpenFileDialog MainOpenFileDialog;
+        private SaveFileDialog MainSaveFileDialog;
     }
 }
