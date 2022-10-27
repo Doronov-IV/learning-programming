@@ -61,9 +61,10 @@ namespace Paint.NET.Core.Forms
             if (MainOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
                 _currentFileInfo = new(MainOpenFileDialog.FileName);
-                _copyFileName = $"{_currentFileInfo.FullName} - copy{_currentFileInfo.Extension}";
+                _copyFileName = $"../../../.temp/{_currentFileInfo.Name}";
                 if (File.Exists(_copyFileName)) File.Delete(_copyFileName);
                 File.Copy(_currentFileInfo.FullName, _copyFileName);
+                
                 _currentBitmap = new(_copyFileName);
                 MainPictureBox.Image = _currentBitmap;
                 RefreshGraphics();
@@ -89,7 +90,7 @@ namespace Paint.NET.Core.Forms
                     bitmap.Save(_currentFileInfo.FullName, bitmap.RawFormat);
                 }
 
-                CreateGraphics();
+                ReassignGraphics();
             }
             else OnSaveAsFileButtonClick(sender, e);
         }
@@ -113,7 +114,7 @@ namespace Paint.NET.Core.Forms
                     bitmap.Save(MainSaveFileDialog.FileName, bitmap.RawFormat);
                 }
 
-                CreateGraphics();
+                ReassignGraphics();
             }
         }
 
@@ -167,7 +168,10 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnColorButtonClick(object sender, EventArgs e)
         {
-            MainColorDialog.ShowDialog();
+            if (MainColorDialog.ShowDialog() == DialogResult.OK)
+            {
+                _currentPen.Color = MainColorDialog.Color;
+            }
 
         }
 
@@ -202,18 +206,17 @@ namespace Paint.NET.Core.Forms
 
         private static Brush? _currentBrush;
 
-        private static Point? _coursorPoint;
-
-        private static Point? _paintingPoint;
 
         private static string? _copyFileName;
 
+        private static DirectoryInfo? _tempDirectory;
 
 
-        private static Point? _startPoint;
+
+        private static Point? _mouseStartPoint;
         
 
-        private static Point? _endPoint;
+        private static Point? _mouseEndPoint;
 
 
         public delegate void DrawObjectDelegate(Pen pen, float x, float y, float width, float height);
@@ -233,15 +236,25 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Dispose and create graphics.
+        /// <br />
+        /// Удалить и создать объект graphics.
+        /// </summary>
         private void RefreshGraphics()
         {
             DisposeGraphics();
 
-            CreateGraphics();
+            ReassignGraphics();
         }
 
 
-        private void CreateGraphics()
+        /// <summary>
+        /// Attach current graphics to the current bitmap.
+        /// <br />
+        /// Прикрепить currentGraphics к currentBitmap.
+        /// </summary>
+        private void ReassignGraphics()
         {
             _currentGraphics = Graphics.FromImage(_currentBitmap);
 
@@ -249,6 +262,11 @@ namespace Paint.NET.Core.Forms
         }
 
 
+        /// <summary>
+        /// Dispose graphics instance and unsubscribe it from the DrawObject.
+        /// <br />
+        /// Задиспозить currentGraphics и отписать его от DrawObject.
+        /// </summary>
         private void DisposeGraphics()
         {
             DrawObject -= _currentGraphics.DrawRectangle;
@@ -257,8 +275,15 @@ namespace Paint.NET.Core.Forms
         }
 
 
+        private void ClearTempFolder()
+        {
+            _tempDirectory?.GetFiles().ToList().ForEach(file => File.Delete(file.FullName));
+        }
+
+
 
         #endregion AUXILIARY
+
 
 
 
@@ -276,6 +301,12 @@ namespace Paint.NET.Core.Forms
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
             _currentGraphics.Dispose();
+
+            MainPictureBox.Dispose();
+
+            _currentBitmap.Dispose();
+
+            ClearTempFolder();
         }
 
 
@@ -291,7 +322,6 @@ namespace Paint.NET.Core.Forms
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 1);
             _isPainting = false;
-            _coursorPoint = null;
 
             string imageFilters = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
 
@@ -307,6 +337,9 @@ namespace Paint.NET.Core.Forms
             _currentGraphics = Graphics.FromImage(_currentBitmap);
             _currentGraphics.Clear(Color.White);
             DrawObject += _currentGraphics.DrawRectangle;
+
+            _tempDirectory = new DirectoryInfo("../../../.temp");
+            if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
         }
 
 
