@@ -9,30 +9,13 @@ namespace Paint.NET.Core.Forms
     {
 
 
-        #region Module: Top Toolstrip Buttons
-
-
-        /// <summary>
-        /// Handle the instruments button click event.
-        /// <br />
-        /// Обработать событие клика по кнопке "Instruments".
-        /// </summary>
-        private void OnShowInstrumentsButtonClick(object sender, EventArgs e)
-        {
-
-        }
-
-
-        #endregion Module: Top Toolstrip Buttons
-
-
 
 
 
         #region PROPERTIES
 
 
-        //
+        private static Image? _image;
 
 
         #endregion PROPERTIES
@@ -44,6 +27,17 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
+        /// Handle MainForm closing event.
+        /// <br />
+        /// Обработать событие закрытия формы "MainForm".
+        /// </summary>
+        private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+
+        /// <summary>
         /// Default constructor.
         /// <br />
         /// Конструктор по умолчанию.
@@ -52,23 +46,23 @@ namespace Paint.NET.Core.Forms
         {
             InitializeComponent();
 
-            Button button = new Button();
-            InstrumentsListView.Items.Add(new ListViewItem);
+            //_image = new();
 
-            Show();
+            MainPictureBox.CreateGraphics();
 
-            Graphics? graphics = CreateGraphics();
 
-            graphics.DrawRectangle(new(Color.Black, 3), 50f,50f,100f,100f);
-
-            graphics.Dispose();
-
-            
+            MainOpenFileDialog.Filter = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
+            MainOpenFileDialog.InitialDirectory = @"C:\";
         }
 
 
 
 
+
+
+
         #endregion CONSTRUCTION
+
+
     }
 }
