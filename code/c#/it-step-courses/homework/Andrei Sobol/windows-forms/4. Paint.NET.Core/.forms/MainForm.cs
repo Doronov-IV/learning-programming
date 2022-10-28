@@ -26,8 +26,13 @@ namespace Paint.NET.Core.Forms
 
         private void OnDrawLine()
         {
-            Pen currentPenClone = _currentPen.Clone() as Pen; 
-            _onPaint += (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPosition, _mouseEndingPosition); };
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            Point? A = _mouseStartingPosition;
+            Point? B = _mouseEndingPosition;
+            _onPaint += (graphics) => { graphics.DrawLine(currentPenClone, A.Value, B.Value); };
+
+            MainPictureBox.Invalidate();
         }
 
         private void OnDrawRectangle()
@@ -37,9 +42,9 @@ namespace Paint.NET.Core.Forms
 
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
         {
-            _currentGraphics = e.Graphics;
+            //c = e.Graphics;
 
-            _onPaint?.Invoke(_currentGraphics);
+            _onPaint?.Invoke(e.Graphics);
 
         }
 
@@ -56,7 +61,7 @@ namespace Paint.NET.Core.Forms
 
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
-            OnDrawLine();
+            //OnDrawLine();
 
             
 
@@ -69,6 +74,8 @@ namespace Paint.NET.Core.Forms
             if (_isPainting)
             {
                 _mouseEndingPosition = e.Location;
+
+                OnDrawLine();
 
                 MainPictureBox.Refresh();
             }
