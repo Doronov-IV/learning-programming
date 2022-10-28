@@ -53,12 +53,12 @@
             // MainPictureBox
             // 
             resources.ApplyResources(this.MainPictureBox, "MainPictureBox");
-            this.MainPictureBox.Image = global::Paint.NET.Core.Properties.Resources.blank;
             this.MainPictureBox.Name = "MainPictureBox";
             this.MainPictureBox.TabStop = false;
             this.MainPictureBox.Click += new System.EventHandler(this.MainPictureBox_Click);
             this.MainPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnMainPictureBoxPaint);
             this.MainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseDown);
+            this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseMove);
             this.MainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseUp);
             // 
             // menuStrip1

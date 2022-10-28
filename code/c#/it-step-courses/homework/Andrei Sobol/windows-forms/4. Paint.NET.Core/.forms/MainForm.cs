@@ -1,3 +1,5 @@
+using System.Drawing.Drawing2D;
+
 namespace Paint.NET.Core.Forms
 {
     /// <summary>
@@ -24,23 +26,21 @@ namespace Paint.NET.Core.Forms
 
         private void OnDrawLine()
         {
-            
-            _onPaint += (graphics) => { graphics.DrawLine(/*new Pen(new SolidBrush(Color.Black), 2)*/_currentPen, _mouseStartingPosition, _mouseEndingPosition); };
-
-            MainPictureBox.Invalidate();
+            Pen currentPenClone = _currentPen.Clone() as Pen; 
+            _onPaint += (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPosition, _mouseEndingPosition); };
         }
 
         private void OnDrawRectangle()
         {
-            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 2), _mouseEndingPosition.X, _mouseEndingPosition.Y, 100, 100); };
+            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 1), _mouseEndingPosition.X, _mouseEndingPosition.Y, 100, 100); };
         }
 
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
         {
             _currentGraphics = e.Graphics;
 
-
             _onPaint?.Invoke(_currentGraphics);
+
         }
 
 
@@ -49,15 +49,29 @@ namespace Paint.NET.Core.Forms
         {
             _mouseStartingPosition = e.Location;
 
+            _isPainting = true;
+
         }
 
 
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
-            _mouseEndingPosition = e.Location;
-
-            //_onPaint?.Invoke(_currentGraphics);
             OnDrawLine();
+
+            
+
+            _isPainting = false;
+        }
+
+
+        private void OnImageBoxMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isPainting)
+            {
+                _mouseEndingPosition = e.Location;
+
+                MainPictureBox.Refresh();
+            }
         }
 
 
@@ -195,6 +209,8 @@ namespace Paint.NET.Core.Forms
                 _currentPen.Color = MainColorDialog.Color;
             }
 
+            MainPictureBox.Invalidate();
+
         }
 
 
@@ -328,7 +344,7 @@ namespace Paint.NET.Core.Forms
 
             //_currentBitmap.Dispose();
 
-            ClearTempFolder();
+            //ClearTempFolder();
         }
 
 
@@ -339,10 +355,12 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         public MainForm()
         {
+            ClearTempFolder();
+
             InitializeComponent();
 
             _currentBrush = new SolidBrush(Color.Black);
-            _currentPen = new(Color.Black, 1);
+            _currentPen = new(Color.Black, 3);
             _isPainting = false;
 
             string imageFilters = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
@@ -356,6 +374,7 @@ namespace Paint.NET.Core.Forms
             
 
             _currentGraphics = MainPictureBox.CreateGraphics();
+            _currentGraphics.SmoothingMode = SmoothingMode.HighQuality;
             _currentGraphics.Clear(Color.White);
             //DrawObject += _currentGraphics.DrawRectangle;
 
