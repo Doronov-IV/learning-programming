@@ -7,8 +7,12 @@ namespace Paint.NET.Core.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        private Action<Graphics> _onPaint;
 
+        private Point _mouseStartingPosition;
+        private Point _mouseEndingPosition;
 
+        private Pen _pen;
 
         #region MODULES
 
@@ -18,24 +22,42 @@ namespace Paint.NET.Core.Forms
         #region Module: Image Box 
 
 
-        private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
+        private void OnDrawLine()
         {
             
+            _onPaint += (graphics) => { graphics.DrawLine(/*new Pen(new SolidBrush(Color.Black), 2)*/_currentPen, _mouseStartingPosition, _mouseEndingPosition); };
+
+            MainPictureBox.Invalidate();
+        }
+
+        private void OnDrawRectangle()
+        {
+            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 2), _mouseEndingPosition.X, _mouseEndingPosition.Y, 100, 100); };
+        }
+
+        private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
+        {
             _currentGraphics = e.Graphics;
+
+
+            _onPaint?.Invoke(_currentGraphics);
         }
 
 
 
         private void OnImageBoxMouseDown(object sender, MouseEventArgs e)
         {
-            DrawObject.Invoke(_currentPen, e.X, e.Y, 50, 50);
-            MainPictureBox.Image = _currentBitmap;
+            _mouseStartingPosition = e.Location;
+
         }
 
 
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
-            //
+            _mouseEndingPosition = e.Location;
+
+            //_onPaint?.Invoke(_currentGraphics);
+            OnDrawLine();
         }
 
 
@@ -304,7 +326,7 @@ namespace Paint.NET.Core.Forms
 
             MainPictureBox.Dispose();
 
-            _currentBitmap.Dispose();
+            //_currentBitmap.Dispose();
 
             ClearTempFolder();
         }
@@ -331,15 +353,16 @@ namespace Paint.NET.Core.Forms
             MainOpenFileDialog.Filter = imageFilters;
             MainOpenFileDialog.InitialDirectory = @"C:\";
 
-            MainPictureBox.Image = _currentBitmap;
+            
 
-            _currentBitmap = new (MainPictureBox.Width, MainPictureBox.Height);
-            _currentGraphics = Graphics.FromImage(_currentBitmap);
+            _currentGraphics = MainPictureBox.CreateGraphics();
             _currentGraphics.Clear(Color.White);
-            DrawObject += _currentGraphics.DrawRectangle;
+            //DrawObject += _currentGraphics.DrawRectangle;
 
             _tempDirectory = new DirectoryInfo("../../../.temp");
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
+
+            
         }
 
 
