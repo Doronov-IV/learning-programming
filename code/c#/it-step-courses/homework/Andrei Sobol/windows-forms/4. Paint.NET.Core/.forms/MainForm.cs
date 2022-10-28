@@ -10,9 +10,15 @@ namespace Paint.NET.Core.Forms
     public partial class MainForm : Form
     {
         private Action<Graphics> _onPaint;
+        private Action<Graphics> _onPaintPreview;
 
-        private Point _mouseStartingPosition;
-        private Point _mouseEndingPosition;
+        private Point _mouseCurrentStartingPosition;
+        private Point _mouseCurrentEndingPosition;
+
+
+        private Point _mouseLastStartingPosition;
+        private Point _mouseLastEndingPosition;
+        private Pen _lastPen;
 
         private Pen _pen;
 
@@ -26,18 +32,38 @@ namespace Paint.NET.Core.Forms
 
         private void OnDrawLine()
         {
-            Pen currentPenClone = _currentPen.Clone() as Pen;
 
-            Point? A = _mouseStartingPosition;
-            Point? B = _mouseEndingPosition;
-            _onPaint += (graphics) => { graphics.DrawLine(currentPenClone, A.Value, B.Value); };
+
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+            Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
+            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+
+            Action<Graphics> newAction = (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
+
+            _onPaint += newAction;
+
+            MainPictureBox.Invalidate();
+        }
+
+        private void OnDrawLinePreview()
+        {
+
+
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+            Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
+            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+
+            Action<Graphics> newAction = (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
+
+            _onPaintPreview = null;
+            _onPaintPreview += newAction;
 
             MainPictureBox.Invalidate();
         }
 
         private void OnDrawRectangle()
         {
-            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 1), _mouseEndingPosition.X, _mouseEndingPosition.Y, 100, 100); };
+            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 1), _mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y, 100, 100); };
         }
 
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
@@ -45,6 +71,7 @@ namespace Paint.NET.Core.Forms
             //c = e.Graphics;
 
             _onPaint?.Invoke(e.Graphics);
+            _onPaintPreview?.Invoke(e.Graphics);
 
         }
 
@@ -52,7 +79,7 @@ namespace Paint.NET.Core.Forms
 
         private void OnImageBoxMouseDown(object sender, MouseEventArgs e)
         {
-            _mouseStartingPosition = e.Location;
+            _mouseCurrentStartingPosition = e.Location;
 
             _isPainting = true;
 
@@ -61,7 +88,7 @@ namespace Paint.NET.Core.Forms
 
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
-            //OnDrawLine();
+            OnDrawLine();
 
             
 
@@ -73,9 +100,10 @@ namespace Paint.NET.Core.Forms
         {
             if (_isPainting)
             {
-                _mouseEndingPosition = e.Location;
+                _mouseCurrentEndingPosition = e.Location;
 
-                OnDrawLine();
+
+                OnDrawLinePreview();
 
                 MainPictureBox.Refresh();
             }
