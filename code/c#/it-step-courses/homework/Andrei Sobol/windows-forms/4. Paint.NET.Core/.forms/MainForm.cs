@@ -16,7 +16,9 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #region Module: Image Box 
+
+        #region Module: Objects
+
 
 
 
@@ -52,6 +54,15 @@ namespace Paint.NET.Core.Forms
 
 
 
+        #endregion Module: Objects
+
+
+
+
+        #region Module: Image Box 
+
+
+
         /// <summary>
         /// Redraw main pircure box.
         /// <br />
@@ -61,8 +72,6 @@ namespace Paint.NET.Core.Forms
         {
             _onPaint?.Invoke(e.Graphics);
             _onPaintPreview?.Invoke(e.Graphics);
-            _currentGraphics = e.Graphics;
-            _currentGraphics.Save();
         }
 
 
@@ -71,6 +80,8 @@ namespace Paint.NET.Core.Forms
         ////////////////////////////////////////////////////////////////////////////////////////
         ///                             MOUSE EVENT HANDLERS                                 ///
         ////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
         /// <summary>
@@ -130,12 +141,12 @@ namespace Paint.NET.Core.Forms
             {
                 _currentFileInfo = new(MainOpenFileDialog.FileName);
                 _copyFileName = $"../../../.temp/{_currentFileInfo.Name}";
+
                 if (File.Exists(_copyFileName)) File.Delete(_copyFileName);
                 File.Copy(_currentFileInfo.FullName, _copyFileName);
                 
                 _currentBitmap = new(_copyFileName);
                 MainPictureBox.Image = _currentBitmap;
-                RefreshGraphics();
             }
         }
 
@@ -150,15 +161,12 @@ namespace Paint.NET.Core.Forms
         {
             if (_currentFileInfo != null)
             {
-                var tempVariable = _currentGraphics;
-                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height, _currentGraphics))
+                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height))
                 {
-                    DisposeGraphics();
+                    MainPictureBox.DrawToBitmap(bitmap, new Rectangle(0,0, bitmap.Width, bitmap.Height));
                     if (File.Exists(_currentFileInfo.FullName)) File.Delete(_currentFileInfo.FullName);
                     bitmap.Save(_currentFileInfo.FullName, bitmap.RawFormat);
                 }
-
-                ReassignGraphics();
             }
             else OnSaveAsFileButtonClick(sender, e);
         }
@@ -174,14 +182,12 @@ namespace Paint.NET.Core.Forms
         {
             if (MainSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height, _currentGraphics))
+                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height))
                 {
-                    DisposeGraphics();
+                    MainPictureBox.DrawToBitmap(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
                     if (File.Exists(MainSaveFileDialog.FileName)) File.Delete(MainSaveFileDialog.FileName);
                     bitmap.Save(MainSaveFileDialog.FileName, bitmap.RawFormat);
                 }
-
-                ReassignGraphics();
             }
         }
 
@@ -263,6 +269,8 @@ namespace Paint.NET.Core.Forms
         #region STATE
 
 
+        private static Bitmap? _currentBitmap;
+
 
         /// <summary>
         /// A reference to the current opened file if any.
@@ -270,22 +278,6 @@ namespace Paint.NET.Core.Forms
         /// —сылка на текущий открытый файл, если он есть.
         /// </summary>
         private static FileInfo? _currentFileInfo;
-
-
-        /// <summary>
-        /// A reference to the current graphics.
-        /// <br />
-        /// —сылка на текущий экземпл€р класса "Graphics".
-        /// </summary>
-        private static Graphics? _currentGraphics;
-
-
-        /// <summary>
-        /// A reference to the current bitmap.
-        /// <br />
-        /// —сылка на текущий экземпл€р класса "Bitmap".
-        /// </summary>
-        private static Bitmap? _currentBitmap;
 
 
         /// <summary>
@@ -386,40 +378,10 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// Dispose and create graphics.
+        /// Clear temp directory to dispose of copied files.
         /// <br />
-        /// ”далить и создать объект graphics.
+        /// ќчистить временную папку, удал€€ копии файлов.
         /// </summary>
-        private void RefreshGraphics()
-        {
-            DisposeGraphics();
-
-            ReassignGraphics();
-        }
-
-
-        /// <summary>
-        /// Attach current graphics to the current bitmap.
-        /// <br />
-        /// ѕрикрепить currentGraphics к currentBitmap.
-        /// </summary>
-        private void ReassignGraphics()
-        {
-            _currentGraphics = Graphics.FromImage(_currentBitmap);
-        }
-
-
-        /// <summary>
-        /// Dispose graphics instance and unsubscribe it from the DrawObject.
-        /// <br />
-        /// «адиспозить currentGraphics и отписать его от DrawObject.
-        /// </summary>
-        private void DisposeGraphics()
-        {
-            _currentGraphics.Dispose();
-        }
-
-
         private void ClearTempFolder()
         {
             _tempDirectory?.GetFiles().ToList().ForEach(file => File.Delete(file.FullName));
@@ -445,13 +407,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            _currentGraphics.Dispose();
-
             MainPictureBox.Dispose();
 
-            //_currentBitmap.Dispose();
-
-            //ClearTempFolder();
+            _currentBitmap?.Dispose();
         }
 
 
@@ -478,16 +436,10 @@ namespace Paint.NET.Core.Forms
             MainOpenFileDialog.Filter = imageFilters;
             MainOpenFileDialog.InitialDirectory = @"C:\";
 
-            
-
-            _currentGraphics = MainPictureBox.CreateGraphics();
-            _currentGraphics.SmoothingMode = SmoothingMode.HighQuality;
-            _currentGraphics.Clear(Color.White);
-            //DrawObject += _currentGraphics.DrawRectangle;
-
             _tempDirectory = new DirectoryInfo("../../../.temp");
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
 
+            // CAUTION;
             _currentAction = OnDrawLine;
         }
 
@@ -500,9 +452,6 @@ namespace Paint.NET.Core.Forms
 
         #endregion CONSTRUCTION
 
-        private void MainPictureBox_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 }
