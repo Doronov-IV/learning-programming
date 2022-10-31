@@ -9,18 +9,7 @@ namespace Paint.NET.Core.Forms
     /// </summary>
     public partial class MainForm : Form
     {
-        private Action<Graphics> _onPaint;
-        private Action<Graphics> _onPaintPreview;
 
-        private Point _mouseCurrentStartingPosition;
-        private Point _mouseCurrentEndingPosition;
-
-
-        private Point _mouseLastStartingPosition;
-        private Point _mouseLastEndingPosition;
-        private Pen _lastPen;
-
-        private Pen _pen;
 
         #region MODULES
 
@@ -30,25 +19,14 @@ namespace Paint.NET.Core.Forms
         #region Module: Image Box 
 
 
+
+        /// <summary>
+        /// Draw a line in the pictureBox.
+        /// <br />
+        /// Нарисовать линию в pictureBox.
+        /// </summary>
         private void OnDrawLine()
         {
-
-
-            Pen currentPenClone = _currentPen.Clone() as Pen;
-            Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
-            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
-
-            Action<Graphics> newAction = (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
-
-            _onPaint += newAction;
-
-            MainPictureBox.Invalidate();
-        }
-
-        private void OnDrawLinePreview()
-        {
-
-
             Pen currentPenClone = _currentPen.Clone() as Pen;
             Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
             Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
@@ -56,56 +34,75 @@ namespace Paint.NET.Core.Forms
             Action<Graphics> newAction = (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
 
             _onPaintPreview = null;
-            _onPaintPreview += newAction;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
 
             MainPictureBox.Invalidate();
         }
 
-        private void OnDrawRectangle()
-        {
-            _onPaint += (graphics) => { graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black), 1), _mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y, 100, 100); };
-        }
 
+
+        /// <summary>
+        /// Redraw main pircure box.
+        /// <br />
+        /// Перерисовать "MainPictureBox".
+        /// </summary>
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
         {
-            //c = e.Graphics;
-
             _onPaint?.Invoke(e.Graphics);
             _onPaintPreview?.Invoke(e.Graphics);
-
+            _currentGraphics = e.Graphics;
+            _currentGraphics.Save();
         }
 
 
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ///                             MOUSE EVENT HANDLERS                                 ///
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+
+        /// <summary>
+        /// Secure the state of the mouse buttons to depict either preview or the painted figure itself.
+        /// <br />
+        /// Зафиксировать состояние кнопок мыши, чтобы правильно отобразить превью фигуры или саму фигуру.
+        /// </summary>
         private void OnImageBoxMouseDown(object sender, MouseEventArgs e)
         {
             _mouseCurrentStartingPosition = e.Location;
 
             _isPainting = true;
-
         }
 
 
+        /// <inheritdoc cref="OnImageBoxMouseDown(object, MouseEventArgs)"/>
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
-            OnDrawLine();
-
-            
-
             _isPainting = false;
+
+            _currentAction.Invoke();
         }
 
 
+        /// <inheritdoc cref="OnImageBoxMouseDown(object, MouseEventArgs)"/>
         private void OnImageBoxMouseMove(object sender, MouseEventArgs e)
         {
             if (_isPainting)
             {
                 _mouseCurrentEndingPosition = e.Location;
 
-
-                OnDrawLinePreview();
-
-                MainPictureBox.Refresh();
+                _currentAction.Invoke();
             }
         }
 
@@ -153,10 +150,10 @@ namespace Paint.NET.Core.Forms
         {
             if (_currentFileInfo != null)
             {
-                DisposeGraphics();
-
-                using (Bitmap bitmap = (Bitmap)MainPictureBox.Image.Clone())
+                var tempVariable = _currentGraphics;
+                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height, _currentGraphics))
                 {
+                    DisposeGraphics();
                     if (File.Exists(_currentFileInfo.FullName)) File.Delete(_currentFileInfo.FullName);
                     bitmap.Save(_currentFileInfo.FullName, bitmap.RawFormat);
                 }
@@ -177,10 +174,9 @@ namespace Paint.NET.Core.Forms
         {
             if (MainSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                DisposeGraphics();
-
-                using (Bitmap bitmap = (Bitmap)MainPictureBox.Image.Clone())
+                using (Bitmap bitmap = new Bitmap(MainPictureBox.Width, MainPictureBox.Height, _currentGraphics))
                 {
+                    DisposeGraphics();
                     if (File.Exists(MainSaveFileDialog.FileName)) File.Delete(MainSaveFileDialog.FileName);
                     bitmap.Save(MainSaveFileDialog.FileName, bitmap.RawFormat);
                 }
@@ -296,6 +292,13 @@ namespace Paint.NET.Core.Forms
 
 
         public event DrawObjectDelegate DrawObject;
+
+        private Action<Graphics> _onPaint;
+        private Action<Graphics> _onPaintPreview;
+        private Action _currentAction;
+
+        private Point _mouseCurrentStartingPosition;
+        private Point _mouseCurrentEndingPosition;
 
 
         #endregion PROPERTIES
@@ -416,7 +419,7 @@ namespace Paint.NET.Core.Forms
             _tempDirectory = new DirectoryInfo("../../../.temp");
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
 
-            
+            _currentAction = OnDrawLine;
         }
 
 
