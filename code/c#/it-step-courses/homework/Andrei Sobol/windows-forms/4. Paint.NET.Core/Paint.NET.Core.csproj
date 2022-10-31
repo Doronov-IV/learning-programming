@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include=".resources\icons\color-palette.png" />
     <Content Include=".resources\icons\palette.png" />
     <Content Include=".resources\images\blank.png" />
   </ItemGroup>

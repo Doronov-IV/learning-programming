@@ -45,6 +45,7 @@
             this.MainColorDialog = new System.Windows.Forms.ColorDialog();
             this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.FiguresListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -135,18 +136,29 @@
             // 
             // ColorButton
             // 
+            this.ColorButton.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.ColorButton, "ColorButton");
             this.ColorButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ColorButton.FlatAppearance.BorderSize = 0;
-            this.ColorButton.Image = global::Paint.NET.Core.Properties.Resources.palette2;
+            this.ColorButton.Image = global::Paint.NET.Core.Properties.Resources.color_palette3;
             this.ColorButton.Name = "ColorButton";
-            this.ColorButton.UseVisualStyleBackColor = true;
+            this.ColorButton.UseVisualStyleBackColor = false;
             this.ColorButton.Click += new System.EventHandler(this.OnColorButtonClick);
+            // 
+            // FiguresListView
+            // 
+            resources.ApplyResources(this.FiguresListView, "FiguresListView");
+            this.FiguresListView.Name = "FiguresListView";
+            this.FiguresListView.UseCompatibleStateImageBehavior = false;
+            this.FiguresListView.View = System.Windows.Forms.View.SmallIcon;
+            this.FiguresListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewClick);
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.FiguresListView);
             this.Controls.Add(this.ColorButton);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainPictureBox);
@@ -182,5 +194,6 @@
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private OpenFileDialog MainOpenFileDialog;
         private SaveFileDialog MainSaveFileDialog;
+        private ListView FiguresListView;
     }
 }

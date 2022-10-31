@@ -1,11 +1,11 @@
-using System.Drawing.Drawing2D;
+п»їusing System.Drawing.Drawing2D;
 
 namespace Paint.NET.Core.Forms
 {
     /// <summary>
     /// Main painting form.
     /// <br />
-    /// Основная paint-форма.
+    /// РћСЃРЅРѕРІРЅР°СЏ paint-С„РѕСЂРјР°.
     /// </summary>
     public partial class MainForm : Form
     {
@@ -25,7 +25,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Draw a line in the pictureBox.
         /// <br />
-        /// Нарисовать линию в pictureBox.
+        /// РќР°СЂРёСЃРѕРІР°С‚СЊ Р»РёРЅРёСЋ РІ pictureBox.
         /// </summary>
         private void OnDrawLine()
         {
@@ -54,7 +54,85 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Draw rectangle.
+        /// <br />
+        /// РќР°СЂРёСЃРѕРІР°С‚СЊ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє.
+        /// </summary>
+        private void OnDrawRectangle()
+        {
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+            Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
+            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+
+
+            int l, r, t, b;                     /*
+             
+                      рџ ™
+                      | T
+                      рџ ›
+             .__________________.
+          L  |                  |    R
+        <--->|                  |<---> 
+             |                  |
+             .__________________.
+                      рџ ™
+                    B | 
+                      рџ ›
+
+                                                */
+
+
+
+            if (_mouseEndingPositionCopy.Value.X > _mouseStartingPositionCopy.Value.X)
+            {
+                l = _mouseStartingPositionCopy.Value.X;
+                r = _mouseEndingPositionCopy.Value.X;
+            }
+            else
+            {
+                r = _mouseStartingPositionCopy.Value.X;
+                l = _mouseEndingPositionCopy.Value.X;
+            }
+
+            if (_mouseEndingPositionCopy.Value.Y > _mouseStartingPositionCopy.Value.Y)
+            {
+                t = _mouseStartingPositionCopy.Value.Y;
+                b = _mouseEndingPositionCopy.Value.Y;
+            }
+            else
+            {
+                b = _mouseStartingPositionCopy.Value.Y;
+                t = _mouseEndingPositionCopy.Value.Y;
+            }
+
+
+            Action<Graphics> newAction = (graphics) => { graphics.DrawRectangle(currentPenClone, Rectangle.FromLTRB(l,t,r,b)); };
+
+            _onPaintPreview = null;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+        }
+
+
+
+
         #endregion Module: Objects
+
+
+
 
 
 
@@ -66,7 +144,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Redraw main pircure box.
         /// <br />
-        /// Перерисовать "MainPictureBox".
+        /// РџРµСЂРµСЂРёСЃРѕРІР°С‚СЊ "MainPictureBox".
         /// </summary>
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
         {
@@ -87,7 +165,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Secure the state of the mouse buttons to depict either preview or the painted figure itself.
         /// <br />
-        /// Зафиксировать состояние кнопок мыши, чтобы правильно отобразить превью фигуры или саму фигуру.
+        /// Р—Р°С„РёРєСЃРёСЂРѕРІР°С‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РєРЅРѕРїРѕРє РјС‹С€Рё, С‡С‚РѕР±С‹ РїСЂР°РІРёР»СЊРЅРѕ РѕС‚РѕР±СЂР°Р·РёС‚СЊ РїСЂРµРІСЊСЋ С„РёРіСѓСЂС‹ РёР»Рё СЃР°РјСѓ С„РёРіСѓСЂСѓ.
         /// </summary>
         private void OnImageBoxMouseDown(object sender, MouseEventArgs e)
         {
@@ -133,7 +211,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle 'Open' button click.
         /// <br />
-        /// Обработать клик по кнопке "открыть".
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ РєР»РёРє РїРѕ РєРЅРѕРїРєРµ "РѕС‚РєСЂС‹С‚СЊ".
         /// </summary>
         private void OnOpenFileButtonClick(object sender, EventArgs e)
         {
@@ -155,7 +233,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle 'Save' button click.
         /// <br />
-        /// Обработать клик по кнопке "сохранить".
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ РєР»РёРє РїРѕ РєРЅРѕРїРєРµ "СЃРѕС…СЂР°РЅРёС‚СЊ".
         /// </summary>
         private void OnSaveButtonClick(object sender, EventArgs e)
         {
@@ -176,7 +254,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle 'Save as...' button click.
         /// <br />
-        /// Обработать клик по кнопке "сохранить как".
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ РєР»РёРє РїРѕ РєРЅРѕРїРєРµ "СЃРѕС…СЂР°РЅРёС‚СЊ РєР°Рє".
         /// </summary>
         private void OnSaveAsFileButtonClick(object sender, EventArgs e)
         {
@@ -211,7 +289,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle the instruments button click event.
         /// <br />
-        /// Обработать событие клика по кнопке "Instruments".
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ СЃРѕР±С‹С‚РёРµ РєР»РёРєР° РїРѕ РєРЅРѕРїРєРµ "Instruments".
         /// </summary>
         private void OnShowInstrumentsButtonClick(object sender, EventArgs e)
         {
@@ -237,7 +315,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle color button click.
         /// <br />
-        /// Обработать клик кнопки выбора цвета.
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ РєР»РёРє РєРЅРѕРїРєРё РІС‹Р±РѕСЂР° С†РІРµС‚Р°.
         /// </summary>
         private void OnColorButtonClick(object sender, EventArgs e)
         {
@@ -247,9 +325,31 @@ namespace Paint.NET.Core.Forms
             }
 
             MainPictureBox.Invalidate();
-
         }
 
+
+        /// <summary>
+        /// Handle selected figure changed.
+        /// <br />
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ РёР·РјРµРЅРµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕР№ С„РёРіСѓСЂС‹.
+        /// </summary>
+        private void OnFiguresListViewClick(object sender, EventArgs e)
+        {
+            if (FiguresListView.SelectedItems.Count > 0)
+            {
+                switch (FiguresListView.SelectedItems[0].ToolTipText)
+                {
+                    case "line":
+                        _currentAction = OnDrawLine;
+                        break;
+                    case "rectangle":
+                        _currentAction = OnDrawRectangle;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
 
         #endregion Module: Main Controls
@@ -275,7 +375,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the current opened file if any.
         /// <br />
-        /// Ссылка на текущий открытый файл, если он есть.
+        /// РЎСЃС‹Р»РєР° РЅР° С‚РµРєСѓС‰РёР№ РѕС‚РєСЂС‹С‚С‹Р№ С„Р°Р№Р», РµСЃР»Рё РѕРЅ РµСЃС‚СЊ.
         /// </summary>
         private static FileInfo? _currentFileInfo;
 
@@ -283,7 +383,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// True if the LMB was down but is not up, otherwise false.
         /// <br />
-        /// "True", если ЛКМ была нажата, но ещё не поднята, иначе "false".
+        /// "True", РµСЃР»Рё Р›РљРњ Р±С‹Р»Р° РЅР°Р¶Р°С‚Р°, РЅРѕ РµС‰С‘ РЅРµ РїРѕРґРЅСЏС‚Р°, РёРЅР°С‡Рµ "false".
         /// </summary>
         private static bool _isPainting;
 
@@ -291,7 +391,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the current pen.
         /// <br />
-        /// Ссылка на текущий карандаш.
+        /// РЎСЃС‹Р»РєР° РЅР° С‚РµРєСѓС‰РёР№ РєР°СЂР°РЅРґР°С€.
         /// </summary>
         private static Pen? _currentPen;
 
@@ -299,7 +399,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the current brush.
         /// <br />
-        /// Ссылка на текущую кисть.
+        /// РЎСЃС‹Р»РєР° РЅР° С‚РµРєСѓС‰СѓСЋ РєРёСЃС‚СЊ.
         /// </summary>
         private static Brush? _currentBrush;
 
@@ -307,7 +407,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the file that we take copy from to not lock the actual file.
         /// <br />
-        /// Ссылка на файл, который мы копируем, чтобы не блокировать основной файл.
+        /// РЎСЃС‹Р»РєР° РЅР° С„Р°Р№Р», РєРѕС‚РѕСЂС‹Р№ РјС‹ РєРѕРїРёСЂСѓРµРј, С‡С‚РѕР±С‹ РЅРµ Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ РѕСЃРЅРѕРІРЅРѕР№ С„Р°Р№Р».
         /// </summary>
         private static string? _copyFileName;
 
@@ -315,7 +415,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the temp directory that we reserve for the copied files.
         /// <br />
-        /// Ссылка на временную директорию, которую мы резервируем для копированных файлов.
+        /// РЎСЃС‹Р»РєР° РЅР° РІСЂРµРјРµРЅРЅСѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ, РєРѕС‚РѕСЂСѓСЋ РјС‹ СЂРµР·РµСЂРІРёСЂСѓРµРј РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРЅС‹С… С„Р°Р№Р»РѕРІ.
         /// </summary>
         private static DirectoryInfo? _tempDirectory;
 
@@ -328,7 +428,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// To be performed when we press the LMB to take a look at the preview of a chosen effect.
         /// <br />
-        /// Выполняется, когда мы нажимаем ЛКМ, чтобы взглянуть на превью выбранного эффекта.
+        /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ, РєРѕРіРґР° РјС‹ РЅР°Р¶РёРјР°РµРј Р›РљРњ, С‡С‚РѕР±С‹ РІР·РіР»СЏРЅСѓС‚СЊ РЅР° РїСЂРµРІСЊСЋ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЌС„С„РµРєС‚Р°.
         /// </summary>
         private Action<Graphics> _onPaintPreview;
 
@@ -336,7 +436,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// To be performed when we end the preview of the effect and actualy want to keep it on the canvas.
         /// <br />
-        /// Выполнится когда мы заверишм превью эффекта и захотим оставить его на холсте.
+        /// Р’С‹РїРѕР»РЅРёС‚СЃСЏ РєРѕРіРґР° РјС‹ Р·Р°РІРµСЂРёС€Рј РїСЂРµРІСЊСЋ СЌС„С„РµРєС‚Р° Рё Р·Р°С…РѕС‚РёРј РѕСЃС‚Р°РІРёС‚СЊ РµРіРѕ РЅР° С…РѕР»СЃС‚Рµ.
         /// </summary>
         private Action<Graphics> _onPaint;
 
@@ -344,7 +444,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// A reference to the current action chosen.
         /// <br />
-        /// Ссылка на выбраное действие.
+        /// РЎСЃС‹Р»РєР° РЅР° РІС‹Р±СЂР°РЅРѕРµ РґРµР№СЃС‚РІРёРµ.
         /// </summary>
         private Action _currentAction;
 
@@ -352,7 +452,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Starting coordinates of the mouse current coursor position.
         /// <br />
-        /// Текущие начальные координаты позиции курсора мыши.
+        /// РўРµРєСѓС‰РёРµ РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РјС‹С€Рё.
         /// </summary>
         private Point _mouseCurrentStartingPosition;
 
@@ -360,7 +460,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Ending coordinates of the mouse current coursor position.
         /// <br />
-        /// Текущие конечные координаты позиции курсора мыши.
+        /// РўРµРєСѓС‰РёРµ РєРѕРЅРµС‡РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РјС‹С€Рё.
         /// </summary>
         private Point _mouseCurrentEndingPosition;
 
@@ -380,11 +480,34 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Clear temp directory to dispose of copied files.
         /// <br />
-        /// Очистить временную папку, удаляя копии файлов.
+        /// РћС‡РёСЃС‚РёС‚СЊ РІСЂРµРјРµРЅРЅСѓСЋ РїР°РїРєСѓ, СѓРґР°Р»СЏСЏ РєРѕРїРёРё С„Р°Р№Р»РѕРІ.
         /// </summary>
         private void ClearTempFolder()
         {
             _tempDirectory?.GetFiles().ToList().ForEach(file => File.Delete(file.FullName));
+        }
+
+
+
+
+        private void FillFiguresListView()
+        {
+            ImageList imageList = new();
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/line20.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/rectangle20.png"));
+
+            ListViewItem lineItem = new();
+            lineItem.ToolTipText = "line";
+            lineItem.ImageIndex = 0;
+
+
+            ListViewItem squareItem = new();
+            squareItem.ToolTipText = "rectangle";
+            squareItem.ImageIndex = 1;
+
+            FiguresListView.SmallImageList = imageList;
+            FiguresListView.Items.Add(lineItem);
+            FiguresListView.Items.Add(squareItem);
         }
 
 
@@ -403,7 +526,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Handle MainForm closing event.
         /// <br />
-        /// Обработать событие закрытия формы "MainForm".
+        /// РћР±СЂР°Р±РѕС‚Р°С‚СЊ СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ "MainForm".
         /// </summary>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
@@ -416,13 +539,15 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Default constructor.
         /// <br />
-        /// Конструктор по умолчанию.
+        /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
         /// </summary>
         public MainForm()
         {
             ClearTempFolder();
 
             InitializeComponent();
+            
+            FillFiguresListView();
 
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
@@ -442,6 +567,7 @@ namespace Paint.NET.Core.Forms
             // CAUTION;
             _currentAction = OnDrawLine;
         }
+
 
 
 

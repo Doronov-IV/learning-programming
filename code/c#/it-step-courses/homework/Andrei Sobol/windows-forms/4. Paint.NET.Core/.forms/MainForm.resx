@@ -65,7 +65,7 @@
   <data name="MainPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABUYAAAI6AQMAAADRyAAWAAAABGdBTUEAALGPC/xhBQAAAANQTFRF////
-        p8QbyAAAAAlwSFlzAAAOwQAADsEBuJFr7QAAAHVJREFUeNrtwTEBAAAAwqD1T20NDyAAAAAAAAAAAAAA
+        p8QbyAAAAAlwSFlzAAAOvQAADr0BR/uQrQAAAHVJREFUeNrtwTEBAAAAwqD1T20NDyAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgUA16kwABalSaiwAAAABJRU5ErkJggg==
 </value>
@@ -96,7 +96,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainPictureBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 17</value>
@@ -171,7 +171,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>276, 17</value>
@@ -252,7 +252,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="ColorButton.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -264,7 +264,7 @@
     <value>NoControl</value>
   </data>
   <data name="ColorButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 52</value>
+    <value>9, 52</value>
   </data>
   <data name="ColorButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 50</value>
@@ -282,7 +282,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="MainColorDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -293,6 +293,27 @@
   <metadata name="MainSaveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>544, 17</value>
   </metadata>
+  <data name="FiguresListView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 52</value>
+  </data>
+  <data name="FiguresListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 50</value>
+  </data>
+  <data name="FiguresListView.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;FiguresListView.Name" xml:space="preserve">
+    <value>FiguresListView</value>
+  </data>
+  <data name="&gt;&gt;FiguresListView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FiguresListView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;FiguresListView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
