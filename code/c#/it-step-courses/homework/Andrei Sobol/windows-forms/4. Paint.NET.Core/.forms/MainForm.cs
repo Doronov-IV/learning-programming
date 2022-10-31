@@ -260,48 +260,121 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #region PROPERTIES
+        #region STATE
 
 
+
+        /// <summary>
+        /// A reference to the current opened file if any.
+        /// <br />
+        /// Ссылка на текущий открытый файл, если он есть.
+        /// </summary>
         private static FileInfo? _currentFileInfo;
 
+
+        /// <summary>
+        /// A reference to the current graphics.
+        /// <br />
+        /// Ссылка на текущий экземпляр класса "Graphics".
+        /// </summary>
         private static Graphics? _currentGraphics;
 
+
+        /// <summary>
+        /// A reference to the current bitmap.
+        /// <br />
+        /// Ссылка на текущий экземпляр класса "Bitmap".
+        /// </summary>
         private static Bitmap? _currentBitmap;
 
+
+        /// <summary>
+        /// True if the LMB was down but is not up, otherwise false.
+        /// <br />
+        /// "True", если ЛКМ была нажата, но ещё не поднята, иначе "false".
+        /// </summary>
         private static bool _isPainting;
 
+
+        /// <summary>
+        /// A reference to the current pen.
+        /// <br />
+        /// Ссылка на текущий карандаш.
+        /// </summary>
         private static Pen? _currentPen;
 
+
+        /// <summary>
+        /// A reference to the current brush.
+        /// <br />
+        /// Ссылка на текущую кисть.
+        /// </summary>
         private static Brush? _currentBrush;
 
 
+        /// <summary>
+        /// A reference to the file that we take copy from to not lock the actual file.
+        /// <br />
+        /// Ссылка на файл, который мы копируем, чтобы не блокировать основной файл.
+        /// </summary>
         private static string? _copyFileName;
 
+
+        /// <summary>
+        /// A reference to the temp directory that we reserve for the copied files.
+        /// <br />
+        /// Ссылка на временную директорию, которую мы резервируем для копированных файлов.
+        /// </summary>
         private static DirectoryInfo? _tempDirectory;
 
 
 
-        private static Point? _mouseStartPoint;
-        
-
-        private static Point? _mouseEndPoint;
+        ////////////////////////////////////////////////////////////////////////
 
 
-        public delegate void DrawObjectDelegate(Pen pen, float x, float y, float width, float height);
 
-
-        public event DrawObjectDelegate DrawObject;
-
-        private Action<Graphics> _onPaint;
+        /// <summary>
+        /// To be performed when we press the LMB to take a look at the preview of a chosen effect.
+        /// <br />
+        /// Выполняется, когда мы нажимаем ЛКМ, чтобы взглянуть на превью выбранного эффекта.
+        /// </summary>
         private Action<Graphics> _onPaintPreview;
+
+
+        /// <summary>
+        /// To be performed when we end the preview of the effect and actualy want to keep it on the canvas.
+        /// <br />
+        /// Выполнится когда мы заверишм превью эффекта и захотим оставить его на холсте.
+        /// </summary>
+        private Action<Graphics> _onPaint;
+
+
+        /// <summary>
+        /// A reference to the current action chosen.
+        /// <br />
+        /// Ссылка на выбраное действие.
+        /// </summary>
         private Action _currentAction;
 
+
+        /// <summary>
+        /// Starting coordinates of the mouse current coursor position.
+        /// <br />
+        /// Текущие начальные координаты позиции курсора мыши.
+        /// </summary>
         private Point _mouseCurrentStartingPosition;
+
+
+        /// <summary>
+        /// Ending coordinates of the mouse current coursor position.
+        /// <br />
+        /// Текущие конечные координаты позиции курсора мыши.
+        /// </summary>
         private Point _mouseCurrentEndingPosition;
 
 
-        #endregion PROPERTIES
+
+        #endregion STATE
 
 
 
@@ -333,8 +406,6 @@ namespace Paint.NET.Core.Forms
         private void ReassignGraphics()
         {
             _currentGraphics = Graphics.FromImage(_currentBitmap);
-
-            DrawObject += _currentGraphics.DrawRectangle;
         }
 
 
@@ -345,8 +416,6 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void DisposeGraphics()
         {
-            DrawObject -= _currentGraphics.DrawRectangle;
-
             _currentGraphics.Dispose();
         }
 
