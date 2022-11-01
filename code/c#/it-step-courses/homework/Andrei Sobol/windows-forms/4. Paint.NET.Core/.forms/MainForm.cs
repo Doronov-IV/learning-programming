@@ -118,6 +118,38 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Draw ellipse.
+        /// <br />
+        /// Нарисовать эллипс.
+        /// </summary>
+        private void OnDrawSomething()
+        {
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            var rekt = GetNewRectangleFromCoursorPosition();
+
+            Action<Graphics> newAction = (graphics) => { /*graphics.DrawImage();*/ };
+
+            _onPaintPreview = null;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+        }
+
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -402,6 +434,9 @@ namespace Paint.NET.Core.Forms
                     case "ellipse":
                         _currentAction = OnDrawEllipse;
                         break;
+                    case "arc":
+                        _currentAction = OnDrawSomething;
+                        break;
                     default:
                         break;
                 }
@@ -573,10 +608,15 @@ namespace Paint.NET.Core.Forms
             ellipseItem.ToolTipText = "ellipse";
             ellipseItem.ImageIndex = 2;
 
+            ListViewItem arcItem = new();
+            arcItem.ToolTipText = "arc";
+            arcItem.ImageIndex = 2;
+
             FigureListView.SmallImageList = imageList;
             FigureListView.Items.Add(lineItem);
             FigureListView.Items.Add(squareItem);
             FigureListView.Items.Add(ellipseItem);
+            FigureListView.Items.Add(arcItem);
         }
 
 

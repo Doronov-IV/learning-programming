@@ -294,7 +294,7 @@
     <value>544, 17</value>
   </metadata>
   <data name="FigureListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>128, 52</value>
+    <value>101, 52</value>
   </data>
   <data name="FigureListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 50</value>
