@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
 namespace Paint.NET.Core.Forms
 {
@@ -337,18 +338,9 @@ namespace Paint.NET.Core.Forms
             Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
 
             // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            _onPaint += newAction;
 
             MainPictureBox.Invalidate();
-            
         }
 
 
@@ -571,6 +563,8 @@ namespace Paint.NET.Core.Forms
         {
             if (FigureListView.SelectedItems.Count > 0)
             {
+                StyloListView.SelectedItems.Clear();
+
                 switch (FigureListView.SelectedItems[0].ToolTipText)
                 {
                     case "line":
@@ -605,6 +599,8 @@ namespace Paint.NET.Core.Forms
         {
             if (StyloListView.SelectedItems.Count > 0)
             {
+                FigureListView.SelectedItems.Clear();
+
                 switch (StyloListView.SelectedItems[0].ToolTipText)
                 {
                     case "pencil":
@@ -636,6 +632,41 @@ namespace Paint.NET.Core.Forms
 
 
         #endregion MODULES
+
+
+
+
+
+        #region WIN_32
+
+
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+
+        /// <inheritdoc cref="SetListViewItemSpacing(ListView, short, short)">
+        public int MakeLength(short lowPart, short highPart)
+        {
+            return (int)(((ushort)lowPart) | (uint)(highPart << 16));
+        }
+
+
+        /// <summary>
+        /// An auxiliary function that uses win32 api to set padding inside of ListView control.
+        /// <br />
+        /// Вспомогательная функция, которая задаёт padding внутри контролла "ListView".
+        /// </summary>
+        public void SetListViewItemSpacing(ListView listview, short leftPadding, short topPadding)
+        {
+            const int LVM_FIRST = 0x1000;
+            const int LVM_SETICONSPACING = LVM_FIRST + 53;
+            SendMessage(listview.Handle, LVM_SETICONSPACING, IntPtr.Zero, (IntPtr)MakeLength(leftPadding, topPadding));
+        }
+
+
+
+        #endregion WIN_32
 
 
 
@@ -803,6 +834,7 @@ namespace Paint.NET.Core.Forms
         private void FillFiguresListView()
         {
             ImageList imageList = new();
+            imageList.ImageSize = new Size(20,20);
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/line20.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/rectangle20.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/filled-square.png"));
@@ -835,11 +867,15 @@ namespace Paint.NET.Core.Forms
 
 
             FigureListView.SmallImageList = imageList;
+            
+            FigureListView.Scrollable = false;
+            //ColumnHeaderAutoResizeStyle.ColumnContent;
+            FigureListView.Items.Clear();
             FigureListView.Items.Add(lineItem);
             FigureListView.Items.Add(squareItem);
             FigureListView.Items.Add(filledSquareItem);
             FigureListView.Items.Add(ellipseItem);
-            FigureListView.Items.Add(filledEllipseItem);
+            FigureListView.Items.Add(filledEllipseItem); 
         }
 
 
@@ -879,11 +915,11 @@ namespace Paint.NET.Core.Forms
 
 
             StyloListView.SmallImageList = imageList;
+            StyloListView.Scrollable = false;
             StyloListView.Items.Add(pencilItem);
             StyloListView.Items.Add(penItem);
             StyloListView.Items.Add(brushItem);
             StyloListView.Items.Add(eraserItem);
-
         }
 
 
