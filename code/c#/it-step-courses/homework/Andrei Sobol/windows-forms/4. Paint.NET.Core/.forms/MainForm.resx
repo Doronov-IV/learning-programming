@@ -293,25 +293,25 @@
   <metadata name="MainSaveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>544, 17</value>
   </metadata>
-  <data name="FiguresListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 52</value>
+  <data name="FigureListView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>128, 52</value>
   </data>
-  <data name="FiguresListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 50</value>
+  <data name="FigureListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 50</value>
   </data>
-  <data name="FiguresListView.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="FigureListView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;FiguresListView.Name" xml:space="preserve">
-    <value>FiguresListView</value>
+  <data name="&gt;&gt;FigureListView.Name" xml:space="preserve">
+    <value>FigureListView</value>
   </data>
-  <data name="&gt;&gt;FiguresListView.Type" xml:space="preserve">
+  <data name="&gt;&gt;FigureListView.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FiguresListView.Parent" xml:space="preserve">
+  <data name="&gt;&gt;FigureListView.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;FiguresListView.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;FigureListView.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
