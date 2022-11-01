@@ -441,6 +441,7 @@ namespace Paint.NET.Core.Forms
             if (MainColorDialog.ShowDialog() == DialogResult.OK)
             {
                 _currentPen.Color = MainColorDialog.Color;
+                _currentBrush = new SolidBrush(MainColorDialog.Color);
             }
 
             MainPictureBox.Invalidate();
