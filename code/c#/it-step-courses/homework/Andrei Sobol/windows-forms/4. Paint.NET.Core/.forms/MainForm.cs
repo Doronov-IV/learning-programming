@@ -1,4 +1,5 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
 namespace Paint.NET.Core.Forms
@@ -8,7 +9,7 @@ namespace Paint.NET.Core.Forms
     /// <br />
     /// Основная paint-форма.
     /// </summary>
-    public partial class MainForm : Form
+    public partial class MainForm : Form, INotifyPropertyChanged
     {
 
 
@@ -40,7 +41,7 @@ namespace Paint.NET.Core.Forms
         private void AddAction(Action<Graphics> action)
         {
             // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
+            if (_isPainting && !_isDoodling)
             {
                 _onPaintPreview = null;
                 _onPaintPreview += action;
@@ -49,7 +50,10 @@ namespace Paint.NET.Core.Forms
             else
             {
                 _onPaint += action;
-                _performedActionsStack.Push(action);
+                PerformedActionsStack.Push(action);
+
+                if (_performedActionsStack.Count > 0) CancellActionButton.Enabled = true;
+                else CancellActionButton.Enabled = false;
             }
         }
 
@@ -62,11 +66,14 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void CancellLastAction()
         {
-            var lastAction = _performedActionsStack.Pop();
+            var lastAction = PerformedActionsStack.Pop();
 
             _onPaint -= lastAction;
 
-            _cancelledActionsStack.Push(lastAction);
+            CancelledActionsStack.Push(lastAction);
+
+            if (_performedActionsStack.Count > 0) CancellActionButton.Enabled = true;
+            else CancellActionButton.Enabled = false;
         }
 
 
@@ -78,11 +85,14 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void RepeatLastCancelledAction()
         {
-            var lastAction = _cancelledActionsStack.Pop();
+            var lastAction = CancelledActionsStack.Pop();
 
             _onPaint += lastAction;
 
-            _performedActionsStack.Push(lastAction);
+            PerformedActionsStack.Push(lastAction);
+
+            if (_cancelledActionsStack.Count > 0) RepeatActionButton.Enabled = true;
+            else RepeatActionButton.Enabled = false;
         }
 
 
@@ -221,11 +231,10 @@ namespace Paint.NET.Core.Forms
 
 
 
-
-
         ///////////////////////////////////////////////////////////////////////////////////////
-        ///                                  AUXILIARY                                      ///
-        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   AUXILIARY   ↓                            ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
 
 
 
@@ -368,13 +377,14 @@ namespace Paint.NET.Core.Forms
         /// </param>
         private void DrawWithSomething(Pen penCopy)
         {
+            _isDoodling = true;
+
             Point? _mouseStartingPositionCopy = new Point(_mousePreviousPosition.X, _mousePreviousPosition.Y);
             Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
 
             Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            _onPaint += newAction;
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
@@ -406,9 +416,9 @@ namespace Paint.NET.Core.Forms
 
 
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-        ///                             MOUSE EVENT HANDLERS                                 ///
-        ////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                       ↓   MOUSE EVENT HANDLERS   ↓                       ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
 
@@ -747,6 +757,9 @@ namespace Paint.NET.Core.Forms
         private static bool _isPainting;
 
 
+        private bool _isDoodling;
+
+
         /// <summary>
         /// A reference to the current pen.
         /// <br />
@@ -836,12 +849,27 @@ namespace Paint.NET.Core.Forms
         private Action _currentAction;
 
 
+        /// <inheritdoc cref="PerformedActionsStack"/>
+        private Stack<Action<Graphics>> _performedActionsStack;
+
+
+        /// <inheritdoc cref="CancelledActionsStack"/>
+        private Stack<Action<Graphics>> _cancelledActionsStack;
+
+
         /// <summary>
         /// The stack of all performed actions.
         /// <br />
         /// Стек всех совершённых действий.
         /// </summary>
-        private Stack<Action<Graphics>> _performedActionsStack;
+        public Stack<Action<Graphics>> PerformedActionsStack
+        {
+            get { return _performedActionsStack; }
+            set
+            {
+                _performedActionsStack = value;
+            }
+        }
 
 
         /// <summary>
@@ -849,8 +877,14 @@ namespace Paint.NET.Core.Forms
         /// <br />
         /// Стек всех отменённых действий.
         /// </summary>
-        private Stack<Action<Graphics>> _cancelledActionsStack;
-
+        public Stack<Action<Graphics>> CancelledActionsStack
+        {
+            get { return _cancelledActionsStack; }
+            set
+            {
+                _cancelledActionsStack = value;
+            }
+        }
 
 
 
@@ -1009,6 +1043,7 @@ namespace Paint.NET.Core.Forms
 
 
 
+
         /// <summary>
         /// Handle MainForm closing event.
         /// <br />
@@ -1050,6 +1085,9 @@ namespace Paint.NET.Core.Forms
 
             InitializeLists();
 
+            CancellActionButton.Enabled = false;
+            RepeatActionButton.Enabled = false;
+
             _performedActionsStack = new();
             _cancelledActionsStack = new();
 
@@ -1073,6 +1111,34 @@ namespace Paint.NET.Core.Forms
             // DEFAULT ACTION;
             _currentAction = OnDrawWithPencil;
         }
+
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
 
 
 
