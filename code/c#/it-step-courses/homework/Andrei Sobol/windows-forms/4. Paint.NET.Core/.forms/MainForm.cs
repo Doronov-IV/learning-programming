@@ -49,11 +49,11 @@ namespace Paint.NET.Core.Forms
             // if we have already done that and we need to draw whatever we previewed;
             else
             {
+                if (_isDoodling) _doodleAction += action;
                 _onPaint += action;
                 PerformedActionsStack.Push(action);
 
-                if (_performedActionsStack.Count > 0) CancellActionButton.Enabled = true;
-                else CancellActionButton.Enabled = false;
+                //CheckStacksSize();
             }
         }
 
@@ -72,8 +72,7 @@ namespace Paint.NET.Core.Forms
 
             CancelledActionsStack.Push(lastAction);
 
-            if (_performedActionsStack.Count > 0) CancellActionButton.Enabled = true;
-            else CancellActionButton.Enabled = false;
+            //CheckStacksSize();
         }
 
 
@@ -91,8 +90,23 @@ namespace Paint.NET.Core.Forms
 
             PerformedActionsStack.Push(lastAction);
 
-            if (_cancelledActionsStack.Count > 0) RepeatActionButton.Enabled = true;
+            //CheckStacksSize();
+        }
+
+
+
+        /// <summary>
+        /// Check what stack has zero size.
+        /// <br />
+        /// .
+        /// </summary>
+        private void CheckStacksSize()
+        {
+            if (CancelledActionsStack.Count > 0) RepeatActionButton.Enabled = true;
             else RepeatActionButton.Enabled = false;
+
+            if (PerformedActionsStack.Count > 0) CancellActionButton.Enabled = true;
+            else CancellActionButton.Enabled = false;
         }
 
 
@@ -440,6 +454,8 @@ namespace Paint.NET.Core.Forms
         private void OnImageBoxMouseUp(object sender, MouseEventArgs e)
         {
             _isPainting = false;
+
+            if (_isDoodling) _isDoodling = false;
 
             _currentAction.Invoke();
         }
@@ -868,6 +884,7 @@ namespace Paint.NET.Core.Forms
             set
             {
                 _performedActionsStack = value;
+                CheckStacksSize();
             }
         }
 
@@ -883,8 +900,17 @@ namespace Paint.NET.Core.Forms
             set
             {
                 _cancelledActionsStack = value;
+                CheckStacksSize();
             }
         }
+
+
+        /// <summary>
+        /// An action that has all those actions that pile when user paints with stylos.
+        /// <br />
+        /// Action, который хранит в себе все действия, которые накапливаются, когда позователь пишет пером.
+        /// </summary>
+        public Action<Graphics> _doodleAction;
 
 
 
