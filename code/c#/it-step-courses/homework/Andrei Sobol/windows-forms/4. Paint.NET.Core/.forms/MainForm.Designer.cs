@@ -47,6 +47,8 @@
             this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.FigureListView = new System.Windows.Forms.ListView();
             this.StyloListView = new System.Windows.Forms.ListView();
+            this.RepeatActionButton = new System.Windows.Forms.Button();
+            this.CancellActionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -155,7 +157,6 @@
             this.FigureListView.Name = "FigureListView";
             this.FigureListView.TileSize = new System.Drawing.Size(20, 20);
             this.FigureListView.UseCompatibleStateImageBehavior = false;
-            this.FigureListView.View = System.Windows.Forms.View.SmallIcon;
             this.FigureListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewSelectedIndexChanged);
             // 
             // StyloListView
@@ -164,14 +165,29 @@
             this.StyloListView.MultiSelect = false;
             this.StyloListView.Name = "StyloListView";
             this.StyloListView.UseCompatibleStateImageBehavior = false;
-            this.StyloListView.View = System.Windows.Forms.View.SmallIcon;
             this.StyloListView.SelectedIndexChanged += new System.EventHandler(this.OnStyloListViewSelectedIndexChanged);
+            // 
+            // RepeatActionButton
+            // 
+            resources.ApplyResources(this.RepeatActionButton, "RepeatActionButton");
+            this.RepeatActionButton.Name = "RepeatActionButton";
+            this.RepeatActionButton.UseVisualStyleBackColor = true;
+            this.RepeatActionButton.Click += new System.EventHandler(this.OnRepeatActionButtonClick);
+            // 
+            // CancellActionButton
+            // 
+            resources.ApplyResources(this.CancellActionButton, "CancellActionButton");
+            this.CancellActionButton.Name = "CancellActionButton";
+            this.CancellActionButton.UseVisualStyleBackColor = true;
+            this.CancellActionButton.Click += new System.EventHandler(this.OnCancellActionButtonClick);
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.CancellActionButton);
+            this.Controls.Add(this.RepeatActionButton);
             this.Controls.Add(this.StyloListView);
             this.Controls.Add(this.FigureListView);
             this.Controls.Add(this.ColorButton);
@@ -211,5 +227,7 @@
         private SaveFileDialog MainSaveFileDialog;
         private ListView FigureListView;
         private ListView StyloListView;
+        private Button RepeatActionButton;
+        private Button CancellActionButton;
     }
 }

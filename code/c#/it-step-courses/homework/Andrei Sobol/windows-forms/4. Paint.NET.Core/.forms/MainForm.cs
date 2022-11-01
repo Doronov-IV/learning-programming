@@ -18,7 +18,92 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #region Module: Objects
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   ACTIONS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+
+
+        #region Module: Action handling
+
+
+
+
+        /// <summary>
+        /// Add an action to the main '_onPaint' delegate and to the stack of actions.
+        /// <br />
+        /// Добавить действие в основной делегат "_onPaint" и в стек действий.
+        /// </summary>
+        private void AddAction(Action<Graphics> action)
+        {
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += action;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += action;
+                _performedActionsStack.Push(action);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Cancell last action and handle it from 'performed' stack to the 'cancelled' ones.
+        /// <br />
+        /// Отменить последнее действие, и переложить его из стека "выполненых" в "отменённые".
+        /// </summary>
+        private void CancellLastAction()
+        {
+            var lastAction = _performedActionsStack.Pop();
+
+            _onPaint -= lastAction;
+
+            _cancelledActionsStack.Push(lastAction);
+        }
+
+
+
+        /// <summary>
+        /// Repeat last cancelled action and handle it from 'cancelled' stack to the 'performed' ones.
+        /// <br />
+        /// Повторить последнее отменённое действие, и переложить его из стека "отменённых" в "выполненные".
+        /// </summary>
+        private void RepeatLastCancelledAction()
+        {
+            var lastAction = _cancelledActionsStack.Pop();
+
+            _onPaint += lastAction;
+
+            _performedActionsStack.Push(lastAction);
+        }
+
+
+
+
+        #endregion Module: delegate handling
+
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   DRAWING   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+
+
+        #region Module: Figures
 
 
 
@@ -38,17 +123,7 @@ namespace Paint.NET.Core.Forms
 
             _onPaintPreview = null;
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
@@ -70,20 +145,11 @@ namespace Paint.NET.Core.Forms
 
             _onPaintPreview = null;
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
+
 
 
         /// <summary>
@@ -101,17 +167,7 @@ namespace Paint.NET.Core.Forms
 
             _onPaintPreview = null;
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
@@ -133,20 +189,11 @@ namespace Paint.NET.Core.Forms
 
             _onPaintPreview = null;
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
+
 
 
         /// <summary>
@@ -164,17 +211,7 @@ namespace Paint.NET.Core.Forms
 
             _onPaintPreview = null;
 
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
+            AddAction(newAction);
 
             MainPictureBox.Invalidate();
         }
@@ -249,7 +286,7 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #endregion Module: Objects
+        #endregion Module: Figures
 
 
 
@@ -312,10 +349,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnDrawWithEraser()
         {
-            _currentPen = new(Color.White, 20);
-            Pen currentPenClone = _currentPen.Clone() as Pen;
+            Pen penCopy = new(Color.White, 20);
 
-            DrawWithSomething(currentPenClone);
+            DrawWithSomething(penCopy);
         }
 
         
@@ -346,7 +382,6 @@ namespace Paint.NET.Core.Forms
 
 
         #endregion Module: Stylo
-
 
 
 
@@ -426,6 +461,14 @@ namespace Paint.NET.Core.Forms
 
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                            ↓   UI CONTROLS   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+
+
         #region Module: Top Text Menu Strip
 
 
@@ -498,10 +541,6 @@ namespace Paint.NET.Core.Forms
 
 
 
-         //********************************************************//
-        ////////////////////////////////////////////////////////////
-
-
 
 
         #region Module: Top Toolstrip Buttons
@@ -524,9 +563,6 @@ namespace Paint.NET.Core.Forms
 
 
 
-
-        //********************************************************//
-       ////////////////////////////////////////////////////////////
 
 
 
@@ -623,6 +659,43 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Handle cancell last action button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке отмены последнего действия.
+        /// </summary>
+        private void OnCancellActionButtonClick(object sender, EventArgs e)
+        { 
+            if (_performedActionsStack.Count > 0)
+            {
+                CancellLastAction();
+
+                if (_performedActionsStack.Count == 0) CancellActionButton.Enabled = false;
+            }
+
+            MainPictureBox.Refresh();
+        }
+
+
+        /// <summary>
+        /// Handle repeat cancelled action button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке повтора отменённого действия.
+        /// </summary>
+        private void OnRepeatActionButtonClick(object sender, EventArgs e)
+        {
+            if (_cancelledActionsStack.Count > 0)
+            {
+                RepeatLastCancelledAction();
+
+                if (_cancelledActionsStack.Count == 0) RepeatActionButton.Enabled = false;
+            }
+
+            MainPictureBox.Refresh();
+        }
+
+
+
         #endregion Module: Main Controls
 
 
@@ -637,42 +710,16 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #region WIN_32
-
-
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
-
-
-        /// <inheritdoc cref="SetListViewItemSpacing(ListView, short, short)">
-        public int MakeLength(short lowPart, short highPart)
-        {
-            return (int)(((ushort)lowPart) | (uint)(highPart << 16));
-        }
-
-
-        /// <summary>
-        /// An auxiliary function that uses win32 api to set padding inside of ListView control.
-        /// <br />
-        /// Вспомогательная функция, которая задаёт padding внутри контролла "ListView".
-        /// </summary>
-        public void SetListViewItemSpacing(ListView listview, short leftPadding, short topPadding)
-        {
-            const int LVM_FIRST = 0x1000;
-            const int LVM_SETICONSPACING = LVM_FIRST + 53;
-            SendMessage(listview.Handle, LVM_SETICONSPACING, IntPtr.Zero, (IntPtr)MakeLength(leftPadding, topPadding));
-        }
-
-
-
-        #endregion WIN_32
-
-
-
-
 
         #region STATE
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                            ↓   PAINTING   ↓                              ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
 
 
 
@@ -733,23 +780,35 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// A reference to the file that we take copy from to not lock the actual file.
+        /// Starting coordinates of the mouse current coursor position.
         /// <br />
-        /// Ссылка на файл, который мы копируем, чтобы не блокировать основной файл.
+        /// Текущие начальные координаты позиции курсора мыши.
         /// </summary>
-        private static string? _copyFileName;
+        private Point _mouseCurrentStartingPosition;
 
 
         /// <summary>
-        /// A reference to the temp directory that we reserve for the copied files.
+        /// Ending coordinates of the mouse current coursor position.
         /// <br />
-        /// Ссылка на временную директорию, которую мы резервируем для копированных файлов.
+        /// Текущие конечные координаты позиции курсора мыши.
         /// </summary>
-        private static DirectoryInfo? _tempDirectory;
+        private Point _mouseCurrentEndingPosition;
+
+
+        /// <summary>
+        /// The previous position of the mouse coursor.
+        /// <br />
+        /// Предыдущая позиция курсора мыши.
+        /// </summary>
+        private Point _mousePreviousPosition;
 
 
 
-        ////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   ACTIONS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
 
 
 
@@ -778,27 +837,44 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// Starting coordinates of the mouse current coursor position.
+        /// The stack of all performed actions.
         /// <br />
-        /// Текущие начальные координаты позиции курсора мыши.
+        /// Стек всех совершённых действий.
         /// </summary>
-        private Point _mouseCurrentStartingPosition;
+        private Stack<Action<Graphics>> _performedActionsStack;
 
 
         /// <summary>
-        /// Ending coordinates of the mouse current coursor position.
+        /// The stack of all cancelled actoins.
         /// <br />
-        /// Текущие конечные координаты позиции курсора мыши.
+        /// Стек всех отменённых действий.
         /// </summary>
-        private Point _mouseCurrentEndingPosition;
+        private Stack<Action<Graphics>> _cancelledActionsStack;
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   OTHER   ↓                               ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
 
 
         /// <summary>
-        /// The previous position of the mouse coursor.
+        /// A reference to the file that we take copy from to not lock the actual file.
         /// <br />
-        /// Предыдущая позиция курсора мыши.
+        /// Ссылка на файл, который мы копируем, чтобы не блокировать основной файл.
         /// </summary>
-        private Point _mousePreviousPosition;
+        private static string? _copyFileName;
+
+
+        /// <summary>
+        /// A reference to the temp directory that we reserve for the copied files.
+        /// <br />
+        /// Ссылка на временную директорию, которую мы резервируем для копированных файлов.
+        /// </summary>
+        private static DirectoryInfo? _tempDirectory;
 
 
 
@@ -866,9 +942,8 @@ namespace Paint.NET.Core.Forms
             filledEllipseItem.ImageIndex = 4;
 
 
-            FigureListView.SmallImageList = imageList;
+            FigureListView.LargeImageList = imageList;
             
-            FigureListView.Scrollable = false;
             //ColumnHeaderAutoResizeStyle.ColumnContent;
             FigureListView.Items.Clear();
             FigureListView.Items.Add(lineItem);
@@ -882,9 +957,9 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// .
+        /// Fill the StyloListView with data.
         /// <br />
-        /// .
+        /// Заполнить список рисовалок.
         /// </summary>
         private void FillStyloListView()
         {
@@ -914,8 +989,7 @@ namespace Paint.NET.Core.Forms
             eraserItem.ImageIndex = 3;
 
 
-            StyloListView.SmallImageList = imageList;
-            StyloListView.Scrollable = false;
+            StyloListView.LargeImageList = imageList;
             StyloListView.Items.Add(pencilItem);
             StyloListView.Items.Add(penItem);
             StyloListView.Items.Add(brushItem);
@@ -924,7 +998,7 @@ namespace Paint.NET.Core.Forms
 
 
 
-            #endregion AUXILIARY
+        #endregion AUXILIARY
 
 
 
@@ -976,6 +1050,9 @@ namespace Paint.NET.Core.Forms
 
             InitializeLists();
 
+            _performedActionsStack = new();
+            _cancelledActionsStack = new();
+
             _currentColor = Color.Black;
 
             _currentBrush = new SolidBrush(Color.Black);
@@ -993,14 +1070,15 @@ namespace Paint.NET.Core.Forms
             _tempDirectory = new DirectoryInfo("../../../.temp");
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
 
-            // CAUTION;
+            // DEFAULT ACTION;
             _currentAction = OnDrawWithPencil;
         }
 
 
 
+
         #endregion CONSTRUCTION
 
-        
+
     }
 }
