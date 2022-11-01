@@ -255,6 +255,80 @@ namespace Paint.NET.Core.Forms
 
 
 
+        #region Module: Stylo
+
+
+
+        private void OnDrawWithPencil()
+        {
+            _currentPen = new(_currentColor.Value, 1);
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            DrawWithSomething(currentPenClone);
+        }
+
+
+        private void OnDrawWithPen()
+        {
+            _currentPen = new(_currentColor.Value, 2);
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            DrawWithSomething(currentPenClone);
+        }
+
+
+        private void OnDrawWithBrush()
+        {
+            _currentPen = new(_currentColor.Value, 5);
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            DrawWithSomething(currentPenClone);
+        }
+
+
+        private void OnDrawWithEraser()
+        {
+            _currentPen = new(Color.White, 20);
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            DrawWithSomething(currentPenClone);
+        }
+
+
+        private void DrawWithSomething(Pen penCopy)
+        {
+            Point? _mouseStartingPositionCopy = new Point(_mousePreviousPosition.X, _mousePreviousPosition.Y);
+            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+
+            if (_mouseStartingPositionCopy.Value.X != 0 && _mouseStartingPositionCopy.Value.Y != 0) 
+            {
+
+                Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
+
+                // if we are painting, i.e. clicked with LMB and aiming the figure; 
+                if (_isPainting)
+                {
+                    _onPaintPreview += newAction;
+                }
+                // if we have already done that and we need to draw whatever we previewed;
+                else
+                {
+                    _onPaint += newAction;
+                }
+
+                MainPictureBox.Invalidate();
+            }
+        }
+
+
+
+        #endregion Module: Stylo
+
+
+
+
+
+
 
         #region Module: Image Box 
 
@@ -282,13 +356,13 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// Secure the state of the mouse buttons to depict either preview or the painted figure itself.
+        /// Secure the state of the mouse buttons to depict either preview or the painted picture itself.
         /// <br />
-        /// Зафиксировать состояние кнопок мыши, чтобы правильно отобразить превью фигуры или саму фигуру.
+        /// Зафиксировать состояние кнопок мыши, чтобы правильно отобразить превью фигуры или сам нарисованный объект.
         /// </summary>
         private void OnImageBoxMouseDown(object sender, MouseEventArgs e)
         {
-            _mouseCurrentStartingPosition = e.Location;
+            _mousePreviousPosition = _mouseCurrentStartingPosition = e.Location;
 
             _isPainting = true;
         }
@@ -308,6 +382,8 @@ namespace Paint.NET.Core.Forms
         {
             if (_isPainting)
             {
+                _mousePreviousPosition = _mouseCurrentEndingPosition;
+
                 _mouseCurrentEndingPosition = e.Location;
 
                 _currentAction.Invoke();
@@ -440,8 +516,10 @@ namespace Paint.NET.Core.Forms
         {
             if (MainColorDialog.ShowDialog() == DialogResult.OK)
             {
-                _currentPen.Color = MainColorDialog.Color;
-                _currentBrush = new SolidBrush(MainColorDialog.Color);
+                _currentColor = MainColorDialog.Color;
+                _currentPen.Color = _currentColor.Value;
+                _currentBrush = new SolidBrush(_currentColor.Value);
+
             }
 
             MainPictureBox.Invalidate();
@@ -453,7 +531,7 @@ namespace Paint.NET.Core.Forms
         /// <br />
         /// Обработать изменение выбранной фигуры.
         /// </summary>
-        private void OnFiguresListViewClick(object sender, EventArgs e)
+        private void OnFiguresListViewSelectedIndexChanged(object sender, EventArgs e)
         {
             if (FigureListView.SelectedItems.Count > 0)
             {
@@ -473,6 +551,31 @@ namespace Paint.NET.Core.Forms
                         break;
                     case "filled ellipse":
                         _currentAction = OnDrawFilledEllipse;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        private void OnStyloListViewSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (StyloListView.SelectedItems.Count > 0)
+            {
+                switch (StyloListView.SelectedItems[0].ToolTipText)
+                {
+                    case "pencil":
+                        _currentAction = OnDrawWithPencil;
+                        break;
+                    case "pen":
+                        _currentAction = OnDrawWithPen;
+                        break;
+                    case "brush":
+                        _currentAction = OnDrawWithBrush;
+                        break;
+                    case "eraser":
+                        _currentAction = OnDrawWithEraser;
                         break;
                     default:
                         break;
@@ -526,11 +629,27 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
+        /// An eraser pen, writing in white color.
+        /// <br />
+        /// Стирательная резинка, окрашивающая в белый цвет.
+        /// </summary>
+        private static Pen? _eraser;
+
+
+        /// <summary>
         /// A reference to the current brush.
         /// <br />
         /// Ссылка на текущую кисть.
         /// </summary>
         private static Brush? _currentBrush;
+
+
+        /// <summary>
+        /// Current color.
+        /// <br />
+        /// Текущий цвет.
+        /// </summary>
+        private static Color? _currentColor;
 
 
         /// <summary>
@@ -592,6 +711,14 @@ namespace Paint.NET.Core.Forms
         /// Текущие конечные координаты позиции курсора мыши.
         /// </summary>
         private Point _mouseCurrentEndingPosition;
+
+
+        /// <summary>
+        /// The previous position of the mouse coursor.
+        /// <br />
+        /// Предыдущая позиция курсора мыши.
+        /// </summary>
+        private Point _mousePreviousPosition;
 
 
 
@@ -668,7 +795,51 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #endregion AUXILIARY
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        private void FillStyloListView()
+        {
+            ImageList imageList = new();
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/pencil.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/pen.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/brush.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/eraser.png"));
+
+            ListViewItem pencilItem = new();
+            pencilItem.ToolTipText = "pencil";
+            pencilItem.ImageIndex = 0;
+
+
+            ListViewItem penItem = new();
+            penItem.ToolTipText = "pen";
+            penItem.ImageIndex = 1;
+
+
+            ListViewItem brushItem = new();
+            brushItem.ToolTipText = "brush";
+            brushItem.ImageIndex = 2;
+
+
+            ListViewItem eraserItem = new();
+            eraserItem.ToolTipText = "eraser";
+            eraserItem.ImageIndex = 3;
+
+
+            StyloListView.SmallImageList = imageList;
+            StyloListView.Items.Add(pencilItem);
+            StyloListView.Items.Add(penItem);
+            StyloListView.Items.Add(brushItem);
+            StyloListView.Items.Add(eraserItem);
+
+        }
+
+
+
+            #endregion AUXILIARY
 
 
 
@@ -692,6 +863,14 @@ namespace Paint.NET.Core.Forms
         }
 
 
+        private void InitializeLists()
+        {
+            FillFiguresListView();
+
+            FillStyloListView();
+        }
+
+
         /// <summary>
         /// Default constructor.
         /// <br />
@@ -702,8 +881,10 @@ namespace Paint.NET.Core.Forms
             ClearTempFolder();
 
             InitializeComponent();
-            
-            FillFiguresListView();
+
+            InitializeLists();
+
+            _currentColor = Color.Black;
 
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
@@ -721,8 +902,9 @@ namespace Paint.NET.Core.Forms
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
 
             // CAUTION;
-            _currentAction = OnDrawLine;
+            _currentAction = OnDrawWithPencil;
         }
+
 
 
 
@@ -734,6 +916,6 @@ namespace Paint.NET.Core.Forms
 
         #endregion CONSTRUCTION
 
-
+        
     }
 }

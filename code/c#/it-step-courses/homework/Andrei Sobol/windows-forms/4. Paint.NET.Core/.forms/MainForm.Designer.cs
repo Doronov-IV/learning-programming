@@ -47,6 +47,7 @@
             this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.FigureListView = new System.Windows.Forms.ListView();
             this.FiguresFillingComboBox = new System.Windows.Forms.ComboBox();
+            this.StyloListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -154,7 +155,7 @@
             this.FigureListView.TileSize = new System.Drawing.Size(20, 20);
             this.FigureListView.UseCompatibleStateImageBehavior = false;
             this.FigureListView.View = System.Windows.Forms.View.SmallIcon;
-            this.FigureListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewClick);
+            this.FigureListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewSelectedIndexChanged);
             // 
             // FiguresFillingComboBox
             // 
@@ -162,11 +163,20 @@
             resources.ApplyResources(this.FiguresFillingComboBox, "FiguresFillingComboBox");
             this.FiguresFillingComboBox.Name = "FiguresFillingComboBox";
             // 
+            // StyloListView
+            // 
+            resources.ApplyResources(this.StyloListView, "StyloListView");
+            this.StyloListView.Name = "StyloListView";
+            this.StyloListView.UseCompatibleStateImageBehavior = false;
+            this.StyloListView.View = System.Windows.Forms.View.SmallIcon;
+            this.StyloListView.SelectedIndexChanged += new System.EventHandler(this.OnStyloListViewSelectedIndexChanged);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.StyloListView);
             this.Controls.Add(this.FiguresFillingComboBox);
             this.Controls.Add(this.FigureListView);
             this.Controls.Add(this.ColorButton);
@@ -206,5 +216,6 @@
         private SaveFileDialog MainSaveFileDialog;
         private ListView FigureListView;
         private ComboBox FiguresFillingComboBox;
+        private ListView StyloListView;
     }
 }
