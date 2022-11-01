@@ -259,6 +259,11 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Draw something with 'pencil'. Width is set to 1.
+        /// <br />
+        /// Нарисовать что-то "карандашом". Ширина выставлена на 1.
+        /// </summary>
         private void OnDrawWithPencil()
         {
             _currentPen = new(_currentColor.Value, 1);
@@ -268,6 +273,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Draw something with "pen". Width is set to 2.
+        /// <br />
+        /// Нарисовать что-то "ручкой". Ширина выставлена на 2.
+        /// </summary>
         private void OnDrawWithPen()
         {
             _currentPen = new(_currentColor.Value, 2);
@@ -277,6 +288,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Draw something with "brush". Width is set to 5.
+        /// <br />
+        /// Нарисовать что-то "кистью". Ширина выставлена на 5.
+        /// </summary>
         private void OnDrawWithBrush()
         {
             _currentPen = new(_currentColor.Value, 5);
@@ -286,6 +303,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Draw with white 20px-width brush.
+        /// <br />
+        /// Нарисовать при помощи белой кисти, толщиной в 20 п.
+        /// </summary>
         private void OnDrawWithEraser()
         {
             _currentPen = new(Color.White, 20);
@@ -294,30 +317,38 @@ namespace Paint.NET.Core.Forms
             DrawWithSomething(currentPenClone);
         }
 
+        
 
+        /// <summary>
+        /// Draw a doodle-picture with current controler.
+        /// <br />
+        /// Нарисовать свой простой рисунок при помощи текущего контроллера.
+        /// </summary>
+        /// <param name="penCopy">
+        /// A copy of the current pen instance.
+        /// <br />
+        /// Копия экземпляра "current pen".
+        /// </param>
         private void DrawWithSomething(Pen penCopy)
         {
             Point? _mouseStartingPositionCopy = new Point(_mousePreviousPosition.X, _mousePreviousPosition.Y);
             Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
 
-            if (_mouseStartingPositionCopy.Value.X != 0 && _mouseStartingPositionCopy.Value.Y != 0) 
+            Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
             {
-
-                Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
-
-                // if we are painting, i.e. clicked with LMB and aiming the figure; 
-                if (_isPainting)
-                {
-                    _onPaintPreview += newAction;
-                }
-                // if we have already done that and we need to draw whatever we previewed;
-                else
-                {
-                    _onPaint += newAction;
-                }
-
-                MainPictureBox.Invalidate();
+                _onPaintPreview += newAction;
             }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+            
         }
 
 
@@ -387,6 +418,10 @@ namespace Paint.NET.Core.Forms
                 _mouseCurrentEndingPosition = e.Location;
 
                 _currentAction.Invoke();
+            }
+            else
+            {
+                _mousePreviousPosition = _mouseCurrentEndingPosition = e.Location;
             }
         }
 
@@ -526,10 +561,11 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
         /// <summary>
         /// Handle selected figure changed.
         /// <br />
-        /// Обработать изменение выбранной фигуры.
+        /// Обработать изменение выбора фигуры.
         /// </summary>
         private void OnFiguresListViewSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -559,6 +595,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Handle selected stylo changed.
+        /// <br />
+        /// Обработать изменение выбора пера.
+        /// </summary>
         private void OnStyloListViewSelectedIndexChanged(object sender, EventArgs e)
         {
             if (StyloListView.SelectedItems.Count > 0)
@@ -584,6 +626,7 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
         #endregion Module: Main Controls
 
 
@@ -601,6 +644,12 @@ namespace Paint.NET.Core.Forms
         #region STATE
 
 
+
+        /// <summary>
+        /// A reference to the current bitmap instance.
+        /// <br />
+        /// Ссылка на экземпляр текущего Bitmap.
+        /// </summary>
         private static Bitmap? _currentBitmap;
 
 
@@ -863,12 +912,19 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Fill the list-view's with data.
+        /// <br />
+        /// Заполнить все list-view данными.
+        /// </summary>
         private void InitializeLists()
         {
             FillFiguresListView();
 
             FillStyloListView();
         }
+
 
 
         /// <summary>
@@ -904,13 +960,6 @@ namespace Paint.NET.Core.Forms
             // CAUTION;
             _currentAction = OnDrawWithPencil;
         }
-
-
-
-
-
-
-
 
 
 
