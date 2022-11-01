@@ -65,7 +65,7 @@
   <data name="MainPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABUYAAAI6AQMAAADRyAAWAAAABGdBTUEAALGPC/xhBQAAAANQTFRF////
-        p8QbyAAAAAlwSFlzAAAOvQAADr0BR/uQrQAAAHVJREFUeNrtwTEBAAAAwqD1T20NDyAAAAAAAAAAAAAA
+        p8QbyAAAAAlwSFlzAAAOvAAADrwBlbxySQAAAHVJREFUeNrtwTEBAAAAwqD1T20NDyAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgUA16kwABalSaiwAAAABJRU5ErkJggg==
 </value>
@@ -297,7 +297,7 @@
     <value>100, 52</value>
   </data>
   <data name="FiguresListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 50</value>
+    <value>122, 50</value>
   </data>
   <data name="FiguresListView.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

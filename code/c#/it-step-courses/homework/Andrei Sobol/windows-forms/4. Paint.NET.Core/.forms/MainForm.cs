@@ -121,8 +121,9 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        ///                                    AUXILIARY                                    ///
+        ///                                  AUXILIARY                                      ///
         ///////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -388,9 +389,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnFiguresListViewClick(object sender, EventArgs e)
         {
-            if (FiguresListView.SelectedItems.Count > 0)
+            if (FigureListView.SelectedItems.Count > 0)
             {
-                switch (FiguresListView.SelectedItems[0].ToolTipText)
+                switch (FigureListView.SelectedItems[0].ToolTipText)
                 {
                     case "line":
                         _currentAction = OnDrawLine;
@@ -572,10 +573,10 @@ namespace Paint.NET.Core.Forms
             ellipseItem.ToolTipText = "ellipse";
             ellipseItem.ImageIndex = 2;
 
-            FiguresListView.SmallImageList = imageList;
-            FiguresListView.Items.Add(lineItem);
-            FiguresListView.Items.Add(squareItem);
-            FiguresListView.Items.Add(ellipseItem);
+            FigureListView.SmallImageList = imageList;
+            FigureListView.Items.Add(lineItem);
+            FigureListView.Items.Add(squareItem);
+            FigureListView.Items.Add(ellipseItem);
         }
 
 

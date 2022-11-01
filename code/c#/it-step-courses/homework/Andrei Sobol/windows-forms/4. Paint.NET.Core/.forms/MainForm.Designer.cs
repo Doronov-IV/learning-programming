@@ -45,7 +45,7 @@
             this.MainColorDialog = new System.Windows.Forms.ColorDialog();
             this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.FiguresListView = new System.Windows.Forms.ListView();
+            this.FigureListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -145,20 +145,22 @@
             this.ColorButton.UseVisualStyleBackColor = false;
             this.ColorButton.Click += new System.EventHandler(this.OnColorButtonClick);
             // 
-            // FiguresListView
+            // FigureListView
             // 
-            resources.ApplyResources(this.FiguresListView, "FiguresListView");
-            this.FiguresListView.Name = "FiguresListView";
-            this.FiguresListView.UseCompatibleStateImageBehavior = false;
-            this.FiguresListView.View = System.Windows.Forms.View.SmallIcon;
-            this.FiguresListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewClick);
+            this.FigureListView.AutoArrange = false;
+            resources.ApplyResources(this.FigureListView, "FigureListView");
+            this.FigureListView.Name = "FigureListView";
+            this.FigureListView.TileSize = new System.Drawing.Size(20, 20);
+            this.FigureListView.UseCompatibleStateImageBehavior = false;
+            this.FigureListView.View = System.Windows.Forms.View.SmallIcon;
+            this.FigureListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewClick);
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.Controls.Add(this.FiguresListView);
+            this.Controls.Add(this.FigureListView);
             this.Controls.Add(this.ColorButton);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainPictureBox);
@@ -194,6 +196,6 @@
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private OpenFileDialog MainOpenFileDialog;
         private SaveFileDialog MainSaveFileDialog;
-        private ListView FiguresListView;
+        private ListView FigureListView;
     }
 }
