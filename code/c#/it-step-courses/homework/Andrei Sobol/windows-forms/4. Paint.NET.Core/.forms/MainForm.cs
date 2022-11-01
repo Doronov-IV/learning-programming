@@ -62,6 +62,77 @@ namespace Paint.NET.Core.Forms
         private void OnDrawRectangle()
         {
             Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            var rekt = GetNewRectangleFromCoursorPosition();
+
+            Action<Graphics> newAction = (graphics) => { graphics.DrawRectangle(currentPenClone, rekt); };
+
+            _onPaintPreview = null;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+        }
+
+
+
+        /// <summary>
+        /// Draw ellipse.
+        /// <br />
+        /// Нарисовать эллипс.
+        /// </summary>
+        private void OnDrawEllipse()
+        {
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            var rekt = GetNewRectangleFromCoursorPosition();
+
+            Action<Graphics> newAction = (graphics) => { graphics.DrawEllipse(currentPenClone, rekt); };
+
+            _onPaintPreview = null;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+        }
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        ///                                    AUXILIARY                                    ///
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        /// <summary>
+        /// Get a new rectangle from current mouse coursor position.
+        /// <br />
+        /// Получить новый прямоугольник из текущей позиции курсора мыши.
+        /// </summary>
+        private Rectangle GetNewRectangleFromCoursorPosition()
+        {
             Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
             Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
 
@@ -106,26 +177,8 @@ namespace Paint.NET.Core.Forms
                 t = _mouseEndingPositionCopy.Value.Y;
             }
 
-
-            Action<Graphics> newAction = (graphics) => { graphics.DrawRectangle(currentPenClone, Rectangle.FromLTRB(l,t,r,b)); };
-
-            _onPaintPreview = null;
-
-            // if we are painting, i.e. clicked with LMB and aiming the figure; 
-            if (_isPainting)
-            {
-                _onPaintPreview = null;
-                _onPaintPreview += newAction;
-            }
-            // if we have already done that and we need to draw whatever we previewed;
-            else
-            {
-                _onPaint += newAction;
-            }
-
-            MainPictureBox.Invalidate();
+            return Rectangle.FromLTRB(l, t, r, b);
         }
-
 
 
 
@@ -345,6 +398,9 @@ namespace Paint.NET.Core.Forms
                     case "rectangle":
                         _currentAction = OnDrawRectangle;
                         break;
+                    case "ellipse":
+                        _currentAction = OnDrawEllipse;
+                        break;
                     default:
                         break;
                 }
@@ -490,11 +546,17 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// Fill the listview of the figures.
+        /// <br />
+        /// Заполнить список фигур.
+        /// </summary>
         private void FillFiguresListView()
         {
             ImageList imageList = new();
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/line20.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/rectangle20.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/circle.png"));
 
             ListViewItem lineItem = new();
             lineItem.ToolTipText = "line";
@@ -505,9 +567,15 @@ namespace Paint.NET.Core.Forms
             squareItem.ToolTipText = "rectangle";
             squareItem.ImageIndex = 1;
 
+
+            ListViewItem ellipseItem = new();
+            ellipseItem.ToolTipText = "ellipse";
+            ellipseItem.ImageIndex = 2;
+
             FiguresListView.SmallImageList = imageList;
             FiguresListView.Items.Add(lineItem);
             FiguresListView.Items.Add(squareItem);
+            FiguresListView.Items.Add(ellipseItem);
         }
 
 
