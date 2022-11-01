@@ -85,6 +85,37 @@ namespace Paint.NET.Core.Forms
         }
 
 
+        /// <summary>
+        /// Draw filled rectangle.
+        /// <br />
+        /// Нарисовать закрашенный прямоугольник.
+        /// </summary>
+        private void OnDrawFilledRectangle()
+        {
+            Brush currentBrushClone = _currentBrush.Clone() as Brush;
+
+            var rekt = GetNewRectangleFromCoursorPosition();
+
+            Action<Graphics> newAction = (graphics) => { graphics.FillRectangle(currentBrushClone, rekt); };
+
+            _onPaintPreview = null;
+
+            // if we are painting, i.e. clicked with LMB and aiming the figure; 
+            if (_isPainting)
+            {
+                _onPaintPreview = null;
+                _onPaintPreview += newAction;
+            }
+            // if we have already done that and we need to draw whatever we previewed;
+            else
+            {
+                _onPaint += newAction;
+            }
+
+            MainPictureBox.Invalidate();
+        }
+
+
 
         /// <summary>
         /// Draw ellipse.
@@ -117,19 +148,18 @@ namespace Paint.NET.Core.Forms
         }
 
 
-
         /// <summary>
-        /// Draw ellipse.
+        /// Draw filled ellipse.
         /// <br />
-        /// Нарисовать эллипс.
+        /// Нарисовать закрашенный эллипс.
         /// </summary>
-        private void OnDrawSomething()
+        private void OnDrawFilledEllipse()
         {
-            Pen currentPenClone = _currentPen.Clone() as Pen;
+            Brush currentBrushClone = _currentBrush.Clone() as Brush;
 
             var rekt = GetNewRectangleFromCoursorPosition();
 
-            Action<Graphics> newAction = (graphics) => { /*graphics.DrawImage();*/ };
+            Action<Graphics> newAction = (graphics) => { graphics.FillEllipse(currentBrushClone, rekt); };
 
             _onPaintPreview = null;
 
@@ -147,6 +177,9 @@ namespace Paint.NET.Core.Forms
 
             MainPictureBox.Invalidate();
         }
+
+
+
 
 
 
@@ -431,11 +464,14 @@ namespace Paint.NET.Core.Forms
                     case "rectangle":
                         _currentAction = OnDrawRectangle;
                         break;
+                    case "filled rectangle":
+                        _currentAction = OnDrawFilledRectangle;
+                        break;
                     case "ellipse":
                         _currentAction = OnDrawEllipse;
                         break;
-                    case "arc":
-                        _currentAction = OnDrawSomething;
+                    case "filled ellipse":
+                        _currentAction = OnDrawFilledEllipse;
                         break;
                     default:
                         break;
@@ -592,7 +628,9 @@ namespace Paint.NET.Core.Forms
             ImageList imageList = new();
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/line20.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/rectangle20.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/filled-square.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/circle.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/filled-circle.png"));
 
             ListViewItem lineItem = new();
             lineItem.ToolTipText = "line";
@@ -604,19 +642,27 @@ namespace Paint.NET.Core.Forms
             squareItem.ImageIndex = 1;
 
 
+            ListViewItem filledSquareItem = new();
+            filledSquareItem.ToolTipText = "filled rectangle";
+            filledSquareItem.ImageIndex = 2;
+
+
             ListViewItem ellipseItem = new();
             ellipseItem.ToolTipText = "ellipse";
-            ellipseItem.ImageIndex = 2;
+            ellipseItem.ImageIndex = 3;
 
-            ListViewItem arcItem = new();
-            arcItem.ToolTipText = "arc";
-            arcItem.ImageIndex = 2;
+
+            ListViewItem filledEllipseItem = new();
+            filledEllipseItem.ToolTipText = "filled ellipse";
+            filledEllipseItem.ImageIndex = 4;
+
 
             FigureListView.SmallImageList = imageList;
             FigureListView.Items.Add(lineItem);
             FigureListView.Items.Add(squareItem);
+            FigureListView.Items.Add(filledSquareItem);
             FigureListView.Items.Add(ellipseItem);
-            FigureListView.Items.Add(arcItem);
+            FigureListView.Items.Add(filledEllipseItem);
         }
 
 

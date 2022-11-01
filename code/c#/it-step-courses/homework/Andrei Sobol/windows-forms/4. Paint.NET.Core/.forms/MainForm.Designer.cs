@@ -46,6 +46,7 @@
             this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.FigureListView = new System.Windows.Forms.ListView();
+            this.FiguresFillingComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -155,11 +156,18 @@
             this.FigureListView.View = System.Windows.Forms.View.SmallIcon;
             this.FigureListView.SelectedIndexChanged += new System.EventHandler(this.OnFiguresListViewClick);
             // 
+            // FiguresFillingComboBox
+            // 
+            this.FiguresFillingComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.FiguresFillingComboBox, "FiguresFillingComboBox");
+            this.FiguresFillingComboBox.Name = "FiguresFillingComboBox";
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.FiguresFillingComboBox);
             this.Controls.Add(this.FigureListView);
             this.Controls.Add(this.ColorButton);
             this.Controls.Add(this.toolStrip1);
@@ -197,5 +205,6 @@
         private OpenFileDialog MainOpenFileDialog;
         private SaveFileDialog MainSaveFileDialog;
         private ListView FigureListView;
+        private ComboBox FiguresFillingComboBox;
     }
 }
