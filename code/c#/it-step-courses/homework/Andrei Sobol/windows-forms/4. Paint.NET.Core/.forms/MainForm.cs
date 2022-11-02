@@ -722,9 +722,9 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// .
+        /// Handle updown value changed event.
         /// <br />
-        /// .
+        /// Обработать ивент изменения "up-down"'а.
         /// </summary>
         private void OnLineWidthUpDownValueChanged(object sender, EventArgs e)
         {
@@ -737,9 +737,9 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// .
+        /// Handle delete button click event.
         /// <br />
-        /// .
+        /// Обработать ивент клика кнопки "delete".
         /// </summary>
         private void OnDeleteButtonClick(object sender, EventArgs e)
         {
@@ -1090,7 +1090,7 @@ namespace Paint.NET.Core.Forms
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
             _isPainting = false;
-            _stylusLineWidth = 2;
+            _stylusLineWidth = (uint)(LineWidthUpDown.Value = 2);
 
             string imageFilters = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
 
