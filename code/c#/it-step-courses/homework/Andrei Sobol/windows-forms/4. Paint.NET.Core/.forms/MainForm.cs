@@ -703,19 +703,6 @@ namespace Paint.NET.Core.Forms
 
 
 
-        /// <summary>
-        /// Handle main form key down event.
-        /// <br />
-        /// Обработать событие нажатия на кнопку.
-        /// </summary>
-        private void OnMainFormKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
-            else if (e.Control && e.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
-        }
-
-
-
         #endregion Module: Main Controls
 
 
