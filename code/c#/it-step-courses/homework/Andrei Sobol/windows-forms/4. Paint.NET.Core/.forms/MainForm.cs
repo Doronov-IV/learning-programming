@@ -49,11 +49,14 @@ namespace Paint.NET.Core.Forms
             // if we have already done that and we need to draw whatever we previewed;
             else
             {
-                if (_isDoodling) _doodleAction += action;
-                _onPaint += action;
-                PerformedActionsStack.Push(action);
+                if (_isDoodling) _onPaintPreview += action;
+                else
+                {
+                    _onPaint += action;
+                    PerformedActionsStack.Push(action);
+                }
 
-                //CheckStacksSize();
+                CheckStacksSize();
             }
         }
 
@@ -72,7 +75,7 @@ namespace Paint.NET.Core.Forms
 
             CancelledActionsStack.Push(lastAction);
 
-            //CheckStacksSize();
+            CheckStacksSize();
         }
 
 
@@ -90,7 +93,7 @@ namespace Paint.NET.Core.Forms
 
             PerformedActionsStack.Push(lastAction);
 
-            //CheckStacksSize();
+            CheckStacksSize();
         }
 
 
@@ -455,7 +458,16 @@ namespace Paint.NET.Core.Forms
         {
             _isPainting = false;
 
-            if (_isDoodling) _isDoodling = false;
+            if (_isDoodling)
+            {
+                _isDoodling = false;
+
+                _onPaint += _onPaintPreview;
+
+                PerformedActionsStack.Push(_onPaintPreview);
+
+                _onPaintPreview = null;
+            }
 
             _currentAction.Invoke();
         }
