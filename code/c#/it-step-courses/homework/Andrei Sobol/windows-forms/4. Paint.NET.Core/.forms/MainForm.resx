@@ -281,10 +281,10 @@
     <value>4</value>
   </data>
   <data name="StyloListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>704, 58</value>
+    <value>508, 58</value>
   </data>
   <data name="StyloListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 30</value>
+    <value>350, 30</value>
   </data>
   <data name="StyloListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

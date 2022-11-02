@@ -292,6 +292,21 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
+        /// Draw something with 'stylus'. Width is custom.
+        /// <br />
+        /// Нарисовать что-то "стилусом". Ширина кастомная.
+        /// </summary>
+        private void OnDrawWithStylus()
+        {
+            _currentPen = new(_currentColor.Value, _stylusLineWidth);
+            Pen currentPenClone = _currentPen.Clone() as Pen;
+
+            DrawWithAnything(currentPenClone);
+        }
+
+
+
+        /// <summary>
         /// Draw something with 'pencil'. Width is set to 1.
         /// <br />
         /// Нарисовать что-то "карандашом". Ширина выставлена на 1.
@@ -651,6 +666,9 @@ namespace Paint.NET.Core.Forms
 
                 switch (StyloListView.SelectedItems[0].ToolTipText)
                 {
+                    case "stylus":
+                        _actionHandler.CurrentAction = OnDrawWithStylus;
+                        break;
                     case "pencil":
                         _actionHandler.CurrentAction = OnDrawWithPencil;
                         break;
@@ -713,6 +731,7 @@ namespace Paint.NET.Core.Forms
             Color currentColor = _currentPen.Color;
             _currentBrush = new SolidBrush(currentColor);
             _currentPen = new(_currentBrush, (float)LineWidthUpDown.Value);
+            _stylusLineWidth = (uint)LineWidthUpDown.Value;
         }
 
 
@@ -724,7 +743,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnDeleteButtonClick(object sender, EventArgs e)
         {
-           _actionHandler.OnPaint = null;
+            _actionHandler.OnPaint = null;
+            _actionHandler.PerformedActionStack.Clear();
+            RefreshButtonsVisibilityState();
             MainPictureBox.Refresh();
         }
 
@@ -838,12 +859,11 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// A value for line width of figures and stylo.
+        /// The width of the stylus line. Stylus represents custom width stylo.
         /// <br />
-        /// Показатель толщины линии фигур и пера.
+        /// Ширина линии стилуса. Стилус представляет собой перо кастомной ширины.
         /// </summary>
-        private uint _currentLineWidth;
-
+        private uint _stylusLineWidth;
 
 
 
@@ -965,32 +985,40 @@ namespace Paint.NET.Core.Forms
         private void FillStyloListView()
         {
             ImageList imageList = new();
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/stylus.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/pencil.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/pen.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/brush.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/eraser.png"));
 
+
+            ListViewItem stylusItem = new();
+            stylusItem.ToolTipText = "stylus";
+            stylusItem.ImageIndex = 0;
+
+
             ListViewItem pencilItem = new();
             pencilItem.ToolTipText = "pencil";
-            pencilItem.ImageIndex = 0;
+            pencilItem.ImageIndex = 1;
 
 
             ListViewItem penItem = new();
             penItem.ToolTipText = "pen";
-            penItem.ImageIndex = 1;
+            penItem.ImageIndex = 2;
 
 
             ListViewItem brushItem = new();
             brushItem.ToolTipText = "brush";
-            brushItem.ImageIndex = 2;
+            brushItem.ImageIndex = 3;
 
 
             ListViewItem eraserItem = new();
             eraserItem.ToolTipText = "eraser";
-            eraserItem.ImageIndex = 3;
+            eraserItem.ImageIndex = 4;
 
 
             StyloListView.LargeImageList = imageList;
+            StyloListView.Items.Add(stylusItem);
             StyloListView.Items.Add(pencilItem);
             StyloListView.Items.Add(penItem);
             StyloListView.Items.Add(brushItem);
@@ -1062,7 +1090,7 @@ namespace Paint.NET.Core.Forms
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
             _isPainting = false;
-            _currentLineWidth = 2;
+            _stylusLineWidth = 2;
 
             string imageFilters = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
 
