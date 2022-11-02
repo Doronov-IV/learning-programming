@@ -1,20 +1,59 @@
-
- .flex {
- 	display: flex;
-    flex-direction: column;
-    font-family: 'Noto Sans', sans-serif;
- }
+body {
+	margin: 10;
+	padding: 10;
+}
 
 
- .article {
-	position: relative;	
+.flex {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Noto Sans', sans-serif;
+}
+
+
+.article {
+	position: relative;
 	order: 2;
 	margin-top: 100px;
 	margin-left: 80px;
 	margin-bottom: 100px;
 }
 
-	
+.card {
+	margin-top: 100px;
+	padding: 30px;
+}
+
+.image {
+	width: 450px;
+	height: 550px;
+	resize: both;
+}
+
+
+.iphone {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin: 0;
+}
+
+
+.pixel {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin: auto;
+}
+
+
+
+.samsung {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin-left: 70%;
+}
+
+
+
 .table {
 	border: 1px solid;
 	border-collapse: collapse;
@@ -27,35 +66,6 @@
 .paragraph {
 	color: rgba(0, 0, 128, 1.0);
 	font-size: 28px;
-	font-family: Bookman, URW Bookman L, serif;
 	margin-left: 40px;
+	font-family: 'Noto Sans', sans-serif;
 }
-
-
-.image {
-	width: 650;
-	height: 450;
-}
-
-
-.lor {
-	order: 3;
-	color: rgba(0,0,0,0.2);
-}
-
-.str1 {
-	color: rgba(0,0,0,1);
-}
-
-.str2 {
-	color: rgba(0,0,0,0.8);
-}
-
-.str3 {
-	color: rgba(0,0,0,0.5);
-}
-
-.str4 {
-	color: rgba(0,0,0,0.2);
-}
-
