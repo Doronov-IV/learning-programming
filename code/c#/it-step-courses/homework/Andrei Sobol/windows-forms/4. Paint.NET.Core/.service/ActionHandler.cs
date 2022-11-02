@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Paint.NET.Core.Service
 {
-	/// <summary>
-	/// An entity that provides main form with all functionality concerning actions, stacks of actions and other.
-	/// <br />
-	/// Сущность, которая предоставляет main form'е функционал, связанный с action'ами, их стеками и другим.
-	/// </summary>
-	public class ActionHandler
+    /// <summary>
+    /// An entity that provides main form with all functionality concerning actions, stacks of actions and other.
+    /// <br />
+    /// Сущность, которая предоставляет main form'е функционал, связанный с action'ами, их стеками и другим.
+    /// </summary>
+    public class ActionHandler : INotifyPropertyChanged
     {
 
 
@@ -39,12 +35,20 @@ namespace Paint.NET.Core.Service
         private Action _currentAction;
 
 
-        /// <inheritdoc cref="PerformedActionsStack"/>
-        private Stack<Action<Graphics>> _performedActionsStack;
+        /// <inheritdoc cref="PerformedActionStack"/>
+        private Stack<Action<Graphics>> _performedActionStack;
 
 
-        /// <inheritdoc cref="CancelledActionsStack"/>
-        private Stack<Action<Graphics>> _cancelledActionsStack;
+        /// <inheritdoc cref="CancelledActionStack"/>
+        private Stack<Action<Graphics>> _cancelledActionStack;
+
+
+        /// <inheritdoc cref="PerformedNotEmpty"/>
+        private bool _performedNotEmpty;
+
+
+        /// <inheritdoc cref="CancelledNotEmpty"/>
+        private bool _cancelledNotEmpty;
 
 
 
@@ -52,6 +56,7 @@ namespace Paint.NET.Core.Service
         ///////////////////////////////////////////////////////////////////////////////////////
         ///  ↓                            ↓   PROPERTIES   ↓                            ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
+
 
 
 
@@ -66,6 +71,7 @@ namespace Paint.NET.Core.Service
             set
             {
                 _onPaintPreview = value;
+                OnPropertyChanged(nameof(OnPaintPreview));
             }
         }
 
@@ -82,6 +88,7 @@ namespace Paint.NET.Core.Service
             set
             {
                 _onPaint = value;
+                OnPropertyChanged(nameof(OnPaint));
             }
         }
 
@@ -98,6 +105,7 @@ namespace Paint.NET.Core.Service
             set
             {
                 _currentAction = value;
+                OnPropertyChanged(nameof(CurrentAction));
             }
         }
 
@@ -108,12 +116,13 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Стек всех совершённых действий.
         /// </summary>
-        public Stack<Action<Graphics>> PerformedActionsStack
+        public Stack<Action<Graphics>> PerformedActionStack
         {
-            get { return _performedActionsStack; }
+            get { return _performedActionStack; }
             set
             {
-                _performedActionsStack = value;
+                _performedActionStack = value;
+                OnPropertyChanged(nameof(PerformedActionStack));
             }
         }
 
@@ -124,12 +133,47 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Стек всех отменённых действий.
         /// </summary>
-        public Stack<Action<Graphics>> CancelledActionsStack
+        public Stack<Action<Graphics>> CancelledActionStack
         {
-            get { return _cancelledActionsStack; }
+            get { return _cancelledActionStack; }
             set
             {
-                _cancelledActionsStack = value;
+                _cancelledActionStack = value;
+                OnPropertyChanged(nameof(CancelledActionStack));
+            }
+        }
+
+
+
+        /// <summary>
+        /// True - if 'PerformedActionStack' is NOT empty otherwise false.
+        /// <br />
+        /// "True" - если "PerformedActionStack" НЕ пуст, иначе "false".
+        /// </summary>
+        public bool PerformedNotEmpty
+        {
+            get { return _performedNotEmpty; }
+            set
+            {
+                _performedNotEmpty = value;
+                OnPropertyChanged(nameof(PerformedNotEmpty));
+            }
+        }
+
+
+
+        /// <summary>
+        /// True - if 'CancelledActionStack' is NOT empty otherwise false.
+        /// <br />
+        /// "True" - если "CancelledActionStack" НЕ пуст, иначе "false".
+        /// </summary>
+        public bool CancelledNotEmpty
+        {
+            get { return _cancelledNotEmpty; }
+            set
+            {
+                _cancelledNotEmpty = value;
+                OnPropertyChanged(nameof(CancelledNotEmpty));
             }
         }
 
@@ -142,11 +186,129 @@ namespace Paint.NET.Core.Service
 
 
 
+
+
         #region API
 
 
 
-        //
+        /// <summary>
+        /// Add preview action for figure.
+        /// <br />
+        /// Preview action is an action that is visible only during user aiming with LMB to place their figure permanently.
+        /// <br />
+        /// <br />
+        /// Добавить preview-действие для фигуры.
+        /// <br />
+        /// Preview-действие - это такое действие, которое видно только тогда, когда ползователь примеряет фигуру при помощи ЛКМ, чтобы разместить её.
+        /// </summary>
+        /// <param name="action">
+        /// A new action to be added to the preview action.
+        /// <br />
+        /// Новое действие, для добавление в preview-действие.
+        /// </param>
+        private void AddFigurePreviewAction(Action<Graphics> action)
+        {
+            OnPaintPreview = null;
+            OnPaintPreview += action;
+        }
+
+
+
+        /// <summary>
+        /// Add a preview 'micro-action' for coursor painting.
+        /// <br />
+        /// Action - a whole curved line painted with coursor. Micro-action - a dot that is drawn when user moves coursor slightly with his LMB pressed.
+        /// <br />
+        /// <br />
+        /// Добавить micro-действие для рисования курсором.
+        /// <br />
+        /// Action - целая линия, которая рисуется курсором. Micro-action - точка, которая рисуется когда пользователь передвигает курсор немного с зажатой ЛКМ.
+        /// </summary>
+        /// <param name="action">
+        /// A new action to be added to the preview action.
+        /// <br />
+        /// Новое действие, для добавление в preview-действие.
+        /// </param>
+        private void AddDoodlePreviewMicroAction(Action<Graphics> action)
+        {
+            OnPaintPreview += action;
+        }
+
+
+
+        /// <summary>
+        /// Add new action to the main one and to the actions stack.
+        /// <br />
+        /// Добавить очередное действие в основное и в стек действий.
+        /// </summary>
+        /// <param name="action">
+        /// A new action to be added to the main action and acion stack.
+        /// <br />
+        /// Новое действие, для добавление в основное действие и стек действий.
+        /// </param>
+        private void AddFinilizedAction(Action<Graphics> action)
+        {
+            _onPaint += action;
+            PerformedActionStack.Push(action);
+        }
+
+
+
+        /// <summary>
+        /// Cancell last action and handle it from 'performed' stack to the 'cancelled' ones.
+        /// <br />
+        /// Отменить последнее действие, и переложить его из стека "выполненых" в "отменённые".
+        /// </summary>
+        private void CancellLastAction()
+        {
+            var lastAction = PerformedActionStack.Pop();
+
+            _onPaint -= lastAction;
+
+            CancelledActionStack.Push(lastAction);
+
+            CheckStacksSize();
+        }
+
+
+
+        /// <summary>
+        /// Repeat last cancelled action and handle it from 'cancelled' stack to the 'performed' ones.
+        /// <br />
+        /// Повторить последнее отменённое действие, и переложить его из стека "отменённых" в "выполненные".
+        /// </summary>
+        private void RepeatLastCancelledAction()
+        {
+            var lastAction = CancelledActionStack.Pop();
+
+            _onPaint += lastAction;
+
+            PerformedActionStack.Push(lastAction);
+
+            CheckStacksSize();
+        }
+
+
+
+        /// <summary>
+        /// Check stacks for elements amount. Used for buttons visibility.
+        /// <br />
+        /// Проверить стеки на наличие элементов. Используется для регулирования видимости кнопок. 
+        /// </summary>
+        /// <returns>
+        /// A tuple where: 'PerformedNotEmpty' - true if respective stack is not empty, otherwise false. 'CancelledNotEmpty' - same.
+        /// <br />
+        /// Кортеж(?), где: "PerformedNotEmpty" - "true" если соответствующий стек не пуст, иначе "false". "CancelledNotEmpty" - так же.
+        /// </returns>
+        private void CheckStacksSize()
+        {
+            if (CancelledActionStack.Count > 0) CancelledNotEmpty = true;
+            else CancelledNotEmpty = false;
+
+            if (PerformedActionStack.Count > 0) PerformedNotEmpty = true;
+            else PerformedNotEmpty = false;
+        }
 
 
 
@@ -156,7 +318,45 @@ namespace Paint.NET.Core.Service
 
 
 
+
+
         #region CONSTRUCTION
+
+
+
+
+
+
+        #region Property changed
+
+
+        /// <summary>
+        /// Propery changed event handler;
+        /// <br />
+        /// Делегат-обработчик события 'property changed';
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        /// <summary>
+        /// Handler-method of the 'property changed' delegate;
+        /// <br />
+        /// Метод-обработчик делегата 'property changed';
+        /// </summary>
+        /// <param name="propName">
+        /// The name of the property;
+        /// <br />
+        /// Имя свойства;
+        /// </param>
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+
+        #endregion Property changed
+
+
 
 
 
@@ -168,9 +368,13 @@ namespace Paint.NET.Core.Service
         /// </summary>
         public ActionHandler()
         {
-            _cancelledActionsStack = new();
-            _performedActionsStack = new();
+            _cancelledActionStack = new();
+            _performedActionStack = new();
+
+            _performedNotEmpty = false;
+            _cancelledNotEmpty = false;
         }
+
 
 
 
