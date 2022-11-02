@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include=".forms\MainForm.cs" />
     <Compile Include=".forms\MainForm.Designer.cs" />
+    <Compile Include=".service\ActionHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>

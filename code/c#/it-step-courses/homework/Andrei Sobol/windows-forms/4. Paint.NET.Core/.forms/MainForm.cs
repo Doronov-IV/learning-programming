@@ -49,6 +49,9 @@ namespace Paint.NET.Core.Forms
             // if we have already done that and we need to draw whatever we previewed;
             else
             {
+                // if we are painting with coursor, every point painted is an action.
+                // so untill we mouse up, we do it in a preview so that it helps us
+                // cancell/repeat the whole line drawn like in a real paint.
                 if (_isDoodling) _onPaintPreview += action;
                 else
                 {
@@ -101,7 +104,7 @@ namespace Paint.NET.Core.Forms
         /// <summary>
         /// Check what stack has zero size.
         /// <br />
-        /// .
+        /// Проверить каждый стек на кол-во элементов.
         /// </summary>
         private void CheckStacksSize()
         {
@@ -123,7 +126,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                              ↓   DRAWING   ↓                             ↓    ///
+        ///  ↓                              ↓   DRAWING   ↓                             ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -434,7 +437,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                       ↓   MOUSE EVENT HANDLERS   ↓                       ↓    ///
+        ///  ↓                       ↓   MOUSE EVENT HANDLERS   ↓                       ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -500,7 +503,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                            ↓   UI CONTROLS   ↓                           ↓    ///
+        ///  ↓                            ↓   UI CONTROLS   ↓                           ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -755,7 +758,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                            ↓   PAINTING   ↓                              ↓    ///
+        ///  ↓                            ↓   PAINTING   ↓                              ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -785,6 +788,11 @@ namespace Paint.NET.Core.Forms
         private static bool _isPainting;
 
 
+        /// <summary>
+        /// 'True' if the user is drawing with their coursor via 'stylo' otherwise 'false'.
+        /// <br />
+        /// "True", если пользователь рисует при помощи курсора, используя "stylo", иначе "false".
+        /// </summary>
         private bool _isDoodling;
 
 
@@ -896,7 +904,6 @@ namespace Paint.NET.Core.Forms
             set
             {
                 _performedActionsStack = value;
-                CheckStacksSize();
             }
         }
 
@@ -912,22 +919,13 @@ namespace Paint.NET.Core.Forms
             set
             {
                 _cancelledActionsStack = value;
-                CheckStacksSize();
             }
         }
 
 
-        /// <summary>
-        /// An action that has all those actions that pile when user paints with stylos.
-        /// <br />
-        /// Action, который хранит в себе все действия, которые накапливаются, когда позователь пишет пером.
-        /// </summary>
-        public Action<Graphics> _doodleAction;
-
-
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                              ↓   OTHER   ↓                               ↓    ///
+        ///  ↓                              ↓   OTHER   ↓                               ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
