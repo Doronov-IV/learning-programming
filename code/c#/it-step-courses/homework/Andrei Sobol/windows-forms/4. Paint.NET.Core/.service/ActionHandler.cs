@@ -295,15 +295,7 @@ namespace Paint.NET.Core.Service
 
 
 
-        #endregion API
 
-
-
-
-
-
-
-        #region LOGIC
 
 
 
@@ -317,7 +309,7 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Кортеж(?), где: "PerformedNotEmpty" - "true" если соответствующий стек не пуст, иначе "false". "CancelledNotEmpty" - так же.
         /// </returns>
-        private void CheckStacksSize()
+        public void CheckStacksSize()
         {
             if (CancelledActionStack.Count > 0) CancelledNotEmpty = true;
             else CancelledNotEmpty = false;
@@ -328,7 +320,8 @@ namespace Paint.NET.Core.Service
 
 
 
-        #endregion LOGIC
+
+        #endregion API
 
 
 

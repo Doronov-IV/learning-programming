@@ -72,6 +72,7 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void RefreshButtonsVisibilityState()
         {
+            _actionHandler.CheckStacksSize();
             RepeatActionButton.Enabled = _actionHandler.CancelledNotEmpty;
             CancellActionButton.Enabled = _actionHandler.PerformedNotEmpty;
         }
@@ -430,6 +431,8 @@ namespace Paint.NET.Core.Forms
 
                 _actionHandler.PerformedActionStack.Push(_actionHandler.OnPaintPreview);
 
+                RefreshButtonsVisibilityState();
+
                 _actionHandler.OnPaintPreview = null;
             }
 
@@ -686,6 +689,21 @@ namespace Paint.NET.Core.Forms
             RefreshButtonsVisibilityState();
 
             MainPictureBox.Refresh();
+        }
+
+
+
+        private void OnMainPictureBoxKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
+            else if (e.Modifiers == Keys.Control && e.Modifiers == Keys.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
+        }
+
+
+        private void OnMainFormxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
+            else if (e.Modifiers == Keys.Control && e.Modifiers == Keys.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
         }
 
 
@@ -1056,10 +1074,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+
+
+
+
         #endregion Property changed
-
-
-
 
         #endregion CONSTRUCTION
 
