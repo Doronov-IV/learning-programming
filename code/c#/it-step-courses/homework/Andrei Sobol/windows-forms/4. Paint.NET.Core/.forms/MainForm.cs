@@ -758,14 +758,6 @@ namespace Paint.NET.Core.Forms
 
 
         /// <summary>
-        /// An eraser pen, writing in white color.
-        /// <br />
-        /// Стирательная резинка, окрашивающая в белый цвет.
-        /// </summary>
-        private static Pen? _eraser;
-
-
-        /// <summary>
         /// A reference to the current brush.
         /// <br />
         /// Ссылка на текущую кисть.

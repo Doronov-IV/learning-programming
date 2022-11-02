@@ -295,6 +295,18 @@ namespace Paint.NET.Core.Service
 
 
 
+        #endregion API
+
+
+
+
+
+
+
+        #region LOGIC
+
+
+
         /// <summary>
         /// Check stacks for elements amount. Used for buttons visibility.
         /// <br />
@@ -316,7 +328,7 @@ namespace Paint.NET.Core.Service
 
 
 
-        #endregion API
+        #endregion LOGIC
 
 
 
