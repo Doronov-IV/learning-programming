@@ -198,7 +198,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnMainFormFormClosing);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnMainFormxKeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnMainFormKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

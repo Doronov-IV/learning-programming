@@ -53,7 +53,10 @@ namespace Paint.NET.Core.Forms
                 // if we are painting with coursor, every point painted is an action.
                 // so untill we mouse up, we do it in a preview so that it helps us
                 // cancell/repeat the whole line drawn like in a real paint.
-                if (_isDoodling) _actionHandler.AddDoodlePreviewMicroAction(action);
+                if (_isDoodling)
+                {
+                    _actionHandler.AddDoodlePreviewMicroAction(action);
+                }
                 else
                 {
                     _actionHandler.AddFinilizedAction(action);
@@ -359,16 +362,21 @@ namespace Paint.NET.Core.Forms
         /// </param>
         private void DrawWithAnything(Pen penCopy)
         {
-            _isDoodling = true;
+            // this fixed the most dreaded bug;
+            // doodle was exactly 1 tick longer than paint.
+            if (_isPainting)
+            {
+                _isDoodling = true;
 
-            Point? _mouseStartingPositionCopy = new Point(_mousePreviousPosition.X, _mousePreviousPosition.Y);
-            Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+                Point? _mouseStartingPositionCopy = new Point(_mousePreviousPosition.X, _mousePreviousPosition.Y);
+                Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
 
-            Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
+                Action<Graphics> newAction = (graphics) => { graphics.DrawLine(penCopy, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
 
-            AddAction(newAction);
+                AddAction(newAction);
 
-            MainPictureBox.Invalidate();
+                MainPictureBox.Invalidate();
+            }
         }
 
 
@@ -468,7 +476,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        ///  ↓                         ↓   OTHER UI CONTROLS   ↓                        ↓   ///
+        ///  ↓                        ↓   OTHER UI CONTROLS   ↓                         ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -700,7 +708,7 @@ namespace Paint.NET.Core.Forms
         /// <br />
         /// Обработать событие нажатия на кнопку.
         /// </summary>
-        private void OnMainFormxKeyDown(object sender, KeyEventArgs e)
+        private void OnMainFormKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
             else if (e.Control && e.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);

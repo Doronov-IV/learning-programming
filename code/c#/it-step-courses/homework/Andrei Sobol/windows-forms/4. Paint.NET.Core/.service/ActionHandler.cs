@@ -299,8 +299,6 @@ namespace Paint.NET.Core.Service
 
 
 
-
-
         /// <summary>
         /// Check stacks for elements amount. Used for buttons visibility.
         /// <br />
