@@ -210,11 +210,8 @@ namespace Paint.NET.Core.Service
         /// </param>
         public void AddFigurePreviewAction(Action<Graphics> action)
         {
-            if (action.GetInvocationList() != null)
-            {
-                OnPaintPreview = null;
-                OnPaintPreview += action;
-            }
+            OnPaintPreview = null;
+            OnPaintPreview += action;
         }
 
 
@@ -236,7 +233,7 @@ namespace Paint.NET.Core.Service
         /// </param>
         public void AddDoodlePreviewMicroAction(Action<Graphics> action)
         {
-            if (action.GetInvocationList() != null) OnPaintPreview += action;
+            OnPaintPreview += action;
         }
 
 
@@ -253,14 +250,13 @@ namespace Paint.NET.Core.Service
         /// </param>
         public void AddFinilizedAction(Action<Graphics> action)
         {
-            if (action.GetInvocationList() != null)
-            {
-                _onPaint += action;
+            _onPaint += action;
 
-                PerformedActionStack.Push(action);
+            PerformedActionStack.Push(action);
 
-                CheckStacksSize();
-            }
+            OnPaintPreview = null;
+
+            CheckStacksSize();
         }
 
 

@@ -298,7 +298,7 @@ namespace Paint.NET.Core.Forms
             _currentPen = new(_currentColor.Value, 1);
             Pen currentPenClone = _currentPen.Clone() as Pen;
 
-            DrawWithSomething(currentPenClone);
+            DrawWithAnything(currentPenClone);
         }
 
 
@@ -313,7 +313,7 @@ namespace Paint.NET.Core.Forms
             _currentPen = new(_currentColor.Value, 2);
             Pen currentPenClone = _currentPen.Clone() as Pen;
 
-            DrawWithSomething(currentPenClone);
+            DrawWithAnything(currentPenClone);
         }
 
 
@@ -328,7 +328,7 @@ namespace Paint.NET.Core.Forms
             _currentPen = new(_currentColor.Value, 5);
             Pen currentPenClone = _currentPen.Clone() as Pen;
 
-            DrawWithSomething(currentPenClone);
+            DrawWithAnything(currentPenClone);
         }
 
 
@@ -340,9 +340,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnDrawWithEraser()
         {
-            Pen penCopy = new(Color.White, 20);
+            Pen eraserPen = new(Color.White, 20);
 
-            DrawWithSomething(penCopy);
+            DrawWithAnything(eraserPen);
         }
 
         
@@ -357,7 +357,7 @@ namespace Paint.NET.Core.Forms
         /// <br />
         /// Копия экземпляра "current pen".
         /// </param>
-        private void DrawWithSomething(Pen penCopy)
+        private void DrawWithAnything(Pen penCopy)
         {
             _isDoodling = true;
 
@@ -399,7 +399,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        ///  ↓                       ↓   MOUSE EVENT HANDLERS   ↓                       ↓   ///
+        ///  ↓                      ↓   MOUSE EVENT HANDLERS   ↓                        ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -427,14 +427,15 @@ namespace Paint.NET.Core.Forms
             {
                 _isDoodling = false;
 
-                _actionHandler.OnPaint += _actionHandler.OnPaintPreview;
-
-                _actionHandler.PerformedActionStack.Push(_actionHandler.OnPaintPreview);
+                AddAction(_actionHandler.OnPaintPreview);
 
                 RefreshButtonsVisibilityState();
 
                 _actionHandler.OnPaintPreview = null;
             }
+
+            // clear cancelled action stack to aviod chaos;
+            _actionHandler.CancelledActionStack = new();
 
             _actionHandler.CurrentAction.Invoke();
         }
