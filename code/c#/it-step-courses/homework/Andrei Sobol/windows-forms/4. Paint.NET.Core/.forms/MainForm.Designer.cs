@@ -63,7 +63,6 @@
             this.MainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseDown);
             this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseMove);
             this.MainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseUp);
-            this.MainPictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnMainPictureBoxKeyDown);
             // 
             // menuStrip1
             // 
@@ -195,6 +194,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainPictureBox);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnMainFormFormClosing);

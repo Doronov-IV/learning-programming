@@ -677,6 +677,7 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
         /// <summary>
         /// Handle repeat cancelled action button click event.
         /// <br />
@@ -693,17 +694,15 @@ namespace Paint.NET.Core.Forms
 
 
 
-        private void OnMainPictureBoxKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
-            else if (e.Modifiers == Keys.Control && e.Modifiers == Keys.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
-        }
-
-
+        /// <summary>
+        /// Handle main form key down event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку.
+        /// </summary>
         private void OnMainFormxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) OnCancellActionButtonClick(null, null);
-            else if (e.Modifiers == Keys.Control && e.Modifiers == Keys.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
+            else if (e.Control && e.Shift && e.KeyCode == Keys.Z) OnRepeatActionButtonClick(null, null);
         }
 
 
