@@ -703,6 +703,33 @@ namespace Paint.NET.Core.Forms
 
 
 
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        private void OnLineWidthUpDownValueChanged(object sender, EventArgs e)
+        {
+            Color currentColor = _currentPen.Color;
+            _currentBrush = new SolidBrush(currentColor);
+            _currentPen = new(_currentBrush, (float)LineWidthUpDown.Value);
+        }
+
+
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        private void OnDeleteButtonClick(object sender, EventArgs e)
+        {
+           _actionHandler.OnPaint = null;
+            MainPictureBox.Refresh();
+        }
+
+
+
         #endregion Module: Main Controls
 
 
@@ -808,6 +835,14 @@ namespace Paint.NET.Core.Forms
         /// Предыдущая позиция курсора мыши.
         /// </summary>
         private Point _mousePreviousPosition;
+
+
+        /// <summary>
+        /// A value for line width of figures and stylo.
+        /// <br />
+        /// Показатель толщины линии фигур и пера.
+        /// </summary>
+        private uint _currentLineWidth;
 
 
 
@@ -1027,6 +1062,7 @@ namespace Paint.NET.Core.Forms
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
             _isPainting = false;
+            _currentLineWidth = 2;
 
             string imageFilters = @"Image Files (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp";
 
@@ -1074,7 +1110,11 @@ namespace Paint.NET.Core.Forms
 
 
 
+
+
         #endregion Property changed
+
+
 
         #endregion CONSTRUCTION
 

@@ -38,6 +38,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColorButton = new System.Windows.Forms.Button();
             this.MainColorDialog = new System.Windows.Forms.ColorDialog();
@@ -47,8 +48,10 @@
             this.StyloListView = new System.Windows.Forms.ListView();
             this.RepeatActionButton = new System.Windows.Forms.Button();
             this.CancellActionButton = new System.Windows.Forms.Button();
+            this.LineWidthUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LineWidthUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // MainPictureBox
@@ -102,7 +105,8 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.backToolStripMenuItem,
-            this.forwardToolStripMenuItem});
+            this.forwardToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             // 
@@ -117,6 +121,12 @@
             this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
             resources.ApplyResources(this.forwardToolStripMenuItem, "forwardToolStripMenuItem");
             this.forwardToolStripMenuItem.Click += new System.EventHandler(this.OnRepeatActionButtonClick);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteButtonClick);
             // 
             // optionsToolStripMenuItem
             // 
@@ -167,11 +177,18 @@
             this.CancellActionButton.UseVisualStyleBackColor = true;
             this.CancellActionButton.Click += new System.EventHandler(this.OnCancellActionButtonClick);
             // 
+            // LineWidthUpDown
+            // 
+            resources.ApplyResources(this.LineWidthUpDown, "LineWidthUpDown");
+            this.LineWidthUpDown.Name = "LineWidthUpDown";
+            this.LineWidthUpDown.ValueChanged += new System.EventHandler(this.OnLineWidthUpDownValueChanged);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.LineWidthUpDown);
             this.Controls.Add(this.CancellActionButton);
             this.Controls.Add(this.RepeatActionButton);
             this.Controls.Add(this.StyloListView);
@@ -186,6 +203,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LineWidthUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,5 +229,7 @@
         private Button CancellActionButton;
         private ToolStripMenuItem backToolStripMenuItem;
         private ToolStripMenuItem forwardToolStripMenuItem;
+        private NumericUpDown LineWidthUpDown;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
