@@ -1,0 +1,116 @@
+body {
+	margin: 10;
+	padding: 10;
+}
+
+
+.flex {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Noto Sans', sans-serif;
+}
+
+
+.article {
+	position: relative;
+	order: 2;
+	margin-top: 100px;
+	margin-left: 80px;
+	margin-bottom: 100px;
+}
+
+.card {
+	margin-top: 100px;
+	padding: 30px;
+}
+
+.image {
+	width: 450px;
+	height: 550px;
+	resize: both;
+}
+
+
+.iphone {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin-left: 0;
+}
+
+
+.pixel {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin-left: 30%;
+}
+
+
+
+.samsung {
+	font-family: 'Noto Sans', sans-serif;
+	width: 450px;
+	margin-left: 70%;
+}
+
+.listItem {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	margin-top: 10px;
+}
+
+.sub {
+	list-style: none;
+}
+
+.mainItem::before {
+	font-size: 24px;
+	content: '>';
+}
+
+.sub1::before {
+	font-size: 24px;
+	content: '✅';
+}
+
+.sub2::before {
+	font-size: 24px;
+	content: '❓';
+}
+
+.sub3::before {
+	font-size: 24px;
+	content: '❌';
+}
+
+
+
+.listTermin {
+	background-color: green;
+	padding-left: 2%;
+}
+
+.listDefinition1::after {
+	content: '[1]'
+}
+
+.listDefinition2::after {
+	content: '[2]'
+}
+
+
+
+.dlItem {
+	margin: 35px;
+	width: 8in;
+	background-color: lime;
+	padding-bottom: 10px;
+
+}
+
+
+
+
+.list {
+	margin: 10px;
+	align-items: center;
+	list-style: none;
+}
