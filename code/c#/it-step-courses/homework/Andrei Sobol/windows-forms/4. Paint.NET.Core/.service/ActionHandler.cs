@@ -23,6 +23,7 @@ namespace Paint.NET.Core.Service
 
 
 
+
         /// <inheritdoc cref="OnPaintPreview"
         private Action<Graphics> _onPaintPreview;
 
@@ -207,7 +208,7 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Новое действие, для добавление в preview-действие.
         /// </param>
-        private void AddFigurePreviewAction(Action<Graphics> action)
+        public void AddFigurePreviewAction(Action<Graphics> action)
         {
             OnPaintPreview = null;
             OnPaintPreview += action;
@@ -230,7 +231,7 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Новое действие, для добавление в preview-действие.
         /// </param>
-        private void AddDoodlePreviewMicroAction(Action<Graphics> action)
+        public void AddDoodlePreviewMicroAction(Action<Graphics> action)
         {
             OnPaintPreview += action;
         }
@@ -247,10 +248,13 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Новое действие, для добавление в основное действие и стек действий.
         /// </param>
-        private void AddFinilizedAction(Action<Graphics> action)
+        public void AddFinilizedAction(Action<Graphics> action)
         {
             _onPaint += action;
+
             PerformedActionStack.Push(action);
+
+            CheckStacksSize();
         }
 
 
@@ -260,7 +264,7 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Отменить последнее действие, и переложить его из стека "выполненых" в "отменённые".
         /// </summary>
-        private void CancellLastAction()
+        public void CancellLastAction()
         {
             var lastAction = PerformedActionStack.Pop();
 
@@ -278,7 +282,7 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Повторить последнее отменённое действие, и переложить его из стека "отменённых" в "выполненные".
         /// </summary>
-        private void RepeatLastCancelledAction()
+        public void RepeatLastCancelledAction()
         {
             var lastAction = CancelledActionStack.Pop();
 

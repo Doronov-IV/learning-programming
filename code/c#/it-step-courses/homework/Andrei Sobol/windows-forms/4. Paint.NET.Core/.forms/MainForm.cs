@@ -2,6 +2,8 @@
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
+using Paint.NET.Core.Service;
+
 namespace Paint.NET.Core.Forms
 {
     /// <summary>
@@ -43,8 +45,7 @@ namespace Paint.NET.Core.Forms
             // if we are painting, i.e. clicked with LMB and aiming the figure; 
             if (_isPainting && !_isDoodling)
             {
-                _onPaintPreview = null;
-                _onPaintPreview += action;
+                _actionHandler.AddFigurePreviewAction(action);
             }
             // if we have already done that and we need to draw whatever we previewed;
             else
@@ -52,67 +53,27 @@ namespace Paint.NET.Core.Forms
                 // if we are painting with coursor, every point painted is an action.
                 // so untill we mouse up, we do it in a preview so that it helps us
                 // cancell/repeat the whole line drawn like in a real paint.
-                if (_isDoodling) _onPaintPreview += action;
+                if (_isDoodling) _actionHandler.AddDoodlePreviewMicroAction(action);
                 else
                 {
-                    _onPaint += action;
-                    PerformedActionsStack.Push(action);
+                    _actionHandler.AddFinilizedAction(action);
                 }
-
-                CheckStacksSize();
             }
+
+            RefreshButtonsVisibilityState();
         }
 
 
 
         /// <summary>
-        /// Cancell last action and handle it from 'performed' stack to the 'cancelled' ones.
+        /// Check action handler: if respective stack is empty, the button must not be active.
         /// <br />
-        /// Отменить последнее действие, и переложить его из стека "выполненых" в "отменённые".
+        /// Проверить хендлер действий: если соответствующий стек пуст, кнопка не должна быть активна.
         /// </summary>
-        private void CancellLastAction()
+        private void RefreshButtonsVisibilityState()
         {
-            var lastAction = PerformedActionsStack.Pop();
-
-            _onPaint -= lastAction;
-
-            CancelledActionsStack.Push(lastAction);
-
-            CheckStacksSize();
-        }
-
-
-
-        /// <summary>
-        /// Repeat last cancelled action and handle it from 'cancelled' stack to the 'performed' ones.
-        /// <br />
-        /// Повторить последнее отменённое действие, и переложить его из стека "отменённых" в "выполненные".
-        /// </summary>
-        private void RepeatLastCancelledAction()
-        {
-            var lastAction = CancelledActionsStack.Pop();
-
-            _onPaint += lastAction;
-
-            PerformedActionsStack.Push(lastAction);
-
-            CheckStacksSize();
-        }
-
-
-
-        /// <summary>
-        /// Check what stack has zero size.
-        /// <br />
-        /// Проверить каждый стек на кол-во элементов.
-        /// </summary>
-        private void CheckStacksSize()
-        {
-            if (CancelledActionsStack.Count > 0) RepeatActionButton.Enabled = true;
-            else RepeatActionButton.Enabled = false;
-
-            if (PerformedActionsStack.Count > 0) CancellActionButton.Enabled = true;
-            else CancellActionButton.Enabled = false;
+            RepeatActionButton.Enabled = _actionHandler.CancelledNotEmpty;
+            CancellActionButton.Enabled = _actionHandler.PerformedNotEmpty;
         }
 
 
@@ -151,7 +112,7 @@ namespace Paint.NET.Core.Forms
 
             Action<Graphics> newAction = (graphics) => { graphics.DrawLine(currentPenClone, _mouseStartingPositionCopy.Value, _mouseEndingPositionCopy.Value); };
 
-            _onPaintPreview = null;
+            _actionHandler.OnPaintPreview = null;
 
             AddAction(newAction);
 
@@ -173,7 +134,7 @@ namespace Paint.NET.Core.Forms
 
             Action<Graphics> newAction = (graphics) => { graphics.DrawRectangle(currentPenClone, rekt); };
 
-            _onPaintPreview = null;
+            _actionHandler.OnPaintPreview = null;
 
             AddAction(newAction);
 
@@ -195,7 +156,7 @@ namespace Paint.NET.Core.Forms
 
             Action<Graphics> newAction = (graphics) => { graphics.FillRectangle(currentBrushClone, rekt); };
 
-            _onPaintPreview = null;
+            _actionHandler.OnPaintPreview = null;
 
             AddAction(newAction);
 
@@ -217,7 +178,7 @@ namespace Paint.NET.Core.Forms
 
             Action<Graphics> newAction = (graphics) => { graphics.DrawEllipse(currentPenClone, rekt); };
 
-            _onPaintPreview = null;
+            _actionHandler.OnPaintPreview = null;
 
             AddAction(newAction);
 
@@ -239,7 +200,7 @@ namespace Paint.NET.Core.Forms
 
             Action<Graphics> newAction = (graphics) => { graphics.FillEllipse(currentBrushClone, rekt); };
 
-            _onPaintPreview = null;
+            _actionHandler.OnPaintPreview = null;
 
             AddAction(newAction);
 
@@ -429,8 +390,8 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnMainPictureBoxPaint(object sender, PaintEventArgs e)
         {
-            _onPaint?.Invoke(e.Graphics);
-            _onPaintPreview?.Invoke(e.Graphics);
+            _actionHandler.OnPaint?.Invoke(e.Graphics);
+            _actionHandler.OnPaintPreview?.Invoke(e.Graphics);
         }
 
 
@@ -465,14 +426,14 @@ namespace Paint.NET.Core.Forms
             {
                 _isDoodling = false;
 
-                _onPaint += _onPaintPreview;
+                _actionHandler.OnPaint += _actionHandler.OnPaintPreview;
 
-                PerformedActionsStack.Push(_onPaintPreview);
+                _actionHandler.PerformedActionStack.Push(_actionHandler.OnPaintPreview);
 
-                _onPaintPreview = null;
+                _actionHandler.OnPaintPreview = null;
             }
 
-            _currentAction.Invoke();
+            _actionHandler.CurrentAction.Invoke();
         }
 
 
@@ -485,7 +446,7 @@ namespace Paint.NET.Core.Forms
 
                 _mouseCurrentEndingPosition = e.Location;
 
-                _currentAction.Invoke();
+                _actionHandler.CurrentAction.Invoke();
             }
             else
             {
@@ -503,7 +464,7 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        ///  ↓                            ↓   UI CONTROLS   ↓                           ↓   ///
+        ///  ↓                         ↓   OTHER UI CONTROLS   ↓                        ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -623,9 +584,7 @@ namespace Paint.NET.Core.Forms
                 _currentColor = MainColorDialog.Color;
                 _currentPen.Color = _currentColor.Value;
                 _currentBrush = new SolidBrush(_currentColor.Value);
-
             }
-
             MainPictureBox.Invalidate();
         }
 
@@ -645,19 +604,19 @@ namespace Paint.NET.Core.Forms
                 switch (FigureListView.SelectedItems[0].ToolTipText)
                 {
                     case "line":
-                        _currentAction = OnDrawLine;
+                        _actionHandler.CurrentAction = OnDrawLine;
                         break;
                     case "rectangle":
-                        _currentAction = OnDrawRectangle;
+                        _actionHandler.CurrentAction = OnDrawRectangle;
                         break;
                     case "filled rectangle":
-                        _currentAction = OnDrawFilledRectangle;
+                        _actionHandler.CurrentAction = OnDrawFilledRectangle;
                         break;
                     case "ellipse":
-                        _currentAction = OnDrawEllipse;
+                        _actionHandler.CurrentAction = OnDrawEllipse;
                         break;
                     case "filled ellipse":
-                        _currentAction = OnDrawFilledEllipse;
+                        _actionHandler.CurrentAction = OnDrawFilledEllipse;
                         break;
                     default:
                         break;
@@ -681,16 +640,16 @@ namespace Paint.NET.Core.Forms
                 switch (StyloListView.SelectedItems[0].ToolTipText)
                 {
                     case "pencil":
-                        _currentAction = OnDrawWithPencil;
+                        _actionHandler.CurrentAction = OnDrawWithPencil;
                         break;
                     case "pen":
-                        _currentAction = OnDrawWithPen;
+                        _actionHandler.CurrentAction = OnDrawWithPen;
                         break;
                     case "brush":
-                        _currentAction = OnDrawWithBrush;
+                        _actionHandler.CurrentAction = OnDrawWithBrush;
                         break;
                     case "eraser":
-                        _currentAction = OnDrawWithEraser;
+                        _actionHandler.CurrentAction = OnDrawWithEraser;
                         break;
                     default:
                         break;
@@ -707,12 +666,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnCancellActionButtonClick(object sender, EventArgs e)
         { 
-            if (_performedActionsStack.Count > 0)
-            {
-                CancellLastAction();
+            if (_actionHandler.PerformedNotEmpty) _actionHandler.CancellLastAction();
 
-                if (_performedActionsStack.Count == 0) CancellActionButton.Enabled = false;
-            }
+            RefreshButtonsVisibilityState();
 
             MainPictureBox.Refresh();
         }
@@ -725,12 +681,9 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnRepeatActionButtonClick(object sender, EventArgs e)
         {
-            if (_cancelledActionsStack.Count > 0)
-            {
-                RepeatLastCancelledAction();
+            if (_actionHandler.CancelledNotEmpty) _actionHandler.RepeatLastCancelledAction();
 
-                if (_cancelledActionsStack.Count == 0) RepeatActionButton.Enabled = false;
-            }
+            RefreshButtonsVisibilityState();
 
             MainPictureBox.Refresh();
         }
@@ -855,81 +808,18 @@ namespace Paint.NET.Core.Forms
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                              ↓   ACTIONS   ↓                             ↓    ///
-        /////////////////////////////////////////////////////////////////////////////////////// 
-
-
-
-
-        /// <summary>
-        /// To be performed when we press the LMB to take a look at the preview of a chosen effect.
-        /// <br />
-        /// Выполняется, когда мы нажимаем ЛКМ, чтобы взглянуть на превью выбранного эффекта.
-        /// </summary>
-        private Action<Graphics> _onPaintPreview;
-
-
-        /// <summary>
-        /// To be performed when we end the preview of the effect and actualy want to keep it on the canvas.
-        /// <br />
-        /// Выполнится когда мы заверишм превью эффекта и захотим оставить его на холсте.
-        /// </summary>
-        private Action<Graphics> _onPaint;
-
-
-        /// <summary>
-        /// A reference to the current action chosen.
-        /// <br />
-        /// Ссылка на выбраное действие.
-        /// </summary>
-        private Action _currentAction;
-
-
-        /// <inheritdoc cref="PerformedActionsStack"/>
-        private Stack<Action<Graphics>> _performedActionsStack;
-
-
-        /// <inheritdoc cref="CancelledActionsStack"/>
-        private Stack<Action<Graphics>> _cancelledActionsStack;
-
-
-        /// <summary>
-        /// The stack of all performed actions.
-        /// <br />
-        /// Стек всех совершённых действий.
-        /// </summary>
-        public Stack<Action<Graphics>> PerformedActionsStack
-        {
-            get { return _performedActionsStack; }
-            set
-            {
-                _performedActionsStack = value;
-            }
-        }
-
-
-        /// <summary>
-        /// The stack of all cancelled actoins.
-        /// <br />
-        /// Стек всех отменённых действий.
-        /// </summary>
-        public Stack<Action<Graphics>> CancelledActionsStack
-        {
-            get { return _cancelledActionsStack; }
-            set
-            {
-                _cancelledActionsStack = value;
-            }
-        }
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
         ///  ↓                              ↓   OTHER   ↓                               ↓   ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
+
+
+        /// <summary>
+        /// An instance that holds everything that concerns actions, their stacks and others.
+        /// <br />
+        /// Экземпляр, который содержит всё, что касается действий, их стеки и другое.
+        /// </summary>
+        private ActionHandler _actionHandler;
 
 
         /// <summary>
@@ -1125,8 +1015,7 @@ namespace Paint.NET.Core.Forms
             CancellActionButton.Enabled = false;
             RepeatActionButton.Enabled = false;
 
-            _performedActionsStack = new();
-            _cancelledActionsStack = new();
+            _actionHandler = new();
 
             _currentColor = Color.Black;
 
@@ -1146,7 +1035,7 @@ namespace Paint.NET.Core.Forms
             if (!Directory.Exists(_tempDirectory.FullName)) _tempDirectory.Create();
 
             // DEFAULT ACTION;
-            _currentAction = OnDrawWithPencil;
+            _actionHandler.CurrentAction = OnDrawWithPencil;
         }
 
 
