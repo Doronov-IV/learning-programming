@@ -512,13 +512,7 @@ namespace Paint.NET.Core.Forms
             if (MainOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
                 _currentFileInfo = new(MainOpenFileDialog.FileName);
-                _copyFileName = $"../../../.temp/{_currentFileInfo.Name}";
-
-                if (File.Exists(_copyFileName)) File.Delete(_copyFileName);
-                File.Copy(_currentFileInfo.FullName, _copyFileName);
-                
-                _currentBitmap = new(_copyFileName);
-                MainPictureBox.Image = _currentBitmap;
+                CreateFileCopyAndOpenIt();
             }
         }
 
@@ -561,6 +555,24 @@ namespace Paint.NET.Core.Forms
                     bitmap.Save(MainSaveFileDialog.FileName, bitmap.RawFormat);
                 }
             }
+        }
+
+
+
+        /// <summary>
+        /// Create copy of the currentFileInfo in the temp folder and open it in the paint.
+        /// <br />
+        /// Создать копию файла "currentFileInfo" во временной папке и открыть её в paint'е.
+        /// </summary>
+        private void CreateFileCopyAndOpenIt()
+        {
+            _copyFileName = $"../../../.temp/{_currentFileInfo.Name}";
+
+            if (File.Exists(_copyFileName)) File.Delete(_copyFileName);
+            File.Copy(_currentFileInfo.FullName, _copyFileName);
+
+            _currentBitmap = new(_copyFileName);
+            MainPictureBox.Image = _currentBitmap;
         }
 
 
@@ -1075,7 +1087,7 @@ namespace Paint.NET.Core.Forms
         public MainForm()
         {
             ClearTempFolder();
-
+            
             InitializeComponent();
 
             InitializeLists();
@@ -1131,13 +1143,6 @@ namespace Paint.NET.Core.Forms
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-
-
-
-
-
-
-
 
 
         #endregion Property changed
