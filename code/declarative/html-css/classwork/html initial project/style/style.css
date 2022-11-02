@@ -1,0 +1,61 @@
+
+ .flex {
+ 	display: flex;
+    flex-direction: column;
+    font-family: 'Noto Sans', sans-serif;
+ }
+
+
+ .article {
+	position: relative;	
+	order: 2;
+	margin-top: 100px;
+	margin-left: 80px;
+	margin-bottom: 100px;
+}
+
+	
+.table {
+	border: 1px solid;
+	border-collapse: collapse;
+	font-family: 'Noto Sans', sans-serif;
+	font-weight: bold;
+	background-color: #daeaf5;
+}
+
+
+.paragraph {
+	color: rgba(0, 0, 128, 1.0);
+	font-size: 28px;
+	font-family: Bookman, URW Bookman L, serif;
+	margin-left: 40px;
+}
+
+
+.image {
+	width: 650;
+	height: 450;
+}
+
+
+.lor {
+	order: 3;
+	color: rgba(0,0,0,0.2);
+}
+
+.str1 {
+	color: rgba(0,0,0,1);
+}
+
+.str2 {
+	color: rgba(0,0,0,0.8);
+}
+
+.str3 {
+	color: rgba(0,0,0,0.5);
+}
+
+.str4 {
+	color: rgba(0,0,0,0.2);
+}
+
