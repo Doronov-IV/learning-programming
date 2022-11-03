@@ -3,9 +3,9 @@
 namespace Paint.NET.Core.Service
 {
     /// <summary>
-    /// An entity that provides main form with all functionality concerning actions, stacks of actions and other.
+    /// An abstraction that manages main form actions.
     /// <br />
-    /// Сущность, которая предоставляет main form'е функционал, связанный с action'ами, их стеками и другим.
+    /// Абстракция, которая управляет action'ами "main form"'ы.
     /// </summary>
     public class ActionHandler : INotifyPropertyChanged
     {
@@ -308,8 +308,6 @@ namespace Paint.NET.Core.Service
                 MessageBox.Show($"Exception: {ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
 
 

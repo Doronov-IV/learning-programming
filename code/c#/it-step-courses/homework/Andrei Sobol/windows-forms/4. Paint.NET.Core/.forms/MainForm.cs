@@ -101,6 +101,8 @@ namespace Paint.NET.Core.Forms
         #region Module: Figures
 
 
+
+
         /// <summary>
         /// Draw text in the pictureBox.
         /// <br />
@@ -125,7 +127,6 @@ namespace Paint.NET.Core.Forms
                 MainPictureBox.Invalidate();
             }
         }
-
 
 
 
@@ -303,6 +304,7 @@ namespace Paint.NET.Core.Forms
 
             return Rectangle.FromLTRB(l, t, r, b);
         }
+
 
 
 
@@ -610,29 +612,6 @@ namespace Paint.NET.Core.Forms
 
 
 
-        #region Module: Top Toolstrip Buttons
-
-
-
-        /// <summary>
-        /// Handle the instruments button click event.
-        /// <br />
-        /// Обработать событие клика по кнопке "Instruments".
-        /// </summary>
-        private void OnShowInstrumentsButtonClick(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-        #endregion Module: Top Toolstrip Buttons
-
-
-
-
-
-
         #region Module: Main Controls
 
 
@@ -791,6 +770,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Handle options->unicode button click event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку options->первый пункт.
+        /// </summary>
         private void OnUnicodeTestButtonClick(object sender, EventArgs e)
         {
             Clipboard.SetText(UnicodeTestToolStripMenuItem.Text);
@@ -798,6 +783,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Handle File->New button click event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку "File->New".
+        /// </summary>
         private void OnNewFileButtonClick(object sender, EventArgs e)
         {
             _actionHandler.OnPaint = null;
@@ -806,6 +797,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Handle the font-gialog button click event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку выбора шрифта.
+        /// </summary>
         private void OnFontButtonClick(object sender, EventArgs e)
         {
             if (MainFontDialog.ShowDialog() == DialogResult.OK)
@@ -816,6 +813,12 @@ namespace Paint.NET.Core.Forms
         }
 
 
+
+        /// <summary>
+        /// Handle the textbox-cross button click event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку крестика у текст бокса.
+        /// </summary>
         private void OnResetTextButtonClick(object sender, EventArgs e)
         {
             DrawStringTextBox.Text = string.Empty;
@@ -945,6 +948,7 @@ namespace Paint.NET.Core.Forms
         /// Информация о текущем шрифте.
         /// </summary>
         private Font _currentFont;
+
 
 
 
@@ -1209,6 +1213,7 @@ namespace Paint.NET.Core.Forms
         #region Property changed
 
 
+
         /// <summary>
         /// Propery changed event handler;
         /// <br />
@@ -1222,7 +1227,11 @@ namespace Paint.NET.Core.Forms
         /// <br />
         /// Метод-обработчик делегата 'property changed';
         /// </summary>
-        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
+        /// <param name="propName">
+        /// The name of the property;
+        /// <br />
+        /// Имя свойства;
+        /// </param>
         private void OnPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -1230,8 +1239,9 @@ namespace Paint.NET.Core.Forms
 
 
 
-
         #endregion Property changed
+
+
 
 
         #endregion CONSTRUCTION
