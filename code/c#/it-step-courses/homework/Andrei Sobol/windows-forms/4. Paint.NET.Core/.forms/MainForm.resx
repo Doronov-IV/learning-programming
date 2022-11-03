@@ -96,9 +96,9 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainPictureBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="TopMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 17</value>
   </metadata>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
@@ -176,29 +176,26 @@
   <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Options</value>
   </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="TopMenuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="TopMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
     <value>1351, 24</value>
   </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+  <data name="TopMenuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
+  <data name="&gt;&gt;TopMenuStrip.Name" xml:space="preserve">
+    <value>TopMenuStrip</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+  <data name="&gt;&gt;TopMenuStrip.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TopMenuStrip.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;TopMenuStrip.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="ColorButton.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -228,7 +225,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <metadata name="MainColorDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -263,7 +260,7 @@
     <value>81, 58</value>
   </data>
   <data name="FigureListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 30</value>
+    <value>410, 30</value>
   </data>
   <data name="FigureListView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -278,10 +275,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;FigureListView.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="StyloListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>508, 58</value>
+    <value>596, 58</value>
   </data>
   <data name="StyloListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>350, 30</value>
@@ -299,7 +296,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StyloListView.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="RepeatActionButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>1264, 52</value>
@@ -323,7 +320,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;RepeatActionButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="CancellActionButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>1183, 52</value>
@@ -347,10 +344,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;CancellActionButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="LineWidthUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>449, 65</value>
+    <value>522, 64</value>
   </data>
   <data name="LineWidthUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 23</value>
@@ -368,8 +365,56 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;LineWidthUpDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TextFontButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>965, 64</value>
+  </data>
+  <data name="TextFontButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 23</value>
+  </data>
+  <data name="TextFontButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="TextFontButton.Text" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="&gt;&gt;TextFontButton.Name" xml:space="preserve">
+    <value>TextFontButton</value>
+  </data>
+  <data name="&gt;&gt;TextFontButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextFontButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TextFontButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DrawStringTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1009, 64</value>
+  </data>
+  <data name="DrawStringTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="DrawStringTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;DrawStringTextBox.Name" xml:space="preserve">
+    <value>DrawStringTextBox</value>
+  </data>
+  <data name="&gt;&gt;DrawStringTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DrawStringTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DrawStringTextBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="MainFontDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>702, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -456,6 +501,12 @@
   </data>
   <data name="&gt;&gt;MainSaveFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MainFontDialog.Name" xml:space="preserve">
+    <value>MainFontDialog</value>
+  </data>
+  <data name="&gt;&gt;MainFontDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FontDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

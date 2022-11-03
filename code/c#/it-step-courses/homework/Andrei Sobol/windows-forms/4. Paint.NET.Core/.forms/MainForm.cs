@@ -101,6 +101,31 @@ namespace Paint.NET.Core.Forms
         #region Module: Figures
 
 
+        /// <summary>
+        /// Draw text in the pictureBox.
+        /// <br />
+        /// Нарисовать текст в pictureBox.
+        /// </summary>
+        private void OnDrawText()
+        {
+            if (!DrawStringTextBox.Text.Equals(String.Empty))
+            {
+                Brush currentBrushClone = _currentBrush.Clone() as SolidBrush;
+                Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
+                Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
+                Font currentFontClone = _currentFont.Clone() as Font;
+
+                Action<Graphics> newAction = (graphics) => { graphics.DrawString(DrawStringTextBox.Text, currentFontClone, currentBrushClone, _mouseEndingPositionCopy.Value); };
+
+                _actionHandler.OnPaintPreview = null;
+
+                AddAction(newAction);
+
+                MainPictureBox.Invalidate();
+            }
+        }
+
+
 
 
         /// <summary>
@@ -657,6 +682,9 @@ namespace Paint.NET.Core.Forms
                     case "filled ellipse":
                         _actionHandler.CurrentAction = OnDrawFilledEllipse;
                         break;
+                    case "text":
+                        _actionHandler.CurrentAction = OnDrawText;
+                        break;
                     default:
                         break;
                 }
@@ -759,6 +787,16 @@ namespace Paint.NET.Core.Forms
             _actionHandler.PerformedActionStack.Clear();
             RefreshButtonsVisibilityState();
             MainPictureBox.Refresh();
+        }
+
+
+        private void OnFontButtonClick(object sender, EventArgs e)
+        {
+            if (MainFontDialog.ShowDialog() == DialogResult.OK)
+            {
+                _currentFont = MainFontDialog.Font;
+            }
+            MainPictureBox.Invalidate();
         }
 
 
@@ -878,6 +916,9 @@ namespace Paint.NET.Core.Forms
         private uint _stylusLineWidth;
 
 
+        private Font _currentFont;
+
+
 
         ///////////////////////////////////////////////////////////////////////////////////////
         ///  ↓                              ↓   OTHER   ↓                               ↓   ///
@@ -949,6 +990,7 @@ namespace Paint.NET.Core.Forms
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/filled-square.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/circle.png"));
             imageList.Images.Add(Image.FromFile("../../../.resources/icons/filled-circle.png"));
+            imageList.Images.Add(Image.FromFile("../../../.resources/icons/text.png"));
 
             ListViewItem lineItem = new();
             lineItem.ToolTipText = "line";
@@ -974,6 +1016,10 @@ namespace Paint.NET.Core.Forms
             filledEllipseItem.ToolTipText = "filled ellipse";
             filledEllipseItem.ImageIndex = 4;
 
+            ListViewItem textItem = new();
+            textItem.ToolTipText = "text";
+            textItem.ImageIndex = 5;
+
 
             FigureListView.LargeImageList = imageList;
             
@@ -984,6 +1030,7 @@ namespace Paint.NET.Core.Forms
             FigureListView.Items.Add(filledSquareItem);
             FigureListView.Items.Add(ellipseItem);
             FigureListView.Items.Add(filledEllipseItem); 
+            FigureListView.Items.Add(textItem); 
         }
 
 
@@ -1098,6 +1145,7 @@ namespace Paint.NET.Core.Forms
             _actionHandler = new();
 
             _currentColor = Color.Black;
+            _currentFont = new Font(DefaultFont.FontFamily, 10);
 
             _currentBrush = new SolidBrush(Color.Black);
             _currentPen = new(Color.Black, 3);
@@ -1145,8 +1193,10 @@ namespace Paint.NET.Core.Forms
         }
 
 
-        #endregion Property changed
 
+
+
+        #endregion Property changed
 
 
         #endregion CONSTRUCTION

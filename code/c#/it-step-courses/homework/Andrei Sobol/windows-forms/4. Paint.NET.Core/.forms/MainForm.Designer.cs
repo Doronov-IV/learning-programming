@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.TopMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +49,11 @@
             this.RepeatActionButton = new System.Windows.Forms.Button();
             this.CancellActionButton = new System.Windows.Forms.Button();
             this.LineWidthUpDown = new System.Windows.Forms.NumericUpDown();
+            this.TextFontButton = new System.Windows.Forms.Button();
+            this.DrawStringTextBox = new System.Windows.Forms.TextBox();
+            this.MainFontDialog = new System.Windows.Forms.FontDialog();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.TopMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LineWidthUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,15 +67,15 @@
             this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseMove);
             this.MainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnImageBoxMouseUp);
             // 
-            // menuStrip1
+            // TopMenuStrip
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.Menu;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TopMenuStrip.BackColor = System.Drawing.SystemColors.Menu;
+            this.TopMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.optionsToolStripMenuItem});
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
-            this.menuStrip1.Name = "menuStrip1";
+            resources.ApplyResources(this.TopMenuStrip, "TopMenuStrip");
+            this.TopMenuStrip.Name = "TopMenuStrip";
             // 
             // fileToolStripMenuItem
             // 
@@ -183,11 +186,25 @@
             this.LineWidthUpDown.Name = "LineWidthUpDown";
             this.LineWidthUpDown.ValueChanged += new System.EventHandler(this.OnLineWidthUpDownValueChanged);
             // 
+            // TextFontButton
+            // 
+            resources.ApplyResources(this.TextFontButton, "TextFontButton");
+            this.TextFontButton.Name = "TextFontButton";
+            this.TextFontButton.UseVisualStyleBackColor = true;
+            this.TextFontButton.Click += new System.EventHandler(this.OnFontButtonClick);
+            // 
+            // DrawStringTextBox
+            // 
+            resources.ApplyResources(this.DrawStringTextBox, "DrawStringTextBox");
+            this.DrawStringTextBox.Name = "DrawStringTextBox";
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.DrawStringTextBox);
+            this.Controls.Add(this.TextFontButton);
             this.Controls.Add(this.LineWidthUpDown);
             this.Controls.Add(this.CancellActionButton);
             this.Controls.Add(this.RepeatActionButton);
@@ -195,14 +212,14 @@
             this.Controls.Add(this.FigureListView);
             this.Controls.Add(this.ColorButton);
             this.Controls.Add(this.MainPictureBox);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.TopMenuStrip);
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.TopMenuStrip;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnMainFormFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.TopMenuStrip.ResumeLayout(false);
+            this.TopMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LineWidthUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -212,7 +229,7 @@
         #endregion
 
         private PictureBox MainPictureBox;
-        private MenuStrip menuStrip1;
+        private MenuStrip TopMenuStrip;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
@@ -231,5 +248,8 @@
         private ToolStripMenuItem forwardToolStripMenuItem;
         private NumericUpDown LineWidthUpDown;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private Button TextFontButton;
+        private TextBox DrawStringTextBox;
+        private FontDialog MainFontDialog;
     }
 }
