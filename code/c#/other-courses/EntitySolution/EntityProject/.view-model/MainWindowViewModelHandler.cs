@@ -9,15 +9,19 @@ namespace MainEntityProject.ViewModel
 
 
 
+
+
+
+
+
         /// <summary>
-        /// Connect button click event handler;
+        /// Handle connect button click event;
         /// <br />
-        /// Обработчик нажатия кнопки "Connect";
+        /// Обработать нажатие кнопки "Connect";
         /// </summary>
         public void OnConnectButtonClick()
         {
-            // Если нет подключения, воткните после "Server=" символы ".\\";
-            connectionString = $@"Server=.\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            // Connection string инициализируется в конструкторе вью-модели.
 
             using (SqlConnection connection = new(connectionString))
             {
@@ -28,13 +32,10 @@ namespace MainEntityProject.ViewModel
                     connection.Close();
 
                     ConnectionStatus.Toggle();
-
-                    // Если не работает Entity, воткните после "Server=" символы ".\";
-                    connectionString = $@"Server=.\{ServerName};Database = DoronovEFCthird;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Connection failed. (location .view-model/Handler/OnConnectButtonClick)\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Connection failed. (location: .view-model/Handler/OnConnectButtonClick)\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

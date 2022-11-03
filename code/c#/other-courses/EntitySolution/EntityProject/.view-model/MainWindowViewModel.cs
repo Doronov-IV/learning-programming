@@ -147,10 +147,14 @@ namespace MainEntityProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            connectionString = $@"Server=.\{ServerName};Database = MainEFCproject;Trusted_Connection=true;Encrypt=false";
+
             _connectionStatus = new();
             _serverName = string.Empty;
 
             ConnectCommand = new(OnConnectButtonClick);
+
+            ServerName = "DoronovIV";
         }
 
 
