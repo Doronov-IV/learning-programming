@@ -1,1 +1,1 @@
-This is a some other folder.
+This is a some other courses folder.

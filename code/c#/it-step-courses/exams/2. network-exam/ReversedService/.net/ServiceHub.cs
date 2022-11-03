@@ -188,6 +188,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                                 buffer = new byte[bufferSize];
                                 stream.Read(buffer, 0, bufferSize);
                                 user.ClientSocket.Client.Send(buffer, SocketFlags.Partial);
+                                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
                             }
                         }
                     }
