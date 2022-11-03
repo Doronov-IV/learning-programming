@@ -737,7 +737,7 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnCancellActionButtonClick(object sender, EventArgs e)
         { 
-            if (_actionHandler.PerformedNotEmpty) _actionHandler.CancellLastAction();
+            if (_actionHandler.PerformedNotEmpty) _actionHandler.TryCancellLastAction();
 
             RefreshButtonsVisibilityState();
 
@@ -753,7 +753,7 @@ namespace Paint.NET.Core.Forms
         /// </summary>
         private void OnRepeatActionButtonClick(object sender, EventArgs e)
         {
-            if (_actionHandler.CancelledNotEmpty) _actionHandler.RepeatLastCancelledAction();
+            if (_actionHandler.CancelledNotEmpty) _actionHandler.TryRepeatLastCancelledAction();
 
             RefreshButtonsVisibilityState();
 
@@ -813,6 +813,12 @@ namespace Paint.NET.Core.Forms
                 _currentFont = MainFontDialog.Font;
             }
             MainPictureBox.Invalidate();
+        }
+
+
+        private void OnResetTextButtonClick(object sender, EventArgs e)
+        {
+            DrawStringTextBox.Text = string.Empty;
         }
 
 
@@ -1221,6 +1227,8 @@ namespace Paint.NET.Core.Forms
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+
 
 
         #endregion Property changed

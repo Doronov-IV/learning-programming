@@ -54,6 +54,7 @@
             this.TextFontButton = new System.Windows.Forms.Button();
             this.DrawStringTextBox = new System.Windows.Forms.TextBox();
             this.MainFontDialog = new System.Windows.Forms.FontDialog();
+            this.ResetTextButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.TopMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LineWidthUpDown)).BeginInit();
@@ -185,14 +186,18 @@
             // 
             // RepeatActionButton
             // 
+            this.RepeatActionButton.BackgroundImage = global::Paint.NET.Core.Properties.Resources.forth;
             resources.ApplyResources(this.RepeatActionButton, "RepeatActionButton");
+            this.RepeatActionButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.MenuBar;
             this.RepeatActionButton.Name = "RepeatActionButton";
             this.RepeatActionButton.UseVisualStyleBackColor = true;
             this.RepeatActionButton.Click += new System.EventHandler(this.OnRepeatActionButtonClick);
             // 
             // CancellActionButton
             // 
+            this.CancellActionButton.BackgroundImage = global::Paint.NET.Core.Properties.Resources.back;
             resources.ApplyResources(this.CancellActionButton, "CancellActionButton");
+            this.CancellActionButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.MenuBar;
             this.CancellActionButton.Name = "CancellActionButton";
             this.CancellActionButton.UseVisualStyleBackColor = true;
             this.CancellActionButton.Click += new System.EventHandler(this.OnCancellActionButtonClick);
@@ -205,8 +210,9 @@
             // 
             // TextFontButton
             // 
-            this.TextFontButton.Image = global::Paint.NET.Core.Properties.Resources.text_size1;
+            this.TextFontButton.BackgroundImage = global::Paint.NET.Core.Properties.Resources.text_size;
             resources.ApplyResources(this.TextFontButton, "TextFontButton");
+            this.TextFontButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.MenuBar;
             this.TextFontButton.Name = "TextFontButton";
             this.TextFontButton.UseVisualStyleBackColor = true;
             this.TextFontButton.Click += new System.EventHandler(this.OnFontButtonClick);
@@ -216,11 +222,23 @@
             resources.ApplyResources(this.DrawStringTextBox, "DrawStringTextBox");
             this.DrawStringTextBox.Name = "DrawStringTextBox";
             // 
+            // ResetTextButton
+            // 
+            this.ResetTextButton.BackColor = System.Drawing.SystemColors.Menu;
+            this.ResetTextButton.BackgroundImage = global::Paint.NET.Core.Properties.Resources.cancel;
+            resources.ApplyResources(this.ResetTextButton, "ResetTextButton");
+            this.ResetTextButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Menu;
+            this.ResetTextButton.FlatAppearance.BorderSize = 0;
+            this.ResetTextButton.Name = "ResetTextButton";
+            this.ResetTextButton.UseVisualStyleBackColor = false;
+            this.ResetTextButton.Click += new System.EventHandler(this.OnResetTextButtonClick);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Controls.Add(this.ResetTextButton);
             this.Controls.Add(this.DrawStringTextBox);
             this.Controls.Add(this.TextFontButton);
             this.Controls.Add(this.LineWidthUpDown);
@@ -271,5 +289,6 @@
         private FontDialog MainFontDialog;
         private ToolStripMenuItem newToolStripMenuItem;
         private ToolStripMenuItem UnicodeTestToolStripMenuItem;
+        private Button ResetTextButton;
     }
 }

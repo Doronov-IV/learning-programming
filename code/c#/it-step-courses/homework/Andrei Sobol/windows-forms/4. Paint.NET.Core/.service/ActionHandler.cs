@@ -266,15 +266,22 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Отменить последнее действие, и переложить его из стека "выполненых" в "отменённые".
         /// </summary>
-        public void CancellLastAction()
+        public void TryCancellLastAction()
         {
-            var lastAction = PerformedActionStack.Pop();
+            try
+            {
+                var lastAction = PerformedActionStack.Pop();
 
-            _onPaint -= lastAction;
+                _onPaint -= lastAction;
 
-            CancelledActionStack.Push(lastAction);
+                CancelledActionStack.Push(lastAction);
 
-            CheckStacksSize();
+                CheckStacksSize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception: {ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -284,15 +291,22 @@ namespace Paint.NET.Core.Service
         /// <br />
         /// Повторить последнее отменённое действие, и переложить его из стека "отменённых" в "выполненные".
         /// </summary>
-        public void RepeatLastCancelledAction()
+        public void TryRepeatLastCancelledAction()
         {
-            var lastAction = CancelledActionStack.Pop();
+            try
+            {
+                var lastAction = CancelledActionStack.Pop();
 
-            _onPaint += lastAction;
+                _onPaint += lastAction;
 
-            PerformedActionStack.Push(lastAction);
+                PerformedActionStack.Push(lastAction);
 
-            CheckStacksSize();
+                CheckStacksSize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception: {ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
