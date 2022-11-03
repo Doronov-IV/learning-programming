@@ -93,7 +93,12 @@ namespace MainEntityProject.ViewModel
 
 
 
-        // 
+        /// <summary>
+        /// Connect to database command;
+        /// <br />
+        /// Команда подключения к бд;
+        /// </summary>
+        public DelegateCommand ConnectCommand { get; }
 
 
 
@@ -144,6 +149,8 @@ namespace MainEntityProject.ViewModel
         {
             _connectionStatus = new();
             _serverName = string.Empty;
+
+            ConnectCommand = new(OnConnectButtonClick);
         }
 
 

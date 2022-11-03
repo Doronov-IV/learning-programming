@@ -18,6 +18,7 @@
     <Compile Include=".model\entities\Student.cs" />
     <Compile Include=".model\entities\Subject.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
+    <Compile Include=".view-model\MainWindowViewModelHandler.cs" />
     <Compile Include=".view\App.xaml.cs" />
     <Compile Include=".view\MainWindow.xaml.cs" />
   </ItemGroup>
