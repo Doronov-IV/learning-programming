@@ -101,6 +101,45 @@
   <metadata name="TopMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 17</value>
   </metadata>
+  <data name="TopMenuStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="TopMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1351, 24</value>
+  </data>
+  <data name="TopMenuStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;TopMenuStrip.Name" xml:space="preserve">
+    <value>TopMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;TopMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TopMenuStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TopMenuStrip.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="fileToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+F</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="newToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+N</value>
+  </data>
+  <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
+  </data>
+  <data name="newToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;New</value>
+  </data>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+O</value>
   </data>
@@ -128,14 +167,11 @@
   <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
     <value>Save &amp;As...</value>
   </data>
-  <data name="fileToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+F</value>
+  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;File</value>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Edit</value>
   </data>
   <data name="backToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+Z</value>
@@ -164,38 +200,17 @@
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Delete</value>
   </data>
-  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Edit</value>
-  </data>
   <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 20</value>
   </data>
   <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Options</value>
   </data>
-  <data name="TopMenuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="UnicodeTestToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="TopMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1351, 24</value>
-  </data>
-  <data name="TopMenuStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;TopMenuStrip.Name" xml:space="preserve">
-    <value>TopMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;TopMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TopMenuStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;TopMenuStrip.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="UnicodeTestToolStripMenuItem.Text" xml:space="preserve">
+    <value>¯ \ _ (ツ) _ / ¯</value>
   </data>
   <data name="ColorButton.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -299,7 +314,7 @@
     <value>5</value>
   </data>
   <data name="RepeatActionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1264, 52</value>
+    <value>1264, 62</value>
   </data>
   <data name="RepeatActionButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -323,7 +338,7 @@
     <value>4</value>
   </data>
   <data name="CancellActionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1183, 52</value>
+    <value>1183, 62</value>
   </data>
   <data name="CancellActionButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -368,16 +383,13 @@
     <value>2</value>
   </data>
   <data name="TextFontButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>965, 64</value>
+    <value>979, 63</value>
   </data>
   <data name="TextFontButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 23</value>
+    <value>24, 24</value>
   </data>
   <data name="TextFontButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
-  </data>
-  <data name="TextFontButton.Text" xml:space="preserve">
-    <value>f</value>
   </data>
   <data name="&gt;&gt;TextFontButton.Name" xml:space="preserve">
     <value>TextFontButton</value>
@@ -393,6 +405,9 @@
   </data>
   <data name="DrawStringTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>1009, 64</value>
+  </data>
+  <data name="DrawStringTextBox.MaxLength" type="System.Int32, mscorlib">
+    <value>16</value>
   </data>
   <data name="DrawStringTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 23</value>
@@ -434,6 +449,12 @@
     <value>fileToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newToolStripMenuItem.Name" xml:space="preserve">
+    <value>newToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;newToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openToolStripMenuItem.Name" xml:space="preserve">
@@ -482,6 +503,12 @@
     <value>optionsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;optionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UnicodeTestToolStripMenuItem.Name" xml:space="preserve">
+    <value>UnicodeTestToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;UnicodeTestToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MainColorDialog.Name" xml:space="preserve">

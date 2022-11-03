@@ -32,6 +32,7 @@
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
             this.TopMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +41,7 @@
             this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UnicodeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColorButton = new System.Windows.Forms.Button();
             this.MainColorDialog = new System.Windows.Forms.ColorDialog();
             this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -80,11 +82,18 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.OnNewFileButtonClick);
             // 
             // openToolStripMenuItem
             // 
@@ -133,8 +142,16 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UnicodeTestToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             resources.ApplyResources(this.optionsToolStripMenuItem, "optionsToolStripMenuItem");
+            // 
+            // UnicodeTestToolStripMenuItem
+            // 
+            this.UnicodeTestToolStripMenuItem.Name = "UnicodeTestToolStripMenuItem";
+            resources.ApplyResources(this.UnicodeTestToolStripMenuItem, "UnicodeTestToolStripMenuItem");
+            this.UnicodeTestToolStripMenuItem.Click += new System.EventHandler(this.OnUnicodeTestButtonClick);
             // 
             // ColorButton
             // 
@@ -188,6 +205,7 @@
             // 
             // TextFontButton
             // 
+            this.TextFontButton.Image = global::Paint.NET.Core.Properties.Resources.text_size1;
             resources.ApplyResources(this.TextFontButton, "TextFontButton");
             this.TextFontButton.Name = "TextFontButton";
             this.TextFontButton.UseVisualStyleBackColor = true;
@@ -251,5 +269,7 @@
         private Button TextFontButton;
         private TextBox DrawStringTextBox;
         private FontDialog MainFontDialog;
+        private ToolStripMenuItem newToolStripMenuItem;
+        private ToolStripMenuItem UnicodeTestToolStripMenuItem;
     }
 }

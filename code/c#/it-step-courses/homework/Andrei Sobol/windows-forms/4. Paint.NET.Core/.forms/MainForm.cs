@@ -114,8 +114,9 @@ namespace Paint.NET.Core.Forms
                 Point? _mouseStartingPositionCopy = new Point(_mouseCurrentStartingPosition.X, _mouseCurrentStartingPosition.Y);
                 Point? _mouseEndingPositionCopy = new Point(_mouseCurrentEndingPosition.X, _mouseCurrentEndingPosition.Y);
                 Font currentFontClone = _currentFont.Clone() as Font;
+                string textboxCopy = new string(DrawStringTextBox.Text);
 
-                Action<Graphics> newAction = (graphics) => { graphics.DrawString(DrawStringTextBox.Text, currentFontClone, currentBrushClone, _mouseEndingPositionCopy.Value); };
+                Action<Graphics> newAction = (graphics) => { graphics.DrawString(textboxCopy, currentFontClone, currentBrushClone, _mouseEndingPositionCopy.Value); };
 
                 _actionHandler.OnPaintPreview = null;
 
@@ -790,6 +791,21 @@ namespace Paint.NET.Core.Forms
         }
 
 
+        private void OnUnicodeTestButtonClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(UnicodeTestToolStripMenuItem.Text);
+            MessageBox.Show("Text copied to the clipboard.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private void OnNewFileButtonClick(object sender, EventArgs e)
+        {
+            _actionHandler.OnPaint = null;
+            _currentFileInfo = null;
+            MainPictureBox.Image = new Bitmap(_defaultImagePass);
+        }
+
+
         private void OnFontButtonClick(object sender, EventArgs e)
         {
             if (MainFontDialog.ShowDialog() == DialogResult.OK)
@@ -798,6 +814,7 @@ namespace Paint.NET.Core.Forms
             }
             MainPictureBox.Invalidate();
         }
+
 
 
 
@@ -916,6 +933,11 @@ namespace Paint.NET.Core.Forms
         private uint _stylusLineWidth;
 
 
+        /// <summary>
+        /// Current font info.
+        /// <br />
+        /// Информация о текущем шрифте.
+        /// </summary>
         private Font _currentFont;
 
 
@@ -949,6 +971,14 @@ namespace Paint.NET.Core.Forms
         /// Ссылка на временную директорию, которую мы резервируем для копированных файлов.
         /// </summary>
         private static DirectoryInfo? _tempDirectory;
+
+
+        /// <summary>
+        /// The pass for the default image (white sheet).
+        /// <br />
+        /// Путь к изображению по умолчанию (белое полотно).
+        /// </summary>
+        private string _defaultImagePass;
 
 
 
@@ -1020,10 +1050,8 @@ namespace Paint.NET.Core.Forms
             textItem.ToolTipText = "text";
             textItem.ImageIndex = 5;
 
-
             FigureListView.LargeImageList = imageList;
             
-            //ColumnHeaderAutoResizeStyle.ColumnContent;
             FigureListView.Items.Clear();
             FigureListView.Items.Add(lineItem);
             FigureListView.Items.Add(squareItem);
@@ -1142,6 +1170,8 @@ namespace Paint.NET.Core.Forms
             CancellActionButton.Enabled = false;
             RepeatActionButton.Enabled = false;
 
+            _defaultImagePass = @"../../../.resources/images/blank.png";
+
             _actionHandler = new();
 
             _currentColor = Color.Black;
@@ -1191,9 +1221,6 @@ namespace Paint.NET.Core.Forms
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-
-
-
 
 
         #endregion Property changed
