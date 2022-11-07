@@ -93,7 +93,7 @@ namespace MainEntityProject.ViewModel
         /// <br />
         /// Команда кнопки "Do Action".
         /// </summary>
-        public DelegateCommand DoActionCommand { get; }
+        public DelegateCommand FillTablesCommand { get; }
 
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace MainEntityProject.ViewModel
             _connectionStatus = new();
             _serverName = string.Empty;
 
-            DoActionCommand = new(OnDoActionButtonClickAsync);
+            FillTablesCommand = new(OnDoActionButtonClickAsync);
             ClearTablesCommand = new(OnClearTablesButtonClickAsync);
 
             ServerName = "doronoviv";

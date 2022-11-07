@@ -16,7 +16,7 @@
 
 
         <Button
-                Command="{Binding DoActionCommand}" Content="Do Action"
+                Command="{Binding FillTablesCommand}" Content="Fill Tables"
                 Grid.Column="2" Height="30"  Margin="0,0,30,30"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90"
          />
