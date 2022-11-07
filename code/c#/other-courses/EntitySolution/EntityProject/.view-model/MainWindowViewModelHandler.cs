@@ -20,7 +20,7 @@ namespace MainEntityProject.ViewModel
         /// <br />
         /// Обработать событие нажатия на кнопку "Clear Database".
         /// </summary>
-        public async void OnClearDatabaseButtonClickAsync()
+        public async void OnClearTablesButtonClickAsync()
         {
             await Task.Run(() =>
             {

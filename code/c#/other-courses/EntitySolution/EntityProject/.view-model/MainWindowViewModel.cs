@@ -88,15 +88,20 @@ namespace MainEntityProject.ViewModel
         #region COMMANDS
 
 
+        /// <summary>
+        /// 'Do action' button command.
+        /// <br />
+        /// Команда кнопки "Do Action".
+        /// </summary>
         public DelegateCommand DoActionCommand { get; }
 
 
         /// <summary>
-        /// .
+        /// 'Clear Tables' button command.
         /// <br />
-        /// .
+        /// Команда кнопки "Clear Tables".
         /// </summary>
-        public DelegateCommand ClearDatabaseCommand { get; }
+        public DelegateCommand ClearTablesCommand { get; }
 
 
 
@@ -151,7 +156,7 @@ namespace MainEntityProject.ViewModel
             _serverName = string.Empty;
 
             DoActionCommand = new(OnDoActionButtonClickAsync);
-            ClearDatabaseCommand = new(OnClearDatabaseButtonClickAsync);
+            ClearTablesCommand = new(OnClearTablesButtonClickAsync);
 
             ServerName = "doronoviv";
         }
