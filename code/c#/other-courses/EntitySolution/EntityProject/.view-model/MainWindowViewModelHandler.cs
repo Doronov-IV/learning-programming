@@ -1,49 +1,44 @@
 ﻿using MainEntityProject.Model.Context;
 using MainEntityProject.Model.Entities;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace MainEntityProject.ViewModel
 {
     public partial class MainWindowViewModel
     {
 
+
+
         #region HANDLERS
 
 
 
-
-
-
-
-
         /// <summary>
-        /// Handle connect button click event;
+        /// Handle 'Clear Database' button click event.
         /// <br />
-        /// Обработать нажатие кнопки "Connect";
+        /// Обработать событие нажатия на кнопку "Clear Database".
         /// </summary>
-        public void OnConnectButtonClick()
+        public async void OnClearDatabaseButtonClickAsync()
         {
-            // Connection string инициализируется в конструкторе вью-модели.
-            connectionString = $@"Server=.\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
-
-            using (SqlConnection connection = new(connectionString))
+            await Task.Run(() =>
             {
                 try
                 {
-                    connection.Open();
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
+                    {
+                        context.Database.ExecuteSqlRaw("DELETE FROM [Books]");
+                        context.Database.ExecuteSqlRaw("DELETE FROM [Authors]");
 
-                    connection.Close();
-
-                    ConnectionStatus.Toggle();
-
-                    // Если не работает Entity, воткните после "Server=" символы ".\";
-                    connectionString = $@"Server=.\{ServerName};Database = MainEFCproject;Trusted_Connection=true;Encrypt=false";
+                        context.SaveChanges();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Connection failed. (location .view-model/Handler/OnConnectButtonClick)\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Connection failed.\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+            });
         }
 
 
@@ -60,7 +55,7 @@ namespace MainEntityProject.ViewModel
             {
                 try
                 {
-                    using (CurrentDatabaseContext context = new CurrentDatabaseContext())
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
                     {
                         List<Book> bookList1 = new();
                         List<Book> bookList2 = new();
@@ -108,6 +103,43 @@ namespace MainEntityProject.ViewModel
 
 
         #endregion HANDLERS
+
+
+
+
+        #region SQL CONNECTION
+
+
+
+        /// <summary>
+        /// Create JSON SQL-connection file.
+        /// <br />
+        /// Создать JSON файл конфигурации SQL-подключения.
+        /// </summary>
+        private void InitializeSQLConnection()
+        {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory());
+
+            if (!File.Exists("appsettings.json"))
+                File.Copy("../../../.config/appsettings.json", "appsettings.json");
+
+            builder.AddJsonFile("appsettings.json");
+
+            var config = builder.Build();
+            string _connectionString = config.GetConnectionString("DefaultConnection");
+
+            var optionsBuilder = new DbContextOptionsBuilder<CurrentDatabaseContext>();
+            _connectionOptions = optionsBuilder
+                .UseSqlServer(_connectionString)
+                .Options;
+        }
+
+
+
+        #endregion SQL CONNECTION
+
+
 
     }
 }

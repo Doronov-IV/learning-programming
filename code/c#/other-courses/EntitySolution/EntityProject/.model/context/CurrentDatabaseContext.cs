@@ -1,6 +1,7 @@
 ﻿using MainEntityProject.Model.Entities;
 using MainEntityProject.Model.Configs;
-using MainEntityProject.ViewModel;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace MainEntityProject.Model.Context
 {
@@ -34,7 +35,7 @@ namespace MainEntityProject.Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($@"Server=.\doronoviv;Database = MainEFCproject;Trusted_Connection=true;Encrypt=false");
+            optionsBuilder.UseSqlServer();
         }
 
 
@@ -62,6 +63,13 @@ namespace MainEntityProject.Model.Context
         /// Конструктор по умолчанию;
         /// </summary>
         public CurrentDatabaseContext()
+        {
+            Database.EnsureCreated();
+        }
+
+
+
+        public CurrentDatabaseContext(DbContextOptions<CurrentDatabaseContext> options) : base(options)
         {
             Database.EnsureCreated();
         }

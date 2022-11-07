@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using MainEntityProject.Model.Context;
+using Microsoft.Extensions.Configuration;
+using System.ComponentModel;
+using System.IO;
 
 namespace MainEntityProject.ViewModel
 {
@@ -64,16 +67,6 @@ namespace MainEntityProject.ViewModel
 
 
 
-
-        /// <summary>
-        /// A connection string just in case;
-        /// <br />
-        /// Строка подключения на всякий случай;
-        /// </summary>
-        public static string connectionString = $@"Server=.\doronoviv;Database = MainEFCproject;Trusted_Connection=true;Encrypt=false";
-
-
-
         /// <inheritdoc cref="ServerName"/>
         private string _serverName;
 
@@ -81,6 +74,9 @@ namespace MainEntityProject.ViewModel
 
         /// <inheritdoc cref="ConnectionStatus"/>
         private CustomConnectionStatus _connectionStatus;
+
+
+        private DbContextOptions<CurrentDatabaseContext> _connectionOptions;
 
 
         #endregion STATE
@@ -92,16 +88,15 @@ namespace MainEntityProject.ViewModel
         #region COMMANDS
 
 
+        public DelegateCommand DoActionCommand { get; }
+
 
         /// <summary>
-        /// Connect to database command;
+        /// .
         /// <br />
-        /// Команда подключения к бд;
+        /// .
         /// </summary>
-        public DelegateCommand ConnectCommand { get; }
-
-
-        public DelegateCommand DoActionCommand { get; }
+        public DelegateCommand ClearDatabaseCommand { get; }
 
 
 
@@ -150,11 +145,13 @@ namespace MainEntityProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
+            InitializeSQLConnection();
+
             _connectionStatus = new();
             _serverName = string.Empty;
 
-            ConnectCommand = new(OnConnectButtonClick);
             DoActionCommand = new(OnDoActionButtonClickAsync);
+            ClearDatabaseCommand = new(OnClearDatabaseButtonClickAsync);
 
             ServerName = "doronoviv";
         }
