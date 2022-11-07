@@ -6,6 +6,7 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System.Windows;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Design;
 global using System.Collections.ObjectModel;
 
 using EntityHomeworkSecond.Model;
@@ -159,7 +160,7 @@ namespace EntityHomeworkSecond.ViewModel
         private void OnConnectButtonClick()
         {
             // Если нет подключения, воткните после "Server=" символы ".\\";
-            MainWindowViewModel.ConnectionString = $"Server={ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
+            MainWindowViewModel.ConnectionString = $"Server=.\\{ServerName};Database = master;Trusted_Connection=true;Encrypt=false";
 
             using (SqlConnection connection = new(MainWindowViewModel.ConnectionString))
             {
@@ -171,7 +172,7 @@ namespace EntityHomeworkSecond.ViewModel
 
                     ConnectionStatus.Toggle();
                     // Если не работает Entity, воткните после "Server=" символы ".\";
-                    MainWindowViewModel.ConnectionString = $@"Server={ServerName};Database = DoronovEFCsecond;Trusted_Connection=true;Encrypt=false";
+                    MainWindowViewModel.ConnectionString = $@"Server=.\{ServerName};Database = DoronovEFCsecond;Trusted_Connection=true;Encrypt=false";
                 }
                 catch (Exception ex)
                 {

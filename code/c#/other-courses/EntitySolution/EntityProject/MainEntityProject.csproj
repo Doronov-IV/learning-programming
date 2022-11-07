@@ -5,18 +5,15 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject>EntityProject.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".model\configs\CardConfiguration.cs" />
-    <Compile Include=".model\configs\MarkConfiguration.cs" />
-    <Compile Include=".model\configs\StudentConfiguration.cs" />
-    <Compile Include=".model\configs\SubjectConfiguration.cs" />
+    <Compile Include=".model\configs\AuthorConfiguration.cs" />
+    <Compile Include=".model\configs\BookConfiguration.cs" />
     <Compile Include=".model\context\CurrentDatabaseContext.cs" />
-    <Compile Include=".model\entities\Card.cs" />
-    <Compile Include=".model\entities\Mark.cs" />
-    <Compile Include=".model\entities\Student.cs" />
-    <Compile Include=".model\entities\Subject.cs" />
+    <Compile Include=".model\entities\Author.cs" />
+    <Compile Include=".model\entities\Book.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
     <Compile Include=".view-model\MainWindowViewModelHandler.cs" />
     <Compile Include=".view\App.xaml.cs" />
@@ -37,6 +34,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 

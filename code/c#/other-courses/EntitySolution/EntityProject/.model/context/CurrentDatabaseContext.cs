@@ -17,36 +17,10 @@ namespace MainEntityProject.Model.Context
         #region STATE
 
 
-        /// <summary>
-        /// The 'Students' table contents;
-        /// <br />
-        /// Содержимое таблицы "Students";
-        /// </summary>
-        public DbSet<Student> Students { get; set; } = null!;
 
+        public DbSet<Book> Books { get; set; } = null!;
+        public DbSet<Author> Authors { get; set; } = null!;
 
-        /// <summary>
-        /// The 'Cards' table contents;
-        /// <br />
-        /// Содержимое таблицы "Cards";
-        /// </summary>
-        public DbSet<Card> Cards { get; set; } = null!;
-
-
-        /// <summary>
-        /// The 'Marks' table contents;
-        /// <br />
-        /// Содержимое таблицы "Marks";
-        /// </summary>
-        public DbSet<Mark> Marks { get; set; } = null!;
-
-
-        /// <summary>
-        /// The 'Subjects' table contents;
-        /// <br />
-        /// Содержимое таблицы "Subjects";
-        /// </summary>
-        public DbSet<Subject> Subjects { get; set; } = null!;
 
 
         #endregion STATE
@@ -60,17 +34,15 @@ namespace MainEntityProject.Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(MainWindowViewModel.connectionString);
+            optionsBuilder.UseSqlServer($@"Server=.\doronoviv;Database = MainEFCproject;Trusted_Connection=true;Encrypt=false");
         }
 
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new StudentConfiguration());
-            modelBuilder.ApplyConfiguration(new CardConfiguration());
-            modelBuilder.ApplyConfiguration(new MarkConfiguration());
-            modelBuilder.ApplyConfiguration(new SubjectConfiguration());
+            modelBuilder.ApplyConfiguration(new BookConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
         }
 
 

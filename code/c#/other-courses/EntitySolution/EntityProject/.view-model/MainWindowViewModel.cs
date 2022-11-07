@@ -70,7 +70,7 @@ namespace MainEntityProject.ViewModel
         /// <br />
         /// Строка подключения на всякий случай;
         /// </summary>
-        public static string connectionString = "";
+        public static string connectionString = $@"Server=.\doronoviv;Database = MainEFCproject;Trusted_Connection=true;Encrypt=false";
 
 
 
@@ -99,6 +99,9 @@ namespace MainEntityProject.ViewModel
         /// Команда подключения к бд;
         /// </summary>
         public DelegateCommand ConnectCommand { get; }
+
+
+        public DelegateCommand DoActionCommand { get; }
 
 
 
@@ -147,14 +150,13 @@ namespace MainEntityProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            connectionString = $@"Server=.\{ServerName};Database = MainEFCproject;Trusted_Connection=true;Encrypt=false";
-
             _connectionStatus = new();
             _serverName = string.Empty;
 
             ConnectCommand = new(OnConnectButtonClick);
+            DoActionCommand = new(OnDoActionButtonClickAsync);
 
-            ServerName = "DoronovIV";
+            ServerName = "doronoviv";
         }
 
 
