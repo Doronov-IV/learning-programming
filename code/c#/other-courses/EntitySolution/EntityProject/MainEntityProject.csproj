@@ -24,7 +24,9 @@
     <ApplicationDefinition Include=".view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Content Include=".config\appsettings.json" />
+    <Content Include=".config\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Page Include=".view\MainWindow.xaml" />
   </ItemGroup>
 

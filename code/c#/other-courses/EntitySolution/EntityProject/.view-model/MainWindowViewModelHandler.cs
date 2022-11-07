@@ -121,10 +121,7 @@ namespace MainEntityProject.ViewModel
             ConfigurationBuilder builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
 
-            if (!File.Exists("appsettings.json"))
-                File.Copy("../../../.config/appsettings.json", "appsettings.json");
-
-            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile(".config/appsettings.json");
 
             var config = builder.Build();
             string _connectionString = config.GetConnectionString("DefaultConnection");
