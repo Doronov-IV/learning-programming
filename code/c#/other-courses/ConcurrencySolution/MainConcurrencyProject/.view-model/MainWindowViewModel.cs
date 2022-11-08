@@ -39,6 +39,15 @@ namespace MainConcurrencyProject.ViewModel
 
 
         /// <summary>
+        /// A semaphore instance for concurrency examples.
+        /// <br />
+        /// Эеземпляр семафора для экспериментов с многопотоком.
+        /// </summary>
+        private Semaphore _semaphore;
+
+
+
+        /// <summary>
         /// A string that accumulates output in a console-like way.
         /// <br />
         /// Строка, которая накапливает инпут по типу консоли.
@@ -92,6 +101,7 @@ namespace MainConcurrencyProject.ViewModel
             _locker = new();
             _autoResetHandler = new(initialState: true);
             _mutex = new();
+            //_semaphore = new(1);
         }
 
 

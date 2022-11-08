@@ -107,7 +107,7 @@
                 }
                 else if (message is int)
                 {
-                    DoSharedExampleWithMutex((int)message);
+                    DoSharedExampleWithSemaphore((int)message);
                 }
             }
         }
@@ -182,6 +182,7 @@
 
 
 
+
         /// <summary>
         /// Increment a number in a loop W/ mutex.
         /// <br />
@@ -197,6 +198,27 @@
             _mutex.WaitOne();
             DoIncrement(number);
             _mutex.ReleaseMutex();
+        }
+
+
+
+        /// <summary>
+        /// Increment a number in a loop W/ semaphore.
+        /// <br />
+        /// Проинкрементировать число в цикле С семафором.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoSharedExampleWithSemaphore(int number)
+        {
+            _semaphore = new(1,1);
+
+            _semaphore.WaitOne();
+            DoIncrement(number);
+            _semaphore.Release();
         }
 
 
