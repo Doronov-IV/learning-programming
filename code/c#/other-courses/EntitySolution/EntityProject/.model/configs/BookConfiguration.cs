@@ -1,15 +1,21 @@
 ﻿using MainEntityProject.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainEntityProject.Model.Configs
 {
+    /// <summary>
+    /// Fluent builder configuration for the 'Book' class.
+    /// <br />
+    /// Конфигурация класса "Book" для Fluent Builder.
+    /// </summary>
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {
 
+
+        /// <summary>
+        /// Configure entity.
+        /// <br />
+        /// Конфигурировать сущность.
+        /// </summary>
         public void Configure(EntityTypeBuilder<Book> bookBuilder)
         {
             bookBuilder.HasKey(book => book.Id);

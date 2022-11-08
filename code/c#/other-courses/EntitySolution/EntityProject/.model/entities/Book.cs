@@ -1,8 +1,12 @@
 ﻿namespace MainEntityProject.Model.Entities
 {
+    /// <summary>
+    /// A book. An instance of a 'Books' table record.
+    /// <br />
+    /// Кинга. Экземпляр записи в таблице "Книги".
+    /// </summary>
     public class Book
     {
-
 
         public int Id { get; set; }
 

@@ -19,7 +19,19 @@ namespace MainEntityProject.Model.Context
 
 
 
+        /// <summary>
+        /// A set of books corrensponding to the 'Books' table in the db.
+        /// <br />
+        /// Сет книг, соответствующий таблице "Книги" в бд.
+        /// </summary>
         public DbSet<Book> Books { get; set; } = null!;
+
+
+        /// <summary>
+        /// A set of books corrensponding to the 'Authors' table in the db.
+        /// <br />
+        /// Сет книг, соответствующий таблице "Авторы" в бд.
+        /// </summary>
         public DbSet<Author> Authors { get; set; } = null!;
 
 
@@ -68,7 +80,16 @@ namespace MainEntityProject.Model.Context
         }
 
 
-
+        /// <summary>
+        /// Constructor with connection options configurations (in this case).
+        /// <br />
+        /// Конструктор с конфигурацией опций подключения (в данном случае).
+        /// </summary>
+        /// <param name="options">
+        /// Connection options instance.
+        /// <br />
+        /// Экземпляр опций подключения.
+        /// </param>
         public CurrentDatabaseContext(DbContextOptions<CurrentDatabaseContext> options) : base(options)
         {
             Database.EnsureCreated();

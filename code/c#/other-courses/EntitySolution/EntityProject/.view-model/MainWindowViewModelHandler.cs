@@ -49,7 +49,7 @@ namespace MainEntityProject.ViewModel
         /// <br />
         /// Обработать событие клика по кнопке "Do Action".
         /// </summary>
-        public async void OnDoActionButtonClickAsync()
+        public async void OnDoFillTablesClickAsync()
         {
             await Task.Run(() =>
             {

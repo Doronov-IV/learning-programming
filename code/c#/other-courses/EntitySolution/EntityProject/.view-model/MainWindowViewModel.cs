@@ -155,7 +155,7 @@ namespace MainEntityProject.ViewModel
             _connectionStatus = new();
             _serverName = string.Empty;
 
-            FillTablesCommand = new(OnDoActionButtonClickAsync);
+            FillTablesCommand = new(OnDoFillTablesClickAsync);
             ClearTablesCommand = new(OnClearTablesButtonClickAsync);
 
             ServerName = "doronoviv";

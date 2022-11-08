@@ -1,5 +1,10 @@
 ﻿namespace MainEntityProject.Model.Entities
 {
+    /// <summary>
+    /// An author of one or some books.
+    /// <br />
+    /// Автор одной или нескольких книг.
+    /// </summary>
     public class Author
     {
 
