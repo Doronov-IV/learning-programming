@@ -43,7 +43,7 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 
  At this point, both my groupmates and me, we all realised that most of the useful topics have passed. Our top teachers have also left.
  During our main teacher departure, he's made some of us an offer which neither of us would deny. And at a time I'm writing those lines, I've alredady 
- quit ITStep due to the new studying at one of our local office.
+ quit ITStep due to the new studying at an office of one of our local companies.
 
 ## The topics left in our former course
 
