@@ -7,6 +7,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MainConcurrencyProject.ViewModel;
+
 namespace MainConcurrencyProject
 {
     /// <summary>
@@ -17,6 +19,8 @@ namespace MainConcurrencyProject
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }

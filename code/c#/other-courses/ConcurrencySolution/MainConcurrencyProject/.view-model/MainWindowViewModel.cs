@@ -32,7 +32,7 @@ namespace MainConcurrencyProject.ViewModel
         /// <br />
         /// Команда клика по кнопке "Do Action".
         /// </summary>
-        DelegateCommand DoActionClickCommand { get; }
+        public DelegateCommand DoActionClickCommand { get; }
 
 
 
