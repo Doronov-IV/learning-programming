@@ -19,8 +19,19 @@ namespace MainConcurrencyProject.ViewModel
         private object _locker;
 
 
+        /// <summary>
+        /// An auto reset event instance for lockers demo.
+        /// <br />
+        /// Экземпляр AutoResetEvent для демки локеров.
+        /// </summary>
+        private AutoResetEvent _autoResetHandler;
 
 
+        /// <summary>
+        /// A string that accumulates output in a console-like way.
+        /// <br />
+        /// Строка, которая накапливает инпут по типу консоли.
+        /// </summary>
         private string _largeMessage;
 
 
@@ -68,6 +79,7 @@ namespace MainConcurrencyProject.ViewModel
             DoActionClickCommand = new(OnDoActionButtonClick);
             _largeMessage = string.Empty;
             _locker = new();
+            _autoResetHandler = new(initialState: true);
         }
 
 

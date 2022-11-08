@@ -8,7 +8,7 @@
     public partial class MainWindowViewModel
     {
 
-
+        // handle controls events
 
         #region HANDLERS - Tier 1
 
@@ -32,7 +32,7 @@
 
 
 
-
+        // handle topics events
 
         #region SECONDARY - Tier 2
 
@@ -86,7 +86,7 @@
 
 
 
-
+        // handle excercises events
 
         #region AUXILIARY - Tier 3 
 
@@ -105,7 +105,7 @@
             }
             else if (message is int)
             {
-                DoSharedNumberExampleWithoutLocker((int)message);
+                DoSharedExampleWithAutoResetEvent((int)message);
             }
         }
 
@@ -117,7 +117,7 @@
 
 
 
-
+        // actual functions with i/o
 
         #region ELEMENTARY - Tier 4
 
@@ -166,6 +166,30 @@
                     Thread.Sleep(100);
                 }
             }
+        }
+
+
+
+        /// <summary>
+        /// Increment a number in a loop W/ auto reset event.
+        /// <br />
+        /// Проинкрементировать число в цикле С авто ресет ивентом.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoSharedExampleWithAutoResetEvent(int number)
+        {
+            _autoResetHandler.WaitOne();
+            for (int i = 0, iSize = 6; i < iSize; ++i)
+            {
+                _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
+                number++;
+                Thread.Sleep(100);
+            }
+            _autoResetHandler.Set();
         }
 
 
