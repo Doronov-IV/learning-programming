@@ -7,6 +7,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        
+        <Button 
+                Content="Do Action" Grid.Column="3" Grid.Row="3" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Margin="110,50,10,0" Padding="5"
+                Command="{Binding DoActionClickCommand}"
+         />
+        
+        
     </Grid>
 </Window>
