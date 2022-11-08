@@ -1,9 +1,9 @@
 ﻿namespace MainConcurrencyProject.ViewModel
 {
     /// <summary>
-    /// Tier 1 - handlers, tier 2 - various secondary methods, tier 3 - auxiliary methods and tier 4 - i/o.
+    /// Tier 1 - handlers, tier 2 - various secondary methods, tier 3 - auxiliary methods, tier 4 - dispatches, tier 5 - generic i/o.
     /// <br />
-    /// Tier 1 - обработчики, tier 2 - различные второстепенные методы, tier 3 - вспомогательные методы и tier 4 - ввод/вывод.
+    /// Tier 1 - обработчики, tier 2 - различные второстепенные методы, tier 3 - вспомогательные методы, tier 4 - диспатчи и tier 5 - генерализованный ввод/вывод.
     /// </summary>
     public partial class MainWindowViewModel
     {
@@ -74,7 +74,7 @@
                 //thread.Join();
             }
 
-            Thread.Sleep(5000);
+            Thread.Sleep(2000);
             ShowOutput(_largeMessage);
         }
 
@@ -99,13 +99,16 @@
         /// </summary>
         private void Print(object? message)
         {
-            if (message is string)
+            if (message is not null)
             {
-                ShowOutput(message.ToString());
-            }
-            else if (message is int)
-            {
-                DoSharedExampleWithAutoResetEvent((int)message);
+                if (message is string)
+                {
+                    ShowOutput(message.ToString());
+                }
+                else if (message is int)
+                {
+                    DoSharedExampleWithMutex((int)message);
+                }
             }
         }
 
@@ -117,7 +120,7 @@
 
 
 
-        // actual functions with i/o
+        // dispatched functions for different api
 
         #region ELEMENTARY - Tier 4
 
@@ -135,12 +138,7 @@
         /// </param>
         private void DoSharedNumberExampleWithoutLocker(int number)
         {
-            for (int i = 0, iSize = 6; i < iSize; ++i)
-            {
-                _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
-                number++;
-                Thread.Sleep(100);
-            }
+            DoIncrement(number);
         }
 
 
@@ -159,12 +157,7 @@
         {
             lock (_locker)
             {
-                for (int i = 0, iSize = 6; i < iSize; ++i)
-                {
-                    _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
-                    number++;
-                    Thread.Sleep(100);
-                }
+                DoIncrement(number);
             }
         }
 
@@ -183,15 +176,63 @@
         private void DoSharedExampleWithAutoResetEvent(int number)
         {
             _autoResetHandler.WaitOne();
+            DoIncrement(number);
+            _autoResetHandler.Set();
+        }
+
+
+
+        /// <summary>
+        /// Increment a number in a loop W/ mutex.
+        /// <br />
+        /// Проинкрементировать число в цикле С мьютексом.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoSharedExampleWithMutex(int number)
+        {
+            _mutex.WaitOne();
+            DoIncrement(number);
+            _mutex.ReleaseMutex();
+        }
+
+
+
+        #endregion ELEMENTARY - Tier 4
+
+
+
+
+
+        // actual generic i/o
+
+        #region ELEMENTARY - Tier 5
+
+
+
+
+        /// <summary>
+        /// Increment a number in a loop.
+        /// <br />
+        /// Проинкрементировать число в цикле.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoIncrement(int number)
+        {
             for (int i = 0, iSize = 6; i < iSize; ++i)
             {
                 _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
                 number++;
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
-            _autoResetHandler.Set();
         }
-
 
 
         /// <summary>
@@ -206,7 +247,8 @@
 
 
 
-        #endregion ELEMENTARY - Tier 4
+
+        #endregion ELEMENTARY - Tier 5
 
 
 

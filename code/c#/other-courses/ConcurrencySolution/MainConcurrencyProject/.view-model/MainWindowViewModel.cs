@@ -19,12 +19,23 @@ namespace MainConcurrencyProject.ViewModel
         private object _locker;
 
 
+
         /// <summary>
         /// An auto reset event instance for lockers demo.
         /// <br />
         /// Экземпляр AutoResetEvent для демки локеров.
         /// </summary>
         private AutoResetEvent _autoResetHandler;
+
+
+
+        /// <summary>
+        /// A mutex instance for concurrency examples.
+        /// <br />
+        /// Экземпляр мьютекса для примеров многопоточности.
+        /// </summary>
+        private Mutex _mutex;
+
 
 
         /// <summary>
@@ -80,6 +91,7 @@ namespace MainConcurrencyProject.ViewModel
             _largeMessage = string.Empty;
             _locker = new();
             _autoResetHandler = new(initialState: true);
+            _mutex = new();
         }
 
 
