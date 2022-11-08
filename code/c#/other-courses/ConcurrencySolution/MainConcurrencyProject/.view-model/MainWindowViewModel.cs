@@ -11,7 +11,17 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        //
+        /// <summary>
+        /// A locker for concurrent shared resources management.
+        /// <br />
+        /// Локер для многопоточного использования разделяемых ресурсов.
+        /// </summary>
+        private object _locker;
+
+
+
+
+        private string _largeMessage;
 
 
 
@@ -56,6 +66,8 @@ namespace MainConcurrencyProject.ViewModel
         public MainWindowViewModel()
         {
             DoActionClickCommand = new(OnDoActionButtonClick);
+            _largeMessage = string.Empty;
+            _locker = new();
         }
 
 

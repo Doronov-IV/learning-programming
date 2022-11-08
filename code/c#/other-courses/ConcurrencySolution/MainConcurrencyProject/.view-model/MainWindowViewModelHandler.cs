@@ -1,9 +1,9 @@
 ﻿namespace MainConcurrencyProject.ViewModel
 {
     /// <summary>
-    /// Tier 1 - handlers, tier 2 - various secondary methods and tier 3 - auxiliary methods.
+    /// Tier 1 - handlers, tier 2 - various secondary methods, tier 3 - auxiliary methods and tier 4 - i/o.
     /// <br />
-    /// Tier 1 - обработчики, tier 2 - различные второстепенные методы, tier 3 - вспомогательные методы.
+    /// Tier 1 - обработчики, tier 2 - различные второстепенные методы, tier 3 - вспомогательные методы и tier 4 - ввод/вывод.
     /// </summary>
     public partial class MainWindowViewModel
     {
@@ -21,7 +21,7 @@
         /// </summary>
         private void OnDoActionButtonClick()
         {
-            RunHellos();
+            RunCounter();
         }
 
 
@@ -56,6 +56,30 @@
 
 
 
+        /// <summary>
+        /// Run shared resources demo.
+        /// <br />
+        /// Запустить демку по разделяемым ресурсам.
+        /// </summary>
+        private void RunCounter()
+        {
+            Thread thread;
+
+            // to lock/unlock, switch methods in tier 3 region.
+            for (int i = 0, iSize = 5; i < iSize; ++i)
+            {
+                thread = new(Print);
+                thread.Name = $"Thread №{i}";
+                thread.Start(1);
+                //thread.Join();
+            }
+
+            Thread.Sleep(5000);
+            ShowOutput(_largeMessage);
+        }
+
+
+
         #endregion SECONDARY - Tier 2
 
 
@@ -79,6 +103,69 @@
             {
                 ShowOutput(message.ToString());
             }
+            else if (message is int)
+            {
+                DoSharedNumberExampleWithoutLocker((int)message);
+            }
+        }
+
+
+
+        #endregion AUXILIARY - Tier 3 
+
+
+
+
+
+
+
+        #region ELEMENTARY - Tier 4
+
+
+
+        /// <summary>
+        /// Increment a number in a loop W/O locking.
+        /// <br />
+        /// Проинкрементировать число в цикле БЕЗ лока.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoSharedNumberExampleWithoutLocker(int number)
+        {
+            for (int i = 0, iSize = 6; i < iSize; ++i)
+            {
+                _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
+                number++;
+                Thread.Sleep(100);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Increment a number in a loop W/ locking.
+        /// <br />
+        /// Проинкрементировать число в цикле С локом.
+        /// </summary>
+        /// <param name="number">
+        /// A number for increment.
+        /// <br />
+        /// Число для инкремента.
+        /// </param>
+        private void DoSharedExampleWithLocker(int number)
+        {
+            lock (_locker)
+            {
+                for (int i = 0, iSize = 6; i < iSize; ++i)
+                {
+                    _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
+                    number++;
+                    Thread.Sleep(100);
+                }
+            }
         }
 
 
@@ -95,7 +182,7 @@
 
 
 
-        #endregion AUXILIARY - Tier 3 
+        #endregion ELEMENTARY - Tier 4
 
 
 
