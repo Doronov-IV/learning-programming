@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include=".view-model\MainWindowViewModel.cs" />
+    <Compile Include=".view\App.xaml.cs" />
+    <Compile Include=".view\MainWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include=".view\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include=".view\MainWindow.xaml" />
+    <!--ApplicationDefinition Include=".view\MainWindow.xaml" /-->
+  </ItemGroup>
+
+</Project>
