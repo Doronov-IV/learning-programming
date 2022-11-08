@@ -7,9 +7,9 @@
 
 
         /// <summary>
-        /// .
+        /// Handle 'Do Action' button click.
         /// <br />
-        /// .
+        /// Обработать клик по кнопке "Do Action".
         /// </summary>
         private void OnDoActionButtonClick()
         {
