@@ -73,7 +73,25 @@
         /// <br />
         /// Вызвать messagebox, чтобы отобразить сообщение для вывода.
         /// </summary>
-        void Print(object? message) => MessageBox.Show(message as string, "Output", MessageBoxButton.OK, MessageBoxImage.Information);
+        private void Print(object? message)
+        {
+            if (message is string)
+            {
+                ShowOutput(message.ToString());
+            }
+        }
+
+
+
+        /// <summary>
+        /// Show messagebox output message.
+        /// <br />
+        /// Отобразить сообщение в messagebox'е.
+        /// </summary>
+        private void ShowOutput(string message)
+        {
+            MessageBox.Show(message, "Output", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
 
 
 
