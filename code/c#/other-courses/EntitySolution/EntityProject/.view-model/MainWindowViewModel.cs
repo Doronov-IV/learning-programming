@@ -104,6 +104,14 @@ namespace MainEntityProject.ViewModel
         public DelegateCommand ClearTablesCommand { get; }
 
 
+        /// <summary>
+        /// 'Change Authors' button command.
+        /// <br />
+        /// Команда кнопки "Change Authors".
+        /// </summary>
+        public DelegateCommand ChangeAuthorsCommand { get; }
+
+
 
         #endregion COMMANDS
 
@@ -157,6 +165,7 @@ namespace MainEntityProject.ViewModel
 
             FillTablesCommand = new(OnDoFillTablesClickAsync);
             ClearTablesCommand = new(OnClearTablesButtonClickAsync);
+            ChangeAuthorsCommand = new(OnChangeAuthorsClickAsync);
 
             ServerName = "doronoviv";
         }

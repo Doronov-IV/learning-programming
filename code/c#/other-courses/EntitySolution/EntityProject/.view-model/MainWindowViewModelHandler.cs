@@ -45,9 +45,9 @@ namespace MainEntityProject.ViewModel
 
 
         /// <summary>
-        /// Handle main action button click event.
+        /// Handle the 'Fill Tables' click event.
         /// <br />
-        /// Обработать событие клика по кнопке "Do Action".
+        /// Обработать событие клика по кнопке "Fill Tables".
         /// </summary>
         public async void OnDoFillTablesClickAsync()
         {
@@ -96,6 +96,33 @@ namespace MainEntityProject.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Connection failed.\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+        }
+
+
+
+        /// <summary>
+        /// Handle 'Change Authors' button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке "Change Authors".
+        /// </summary>
+        private async void OnChangeAuthorsClickAsync()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
+                    {
+                        context.Authors.AsEnumerable().Select(a => { if (a.Name.Contains("Defoe")) a.Name = "Definitely not Daniel Defoe"; return a; }).ToList();
+
+                        context.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Update failed.\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
