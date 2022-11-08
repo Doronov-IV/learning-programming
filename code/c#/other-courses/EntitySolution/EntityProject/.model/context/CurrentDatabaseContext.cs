@@ -47,7 +47,15 @@ namespace MainEntityProject.Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory());
+
+            builder.AddJsonFile(".config/appsettings.json");
+
+            var config = builder.Build();
+            string _connectionString = config.GetConnectionString("DefaultConnection");
+
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
 

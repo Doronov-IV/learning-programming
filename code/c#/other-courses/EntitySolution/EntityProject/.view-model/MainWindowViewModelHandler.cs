@@ -133,37 +133,5 @@ namespace MainEntityProject.ViewModel
 
 
 
-
-        #region SQL CONNECTION
-
-
-
-        /// <summary>
-        /// Create JSON SQL-connection file.
-        /// <br />
-        /// Создать JSON файл конфигурации SQL-подключения.
-        /// </summary>
-        private void InitializeSQLConnection()
-        {
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-
-            builder.AddJsonFile(".config/appsettings.json");
-
-            var config = builder.Build();
-            string _connectionString = config.GetConnectionString("DefaultConnection");
-
-            var optionsBuilder = new DbContextOptionsBuilder<CurrentDatabaseContext>();
-            _connectionOptions = optionsBuilder
-                .UseSqlServer(_connectionString)
-                .Options;
-        }
-
-
-
-        #endregion SQL CONNECTION
-
-
-
     }
 }

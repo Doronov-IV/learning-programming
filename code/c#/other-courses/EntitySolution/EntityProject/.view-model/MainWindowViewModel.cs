@@ -158,8 +158,6 @@ namespace MainEntityProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            InitializeSQLConnection();
-
             _connectionStatus = new();
             _serverName = string.Empty;
 
