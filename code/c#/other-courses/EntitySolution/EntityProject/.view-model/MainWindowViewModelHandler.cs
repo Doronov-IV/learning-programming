@@ -55,7 +55,7 @@ namespace MainEntityProject.ViewModel
             {
                 try
                 {
-                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext())
                     {
                         List<Book> bookList1 = new();
                         List<Book> bookList2 = new();

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MainEntityProject.Migrations
 {
     [DbContext(typeof(CurrentDatabaseContext))]
-    [Migration("20221108084220_ValueChangeMigration")]
-    partial class ValueChangeMigration
+    [Migration("20221108085624_SeedDatabase")]
+    partial class SeedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

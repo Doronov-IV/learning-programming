@@ -4,16 +4,17 @@
 
 namespace MainEntityProject.Migrations
 {
-    public partial class initial : Migration
+    public partial class CreateTablesAuthorsAndBooks : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            /*
             migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
                 name: "Authors");
+            */
 
             migrationBuilder.CreateTable(
                 name: "Authors",
