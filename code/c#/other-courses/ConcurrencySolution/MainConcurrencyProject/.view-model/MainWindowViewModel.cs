@@ -43,7 +43,7 @@ namespace MainConcurrencyProject.ViewModel
         /// <br />
         /// Эеземпляр семафора для экспериментов с многопотоком.
         /// </summary>
-        private Semaphore _semaphore;
+        private static Semaphore _semaphore = new(1,1);
 
 
 

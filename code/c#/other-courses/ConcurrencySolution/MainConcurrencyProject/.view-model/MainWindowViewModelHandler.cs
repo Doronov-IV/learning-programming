@@ -182,7 +182,6 @@
 
 
 
-
         /// <summary>
         /// Increment a number in a loop W/ mutex.
         /// <br />
@@ -214,8 +213,6 @@
         /// </param>
         private void DoSharedExampleWithSemaphore(int number)
         {
-            _semaphore = new(1,1);
-
             _semaphore.WaitOne();
             DoIncrement(number);
             _semaphore.Release();
