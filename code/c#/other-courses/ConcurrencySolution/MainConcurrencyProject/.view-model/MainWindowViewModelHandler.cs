@@ -1,4 +1,8 @@
-﻿namespace MainConcurrencyProject.ViewModel
+﻿using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Windows.Controls;
+
+namespace MainConcurrencyProject.ViewModel
 {
     /// <summary>
     /// Tier 1 - handlers, tier 2 - various secondary methods, tier 3 - auxiliary methods, tier 4 - dispatches, tier 5 - generic i/o.
@@ -19,9 +23,12 @@
         /// <br />
         /// Обработать клик по кнопке "Do Action".
         /// </summary>
-        private void OnDoActionButtonClick()
+        private async void OnDoActionButtonClickAsync()
         {
-            RunCounter();
+            await Task.Run(() =>
+            {
+                CalculatePiNumber();
+            });
         }
 
 
@@ -47,7 +54,7 @@
         {
             Thread myThread1 = new Thread(new ParameterizedThreadStart(Print));
             Thread myThread2 = new Thread(Print);
-            Thread myThread3 = new Thread(message => MessageBox.Show(message as string, "Output", MessageBoxButton.OK, MessageBoxImage.Information));
+            Thread myThread3 = new Thread(message => Application.Current.Dispatcher.Invoke(() => OutputCollection.Add(message.ToString())));
 
             myThread1.Start("Hello");
             myThread2.Start("Привет");
@@ -261,13 +268,133 @@
         /// </summary>
         private void ShowOutput(string message)
         {
-            MessageBox.Show(message, "Output", MessageBoxButton.OK, MessageBoxImage.Information);
+            Application.Current.Dispatcher.Invoke(() => OutputCollection.Add(message));
         }
 
 
 
 
         #endregion ELEMENTARY - Tier 5
+
+
+
+
+
+
+        #region Property Changed Handlers
+
+
+
+        //
+
+
+
+        #endregion Property Changed Handlers
+
+
+
+
+
+
+        #region PI CALCULATION
+
+
+        Random random = new Random();
+
+        // defines parse
+        double nMaxAmountOfDots;    // limit_Nmax  = 1e7
+        double nMaxCircleRadius;  // limit_a = 1e6
+        double nStartingRadius;    // min_a = 100
+
+
+        double SquareSideLength;            // a;
+
+
+        long XCoordinate;
+        long YCoordinate;                                       // double x,y,Pi
+        double PiNumber;
+
+
+        long counter;
+
+
+        double DotsInsideCircle;                          // Ncirc
+        double OverallDotsCount;
+
+
+
+        private async void CalculatePiNumber()
+        {
+            Random random = new Random();
+
+            // defines parse
+            nMaxAmountOfDots = double.Parse(MaxAmountOfDots);    // limit_Nmax  = 1e7
+            nMaxCircleRadius = double.Parse(MaxCircleRadious);  // limit_a = 1e6
+            nStartingRadius = double.Parse(StartingRadius);      // min_a = 100
+
+
+            SquareSideLength = nMaxCircleRadius;                // a;
+
+
+
+
+
+            XCoordinate = 0; 
+            YCoordinate = 0;                                       // double x,y,Pi
+            PiNumber = 0;
+
+
+            counter = 0;
+
+
+            DotsInsideCircle = 0;                            // Ncirc
+            OverallDotsCount = nMaxAmountOfDots;             // Nmax
+
+            _stopwatch.Start();
+            
+            await Task.Run(() => DoWhileLoop());
+
+            ResultPiNumber = PiNumber.ToString();
+            _stopwatch.Stop();
+            ElapsedTime = _stopwatch.Elapsed.TotalSeconds.ToString();
+
+        }
+
+
+
+        private void DoWhileLoop()
+        {
+            while (counter < OverallDotsCount)
+            {
+                XCoordinate = random.NextInt64(0, (long)SquareSideLength);
+                YCoordinate = random.NextInt64(0, (long)SquareSideLength);
+
+                if (YCoordinate * YCoordinate <= GetSquareForCircle(XCoordinate, (SquareSideLength / 2)))
+                {
+                    DotsInsideCircle++;
+                }
+
+                counter++;
+            }
+
+            lock (_locker)
+            {
+                PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
+            }
+        }
+
+
+
+
+
+        private double GetSquareForCircle(double xCoordinate, double radius)
+        {
+            return ((radius * radius) - (xCoordinate * xCoordinate));
+        }
+
+
+
+        #endregion PI CALCULATION
 
 
 
