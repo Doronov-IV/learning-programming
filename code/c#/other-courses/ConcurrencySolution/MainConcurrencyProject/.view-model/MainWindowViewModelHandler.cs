@@ -310,8 +310,7 @@ namespace MainConcurrencyProject.ViewModel
         double SquareSideLength;            // a;
 
 
-        long XCoordinate;
-        long YCoordinate;                                       // double x,y,Pi
+        Point point;                                      // double x,y,Pi
         double PiNumber;
 
 
@@ -322,8 +321,12 @@ namespace MainConcurrencyProject.ViewModel
         double OverallDotsCount;
 
 
+        int OverallTasksCount = 0;
+        int currentTasksCount = 0;
 
-        private async void CalculatePiNumber()
+
+
+        private async Task CalculatePiNumber()
         {
             Random random = new Random();
 
@@ -338,9 +341,7 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-
-            XCoordinate = 0; 
-            YCoordinate = 0;                                       // double x,y,Pi
+                                                   // double x,y,Pi
             PiNumber = 0;
 
 
@@ -349,9 +350,10 @@ namespace MainConcurrencyProject.ViewModel
 
             DotsInsideCircle = 0;                            // Ncirc
             OverallDotsCount = nMaxAmountOfDots;             // Nmax
+            OverallTasksCount = (int)OverallDotsCount / 100;
 
             _stopwatch.Start();
-            await Task.Run(() => DoWhileLoop());
+            await Task.Run(DoWhileLoop);
             //DoWhileLoop();
             _stopwatch.Stop();
 
@@ -362,33 +364,47 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        private void DoWhileLoop()
+        private async Task DoWhileLoop()
         {
-            while (counter < OverallDotsCount)
-            {
-                GenerateAndCheckDot();
-            }
+            //Task task;
+            //while (counter < OverallDotsCount)
+            //{
+            //    task = GenerateAndCheckDot();
+            //
+            //    await task;
+            //}
 
-            lock (_locker)
+            double iSize = nMaxAmountOfDots / 10000;
+
+            Parallel.For(0, (int)iSize, counter =>
             {
-                PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
-            }
+                while (counter < OverallDotsCount)
+                {
+                    point.X = random.NextInt64(0, (long)SquareSideLength);
+                    point.Y = random.NextInt64(0, (long)SquareSideLength);
+
+                    //if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
+                    //lock (_locker) { counter++; }
+
+                    if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) DotsInsideCircle++;
+                    counter++;
+                }
+            });
+
+            PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
         }
 
 
         private void GenerateAndCheckDot()
         {
-            XCoordinate = random.NextInt64(0, (long)SquareSideLength);
-            YCoordinate = random.NextInt64(0, (long)SquareSideLength);
+            for (int i = 0, iSize = 10000; i < iSize && counter < OverallDotsCount; i++)
+            {
+                point.X = random.NextInt64(0, (long)SquareSideLength);
+                point.Y = random.NextInt64(0, (long)SquareSideLength);
 
-            lock (_locker) 
-            { 
-                if (YCoordinate * YCoordinate <= GetSquareForCircle(XCoordinate, (SquareSideLength / 2)))
-                {
-                    DotsInsideCircle++;
-                }
+                if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
 
-                counter++;
+                lock (_locker) { counter++; }
             }
         }
 
