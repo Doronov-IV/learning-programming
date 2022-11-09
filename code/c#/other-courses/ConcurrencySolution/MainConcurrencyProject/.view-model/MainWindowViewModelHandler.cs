@@ -25,10 +25,7 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            await Task.Run(() =>
-            {
-                CalculatePiNumber();
-            });
+            await CalculatePiNumber();
         }
 
 
@@ -321,8 +318,9 @@ namespace MainConcurrencyProject.ViewModel
         double OverallDotsCount;
 
 
-        int OverallTasksCount = 0;
         int currentTasksCount = 0;
+
+        int tasksCount;
 
 
 
@@ -338,24 +336,22 @@ namespace MainConcurrencyProject.ViewModel
 
             SquareSideLength = nMaxCircleRadius;                // a;
 
-
-
-
                                                    // double x,y,Pi
             PiNumber = 0;
 
-
+            tasksCount = 20;
             counter = 0;
 
 
             DotsInsideCircle = 0;                            // Ncirc
-            OverallDotsCount = nMaxAmountOfDots;             // Nmax
-            OverallTasksCount = (int)OverallDotsCount / 100;
+            OverallDotsCount = (long)nMaxAmountOfDots;             // Nmax
 
+            _stopwatch.Reset();
             _stopwatch.Start();
             await Task.Run(DoWhileLoop);
             //DoWhileLoop();
             _stopwatch.Stop();
+
 
             ResultPiNumber = PiNumber.ToString();
             ElapsedTime = _stopwatch.Elapsed.TotalSeconds.ToString();
@@ -369,42 +365,52 @@ namespace MainConcurrencyProject.ViewModel
             //Task task;
             //while (counter < OverallDotsCount)
             //{
-            //    task = GenerateAndCheckDot();
+            //    point.X = random.NextInt64(0, (long)SquareSideLength);
+            //    point.Y = random.NextInt64(0, (long)SquareSideLength);
             //
-            //    await task;
+            //    //if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
+            //    //lock (_locker) { counter++; }
+            //
+            //    if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) DotsInsideCircle++;
+            //    counter++;
             //}
 
-            double iSize = nMaxAmountOfDots / 10000;
 
-            Parallel.For(0, (int)iSize, counter =>
+
+            //Parallel.For(0, (long)OverallDotsCount, counter =>
+            //{
+            //    point.X = random.NextInt64(0, (long)SquareSideLength);
+            //    point.Y = random.NextInt64(0, (long)SquareSideLength);
+            //
+            //    if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
+            //    lock (_locker) { counter++; }
+            //
+            //    //if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) DotsInsideCircle++;
+            //    //counter++;
+            //});
+
+            currentTasksCount = 50;
+            for (int i = 0; i < currentTasksCount; i++)
             {
-                while (counter < OverallDotsCount)
-                {
-                    point.X = random.NextInt64(0, (long)SquareSideLength);
-                    point.Y = random.NextInt64(0, (long)SquareSideLength);
-
-                    //if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
-                    //lock (_locker) { counter++; }
-
-                    if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) DotsInsideCircle++;
-                    counter++;
-                }
-            });
+                await Task.Run(GenerateAndCheckDots);
+            }
 
             PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
         }
 
 
-        private void GenerateAndCheckDot()
+        private void GenerateAndCheckDots()
         {
-            for (int i = 0, iSize = 10000; i < iSize && counter < OverallDotsCount; i++)
+            for (int j = 0; j < OverallDotsCount / currentTasksCount; j++)
             {
                 point.X = random.NextInt64(0, (long)SquareSideLength);
                 point.Y = random.NextInt64(0, (long)SquareSideLength);
 
                 if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) lock (_locker) { DotsInsideCircle++; }
-
                 lock (_locker) { counter++; }
+
+                //if (point.Y * point.Y <= GetSquareForCircle(point.X, (SquareSideLength / 2))) DotsInsideCircle++;
+                //counter++;
             }
         }
 

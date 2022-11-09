@@ -73,6 +73,9 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
+        public List<List<Point>> DotsList;
+
+
 
         /// <inheritdoc cref="OutputCollection"/>
         private ObservableCollection<string> _outputCollection;
@@ -214,6 +217,7 @@ namespace MainConcurrencyProject.ViewModel
             MaxCircleRadious = "1024e4";
             StartingRadius = "100";
             _stopwatch = new();
+            DotsList = new();
         }
 
 
