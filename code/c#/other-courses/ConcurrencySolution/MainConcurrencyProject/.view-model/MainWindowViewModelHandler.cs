@@ -351,11 +351,11 @@ namespace MainConcurrencyProject.ViewModel
             OverallDotsCount = nMaxAmountOfDots;             // Nmax
 
             _stopwatch.Start();
-            
             await Task.Run(() => DoWhileLoop());
+            //DoWhileLoop();
+            _stopwatch.Stop();
 
             ResultPiNumber = PiNumber.ToString();
-            _stopwatch.Stop();
             ElapsedTime = _stopwatch.Elapsed.TotalSeconds.ToString();
 
         }
@@ -366,20 +366,29 @@ namespace MainConcurrencyProject.ViewModel
         {
             while (counter < OverallDotsCount)
             {
-                XCoordinate = random.NextInt64(0, (long)SquareSideLength);
-                YCoordinate = random.NextInt64(0, (long)SquareSideLength);
+                GenerateAndCheckDot();
+            }
 
+            lock (_locker)
+            {
+                PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
+            }
+        }
+
+
+        private void GenerateAndCheckDot()
+        {
+            XCoordinate = random.NextInt64(0, (long)SquareSideLength);
+            YCoordinate = random.NextInt64(0, (long)SquareSideLength);
+
+            lock (_locker) 
+            { 
                 if (YCoordinate * YCoordinate <= GetSquareForCircle(XCoordinate, (SquareSideLength / 2)))
                 {
                     DotsInsideCircle++;
                 }
 
                 counter++;
-            }
-
-            lock (_locker)
-            {
-                PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
             }
         }
 
