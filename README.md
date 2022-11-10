@@ -29,6 +29,7 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 
 ### Introduction to .NET and C# (~ 3 months)
  Basic .NET concepts. New syntax and mechanisms.
+ Introduction to the delegation. Basic delegation mechanics.
 
 ## Visual
 
@@ -39,24 +40,10 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 ### Concurrency & Network programming (~ 1 month)
  Threads, tasks and synchronization basics. Then, switch to networks: sockets and clients.
 
-## Change of plans
+## Intellectika
 
- At this point, both my groupmates and me, we all realised that most of the useful topics have passed. Our top teachers have also left.
- During our main teacher departure, he's made some of us an offer which neither of us would deny. And at a time I'm writing those lines, I've alredady 
- quit ITStep due to the new studying at an office of one of our local companies.
+### Delegation (~ 1 week)
+Basic syntax via practice on a custom 'Paint'-like application using GDI+. Implementing graphics actions with lambda-expressions, dealling with closure. Actions stacking dispatch for managing delegate data in collections.
 
-## The topics left in our former course
-
-– Frontend: HTML, CSS, JS;
-
-– Teamworking and Team Project Management;
-
-– ASP.NET: back & front;
-
-– Java from scratch. (?)
-
-– PHP (???);
-
-– Android platform;
-
-– Unity.
+### Concurrency (actual)
+Basic api, working on a custom application that calculates PI number via Monte Carlo technique.
