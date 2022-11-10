@@ -25,7 +25,7 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            await CalculatePiNumber();
+            await BeginPiNumberCalculationSetUp();
         }
 
 
@@ -296,63 +296,61 @@ namespace MainConcurrencyProject.ViewModel
         #region PI CALCULATION
 
 
-        Random random = new Random();
+        private Random random = new Random();
 
-        // defines parse
-        double nMaxAmountOfDots;    // limit_Nmax  = 1e7
-        double nMaxCircleRadius;  // limit_a = 1e6
-        double nStartingRadius;    // min_a = 100
-
-
-        double SquareSideLength;            // a;
+        // defines;
+        private double nMaxAmountOfDots;    // limit_Nmax  = 1e7;
+        private double nMaxCircleRadius;    // limit_a = 1e6;
+        private double nStartingRadius;     // min_a = 100;
 
 
-        Point point;                                      // double x,y,Pi
-        double PiNumber;
+        private double SquareSideLength;    // a;
 
 
-        long counter;
+        private Point point;                // double x,y,Pi;
+        private double PiNumber;
+        private long counter;               // i;
 
 
-        double DotsInsideCircle;                          // Ncirc
-        double OverallDotsCount;
+        private double DotsInsideCircle;    // Ncirc;
+        private double OverallDotsCount;    // Nmax;
 
 
-        int currentTasksCount = 0;
-
-        int tasksCount;
+        private int currentTasksCount = 0;
 
 
 
-        private async Task CalculatePiNumber()
+        /// <summary>
+        /// Begin parsing input data as well as calculating pi number.
+        /// <br />
+        /// Начать парсинг введённых данных, вместе с вычислением числа pi.
+        /// </summary>
+        private async Task BeginPiNumberCalculationSetUp()
         {
             Random random = new Random();
 
             // defines parse
-            nMaxAmountOfDots = double.Parse(MaxAmountOfDots);    // limit_Nmax  = 1e7
-            nMaxCircleRadius = double.Parse(MaxCircleRadious);  // limit_a = 1e6
-            nStartingRadius = double.Parse(StartingRadius);      // min_a = 100
+            nMaxAmountOfDots = double.Parse(MaxAmountOfDots);    // limit_Nmax  = 1e7;
+            nMaxCircleRadius = double.Parse(MaxCircleRadious);   // limit_a = 1e6;
+            nStartingRadius = double.Parse(StartingRadius);      // min_a = 100;
+
+            SquareSideLength = nMaxCircleRadius;                 // a;
+                                                                 
+            PiNumber = 0;                                        // pi number;
+
+            counter = 0;                                         // i;
+
+            DotsInsideCircle = 0;                                // Ncirc;
+            OverallDotsCount = (long)nMaxAmountOfDots;           // Nmax;
 
 
-            SquareSideLength = nMaxCircleRadius;                // a;
-
-                                                   // double x,y,Pi
-            PiNumber = 0;
-
-            tasksCount = 20;
-            counter = 0;
-
-
-            DotsInsideCircle = 0;                            // Ncirc
-            OverallDotsCount = (long)nMaxAmountOfDots;             // Nmax
-
+            // measuring time and calculating the number;
             _stopwatch.Reset();
             _stopwatch.Start();
-            await Task.Run(DoWhileLoop);
-            //DoWhileLoop();
+            await Task.Run(BeginCalculatePiNumber);
             _stopwatch.Stop();
 
-
+            // time and the number result output;
             ResultPiNumber = PiNumber.ToString();
             ElapsedTime = _stopwatch.Elapsed.TotalSeconds.ToString();
 
@@ -360,7 +358,12 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        private async Task DoWhileLoop()
+        /// <summary>
+        /// Begin the actual pi number calculation via Monte Carlo technique.
+        /// <br />
+        /// Начать само вычисление числа pi через метод Монте Карло.
+        /// </summary>
+        private async Task BeginCalculatePiNumber()
         {
             //Task task;
             //while (counter < OverallDotsCount)
@@ -389,16 +392,24 @@ namespace MainConcurrencyProject.ViewModel
             //    //counter++;
             //});
 
+
             currentTasksCount = 50;
             for (int i = 0; i < currentTasksCount; i++)
             {
-                await Task.Run(GenerateAndCheckDots);
+                //await Task.Run(GenerateAndCheckDots);
+                GenerateAndCheckDots();
             }
 
             PiNumber = (DotsInsideCircle / OverallDotsCount) * 16;
         }
 
 
+
+        /// <summary>
+        /// Generate and compare some amount of dots equal to 'OverallDotsCount' devided by the 'CurrentTaskCount'.
+        /// <br />
+        /// Сгенерить и проверить некоторое кол-во точек, равное "OverallDotsCount" разделить на "CurrentTaskCount".
+        /// </summary>
         private void GenerateAndCheckDots()
         {
             for (int j = 0; j < OverallDotsCount / currentTasksCount; j++)
@@ -416,8 +427,11 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-
-
+        /// <summary>
+        /// Get a square rectangle sides' length for comparison via Monte Carlo method.
+        /// <br />
+        /// Получить длины сторон для проверки через метод Монте Карло.
+        /// </summary>
         private double GetSquareForCircle(double xCoordinate, double radius)
         {
             return ((radius * radius) - (xCoordinate * xCoordinate));
