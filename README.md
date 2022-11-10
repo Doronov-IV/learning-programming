@@ -29,6 +29,7 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 
 ### Introduction to .NET and C# (~ 3 months)
  Basic .NET concepts. New syntax and mechanisms.
+ Introduction to the delegation. Basic delegation mechanics.
 
 ## Visual
 
@@ -42,7 +43,7 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 ## Intellectika
 
 ### Delegation (~ 1 week)
-Basic syntax via practice on a custom 'Paint'-like application using GDI+. Implementing graphics action with lambda-expressions, dealling with closure. Actions stacking dispatch for managing delegate data in collections.
+Basic syntax via practice on a custom 'Paint'-like application using GDI+. Implementing graphics actions with lambda-expressions, dealling with closure. Actions stacking dispatch for managing delegate data in collections.
 
 ### Concurrency (actual)
 Basic api, working on a custom application that calculates PI number via Monte Carlo technique.
