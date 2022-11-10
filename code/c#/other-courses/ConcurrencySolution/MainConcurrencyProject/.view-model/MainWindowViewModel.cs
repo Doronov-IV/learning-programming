@@ -62,13 +62,13 @@ namespace MainConcurrencyProject.ViewModel
 
         private string _elapsedTime;
 
-        public string ElapsedTime
+        public string elapsedTime
         {
             get { return _elapsedTime; }
             set
             {
                 _elapsedTime = value;
-                OnPropertyChanged(nameof(ElapsedTime));
+                OnPropertyChanged(nameof(elapsedTime));
             }
         }
 
@@ -152,13 +152,13 @@ namespace MainConcurrencyProject.ViewModel
         private string _resultPiNumber;
 
 
-        public string ResultPiNumber
+        public string resultPiNumber
         {
             get { return _resultPiNumber; }
             set
             {
                 _resultPiNumber = value;
-                OnPropertyChanged(nameof(ResultPiNumber));
+                OnPropertyChanged(nameof(resultPiNumber));
             }
         }
 
@@ -212,6 +212,8 @@ namespace MainConcurrencyProject.ViewModel
             _outputCollection = new();
             //OutputCollection.CollectionChanged += OnObservableCollectionChanged;
 
+            double x =  1e213;
+            int y = 0x9C4000;
 
             MaxAmountOfDots = "2048e5";
             MaxCircleRadious = "1024e4";

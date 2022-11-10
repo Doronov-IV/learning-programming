@@ -42,12 +42,12 @@
 
 
         <Label 
-               Content="{Binding ResultPiNumber}" HorizontalAlignment="Left" Grid.Row="3" 
+               Content="{Binding resultPiNumber}" HorizontalAlignment="Left" Grid.Row="3" 
                VerticalAlignment="Bottom" Margin="0" 
          />
 
         <Label 
-               Content="{Binding ElapsedTime}" HorizontalAlignment="Left" Grid.Row="1" 
+               Content="{Binding elapsedTime}" HorizontalAlignment="Left" Grid.Row="1" 
                VerticalAlignment="Bottom" Margin="0" 
          />
 
