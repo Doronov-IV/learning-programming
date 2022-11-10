@@ -61,9 +61,9 @@ namespace MainEntityProject.ViewModel
                         List<Book> bookList2 = new();
                         List<Book> bookList3 = new();
 
-                        Author author1 = new() { Name = "Mark Twain", WebUrl = "https://en.wikipedia.org/wiki/Mark_Twain" };
-                        Author author2 = new() { Name = "Daniel Defoe", WebUrl = "https://en.wikipedia.org/wiki/Daniel_Defoe" };
-                        Author author3 = new() { Name = "Jules Verne", WebUrl = "https://en.wikipedia.org/wiki/Jules_Verne" };
+                        Author author1 = new() { Name = "Mark Twain", WebUrl = null };
+                        Author author2 = new() { Name = "Daniel Defoe", WebUrl = null };
+                        Author author3 = new() { Name = "Jules Verne", WebUrl = null };
 
                         Book book1 = new() { Author = author1, Title = "The Adventures of Tom Sawyer", Description = "lorem100" };
                         Book book2 = new() { Author = author1, Title = "Adventures of Huckleberry Finn", Description = "lorem100" };

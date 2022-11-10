@@ -11,21 +11,21 @@ namespace MainEntityProject.Migrations
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new string[] { "Name", "WebUrl" },
-                values: new string[] { "Mark Twain", "https://en.wikipedia.org/wiki/Mark_Twain" },
+                values: new string[] { "Mark Twain", null },
                 schema: default
             );
 
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new string[] { "Name", "WebUrl" },
-                values: new string[] { "Daniel Defoe", "https://en.wikipedia.org/wiki/Daniel_Defoe" },
+                values: new string[] { "Daniel Defoe", null },
                 schema: default
             );
 
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new string[] { "Name", "WebUrl" },
-                values: new string[] { "Jules Verne", "https://en.wikipedia.org/wiki/Jules_Verne" },
+                values: new string[] { "Jules Verne", null },
                 schema: default
             );
         }

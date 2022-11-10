@@ -15,7 +15,7 @@
         public string Name { get; set; } = null!;
 
 
-        public string WebUrl { get; set; } = null!;
+        public string? WebUrl { get; set; }
 
 
         public List<Book> BookList { get; set; } = null!;
