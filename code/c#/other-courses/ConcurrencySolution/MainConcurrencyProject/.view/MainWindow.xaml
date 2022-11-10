@@ -20,6 +20,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <TextBox Height="30" Text="{Binding ThreadCount}"/>
 
         <Button 
                 Content="Do Action" Grid.Column="3" Grid.Row="3" 

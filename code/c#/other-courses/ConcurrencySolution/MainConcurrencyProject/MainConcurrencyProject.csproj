@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include=".model\AsynchronousCalculator.cs" />
+    <Compile Include=".model\PiNumberConstantSet.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />
     <Compile Include=".view-model\MainWindowViewModelHandler.cs" />
     <Compile Include=".view\App.xaml.cs" />

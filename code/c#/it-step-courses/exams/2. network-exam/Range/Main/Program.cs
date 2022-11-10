@@ -7,7 +7,20 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            OuterMethod();
+            List<Action> actions = new List<Action>();
+
+            Int32 count = 0;
+            for (Int32 j;count < 10; count++)
+            {
+                j = new();
+                var a = count;
+                j = a;
+                actions.Add(() => Console.WriteLine(a));
+            }
+            foreach (var action in actions)
+            {
+                action();
+            }
         }
 
 

@@ -73,7 +73,7 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
-        public List<List<Point>> DotsList;
+        //public List<List<Point>> DotsList;
 
 
 
@@ -101,10 +101,10 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        private string _maxAmountOfDots;
+        private double _maxAmountOfDots;
 
 
-        public string MaxAmountOfDots
+        public double MaxAmountOfDots
         {
             get { return _maxAmountOfDots; }
             set
@@ -117,10 +117,10 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        private string _maxCircleRadious;
+        private double _maxCircleRadious;
 
 
-        public string MaxCircleRadious
+        public double MaxCircleRadious
         {
             get { return _maxCircleRadious; }
             set
@@ -130,14 +130,23 @@ namespace MainConcurrencyProject.ViewModel
             }
         }
 
+        public int ThreadCount
+        {
+            get => _threadCount;
+
+            set
+            {
+                _threadCount = value;
+                OnPropertyChanged(nameof(ThreadCount));
+            }
+        }
 
 
 
+        private double _startingRadius;
 
-        private string _startingRadius;
 
-
-        public string StartingRadius
+        public double StartingRadius
         {
             get { return _startingRadius; }
             set
@@ -150,7 +159,7 @@ namespace MainConcurrencyProject.ViewModel
 
 
         private string _resultPiNumber;
-
+        private int _threadCount;
 
         public string resultPiNumber
         {
@@ -215,11 +224,11 @@ namespace MainConcurrencyProject.ViewModel
             double x =  1e213;
             int y = 0x9C4000;
 
-            MaxAmountOfDots = "2048e5";
-            MaxCircleRadious = "1024e4";
-            StartingRadius = "100";
-            _stopwatch = new();
-            DotsList = new();
+            _maxAmountOfDots = 2048e5;      // limit_Nmax  = 1e7;
+            _maxCircleRadious = 1024e4;     // limit_a = 1e6;
+            StartingRadius = 100;           // min_a = 100;
+
+            FillPointArray();
         }
 
 
