@@ -338,22 +338,19 @@ namespace MainConcurrencyProject.ViewModel
                                                                  
             piNumber = 0;                                        // pi number;
 
-            counter = 0;                                         // i;
+            //counter = 0;                                         // i;
 
             dotsInsideCircle = 0;                                // Ncirc;
             overallDotsCount = (long)dMaxAmountOfDots;           // Nmax;
 
 
             // measuring time and calculating the number;
-            _stopwatch.Reset();
-            _stopwatch.Start();
             await Task.Run(BeginCalculatePiNumber);
-            _stopwatch.Stop();
 
             // time and the number result output;
 
             var a = (double)dotsInsideCircle / (double)overallDotsCount;
-            piNumber = a * 16.0;
+            piNumber = a * 16;
             resultPiNumber = piNumber.ToString();
             elapsedTime = _stopwatch.Elapsed.TotalSeconds.ToString();
 
@@ -395,7 +392,7 @@ namespace MainConcurrencyProject.ViewModel
             //    //counter++;
             //});
 
-            Point[] points = new Point[overallDotsCount];
+            Point[]? points = new Point[overallDotsCount];
             
             for (int i = 0; i < points.Length; i++)
             {
@@ -406,26 +403,34 @@ namespace MainConcurrencyProject.ViewModel
 
             Thread[] threads = new Thread[currentTasksCount];
 
-
-            for (int i = 0, j = 1; i < currentTasksCount; i++, j++)
-            {
-                if (i < currentTasksCount-1)
-                    threads[i] = new Thread(() => 
-                    {
-                    GenerateAndCheckDots(points, (overallDotsCount / currentTasksCount) * i ,(overallDotsCount / currentTasksCount) * j, i);
-                    });
-                else
-                    threads[i] = new Thread(() =>
-                    {
-                        GenerateAndCheckDots(points, (overallDotsCount / currentTasksCount) * i, overallDotsCount, i);
-                    });
-                threads[i].Start();
-            }
+            _stopwatch.Reset();
+            _stopwatch.Start();
 
             for (int i = 0; i < currentTasksCount; i++)
             {
-                threads[i].Join();
+                var x = i;
+
+                var statrIndex = (overallDotsCount / currentTasksCount) * x;
+
+                var endIndex = (overallDotsCount / currentTasksCount) * (x + 1);
+
+                threads[i] = new Thread(() =>
+                {
+                    GenerateAndCheckDots(points, statrIndex, endIndex, x);
+                });
+
+                threads[i].Start();
             }
+
+            //for (int i = 0; i < currentTasksCount; i++)
+            //{
+            //    threads[i].Join();
+            //}
+
+            await Task.Delay(5000);
+
+            points = null;
+            _stopwatch.Stop();
 
         }
 
@@ -450,7 +455,7 @@ namespace MainConcurrencyProject.ViewModel
                         if (point.Y * point.Y <= GetSquareForCircle(point.X, (squareSideLength / 2)))
                             Interlocked.Increment(ref dotsInsideCircle);
 
-                        Interlocked.Increment(ref counter);
+                        //Interlocked.Increment(ref counter);
 
                         //if (point.Y * point.Y <= GetSquareForCircle(point.X, (squareSideLength / 2))) dotsInsideCircle++;
                         //counter++;
@@ -473,6 +478,54 @@ namespace MainConcurrencyProject.ViewModel
         private double GetSquareForCircle(double xCoordinate, double radius)
         {
             return ((radius * radius) - (xCoordinate * xCoordinate));
+        }
+
+
+        private void CalculateSyncronous()
+        {
+            Point[]? points = new Point[overallDotsCount];
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                points[i] = new Point(random.NextInt64(0, (long)squareSideLength), random.NextInt64(0, (long)squareSideLength));
+            }
+
+            currentTasksCount = 10;
+
+            Thread[] threads = new Thread[currentTasksCount];
+
+            _stopwatch.Reset();
+            _stopwatch.Start();
+
+            for (int i = 0; i < currentTasksCount; i++)
+            {
+                long j = (overallDotsCount / currentTasksCount) * i;
+                long endIndex = (overallDotsCount / currentTasksCount) * (i + 1);
+                try
+                {
+                    for (; j < endIndex; j++)
+                    {
+                        var point = points[j];
+
+                        if (point.Y * point.Y <= GetSquareForCircle(point.X, (squareSideLength / 2)))
+                            Interlocked.Increment(ref dotsInsideCircle);
+
+                        Interlocked.Increment(ref counter);
+
+                        //if (point.Y * point.Y <= GetSquareForCircle(point.X, (squareSideLength / 2))) dotsInsideCircle++;
+                        //counter++;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+
+
+
+            points = null;
+            _stopwatch.Stop();
         }
 
 
