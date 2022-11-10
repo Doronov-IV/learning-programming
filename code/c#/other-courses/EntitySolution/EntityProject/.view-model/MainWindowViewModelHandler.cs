@@ -26,7 +26,7 @@ namespace MainEntityProject.ViewModel
             {
                 try
                 {
-                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext())
                     {
                         context.Database.ExecuteSqlRaw("DELETE FROM [Books]");
                         context.Database.ExecuteSqlRaw("DELETE FROM [Authors]");
@@ -36,7 +36,7 @@ namespace MainEntityProject.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Connection failed.\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Deletion failed.\n\nException: {ex.Message}", "Exception.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
@@ -113,7 +113,7 @@ namespace MainEntityProject.ViewModel
             {
                 try
                 {
-                    using (CurrentDatabaseContext context = new CurrentDatabaseContext(_connectionOptions))
+                    using (CurrentDatabaseContext context = new CurrentDatabaseContext())
                     {
                         context.Authors.AsEnumerable().Select(a => { if (a.Name.Contains("Defoe")) a.Name = "Definitely not Daniel Defoe"; return a; }).ToList();
 
