@@ -76,29 +76,23 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
             if (_valueSet is null) throw new NullReferenceException("Value set is not specified by the start of the calculation.");
 
             _piNumber = 0;
-
             _pointInsideCircleCounter = 0;
-
             _points = new Point[_valueSet.AmountOfPoints];
-
             _squareSideLength = ValueSet.CircleRadius / 2;
-
-            Thread[] threads = new Thread[_amountOfThreads];
 
             FillPointArray();
 
+            Thread[] threads = new Thread[_amountOfThreads];
 
             for (int i = 0; i < _amountOfThreads; i++)
             {
                 var closureIteratorCopy = i;
-
                 var closureStatrIndexCopy = (_valueSet.AmountOfPoints / _amountOfThreads) * closureIteratorCopy;
-
                 var closureEndIndexCopy = (_valueSet.AmountOfPoints / _amountOfThreads) * (closureIteratorCopy + 1);
 
                 threads[i] = new Thread(() =>
                 {
-                    GenerateAndCheckPoints(
+                    CheckBunchOfPoints(
                         pointArray: _points,
                         startIndex: closureStatrIndexCopy,
                         endIndex: closureEndIndexCopy
@@ -143,7 +137,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// <br />
         /// Сгенерировать и проверить некоторое кол-во точек, равное "_overallPointCounter" разделить на "CurrentTaskCount".
         /// </summary>
-        private void GenerateAndCheckPoints(Point[] pointArray, long startIndex, long endIndex)
+        private void CheckBunchOfPoints(Point[] pointArray, long startIndex, long endIndex)
         {
             long currentThreadIncrementResult = 0;
 
@@ -151,7 +145,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
             {
                 var point = pointArray[j];
 
-                if (point.Y * point.Y <= GetSquareForCircle(point.X, (_squareSideLength)))
+                if (point.Y * point.Y <= GetYCoordinateSqr(point.X, (_squareSideLength)))
                     ++currentThreadIncrementResult;
             }
 
@@ -168,7 +162,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         private void FillPointArray()
         {
             _points = new Point[_valueSet.AmountOfPoints];
-
+            
             for (int i = 0; i < _points.Length; i++)
             {
                 _points[i] = new Point(AsynchronousCalculator.random.NextInt64(0, (long) _valueSet.CircleRadius), AsynchronousCalculator.random.NextInt64(0, (long)_valueSet.CircleRadius));
@@ -178,13 +172,14 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
         /// <summary>
-        /// Get a square rectangle sides' length for comparison via Monte Carlo method.
+        /// Get a square of an Y coordinate of a point based on it's x-one and a radius of a circle.
         /// <br />
-        /// Получить длины сторон для проверки через метод Монте Карло.
+        /// Получить квадрат y-координаты точки, через её x-координату и радиус круга.
         /// </summary>
-        private double GetSquareForCircle(double xCoordinate, double radius)
+        private double GetYCoordinateSqr(double xCoordinate, double radius)
         {
-            return ((radius * radius) - (xCoordinate * xCoordinate));
+            var sqrY = ((radius * radius) - (xCoordinate * xCoordinate));
+            return sqrY;
         }
 
 
