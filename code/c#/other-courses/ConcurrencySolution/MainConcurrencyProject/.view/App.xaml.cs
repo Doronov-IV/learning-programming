@@ -9,6 +9,8 @@ global using System.Windows;
 
 global using Prism.Commands;
 
+global using Tools.Flags;
+
 namespace MainConcurrencyProject
 {
     /// <summary>

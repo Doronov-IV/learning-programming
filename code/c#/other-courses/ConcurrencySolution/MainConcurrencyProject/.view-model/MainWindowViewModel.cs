@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using Toolbox.Flags;
 
 namespace MainConcurrencyProject.ViewModel
 {
@@ -58,7 +59,7 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        private static Stopwatch _stopwatch;
+
 
         private string _elapsedTime;
 
@@ -73,7 +74,7 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
-        //public List<List<Point>> DotsList;
+        
 
 
 
@@ -98,38 +99,6 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
-
-
-
-        private double _maxAmountOfDots;
-
-
-        public double MaxAmountOfDots
-        {
-            get { return _maxAmountOfDots; }
-            set
-            {
-                _maxAmountOfDots = value;
-                OnPropertyChanged(nameof(MaxAmountOfDots));
-            }
-        }
-
-
-
-
-        private double _maxCircleRadious;
-
-
-        public double MaxCircleRadious
-        {
-            get { return _maxCircleRadious; }
-            set
-            {
-                _maxCircleRadious = value;
-                OnPropertyChanged(nameof(MaxCircleRadious));
-            }
-        }
-
         public int ThreadCount
         {
             get => _threadCount;
@@ -142,34 +111,30 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
-
-        private double _startingRadius;
-
-
-        public double StartingRadius
-        {
-            get { return _startingRadius; }
-            set
-            {
-                _startingRadius = value;
-                OnPropertyChanged(nameof(StartingRadius));
-            }
-        }
-
-
-
-        private string _resultPiNumber;
         private int _threadCount;
 
-        public string resultPiNumber
+
+        private string resultNumber;
+
+
+        public string ResultNumber
         {
-            get { return _resultPiNumber; }
+            get => resultNumber;
             set
             {
-                _resultPiNumber = value;
-                OnPropertyChanged(nameof(resultPiNumber));
+                resultNumber = value;
+                OnPropertyChanged((nameof(ResultNumber)));
             }
         }
+
+
+
+        public CustomProcessingStatus ProcessingStatus
+        {
+            get;
+            set;
+        }
+
 
 
         #endregion STATE
@@ -219,14 +184,7 @@ namespace MainConcurrencyProject.ViewModel
             _mutex = new();
 
             _outputCollection = new();
-            //OutputCollection.CollectionChanged += OnObservableCollectionChanged;
-
-            double x =  1e213;
-            int y = 0x9C4000;
-
-            _maxAmountOfDots = 2048e5;      // limit_Nmax  = 1e7;
-            _maxCircleRadious = 1024e4;     // limit_a = 1e6;
-            StartingRadius = 100;           // min_a = 100;
+            ProcessingStatus = new();
         }
 
 

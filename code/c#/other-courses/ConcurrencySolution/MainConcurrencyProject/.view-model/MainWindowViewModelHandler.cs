@@ -13,7 +13,7 @@ namespace MainConcurrencyProject.ViewModel
 
         // handle controls events
 
-        #region HANDLERS - Tier 1
+        #region HANDLERS
 
 
 
@@ -24,259 +24,52 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
+            ProcessingStatus.Toggle();
             (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
             await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
 
-            resultPiNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
+            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
             elapsedTime = tuple.timeElapsed.ToString();
+
+            string numberWithDots = String.Format("{0:#,0}", tuple.resultNumber);
+            string outputString = $"The number is \"{numberWithDots}\", with total devisors number {tuple.divisorsNumber}, time elapsed {tuple.timeElapsed} ms.";
+
+            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
+            elapsedTime = tuple.timeElapsed.ToString();
+
+            SendOutput(outputString);
+            ProcessingStatus.Toggle();
         }
 
 
 
-        #endregion HANDLERS - Tier 1
+        #endregion HANDLERS
 
 
 
 
 
-        // handle topics events
-
-        #region SECONDARY - Tier 2
-
+        #region IO
 
 
         /// <summary>
-        /// Run Parametrized thread demo.
+        /// Send output to the greenboard.
         /// <br />
-        /// Запустить демо Потоки с параметрами.
+        /// Отправить данные в листбокс.
         /// </summary>
-        private void RunHellos()
-        {
-            Thread myThread1 = new Thread(new ParameterizedThreadStart(Print));
-            Thread myThread2 = new Thread(Print);
-            Thread myThread3 = new Thread(message => Application.Current.Dispatcher.Invoke(() => OutputCollection.Add(message.ToString())));
-
-            myThread1.Start("Hello");
-            myThread2.Start("Привет");
-            myThread3.Start("Salut");
-        }
-
-
-
-        /// <summary>
-        /// Run shared resources demo.
+        /// <param name="messsage">
+        /// The text message to be sent.
         /// <br />
-        /// Запустить демку по разделяемым ресурсам.
-        /// </summary>
-        private void RunCounter()
-        {
-            Thread thread;
-
-            // to lock/unlock, switch methods in tier 3 region.
-            for (int i = 0, iSize = 5; i < iSize; ++i)
-            {
-                thread = new(Print);
-                thread.Name = $"Thread №{i}";
-                thread.Start(1);
-                //thread.Join();
-            }
-
-            Thread.Sleep(2000);
-            ShowOutput(_largeMessage);
-        }
-
-
-
-        #endregion SECONDARY - Tier 2
-
-
-
-
-
-        // handle excercises events
-
-        #region AUXILIARY - Tier 3 
-
-
-
-        /// <summary>
-        /// Call messagebox to display output message.
-        /// <br />
-        /// Вызвать messagebox, чтобы отобразить сообщение для вывода.
-        /// </summary>
-        private void Print(object? message)
-        {
-            if (message is not null)
-            {
-                if (message is string)
-                {
-                    ShowOutput(message.ToString());
-                }
-                else if (message is int)
-                {
-                    DoSharedExampleWithSemaphore((int)message);
-                }
-            }
-        }
-
-
-
-        #endregion AUXILIARY - Tier 3 
-
-
-
-
-
-        // dispatched functions for different api
-
-        #region ELEMENTARY - Tier 4
-
-
-
-        /// <summary>
-        /// Increment a number in a loop W/O locking.
-        /// <br />
-        /// Проинкрементировать число в цикле БЕЗ лока.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
+        /// Текстовое сообщение для отправления.
         /// </param>
-        private void DoSharedNumberExampleWithoutLocker(int number)
+        private void SendOutput(string message)
         {
-            DoIncrement(number);
+            Application.Current.Dispatcher.Invoke(() => { OutputCollection.Add(message); } );
         }
 
 
-
-        /// <summary>
-        /// Increment a number in a loop W/ locking.
-        /// <br />
-        /// Проинкрементировать число в цикле С локом.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
-        /// </param>
-        private void DoSharedExampleWithLocker(int number)
-        {
-            lock (_locker)
-            {
-                DoIncrement(number);
-            }
-        }
-
-
-
-        /// <summary>
-        /// Increment a number in a loop W/ auto reset event.
-        /// <br />
-        /// Проинкрементировать число в цикле С авто ресет ивентом.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
-        /// </param>
-        private void DoSharedExampleWithAutoResetEvent(int number)
-        {
-            _autoResetHandler.WaitOne();
-            DoIncrement(number);
-            _autoResetHandler.Set();
-        }
-
-
-
-        /// <summary>
-        /// Increment a number in a loop W/ mutex.
-        /// <br />
-        /// Проинкрементировать число в цикле С мьютексом.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
-        /// </param>
-        private void DoSharedExampleWithMutex(int number)
-        {
-            _mutex.WaitOne();
-            DoIncrement(number);
-            _mutex.ReleaseMutex();
-        }
-
-
-
-        /// <summary>
-        /// Increment a number in a loop W/ semaphore.
-        /// <br />
-        /// Проинкрементировать число в цикле С семафором.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
-        /// </param>
-        private void DoSharedExampleWithSemaphore(int number)
-        {
-            _semaphore.WaitOne();
-            DoIncrement(number);
-            _semaphore.Release();
-        }
-
-
-
-        #endregion ELEMENTARY - Tier 4
-
-
-
-
-
-        // actual generic i/o
-
-        #region ELEMENTARY - Tier 5
-
-
-
-
-        /// <summary>
-        /// Increment a number in a loop.
-        /// <br />
-        /// Проинкрементировать число в цикле.
-        /// </summary>
-        /// <param name="number">
-        /// A number for increment.
-        /// <br />
-        /// Число для инкремента.
-        /// </param>
-        private void DoIncrement(int number)
-        {
-            for (int i = 0, iSize = 6; i < iSize; ++i)
-            {
-                _largeMessage += Thread.CurrentThread.Name + ": " + number.ToString() + "\n";
-                number++;
-                Thread.Sleep(10);
-            }
-        }
-
-
-        /// <summary>
-        /// Show messagebox output message.
-        /// <br />
-        /// Отобразить сообщение в messagebox'е.
-        /// </summary>
-        private void ShowOutput(string message)
-        {
-            Application.Current.Dispatcher.Invoke(() => OutputCollection.Add(message));
-        }
-
-
-
-
-        #endregion ELEMENTARY - Tier 5
-
+        #endregion IO
 
 
     }

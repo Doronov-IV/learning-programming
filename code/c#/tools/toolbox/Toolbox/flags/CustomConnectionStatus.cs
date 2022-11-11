@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Tools.Connection
+namespace Tools.Flags
 {
     /// <summary>
     /// Represents a custom manual set of flags, providing basic connection info;
@@ -12,13 +12,22 @@ namespace Tools.Connection
 
 
 
-        #region PROPERTIES - forming State of an object
+        #region STATE
 
 
-        /// <summary>
-        /// @see public bool IsConnected;
-        /// </summary>
+
+        /// <inheritdoc cref="IsConnected"/>
         private bool _IsConnected;
+
+
+        /// <inheritdoc cref="Narrative"/>
+        private string _Narrative;
+
+
+        /// <inheritdoc cref="IsNotConnected"/>
+        private bool _IsNotConnected;
+
+
 
 
         /// <summary>
@@ -38,12 +47,6 @@ namespace Tools.Connection
 
 
         /// <summary>
-        /// @see public bool IsNotConnected;
-        /// </summary>
-        private bool _IsNotConnected;
-
-
-        /// <summary>
         /// True if NOT connected, otherwise false;
         /// <br />
         /// "True" если НЕ подключено, иначе "false";
@@ -57,12 +60,6 @@ namespace Tools.Connection
                 OnPropertyChanged(nameof(IsNotConnected));
             }
         }
-
-
-        /// <summary>
-        /// @see public string Narrative;
-        /// </summary>
-        private string _Narrative;
 
 
         /// <summary>
@@ -81,7 +78,8 @@ namespace Tools.Connection
         }
 
 
-        #endregion PROPERTIES - forming State of an object
+
+        #endregion STATE
 
 
 
@@ -168,19 +166,13 @@ namespace Tools.Connection
         /// <br />
         /// "True", если к моменту создания этого объекта, подключение уже установлено, иначе "false";
         /// </param>
-        public CustomConnectionStatus(bool ConnectionAlreadyEstablished)
+        public CustomConnectionStatus(bool ConnectionAlreadyEstablished) : this()
         {
             if (ConnectionAlreadyEstablished)
             {
                 _IsConnected = true;
                 _IsNotConnected = false;
                 _Narrative = "Connected";
-            }
-            else
-            {
-                _IsConnected = false;
-                _IsNotConnected = true;
-                _Narrative = "Waiting ...";
             }
         }
 
