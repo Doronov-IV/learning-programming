@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <Compile Include=".model\AsynchronousCalculator.cs" />
+    <Compile Include=".model\divisors\DivisorsCalculator.cs" />
+    <Compile Include=".model\divisors\DivisorsValueSet.cs" />
     <Compile Include=".model\pi-number\PiNumberCalculator.cs" />
     <Compile Include=".model\pi-number\PiNumberValueSet.cs" />
     <Compile Include=".view-model\MainWindowViewModel.cs" />

@@ -24,11 +24,11 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            (double resultNumber, long timeElapsed) tuple = (0,0); 
+            ((long divisorsNumber , long resultNumber) pair, long timeElapsed) tuple = ((0, 0),0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
-            await Task.Run(() => { tuple = calculator.CalculatePiNumber(); });
+            await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
 
-            resultPiNumber = tuple.resultNumber.ToString();
+            resultPiNumber = tuple.pair.resultNumber.ToString() + "  " + tuple.pair.divisorsNumber.ToString();
             elapsedTime = tuple.timeElapsed.ToString();
         }
 
@@ -276,47 +276,6 @@ namespace MainConcurrencyProject.ViewModel
 
 
         #endregion ELEMENTARY - Tier 5
-
-
-
-
-
-
-        #region Property Changed Handlers
-
-
-
-        //
-
-
-
-        #endregion Property Changed Handlers
-
-
-
-
-
-
-        #region PI CALCULATION
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #endregion PI CALCULATION
 
 
 

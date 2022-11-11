@@ -44,7 +44,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
 
-        private Point[] _points;
+        private Point[]? _points = null;
 
         private int _amountOfThreads;
 

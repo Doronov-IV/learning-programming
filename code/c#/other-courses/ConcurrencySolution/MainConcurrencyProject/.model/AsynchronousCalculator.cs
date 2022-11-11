@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MainConcurrencyProject.Model.Calculator.PiNumber;
+using MainConcurrencyProject.Model.Divisors;
 
 namespace MainConcurrencyProject.Model.Calculator
 {
@@ -15,6 +16,8 @@ namespace MainConcurrencyProject.Model.Calculator
 
         #region STATE
 
+
+        private DivisorsCalculator _divisorsCalculator;
 
 
 
@@ -93,6 +96,15 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
 
+        public ((long divisorsAmount, long resultNumber) pair, long timeElapsed) CalculateDivisors()
+        {
+            _divisorsCalculator.CalculateDivisorsAsync();
+
+            return ((_divisorsCalculator.ValueSet.ResultNumber.divisorsAmount, _divisorsCalculator.ValueSet.ResultNumber.number), stopwatch.ElapsedMilliseconds);
+        }
+
+
+
         #endregion API
 
 
@@ -116,6 +128,7 @@ namespace MainConcurrencyProject.Model.Calculator
         public AsynchronousCalculator(int currentAmountOfThreads)
         {
             _piCalculator = new(amountOfThreads: currentAmountOfThreads);
+            _divisorsCalculator = new(amountOfThreads: currentAmountOfThreads);
         }
 
 
