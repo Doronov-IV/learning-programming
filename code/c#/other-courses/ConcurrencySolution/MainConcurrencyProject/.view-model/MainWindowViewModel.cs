@@ -227,8 +227,6 @@ namespace MainConcurrencyProject.ViewModel
             _maxAmountOfDots = 2048e5;      // limit_Nmax  = 1e7;
             _maxCircleRadious = 1024e4;     // limit_a = 1e6;
             StartingRadius = 100;           // min_a = 100;
-
-            FillPointArray();
         }
 
 

@@ -54,14 +54,14 @@
             get { return _circleRadius; }
             set
             {
-                _amountOfPoints = value;
+                _circleRadius = value;
             }
         }
 
 
 
         /// <summary>
-        /// The quantity of the points to be produced.
+        /// The quantity of the _points to be produced.
         /// <br />
         /// Кол-во точек для генерирования.
         /// </summary>
@@ -110,12 +110,12 @@
         /// Конструктор с параметрами.
         /// </summary>
         /// <param name="amountOfPoints">
-        /// The total quantity of generated points.
+        /// The total quantity of generated _points.
         /// <br />
         /// Общее кол-во генерируемых точек.
         /// </param>
         /// <param name="circleRadius">
-        /// The size of the field to be inserted with points.
+        /// The size of the field to be inserted with _points.
         /// <br />
         /// Размеры поля, в которое будут поступать точки.
         /// </param>
@@ -134,12 +134,12 @@
         /// Конструктор с параметрами для альтернативных форм записи чисел.
         /// </summary>
         /// <param name="amountOfPoints">
-        /// The total quantity of generated points.
+        /// The total quantity of generated _points.
         /// <br />
         /// Общее кол-во генерируемых точек.
         /// </param>
         /// <param name="circleRadius">
-        /// The size of the field to be inserted with points.
+        /// The size of the field to be inserted with _points.
         /// <br />
         /// Размеры поля, в которое будут поступать точки.
         /// </param>

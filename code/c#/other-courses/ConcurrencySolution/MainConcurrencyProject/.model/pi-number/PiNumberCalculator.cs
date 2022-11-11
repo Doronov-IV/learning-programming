@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Controls.Primitives;
 
 namespace MainConcurrencyProject.Model.Calculator.PiNumber
 {
@@ -16,7 +17,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// <br />
         /// Набор значений по умолчанию.
         /// </summary>
-        public static readonly PiNumberValueSet DefaultValueSet = new(amountOfPoints: 2048e5, circleRadius: 1024e4);
+        public static readonly PiNumberValueSet DefaultValueSet = new(amountOfPoints: 512e6, circleRadius: 256e5);
 
 
 
@@ -43,18 +44,16 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
 
+        private Point[] _points;
+
         private int _amountOfThreads;
 
-        private Random _random;
+        private double _squareSideLength;             // a;
 
-        private double squareSideLength;             // a;
+        private double _piNumber;
 
-        private double piNumber;
-        private long counter;                        // i;
+        private long _pointInsideCircleCounter;      // Ncirc;
 
-
-        private long pointsInsideCircleCounter;      // Ncirc;
-        private long overallPointCount;              // Nmax;
 
 
 
@@ -76,7 +75,18 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         {
             if (_valueSet is null) throw new NullReferenceException("Value set is not specified by the start of the calculation.");
 
+            _piNumber = 0;
+
+            _pointInsideCircleCounter = 0;
+
+            _points = new Point[_valueSet.AmountOfPoints];
+
+            _squareSideLength = ValueSet.CircleRadius / 2;
+
             Thread[] threads = new Thread[_amountOfThreads];
+
+            FillPointArray();
+
 
             for (int i = 0; i < _amountOfThreads; i++)
             {
@@ -89,13 +99,16 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
                 threads[i] = new Thread(() =>
                 {
                     GenerateAndCheckPoints(
-                        pointArray: points,
+                        pointArray: _points,
                         startIndex: closureStatrIndexCopy,
                         endIndex: closureEndIndexCopy
                     );
                 });
             }
 
+
+            AsynchronousCalculator.stopwatch = new();
+            AsynchronousCalculator.stopwatch.Start();
             for (int i = 0; i < _amountOfThreads; i++)
             {
                 threads[i].Start();
@@ -105,6 +118,13 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
             {
                 threads[i].Join();
             }
+            AsynchronousCalculator.stopwatch.Stop();
+
+
+            _piNumber = (double)_pointInsideCircleCounter * 16.0 / (double)_valueSet.AmountOfPoints;
+            _valueSet.PiNumberResultValue = _piNumber;
+            _points = null;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
 
@@ -119,18 +139,52 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
         /// <summary>
-        /// Fill the array of points with random generated units.
+        /// Generate and compare some amount of dots equal to '_overallPointCounter' devided by the 'CurrentTaskCount'.
+        /// <br />
+        /// Сгенерировать и проверить некоторое кол-во точек, равное "_overallPointCounter" разделить на "CurrentTaskCount".
+        /// </summary>
+        private void GenerateAndCheckPoints(Point[] pointArray, long startIndex, long endIndex)
+        {
+            long currentThreadIncrementResult = 0;
+
+            for (long j = startIndex; j < endIndex; j++)
+            {
+                var point = pointArray[j];
+
+                if (point.Y * point.Y <= GetSquareForCircle(point.X, (_squareSideLength)))
+                    ++currentThreadIncrementResult;
+            }
+
+            Interlocked.Add(ref _pointInsideCircleCounter, currentThreadIncrementResult);
+        }
+
+
+
+        /// <summary>
+        /// Fill the array of _points with random generated units.
         /// <br />
         /// Заполнить массив точек случайно генерируемыми значениями.
         /// </summary>
         private void FillPointArray()
         {
-            points = new Point[_valueSet.AmountOfPoints];
+            _points = new Point[_valueSet.AmountOfPoints];
 
-            for (int i = 0; i < points.Length; i++)
+            for (int i = 0; i < _points.Length; i++)
             {
-                points[i] = new Point(random.NextInt64(0, (long)squareSideLength), random.NextInt64(0, (long)squareSideLength));
+                _points[i] = new Point(AsynchronousCalculator.random.NextInt64(0, (long) _valueSet.CircleRadius), AsynchronousCalculator.random.NextInt64(0, (long)_valueSet.CircleRadius));
             }
+        }
+
+
+
+        /// <summary>
+        /// Get a square rectangle sides' length for comparison via Monte Carlo method.
+        /// <br />
+        /// Получить длины сторон для проверки через метод Монте Карло.
+        /// </summary>
+        private double GetSquareForCircle(double xCoordinate, double radius)
+        {
+            return ((radius * radius) - (xCoordinate * xCoordinate));
         }
 
 

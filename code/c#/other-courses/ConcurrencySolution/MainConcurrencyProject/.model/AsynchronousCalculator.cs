@@ -22,7 +22,7 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
 
-        private static Stopwatch _stopwatch;
+        public static Stopwatch stopwatch = new();
 
 
 
@@ -40,6 +40,7 @@ namespace MainConcurrencyProject.Model.Calculator
         }
 
 
+        public static Random random = new();
 
 
         #endregion STATE
@@ -52,7 +53,12 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
 
+        public (double resultNumber, long timeElapsed)  CalculatePiNumber()
+        {
+            _piCalculator.CalculatePiNumberAsync();
 
+            return (_piCalculator.ValueSet.PiNumberResultValue, stopwatch.ElapsedMilliseconds);
+        }
 
 
 
@@ -75,7 +81,6 @@ namespace MainConcurrencyProject.Model.Calculator
         public AsynchronousCalculator(int currentAmountOfThreads)
         {
             _piCalculator = new(amountOfThreads: currentAmountOfThreads);
-            _stopwatch = new();
         }
 
 
