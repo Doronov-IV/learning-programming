@@ -1,4 +1,7 @@
-﻿namespace MainConcurrencyProject.Model
+﻿using System.Diagnostics;
+using MainConcurrencyProject.Model.Calculator.PiNumber;
+
+namespace MainConcurrencyProject.Model.Calculator
 {
 	/// <summary>
 	/// A tool which calculates using concurrency.
@@ -14,7 +17,28 @@
 
 
 
-        //
+
+        private PiNumberCalculator _piCalculator;
+
+
+
+        private static Stopwatch _stopwatch;
+
+
+
+
+        private int _threadCount;
+
+        public int ThreadCount
+        {
+            get => _threadCount;
+
+            set
+            {
+                _threadCount = value;
+            }
+        }
+
 
 
 
@@ -28,10 +52,7 @@
 
 
 
-        public void CalculatePiNumber()
-        {
 
-        }
 
 
 
@@ -45,14 +66,16 @@
 
 
 
+
         /// <summary>
         /// Default constructor.
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public AsynchronousCalculator()
+        public AsynchronousCalculator(int currentAmountOfThreads)
         {
-
+            _piCalculator = new(amountOfThreads: currentAmountOfThreads);
+            _stopwatch = new();
         }
 
 

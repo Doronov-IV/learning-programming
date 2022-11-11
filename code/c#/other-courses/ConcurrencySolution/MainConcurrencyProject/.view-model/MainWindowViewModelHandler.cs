@@ -297,9 +297,6 @@ namespace MainConcurrencyProject.ViewModel
         private Random random = new Random();
 
         // defines;
-        //private double dMaxAmountOfDots;    // limit_Nmax  = 1e7;
-        //private double dMaxCircleRadius;    // limit_a = 1e6;
-        //private double dStartingRadius;     // min_a = 100;
 
 
         private double squareSideLength = 1.024e3;    // a;
@@ -355,64 +352,10 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-        /// <summary>
-        /// Fill the array of points with random generated units.
-        /// <br />
-        /// Заполнить массив точек случайно генерируемыми значениями.
-        /// </summary>
-        private void FillPointArray()
-        {
-            points = new Point[overallPointCount];
-
-            for (int i = 0; i < points.Length; i++)
-            {
-                points[i] = new Point(random.NextInt64(0, (long)squareSideLength), random.NextInt64(0, (long)squareSideLength));
-            }
-        }
 
 
 
-        /// <summary>
-        /// Begin the actual pi number calculation via Monte Carlo technique.
-        /// <br />
-        /// Начать само вычисление числа pi через метод Монте Карло.
-        /// </summary>
-        private void CalculatePiNumberAsync()
-        {
-            Thread[] threads = new Thread[_threadCount];
 
-            for (int i = 0; i < _threadCount; i++)
-            {
-                var closureIteratorCopy = i;
-
-                var closureStatrIndexCopy = (overallPointCount / _threadCount) * closureIteratorCopy;
-
-                var closureEndIndexCopy = (overallPointCount / _threadCount) * (closureIteratorCopy + 1);
-
-                threads[i] = new Thread(() =>
-                {
-                    GenerateAndCheckPoints(
-                        pointArray: points,
-                        startIndex: closureStatrIndexCopy,
-                        endIndex: closureEndIndexCopy
-                    );
-                });
-            }
-
-            _stopwatch = Stopwatch.StartNew();
-
-            for (int i = 0; i < _threadCount; i++)
-            {
-                threads[i].Start();
-            }
-
-            for (int i = 0; i < _threadCount; i++)
-            {
-                threads[i].Join();
-            }
-
-            _stopwatch.Stop();
-        }
 
 
 
