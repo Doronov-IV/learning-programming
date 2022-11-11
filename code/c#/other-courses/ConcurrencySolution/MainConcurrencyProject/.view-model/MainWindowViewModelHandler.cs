@@ -24,11 +24,11 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            ((long divisorsNumber , long resultNumber) pair, long timeElapsed) tuple = ((0, 0),0); 
+            (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
             await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
 
-            resultPiNumber = tuple.pair.resultNumber.ToString() + "  " + tuple.pair.divisorsNumber.ToString();
+            resultPiNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
             elapsedTime = tuple.timeElapsed.ToString();
         }
 

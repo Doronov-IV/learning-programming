@@ -118,6 +118,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
             _piNumber = (double)_pointInsideCircleCounter * 16.0 / (double)_valueSet.AmountOfPoints;
             _valueSet.PiNumberResultValue = _piNumber;
             _points = null;
+            // once again, just in case;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 

@@ -63,12 +63,28 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
+        /// <summary>
+        /// Maximum divisors value.
+        /// <br />
+        /// Максимальный показатель делителей.
+        /// </summary>
         long _localDivisorsValue;
 
+
+        /// <summary>
+        /// The Number of the maximum divisors value.
+        /// <br />
+        /// Число для максимального показателя делителей.
+        /// </summary>
         long _localNumberValue;
 
 
-        private long[] _numbers;
+        /// <summary>
+        /// An array of numbers from 1 to 'cieling'.
+        /// <br />
+        /// Массив чисел от 1 до "cieling".
+        /// </summary>
+        private long[]? _numbers;
 
 
 
@@ -83,6 +99,11 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
+        /// <summary>
+        /// Calculate the number with the most amount of divisors.
+        /// <br />
+        /// Рассчитать число с максимальным числом делителей.
+        /// </summary>
         public void CalculateDivisorsAsync()
         {
             FillNumbersArray();
@@ -98,7 +119,7 @@ namespace MainConcurrencyProject.Model.Divisors
 
                 threads[i] = new Thread(() =>
                 {
-                    CheckBunchOfNumbers(
+                    ProcessBunchOfNumbers(
                         numbersArray: _numbers,
                         startIndex: closureStartIndexCopy,
                         endIndex: closureEndIndexCopy
@@ -121,8 +142,10 @@ namespace MainConcurrencyProject.Model.Divisors
             AsynchronousCalculator.stopwatch.Stop();
 
 
-            _valueSet.ResultNumber = _localResultValue;
+            _valueSet.ResultNumber = _localNumberValue;
+            _valueSet.ResultNumberDivisorsCount = _localDivisorsValue;
             _numbers = null;
+            // just in case;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
@@ -138,7 +161,27 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
-        private void CheckBunchOfNumbers(long[] numbersArray, long startIndex, long endIndex)
+        /// <summary>
+        /// Process a portion of the numbers array.
+        /// <br />
+        /// Обработать часть массива чисел.
+        /// </summary>
+        /// <param name="numbersArray">
+        /// The local array of numbers.
+        /// <br />
+        /// Локальный массив чисел.
+        /// </param>
+        /// <param name="startIndex">
+        /// Starting index.
+        /// <br />
+        /// Начальный индекс.
+        /// </param>
+        /// <param name="endIndex">
+        /// Ending index.
+        /// <br />
+        /// Конечный индекс.
+        /// </param>
+        private void ProcessBunchOfNumbers(long[] numbersArray, long startIndex, long endIndex)
         {
             (long nMaxDivisorsCounter, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
             (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
@@ -159,12 +202,21 @@ namespace MainConcurrencyProject.Model.Divisors
                     maxDivisorsPair = currentPair;
                 }
             }
-            
-            if (_localResultValue.divisorsValue < maxDivisorsPair.nMaxDivisorsCounter) _localResultValue = maxDivisorsPair;
+
+            if (_localDivisorsValue < maxDivisorsPair.nMaxDivisorsCounter)
+            {
+                _localNumberValue = maxDivisorsPair.maxDivisorsNumber;
+                _localDivisorsValue = maxDivisorsPair.nMaxDivisorsCounter;
+            }
         }
 
 
 
+        /// <summary>
+        /// Populate the '_numbers' array with long numbers.
+        /// <br />
+        /// Заполнить массив "_numbers" числами типа long.
+        /// </summary>
         private void FillNumbersArray()
         {
             _numbers = new long[_valueSet.CielingNumber];

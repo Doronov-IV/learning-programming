@@ -96,11 +96,11 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
 
-        public ((long divisorsAmount, long resultNumber) pair, long timeElapsed) CalculateDivisors()
+        public (long divisorsAmount, long resultNumber, long timeElapsed) CalculateDivisors()
         {
             _divisorsCalculator.CalculateDivisorsAsync();
 
-            return ((_divisorsCalculator.ValueSet.ResultNumber.divisorsAmount, _divisorsCalculator.ValueSet.ResultNumber.number), stopwatch.ElapsedMilliseconds);
+            return (_divisorsCalculator.ValueSet.ResultNumberDivisorsCount, _divisorsCalculator.ValueSet.ResultNumber, stopwatch.ElapsedMilliseconds);
         }
 
 
