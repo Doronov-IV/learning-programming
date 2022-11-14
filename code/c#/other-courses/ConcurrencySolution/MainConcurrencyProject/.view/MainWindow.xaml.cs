@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -21,6 +23,12 @@ namespace MainConcurrencyProject
             InitializeComponent();
 
             DataContext = new MainWindowViewModel();
+        }
+
+
+        public void OnWindowClosing(object? sender, CancelEventArgs args)
+        {
+            Process.GetProcesses().ToList().Find(n => n.ProcessName == "MainConcurrencyProject")?.Kill();
         }
     }
 }
