@@ -111,6 +111,7 @@ namespace MainConcurrencyProject.Model.Divisors
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
 
             Thread[] threads = new Thread[_amountOfThreads];
+            Task[] tasks = new Task[_amountOfThreads];
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
@@ -134,7 +135,7 @@ namespace MainConcurrencyProject.Model.Divisors
             {
                 (long startIndexClosureCopy, long endIndexClosureCopy) currentCopy = startEndIndexPairs[i];
 
-                threads[i] = new Thread(() =>
+                tasks[i] = new Task(() =>
                 {
                     ProcessBunchOfNumbersFast(
                         numbersArray: _numbers,
@@ -149,12 +150,12 @@ namespace MainConcurrencyProject.Model.Divisors
             AsynchronousCalculator.stopwatch.Start();
             for (int i = 0; i < _amountOfThreads; i++)
             {
-                threads[i].Start();
+                tasks[i].Start();
             }
 
             for (int i = 0; i < _amountOfThreads; i++)
             {
-                threads[i].Join();
+                tasks[i].Wait();
             }
             AsynchronousCalculator.stopwatch.Stop();
 
