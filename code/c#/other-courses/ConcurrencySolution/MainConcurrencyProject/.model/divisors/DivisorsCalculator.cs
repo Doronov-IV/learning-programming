@@ -109,7 +109,6 @@ namespace MainConcurrencyProject.Model.Divisors
             FillNumbersArray();
 
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
-                 
 
             Thread[] threads = new Thread[_amountOfThreads];
 
@@ -129,6 +128,7 @@ namespace MainConcurrencyProject.Model.Divisors
                 }
             }
             */
+
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
@@ -308,6 +308,8 @@ namespace MainConcurrencyProject.Model.Divisors
             {
                 _numbers[i] = i + 1;
             }
+
+            _numbers = _numbers.OrderBy(x => AsynchronousCalculator.random.Next()).ToArray();
         }
 
 
