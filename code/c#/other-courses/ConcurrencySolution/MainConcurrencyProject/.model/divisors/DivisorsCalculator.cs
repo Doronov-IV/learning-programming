@@ -15,7 +15,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Набор значений по умолчанию.
         /// </summary>
-        public static readonly DivisorsValueSet DefaultValueSet = new(cielingNumber: 2e8);
+        public static readonly DivisorsValueSet DefaultValueSet = new(cielingNumber: 4e7);
 
 
         /// <inheritdoc cref="ValueSet"/>
@@ -108,15 +108,27 @@ namespace MainConcurrencyProject.Model.Divisors
         {
             FillNumbersArray();
 
-            List<(long startIndex, long endIndex)> startEndIndexPairs = new();
+            (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
                  
 
             Thread[] threads = new Thread[_amountOfThreads];
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
-                startEndIndexPairs.Add(((_valueSet.CielingNumber / _amountOfThreads) * i, (_valueSet.CielingNumber / _amountOfThreads) * (i + 1)));
+                startEndIndexPairs[i] = new ((_valueSet.CielingNumber / _amountOfThreads) * i, (_valueSet.CielingNumber / _amountOfThreads) * (i + 1));
             }
+
+
+            /*
+            for (int i = _amountOfThreads-1, iSize = 0; i > iSize; --i)
+            {
+                for (int j = 0; j < _amountOfThreads - i; j++)
+                {
+                    startEndIndexPairs[i].startIndex += (_valueSet.CielingNumber / _amountOfThreads) / (_amountOfThreads/2);
+                    startEndIndexPairs[i - 1].endIndex += (_valueSet.CielingNumber / _amountOfThreads) / (_amountOfThreads/2);
+                }
+            }
+            */
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
@@ -242,7 +254,15 @@ namespace MainConcurrencyProject.Model.Divisors
             (long nMaxDivisorsCounter, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
             (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
 
-            for (long j = startIndex, jSize = endIndex; j < jSize; j++)
+            var startIndexCopy = startIndex;
+            var endIndexCopy = endIndex;
+
+            if (endIndex > _valueSet.CielingNumber)
+            {
+                endIndexCopy = _valueSet.CielingNumber;
+            } 
+
+            for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
             {
                 currentPair = (0, numbersArray[j]);
                 for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
