@@ -63,6 +63,8 @@ namespace MainConcurrencyProject.ViewModel
 
         private string _elapsedTime;
 
+
+
         public string elapsedTime
         {
             get { return _elapsedTime; }

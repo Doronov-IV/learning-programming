@@ -108,21 +108,26 @@ namespace MainConcurrencyProject.Model.Divisors
         {
             FillNumbersArray();
 
+            List<(long startIndex, long endIndex)> startEndIndexPairs = new();
+                 
 
             Thread[] threads = new Thread[_amountOfThreads];
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
-                var closureIteratorCopy = i;
-                var closureStartIndexCopy = (_valueSet.CielingNumber / _amountOfThreads) * closureIteratorCopy;
-                var closureEndIndexCopy = (_valueSet.CielingNumber / _amountOfThreads) * (closureIteratorCopy + 1);
+                startEndIndexPairs.Add(((_valueSet.CielingNumber / _amountOfThreads) * i, (_valueSet.CielingNumber / _amountOfThreads) * (i + 1)));
+            }
+
+            for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
+            {
+                (long startIndexClosureCopy, long endIndexClosureCopy) currentCopy = startEndIndexPairs[i];
 
                 threads[i] = new Thread(() =>
                 {
                     ProcessBunchOfNumbersFast(
                         numbersArray: _numbers,
-                        startIndex: closureStartIndexCopy,
-                        endIndex: closureEndIndexCopy
+                        startIndex: currentCopy.startIndexClosureCopy,
+                        endIndex: currentCopy.endIndexClosureCopy
                         );
                 });
             }
