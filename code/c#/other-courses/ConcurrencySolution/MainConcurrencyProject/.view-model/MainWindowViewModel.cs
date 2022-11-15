@@ -28,7 +28,7 @@ namespace MainConcurrencyProject.ViewModel
         /// <br />
         /// Экземпляр AutoResetEvent для демки локеров.
         /// </summary>
-        private AutoResetEvent _autoResetHandler;
+        public static AutoResetEvent _autoResetHandler = new(initialState: true);
 
 
 
@@ -160,6 +160,15 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
+        /// <summary>
+        /// 'Pause calculations' command.
+        /// <br />
+        /// Комманда "приостановить вычисление".
+        /// </summary>
+        public DelegateCommand PressPauseCommand { get; }
+
+
+
         #endregion COMMANDS
 
 
@@ -180,9 +189,10 @@ namespace MainConcurrencyProject.ViewModel
         public MainWindowViewModel()
         {
             DoActionClickCommand = new(OnDoActionButtonClickAsync);
+            PressPauseCommand = new(OnPauseKeyButtonPressed);
             _largeMessage = string.Empty;
             _locker = new();
-            _autoResetHandler = new(initialState: true);
+            //_autoResetHandler = new(initialState: true);
             _mutex = new();
 
             _outputCollection = new();

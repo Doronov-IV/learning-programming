@@ -44,6 +44,27 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
+        /// <summary>
+        /// Handle 'space' key press event.
+        /// <br />
+        /// Обработать событие нажатия на кнопку "пробел".
+        /// </summary>
+        public void OnPauseKeyButtonPressed()
+        {
+            if (ProcessingStatus.IsRunning)
+            {
+                AsynchronousCalculator.maunalResetHandler.Reset();
+                ProcessingStatus.Toggle();
+            }
+            else
+            {
+                AsynchronousCalculator.maunalResetHandler.Set();
+                ProcessingStatus.Toggle();
+            }
+        }
+
+
+
         #endregion HANDLERS
 
 

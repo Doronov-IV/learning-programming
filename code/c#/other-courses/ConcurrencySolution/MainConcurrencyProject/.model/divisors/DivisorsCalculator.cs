@@ -26,6 +26,9 @@ namespace MainConcurrencyProject.Model.Divisors
         private int _amountOfThreads;
 
 
+        
+
+
 
 
 
@@ -199,59 +202,10 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Конечный индекс.
         /// </param>
-        private void ProcessBunchOfNumbersSlow(long[] numbersArray, long startIndex, long endIndex)
-        {
-            (long nMaxDivisorsCounter, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
-            (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
-
-            for (long j = startIndex, jSize = endIndex; j < jSize; j++)
-            {
-                currentPair = (0, numbersArray[j]);
-                for (long i = 1, iSize = numbersArray[j]; i < iSize; i++)
-                {
-                    if (numbersArray[j] % i == 0)
-                    {
-                        currentPair.nCurrentNumberDivisorsCounter++;
-                    }
-                }
-                
-                if (maxDivisorsPair.nMaxDivisorsCounter < currentPair.nCurrentNumberDivisorsCounter)
-                {
-                    maxDivisorsPair = currentPair;
-                }
-            }
-
-            if (_localDivisorsValue < maxDivisorsPair.nMaxDivisorsCounter)
-            {
-                _localNumberValue = maxDivisorsPair.maxDivisorsNumber;
-                _localDivisorsValue = maxDivisorsPair.nMaxDivisorsCounter;
-            }
-        }
-
-
-
-        /// <summary>
-        /// Process a portion of the numbers array.
-        /// <br />
-        /// Обработать часть массива чисел.
-        /// </summary>
-        /// <param name="numbersArray">
-        /// The local array of numbers.
-        /// <br />
-        /// Локальный массив чисел.
-        /// </param>
-        /// <param name="startIndex">
-        /// Starting index.
-        /// <br />
-        /// Начальный индекс.
-        /// </param>
-        /// <param name="endIndex">
-        /// Ending index.
-        /// <br />
-        /// Конечный индекс.
-        /// </param>
         private void ProcessBunchOfNumbersFast(long[] numbersArray, long startIndex, long endIndex)
         {
+            var a = AsynchronousCalculator.maunalResetHandler;
+
             (long nMaxDivisorsCounter, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
             (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
 
@@ -265,6 +219,7 @@ namespace MainConcurrencyProject.Model.Divisors
 
             for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
             {
+                AsynchronousCalculator.maunalResetHandler.WaitOne();
                 currentPair = (0, numbersArray[j]);
                 for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
                 {

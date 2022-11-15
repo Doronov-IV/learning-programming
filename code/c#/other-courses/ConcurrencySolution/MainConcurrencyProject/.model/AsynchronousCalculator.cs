@@ -67,6 +67,14 @@ namespace MainConcurrencyProject.Model.Calculator
         public static Random random = new();
 
 
+        /// <summary>
+        /// A manual reset event instance for lockers demo.
+        /// <br />
+        /// Экземпляр ManualResetEvent для демки локеров.
+        /// </summary>
+        public static ManualResetEvent maunalResetHandler = new(initialState: true);
+
+
         #endregion STATE
 
 
