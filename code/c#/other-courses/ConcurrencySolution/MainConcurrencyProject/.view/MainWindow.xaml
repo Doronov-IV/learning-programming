@@ -35,7 +35,7 @@
             HorizontalAlignment="Left" VerticalAlignment="Top" 
             Margin="10,10,10,10" Padding="5"
             Command="{Binding DoActionClickCommand}"
-            Visibility="{Binding Path=ProcessingStatus.IsNotRunning, 
+            Visibility="{Binding Path=ProcessingStatus.HasFinished, 
             Converter={StaticResource BooleanToVisibilityConverter}}"
             
          />
@@ -53,14 +53,14 @@
         <Label 
                Content="Result:" HorizontalAlignment="Left" Grid.Row="2" 
                VerticalAlignment="Top" Margin="10,81,0,0" 
-            Visibility="{Binding Path=ProcessingStatus.IsNotRunning, 
+            Visibility="{Binding Path=ProcessingStatus.HasFinished, 
             Converter={StaticResource BooleanToVisibilityConverter}}"
          />
 
         <Label 
                Content="Time:" HorizontalAlignment="Left" Grid.Row="2" 
                VerticalAlignment="Top" Margin="10,172,0,0" 
-            Visibility="{Binding Path=ProcessingStatus.IsNotRunning, 
+            Visibility="{Binding Path=ProcessingStatus.HasFinished, 
             Converter={StaticResource BooleanToVisibilityConverter}}"
          />
 
@@ -68,14 +68,14 @@
         <Label 
                Content="{Binding ResultNumber}" HorizontalAlignment="Left" 
                Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,0,136" 
-            Visibility="{Binding Path=ProcessingStatus.IsNotRunning, 
+            Visibility="{Binding Path=ProcessingStatus.HasFinished, 
             Converter={StaticResource BooleanToVisibilityConverter}}"
          />
 
         <Label 
                Content="{Binding elapsedTime}" HorizontalAlignment="Left" 
                Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,0,44"
-                Visibility="{Binding Path=ProcessingStatus.IsNotRunning,
+                Visibility="{Binding Path=ProcessingStatus.HasFinished,
             Converter={StaticResource BooleanToVisibilityConverter}}"
          />
 

@@ -2,12 +2,12 @@
 
 namespace Toolbox.Flags
 {
-	/// <summary>
-	/// Represents a manual set of flags for denoting application gloabal processing status.
-	/// <br />
-	/// Представляет собой кастомный набор флагов для определения статуса работы приложения.
-	/// </summary>
-	public class CustomProcessingStatus : INotifyPropertyChanged
+    /// <summary>
+    /// Represents a manual set of flags for denoting application gloabal processing status.
+    /// <br />
+    /// Представляет собой кастомный набор флагов для определения статуса работы приложения.
+    /// </summary>
+    public class CustomProcessingStatus : INotifyPropertyChanged
     {
 
 
@@ -23,27 +23,43 @@ namespace Toolbox.Flags
 		private bool _isNotRunning;
 
 
+        /// <inheritdoc cref="HasStarted"/>
+        private bool _hasStarted;
+
+
+        /// <inheritdoc cref="HasNotStarted"/>
+        private bool _hasNotStarted;
+
+
+        /// <inheritdoc cref="HasFinished"/>
+        private bool _hasFinished;
+
+
+        /// <inheritdoc cref="HasNotFinished"/>
+        private bool _hasNotFinished;
+
+
 
         /// <summary>
-        /// True - if the process has been launched, otherwise false.
+        /// True - if the process is running at the moment, otherwise false.
         /// <br />
-        /// "True", если процесс был запущен, иначе "false".
+        /// "True", если процесс работает в данный момент, иначе "false".
         /// </summary>
         public bool IsRunning
-		{
+        {
             get { return _isRunning; }
             set
             {
                 _isRunning = value;
                 OnPropertyChanged(nameof(IsRunning));
             }
-		}
+        }
 
 
         /// <summary>
-        /// True - if the process has NOT been launched, otherwise false.
+        /// True - if the process is NOT running at the moment (i.e. 'paused'), otherwise false.
         /// <br />
-        /// "True", если процесс НЕ был запущен, иначе "false".
+        /// "True", если процесс НЕ работает в данный момент (т.е. "пауза"), иначе "false".
         /// </summary>
         public bool IsNotRunning
         {
@@ -52,6 +68,71 @@ namespace Toolbox.Flags
             {
                 _isNotRunning = value;
                 OnPropertyChanged(nameof(IsNotRunning));
+            }
+        }
+
+
+        /// <summary>
+        /// True - if process has already started, otherwise false.
+        /// <br />
+        /// "True" - если процесс уже запустился, иначе "false".
+        /// </summary>
+        public bool HasStarted
+        {
+            get { return _hasStarted; }
+            set
+            {
+                _hasStarted = value;
+                OnPropertyChanged(nameof(HasStarted));
+            }
+        }
+
+
+
+        /// <summary>
+        /// True - if process has NOT started yet, otherwise false.
+        /// <br />
+        /// "True" - если процесс ещё НЕ запустился, иначе "false".
+        /// </summary>
+        public bool HasNotStarted
+        {
+            get { return _hasNotStarted; }
+            set
+            {
+                _hasNotStarted = value;
+                OnPropertyChanged(nameof(HasNotStarted));
+            }
+        }
+
+
+        /// <summary>
+        /// True - if process has already finished, otherwise false.
+        /// <br />
+        /// "True" - если процесс уже завершился, иначе "false".
+        /// </summary>
+        public bool HasFinished
+        {
+            get { return _hasFinished; }
+            set
+            {
+                _hasFinished = value;
+                OnPropertyChanged(nameof(HasFinished));
+            }
+        }
+
+
+        /// <summary>
+        /// True - if process has NOT finished yet, otherwise false.
+        /// <br />
+        /// "True" - если процесс ещё НЕ завершился, иначе "false".
+        /// </summary>
+        public bool HasNotFinished
+        {
+            get { return _hasNotFinished; }
+            set
+            {
+                _hasNotFinished = value;
+                OnPropertyChanged(nameof(HasNotFinished));
             }
         }
 
@@ -68,15 +149,29 @@ namespace Toolbox.Flags
 
 
         /// <summary>
-        /// Toggle flags, changing their values.
+        /// ToggleProcessing flags, changing their values.
         /// <br />
         /// Переключить флаги, заменив их значения.
         /// </summary>
-        public void Toggle()
+        public void ToggleProcessing()
         {
             bool bTemp = IsRunning;
             IsRunning = IsNotRunning;
             IsNotRunning = bTemp;
+        }
+
+
+
+        /// <summary>
+        /// Toggle completion flags changing their value accordingly.
+        /// <br />
+        /// Переключить флаги готовности результата, изменив их значения соответствующим образом.
+        /// </summary>
+        public void Toggle()
+        {
+            ToggleProcessing();
+            HasFinished = IsNotRunning;
+            HasStarted = IsRunning || HasFinished;
         }
 
 
@@ -99,8 +194,8 @@ namespace Toolbox.Flags
         /// </summary>
         public CustomProcessingStatus()
         {
-            _isRunning = false;
-            _isNotRunning = true;
+            _hasStarted = _isRunning = false;
+            _hasFinished = _isNotRunning = true;
         }
 
 
@@ -116,11 +211,8 @@ namespace Toolbox.Flags
         /// </param>
         public CustomProcessingStatus(bool isAlreadyRunning) : this()
         {
-            if (isAlreadyRunning)
-            {
-                _isRunning = true;
-                _isNotRunning = false;
-            }
+            _hasStarted = _isRunning = isAlreadyRunning;
+            _hasFinished = _isNotRunning = !isAlreadyRunning;
         }
 
 

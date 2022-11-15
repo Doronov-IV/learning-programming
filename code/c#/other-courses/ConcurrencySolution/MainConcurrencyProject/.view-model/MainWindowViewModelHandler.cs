@@ -24,7 +24,7 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            ProcessingStatus.Toggle();
+            ProcessingStatus.ToggleCompletion();
             (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
             await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
@@ -39,7 +39,7 @@ namespace MainConcurrencyProject.ViewModel
             elapsedTime = tuple.timeElapsed.ToString();
 
             SendOutput(outputString);
-            ProcessingStatus.Toggle();
+            ProcessingStatus.ToggleCompletion();
         }
 
 
@@ -54,12 +54,12 @@ namespace MainConcurrencyProject.ViewModel
             if (ProcessingStatus.IsRunning)
             {
                 AsynchronousCalculator.maunalResetHandler.Reset();
-                ProcessingStatus.Toggle();
+                ProcessingStatus.ToggleProcessing();
             }
             else
             {
                 AsynchronousCalculator.maunalResetHandler.Set();
-                ProcessingStatus.Toggle();
+                ProcessingStatus.ToggleProcessing();
             }
         }
 
