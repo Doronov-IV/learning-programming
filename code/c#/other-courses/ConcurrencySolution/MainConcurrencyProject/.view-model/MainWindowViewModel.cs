@@ -59,7 +59,7 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
-
+        private string _pauseContinueActionName;
 
         private string _elapsedTime;
 
@@ -138,6 +138,17 @@ namespace MainConcurrencyProject.ViewModel
         }
 
 
+        public string PauseContinueActionName
+        {
+            get { return _pauseContinueActionName; }
+            set
+            {
+                _pauseContinueActionName = value;
+                OnPropertyChanged(nameof(PauseContinueActionName));
+            }
+        }
+
+
 
         #endregion STATE
 
@@ -194,6 +205,8 @@ namespace MainConcurrencyProject.ViewModel
             _locker = new();
             //_autoResetHandler = new(initialState: true);
             _mutex = new();
+
+            PauseContinueActionName = "Pause";
 
             _outputCollection = new();
             ProcessingStatus = new();

@@ -8,11 +8,11 @@
         Title="MainWindow" Height="450" Width="800"
         Closing="OnWindowClosing"
         >
-    
+
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding PressPauseCommand}"/>
     </Window.InputBindings>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -28,16 +28,40 @@
 
 
 
-        <TextBox Height="30" Text="{Binding ThreadCount}"/>
+        <TextBox 
+            Height="30" Text="{Binding ThreadCount,
+            UpdateSourceTrigger=PropertyChanged}"
+            MaxLength="4" Margin="20,10,80,10"
+         >
+            <TextBox.InputBindings>
+                <KeyBinding 
+                      Command="{Binding DoActionClickCommand}"
+                      Key="Return"
+                      
+                 />
+            </TextBox.InputBindings>
+
+        </TextBox>
+
 
         <Button 
-            Content="Do Action" Grid.Column="3" Grid.Row="3" 
-            HorizontalAlignment="Left" VerticalAlignment="Top" 
-            Margin="10,10,10,10" Padding="5"
+            Content="Do Action" Grid.Column="2" Grid.Row="3" 
+            HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+            Margin="0,0,25,16" Padding="5"
             Command="{Binding DoActionClickCommand}"
             Visibility="{Binding Path=ProcessingStatus.HasFinished, 
             Converter={StaticResource BooleanToVisibilityConverter}}"
-            
+         />
+
+        <Button 
+            Content="{Binding PauseContinueActionName}"
+            Grid.Column="1" Grid.Row="3" 
+            Margin="420,10,0,0" Padding="5"
+            Command="{Binding PressPauseCommand}"
+            Visibility="{Binding Path=ProcessingStatus.HasNotFinished, 
+            Converter={StaticResource BooleanToVisibilityConverter}}" 
+            HorizontalAlignment="Left" VerticalAlignment="Top" 
+            Height="28" Width="70"
          />
 
 

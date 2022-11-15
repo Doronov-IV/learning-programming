@@ -167,10 +167,11 @@ namespace Toolbox.Flags
         /// <br />
         /// Переключить флаги готовности результата, изменив их значения соответствующим образом.
         /// </summary>
-        public void Toggle()
+        public void ToggleCompletion()
         {
             ToggleProcessing();
             HasFinished = IsNotRunning;
+            HasNotFinished = !HasFinished;
             HasStarted = IsRunning || HasFinished;
         }
 
@@ -194,7 +195,7 @@ namespace Toolbox.Flags
         /// </summary>
         public CustomProcessingStatus()
         {
-            _hasStarted = _isRunning = false;
+            _hasNotFinished = _hasStarted = _isRunning = false;
             _hasFinished = _isNotRunning = true;
         }
 
@@ -211,7 +212,7 @@ namespace Toolbox.Flags
         /// </param>
         public CustomProcessingStatus(bool isAlreadyRunning) : this()
         {
-            _hasStarted = _isRunning = isAlreadyRunning;
+            _hasNotFinished = _hasStarted = _isRunning = isAlreadyRunning;
             _hasFinished = _isNotRunning = !isAlreadyRunning;
         }
 

@@ -1,5 +1,6 @@
 ﻿using MainConcurrencyProject.Model.Calculator;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace MainConcurrencyProject.ViewModel
 {
@@ -55,11 +56,13 @@ namespace MainConcurrencyProject.ViewModel
             {
                 AsynchronousCalculator.maunalResetHandler.Reset();
                 ProcessingStatus.ToggleProcessing();
+                PauseContinueActionName = "Continue";
             }
             else
             {
                 AsynchronousCalculator.maunalResetHandler.Set();
                 ProcessingStatus.ToggleProcessing();
+                PauseContinueActionName = "Pause";
             }
         }
 

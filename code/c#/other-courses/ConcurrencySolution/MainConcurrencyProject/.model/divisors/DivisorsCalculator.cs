@@ -223,6 +223,7 @@ namespace MainConcurrencyProject.Model.Divisors
                 currentPair = (0, numbersArray[j]);
                 for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
                 {
+                    //AsynchronousCalculator.maunalResetHandler.WaitOne();
                     if (numbersArray[j] % i == 0)
                     {
                         if (numbersArray[j] % i == i)
