@@ -220,10 +220,11 @@ namespace MainConcurrencyProject.Model.Divisors
             for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
             {
                 AsynchronousCalculator.maunalResetHandler.WaitOne();
+
                 currentPair = (0, numbersArray[j]);
+                
                 for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
                 {
-                    //AsynchronousCalculator.maunalResetHandler.WaitOne();
                     if (numbersArray[j] % i == 0)
                     {
                         if (numbersArray[j] % i == i)
@@ -263,6 +264,7 @@ namespace MainConcurrencyProject.Model.Divisors
 
             for (long i = 0, iSize = _numbers.Length; i < iSize; i++)
             {
+                AsynchronousCalculator.maunalResetHandler.WaitOne();
                 _numbers[i] = i + 1;
             }
 

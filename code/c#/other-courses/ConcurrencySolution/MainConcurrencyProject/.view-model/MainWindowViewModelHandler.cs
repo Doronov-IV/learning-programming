@@ -26,6 +26,7 @@ namespace MainConcurrencyProject.ViewModel
         private async void OnDoActionButtonClickAsync()
         {
             ProcessingStatus.ToggleCompletion();
+            Keyboard.ClearFocus();
             (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
             await Task.Run(() => { tuple = calculator.CalculateDivisors(); });

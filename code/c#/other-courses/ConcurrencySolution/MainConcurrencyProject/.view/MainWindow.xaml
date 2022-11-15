@@ -10,7 +10,9 @@
         >
 
     <Window.InputBindings>
-        <KeyBinding Key="Space" Command="{Binding PressPauseCommand}"/>
+        <KeyBinding 
+            Key="Space" Command="{Binding PressPauseCommand}"     
+         />
     </Window.InputBindings>
 
     <Grid>
@@ -37,7 +39,7 @@
                 <KeyBinding 
                       Command="{Binding DoActionClickCommand}"
                       Key="Return"
-                      
+                    
                  />
             </TextBox.InputBindings>
 
