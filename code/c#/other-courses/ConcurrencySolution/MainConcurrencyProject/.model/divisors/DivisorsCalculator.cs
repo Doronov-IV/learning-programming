@@ -107,7 +107,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Рассчитать число с максимальным числом делителей.
         /// </summary>
-        public void CalculateDivisorsAsync()
+        public async void CalculateDivisorsAsync()
         {
             FillNumbersArray();
 
@@ -156,10 +156,7 @@ namespace MainConcurrencyProject.Model.Divisors
                 tasks[i].Start();
             }
 
-            for (int i = 0; i < _amountOfThreads; i++)
-            {
-                tasks[i].Wait();
-            }
+            Task.WhenAll(tasks).Wait();
             AsynchronousCalculator.stopwatch.Stop();
 
 
