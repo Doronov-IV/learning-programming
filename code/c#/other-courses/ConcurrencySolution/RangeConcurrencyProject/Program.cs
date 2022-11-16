@@ -12,12 +12,15 @@ namespace Range
 
         public static async Task Main(string[] args)
         {
-            Task<int> primeBumberTask = Task.Run(() =>
-            Enumerable.Range(2, 20000000).Count(n =>
-            Enumerable.Range(2, (int)Math.Sqrt(n) - 1).All(i => n % i > 0)));
+            Task<int> primeNumberTask = Task.Run (() =>
+            Enumerable.Range (2, 9000000).Count(n =>
+            Enumerable.Range (2, (int)Math.Sqrt(n) - 1).All(i => n % i > 0)));
 
-            Console.WriteLine("Task running.....");
-            Console.WriteLine("The answer is " + primeBumberTask.Result);
+            await primeNumberTask.ContinueWith(antecedent =>
+            {
+                int result = antecedent.Result;
+                Console.WriteLine(result);
+            });
         }
 
 
