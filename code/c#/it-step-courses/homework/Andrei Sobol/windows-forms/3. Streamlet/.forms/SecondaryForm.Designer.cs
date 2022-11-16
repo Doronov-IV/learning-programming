@@ -35,9 +35,8 @@
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.MainOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.TextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,10 +55,10 @@
             this.MainRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainRichTextBox.Location = new System.Drawing.Point(12, 64);
+            this.MainRichTextBox.Location = new System.Drawing.Point(12, 26);
             this.MainRichTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MainRichTextBox.Name = "MainRichTextBox";
-            this.MainRichTextBox.Size = new System.Drawing.Size(1114, 375);
+            this.MainRichTextBox.Size = new System.Drawing.Size(1114, 413);
             this.MainRichTextBox.TabIndex = 1;
             this.MainRichTextBox.Text = "";
             // 
@@ -67,9 +66,7 @@
             // 
             this.TextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.TextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.видToolStripMenuItem,
-            this.настройкиToolStripMenuItem});
+            this.файлToolStripMenuItem});
             this.TextMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.TextMenuStrip.Name = "TextMenuStrip";
             this.TextMenuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -93,6 +90,7 @@
             this.открытьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.открытьToolStripMenuItem.Text = "Open";
+            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.OnOpenFileClick);
             // 
             // сохранитьToolStripMenuItem
             // 
@@ -111,17 +109,9 @@
             this.сохранитьКакToolStripMenuItem.Text = "Save as";
             this.сохранитьКакToolStripMenuItem.Click += new System.EventHandler(this.OnSaveAsClick);
             // 
-            // видToolStripMenuItem
+            // MainOpenFileDialog
             // 
-            this.видToolStripMenuItem.Name = "видToolStripMenuItem";
-            this.видToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.видToolStripMenuItem.Text = "View";
-            // 
-            // настройкиToolStripMenuItem
-            // 
-            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.настройкиToolStripMenuItem.Text = "Settings";
+            this.MainOpenFileDialog.FileName = "openFileDialog1";
             // 
             // SecondaryForm
             // 
@@ -134,7 +124,7 @@
             this.MainMenuStrip = this.TextMenuStrip;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SecondaryForm";
-            this.Text = "Edit File Text";
+            this.Text = "edit text file";
             this.Load += new System.EventHandler(this.OnSecondaryFormLoad);
             this.TextMenuStrip.ResumeLayout(false);
             this.TextMenuStrip.PerformLayout();
@@ -152,8 +142,7 @@
         private ToolStripMenuItem открытьToolStripMenuItem;
         private ToolStripMenuItem сохранитьToolStripMenuItem;
         private ToolStripMenuItem сохранитьКакToolStripMenuItem;
-        private ToolStripMenuItem видToolStripMenuItem;
-        private ToolStripMenuItem настройкиToolStripMenuItem;
         private SaveFileDialog SaveAsFileDialog;
+        private OpenFileDialog MainOpenFileDialog;
     }
 }

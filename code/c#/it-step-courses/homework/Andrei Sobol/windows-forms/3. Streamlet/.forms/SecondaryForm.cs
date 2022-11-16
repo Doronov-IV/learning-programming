@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,12 +89,37 @@ namespace Streamlet.Forms
         }
 
 
+        /// <summary>
+        /// Handle Open button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке "Open".
+        /// </summary>
+        private void OnOpenFileClick(object sender, EventArgs e)
+        {
+            if (MainOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                _CurrentFileInfo = new(MainOpenFileDialog.FileName);
+
+                LoadFile();
+            }
+        }
+
+
         #endregion HANDLERS
 
 
 
 
         #region CONSTRUCTION
+
+
+        private void LoadFile()
+        {
+            MainRichTextBox.Text = File.ReadAllText(_CurrentFileInfo.FullName);
+
+            this.Text = _CurrentFileInfo.Name + "- editing";
+            LowerStatusStrip.Items.Add(_CurrentFileInfo.FullName);
+        }
 
 
         /// <summary>
@@ -106,6 +132,10 @@ namespace Streamlet.Forms
             InitializeComponent();
 
             SaveAsFileDialog.Filter = ".txt|*.txt";
+            MainOpenFileDialog.Filter = ".txt|*.txt";
+
+            SaveAsFileDialog.FileName = String.Empty;
+            MainOpenFileDialog.FileName = String.Empty;
         }
 
 
@@ -116,8 +146,8 @@ namespace Streamlet.Forms
         /// </summary>
         public SecondaryForm(FileInfo fileInfo) : this()
         {
-            MainRichTextBox.Text = File.ReadAllText(fileInfo.FullName);
             _CurrentFileInfo = fileInfo;
+            LoadFile();
         }
 
 
@@ -128,12 +158,7 @@ namespace Streamlet.Forms
         /// </summary>
         private void OnSecondaryFormLoad(object sender, EventArgs e)
         {
-
         }
-
-
-
-
 
 
         #endregion CONSTRUCTION
