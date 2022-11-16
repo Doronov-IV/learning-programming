@@ -12,17 +12,7 @@ namespace Range
 
         public static async Task Main(string[] args)
         {
-            var tcs = new TaskCompletionSource<int>();
-
-            new Thread (() =>
-            {
-                Thread.Sleep (3000);
-                tcs.SetResult (42);
-            })
-            { IsBackground = true }.Start ();
-
-            Task<int> task = tcs.Task;
-            Console.WriteLine (task.Result);
+            await Task.Run(() => WaitThreeSecAsync()).ContinueWith((a) => Console.WriteLine("Done!"));
         }
 
 
