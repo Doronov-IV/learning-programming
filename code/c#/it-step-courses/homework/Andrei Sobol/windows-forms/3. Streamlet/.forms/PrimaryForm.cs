@@ -312,21 +312,31 @@ namespace Streamlet.Forms
                 }
                 else
                 {
-                    foreach (DirectoryInfo generalItem in currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.GetDirectories())
+                    try
                     {
-                        foreach (ListViewItem selectedItem in currentExplorerWindow?.ExplorerListView?.SelectedItems)
-                        {
-                            bDebugFlag = generalItem.Name.Equals(selectedItem.Text);
+                        var tempNullCheckRef = currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory?.GetDirectories();
 
-                            if (bDebugFlag)
+                        if (tempNullCheckRef is not null)
+                        {
+
+                            foreach (DirectoryInfo generalItem in currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory?.GetDirectories())
                             {
-                                currentExplorerWindow?.ExplorerFilePointer.NextDirectory(generalItem);
-                                currentExplorerWindow.ExplorerAddressBox.Text = currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName;
-                                ShowDirectoryContents(currentExplorerWindow);
-                                break;
+                                foreach (ListViewItem selectedItem in currentExplorerWindow?.ExplorerListView?.SelectedItems)
+                                {
+                                    bDebugFlag = generalItem.Name.Equals(selectedItem.Text);
+
+                                    if (bDebugFlag)
+                                    {
+                                        currentExplorerWindow?.ExplorerFilePointer.NextDirectory(generalItem);
+                                        currentExplorerWindow.ExplorerAddressBox.Text = currentExplorerWindow?.ExplorerFilePointer?.CurrentDirectory.FullName;
+                                        ShowDirectoryContents(currentExplorerWindow);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
+                    catch { }
                 }
             }
             catch (System.UnauthorizedAccessException ex)
