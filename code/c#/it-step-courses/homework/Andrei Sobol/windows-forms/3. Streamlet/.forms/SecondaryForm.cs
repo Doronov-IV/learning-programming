@@ -113,6 +113,11 @@ namespace Streamlet.Forms
         #region CONSTRUCTION
 
 
+        /// <summary>
+        /// Load current file contents to the screen.
+        /// <br />
+        /// Загрузить содержимое текущего файла на экран.
+        /// </summary>
         private void LoadFile()
         {
             MainRichTextBox.Text = File.ReadAllText(_CurrentFileInfo.FullName);
