@@ -116,7 +116,7 @@ namespace MainConcurrencyProject.Model.Divisors
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
 
             Thread[] threads = new Thread[_amountOfThreads];
-            Task<(long divisorsCounter, long maxDivisorsNumber)>[] tasks = new Task<(long divisorsCounter, long maxDivisorsNumber)>[_amountOfThreads];
+            Task<(long divisorsCounter, long numberItself)>[] tasks = new Task<(long, long)>[_amountOfThreads];
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
@@ -150,19 +150,18 @@ namespace MainConcurrencyProject.Model.Divisors
                         );
             }
 
-            List<(long divisorsCounter, long maxDivisorsNumber)> tasksResult = new();
+            List<(long divisorsCounter, long numberItself)> tasksResult = new();
 
-            foreach (Task<(long divisorsCounter, long maxDivisorsNumber)> task in tasks)
+            foreach (Task<(long, long)> task in tasks)
             {
                 var result = task.GetAwaiter().GetResult();
                 tasksResult.Add(result);
             }
 
-            // getting first fit value from the result list;
-            long tempRes = tasksResult.Max(t => t.divisorsCounter);                         // max divisors count;
-            var resPair = tasksResult.FirstOrDefault(p => p.divisorsCounter == tempRes);    // the first pair with this value;
 
-            _localNumberValue = resPair.maxDivisorsNumber;
+            var resPair = tasksResult.FirstOrDefault(p => p.divisorsCounter == tasksResult.Max(t => t.divisorsCounter));    // the first pair with the max divisors count;
+
+            _localNumberValue = resPair.numberItself;
             _localDivisorsValue= resPair.divisorsCounter;
 
             AsynchronousCalculator.stopwatch.Stop();
