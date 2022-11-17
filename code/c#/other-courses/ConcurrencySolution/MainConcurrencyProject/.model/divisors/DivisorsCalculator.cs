@@ -1,5 +1,7 @@
 ﻿using MainConcurrencyProject.Model.Calculator;
 using MainConcurrencyProject.Model.Calculator.PiNumber;
+using MainConcurrencyProject.ViewModel;
+using System.Globalization;
 
 namespace MainConcurrencyProject.Model.Divisors
 {
@@ -109,7 +111,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// </summary>
         public async Task CalculateDivisorsAsync()
         {
-            FillNumbersArray();
+            FillNumbersArrayAsync().Wait();
 
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
 
@@ -207,8 +209,6 @@ namespace MainConcurrencyProject.Model.Divisors
 
             await Task.Run(() =>
             {
-                var a = AsynchronousCalculator.maunalResetHandler;
-
                 maxDivisorsPair = (0, 0);
                 (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
 
@@ -259,17 +259,16 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Заполнить массив "_numbers" числами типа long.
         /// </summary>
-        private void FillNumbersArray()
+        private async Task FillNumbersArrayAsync()
         {
             _numbers = new long[_valueSet.CielingNumber];
 
-            for (long i = 0, iSize = _numbers.Length; i < iSize; i++)
+            Parallel.For(0, _valueSet.CielingNumber, (i) => 
             {
-                AsynchronousCalculator.maunalResetHandler.WaitOne();
-                _numbers[i] = i + 1;
-            }
+                _numbers[i++] = i;
+            });
 
-            _numbers = _numbers.OrderBy(x => AsynchronousCalculator.random.Next()).ToArray();
+            _numbers = _numbers.AsParallel().OrderBy(x => AsynchronousCalculator.random.Next()).ToArray();
         }
 
 

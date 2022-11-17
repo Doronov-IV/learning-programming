@@ -19,7 +19,7 @@ namespace MainConcurrencyProject.ViewModel
         /// <br />
         /// Локер для многопоточного использования разделяемых ресурсов.
         /// </summary>
-        private static object _locker;
+        public static object locker = new();
 
 
 
@@ -202,7 +202,7 @@ namespace MainConcurrencyProject.ViewModel
             DoActionClickCommand = new(OnDoActionButtonClickAsync);
             PressPauseCommand = new(OnPauseKeyButtonPressed);
             _largeMessage = string.Empty;
-            _locker = new();
+            locker = new();
             //_autoResetHandler = new(initialState: true);
             _mutex = new();
 
