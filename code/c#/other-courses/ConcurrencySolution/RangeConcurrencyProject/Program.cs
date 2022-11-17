@@ -12,13 +12,14 @@ namespace Range
 
         public static async Task Main(string[] args)
         {
+            await WaitThreeSecAsync();
             await Task.Run(() => DisplayPrimesCount());
         }
 
 
-        private static void WaitThreeSecAsync()
+        private static async Task WaitThreeSecAsync()
         {
-            Task.Delay(3000).Wait();
+            await Task.Delay(3000);
         }
 
 
