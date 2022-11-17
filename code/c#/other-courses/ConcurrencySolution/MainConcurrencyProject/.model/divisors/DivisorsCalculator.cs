@@ -12,59 +12,34 @@ namespace MainConcurrencyProject.Model.Divisors
         #region STATE
 
 
-        /// <summary>
-        /// Default value set.
-        /// <br />
-        /// Набор значений по умолчанию.
-        /// </summary>
-        public static readonly DivisorsValueSet DefaultValueSet = new(cielingNumber: 4e7);
 
-
-        /// <inheritdoc cref="ValueSet"/>
-        private DivisorsValueSet _valueSet;
-
-
-        /// <inheritdoc cref="AmountOfThreads"/>
-        private int _amountOfThreads;
-
-
-        
-
-
+        //
 
 
 
         /// <summary>
-        /// The set of required values.
+        /// Raise progress bar value by the specific value.
         /// <br />
-        /// Набор необходимых значений.
+        /// Увеличить значение програссбара на определенное значение.
         /// </summary>
-        public DivisorsValueSet ValueSet
-        {
-            get { return _valueSet; }
-            set 
-            { 
-                _valueSet = value; 
-            }
-        }
+        /// <param name="incrementValue">
+        /// The specific value to add to the pb's one.
+        /// <br />
+        /// Конкретное значение, чтобы добавить к показателю прогрессбара.
+        /// </param>
+        public delegate void ProgressbarIncrementValueDelegate(long incrementValue);
 
 
         /// <summary>
-        /// The amount of threads chosen by user.
+        /// Add specific value to the progressbar's one.
         /// <br />
-        /// Кол-во потоков, выбранное пользователем.
+        /// Добавить определённое значение к значению прогрессбара.
         /// </summary>
-        public int AmountOfThreads
-        {
-            get { return _amountOfThreads; }
-            set 
-            {
-                _amountOfThreads = value;
-            }
-        }
+        public event ProgressbarIncrementValueDelegate PassProgressbarValueIncrement;
 
 
 
+        //
 
 
 
@@ -73,7 +48,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Максимальный показатель делителей.
         /// </summary>
-        long _localDivisorsValue;
+        private long _localDivisorsValue;
 
 
         /// <summary>
@@ -81,7 +56,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Число для максимального показателя делителей.
         /// </summary>
-        long _localNumberValue;
+        private long _localNumberValue;
 
 
         /// <summary>
@@ -93,8 +68,64 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
+        //
+
+
+
+        /// <summary>
+        /// Default value set.
+        /// <br />
+        /// Набор значений по умолчанию.
+        /// </summary>
+        public static readonly DivisorsValueSet DefaultValueSet = new(cielingNumber: 2e8);
+
+
+        /// <inheritdoc cref="ValueSet"/>
+        private DivisorsValueSet valueSet;
+
+
+        /// <inheritdoc cref="AmountOfThreads"/>
+        private int amountOfThreads;
+
+
+        
+        //
+
+
+
+        /// <summary>
+        /// The set of required values.
+        /// <br />
+        /// Набор необходимых значений.
+        /// </summary>
+        public DivisorsValueSet ValueSet
+        {
+            get { return valueSet; }
+            set 
+            { 
+                valueSet = value; 
+            }
+        }
+
+
+        /// <summary>
+        /// The amount of threads chosen by user.
+        /// <br />
+        /// Кол-во потоков, выбранное пользователем.
+        /// </summary>
+        public int AmountOfThreads
+        {
+            get { return amountOfThreads; }
+            set 
+            {
+                amountOfThreads = value;
+            }
+        }
+
+
 
         #endregion STATE
+
 
 
 
@@ -113,33 +144,31 @@ namespace MainConcurrencyProject.Model.Divisors
         {
             FillNumbersArrayAsync();
 
-            (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
+            (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[amountOfThreads];
 
-            Thread[] threads = new Thread[_amountOfThreads];
-            Task<(long divisorsCounter, long numberItself)>[] tasks = new Task<(long, long)>[_amountOfThreads];
+            Thread[] threads = new Thread[amountOfThreads];
+            Task<(long divisorsCounter, long numberItself)>[] tasks = new Task<(long, long)>[amountOfThreads];
 
-            for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
+            for (int i = 0, iSize = amountOfThreads; i < iSize; i++)
             {
-                startEndIndexPairs[i] = new ((_valueSet.CielingNumber / _amountOfThreads) * i, (_valueSet.CielingNumber / _amountOfThreads) * (i + 1));
+                startEndIndexPairs[i] = new ((valueSet.CielingNumber / amountOfThreads) * i, (valueSet.CielingNumber / amountOfThreads) * (i + 1));
             }
 
 
             /*
-            for (int i = _amountOfThreads-1, iSize = 0; i > iSize; --i)
+            for (int i = amountOfThreads-1, iSize = 0; i > iSize; --i)
             {
-                for (int j = 0; j < _amountOfThreads - i; j++)
+                for (int j = 0; j < amountOfThreads - i; j++)
                 {
-                    startEndIndexPairs[i].startIndex += (_valueSet.CielingNumber / _amountOfThreads) / (_amountOfThreads/2);
-                    startEndIndexPairs[i - 1].endIndex += (_valueSet.CielingNumber / _amountOfThreads) / (_amountOfThreads/2);
+                    startEndIndexPairs[i].startIndex += (valueSet.CielingNumber / amountOfThreads) / (amountOfThreads/2);
+                    startEndIndexPairs[i - 1].endIndex += (valueSet.CielingNumber / amountOfThreads) / (amountOfThreads/2);
                 }
             }
             */
-
-
             
             AsynchronousCalculator.stopwatch = new();
             AsynchronousCalculator.stopwatch.Start();
-            for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
+            for (int i = 0, iSize = amountOfThreads; i < iSize; i++)
             {
                 (long startIndexClosureCopy, long endIndexClosureCopy) currentCopy = startEndIndexPairs[i];
 
@@ -168,8 +197,8 @@ namespace MainConcurrencyProject.Model.Divisors
             
 
 
-            _valueSet.ResultNumber = _localNumberValue;
-            _valueSet.ResultNumberDivisorsCount = _localDivisorsValue;
+            valueSet.ResultNumber = _localNumberValue;
+            valueSet.ResultNumberDivisorsCount = _localDivisorsValue;
             _numbers = null;
             // just in case;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
@@ -178,6 +207,7 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
         #endregion API
+
 
 
 
@@ -210,18 +240,17 @@ namespace MainConcurrencyProject.Model.Divisors
         private async Task<(long divisorsCount, long divisorsNumber)> ProcessBunchOfNumbersFastAsync(long[] numbersArray, long startIndex, long endIndex)
         {
             (long maxDivisorsCount, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
+            var startIndexCopy = startIndex;
+            var endIndexCopy = endIndex;
 
             await Task.Run(() =>
             {
                 maxDivisorsPair = (0, 0);
                 (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
 
-                var startIndexCopy = startIndex;
-                var endIndexCopy = endIndex;
-
-                if (endIndex > _valueSet.CielingNumber)
+                if (endIndex > valueSet.CielingNumber)
                 {
-                    endIndexCopy = _valueSet.CielingNumber;
+                    endIndexCopy = valueSet.CielingNumber;
                 }
 
                 for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
@@ -245,6 +274,8 @@ namespace MainConcurrencyProject.Model.Divisors
                         }
                     }
 
+                    PassProgressbarValueIncrement?.Invoke(1);
+
                     if (maxDivisorsPair.maxDivisorsCount < currentPair.nCurrentNumberDivisorsCounter)
                     {
                         maxDivisorsPair = currentPair;
@@ -265,9 +296,9 @@ namespace MainConcurrencyProject.Model.Divisors
         /// </summary>
         private void FillNumbersArrayAsync()
         {
-            _numbers = new long[_valueSet.CielingNumber];
+            _numbers = new long[valueSet.CielingNumber];
 
-            Parallel.For(0, _valueSet.CielingNumber, (i) => 
+            Parallel.For(0, valueSet.CielingNumber, (i) => 
             {
                 _numbers[i++] = i;
             });
@@ -276,8 +307,8 @@ namespace MainConcurrencyProject.Model.Divisors
         }
 
 
-
         #endregion LOGIC
+
 
 
 
@@ -299,8 +330,8 @@ namespace MainConcurrencyProject.Model.Divisors
         /// </param>
         public DivisorsCalculator(int amountOfThreads)
         {
-            _amountOfThreads = amountOfThreads;
-            _valueSet = DefaultValueSet;
+            this.amountOfThreads = amountOfThreads;
+            valueSet = DefaultValueSet;
         }
 
 
@@ -320,10 +351,9 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Набор значений.
         /// </param>
-        public DivisorsCalculator(DivisorsValueSet valueSet, int amountOfThreads)
+        public DivisorsCalculator(DivisorsValueSet valueSet, int amountOfThreads) : this(amountOfThreads)
         {
-            _amountOfThreads = amountOfThreads;
-            _valueSet = valueSet;
+            this.valueSet = valueSet;
         }
 
 

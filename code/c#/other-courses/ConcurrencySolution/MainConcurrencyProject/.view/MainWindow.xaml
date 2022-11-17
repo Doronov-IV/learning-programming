@@ -106,5 +106,16 @@
          />
 
 
+
+        <ProgressBar 
+            Grid.Column="1" Height="9" 
+            Margin="10,36,10,0" Grid.Row="1" VerticalAlignment="Top"
+            Maximum="{Binding ProgressBarMaximum}" Minimum="0" 
+            Value="{Binding ProgressValue}"
+            Visibility="{Binding Path=ProcessingStatus.HasStarted, 
+            Converter={StaticResource BooleanToVisibilityConverter}}"
+         />
+
+
     </Grid>
 </Window>

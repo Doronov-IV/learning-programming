@@ -1,4 +1,5 @@
 ﻿using MainConcurrencyProject.Model.Calculator;
+using MainConcurrencyProject.Model.Divisors;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -29,7 +30,11 @@ namespace MainConcurrencyProject.ViewModel
             Keyboard.ClearFocus();
             (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
             AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
+            calculator.PassProgressbarValueIncrement += OnProgressBarValueIncreased;
+            ProgressBarMaximum = DivisorsCalculator.DefaultValueSet.CielingNumber;
+            ProgressValue = 0;
             await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
+            ProgressValue = ProgressBarMaximum;
 
             ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
             elapsedTime = tuple.timeElapsed.ToString();
@@ -69,6 +74,18 @@ namespace MainConcurrencyProject.ViewModel
 
 
 
+        /// <summary>
+        /// Handle progressbar value increased event.
+        /// <br />
+        /// Обработать событие увеличения значения progressbar'а.
+        /// </summary>
+        private void OnProgressBarValueIncreased(long value)
+        {
+            ProgressValue += value;
+        }
+
+
+
         #endregion HANDLERS
 
 
@@ -76,6 +93,7 @@ namespace MainConcurrencyProject.ViewModel
 
 
         #region IO
+
 
 
         /// <summary>
@@ -92,6 +110,7 @@ namespace MainConcurrencyProject.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() => { OutputCollection.Add(message); } );
         }
+
 
 
         #endregion IO

@@ -17,6 +17,39 @@ namespace MainConcurrencyProject.Model.Calculator
         #region STATE
 
 
+
+
+        /// <summary>
+        /// Raise progress bar value by the specific one.
+        /// <br />
+        /// Увеличить значение програссбара на определенное значение.
+        /// </summary>
+        /// <param name="incrementValue">
+        /// The specific value to add to the pb's one.
+        /// <br />
+        /// Конкретное значение, чтобы добавить к показателю прогрессбара.
+        /// </param>
+        public delegate void ProgressbarIncrementValueDelegate(long incrementValue);
+
+
+
+        /// <summary>
+        /// Add specific value to the progressbar's one.
+        /// <br />
+        /// Добавить определённое значение к значению прогрессбара.
+        /// </summary>
+        public event ProgressbarIncrementValueDelegate PassProgressbarValueIncrement;
+
+
+
+
+
+
+        /// <summary>
+        /// An instance of a calculator, looking for the number with most amount of divisors in specific span.
+        /// <br />
+        /// Экземпляр калькулятора, который занимается поиском числа с наибольшим кол-вом делителей в заданном промежутке.
+        /// </summary>
         private DivisorsCalculator _divisorsCalculator;
 
 
@@ -43,6 +76,7 @@ namespace MainConcurrencyProject.Model.Calculator
         private int _threadCount;
 
 
+
         /// <summary>
         /// Amout of threads user chooses to proceed with.
         /// <br />
@@ -59,6 +93,7 @@ namespace MainConcurrencyProject.Model.Calculator
         }
 
 
+
         /// <summary>
         /// An instance of the System.Random class.
         /// <br />
@@ -67,12 +102,14 @@ namespace MainConcurrencyProject.Model.Calculator
         public static Random random = new();
 
 
+
         /// <summary>
         /// A manual reset event instance for lockers demo.
         /// <br />
         /// Экземпляр ManualResetEvent для демки локеров.
         /// </summary>
         public static ManualResetEvent maunalResetHandler = new(initialState: true);
+
 
 
         #endregion STATE
@@ -104,6 +141,16 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
 
+        /// <summary>
+        /// Calculate divisors.
+        /// <br />
+        /// Вычислить делители.
+        /// </summary>
+        /// <returns>
+        /// A tuple of two values; divisorsAmount - the quantity of divisors found, resultNumber - the number for which the amount of divisors was found, time elapsed - time spent for calculations.
+        /// <br />
+        /// Кортеж из двух значений; "divisorsAmount" - кол-во найденых делителей, "resultNumber" - число, для которого нашли делители, "timeElapsed" - время, затраченное на вычисления.
+        /// </returns>
         public (long divisorsAmount, long resultNumber, long timeElapsed) CalculateDivisors()
         {
             _divisorsCalculator.CalculateDivisorsAsync();
@@ -114,6 +161,22 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
         #endregion API
+
+
+
+
+        #region LOGIC
+
+
+
+        private void OnProgressbarValuePassed(long value)
+        {
+            PassProgressbarValueIncrement?.Invoke(value);
+        }
+
+
+
+        #endregion LOGIC
 
 
 
@@ -137,6 +200,7 @@ namespace MainConcurrencyProject.Model.Calculator
         {
             _piCalculator = new(amountOfThreads: currentAmountOfThreads);
             _divisorsCalculator = new(amountOfThreads: currentAmountOfThreads);
+            _divisorsCalculator.PassProgressbarValueIncrement += OnProgressbarValuePassed;
         }
 
 

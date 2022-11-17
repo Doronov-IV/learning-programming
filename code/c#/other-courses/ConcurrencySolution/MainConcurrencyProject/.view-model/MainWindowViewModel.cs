@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using MainConcurrencyProject.Model.Calculator;
+using MainConcurrencyProject.Model.Divisors;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -63,6 +65,30 @@ namespace MainConcurrencyProject.ViewModel
 
         private string _elapsedTime;
 
+
+        private long _progressBarMaximum;
+
+        public long ProgressBarMaximum
+        {
+            get { return _progressBarMaximum; }
+            set
+            {
+                _progressBarMaximum = value;
+                OnPropertyChanged(nameof(ProgressBarMaximum));
+            }
+        }
+
+        private long _progressValue;
+
+        public long ProgressValue
+        {
+            get { return _progressValue; }
+            set
+            {
+                _progressValue = value;
+                OnPropertyChanged(nameof(ProgressValue));
+            }
+        }
 
 
         public string elapsedTime
