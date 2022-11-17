@@ -107,14 +107,14 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Рассчитать число с максимальным числом делителей.
         /// </summary>
-        public async void CalculateDivisorsAsync()
+        public async Task CalculateDivisorsAsync()
         {
             FillNumbersArray();
 
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
 
             Thread[] threads = new Thread[_amountOfThreads];
-            Task[] tasks = new Task[_amountOfThreads];
+            Task<(long divisorsCounter, long maxDivisorsNumber)>[] tasks = new Task<(long divisorsCounter, long maxDivisorsNumber)>[_amountOfThreads];
 
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
@@ -134,30 +134,32 @@ namespace MainConcurrencyProject.Model.Divisors
             */
 
 
+            
+            AsynchronousCalculator.stopwatch = new();
+            AsynchronousCalculator.stopwatch.Start();
             for (int i = 0, iSize = _amountOfThreads; i < iSize; i++)
             {
                 (long startIndexClosureCopy, long endIndexClosureCopy) currentCopy = startEndIndexPairs[i];
 
-                tasks[i] = new Task(() =>
-                {
-                    ProcessBunchOfNumbersFast(
+                tasks[i] = ProcessBunchOfNumbersFastAsync (
                         numbersArray: _numbers,
                         startIndex: currentCopy.startIndexClosureCopy,
                         endIndex: currentCopy.endIndexClosureCopy
                         );
-                });
             }
 
+            List<(long divisorsCounter, long maxDivisorsNumber)> tasksResult = new();
 
-            AsynchronousCalculator.stopwatch = new();
-            AsynchronousCalculator.stopwatch.Start();
-            for (int i = 0; i < _amountOfThreads; i++)
+            foreach (Task<(long divisorsCounter, long maxDivisorsNumber)> task in tasks)
             {
-                tasks[i].Start();
+                var result = task.GetAwaiter().GetResult();
+                tasksResult.Add(result);
             }
 
-            Task.WhenAll(tasks).Wait();
+            _localNumberValue = tasksResult.Max(t => t.maxDivisorsNumber);
+            _localDivisorsValue = tasksResult.Max(t => t.divisorsCounter);
             AsynchronousCalculator.stopwatch.Stop();
+            
 
 
             _valueSet.ResultNumber = _localNumberValue;
@@ -199,53 +201,55 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Конечный индекс.
         /// </param>
-        private void ProcessBunchOfNumbersFast(long[] numbersArray, long startIndex, long endIndex)
+        private async Task<(long divisorsCount, long divisorsNumber)> ProcessBunchOfNumbersFastAsync(long[] numbersArray, long startIndex, long endIndex)
         {
-            var a = AsynchronousCalculator.maunalResetHandler;
+            (long maxDivisorsCount, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
 
-            (long nMaxDivisorsCounter, long maxDivisorsNumber) maxDivisorsPair = (0, 0);
-            (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
-
-            var startIndexCopy = startIndex;
-            var endIndexCopy = endIndex;
-
-            if (endIndex > _valueSet.CielingNumber)
+            await Task.Run(() =>
             {
-                endIndexCopy = _valueSet.CielingNumber;
-            } 
+                var a = AsynchronousCalculator.maunalResetHandler;
 
-            for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
-            {
-                AsynchronousCalculator.maunalResetHandler.WaitOne();
+                maxDivisorsPair = (0, 0);
+                (long nCurrentNumberDivisorsCounter, long currentNumber) currentPair = (0, 0);
 
-                currentPair = (0, numbersArray[j]);
-                
-                for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
+                var startIndexCopy = startIndex;
+                var endIndexCopy = endIndex;
+
+                if (endIndex > _valueSet.CielingNumber)
                 {
-                    if (numbersArray[j] % i == 0)
+                    endIndexCopy = _valueSet.CielingNumber;
+                }
+
+                for (long j = startIndexCopy, jSize = endIndexCopy; j < jSize; j++)
+                {
+                    AsynchronousCalculator.maunalResetHandler.WaitOne();
+
+                    currentPair = (0, numbersArray[j]);
+
+                    for (long i = 1, iSize = (long)Math.Sqrt(numbersArray[j]); i < iSize; i++)
                     {
-                        if (numbersArray[j] % i == i)
+                        if (numbersArray[j] % i == 0)
                         {
-                            currentPair.nCurrentNumberDivisorsCounter++;
+                            if (numbersArray[j] % i == i)
+                            {
+                                currentPair.nCurrentNumberDivisorsCounter++;
+                            }
+                            else
+                            {
+                                currentPair.nCurrentNumberDivisorsCounter += 2;
+                            }
                         }
-                        else
-                        {
-                            currentPair.nCurrentNumberDivisorsCounter+=2;
-                        }
+                    }
+
+                    if (maxDivisorsPair.maxDivisorsCount < currentPair.nCurrentNumberDivisorsCounter)
+                    {
+                        maxDivisorsPair = currentPair;
                     }
                 }
 
-                if (maxDivisorsPair.nMaxDivisorsCounter < currentPair.nCurrentNumberDivisorsCounter)
-                {
-                    maxDivisorsPair = currentPair;
-                }
-            }
+            });
 
-            if (_localDivisorsValue < maxDivisorsPair.nMaxDivisorsCounter)
-            {
-                _localNumberValue = maxDivisorsPair.maxDivisorsNumber;
-                _localDivisorsValue = maxDivisorsPair.nMaxDivisorsCounter;
-            }
+                return maxDivisorsPair;
         }
 
 
