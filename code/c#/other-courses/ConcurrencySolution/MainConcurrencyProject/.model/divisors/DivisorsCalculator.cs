@@ -111,7 +111,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// </summary>
         public async Task CalculateDivisorsAsync()
         {
-            FillNumbersArrayAsync().Wait();
+            FillNumbersArrayAsync();
 
             (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[_amountOfThreads];
 
@@ -158,8 +158,13 @@ namespace MainConcurrencyProject.Model.Divisors
                 tasksResult.Add(result);
             }
 
-            _localNumberValue = tasksResult.Max(t => t.maxDivisorsNumber);
-            _localDivisorsValue = tasksResult.Max(t => t.divisorsCounter);
+            // getting first fit value from the result list;
+            long tempRes = tasksResult.Max(t => t.divisorsCounter);                         // max divisors count;
+            var resPair = tasksResult.FirstOrDefault(p => p.divisorsCounter == tempRes);    // the first pair with this value;
+
+            _localNumberValue = resPair.maxDivisorsNumber;
+            _localDivisorsValue= resPair.divisorsCounter;
+
             AsynchronousCalculator.stopwatch.Stop();
             
 
@@ -259,7 +264,7 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <br />
         /// Заполнить массив "_numbers" числами типа long.
         /// </summary>
-        private async Task FillNumbersArrayAsync()
+        private void FillNumbersArrayAsync()
         {
             _numbers = new long[_valueSet.CielingNumber];
 
