@@ -1,5 +1,7 @@
 ﻿using MainConcurrencyProject.Model.Calculator;
+using MainConcurrencyProject.Model.Calculator.PiNumber;
 using MainConcurrencyProject.Model.Divisors;
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -26,27 +28,7 @@ namespace MainConcurrencyProject.ViewModel
         /// </summary>
         private async void OnDoActionButtonClickAsync()
         {
-            ProcessingStatus.ToggleCompletion();
-            Keyboard.ClearFocus();
-            (long divisorsNumber , long resultNumber, long timeElapsed) tuple = (0, 0, 0); 
-            AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
-            calculator.PassProgressbarValueIncrement += OnProgressBarValueIncreased;
-            ProgressBarMaximum = DivisorsCalculator.DefaultValueSet.CielingNumber;
-            ProgressValue = 0;
-            await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
-            ProgressValue = ProgressBarMaximum;
-
-            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
-            elapsedTime = tuple.timeElapsed.ToString();
-
-            string numberWithDots = String.Format("{0:#,0}", tuple.resultNumber);
-            string outputString = $"The number is \"{numberWithDots}\", with total devisors number {tuple.divisorsNumber}, time elapsed {tuple.timeElapsed} ms.";
-
-            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
-            elapsedTime = tuple.timeElapsed.ToString();
-
-            SendOutput(outputString);
-            ProcessingStatus.ToggleCompletion();
+            await CalculateDivisorsAsync();
         }
 
 
@@ -87,6 +69,68 @@ namespace MainConcurrencyProject.ViewModel
 
 
         #endregion HANDLERS
+
+
+
+
+
+        #region CALCULATOR TASKS
+
+
+        private async Task CalculateDivisorsAsync()
+        {
+            ProcessingStatus.ToggleCompletion();
+            Keyboard.ClearFocus();
+            (long divisorsNumber, long resultNumber, double timeElapsed) tuple = (0, 0, 0);
+            AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
+            calculator.PassProgressbarValueIncrement += OnProgressBarValueIncreased;
+            ProgressBarMaximum = DivisorsCalculator.DefaultValueSet.CielingNumber;
+            ProgressValue = 0;
+            await Task.Run(() => { tuple = calculator.CalculateDivisors(); });
+            ProgressValue = ProgressBarMaximum;
+
+            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
+            elapsedTime = tuple.timeElapsed.ToString();
+
+            string numberWithDots = String.Format("{0:#,0}", tuple.resultNumber);
+            string outputString = $"The number is \"{numberWithDots}\", with total devisors number {tuple.divisorsNumber}, time elapsed {tuple.timeElapsed} ms.";
+
+            ResultNumber = tuple.resultNumber.ToString() + "  " + tuple.divisorsNumber.ToString();
+            elapsedTime = tuple.timeElapsed.ToString();
+
+            SendOutput(outputString);
+            ProcessingStatus.ToggleCompletion();
+        }
+
+
+
+        private async Task CalculateMonteCarloAsync()
+        {
+            ProcessingStatus.ToggleCompletion();
+            Keyboard.ClearFocus();
+
+            (double resultNumber, double timeElapsed) tuple = new();
+
+            AsynchronousCalculator calculator = new(currentAmountOfThreads: _threadCount);
+            calculator.PassProgressbarValueIncrement += OnProgressBarValueIncreased;
+            ProgressBarMaximum = PiNumberCalculator.DefaultValueSet.AmountOfPoints;
+            ProgressValue = 0;
+
+            await Task.Run(() => { tuple = calculator.CalculatePiNumber(); });
+            ProgressValue = ProgressBarMaximum;
+
+            string outputString = $"The number is \"{tuple.resultNumber}\", time elapsed {tuple.timeElapsed} ms.";
+
+            ResultNumber = tuple.resultNumber.ToString();
+            elapsedTime = tuple.timeElapsed.ToString();
+
+            SendOutput(outputString);
+            ProcessingStatus.ToggleCompletion();
+
+        }
+
+
+        #endregion CALCULATOR TASKS
 
 
 

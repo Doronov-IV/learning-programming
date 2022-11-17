@@ -73,7 +73,7 @@ namespace MainConcurrencyProject.Model.Calculator
 
 
         /// <inheritdoc cref="ThreadCount"/>
-        private int _threadCount;
+        private static int threadCount;
 
 
 
@@ -82,13 +82,13 @@ namespace MainConcurrencyProject.Model.Calculator
         /// <br />
         /// Кол-во потоков, которое выбирает пользователь.
         /// </summary>
-        public int ThreadCount
+        public static int ThreadCount
         {
-            get => _threadCount;
+            get => threadCount;
 
             set
             {
-                _threadCount = value;
+                threadCount = value;
             }
         }
 
@@ -132,11 +132,11 @@ namespace MainConcurrencyProject.Model.Calculator
         /// <br />
         /// Кортеж из: "resultNumber" - результат вычисления (число Pi), "timeElapsed" - затраченное время в милисекундах.
         /// </returns>
-        public (double resultNumber, long timeElapsed)  CalculatePiNumber()
+        public (double resultNumber, double timeElapsed)  CalculatePiNumber()
         {
             _piCalculator.CalculatePiNumberAsync();
 
-            return (_piCalculator.ValueSet.PiNumberResultValue, stopwatch.ElapsedMilliseconds);
+            return (_piCalculator.ValueSet.PiNumberResultValue, stopwatch.Elapsed.TotalSeconds);
         }
 
 
@@ -151,11 +151,11 @@ namespace MainConcurrencyProject.Model.Calculator
         /// <br />
         /// Кортеж из двух значений; "divisorsAmount" - кол-во найденых делителей, "resultNumber" - число, для которого нашли делители, "timeElapsed" - время, затраченное на вычисления.
         /// </returns>
-        public (long divisorsAmount, long resultNumber, long timeElapsed) CalculateDivisors()
+        public (long divisorsAmount, long resultNumber, double timeElapsed) CalculateDivisors()
         {
             _divisorsCalculator.CalculateDivisorsAsync();
 
-            return (_divisorsCalculator.ValueSet.ResultNumberDivisorsCount, _divisorsCalculator.ValueSet.ResultNumber, stopwatch.ElapsedMilliseconds);
+            return (_divisorsCalculator.ValueSet.ResultNumberDivisorsCount, _divisorsCalculator.ValueSet.ResultNumber, stopwatch.Elapsed.TotalSeconds);
         }
 
 
@@ -198,9 +198,11 @@ namespace MainConcurrencyProject.Model.Calculator
         /// </param>
         public AsynchronousCalculator(int currentAmountOfThreads)
         {
-            _piCalculator = new(amountOfThreads: currentAmountOfThreads);
-            _divisorsCalculator = new(amountOfThreads: currentAmountOfThreads);
+            ThreadCount= currentAmountOfThreads;
+            _piCalculator = new();
+            _divisorsCalculator = new();
             _divisorsCalculator.PassProgressbarValueIncrement += OnProgressbarValuePassed;
+            _piCalculator.PassProgressbarValueIncrement += OnProgressbarValuePassed;
         }
 
 

@@ -12,19 +12,28 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   FIELDS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
         /// <summary>
         /// Default value set.
         /// <br />
         /// Набор значений по умолчанию.
         /// </summary>
-        public static readonly PiNumberValueSet DefaultValueSet = new(amountOfPoints: 512e6, circleRadius: 256e5);
-
+        public static readonly PiNumberValueSet DefaultValueSet = new(amountOfPoints: 8e7, circleRadius: 2e7);
 
 
         /// <inheritdoc cref="ValueSet"/>
-        private PiNumberValueSet? _valueSet = null;
+        private PiNumberValueSet? valueSet = null;
 
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -34,7 +43,7 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// </summary>
         public PiNumberValueSet ValueSet
         {
-            get { return _valueSet; }
+            get { return valueSet; }
             set
             {
                 ValueSet = value;
@@ -44,15 +53,38 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
 
-        private Point[]? _points = null;
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                          ↓   LOCAL VARIABLES   ↓                         ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
-        private int _amountOfThreads;
+
+        /// <summary>
+        /// An array of generated points.
+        /// <br />
+        /// Массив генерируемых точек.
+        /// </summary>
+        private Point[]? _points = null;
 
         private double _squareSideLength;             // a;
 
         private double _piNumber;
 
         private long _pointInsideCircleCounter;      // Ncirc;
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   DELEGATES   ↓                            ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+        /// <inheritdoc cref="AsynchronousCalculator.ProgressbarIncrementValueDelegate"/>
+        public delegate void ProgressbarIncrementValueDelegate(long incrementValue);
+
+
+        /// <inheritdoc cref="AsynchronousCalculator.PassProgressbarValueIncrement"/>
+        public event ProgressbarIncrementValueDelegate PassProgressbarValueIncrement;
 
 
 
@@ -73,22 +105,22 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// </summary>
         public void CalculatePiNumberAsync()
         {
-            if (_valueSet is null) throw new NullReferenceException("Value set is not specified by the start of the calculation.");
+            if (valueSet is null) throw new NullReferenceException("Value set is not specified by the start of the calculation.");
 
             _piNumber = 0;
             _pointInsideCircleCounter = 0;
-            _points = new Point[_valueSet.AmountOfPoints];
+            _points = new Point[valueSet.AmountOfPoints];
             _squareSideLength = ValueSet.CircleRadius / 2;
 
             FillPointArray();
 
-            Thread[] threads = new Thread[_amountOfThreads];
+            Thread[] threads = new Thread[AsynchronousCalculator.ThreadCount];
 
-            for (int i = 0; i < _amountOfThreads; i++)
+            for (int i = 0; i < AsynchronousCalculator.ThreadCount; i++)
             {
                 var closureIteratorCopy = i;
-                var closureStatrIndexCopy = (_valueSet.AmountOfPoints / _amountOfThreads) * closureIteratorCopy;
-                var closureEndIndexCopy = (_valueSet.AmountOfPoints / _amountOfThreads) * (closureIteratorCopy + 1);
+                var closureStatrIndexCopy = (valueSet.AmountOfPoints / AsynchronousCalculator.ThreadCount) * closureIteratorCopy;
+                var closureEndIndexCopy = (valueSet.AmountOfPoints / AsynchronousCalculator.ThreadCount) * (closureIteratorCopy + 1);
 
                 threads[i] = new Thread(() =>
                 {
@@ -103,20 +135,20 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
             AsynchronousCalculator.stopwatch = new();
             AsynchronousCalculator.stopwatch.Start();
-            for (int i = 0; i < _amountOfThreads; i++)
+            for (int i = 0; i < AsynchronousCalculator.ThreadCount; i++)
             {
                 threads[i].Start();
             }
 
-            for (int i = 0; i < _amountOfThreads; i++)
+            for (int i = 0; i < AsynchronousCalculator.ThreadCount; i++)
             {
                 threads[i].Join();
             }
             AsynchronousCalculator.stopwatch.Stop();
 
 
-            _piNumber = (double)_pointInsideCircleCounter * 16.0 / (double)_valueSet.AmountOfPoints;
-            _valueSet.PiNumberResultValue = _piNumber;
+            _piNumber = (double)_pointInsideCircleCounter * 16.0 / (double)valueSet.AmountOfPoints;
+            valueSet.PiNumberResultValue = _piNumber;
             _points = null;
             // once again, just in case;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
@@ -144,10 +176,14 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
             for (long j = startIndex; j < endIndex; j++)
             {
+                AsynchronousCalculator.maunalResetHandler.WaitOne();
+
                 var point = pointArray[j];
 
                 if (point.Y * point.Y <= GetYCoordinateSqr(point.X, (_squareSideLength)))
                     ++currentThreadIncrementResult;
+
+                PassProgressbarValueIncrement?.Invoke(1);
             }
 
             Interlocked.Add(ref _pointInsideCircleCounter, currentThreadIncrementResult);
@@ -162,12 +198,17 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// </summary>
         private void FillPointArray()
         {
-            _points = new Point[_valueSet.AmountOfPoints];
-            
-            for (int i = 0; i < _points.Length; i++)
+            _points = new Point[valueSet.AmountOfPoints];
+
+            ParallelOptions options = new();
+            options.MaxDegreeOfParallelism = AsynchronousCalculator.ThreadCount;
+
+            Parallel.For(0,_points.Length, options, (i) =>
             {
-                _points[i] = new Point(AsynchronousCalculator.random.NextInt64(0, (long) _valueSet.CircleRadius), AsynchronousCalculator.random.NextInt64(0, (long)_valueSet.CircleRadius));
-            }
+                AsynchronousCalculator.maunalResetHandler.WaitOne();
+
+                _points[i++] = new Point(AsynchronousCalculator.random.NextInt64(0, (long)valueSet.CircleRadius), AsynchronousCalculator.random.NextInt64(0, (long)valueSet.CircleRadius));
+            });
         }
 
 
@@ -194,17 +235,14 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
 
 
 
-
-
         /// <summary>
         /// Default constructor.
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public PiNumberCalculator(int amountOfThreads)
+        public PiNumberCalculator()
         {
-            if (_valueSet is null) _valueSet = DefaultValueSet;
-            _amountOfThreads = amountOfThreads;
+            valueSet = DefaultValueSet;
         }
 
 
@@ -219,12 +257,10 @@ namespace MainConcurrencyProject.Model.Calculator.PiNumber
         /// <br />
         /// Кастомный набор значений.
         /// </param>
-        public PiNumberCalculator(PiNumberValueSet valueSet, int amountOfThreads)
+        public PiNumberCalculator(PiNumberValueSet valueSet)
         {
-            _valueSet = valueSet;
-            _amountOfThreads = amountOfThreads;
+            this.valueSet = valueSet;
         }
-
 
 
 

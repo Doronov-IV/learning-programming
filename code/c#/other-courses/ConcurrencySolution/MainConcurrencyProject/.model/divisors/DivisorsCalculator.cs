@@ -13,34 +13,24 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
-        //
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   DELEGATES   ↓                            ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-
-        /// <summary>
-        /// Raise progress bar value by the specific value.
-        /// <br />
-        /// Увеличить значение програссбара на определенное значение.
-        /// </summary>
-        /// <param name="incrementValue">
-        /// The specific value to add to the pb's one.
-        /// <br />
-        /// Конкретное значение, чтобы добавить к показателю прогрессбара.
-        /// </param>
+        /// <inheritdoc cref="AsynchronousCalculator.ProgressbarIncrementValueDelegate"/>
         public delegate void ProgressbarIncrementValueDelegate(long incrementValue);
 
 
-        /// <summary>
-        /// Add specific value to the progressbar's one.
-        /// <br />
-        /// Добавить определённое значение к значению прогрессбара.
-        /// </summary>
+        /// <inheritdoc cref="AsynchronousCalculator.PassProgressbarValueIncrement"/>
         public event ProgressbarIncrementValueDelegate PassProgressbarValueIncrement;
 
 
 
-        //
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                          ↓   LOCAL VARIABLES   ↓                         ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -68,8 +58,10 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
-        //
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                              ↓   FIELDS   ↓                              ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -84,13 +76,11 @@ namespace MainConcurrencyProject.Model.Divisors
         private DivisorsValueSet valueSet;
 
 
-        /// <inheritdoc cref="AmountOfThreads"/>
-        private int amountOfThreads;
 
 
-        
-        //
-
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                            ↓   PROPERTIES   ↓                            ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -104,21 +94,6 @@ namespace MainConcurrencyProject.Model.Divisors
             set 
             { 
                 valueSet = value; 
-            }
-        }
-
-
-        /// <summary>
-        /// The amount of threads chosen by user.
-        /// <br />
-        /// Кол-во потоков, выбранное пользователем.
-        /// </summary>
-        public int AmountOfThreads
-        {
-            get { return amountOfThreads; }
-            set 
-            {
-                amountOfThreads = value;
             }
         }
 
@@ -144,31 +119,31 @@ namespace MainConcurrencyProject.Model.Divisors
         {
             FillNumbersArrayAsync();
 
-            (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[amountOfThreads];
+            (long startIndex, long endIndex)[] startEndIndexPairs = new (long startIndex, long endIndex)[AsynchronousCalculator.ThreadCount];
 
-            Thread[] threads = new Thread[amountOfThreads];
-            Task<(long divisorsCounter, long numberItself)>[] tasks = new Task<(long, long)>[amountOfThreads];
+            Thread[] threads = new Thread[AsynchronousCalculator.ThreadCount];
+            Task<(long divisorsCounter, long numberItself)>[] tasks = new Task<(long, long)>[AsynchronousCalculator.ThreadCount];
 
-            for (int i = 0, iSize = amountOfThreads; i < iSize; i++)
+            for (int i = 0, iSize = AsynchronousCalculator.ThreadCount; i < iSize; i++)
             {
-                startEndIndexPairs[i] = new ((valueSet.CielingNumber / amountOfThreads) * i, (valueSet.CielingNumber / amountOfThreads) * (i + 1));
+                startEndIndexPairs[i] = new ((valueSet.CielingNumber / AsynchronousCalculator.ThreadCount) * i, (valueSet.CielingNumber / AsynchronousCalculator.ThreadCount) * (i + 1));
             }
 
 
             /*
-            for (int i = amountOfThreads-1, iSize = 0; i > iSize; --i)
+            for (int i = AsynchronousCalculator.ThreadCount-1, iSize = 0; i > iSize; --i)
             {
-                for (int j = 0; j < amountOfThreads - i; j++)
+                for (int j = 0; j < AsynchronousCalculator.ThreadCount - i; j++)
                 {
-                    startEndIndexPairs[i].startIndex += (valueSet.CielingNumber / amountOfThreads) / (amountOfThreads/2);
-                    startEndIndexPairs[i - 1].endIndex += (valueSet.CielingNumber / amountOfThreads) / (amountOfThreads/2);
+                    startEndIndexPairs[i].startIndex += (valueSet.CielingNumber / AsynchronousCalculator.ThreadCount) / (AsynchronousCalculator.ThreadCount/2);
+                    startEndIndexPairs[i - 1].endIndex += (valueSet.CielingNumber / AsynchronousCalculator.ThreadCount) / (AsynchronousCalculator.ThreadCount/2);
                 }
             }
             */
-            
+
             AsynchronousCalculator.stopwatch = new();
             AsynchronousCalculator.stopwatch.Start();
-            for (int i = 0, iSize = amountOfThreads; i < iSize; i++)
+            for (int i = 0, iSize = AsynchronousCalculator.ThreadCount; i < iSize; i++)
             {
                 (long startIndexClosureCopy, long endIndexClosureCopy) currentCopy = startEndIndexPairs[i];
 
@@ -298,13 +273,17 @@ namespace MainConcurrencyProject.Model.Divisors
         {
             _numbers = new long[valueSet.CielingNumber];
 
-            Parallel.For(0, valueSet.CielingNumber, (i) => 
+            ParallelOptions options = new();
+            options.MaxDegreeOfParallelism = AsynchronousCalculator.ThreadCount;
+
+            Parallel.For(0, valueSet.CielingNumber, options, (i) => 
             {
                 _numbers[i++] = i;
             });
 
             _numbers = _numbers.AsParallel().OrderBy(x => AsynchronousCalculator.random.Next()).ToArray();
         }
+
 
 
         #endregion LOGIC
@@ -318,19 +297,14 @@ namespace MainConcurrencyProject.Model.Divisors
 
 
 
+
         /// <summary>
-        /// Parametrized constructor.
+        /// Default constructor.
         /// <br />
-        /// Конструктор с параметром.
+        /// Конструктор по умолчанию.
         /// </summary>
-        /// <param name="amountOfThreads">
-        /// The quantity of threads to proceed with.
-        /// <br />
-        /// Кол-во потоков для работы.
-        /// </param>
-        public DivisorsCalculator(int amountOfThreads)
+        public DivisorsCalculator()
         {
-            this.amountOfThreads = amountOfThreads;
             valueSet = DefaultValueSet;
         }
 
@@ -339,19 +313,14 @@ namespace MainConcurrencyProject.Model.Divisors
         /// <summary>
         /// Parametrized constructor.
         /// <br />
-        /// Конструктор с параметрами.
+        /// Конструктор с параметром.
         /// </summary>
-        /// <param name="amountOfThreads">
-        /// The quantity of threads to proceed with.
-        /// <br />
-        /// Кол-во потоков для работы.
-        /// </param>
         /// <param name="valueSet">
         /// The set of values.
         /// <br />
         /// Набор значений.
         /// </param>
-        public DivisorsCalculator(DivisorsValueSet valueSet, int amountOfThreads) : this(amountOfThreads)
+        public DivisorsCalculator(DivisorsValueSet valueSet) : this()
         {
             this.valueSet = valueSet;
         }
