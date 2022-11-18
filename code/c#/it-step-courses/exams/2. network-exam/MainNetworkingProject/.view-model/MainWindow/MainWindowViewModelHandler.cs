@@ -88,25 +88,41 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         {
             // service "Downloads" folder;
             DirectoryInfo serviceDownloadsDirectory = new("..\\..\\..\\..\\ReversedService\\Downloads");
-            foreach (FileInfo file in serviceDownloadsDirectory.GetFiles())
+
+            if (!Directory.Exists(serviceDownloadsDirectory.FullName))
             {
-                try
+                Directory.CreateDirectory(serviceDownloadsDirectory.FullName);
+            }
+            else
+            {
+                foreach (FileInfo file in serviceDownloadsDirectory.GetFiles())
                 {
-                    File.Delete(file.FullName);
+                    try
+                    {
+                        File.Delete(file.FullName);
+                    }
+                    catch { }
                 }
-                catch { }
             }
 
 
             // client "Downloads" folder;
             DirectoryInfo clientDownloadsDirectory = new("..\\..\\..\\..\\ReversedClient\\Downloads");
-            foreach (FileInfo file in clientDownloadsDirectory.GetFiles())
+
+            if (!Directory.Exists(clientDownloadsDirectory.FullName))
             {
-                try
+                Directory.CreateDirectory(clientDownloadsDirectory.FullName);
+            }
+            else
+            {
+                foreach (FileInfo file in clientDownloadsDirectory.GetFiles())
                 {
-                    File.Delete(file.FullName);
+                    try
+                    {
+                        File.Delete(file.FullName);
+                    }
+                    catch { }
                 }
-                catch { }
             }
         }
 
