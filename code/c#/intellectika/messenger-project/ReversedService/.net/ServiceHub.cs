@@ -165,7 +165,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Идентификатор отправителя.
         /// </param>
-        public void BroadcastFile(FileInfo info, Guid SenderId)
+        public void BroadcastFileInParallel(FileInfo info, Guid SenderId)
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(6);

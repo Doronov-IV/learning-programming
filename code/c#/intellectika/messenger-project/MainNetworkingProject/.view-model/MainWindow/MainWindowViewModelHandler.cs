@@ -84,7 +84,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         /// <br />
         /// Очистить папаки ".files" клиентов и сервиса.
         /// </summary>
-        public void OnClearFoldersButtonClickAsync()
+        public void OnClearFoldersButtonClickInParallel()
         {
             DirectoryInfo dirInfo = new("..\\..\\..\\..\\");
             Parallel.ForEach(dirInfo.GetDirectories(), (name) =>

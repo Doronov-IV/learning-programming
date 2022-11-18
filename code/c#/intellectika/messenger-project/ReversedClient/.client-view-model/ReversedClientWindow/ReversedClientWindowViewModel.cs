@@ -267,11 +267,10 @@ namespace ReversedClient.ViewModel
             _server.connectedEvent += ConnectUser;           // user connection;
             _server.msgReceivedEvent += RecieveMessage;     // message receipt;
             _server.fileReceivedEvent += RecieveFile;      // file receipt;
-            _server.userDisconnectEvent += RemoveUser;    // user disconnection;
+            _server.otherUserDisconnectEvent += RemoveUser;    // user disconnection;
+            _server.currentUserDisconnectEvent += DisconnectFromServer;
 
             _Users.CollectionChanged += OnUsersCollectionChanged;
-
-            bool placeholder = true;
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new (ConnectToService);

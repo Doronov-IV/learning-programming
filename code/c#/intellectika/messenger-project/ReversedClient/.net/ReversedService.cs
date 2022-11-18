@@ -96,7 +96,10 @@ namespace Debug.Net
         /// <br />
         /// Событие отключения пользователя;
         /// </summary>
-        public event Action userDisconnectEvent;
+        public event Action otherUserDisconnectEvent;
+
+
+        public event Action currentUserDisconnectEvent;
 
 
 
@@ -291,7 +294,7 @@ namespace Debug.Net
                     }
                     catch (Exception e)
                     {
-                        userDisconnectEvent?.Invoke();
+                        currentUserDisconnectEvent?.Invoke();
                     }
                     switch (opCode)
                     {
@@ -311,7 +314,7 @@ namespace Debug.Net
                             break;
 
                         case 10:
-                            userDisconnectEvent?.Invoke();// client disconnection;
+                            otherUserDisconnectEvent?.Invoke();// client disconnection;
                             break;
 
                         default:

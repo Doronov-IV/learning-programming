@@ -28,8 +28,8 @@ namespace ReversedClient.ViewModel
             var uid = _server.PacketReader.ReadMessage();
             var user = Users.Where(x => x.UID == uid).FirstOrDefault();
 
-            //foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user)); // removing disconnected user;
+            // foreach (var user in )
+            Application.Current.Dispatcher.Invoke(() => Users.Remove(user));   // removing disconnected user;
         }
 
 
@@ -87,6 +87,12 @@ namespace ReversedClient.ViewModel
                 Application.Current.Dispatcher.Invoke(() => Users.Add(user));
                 Application.Current.Dispatcher.Invoke(() => Messages.Add($"{user.UserName} joins chat."));
             }
+        }
+
+
+        public void DisconnectFromServer()
+        {
+            MessageBox.Show("You've been disconnected.","Disconnection", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
