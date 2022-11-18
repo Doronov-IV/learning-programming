@@ -7,43 +7,8 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            List<Action> actions = new List<Action>();
-
-            Int32 count = 0;
-            for (Int32 j;count < 10; count++)
-            {
-                j = new();
-                var a = count;
-                j = a;
-                actions.Add(() => Console.WriteLine(a));
-            }
-            foreach (var action in actions)
-            {
-                action();
-            }
+            TryFilePackage();
         }
-
-
-
-        #region CLOSURE
-
-
-        protected static void OuterMethod()
-        {
-            int variable = 5;
-
-            var inner = () =>
-            {
-                variable++;
-                Console.WriteLine(variable);
-            };
-
-            inner();
-
-            Console.WriteLine(variable);
-        }
-
-        #endregion CLOSURE
 
 
 
@@ -52,7 +17,7 @@ namespace Range.Main
 
         public static void TryFilePackage()
         {
-            FileMessagePackage AssembledFileMessage = new("Mario", "Luigi", new("C:\\Users\\i.doronov\\Desktop\\VirtualBox-7.0.2-154219-Win.exe"));
+            FileMessagePackage AssembledFileMessage = new("Mario", "Luigi", new("C:\\Users\\i.doronov\\Desktop\\specific files\\VirtualBox-7.0.2-154219-Win.exe"));
 
             FileMessagePackage UnassembledFileMessage = new();
 

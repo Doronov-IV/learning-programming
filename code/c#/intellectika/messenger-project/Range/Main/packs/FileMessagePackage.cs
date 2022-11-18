@@ -99,7 +99,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <returns>
         /// A fully-assembled array of bytes.
         /// <br />
-        /// Полностью собранный масств байтов.
+        /// Полностью собранный массив байтов.
         /// </returns>
         public override void Assemble()
         {
@@ -115,7 +115,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 byte[] binFileName = Encoding.UTF8.GetBytes(_fileName);
 
                 var fileRef = Message as FileInfo;
-                //byte[] binFile = File.ReadAllBytes(fileRef.FullName);
+
                 byte[] binFile = new byte[fileRef.Length];
 
                 using (FileStream fileStream = new(fileRef.FullName, FileMode.Open))
@@ -210,7 +210,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
                     using (BinaryReader binReader = new BinaryReader(memoryStream, Encoding.UTF8, false))
                     {
 
-                        //int messageLength = binReader.ReadInt32();
+                        int messageLength = binReader.ReadInt32();
 
                         int senderLength = binReader.ReadInt32();
 

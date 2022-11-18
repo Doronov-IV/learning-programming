@@ -42,7 +42,7 @@ namespace ReversedClient.ViewModel
         private void RecieveMessage()
         {
             string msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg)); // adding it to the observable collection;
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));    // adding it to the observable collection;
         }
 
 
@@ -143,6 +143,13 @@ namespace ReversedClient.ViewModel
         private void ConnectToService()
         {
             _server.ConnectToServer(UserName);
+        }
+
+
+
+        private void ShowErrorMessage(string sMessage)
+        {
+            MessageBox.Show(sMessage, "Exception", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 

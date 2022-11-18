@@ -282,6 +282,8 @@ namespace ReversedClient.ViewModel
 
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(OnSignInButtonClick);
+
+            _server.SendOutput += ShowErrorMessage;
         }
 
 

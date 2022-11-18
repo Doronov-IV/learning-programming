@@ -114,7 +114,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                         case 6:
                             var file = _packetReader.ReadFile(UserName: CurrentUserName);
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a file.");
-                            StaticServiceHub.BroadcastFile(file, CurrentUID);
+                            StaticServiceHub.BroadcastFileAsync(file, CurrentUID);
                             break;
                         default:
                             break;
