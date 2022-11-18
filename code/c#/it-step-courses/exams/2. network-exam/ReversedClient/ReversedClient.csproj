@@ -56,20 +56,17 @@
 
 
 	<ItemGroup>
-		<Reference Include="NetworkingAuxiliaryLibrary">
-		  <HintPath>..\ReversedService\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
-		</Reference>
-		<Reference Include="Toolbox">
-			<HintPath>..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
-		</Reference>
-		<Reference Include="tools">
-			<HintPath>..\..\tools\precompiled-dll\tools.dll</HintPath>
-		</Reference>
+	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
+	  <Reference Include="NetworkingAuxiliaryLibrary">
+	    <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Toolbox">
+	    <HintPath>..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>
