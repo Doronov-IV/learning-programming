@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
