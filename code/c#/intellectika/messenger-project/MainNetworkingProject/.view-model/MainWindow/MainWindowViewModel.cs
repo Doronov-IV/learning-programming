@@ -95,7 +95,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             LaunchClientCommand = new(OnLaunchClientButtonClickAsync);
             LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);
             KillServiceCommand = new(OnKillServiceButtonClick);
-            ClearFoldersCommand = new(OnClearFoldersButtonClick);
+            ClearFoldersCommand = new(OnClearFoldersButtonClickAsync);
         }
 
 

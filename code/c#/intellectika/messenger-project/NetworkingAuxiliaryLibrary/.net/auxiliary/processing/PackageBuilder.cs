@@ -4,8 +4,9 @@ using System.Text;
 namespace NetworkingAuxiliaryLibrary.Processing
 {
     /// <summary>
-    /// Объект добавляет данные в поток памяти, который используется для получения байтов для отправки на сервер;
-    /// По сути, осуществляет передачу данных между клиентом и сервером;
+    /// A service that forms packages for communication.
+    /// <br />
+    /// Сервис, который формирует пакеты для коммуникации.
     /// </summary>
     public class PackageBuilder
     {

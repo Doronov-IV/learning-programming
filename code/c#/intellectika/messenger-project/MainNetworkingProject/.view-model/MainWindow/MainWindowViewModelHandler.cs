@@ -84,38 +84,46 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         /// <br />
         /// Очистить папаки ".files" клиентов и сервиса.
         /// </summary>
-        public void OnClearFoldersButtonClick()
+        public void OnClearFoldersButtonClickAsync()
         {
-            // service "Downloads" folder;
-            DirectoryInfo serviceDownloadsDirectory = new("..\\..\\..\\..\\ReversedService\\Downloads");
-
-            if (!Directory.Exists(serviceDownloadsDirectory.FullName))
+            DirectoryInfo dirInfo = new("..\\..\\..\\..\\");
+            Parallel.ForEach(dirInfo.GetDirectories(), (name) =>
             {
-                Directory.CreateDirectory(serviceDownloadsDirectory.FullName);
+                CreateOrClearDownloads(name.Name);
+            });
+        }
+
+
+        #endregion HANDLERS
+
+
+
+
+        #region MISC
+
+
+
+        /// <summary>
+        /// Create folder "Downloads" in all networking projects. If the folder is already present, clear it.
+        /// <br />
+        /// Создать папку "Downloads" во всех сетевых проектах Если папка уже есть, очистить её.
+        /// </summary>
+        /// <param name="projectFolderName">
+        /// The relative name of the project folder.
+        /// <br />
+        /// Короткое имя папки проекта.
+        /// </param>
+        private void CreateOrClearDownloads(string projectFolderName)
+        {
+            DirectoryInfo currentDownloadsDirectory = new($"..\\..\\..\\..\\{projectFolderName}\\Downloads");
+
+            if (!Directory.Exists(currentDownloadsDirectory.FullName))
+            {
+                Directory.CreateDirectory(currentDownloadsDirectory.FullName);
             }
             else
             {
-                foreach (FileInfo file in serviceDownloadsDirectory.GetFiles())
-                {
-                    try
-                    {
-                        File.Delete(file.FullName);
-                    }
-                    catch { }
-                }
-            }
-
-
-            // client "Downloads" folder;
-            DirectoryInfo clientDownloadsDirectory = new("..\\..\\..\\..\\ReversedClient\\Downloads");
-
-            if (!Directory.Exists(clientDownloadsDirectory.FullName))
-            {
-                Directory.CreateDirectory(clientDownloadsDirectory.FullName);
-            }
-            else
-            {
-                foreach (FileInfo file in clientDownloadsDirectory.GetFiles())
+                foreach (FileInfo file in currentDownloadsDirectory.GetFiles())
                 {
                     try
                     {
@@ -127,7 +135,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
-        #endregion HANDLERS
+
+        #endregion MISC
 
 
     }
