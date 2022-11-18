@@ -231,9 +231,9 @@ namespace Debug.Net
             byte[] buffer;
             try
             {
-                if (bytes.Length > bufferSize)
+                await Task.Run(() =>
                 {
-                    await Task.Run(() =>
+                    if (bytes.Length > bufferSize)
                     {
                         using (MemoryStream stream = new(bytes))
                         {
@@ -244,9 +244,9 @@ namespace Debug.Net
                                 _client.Client.Send(buffer, SocketFlags.Partial);
                             }
                         }
-                    });
-                }
+                    }
                 else _client.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
+                });
             }
             catch (Exception ex)
             {
