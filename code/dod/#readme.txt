@@ -1,1 +1,0 @@
-This is a doomsday-opensource-depository folder. 
