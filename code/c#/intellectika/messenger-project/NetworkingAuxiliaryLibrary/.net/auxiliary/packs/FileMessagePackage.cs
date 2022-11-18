@@ -138,8 +138,8 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 byte[] binFileNameLength = BitConverter.GetBytes(binFileName.Length);
                 lRes.AddRange(binFileNameLength);
 
-                byte[] binMessageLength = BitConverter.GetBytes(binFile.Length);
-                lRes.AddRange(binMessageLength);
+                byte[] binFileLength = BitConverter.GetBytes(binFile.Length);
+                lRes.AddRange(binFileLength);
 
                 lRes.AddRange(binSender);
                 lRes.AddRange(binReciever);
@@ -275,7 +275,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (File Message Package)");
 
-            return (Sender, Reciever, Message as FileInfo);
+            return (Sender, Reciever, Message);
         }
 
 

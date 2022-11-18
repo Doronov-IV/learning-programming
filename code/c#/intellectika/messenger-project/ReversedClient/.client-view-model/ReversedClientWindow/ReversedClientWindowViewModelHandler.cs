@@ -54,7 +54,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveFile()
         {
-            _server.PacketReader.ReadFile(UserName);
+            var aaaaaaaa = _server.PacketReader.ReadFile(UserName);
             Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }

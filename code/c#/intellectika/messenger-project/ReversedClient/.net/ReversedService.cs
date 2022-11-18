@@ -295,6 +295,8 @@ namespace Debug.Net
                     }
                     switch (opCode)
                     {
+                        case 0:
+                            break;
 
                         case 1:
                             connectedEvent?.Invoke();// client connection;
@@ -313,7 +315,7 @@ namespace Debug.Net
                             break;
 
                         default:
-                            //SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.");
+                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.");
                             break;
                     }
                 }

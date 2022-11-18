@@ -138,7 +138,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
             // this warning is unnecessary. the action is completely safe;
             info = package.Disassemble("default", UserName).Message as FileInfo;
 
-            _NetworkStream.Flush();
+            // _NetworkStream.Flush(); doesn't work.
 
             return info;
         }

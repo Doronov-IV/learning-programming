@@ -165,7 +165,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Идентификатор отправителя.
         /// </param>
-        public async Task BroadcastFileAsync(FileInfo info, Guid SenderId)
+        public void BroadcastFile(FileInfo info, Guid SenderId)
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(6);
@@ -174,31 +174,32 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             var bytes = msgPacket.GetPacketBytes();
             const int bufferSize = 4096;
             byte[] buffer;
-            foreach (var user in _UserList)
+            Parallel.ForEach(_UserList, (user) =>
             {
-                await Task.Run(() =>
+                if (user.CurrentUID != SenderId)
                 {
-                    // to prevent sending file to the sender;
-                    if (user.CurrentUID != SenderId)
+                    if (bytes.Length > bufferSize)
                     {
-                        if (bytes.Length > bufferSize)
+                        using (MemoryStream stream = new(bytes))
                         {
-                            using (MemoryStream stream = new(bytes))
+                            while (stream.Position != stream.Length)
                             {
-                                while (stream.Position != stream.Length)
-                                {
+                                if (stream.Length - stream.Position >= bufferSize)
                                     buffer = new byte[bufferSize];
-                                    stream.Read(buffer, 0, bufferSize);
-                                    user.ClientSocket.Client.Send(buffer, SocketFlags.Partial);
-                                    GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+                                else
+                                {
+                                    buffer = new byte[stream.Length - stream.Position];
                                 }
+                                stream.Read(buffer, 0, buffer.Length);
+                                user.ClientSocket.Client.Send(buffer, SocketFlags.Partial);
+                                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
                             }
                         }
-                        else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
                     }
-                });
-                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-            }
+                    else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
+                }
+            });
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
 
