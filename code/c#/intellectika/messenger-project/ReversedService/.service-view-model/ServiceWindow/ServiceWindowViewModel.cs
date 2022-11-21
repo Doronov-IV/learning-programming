@@ -1,4 +1,5 @@
-﻿
+﻿using Toolbox.Flags;
+using Tools.Flags;
 
 namespace ReversedService.ViewModel.ServiceWindow
 {
@@ -14,30 +15,6 @@ namespace ReversedService.ViewModel.ServiceWindow
 
         #region PROPERTIES
 
-
-        //
-        // Basic assosiations
-        //
-
-        /// <summary>
-        /// @see public ServiceWindowViewModelHandler Handler;
-        /// </summary>
-        private ServiceWindowViewModelHandler _Handler;
-
-        /// <summary>
-        /// ViewModel's behavior class, required to decompose it;
-        /// <br />
-        /// Класс поведения вью-модели, необходимый, чтобы декомпозировать её;
-        /// </summary>
-        public ServiceWindowViewModelHandler Handler
-        {
-            get { return _Handler; }
-            set
-            {
-                _Handler = value;
-                OnPropertyChanged(nameof(Handler));
-            }
-        }
 
 
         /// <summary>
@@ -93,43 +70,38 @@ namespace ReversedService.ViewModel.ServiceWindow
         //
 
 
-        /// <summary>
-        /// @see public bool IsRunning;
-        /// </summary>
-        private bool _IsRunning;
+        private CustomProcessingStatus processingStatus;
 
-        /// <summary>
-        /// @see public bool IsNotRunning;
-        /// </summary>
-        private bool _IsNotRunning;
-
-        /// <summary>
-        /// True if the server is listenning, otherwise false;
-        /// <br />
-        /// True если сервис ведёт приём, иначе false;
-        /// </summary>
-        public bool IsRunning
+        public CustomProcessingStatus ProcessingStatus
         {
-            get { return _IsRunning; }
+            get { return processingStatus; }
             set
             {
-                _IsRunning = value;
-                OnPropertyChanged(nameof(IsRunning));
+                processingStatus = value;
+                OnPropertyChanged(nameof(ProcessingStatus));
             }
         }
 
-        /// <summary>
-        /// True if the server is NOT listenning, otherwise false;
-        /// <br />
-        /// True если сервис НЕ ведёт приём, иначе false;
-        /// </summary>
-        public bool IsNotRunning
+
+
+        private bool serviceTrigger;
+
+        public bool ServiceTrigger
         {
-            get { return _IsNotRunning; }
+            get { return serviceTrigger; }
             set
             {
-                _IsNotRunning = value;
-                OnPropertyChanged(nameof(IsNotRunning));
+                serviceTrigger = value;
+                
+                OnPropertyChanged(nameof(ServiceTrigger));
+
+                if (serviceTrigger && ProcessingStatus.IsNotRunning)
+                {
+                    OnRunClick();
+                }
+                else StopServiceCommand.Execute();
+
+                ProcessingStatus.ToggleProcessing();
             }
         }
 
@@ -150,12 +122,7 @@ namespace ReversedService.ViewModel.ServiceWindow
         public DelegateCommand RunServiceCommand { get; }
 
 
-        /// <summary>
-        /// A command that binds the 'Cancel Service' button with the corresponding method;
-        /// <br />
-        /// Команда, которая связывает кнопку "Cancel Service" с соответствующим методом;
-        /// </summary>
-        public DelegateCommand KillServiceCommand { get; }
+        public DelegateCommand StopServiceCommand { get; }
 
 
         #endregion COMMANDS
@@ -174,15 +141,17 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// </summary>
         public ServiceWindowViewModel()
         {
-            _IsRunning = false;
-            _IsNotRunning = true;
+            Service = new();
+            ServiceLog = new();
 
-            _Service = new();
-            _Handler = new(this);
-            _ServiceLog = new();
+            ProcessingStatus = new();
 
-            RunServiceCommand = new(Handler.OnRunButtonClick);
-            KillServiceCommand = new(Handler.OnCancelServiceButtonClick);
+            Service.SendServiceOutput += OnServiceOutput;
+
+            RunServiceCommand = new(OnRunClick);
+            StopServiceCommand = new(OnShutdownClick);
+
+            serviceTrigger = false;
         }
 
 

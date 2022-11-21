@@ -1,39 +1,46 @@
-﻿<Window x:Class="ReversedService.service_view.ServiceWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedService.service_view"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ReversedService.service_view.ServiceWindow"
         mc:Ignorable="d"
         Title="ServiceWindow" Height="450" Width="800"
         Closing="OnWindowClosing"
         >
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            
-            <!-- Erzatz-console listview -->
-            <ListBox 
-            Name="ConsoleLogListBox" Margin="10,10,10,10"
-            ItemsSource="{Binding Path=ServiceLog, Mode=TwoWay}"
-            Grid.Column="1" Grid.Row="1" FontFamily="Consolas" Background="Black" Foreground="#FF008C00" />
-            <Button Command="{Binding RunServiceCommand}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Run" Grid.Column="3" Margin="10,15,10,15" Grid.Row="2"/>
-            <Button Command="{Binding KillServiceCommand}" Grid.Column="2" Content="Cancel" Margin="10,15,10,15" Grid.Row="2" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
 
+        <!-- Erzatz-console listview -->
+        <ListBox 
+              x:Name="ConsoleLogListBox" Margin="10,10,10,10"
+              ItemsSource="{Binding ServiceLog, Mode=TwoWay}"
+              Grid.Column="1" Grid.Row="1" FontFamily="Consolas"
+              Background="Black" Foreground="#FF008C00" 
+             />
+        <CheckBox 
+            Grid.Column="2" Content="On" Margin="0,20,30,0"
+            IsChecked="{Binding ServiceTrigger}"
+            VerticalAlignment="Top" HorizontalAlignment="Right"
+         />
 
-        </Grid>
+
+
+
+
     </Grid>
 </Window>

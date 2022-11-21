@@ -31,6 +31,9 @@ global using NetworkingAuxiliaryLibrary.ClientService;
 
 global using Prism.Commands;
 
+global using MahApps.Metro.Controls;
+global using ToggleSwitch;
+
 using ReversedService.service_view;
 
 namespace ReversedService

@@ -90,20 +90,34 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void Run()
         {
-            _UserList = new List<ReversedClient>();
-
-            _Listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
-
-            _Listener.Start();
-
-            ReversedClient client;
-
-            while (true)
+            try
             {
-                client = new ReversedClient(_Listener.AcceptTcpClient(), this);
-                _UserList.Add(client);
-                BroadcastConnection();
+                _UserList = new List<ReversedClient>();
+
+                _Listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
+
+                _Listener.Start();
+
+                ReversedClient client;
+
+                while (true)
+                {
+                    client = new ReversedClient(_Listener.AcceptTcpClient(), this);
+                    _UserList.Add(client);
+                    BroadcastConnection();
+                }
             }
+            catch { }
+        }
+
+
+        public void Stop()
+        {
+            _Listener.Stop();
+
+            _UserList.ForEach(u => u.ClientSocket.Close());
+
+            IsRunning = false;
         }
 
 

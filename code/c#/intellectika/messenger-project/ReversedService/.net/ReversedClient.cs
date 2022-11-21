@@ -126,7 +126,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     StaticServiceHub.BroadcastDisconnect(CurrentUID.ToString());
                     ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
                     break;
-
                 }
             }
         }
