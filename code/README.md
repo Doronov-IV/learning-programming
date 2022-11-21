@@ -23,7 +23,7 @@ Andrei Sobol's one.
 ## C# ITstep
 
 ### Basics
-A common concepts of .NET via console kind of applications.
+Common concepts of .NET via console kind of applications.
 
 ### Visual
 An Introduction to visual interface programming, in parallel with introduction to databases.
