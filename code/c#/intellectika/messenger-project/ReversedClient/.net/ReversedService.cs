@@ -1,6 +1,7 @@
 ﻿using NetworkingAuxiliaryLibrary.Processing;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows;
 
 namespace Debug.Net
@@ -101,6 +102,7 @@ namespace Debug.Net
 
         public event Action currentUserDisconnectEvent;
 
+        private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
 
 
@@ -182,7 +184,11 @@ namespace Debug.Net
         {
             if (_client.Connected)
             {
+                cancellationTokenSource.Cancel();
+
                 _client.Close();
+
+                currentUserDisconnectEvent?.Invoke();
             }
         }
 
@@ -287,14 +293,16 @@ namespace Debug.Net
                 byte opCode = 0;
                 while (true)
                 {
-                    //код операции;
+
+                    if (cancellationTokenSource.IsCancellationRequested) break;
+
                     try
                     {
                         opCode = PacketReader.ReadByte();
                     }
                     catch (Exception e)
                     {
-                        currentUserDisconnectEvent?.Invoke();
+                        Disconnect();
                     }
                     switch (opCode)
                     {

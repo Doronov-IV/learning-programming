@@ -100,11 +100,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 _Listener.Start();
 
                 if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
-                    ServiceWindowViewModel.cancellationTokenSource.TryReset();
+                    ServiceWindowViewModel.cancellationTokenSource = new();
 
                 ReversedClient client;
 
-                while (true)
+                while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
                     client = new ReversedClient(_Listener.AcceptTcpClient(), this);
                     _UserList.Add(client);
