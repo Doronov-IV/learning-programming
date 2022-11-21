@@ -1,4 +1,5 @@
 ﻿using NetworkingAuxiliaryLibrary.ClientService;
+using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
@@ -51,11 +52,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// A 'ServiceHub' object instance common for all users;
+        /// A 'ServiceController' object instance common for all users;
         /// <br />
-        /// Объект класса "ServiceHub", общий для всех клиентов;
+        /// Объект класса "ServiceController", общий для всех клиентов;
         /// </summary>
-        private static ServiceHub StaticServiceHub = null!;
+        private static ServiceController StaticServiceHub = null!;
 
 
 
@@ -101,6 +102,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             while (true)
             {
+
+                if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested) break;
+
                 try
                 {
                     var opCode = _packetReader.ReadByte();
@@ -122,10 +126,13 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 }
                 catch (Exception ex)
                 {
-                    SendOutput.Invoke($"User {CurrentUserName} (id = {CurrentUID.ToString()}) has disconnected!");
-                    StaticServiceHub.BroadcastDisconnect(CurrentUID.ToString());
-                    ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
-                    break;
+                    if (StaticServiceHub.IsRunning)
+                    {
+                        SendOutput.Invoke($"User {CurrentUserName} (id = {CurrentUID.ToString()}) has disconnected!");
+                        StaticServiceHub.BroadcastDisconnect(CurrentUID.ToString());
+                        ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
+                        break;
+                    }
                 }
             }
         }
@@ -151,11 +158,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// Сокет клиента;
         /// </param>
         /// <param name="serviceHub">
-        /// An instance of the 'ServiceHub';
+        /// An instance of the 'ServiceController';
         /// <br />
-        /// Экземпляр объекта класса "ServiceHub";
+        /// Экземпляр объекта класса "ServiceController";
         /// </param>
-        public ReversedClient(TcpClient client, ServiceHub serviceHub)
+        public ReversedClient(TcpClient client, ServiceController serviceHub)
         {
             ReversedClient.StaticServiceHub = serviceHub;
 

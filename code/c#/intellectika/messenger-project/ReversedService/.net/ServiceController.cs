@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ReversedService.ViewModel.ServiceWindow;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 
@@ -9,7 +10,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
     /// <br />
     /// Обёртка для объекта "ReversedService". В отличие от последнего, образец данного класса отвечает за рассылку уведомлений пользователям, а не за подключения;
     /// </summary>
-    public class ServiceHub : INotifyPropertyChanged
+    public class ServiceController : INotifyPropertyChanged
     {
 
 
@@ -98,6 +99,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 _Listener.Start();
 
+                if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+                    ServiceWindowViewModel.cancellationTokenSource.TryReset();
+
                 ReversedClient client;
 
                 while (true)
@@ -111,11 +115,18 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        /// <summary>
+        /// Stop service.
+        /// <br />
+        /// Остановить сервис.
+        /// </summary>
         public void Stop()
         {
             _Listener.Stop();
 
             _UserList.ForEach(u => u.ClientSocket.Close());
+
+            _UserList.Clear();
 
             IsRunning = false;
         }
@@ -277,7 +288,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ServiceHub()
+        public ServiceController()
         {
             _UserList = new List<ReversedClient>();
         }

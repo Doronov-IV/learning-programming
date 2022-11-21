@@ -17,25 +17,26 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
 
-        /// <summary>
-        /// @see public ServiceHub Service;
-        /// </summary>
-        private ServiceHub _Service;
+        /// <inheritdoc cref="Service"/>
+        private ServiceController service;
 
         /// <summary>
         /// An instance of the service-wrapper class;
         /// <br />
         /// Экземпляр класса-обёртки сервиса;
         /// </summary>
-        public ServiceHub Service
+        public ServiceController Service
         {
-            get { return _Service; }
+            get { return service; }
             set
             {
-                _Service = value;
+                service = value;
                 OnPropertyChanged(nameof(Service));
             }
         }
+
+
+        public static CancellationTokenSource cancellationTokenSource = new();
 
 
 
@@ -43,10 +44,8 @@ namespace ReversedService.ViewModel.ServiceWindow
         // The chat messages in form of a list
         //
 
-        /// <summary>
-        /// @see public AsyncObservableCollection<string> ServiceLog;
-        /// </summary>
-        private AsyncObservableCollection<string> _ServiceLog;
+        /// <inheritdoc cref="ServiceLog"/>
+        private AsyncObservableCollection<string> serviceLog;
 
         /// <summary>
         /// A list of chat messages;
@@ -55,10 +54,10 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// </summary>
         public AsyncObservableCollection<string> ServiceLog
         {
-            get { return _ServiceLog; }
+            get { return serviceLog; }
             set
             {
-                _ServiceLog = value;
+                serviceLog = value;
                 OnPropertyChanged(nameof(ServiceLog));
             }
         }
@@ -99,9 +98,7 @@ namespace ReversedService.ViewModel.ServiceWindow
                 {
                     OnRunClick();
                 }
-                else StopServiceCommand.Execute();
-
-                ProcessingStatus.ToggleProcessing();
+                else OnShutdownClick();
             }
         }
 
@@ -148,8 +145,8 @@ namespace ReversedService.ViewModel.ServiceWindow
 
             Service.SendServiceOutput += OnServiceOutput;
 
-            RunServiceCommand = new(OnRunClick);
-            StopServiceCommand = new(OnShutdownClick);
+            //RunServiceCommand = new(OnRunClick);
+            //StopServiceCommand = new(OnShutdownClick);
 
             serviceTrigger = false;
         }

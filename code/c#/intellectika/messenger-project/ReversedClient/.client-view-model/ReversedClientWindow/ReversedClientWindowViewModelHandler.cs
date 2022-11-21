@@ -93,10 +93,10 @@ namespace ReversedClient.ViewModel
         // Does not work!!!!
         public void DisconnectFromServer()
         {
-            Application.Current.MainWindow.Close();
 
             loginWindowReference.Show();
 
+            Application.Current.MainWindow.Close();
             Application.Current.MainWindow = loginWindowReference;
             
             chatWindowReference = new();
@@ -198,8 +198,8 @@ namespace ReversedClient.ViewModel
                 WindowHeaderString = UserName + " - common chat";
                 chatWindowReference.Show();
                 //
-                loginWindowReference.Close();
 
+                loginWindowReference.Close();
                 Application.Current.MainWindow.Close();
                 Application.Current.MainWindow = chatWindowReference;
                 // ===============================

@@ -34,6 +34,8 @@ global using Prism.Commands;
 global using MahApps.Metro.Controls;
 global using ToggleSwitch;
 
+global using ReversedService.ViewModel;
+
 using ReversedService.service_view;
 
 namespace ReversedService

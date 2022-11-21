@@ -35,22 +35,28 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
         /// <summary>
-        /// Handle 'Run' click;
+        /// Handle checkbox 'On' click;
         /// <br />
-        /// Обработать нажатие "Run";
+        /// Обработать нажатие "On" чекбокса;
         /// </summary>
         public async void OnRunClick()
         {
             OnServiceOutput("Service on.");
-            await Task.Run(() => Service.Run());
             ProcessingStatus.ToggleCompletion();
+            await Task.Run(() => Service.Run());
         }
 
 
+        /// <summary>
+        /// Handle checkbox 'Off' click;
+        /// <br />
+        /// Обработать нажатие "Off" чекбокса;
+        /// </summary>
         public void OnShutdownClick()
         {
             OnServiceOutput("Service off.");
             Service.Stop();
+            cancellationTokenSource.Cancel();
             ProcessingStatus.ToggleProcessing();
         }
 
