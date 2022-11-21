@@ -47,15 +47,12 @@ namespace Debug.Net
         private static IPAddress otherHostIpAddress = IPAddress.Parse("127.0.0.1");
 
 
-
-
         /// <summary>
         /// Provides client connections fo the service;
         /// <br />
         /// Предоставляет клиенские подключения для сервиса;
         /// </summary>
         private TcpClient _serviceSocket;
-
 
 
         /// <summary>
@@ -82,23 +79,23 @@ namespace Debug.Net
         public event Action msgReceivedEvent;
 
         /// <summary>
-        /// .
+        /// File receipt event.
         /// <br />
-        /// .
+        /// Событие получения файла.
         /// </summary>
         public event Action fileReceivedEvent;
 
         /// <summary>
-        /// User disconnection event;
+        /// Other user disconnection event;
         /// <br />
-        /// Событие отключения пользователя;
+        /// Событие отключения другого пользователя;
         /// </summary>
         public event Action otherUserDisconnectEvent;
 
         /// <summary>
-        /// .
+        /// Current user disconnection event.
         /// <br />
-        /// .
+        /// Событие отключение текущего пользователя.
         /// </summary>
         public event Action currentUserDisconnectEvent;
 

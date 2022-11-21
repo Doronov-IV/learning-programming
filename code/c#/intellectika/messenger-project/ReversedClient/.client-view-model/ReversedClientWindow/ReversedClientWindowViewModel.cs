@@ -275,8 +275,8 @@ namespace ReversedClient.ViewModel
             _server = new();
 
             _server.connectedEvent += ConnectUser;                           // user connection;
-            _server.msgReceivedEvent += RecieveMessage;                      // message receipt;
             _server.fileReceivedEvent += RecieveFile;                        // file receipt;
+            _server.msgReceivedEvent += RecieveMessage;                      // message receipt;
             _server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
             _server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
 
