@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace ReversedClient.ViewModel
 {
@@ -54,7 +55,6 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveFile()
         {
-            var aaaaaaaa = _server.PacketReader.ReadFile(UserName);
             Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
@@ -93,10 +93,7 @@ namespace ReversedClient.ViewModel
         // Does not work!!!!
         public void DisconnectFromServer()
         {
-
-            loginWindowReference.Show();
-
-            Application.Current.MainWindow.Close();
+            
             Application.Current.MainWindow = loginWindowReference;
             
             chatWindowReference = new();
@@ -219,7 +216,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public void OnUsersCollectionChanged(object? sender, EventArgs e)
         {
-            if (Users.Count > 1) TheMembersString = "members";
+            if (Users.Count != 1) TheMembersString = "members";
             else TheMembersString = "member";
         }
 

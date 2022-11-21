@@ -20,6 +20,24 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// <inheritdoc cref="Service"/>
         private ServiceController service;
 
+        /// <inheritdoc cref="ServiceTrigger"/>
+        private bool serviceTrigger;
+
+        /// <inheritdoc cref="ProcessingStatus"/>
+        private CustomProcessingStatus processingStatus;
+
+        /// <inheritdoc cref="ServiceLog"/>
+        private AsyncObservableCollection<string> serviceLog;
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        public static CancellationTokenSource cancellationTokenSource = new();
+
+
+
         /// <summary>
         /// An instance of the service-wrapper class;
         /// <br />
@@ -36,16 +54,6 @@ namespace ReversedService.ViewModel.ServiceWindow
         }
 
 
-        public static CancellationTokenSource cancellationTokenSource = new();
-
-
-
-        //
-        // The chat messages in form of a list
-        //
-
-        /// <inheritdoc cref="ServiceLog"/>
-        private AsyncObservableCollection<string> serviceLog;
 
         /// <summary>
         /// A list of chat messages;
@@ -63,14 +71,6 @@ namespace ReversedService.ViewModel.ServiceWindow
         }
 
 
-
-        //
-        // Visibility binding properties
-        //
-
-
-        private CustomProcessingStatus processingStatus;
-
         public CustomProcessingStatus ProcessingStatus
         {
             get { return processingStatus; }
@@ -82,9 +82,6 @@ namespace ReversedService.ViewModel.ServiceWindow
         }
 
 
-
-        private bool serviceTrigger;
-
         public bool ServiceTrigger
         {
             get { return serviceTrigger; }
@@ -94,10 +91,8 @@ namespace ReversedService.ViewModel.ServiceWindow
                 
                 OnPropertyChanged(nameof(ServiceTrigger));
 
-                if (serviceTrigger && ProcessingStatus.IsNotRunning)
-                {
+                if (serviceTrigger && ProcessingStatus.IsNotRunning) 
                     OnRunClick();
-                }
                 else OnShutdownClick();
             }
         }
@@ -111,15 +106,22 @@ namespace ReversedService.ViewModel.ServiceWindow
         #region COMMANDS
 
 
+
         /// <summary>
-        /// A command that binds the 'Run' button with the corresponding method;
+        /// Binding checkbox with the 'Run' method;
         /// <br />
-        /// Комманда, которая связывает кнопку "Run" с соответствующим методом;
+        /// Привязка чекбокса с методом "Run";
         /// </summary>
         public DelegateCommand RunServiceCommand { get; }
 
 
+        /// <summary>
+        /// Binding checkbox with the 'Stop' method;
+        /// <br />
+        /// Привязка чекбокса с методом "Stop";
+        /// </summary>
         public DelegateCommand StopServiceCommand { get; }
+
 
 
         #endregion COMMANDS
@@ -142,13 +144,10 @@ namespace ReversedService.ViewModel.ServiceWindow
             ServiceLog = new();
 
             ProcessingStatus = new();
+            serviceTrigger = false;
 
             Service.SendServiceOutput += OnServiceOutput;
 
-            //RunServiceCommand = new(OnRunClick);
-            //StopServiceCommand = new(OnShutdownClick);
-
-            serviceTrigger = false;
         }
 
 

@@ -274,19 +274,17 @@ namespace ReversedClient.ViewModel
             _Messages = new ObservableCollection<string>();
             _server = new();
 
-            _server.connectedEvent += ConnectUser;           // user connection;
-            _server.msgReceivedEvent += RecieveMessage;     // message receipt;
-            _server.fileReceivedEvent += RecieveFile;      // file receipt;
-            _server.otherUserDisconnectEvent += RemoveUser;    // user disconnection;
-            _server.currentUserDisconnectEvent += DisconnectFromServer;
+            _server.connectedEvent += ConnectUser;                           // user connection;
+            _server.msgReceivedEvent += RecieveMessage;                      // message receipt;
+            _server.fileReceivedEvent += RecieveFile;                        // file receipt;
+            _server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
+            _server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
 
             _Users.CollectionChanged += OnUsersCollectionChanged;
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new (ConnectToService);
-
             SendMessageCommand = new (SendMessage);
-
             SelectFileCommand = new (SelectFile);
 
             // we need to manage windows right after we connect;

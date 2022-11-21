@@ -28,7 +28,7 @@ namespace Debug.Net
         /// <br />
         /// Текущий эндпоинт сервиса;
         /// </summary>
-        private IPEndPoint ourEndPoint = new(localHostIpAddress, 7891);
+        private IPEndPoint serviceEndPoint = new(localHostIpAddress, 7891);
 
 
         /// <summary>
@@ -46,10 +46,6 @@ namespace Debug.Net
         /// </summary>
         private static IPAddress otherHostIpAddress = IPAddress.Parse("127.0.0.1");
 
-        //
-        // /EndPoint
-        //
-
 
 
 
@@ -58,7 +54,7 @@ namespace Debug.Net
         /// <br />
         /// Предоставляет клиенские подключения для сервиса;
         /// </summary>
-        private TcpClient _client;
+        private TcpClient _serviceSocket;
 
 
 
@@ -78,8 +74,6 @@ namespace Debug.Net
         /// </summary>
         public event Action connectedEvent;
 
-
-
         /// <summary>
         /// Message recievment event;
         /// <br />
@@ -87,10 +81,12 @@ namespace Debug.Net
         /// </summary>
         public event Action msgReceivedEvent;
 
-
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
         public event Action fileReceivedEvent;
-
-
 
         /// <summary>
         /// User disconnection event;
@@ -99,8 +95,15 @@ namespace Debug.Net
         /// </summary>
         public event Action otherUserDisconnectEvent;
 
-
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
         public event Action currentUserDisconnectEvent;
+
+
+
 
         private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -119,9 +122,7 @@ namespace Debug.Net
         /// </param>
         public delegate void PendOutputDelegate(string sOutputMessage);
 
-        /// <summary>
-        /// @see public delegate void PendOutputDelegate(string sOutputMessage);
-        /// </summary>
+        /// <inheritdoc cref="PendOutputDelegate"/>
         public event PendOutputDelegate SendOutput;
 
 
@@ -150,13 +151,16 @@ namespace Debug.Net
         public async void ConnectToServer(string userName)
         {
             //Если клиент не подключен
-            if (!_client.Connected)
+            if (!_serviceSocket.Connected)
             {
                 /// 
                 /// - Client connection [!]
                 ///
-                await _client.ConnectAsync(ourEndPoint);
-                PacketReader = new(_client.GetStream());
+                await _serviceSocket.ConnectAsync(serviceEndPoint);
+                PacketReader = new(_serviceSocket.GetStream());
+
+                if (cancellationTokenSource.IsCancellationRequested)
+                    cancellationTokenSource = new();
 
                 if (!string.IsNullOrEmpty(userName))
                 {
@@ -166,7 +170,7 @@ namespace Debug.Net
 
                     connectPacket.WriteMessage(userName);
 
-                    _client.Client.Send(connectPacket.GetPacketBytes());
+                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
                 }
 
                 ReadPackets();
@@ -182,11 +186,11 @@ namespace Debug.Net
         /// </summary>
         public void Disconnect()
         {
-            if (_client.Connected)
+            if (_serviceSocket.Connected)
             {
                 cancellationTokenSource.Cancel();
 
-                _client.Close();
+                _serviceSocket.Close();
 
                 currentUserDisconnectEvent?.Invoke();
             }
@@ -210,7 +214,7 @@ namespace Debug.Net
             messagePacket.WriteMessage(message);
             try
             {
-                _client.Client.Send(messagePacket.GetPacketBytes());
+                _serviceSocket.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
             {
@@ -250,17 +254,16 @@ namespace Debug.Net
                             {
                                 buffer = new byte[bufferSize];
                                 stream.Read(buffer, 0, bufferSize);
-                                _client.Client.Send(buffer, SocketFlags.Partial);
+                                _serviceSocket.Client.Send(buffer, SocketFlags.Partial);
                             }
                         }
                     }
-                else _client.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
+                else _serviceSocket.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
                 });
             }
             catch (Exception ex)
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
-
             }
             finally
             {
@@ -310,7 +313,7 @@ namespace Debug.Net
                             break;
 
                         case 1:
-                            connectedEvent?.Invoke();// client connection;
+                            connectedEvent?.Invoke(); // client connection;
                             break;
 
                         case 5:
@@ -322,7 +325,7 @@ namespace Debug.Net
                             break;
 
                         case 10:
-                            otherUserDisconnectEvent?.Invoke();// client disconnection;
+                            otherUserDisconnectEvent?.Invoke(); // client disconnection;
                             break;
 
                         default:
@@ -351,7 +354,7 @@ namespace Debug.Net
         /// </summary>
         public ReversedService()
         {
-            _client = new TcpClient();
+            _serviceSocket = new TcpClient();
         }
 
 

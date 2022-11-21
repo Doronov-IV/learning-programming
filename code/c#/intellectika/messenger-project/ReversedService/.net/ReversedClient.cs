@@ -139,6 +139,13 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+        private async Task ProcessAsync()
+        {
+            await Task.Run(() => Process());
+        }
+
+
+
         #endregion LOGIC - private Behavior
 
 
@@ -180,7 +187,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             //имени пользователя присваивается прочитанная строка
             CurrentUserName = _packetReader.ReadMessage();
 
-            Task.Run(() => Process());
+            ProcessAsync();
         }
 
 
