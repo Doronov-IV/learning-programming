@@ -104,6 +104,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 ReversedClient client;
 
+                IsRunning= true;
+
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
                     client = new ReversedClient(_Listener.AcceptTcpClient(), this);
@@ -126,7 +128,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             _UserList.ForEach(u => u.ClientSocket.Close());
 
-            _UserList.Clear();
+            _UserList = new();
 
             IsRunning = false;
         }
