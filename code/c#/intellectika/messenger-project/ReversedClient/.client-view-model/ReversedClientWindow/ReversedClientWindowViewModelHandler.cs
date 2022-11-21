@@ -90,9 +90,17 @@ namespace ReversedClient.ViewModel
         }
 
 
+        // Does not work!!!!
         public void DisconnectFromServer()
         {
-            MessageBox.Show("You've been disconnected.","Disconnection", MessageBoxButton.OK, MessageBoxImage.Information);
+            Application.Current.MainWindow.Close();
+
+            loginWindowReference.Show();
+
+            Application.Current.MainWindow = loginWindowReference;
+            
+            chatWindowReference = new();
+            //
         }
 
 
@@ -180,17 +188,20 @@ namespace ReversedClient.ViewModel
         {
             try
             {
-                Server.ConnectToServer(UserName);
+                chatWindowReference = new();
+                loginWindowReference = new();
 
+                Server.ConnectToServer(UserName);
 
                 //// [!] In this particular order;
                 //
                 WindowHeaderString = UserName + " - common chat";
-                ReversedClient.client_view.ReversedClientWindow clientChatWindow = new();
-                clientChatWindow.Show();
+                chatWindowReference.Show();
                 //
-                ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
-                clientLoginWindow?.Close();
+                loginWindowReference.Close();
+
+                Application.Current.MainWindow.Close();
+                Application.Current.MainWindow = chatWindowReference;
                 // ===============================
             }
             catch (Exception ex)

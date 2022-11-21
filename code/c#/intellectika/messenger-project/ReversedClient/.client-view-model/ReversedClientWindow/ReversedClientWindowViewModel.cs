@@ -189,6 +189,16 @@ namespace ReversedClient.ViewModel
         private IDialogService _DialogService;
 
 
+
+        private ClientLoginWindow loginWindowReference;
+
+
+        private ReversedClientWindow chatWindowReference;
+
+
+
+
+
         #endregion PROPERTIES - Object State
 
 
