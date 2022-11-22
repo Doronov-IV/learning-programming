@@ -1,12 +1,14 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:t="clr-namespace:Simple.Wpf.Terminal;assembly=Simple.Wpf.Terminal"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
         xmlns:local="clr-namespace:ReversedService.service_view"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ReversedService.service_view.ServiceWindow"
         mc:Ignorable="d"
         Title="ServiceWindow" Height="450" Width="800"
+        x:Class="ReversedService.service_view.ServiceWindow"
         Closing="OnWindowClosing"
         >
     <Grid>
@@ -26,12 +28,24 @@
 
 
         <!-- Erzatz-console listview -->
-        <ListBox 
-              x:Name="ConsoleLogListBox" Margin="10,10,10,10"
-              ItemsSource="{Binding ServiceLog, Mode=TwoWay}"
-              Grid.Column="1" Grid.Row="1" FontFamily="Consolas"
-              Background="Black" Foreground="#FF008C00" 
-             />
+        
+        <t:Terminal
+            Grid.Column="1" Grid.Row="1" Margin="10"
+            ItemsSource="{Binding ServiceLog}"
+            Style="{StaticResource DefaultlTerminalStyle}"
+         >
+            
+        </t:Terminal>
+
+
+        <!--sw:HorizontalToggleSwitch
+            Grid.Column="3" Margin="0,20,30,0"
+            IsChecked="{Binding ServiceTrigger}"
+            VerticalAlignment="Top" HorizontalAlignment="Right"
+         >
+        </sw:HorizontalToggleSwitch-->
+
+
         <CheckBox 
             Grid.Column="2" Content="On" Margin="0,20,30,0"
             IsChecked="{Binding ServiceTrigger}"

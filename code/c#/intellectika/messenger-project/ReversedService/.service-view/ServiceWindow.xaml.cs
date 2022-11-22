@@ -1,8 +1,7 @@
 ﻿using ReversedService.ViewModel;
 using ReversedService.ViewModel.ServiceWindow;
 
-using ToggleSwitch.Utils;
-using ToggleSwitch.Borders;
+using Simple.Wpf.Terminal;
 using ToggleSwitch;
 
 namespace ReversedService.service_view
