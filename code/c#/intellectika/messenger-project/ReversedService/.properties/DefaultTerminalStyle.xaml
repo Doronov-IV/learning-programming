@@ -7,7 +7,9 @@
            TargetType="{x:Type terminal:Terminal}"
            BasedOn="{x:Null}">
         <Setter Property="BorderThickness"
-                Value="0" />
+                Value="2" />
+        <Setter Property="BorderBrush"
+                Value="Black" />
         <Setter Property="Background"
                 Value="Blue" />
         <Setter Property="Foreground"

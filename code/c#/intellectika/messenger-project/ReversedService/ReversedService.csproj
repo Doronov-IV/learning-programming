@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include=".local-service\TerminalManager.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".net\ServiceController.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
