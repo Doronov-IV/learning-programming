@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace ReversedService.LocalService
 {
@@ -50,6 +51,32 @@ namespace ReversedService.LocalService
 
 
         #endregion STATE
+
+
+
+
+
+        #region API
+
+
+        /// <summary>
+        /// Add a line to the list.
+        /// <br />
+        /// Добавить строку к списку.
+        /// </summary>
+        /// <param name="message">
+        /// A line to add.
+        /// <br />
+        /// Строка к добавлению.
+        /// </param>
+        public void AddMessage(string message)
+        {
+            string messageClosureCopy = message; // just in case.
+            Application.Current.Dispatcher.Invoke(() => { Log.Add(messageClosureCopy); });
+        }
+
+
+        #endregion API
 
 
 

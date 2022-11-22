@@ -1,4 +1,5 @@
-﻿using Toolbox.Flags;
+﻿using ReversedService.LocalService;
+using Toolbox.Flags;
 using Tools.Flags;
 
 namespace ReversedService.ViewModel.ServiceWindow
@@ -20,14 +21,15 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// <inheritdoc cref="Service"/>
         private ServiceController service;
 
+        /// <inheritdoc cref="CustomTerminalManager"/>
+        private TerminalManager customTerminalManager;
+
         /// <inheritdoc cref="ServiceTrigger"/>
         private bool serviceTrigger;
 
         /// <inheritdoc cref="ProcessingStatus"/>
         private CustomProcessingStatus processingStatus;
 
-        /// <inheritdoc cref="ServiceLog"/>
-        private AsyncObservableCollection<string> serviceLog;
 
         /// <summary>
         /// .
@@ -54,19 +56,18 @@ namespace ReversedService.ViewModel.ServiceWindow
         }
 
 
-
         /// <summary>
-        /// A list of chat messages;
+        /// An object to decompose vm of terminal management.
         /// <br />
-        /// Список сообщений в чате;
+        /// Объект для декомпозиции вью-модели от управления терминалом.
         /// </summary>
-        public AsyncObservableCollection<string> ServiceLog
+        public TerminalManager CustomTerminalManager
         {
-            get { return serviceLog; }
+            get { return customTerminalManager; }
             set
             {
-                serviceLog = value;
-                OnPropertyChanged(nameof(ServiceLog));
+                customTerminalManager = value;
+                OnPropertyChanged(nameof(CustomTerminalManager));
             }
         }
 
@@ -141,12 +142,12 @@ namespace ReversedService.ViewModel.ServiceWindow
         public ServiceWindowViewModel()
         {
             Service = new();
-            ServiceLog = new();
+            customTerminalManager = new TerminalManager();
 
             ProcessingStatus = new();
             serviceTrigger = false;
 
-            Service.SendServiceOutput += OnServiceOutput;
+            Service.SendServiceOutput += CustomTerminalManager.AddMessage;
 
         }
 

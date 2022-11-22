@@ -6,31 +6,6 @@ namespace ReversedService.ViewModel.ServiceWindow
     {
 
 
-        #region PENDING OUTPUT
-
-
-        /// <summary>
-        /// Service feedback output handling;
-        /// <br />
-        /// Обработка сообщений обратной связи сервера;
-        /// </summary>
-        /// <param name="sServiceOutput">
-        /// The text message sent by server;
-        /// <br />
-        /// Текстовое сообщение, отправленное сервером;
-        /// </param>
-        public void OnServiceOutput(string sServiceOutput)
-        {
-            ServiceLog.Add(sServiceOutput);
-        }
-
-
-        #endregion PENDING OUTPUT
-
-
-
-
-
         #region CONTROLS HANDLERS
 
 
@@ -41,7 +16,7 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// </summary>
         public async void OnRunClick()
         {
-            OnServiceOutput("Service on.");
+            CustomTerminalManager.AddMessage("Service on.");
             ProcessingStatus.ToggleCompletion();
             await Task.Run(() => Service.Run());
         }
@@ -54,7 +29,7 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// </summary>
         public void OnShutdownClick()
         {
-            OnServiceOutput("Service off.");
+            CustomTerminalManager.AddMessage("Service off.");
             Service.Stop();
             cancellationTokenSource.Cancel();
             ProcessingStatus.ToggleProcessing();
