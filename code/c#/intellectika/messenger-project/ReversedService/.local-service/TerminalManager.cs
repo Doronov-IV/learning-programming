@@ -22,7 +22,10 @@ namespace ReversedService.LocalService
 
 
         /// <inheritdoc cref="Log"/>
-        private AsyncObservableCollection<string> _log;
+        private AsyncObservableCollection<string> log;
+
+
+        private string line;
 
 
 
@@ -40,13 +43,26 @@ namespace ReversedService.LocalService
         /// </summary>
         public AsyncObservableCollection<string> Log
         {
-            get { return _log; }
+            get { return log; }
             set
             {
-                _log = value;
+                log = value;
                 OnPropertyChanged(nameof(Log));
             }
         }
+
+
+        public string Line
+        {
+            get { return line; }
+            set
+            {
+                line = value;
+                OnPropertyChanged(nameof(Line));
+            }
+        }
+
+
 
 
 
@@ -76,6 +92,20 @@ namespace ReversedService.LocalService
         }
 
 
+        public void AddLine()
+        {
+            AddMessage(Line);
+            Line = string.Empty;
+        }
+
+
+
+        public void ClearLog()
+        {
+            Log = new();
+        }
+
+
         #endregion API
 
 
@@ -93,7 +123,7 @@ namespace ReversedService.LocalService
         /// </summary>
         public TerminalManager()
         {
-            _log = new();
+            log = new();
         }
 
 

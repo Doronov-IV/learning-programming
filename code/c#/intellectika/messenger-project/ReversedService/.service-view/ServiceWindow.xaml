@@ -28,15 +28,45 @@
 
 
         <!-- Erzatz-console listview -->
-        
+
         <t:Terminal
-            Grid.Column="1" Grid.Row="1" Margin="10"
-            ItemsSource="{Binding Path=CustomTerminalManager.Log}"
+            Grid.Column="1" Grid.Row="1" Margin="0"
+            ItemsSource="{Binding Path=CustomTerminalManager.Log, Mode=TwoWay}"
             Style="{StaticResource DefaultlTerminalStyle}"
+            IsReadOnly="False"
          >
-            
+
+
+            <t:Terminal.InputBindings>
+                <KeyBinding 
+                    Command="{Binding ClearLogCommand}"
+                    Gesture="CTRL+E"
+                 />
+
+                <KeyBinding
+                    Command="{Binding SendLineCommand}"
+                    Gesture="CTRL+Return"
+                 />
+            </t:Terminal.InputBindings>
+
         </t:Terminal>
 
+        <!--TextBox 
+            Grid.Column="1" Grid.Row="2"
+            Margin="0,0,0,40"
+            Text="{Binding Path=CustomTerminalManager.Line, Mode=TwoWay}"
+            
+            Background="Blue" Foreground="Yellow"
+         >
+            
+            <TextBox.InputBindings>
+                <KeyBinding 
+                    Command="{Binding SendLineCommand}"
+                    Key="Return"
+                 />
+            </TextBox.InputBindings>
+                
+        </TextBox-->
 
         <!--sw:HorizontalToggleSwitch
             Grid.Column="3" Margin="0,20,30,0"

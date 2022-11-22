@@ -60,9 +60,6 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// </param>
         public void WriteMessage(string msg)
         {
-            // the most important thing is: to code message to utf BEFORE we calculate its length;
-
-            ///*
             TextMessagePackage package = new TextMessagePackage("placeholder", "placeholder", msg);
 
             _memoryStream.Write(package.Data);

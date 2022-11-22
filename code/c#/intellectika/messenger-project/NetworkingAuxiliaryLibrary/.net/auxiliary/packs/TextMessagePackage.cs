@@ -97,19 +97,26 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                 byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
 
+
                 lRes.AddRange(binSenderLength);
+
                 lRes.AddRange(binRecieverLength);
+
                 lRes.AddRange(binMessageLength);
 
                 lRes.AddRange(binSender);
+
                 lRes.AddRange(binReciever);
+
                 lRes.AddRange(binMessage);
+
 
                 lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
 
                 _Data = lRes.ToArray();
 
                 lRes.Clear();
+
                 lRes = null;
             }
         }

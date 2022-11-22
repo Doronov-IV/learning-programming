@@ -124,6 +124,11 @@ namespace ReversedService.ViewModel.ServiceWindow
         public DelegateCommand StopServiceCommand { get; }
 
 
+        public DelegateCommand ClearLogCommand { get; }
+
+        public DelegateCommand SendLineCommand { get; }
+
+
 
         #endregion COMMANDS
 
@@ -147,6 +152,8 @@ namespace ReversedService.ViewModel.ServiceWindow
             ProcessingStatus = new();
             serviceTrigger = false;
 
+            SendLineCommand = new(CustomTerminalManager.AddLine);
+            ClearLogCommand = new(CustomTerminalManager.ClearLog);
             Service.SendServiceOutput += CustomTerminalManager.AddMessage;
 
         }
