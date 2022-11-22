@@ -10,7 +10,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
     /// <br />
     /// Ссылка на клиента, используемая сёрвером для обработки пользовательских данных;
     /// </summary>
-    public class ReversedClient
+    public class ServiceReciever
     {
 
 
@@ -169,9 +169,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Экземпляр объекта класса "ServiceController";
         /// </param>
-        public ReversedClient(TcpClient client, ServiceController serviceHub)
+        public ServiceReciever(TcpClient client, ServiceController serviceHub)
         {
-            ReversedClient.StaticServiceHub = serviceHub;
+            ServiceReciever.StaticServiceHub = serviceHub;
 
             SendOutput += serviceHub.PassOutputMessage;
 

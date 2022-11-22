@@ -6,9 +6,9 @@ using System.Net.Sockets;
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
     /// <summary>
-    /// A wrapper on 'ReversedService' object. Unlike one, it's responsible for user notification, rather than connections;
+    /// A controller for ServiceReciever instance to broadcast recieved data to every users.
     /// <br />
-    /// Обёртка для объекта "ReversedService". В отличие от последнего, образец данного класса отвечает за рассылку уведомлений пользователям, а не за подключения;
+    /// Контроллер экземпляра "ServiceReciever" для рассылки полученных данных всем пользователям
     /// </summary>
     public class ServiceController : INotifyPropertyChanged
     {
@@ -23,7 +23,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Актуальный список пользователей;
         /// </summary>
-        private List<ReversedClient> _UserList = null!;
+        private List<ServiceReciever> _UserList = null!;
 
 
         /// <summary>
@@ -85,15 +85,15 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Run service;
+        /// Run controller;
         /// <br />
-        /// Запустить сервис;
+        /// Запустить контроллер;
         /// </summary>
         public void Run()
         {
             try
             {
-                _UserList = new List<ReversedClient>();
+                _UserList = new List<ServiceReciever>();
 
                 _Listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
 
@@ -102,13 +102,13 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                     ServiceWindowViewModel.cancellationTokenSource = new();
 
-                ReversedClient client;
+                ServiceReciever client;
 
-                IsRunning= true;
+                IsRunning = true;
 
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
-                    client = new ReversedClient(_Listener.AcceptTcpClient(), this);
+                    client = new ServiceReciever(_Listener.AcceptTcpClient(), this);
                     _UserList.Add(client);
                     BroadcastConnection();
                 }
@@ -292,7 +292,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public ServiceController()
         {
-            _UserList = new List<ReversedClient>();
+            _UserList = new List<ServiceReciever>();
         }
 
 

@@ -11,7 +11,7 @@ namespace Debug.Net
     /// <br />
     /// Сервис, который отвечает за подключения и чтение/запись данных на более низком уровне;
     /// </summary>
-    public class ReversedService
+    public class ClientReciever
     {
 
 
@@ -169,7 +169,6 @@ namespace Debug.Net
 
                     _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
                 }
-
                 ReadPackets();
             }
             
@@ -326,7 +325,7 @@ namespace Debug.Net
                             break;
 
                         default:
-                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ReversedService, method: ReadPackets.");
+                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientReciever, method: ReadPackets.");
                             break;
                     }
                 }
@@ -349,7 +348,7 @@ namespace Debug.Net
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ReversedService()
+        public ClientReciever()
         {
             _serviceSocket = new TcpClient();
         }

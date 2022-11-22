@@ -18,7 +18,7 @@
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
-    <Compile Include=".net\ReversedService.cs" />
+    <Compile Include=".net\ClientReciever.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
     <Compile Include=".properties\dialogs\IDialogService.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModel.cs" />

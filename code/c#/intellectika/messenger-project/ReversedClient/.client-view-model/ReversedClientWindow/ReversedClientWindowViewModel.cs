@@ -166,14 +166,14 @@ namespace ReversedClient.ViewModel
 
 
         /// <inheritdoc cref="Server"/>
-        private ReversedService _server;
+        private ClientReciever _server;
 
         /// <summary>
-        /// An instance of a 'ReversedService';
+        /// An instance of a 'ClientReciever';
         /// <br />
-        /// Экземпляр класса "ReversedService";
+        /// Экземпляр класса "ClientReciever";
         /// </summary>
-        public ReversedService Server
+        public ClientReciever Server
         {
             get { return _server; }
             set { _server = value; }
