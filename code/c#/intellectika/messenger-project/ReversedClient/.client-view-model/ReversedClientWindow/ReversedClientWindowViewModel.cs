@@ -108,10 +108,10 @@ namespace ReversedClient.ViewModel
         }
 
 
-        private string _selectedUser;
+        private UserModel _selectedUser;
 
 
-        public string SelectedUser
+        public UserModel SelectedUser
         {
             get { return _selectedUser; }
             set

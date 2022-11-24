@@ -112,8 +112,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     {
                         case 5:
                             var msg = _packetReader.ReadMessage();
-                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg}");
-                            StaticServiceHub.BroadcastMessage(senderId: msg.Sender, recieverId: msg.Reciever,message: $"[{DateTime.Now}] {CurrentUserName}: {msg.Message}");
+                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg.Message as string}");
+                            StaticServiceHub.BroadcastMessage(
+                                senderId: msg.Sender,
+                                recieverId: msg.Reciever,
+                                message: $"[{DateTime.Now}] {CurrentUserName}: {msg.Message}"
+                                );
                             break;
                         case 6:
                             var fileMsg = _packetReader.ReadFile(UserName: CurrentUserName);

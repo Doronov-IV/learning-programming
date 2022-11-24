@@ -60,9 +60,9 @@ namespace NetworkingAuxiliaryLibrary.Processing
             {
                 List<byte> byteList = new();
 
-                int i = 0;
                 int packageLength = ReadInt32();
 
+                int i = 0;
                 while (i++ < packageLength)
                 {
                     byteList.Add((byte)_NetworkStream.ReadByte());
