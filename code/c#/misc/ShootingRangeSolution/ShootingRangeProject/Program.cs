@@ -4,33 +4,21 @@ namespace ShootingRange
 {
     public static class Program
     {
+        public struct /*class*/ ObjectX
+        {
+            public string value;
+        }
         static void Main(string[] args)
         {
-            object sync = new object();
-            var thread = new Thread(() =>
-            {
-                try
-                {
-                    Work();
-                }
-                finally
-                {
-                    lock (sync)
-                    {
-                        Monitor.PulseAll(sync);
-                    }
-                }
-            });
-            thread.Start();
-            lock (sync)
-            {
-                Monitor.Wait(sync);
-            }
-            Console.WriteLine("test");
+            ObjectX A = new();
+            A.value = "abc";
+            ObjectX B = A;
+            Console.WriteLine(B.value);
+            A.value = "hello";
+            Console.WriteLine(B.value);
         }
-        private static void Work()
-        {
-            Thread.Sleep(1000);
-        }
+
+
+        
     }
 }
