@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkingAuxiliaryLibrary.Packages
+namespace Range.Packages
 {
     /// <summary>
     /// An entity providing basic logic for message;

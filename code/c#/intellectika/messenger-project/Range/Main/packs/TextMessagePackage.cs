@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace NetworkingAuxiliaryLibrary.Packages
+namespace Range.Packages
 {
     /// <summary>
     /// A string to binary text message compiler.

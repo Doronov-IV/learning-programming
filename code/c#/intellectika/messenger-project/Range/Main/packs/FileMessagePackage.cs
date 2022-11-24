@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkingAuxiliaryLibrary.Packages
+namespace Range.Packages
 {
     /// <summary>
     /// Order: sender, reciever, filename, file. Every argument is prefixed with its length.

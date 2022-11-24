@@ -26,7 +26,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RemoveUser()
         {
-            var uid = _server.PacketReader.ReadMessage();
+            var uid = _server.PacketReader.ReadMessage().Message;
             var user = Users.Where(x => x.UID == uid).FirstOrDefault();
 
             // foreach (var user in )
@@ -42,8 +42,8 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveMessage()
         {
-            string msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));    // adding it to the observable collection;
+            var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg.Message as string));    // adding it to the observable collection;
         }
 
 
@@ -71,8 +71,8 @@ namespace ReversedClient.ViewModel
             // create new user instance;
             var user = new UserModel()
             {
-                UserName = _server.PacketReader.ReadMessage(),
-                UID = _server.PacketReader.ReadMessage(),
+                UserName = _server.PacketReader.ReadMessage().Message as string,
+                UID = _server.PacketReader.ReadMessage().Message as string,
             };
 
             /*
@@ -138,13 +138,13 @@ namespace ReversedClient.ViewModel
         {
             if (Message != string.Empty)
             {
-                _server.SendMessageToServer(Message);
+                _server.SendMessageToServer(UserName,SelectedUser,Message);
                 Message = string.Empty;
             }
 
             if (UserFile != null)
             {
-                _server.SendFileToServerAsync(UserFile);
+                _server.SendFileToServerAsync(sender: UserName, reciever: SelectedUser,UserFile);
                 Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
                 UserFile = null;
             }

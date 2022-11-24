@@ -147,7 +147,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 foreach (var usr in _UserList)
                 {
-                    broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
+                    broadcastPacket.WriteOpCode(1); // code '1' means 'ew user have connected;
                     broadcastPacket.WriteMessage(usr.CurrentUID, "@All",usr.CurrentUserName);
                     broadcastPacket.WriteMessage(usr.CurrentUID, "@All", usr.CurrentUID.ToString());
 
@@ -171,7 +171,14 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             msgPacket.WriteMessage(senderId, recieverId, message);
             foreach (var user in _UserList)
             {
-                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
+                if (recieverId != "@All")
+                {
+                    if (user.CurrentUID == recieverId)
+                    {
+                        user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
+                    }
+                }
+                else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
             }
         }
 
@@ -203,7 +210,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             byte[] buffer;
             Parallel.ForEach(_UserList, (user) =>
             {
-                if (user.CurrentUID != senderId && user.CurrentUID == recieverId && recieverId != "@All")
+                if (user.CurrentUID != senderId && user.CurrentUID == recieverId)
                 {
                     if (bytes.Length > bufferSize)
                     {

@@ -108,6 +108,20 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private string _selectedUser;
+
+
+        public string SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
+
+
         /// <inheritdoc cref="WindowHeaderString"/>
         private string _windowHeaderString;
 

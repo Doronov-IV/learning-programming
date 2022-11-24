@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="NetworkingAuxiliaryLibrary">
+      <HintPath>..\ReversedService\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Toolbox">
       <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
     </Reference>

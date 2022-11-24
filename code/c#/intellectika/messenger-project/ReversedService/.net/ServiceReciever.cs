@@ -113,12 +113,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                         case 5:
                             var msg = _packetReader.ReadMessage();
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg}");
-                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg.Message}");
+                            StaticServiceHub.BroadcastMessage(senderId: msg.Sender, recieverId: msg.Reciever,message: $"[{DateTime.Now}] {CurrentUserName}: {msg.Message}");
                             break;
                         case 6:
-                            var filePack = _packetReader.ReadFile(UserName: CurrentUserName);
+                            var fileMsg = _packetReader.ReadFile(UserName: CurrentUserName);
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a filePack.");
-                            StaticServiceHub.BroadcastFileInParallel(filePack.Message as FileInfo, CurrentUID);
+                            StaticServiceHub.BroadcastFileInParallel(senderId: fileMsg.Sender, recieverId: fileMsg.Reciever, fileMsg.Message as FileInfo);
                             break;
                         default:
                             break;
@@ -177,15 +177,14 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             ClientSocket = client;
 
-            //Генерация нового идентификатора пользователя при каждом создании экземляра клиента
-            CurrentUID = Guid.NewGuid();
-
             _packetReader = new PackageReader(ClientSocket.GetStream());
 
             var opCode = _packetReader.ReadByte();
 
+            var msgRef = _packetReader.ReadMessage();
+
             //имени пользователя присваивается прочитанная строка
-            CurrentUserName = _packetReader.ReadMessage();
+            CurrentUID = CurrentUserName = msgRef.Message as string;
 
             ProcessAsync();
         }

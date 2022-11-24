@@ -7,7 +7,7 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            TryFilePackage();
+            TryTextPackage();
         }
 
 
@@ -36,7 +36,7 @@ namespace Range.Main
 
         public static void TryTextPackage()
         {
-            TextMessagePackage AssembledTextMessage = new("Mario", "Luigi", "It's me, Mario!");
+            TextMessagePackage AssembledTextMessage = new("abc", "@All", "It's me, Mario!");
 
             TextMessagePackage UnassembledTextMessage = new();
 

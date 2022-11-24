@@ -40,7 +40,8 @@
                   ItemsSource="{Binding Users}" HorizontalAlignment="Left" 
                 Margin="15,60,0,20" Width="154" Background="{x:Null}" 
               BorderBrush="{x:Null}" Foreground="#E50A0A0A" 
-            FontFamily="Bookman Old Style">
+            FontFamily="Bookman Old Style"
+            SelectedItem="{Binding SelectedUser}">
 
 
             <ListView.ItemTemplate>

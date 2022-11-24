@@ -56,14 +56,14 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
                 // target;
                 FileInfo targetInfo = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\" +
-        "it-step-courses\\exams\\2. network-exam\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
+        "intellectika\\messenger-project\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
                 // destination 1 (client);
                 List<DirectoryInfo> extractorDestinations = new();
                 extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
-                    "\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedClient\\.net"));
+                    "\\code\\c#\\intellectika\\messenger-project\\ReversedClient\\.net"));
                 // destination 2 (service);
                 extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
-        "\\code\\c#\\it-step-courses\\exams\\2. network-exam\\ReversedService\\.net"));
+        "\\code\\c#\\intellectika\\messenger-project\\ReversedService\\.net"));
                 // extracting;
                 LibraryExtractor networkingLibraryExtractor = new(targetInfo, extractorDestinations);
                 networkingLibraryExtractor.Extract();
