@@ -136,8 +136,6 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 {
                     using (BinaryReader binReader = new BinaryReader(memoryStream, Encoding.UTF8, false))
                     {
-                        //int packageLength = binReader.ReadInt32();
-
                         int senderLength = binReader.ReadInt32();
 
                         int recieverLength = binReader.ReadInt32();

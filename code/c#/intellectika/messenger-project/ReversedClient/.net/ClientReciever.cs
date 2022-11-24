@@ -165,7 +165,7 @@ namespace Debug.Net
 
                     connectPacket.WriteOpCode(0);
 
-                    connectPacket.WriteMessage(userName, "@All",userName);
+                    connectPacket.WriteMessage(new TextMessagePackage(userName, "@All",userName));
 
                     _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
                 }
@@ -203,11 +203,11 @@ namespace Debug.Net
         /// <br />
         /// Сообщение пользователя;
         /// </param>
-        public void SendMessageToServer(string senderId, string recieverId,string message)
+        public void SendMessageToServer(TextMessagePackage package)
         {
             var messagePacket = new PackageBuilder();
             messagePacket.WriteOpCode(5);
-            messagePacket.WriteMessage(senderId, recieverId,message);
+            messagePacket.WriteMessage(package);
             try
             {
                 _serviceSocket.Client.Send(messagePacket.GetPacketBytes());
@@ -229,11 +229,11 @@ namespace Debug.Net
         /// <br />
         /// Прикреплённый файл.
         /// </param>
-        public async void SendFileToServerAsync(string sender, string reciever, FileInfo info)
+        public async void SendFileToServerAsync(FileMessagePackage filePackage)
         {
             PackageBuilder messagePacket = new();
             messagePacket.WriteOpCode(6);
-            messagePacket.WriteFile(sender, reciever ,info);
+            messagePacket.WriteMessage(filePackage);
 
             var bytes = messagePacket.GetPacketBytes();
             const int bufferSize = 4096;

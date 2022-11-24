@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Range.Packages
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
     /// Order: sender, reciever, filename, file. Every argument is prefixed with its length.
@@ -138,8 +138,8 @@ namespace Range.Packages
                 byte[] binFileNameLength = BitConverter.GetBytes(binFileName.Length);
                 lRes.AddRange(binFileNameLength);
 
-                byte[] binMessageLength = BitConverter.GetBytes(binFile.Length);
-                lRes.AddRange(binMessageLength);
+                byte[] binFileLength = BitConverter.GetBytes(binFile.Length);
+                lRes.AddRange(binFileLength);
 
                 lRes.AddRange(binSender);
                 lRes.AddRange(binReciever);
@@ -177,7 +177,7 @@ namespace Range.Packages
         /// <br />
         /// Срабатывает если "Data" пустой, т.е. сообщение не было собрано.
         /// </exception>
-        public override (string Sender, string Reciever, object Message) Disassemble()
+        public override MessagePackage Disassemble()
         {
             return Disassemble("default", "default");
         }
@@ -199,7 +199,7 @@ namespace Range.Packages
         /// <br />
         /// Кортеж, включающий в себя отправителя, получателя и сообщение в виде файла;
         /// </returns>
-        public (string Sender, string Reciever, object Message) Disassemble(string desiredFileDownloadPath, string recieverName)
+        public MessagePackage Disassemble(string desiredFileDownloadPath, string recieverName)
         {
             if (desiredFileDownloadPath.Equals("default")) desiredFileDownloadPath = _defaultDownloadsPath;
 
@@ -209,8 +209,6 @@ namespace Range.Packages
                 {
                     using (BinaryReader binReader = new BinaryReader(memoryStream, Encoding.UTF8, false))
                     {
-
-                        int messageLength = binReader.ReadInt32();
 
                         int senderLength = binReader.ReadInt32();
 
@@ -275,7 +273,7 @@ namespace Range.Packages
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (File Message Package)");
 
-            return (Sender, Reciever, Message as FileInfo);
+            return new FileMessagePackage(Sender, Reciever, Message as FileInfo);
         }
 
 
@@ -334,6 +332,21 @@ namespace Range.Packages
         public FileMessagePackage(byte[] Data)
         {
             _Data = Data;
+
+            try
+            {
+                var temp = Disassemble();
+
+                _sender = temp.Sender;
+                _reciever = temp.Reciever;
+                _message = temp.Message;
+                var fileref = Message as FileInfo;
+                _fileName = fileref.FullName;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception($"Exception during file message deserialization. Details: {ex.Message}");
+            }
         }
 
 

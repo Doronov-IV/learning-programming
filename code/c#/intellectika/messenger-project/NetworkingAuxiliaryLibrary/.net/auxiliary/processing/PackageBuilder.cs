@@ -53,36 +53,16 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// <br />
         /// Записать сообщение в бинарном виде;
         /// </summary>
-        /// <param name="msg">
-        /// Message text;
+        /// <param name="package">
+        /// Message package;
         /// <br />
-        /// Текст сообщения;
+        /// Пакет сообщения;
         /// </param>
-        public void WriteMessage(string sSenderId, string sRecieverId, string msg)
+        public void WriteMessage(MessagePackage package)
         {
-            TextMessagePackage package = new TextMessagePackage(sSenderId, sRecieverId, msg);
-
-            _memoryStream.Write(package.Data);
-        }
-
-        /// <summary>
-        /// Write binary message;
-        /// <br />
-        /// Записать сообщение в бинарном виде;
-        /// </summary>
-        /// <param name="msg">
-        /// Message text;
-        /// <br />
-        /// Текст сообщения;
-        /// </param>
-        public void WriteFile(string sSenderId, string sRecieverId, FileInfo info)
-        {
-            if (info != null)
-            {
-                FileMessagePackage package = new FileMessagePackage(sSenderId, sRecieverId, info);
-
+            if (package.Assembled)
                 _memoryStream.Write(package.Data);
-            }
+            else throw new Exception("Message has not been assembled!");
         }
 
 

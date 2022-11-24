@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Range.Packages
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
     /// An entity providing basic logic for message;
@@ -155,7 +155,7 @@ namespace Range.Packages
         /// <br />
         /// Десериализовать массив байтов, представленный свойством "Data".
         /// </summary>
-        public abstract (string Sender, string Reciever, object Message) Disassemble();
+        public abstract MessagePackage Disassemble();
 
 
         #endregion API

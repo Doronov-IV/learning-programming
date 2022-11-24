@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Range.Packages
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
     /// A string to binary text message compiler.
@@ -97,19 +97,26 @@ namespace Range.Packages
 
                 byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
 
+
                 lRes.AddRange(binSenderLength);
+
                 lRes.AddRange(binRecieverLength);
+
                 lRes.AddRange(binMessageLength);
 
                 lRes.AddRange(binSender);
+
                 lRes.AddRange(binReciever);
+
                 lRes.AddRange(binMessage);
 
-                lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
+
+                //lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
 
                 _Data = lRes.ToArray();
 
                 lRes.Clear();
+
                 lRes = null;
             }
         }
@@ -121,7 +128,7 @@ namespace Range.Packages
         /// <br />
         /// Десериализовать массив байтов, представленный свойством "Data".
         /// </summary>
-        public override (string Sender, string Reciever, object Message) Disassemble()
+        public override MessagePackage Disassemble()
         {
             if (_Data != null)
             {
@@ -129,8 +136,6 @@ namespace Range.Packages
                 {
                     using (BinaryReader binReader = new BinaryReader(memoryStream, Encoding.UTF8, false))
                     {
-                        int packageLength = binReader.ReadInt32();
-
                         int senderLength = binReader.ReadInt32();
 
                         int recieverLength = binReader.ReadInt32();
@@ -162,7 +167,7 @@ namespace Range.Packages
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (Text Message Package)");
 
-            return (Sender, Reciever, Message as string);
+            return new TextMessagePackage(Sender, Reciever, Message as string);
         }
 
 
@@ -219,6 +224,18 @@ namespace Range.Packages
         public TextMessagePackage(byte[] Data)
         {
             _Data = Data;
+
+            try
+            {
+                var temp = Disassemble();
+                _sender = temp.Sender;
+                _reciever = temp.Reciever;
+                _message = temp.Message;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception during text message deserialization. Details: {ex.Message}");
+            }
         }
 
 

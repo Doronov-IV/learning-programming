@@ -42,7 +42,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveMessage()
         {
-            var msg = _server.PacketReader.ReadMessage();                   // reading new message via our packet reader;
+            var msg = _server.PacketReader.ReadMessage();                                        // reading new message via our packet reader;
             Application.Current.Dispatcher.Invoke(() => Messages.Add(msg.Message as string));    // adding it to the observable collection;
         }
 
@@ -138,13 +138,13 @@ namespace ReversedClient.ViewModel
         {
             if (Message != string.Empty)
             {
-                _server.SendMessageToServer(UserName,SelectedUser.UserName,Message);
+                _server.SendMessageToServer(new TextMessagePackage(UserName,SelectedUser.UserName,Message));
                 Message = string.Empty;
             }
 
             if (UserFile != null)
             {
-                _server.SendFileToServerAsync(sender: UserName, reciever: SelectedUser.UserName,UserFile);
+                _server.SendFileToServerAsync(new FileMessagePackage(UserName, SelectedUser.UserName,UserFile));
                 Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
                 UserFile = null;
             }
