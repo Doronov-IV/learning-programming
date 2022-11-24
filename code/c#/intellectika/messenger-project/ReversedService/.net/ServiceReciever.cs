@@ -31,7 +31,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Предоставляет глобальный идентификатор;
         /// </summary>
-        public Guid CurrentUID { get; set; }
+        public string CurrentUID { get; set; }
 
 
 
@@ -113,12 +113,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                         case 5:
                             var msg = _packetReader.ReadMessage();
                             SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg}");
-                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg}");
+                            StaticServiceHub.BroadcastMessage($"[{DateTime.Now}] {CurrentUserName}: {msg.Message}");
                             break;
                         case 6:
-                            var file = _packetReader.ReadFile(UserName: CurrentUserName);
-                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a file.");
-                            StaticServiceHub.BroadcastFileInParallel(file, CurrentUID);
+                            var filePack = _packetReader.ReadFile(UserName: CurrentUserName);
+                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a filePack.");
+                            StaticServiceHub.BroadcastFileInParallel(filePack.Message as FileInfo, CurrentUID);
                             break;
                         default:
                             break;

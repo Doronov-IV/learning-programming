@@ -155,7 +155,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Десериализовать массив байтов, представленный свойством "Data".
         /// </summary>
-        public abstract (string Sender, string Reciever, object Message) Disassemble();
+        public abstract MessagePackage Disassemble();
 
 
         #endregion API

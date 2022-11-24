@@ -128,7 +128,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Десериализовать массив байтов, представленный свойством "Data".
         /// </summary>
-        public override (string Sender, string Reciever, object Message) Disassemble()
+        public override MessagePackage Disassemble()
         {
             if (_Data != null)
             {
@@ -169,7 +169,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (Text Message Package)");
 
-            return (Sender, Reciever, Message as string);
+            return new TextMessagePackage(Sender, Reciever, Message as string);
         }
 
 
@@ -226,6 +226,18 @@ namespace NetworkingAuxiliaryLibrary.Packages
         public TextMessagePackage(byte[] Data)
         {
             _Data = Data;
+
+            try
+            {
+                var temp = Disassemble();
+                _sender = temp.Sender;
+                _reciever = temp.Reciever;
+                _message = temp.Message;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception during text message deserialization. Details: {ex.Message}");
+            }
         }
 
 

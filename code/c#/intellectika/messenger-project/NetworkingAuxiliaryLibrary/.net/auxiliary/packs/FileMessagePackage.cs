@@ -177,7 +177,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Срабатывает если "Data" пустой, т.е. сообщение не было собрано.
         /// </exception>
-        public override (string Sender, string Reciever, object Message) Disassemble()
+        public override MessagePackage Disassemble()
         {
             return Disassemble("default", "default");
         }
@@ -199,7 +199,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Кортеж, включающий в себя отправителя, получателя и сообщение в виде файла;
         /// </returns>
-        public (string Sender, string Reciever, object Message) Disassemble(string desiredFileDownloadPath, string recieverName)
+        public MessagePackage Disassemble(string desiredFileDownloadPath, string recieverName)
         {
             if (desiredFileDownloadPath.Equals("default")) desiredFileDownloadPath = _defaultDownloadsPath;
 
@@ -275,7 +275,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (File Message Package)");
 
-            return (Sender, Reciever, Message);
+            return new FileMessagePackage(Sender, Reciever, Message as FileInfo);
         }
 
 
@@ -334,6 +334,21 @@ namespace NetworkingAuxiliaryLibrary.Packages
         public FileMessagePackage(byte[] Data)
         {
             _Data = Data;
+
+            try
+            {
+                var temp = Disassemble();
+
+                _sender = temp.Sender;
+                _reciever = temp.Reciever;
+                _message = temp.Message;
+                var fileref = Message as FileInfo;
+                _fileName = fileref.FullName;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception($"Exception during file message deserialization. Details: {ex.Message}");
+            }
         }
 
 

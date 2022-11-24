@@ -148,8 +148,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 foreach (var usr in _UserList)
                 {
                     broadcastPacket.WriteOpCode(1); // code '1' means 'new user have connected';
-                    broadcastPacket.WriteMessage(usr.CurrentUserName);
-                    broadcastPacket.WriteMessage(usr.CurrentUID.ToString());
+                    broadcastPacket.WriteMessage(usr.CurrentUID, "@All",usr.CurrentUserName);
+                    broadcastPacket.WriteMessage(usr.CurrentUID, "@All", usr.CurrentUID.ToString());
 
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }
@@ -164,11 +164,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// Отправить сообщение всем пользователям. В основном, используется, чтобы переслать сообщение одного пользователя всем остальным;
         /// </summary>
         /// <param name="message"></param>
-        public void BroadcastMessage(string message)
+        public void BroadcastMessage(string senderId, string recieverId, string message)
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(5);
-            msgPacket.WriteMessage(message);
+            msgPacket.WriteMessage(senderId, recieverId, message);
             foreach (var user in _UserList)
             {
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
@@ -192,18 +192,18 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Идентификатор отправителя.
         /// </param>
-        public void BroadcastFileInParallel(FileInfo info, Guid SenderId)
+        public void BroadcastFileInParallel(string senderId, string recieverId, FileInfo info)
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(6);
-            msgPacket.WriteFile(info);
+            msgPacket.WriteFile($"{senderId}", $"{recieverId}", info);
 
             var bytes = msgPacket.GetPacketBytes();
             const int bufferSize = 4096;
             byte[] buffer;
             Parallel.ForEach(_UserList, (user) =>
             {
-                if (user.CurrentUID != SenderId)
+                if (user.CurrentUID != senderId && user.CurrentUID == recieverId && recieverId != "@All")
                 {
                     if (bytes.Length > bufferSize)
                     {
@@ -250,11 +250,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             foreach (var user in _UserList)
             {
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
-                broadcastPacket.WriteMessage(uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
+                broadcastPacket.WriteMessage(uid, "@All", uid); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
-            BroadcastMessage($"{disconnectedUser.CurrentUserName} Disconnected!");
+            BroadcastMessage(disconnectedUser.CurrentUID, "@All" ,$"{disconnectedUser.CurrentUserName} Disconnected!");
         }
 
 

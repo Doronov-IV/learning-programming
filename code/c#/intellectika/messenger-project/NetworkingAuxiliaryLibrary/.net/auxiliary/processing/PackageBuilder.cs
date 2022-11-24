@@ -58,9 +58,9 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// <br />
         /// Текст сообщения;
         /// </param>
-        public void WriteMessage(string msg)
+        public void WriteMessage(string sSenderId, string sRecieverId, string msg)
         {
-            TextMessagePackage package = new TextMessagePackage("placeholder", "placeholder", msg);
+            TextMessagePackage package = new TextMessagePackage(sSenderId, sRecieverId, msg);
 
             _memoryStream.Write(package.Data);
         }
@@ -75,11 +75,11 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// <br />
         /// Текст сообщения;
         /// </param>
-        public void WriteFile(FileInfo info)
+        public void WriteFile(string sSenderId, string sRecieverId, FileInfo info)
         {
             if (info != null)
             {
-                FileMessagePackage package = new FileMessagePackage("placeholder", "placeholder", info);
+                FileMessagePackage package = new FileMessagePackage(sSenderId, sRecieverId, info);
 
                 _memoryStream.Write(package.Data);
             }

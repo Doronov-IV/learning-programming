@@ -91,22 +91,13 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// <br />
         /// Текст сообщения в виде строки.
         /// </returns>
-        public string ReadMessage()
+        public MessagePackage ReadMessage()
         {
-            string msg = "";
-
             byte[] tempArray = ReadMessageBytes();
 
             TextMessagePackage package = new TextMessagePackage(tempArray);
 
-            package.Data = tempArray;
-
-            // this warning is unnecessary. the action is completely safe;
-            msg = package.Disassemble().Message as string;
-
-            _NetworkStream.Flush();
-
-            return msg;
+            return package;
         }
 
         
@@ -125,22 +116,13 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// <br />
         /// Информация о считанном файле.
         /// </returns>
-        public FileInfo ReadFile(string UserName)
+        public MessagePackage ReadFile(string UserName)
         {
-            FileInfo info = null;
-
             byte[] tempArray = ReadMessageBytes();
 
             FileMessagePackage package = new FileMessagePackage(tempArray);
 
-            package.Data = tempArray;
-
-            // this warning is unnecessary. the action is completely safe;
-            info = package.Disassemble("default", UserName).Message as FileInfo;
-
-            // _NetworkStream.Flush(); doesn't work.
-
-            return info;
+            return package;
         }
 
 
