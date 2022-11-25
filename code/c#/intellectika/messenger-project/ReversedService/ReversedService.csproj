@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove=".net\.net\**" />
+    <EmbeddedResource Remove=".net\.net\**" />
+    <None Remove=".net\.net\**" />
+    <Page Remove=".net\.net\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include=".local-service\TerminalManager.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".net\ServiceController.cs" />
@@ -42,8 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Reference Include="NetworkingAuxiliaryLibrary">
-	    <HintPath>..\ReversedClient\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+	    <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Toolbox">
 	    <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>

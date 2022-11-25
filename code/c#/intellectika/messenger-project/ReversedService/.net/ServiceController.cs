@@ -1,5 +1,7 @@
 ﻿using ReversedService.ViewModel.ServiceWindow;
 using System.ComponentModel;
+using System.IO.Packaging;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
@@ -168,14 +170,16 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(5);
+            msgPacket.WritePackageLength(package);
             msgPacket.WriteMessage(package);
             foreach (var user in _UserList)
             {
                 if (package.Reciever != "@All")
                 {
-                    if (user.CurrentUID == package.Reciever)
+                    if (user.CurrentUID == package.Reciever || user.CurrentUID == package.Sender)
                     {
                         user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
+                    
                     }
                 }
                 else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);

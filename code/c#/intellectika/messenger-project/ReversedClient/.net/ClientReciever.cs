@@ -147,29 +147,36 @@ namespace Debug.Net
         /// </param>
         public async void ConnectToServer(string userName)
         {
-            //Если клиент не подключен
-            if (!_serviceSocket.Connected)
+            try
             {
-                /// 
-                /// - Client connection [!]
-                ///
-                await _serviceSocket.ConnectAsync(serviceEndPoint);
-                PacketReader = new(_serviceSocket.GetStream());
-
-                if (cancellationTokenSource.IsCancellationRequested)
-                    cancellationTokenSource = new();
-
-                if (!string.IsNullOrEmpty(userName))
+                //Если клиент не подключен
+                if (!_serviceSocket.Connected)
                 {
-                    var connectPacket = new PackageBuilder();
+                    /// 
+                    /// - Client connection [!]
+                    ///
+                    await _serviceSocket.ConnectAsync(serviceEndPoint);
+                    PacketReader = new(_serviceSocket.GetStream());
 
-                    connectPacket.WriteOpCode(0);
+                    if (cancellationTokenSource.IsCancellationRequested)
+                        cancellationTokenSource = new();
 
-                    connectPacket.WriteMessage(new TextMessagePackage(userName, "@All",userName));
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        var connectPacket = new PackageBuilder();
 
-                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+                        connectPacket.WriteOpCode(0);
+
+                        connectPacket.WriteMessage(new TextMessagePackage(userName, "@All", userName));
+
+                        _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+                    }
+                    ReadPackets();
                 }
-                ReadPackets();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The server is currently down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             
         }

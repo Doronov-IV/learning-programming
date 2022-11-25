@@ -47,6 +47,21 @@ namespace NetworkingAuxiliaryLibrary.Processing
             _memoryStream.WriteByte(opCode);
         }
 
+
+        /// <summary>
+        /// When the service gets message, it serializes and deserializes it and looses the package length. That is why we need this action.
+        /// <br />
+        /// Когда сервис получает сообщение, он сериализует и десериализует его, теряя длину пакета. Поэтому, нам необходимо это действие.
+        /// </summary>
+        public void WritePackageLength(MessagePackage package)
+        {
+            var len = BitConverter.GetBytes(package.Data.Length);
+            foreach (var item in len)
+            {
+                _memoryStream.WriteByte(item);
+            }
+        }
+
         
         /// <summary>
         /// Write binary message;

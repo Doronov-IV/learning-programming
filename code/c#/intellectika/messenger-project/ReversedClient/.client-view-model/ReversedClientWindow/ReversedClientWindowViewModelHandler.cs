@@ -42,8 +42,15 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveMessage()
         {
-            var msg = _server.PacketReader.ReadMessage();                                        // reading new message via our packet reader;
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg.Message as string));    // adding it to the observable collection;
+            try 
+            {
+                var msg = _server.PacketReader.ReadMessage();                                        // reading new message via our packet reader;
+                Application.Current.Dispatcher.Invoke(() => Messages.Add($"[{DateTime.Now.TimeOfDay.Hours}:{DateTime.Now.TimeOfDay.Minutes}] " + $"{msg.Sender}: " + msg.Message as string));    // adding it to the observable collection;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
 
@@ -84,8 +91,10 @@ namespace ReversedClient.ViewModel
 
             if (!Users.Any(x => x.UID == user.UID))
             {
-                Application.Current.Dispatcher.Invoke(() => Users.Add(user));
-                Application.Current.Dispatcher.Invoke(() => Messages.Add($"{user.UserName} joins chat."));
+                Application.Current.Dispatcher.Invoke(() => 
+                {
+                    if (user.UID != UserName) Users.Add(user);
+                });
             }
         }
 
@@ -136,17 +145,24 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void SendMessage()
         {
-            if (Message != string.Empty)
+            try
             {
-                _server.SendMessageToServer(new TextMessagePackage(UserName,SelectedUser.UserName,Message));
-                Message = string.Empty;
-            }
+                if (Message != string.Empty)
+                {
+                    _server.SendMessageToServer(new TextMessagePackage(UserName, SelectedUser.UserName, Message));
+                    Message = string.Empty;
+                }
 
-            if (UserFile != null)
+                if (UserFile != null)
+                {
+                    _server.SendFileToServerAsync(new FileMessagePackage(UserName, SelectedUser.UserName, UserFile));
+                    Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
+                    UserFile = null;
+                }
+            }
+            catch(Exception ex)
             {
-                _server.SendFileToServerAsync(new FileMessagePackage(UserName, SelectedUser.UserName,UserFile));
-                Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
-                UserFile = null;
+                MessageBox.Show("Please, choose a contact.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
 
@@ -216,8 +232,8 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public void OnUsersCollectionChanged(object? sender, EventArgs e)
         {
-            if (Users.Count != 1) TheMembersString = "members";
-            else TheMembersString = "member";
+            if (Users.Count != 1) TheContactsString = "contacts";
+            else TheContactsString = "contact";
         }
 
 

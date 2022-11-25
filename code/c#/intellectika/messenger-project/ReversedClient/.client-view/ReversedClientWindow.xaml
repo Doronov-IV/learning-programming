@@ -100,7 +100,7 @@
         Height="24" Width="31"/>
 
         <Label
-            Content="{Binding TheMembersString}" HorizontalAlignment="Left" 
+            Content="{Binding TheContactsString}" HorizontalAlignment="Left" 
           VerticalAlignment="Top" Margin="51,31,0,0" 
         Background="#FFFAFAFA" Foreground="#E50A0A0A" 
       FontFamily="Bookman Old Style" Height="24" Width="89"/>

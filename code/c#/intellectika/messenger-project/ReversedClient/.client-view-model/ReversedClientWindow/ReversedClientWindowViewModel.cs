@@ -43,7 +43,7 @@ namespace ReversedClient.ViewModel
 
 
 
-        /// <inheritdoc cref="TheMembersString"/>
+        /// <inheritdoc cref="TheContactsString"/>
         private string _TheMembersString;
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Надпись "Участники".
         /// </summary>
-        public string TheMembersString
+        public string TheContactsString
         {
             get { return _TheMembersString; }
             set
             {
                 _TheMembersString = value;
-                OnPropertyChanged(nameof(TheMembersString));
+                OnPropertyChanged(nameof(TheContactsString));
             }
         }
 
@@ -279,7 +279,7 @@ namespace ReversedClient.ViewModel
             _userFile = null;
             _DialogService = new AttachFileDialogService();
 
-            _TheMembersString = "member";
+            _TheMembersString = "contacts";
 
             _userName = string.Empty;
             _message = string.Empty;

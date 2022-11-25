@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Compile Remove=".files\**" />
+    <Compile Remove=".net\.net\**" />
     <EmbeddedResource Remove=".files\**" />
+    <EmbeddedResource Remove=".net\.net\**" />
     <None Remove=".files\**" />
+    <None Remove=".net\.net\**" />
     <Page Remove=".files\**" />
+    <Page Remove=".net\.net\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +39,7 @@
     <ApplicationDefinition Include=".client-view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
     <Page Include=".client-view\ClientLoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -53,11 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
-
-	<ItemGroup>
-	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
-	</ItemGroup>
 
 
 	<ItemGroup>
