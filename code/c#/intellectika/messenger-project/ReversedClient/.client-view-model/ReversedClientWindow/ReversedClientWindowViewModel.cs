@@ -109,21 +109,12 @@ namespace ReversedClient.ViewModel
             {
                 _selectedContact = value;
                 OnPropertyChanged(nameof(SelectedContact));
-                SelectedChat = ChatList.First(c => c.Addressee == SelectedContact);
+
+                if (ChatList.First(c => c.Addressee == SelectedContact) is null) 
+                    ChatList.Add(new(addresser: CurrentUser, addressee: SelectedContact));
+                else 
+                    ActiveChat = ChatList.First(c => c.Addressee == SelectedContact);
                 OnPropertyChanged(nameof(ActiveChat.MessageList));
-            }
-        }
-
-
-        private MessengerChat selectedChat;
-
-        public MessengerChat SelectedChat
-        {
-            get { return selectedChat; }
-            set
-            {
-                selectedChat = value;
-                OnPropertyChanged(nameof(SelectedChat));
             }
         }
 

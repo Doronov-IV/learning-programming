@@ -99,7 +99,7 @@ namespace ReversedClient.ViewModel.Chatting
         /// </param>
         public void AddIncommingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addressee.UserName}:" + message);
+            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addressee.UserName}: " + message);
         }
 
 
@@ -115,7 +115,7 @@ namespace ReversedClient.ViewModel.Chatting
         /// </param>
         public void AddOutgoingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addresser.UserName}:" + message);
+            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addresser.UserName}: " + message);
         }
 
 
@@ -149,7 +149,7 @@ namespace ReversedClient.ViewModel.Chatting
         {
             addressee = null;
             addresser = null;
-            _messageList = null;
+            _messageList = new();
         }
 
 

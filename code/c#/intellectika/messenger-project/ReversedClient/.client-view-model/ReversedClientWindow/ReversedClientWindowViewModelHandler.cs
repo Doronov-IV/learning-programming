@@ -45,8 +45,19 @@ namespace ReversedClient.ViewModel
         {
             try 
             {
-                var msg = _server.PacketReader.ReadMessage();                                        // reading new message via our packet reader;
-                Application.Current.Dispatcher.Invoke(() => activeChat.AddIncommingMessage(msg.Message as string));    // adding it to the observable collection;
+                var msg = _server.PacketReader.ReadMessage(); // reading new message via our packet reader;
+                Application.Current.Dispatcher.Invoke(() => 
+                {
+                    var currentActiveChat = ChatList.FirstOrDefault(c => c.Addressee.UserName == msg.Sender);
+
+                    if (currentUser.UID == currentActiveChat.Addressee.UID)
+                        currentActiveChat.AddIncommingMessage(msg.Message as string);
+                    else
+                        currentActiveChat.AddOutgoingMessage(msg.Message as string);
+
+                    ActiveChat = currentActiveChat;
+
+                });    // adding it to the observable collection;
             }
             catch (Exception ex)
             {
@@ -155,6 +166,7 @@ namespace ReversedClient.ViewModel
                 if (Message != string.Empty)
                 {
                     _server.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
+                    //ActiveChat = 
                     Message = string.Empty;
                 }
 
