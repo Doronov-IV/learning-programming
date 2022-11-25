@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
+    <Compile Include=".client-view-model\chatting\MessengerChat.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
     <Compile Include=".net\ClientReciever.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />

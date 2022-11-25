@@ -84,6 +84,18 @@ namespace ReversedClient.ViewModel
             }
         }
 
+        private ObservableCollection<string> activeChat;
+
+        public ObservableCollection<string> ActiveChat
+        {
+            get { return activeChat; }
+            set
+            {
+                activeChat = value;
+                OnPropertyChanged(nameof(ActiveChat));
+            }
+        }
+
 
 
 
