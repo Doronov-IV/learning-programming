@@ -2,6 +2,7 @@
 using System.Windows;
 using Debug.Net;
 using ReversedClient.Model.Basics;
+using ReversedClient.ViewModel.Chatting;
 using ReversedClient.Properties;
 using System.Windows.Interop;
 
@@ -62,31 +63,9 @@ namespace ReversedClient.ViewModel
         }
 
 
+        private MessengerChat activeChat;
 
-
-
-        /// <inheritdoc cref="Messages"/>
-        private ObservableCollection<string> _Messages;
-
-
-        /// <summary>
-        /// Message history observable collection.
-        /// <br />
-        /// Обозреваемая коллекция сообщений.
-        /// </summary>
-        public ObservableCollection<string> Messages 
-        {
-            get { return _Messages; }
-            set
-            {
-                _Messages = value;
-                OnPropertyChanged(nameof(Messages));
-            }
-        }
-
-        private ObservableCollection<string> activeChat;
-
-        public ObservableCollection<string> ActiveChat
+        public MessengerChat ActiveChat
         {
             get { return activeChat; }
             set
@@ -100,8 +79,8 @@ namespace ReversedClient.ViewModel
 
 
 
-        /// <inheritdoc cref="UserName"/>
-        private string _userName;
+        /// <inheritdoc cref="CurrentUser"/>
+        private UserModel currentUser;
 
 
         /// <summary>
@@ -109,27 +88,56 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Имя пользователя, для подключения;
         /// </summary>
-        public string UserName 
+        public UserModel CurrentUser
         {
-            get { return _userName; }
+            get { return currentUser; }
             set
             {
-                _userName = value;
-                OnPropertyChanged(nameof(UserName));
+                currentUser = value;
+                OnPropertyChanged(nameof(CurrentUser));
             }
         }
 
 
-        private UserModel _selectedUser;
+        private UserModel _selectedContact;
 
 
-        public UserModel SelectedUser
+        public UserModel SelectedContact
         {
-            get { return _selectedUser; }
+            get { return _selectedContact; }
             set
             {
-                _selectedUser = value;
-                OnPropertyChanged(nameof(SelectedUser));
+                _selectedContact = value;
+                OnPropertyChanged(nameof(SelectedContact));
+                SelectedChat = ChatList.First(c => c.Addressee == SelectedContact);
+                OnPropertyChanged(nameof(ActiveChat.MessageList));
+            }
+        }
+
+
+        private MessengerChat selectedChat;
+
+        public MessengerChat SelectedChat
+        {
+            get { return selectedChat; }
+            set
+            {
+                selectedChat = value;
+                OnPropertyChanged(nameof(SelectedChat));
+            }
+        }
+
+
+        private ObservableCollection<MessengerChat> chatList;
+
+
+        private ObservableCollection<MessengerChat> ChatList
+        {
+            get { return chatList; }
+            set
+            {
+                chatList = value;
+                OnPropertyChanged(nameof(ChatList));
             }
         }
 
@@ -288,16 +296,16 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ReversedClientWindowViewModel()
         {
+            chatList = new();
             _userFile = null;
             _DialogService = new AttachFileDialogService();
 
             _TheMembersString = "contacts";
 
-            _userName = string.Empty;
+            currentUser = new();
             _message = string.Empty;
 
             _Users = new ObservableCollection<UserModel>();
-            _Messages = new ObservableCollection<string>();
             _server = new();
 
             _server.connectedEvent += ConnectUser;                           // user connection;

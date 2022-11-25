@@ -1,5 +1,6 @@
 ﻿using ReversedClient.client_view;
 using ReversedClient.Model.Basics;
+using ReversedClient.ViewModel.Chatting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace ReversedClient.ViewModel
             try 
             {
                 var msg = _server.PacketReader.ReadMessage();                                        // reading new message via our packet reader;
-                Application.Current.Dispatcher.Invoke(() => Messages.Add($"[{DateTime.Now.TimeOfDay.Hours}:{DateTime.Now.TimeOfDay.Minutes}] " + $"{msg.Sender}: " + msg.Message as string));    // adding it to the observable collection;
+                Application.Current.Dispatcher.Invoke(() => activeChat.AddIncommingMessage(msg.Message as string));    // adding it to the observable collection;
             }
             catch (Exception ex)
             {
@@ -62,7 +63,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RecieveFile()
         {
-            Application.Current.Dispatcher.Invoke(() => Messages.Add("File recieved."));
+            Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add("File recieved."));
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
@@ -89,23 +90,27 @@ namespace ReversedClient.ViewModel
             
              */
 
+            MessengerChat newChat;
             if (!Users.Any(x => x.UID == user.UID))
             {
-                Application.Current.Dispatcher.Invoke(() => 
+                if (user.UID != currentUser.UID)
                 {
-                    if (user.UID != UserName) Users.Add(user);
-                });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Users.Add(user);
+                    });
+                    newChat = new MessengerChat(addressee: user, addresser: CurrentUser);
+                    chatList.Add(newChat);
+                }
             }
         }
 
 
-        // Does not work!!!!
+
         public void DisconnectFromServer()
         {
-            
-            Application.Current.MainWindow = loginWindowReference;
-            
-            chatWindowReference = new();
+
+            Process.GetProcesses().ToList().FindAll(n => n.ProcessName == "ReversedClient")?.ForEach(p => p.Kill());
             //
         }
 
@@ -149,14 +154,14 @@ namespace ReversedClient.ViewModel
             {
                 if (Message != string.Empty)
                 {
-                    _server.SendMessageToServer(new TextMessagePackage(UserName, SelectedUser.UserName, Message));
+                    _server.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
                     Message = string.Empty;
                 }
 
                 if (UserFile != null)
                 {
-                    _server.SendFileToServerAsync(new FileMessagePackage(UserName, SelectedUser.UserName, UserFile));
-                    Application.Current.Dispatcher.Invoke(() => Messages.Add($"File sent."));
+                    _server.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
+                    Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add($"File sent."));
                     UserFile = null;
                 }
             }
@@ -169,7 +174,7 @@ namespace ReversedClient.ViewModel
 
         private void ConnectToService()
         {
-            _server.ConnectToServer(UserName);
+            _server.ConnectToServer(currentUser.UserName);
         }
 
 
@@ -201,14 +206,17 @@ namespace ReversedClient.ViewModel
         {
             try
             {
+                // Debug feature [!]
+                currentUser.UID = currentUser.UserName;
+
                 chatWindowReference = new();
                 loginWindowReference = new();
 
-                Server.ConnectToServer(UserName);
+                Server.ConnectToServer(currentUser.UserName);
 
                 //// [!] In this particular order;
                 //
-                WindowHeaderString = UserName + " - common chat";
+                WindowHeaderString = currentUser.UserName + " - common chat";
                 chatWindowReference.Show();
                 //
 

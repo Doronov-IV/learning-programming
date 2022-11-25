@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view"
         mc:Ignorable="d"
-        Title="{Binding WindowHeaderString}" Height="600" Width="750">
-
+        Title="{Binding WindowHeaderString}" Height="600" Width="750"
+        >
+        
     <Grid Background="#FFFAFAFA">
 
 
@@ -41,7 +42,7 @@
                 Margin="15,60,0,20" Width="154" Background="{x:Null}" 
               BorderBrush="{x:Null}" Foreground="#E50A0A0A" 
             FontFamily="Bookman Old Style"
-            SelectedItem="{Binding SelectedUser}">
+            SelectedItem="{Binding SelectedContact}">
 
 
             <ListView.ItemTemplate>
@@ -59,7 +60,7 @@
 
 
         <ListView
-                  ItemsSource="{Binding Messages}" Margin="20,31,20,20" 
+                  ItemsSource="{Binding Path=ActiveChat.MessageList}" Margin="20,31,20,20" 
                 Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="1" 
               Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
 

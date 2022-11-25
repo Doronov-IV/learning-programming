@@ -149,9 +149,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 foreach (var usr in _UserList)
                 {
-                    broadcastPacket.WriteOpCode(1); // code '1' means 'ew user have connected;
+                    broadcastPacket.WriteOpCode(1); // code '1' means new user has connected;
                     broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All",usr.CurrentUserName));
-                    broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUID.ToString()));
+                    broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUID));
 
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }

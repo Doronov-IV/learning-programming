@@ -184,7 +184,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             var msgRef = _packetReader.ReadMessage();
 
             //имени пользователя присваивается прочитанная строка
-            CurrentUID = CurrentUserName = msgRef.Message as string;
+            CurrentUserName = msgRef.Message as string;
+            CurrentUID = CurrentUserName;
 
             ProcessAsync();
         }
