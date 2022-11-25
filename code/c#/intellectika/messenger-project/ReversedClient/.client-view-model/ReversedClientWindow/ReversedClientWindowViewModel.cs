@@ -112,8 +112,9 @@ namespace ReversedClient.ViewModel
 
                 if (ChatList.First(c => c.Addressee == SelectedContact) is null) 
                     ChatList.Add(new(addresser: CurrentUser, addressee: SelectedContact));
-                else 
-                    ActiveChat = ChatList.First(c => c.Addressee == SelectedContact);
+
+                ActiveChat = ChatList.First(c => c.Addressee == SelectedContact);
+
                 OnPropertyChanged(nameof(ActiveChat.MessageList));
             }
         }

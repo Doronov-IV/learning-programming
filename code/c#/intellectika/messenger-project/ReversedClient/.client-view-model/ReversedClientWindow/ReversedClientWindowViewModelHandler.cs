@@ -46,18 +46,22 @@ namespace ReversedClient.ViewModel
             try 
             {
                 var msg = _server.PacketReader.ReadMessage(); // reading new message via our packet reader;
-                Application.Current.Dispatcher.Invoke(() => 
+                var msgCopy = msg;
+                if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
                 {
-                    var currentActiveChat = ChatList.FirstOrDefault(c => c.Addressee.UserName == msg.Sender);
-
-                    if (currentUser.UID == currentActiveChat.Addressee.UID)
-                        currentActiveChat.AddIncommingMessage(msg.Message as string);
-                    else
-                        currentActiveChat.AddOutgoingMessage(msg.Message as string);
-
-                    ActiveChat = currentActiveChat;
-
-                });    // adding it to the observable collection;
+                    var ActiveChat = ChatList.First(c => c.Addressee.UserName == msg.Sender);
+                    if (ActiveChat is null)
+                    {
+                        MessengerChat newActiveChat = new(addressee: Users.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
+                        Application.Current.Dispatcher.Invoke(() => ChatList.Add(newActiveChat));
+                    }
+                    ActiveChat.AddIncommingMessage(msgCopy.Message as string);
+                    SelectedContact = Users.First(u => u.UID == msg.Sender);
+                }
+                else // if we sent this message
+                {
+                    Application.Current.Dispatcher.Invoke(() => ActiveChat.AddOutgoingMessage(msg.Message as string));
+                }
             }
             catch (Exception ex)
             {
