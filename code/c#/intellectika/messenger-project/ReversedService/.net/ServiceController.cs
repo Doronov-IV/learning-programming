@@ -323,11 +323,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                         {
                             newChat.UserList.Add(newSender);
                             newChat.UserList.Add(newReciever);
-                            newChat.MessageList.Add(newMessage);
+                            context.Chats.Add(newChat);
                         }
                         else newChat = existingChat;
                     }
-                    context.Chats.Add(newChat);
+                    newChat.MessageList.Add(newMessage);
                     newMessage.Chat = newChat;
 
                     context.Messages.Add(newMessage);

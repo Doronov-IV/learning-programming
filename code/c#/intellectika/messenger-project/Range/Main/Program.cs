@@ -1,5 +1,6 @@
 ﻿using System;
 using NetworkingAuxiliaryLibrary.Packages;
+using Range.Encryption;
 
 namespace Range.Main
 {
@@ -7,7 +8,7 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            TryTextPackage();
+            TryPasswordEncryption();
         }
 
 
@@ -51,7 +52,25 @@ namespace Range.Main
 
 
         #endregion PACKAGES
-    
-    
+
+
+
+
+
+        #region ENCRYPTION
+
+
+        public static void TryPasswordEncryption()
+        {
+            var hash = SecurePasswordHasher.Hash("admin");
+
+            var result = SecurePasswordHasher.Verify("admin", hash);
+
+            Console.WriteLine(result);
+        }
+
+
+        #endregion ENCRYPTION
+
     }
 }
