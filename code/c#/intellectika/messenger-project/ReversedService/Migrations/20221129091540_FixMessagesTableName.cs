@@ -78,21 +78,6 @@ namespace ReversedService.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-                        migrationBuilder.CreateIndex(
-                            name: "IX_ChatUser_UserListId",
-                            table: "ChatUser",
-                            column: "UserListId");
-
-                        migrationBuilder.CreateIndex(
-                            name: "IX_messages_AuthorId",
-                            table: "Messages",
-                            column: "AuthorId");
-
-                        migrationBuilder.CreateIndex(
-                            name: "IX_messages_ChatId",
-                            table: "Messages",
-                            column: "ChatId");
         }
     }
 }

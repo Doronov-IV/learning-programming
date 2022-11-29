@@ -20,7 +20,8 @@
         /// </summary>
         public Chat()
         {
-
+            UserList = new();
+            MessageList = new();
         }
     }
 }

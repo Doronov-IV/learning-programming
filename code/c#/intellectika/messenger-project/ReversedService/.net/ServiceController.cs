@@ -1,9 +1,6 @@
 ﻿using ReversedService.ViewModel.ServiceWindow;
-using System.ComponentModel;
-using System.IO.Packaging;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
+using ReversedService.Model.Entities;
+using ReversedService.Model.Context;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -137,6 +134,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+
+
+
         /// <summary>
         /// Broadcast a notification message to all users about the new user connection;
         /// <br />
@@ -199,7 +199,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// Транслируемый файл.
         /// </param>
         /// <param name="SenderId">
-        /// The id of the sender-user.
+        /// The id of the newReciever-user.
         /// <br />
         /// Идентификатор отправителя.
         /// </param>
@@ -267,6 +267,78 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             BroadcastMessage(new TextMessagePackage(disconnectedUser.CurrentUID, "@All" ,$"{disconnectedUser.CurrentUserName} Disconnected!"));
         }
+
+
+
+
+
+
+        public void SendMessageToTheDb(MessagePackage package)
+        {
+            if (package is not null)
+            {
+                using (MessengerDatabaseContext context = new())
+                {
+                    Message newMessage = new();
+
+                    newMessage.Contents = package.Message as string;
+                    newMessage.Date = DateTime.Now.Date.ToString();
+                    newMessage.Time = DateTime.Now.TimeOfDay.ToString();
+
+                    // check if db knows the sender
+                    User newSender = new();
+                    var existingSender = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.Sender));
+                    if (existingSender is null)
+                    {
+                        newSender.PublicId = package.Sender;
+                        newSender.CurrentNickname = package.Sender;
+                        newSender.MessageList = new();
+                        newSender.ChatList = new();
+
+                        context.Users.Add(newSender);
+                    }
+                    else newSender = existingSender;
+                    newMessage.Author = newSender;
+
+                    // check if db knows the reciever
+                    User newReciever = new();
+                    var existingReciever = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.Reciever));
+                    if (existingReciever is null)
+                    {
+                        newReciever.PublicId = package.Reciever;
+                        newReciever.CurrentNickname = package.Reciever;
+                        newReciever.MessageList = new();
+                        newReciever.ChatList = new();
+
+                        context.Users.Add(newReciever);
+                    }
+                    else newReciever = existingReciever;
+
+                    // check if it isn't a new chat
+                    Chat newChat = new();
+                    if (package.Reciever != "@All")
+                    {
+                        var existingChat = context.Chats.FirstOrDefault(c => c.UserList.Contains(newSender) && c.UserList.Contains(newReciever) && c.UserList.Count == 2);
+                        if (existingChat is null)
+                        {
+                            newChat.UserList.Add(newSender);
+                            newChat.UserList.Add(newReciever);
+                            newChat.MessageList.Add(newMessage);
+                        }
+                        else newChat = existingChat;
+                    }
+                    context.Chats.Add(newChat);
+                    newMessage.Chat = newChat;
+
+                    context.Messages.Add(newMessage);
+
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
+
 
 
 

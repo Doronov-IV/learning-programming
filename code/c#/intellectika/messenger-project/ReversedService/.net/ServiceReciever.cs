@@ -112,12 +112,13 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     {
                         case 5:
                             var msg = _packetReader.ReadMessage();
-                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} says: {msg.Message as string}");
+                            StaticServiceHub.SendMessageToTheDb(msg);
+                            SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" says: {msg.Message as string}.");
                             StaticServiceHub.BroadcastMessage(msg);
                             break;
                         case 6:
                             var fileMsg = _packetReader.ReadFile(UserName: CurrentUserName);
-                            SendOutput.Invoke($"[{DateTime.Now}] user {CurrentUserName} sent a filePack.");
+                            SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" sent a file.");
                             StaticServiceHub.BroadcastFileInParallel(fileMsg as FileMessagePackage);
                             break;
                         default:

@@ -25,7 +25,8 @@
         /// </summary>
         public User()
         {
-
+            ChatList = new();
+            MessageList = new();
         }
     }
 }
