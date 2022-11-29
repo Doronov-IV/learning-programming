@@ -9,9 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove=".files\**" />
     <Compile Remove=".net\.net\**" />
+    <EmbeddedResource Remove=".files\**" />
     <EmbeddedResource Remove=".net\.net\**" />
+    <None Remove=".files\**" />
     <None Remove=".net\.net\**" />
+    <Page Remove=".files\**" />
     <Page Remove=".net\.net\**" />
   </ItemGroup>
 
@@ -19,7 +23,13 @@
     <Compile Include=".local-service\TerminalManager.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".net\ServiceController.cs" />
-    <Compile Include=".service-model\Message.cs" />
+    <Compile Include=".service-model\configs\ChatConfiguration.cs" />
+    <Compile Include=".service-model\configs\MessageConfiguration.cs" />
+    <Compile Include=".service-model\configs\UserConfiguration.cs" />
+    <Compile Include=".service-model\context\MessengerDatabaseContext.cs" />
+    <Compile Include=".service-model\entities\Chat.cs" />
+    <Compile Include=".service-model\entities\Message.cs" />
+    <Compile Include=".service-model\entities\User.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
     <Compile Include=".service-view\App.xaml.cs" />
@@ -33,6 +43,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Simple.Wpf.Terminal" Version="2.3.53" />
     <PackageReference Include="ToggleSwitch" Version="1.2.0" />
@@ -42,7 +53,7 @@
     <ApplicationDefinition Include=".service-view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Content Include=".service-model\readme.txt" />
+    <Content Include=".config\appsettings.json" />
     <Page Include=".properties\DefaultTerminalStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -50,10 +61,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include=".files\" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />

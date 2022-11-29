@@ -13,7 +13,7 @@ using EntityHomeworkSecond.Model;
 using Prism.Commands;
 using EntityHomeworkSecond.Model.Context;
 using EntityHomeworkSecond.Model.Entities;
-using Tools.Connection;
+using Tools.Flags;
 using Microsoft.Data.SqlClient;
 
 namespace EntityHomeworkSecond.ViewModel

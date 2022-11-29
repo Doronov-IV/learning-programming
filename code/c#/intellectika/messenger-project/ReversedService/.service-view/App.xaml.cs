@@ -33,6 +33,9 @@ global using Prism.Commands;
 
 global using ReversedService.ViewModel;
 
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using ReversedService.service_view;
 
 namespace ReversedService

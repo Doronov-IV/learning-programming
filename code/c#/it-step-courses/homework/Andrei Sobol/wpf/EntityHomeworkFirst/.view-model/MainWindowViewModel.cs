@@ -11,7 +11,7 @@ global using System.Collections.ObjectModel;
 using EntityHomeworkFirst.Model;
 using Prism.Commands;
 using System.Data.SqlClient;
-using Tools.Connection;
+using Tools.Flags;
 
 namespace EntityHomeworkFirst.ViewModel
 {
