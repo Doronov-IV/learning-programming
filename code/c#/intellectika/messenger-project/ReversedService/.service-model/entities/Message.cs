@@ -17,10 +17,10 @@
         public int AuthorId { get; set; }
 
 
-        public DateOnly Date { get; set; }
+        public string Date { get; set; } = null!;
 
 
-        public TimeOnly Time { get; set; }
+        public string Time { get; set; } = null!;
 
 
         public User Author { get; set; } = null!;

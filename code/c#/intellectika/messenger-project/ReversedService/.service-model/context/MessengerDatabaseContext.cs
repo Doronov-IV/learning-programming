@@ -16,7 +16,7 @@ namespace ReversedService.Model.Context
         public DbSet<User> Users { get; set; } = null!; 
 
 
-        public DbSet<Message> messages { get; set; } = null!;
+        public DbSet<Message> Messages { get; set; } = null!;
 
 
         public DbSet<Chat> Chats { get; set; } = null!;
@@ -64,7 +64,33 @@ namespace ReversedService.Model.Context
         #region CONSTRUCTION
 
 
-        //
+
+        /// <summary>
+        /// Default constructor;
+        /// <br />
+        /// Конструктор по умолчанию;
+        /// </summary>
+        public MessengerDatabaseContext()
+        {
+            Database.EnsureCreated();
+        }
+
+
+        /// <summary>
+        /// Constructor with connection options configurations (in this case).
+        /// <br />
+        /// Конструктор с конфигурацией опций подключения (в данном случае).
+        /// </summary>
+        /// <param name="options">
+        /// Connection options instance.
+        /// <br />
+        /// Экземпляр опций подключения.
+        /// </param>
+        public MessengerDatabaseContext(DbContextOptions<MessengerDatabaseContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
+
 
 
         #endregion CONSTRUCTION

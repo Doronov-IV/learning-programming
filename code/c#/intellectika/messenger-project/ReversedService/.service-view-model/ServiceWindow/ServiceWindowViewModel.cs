@@ -1,4 +1,5 @@
 ﻿using ReversedService.LocalService;
+using ReversedService.Model.Context;
 using Toolbox.Flags;
 using Tools.Flags;
 
@@ -156,6 +157,10 @@ namespace ReversedService.ViewModel.ServiceWindow
             ClearLogCommand = new(CustomTerminalManager.ClearLog);
             Service.SendServiceOutput += CustomTerminalManager.AddMessage;
 
+            using (MessengerDatabaseContext context = new())
+            {
+
+            }
         }
 
 
