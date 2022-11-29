@@ -304,7 +304,7 @@ namespace ReversedClient.ViewModel
             _server.fileReceivedEvent += RecieveFile;                        // file receipt;
             _server.msgReceivedEvent += RecieveMessage;                      // message receipt;
             _server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            _server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            //_server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
 
             _Users.CollectionChanged += OnUsersCollectionChanged;
 

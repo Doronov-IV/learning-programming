@@ -28,7 +28,7 @@ namespace ReversedClient.ViewModel
         private void RemoveUser()
         {
             var uid = _server.PacketReader.ReadMessage().Message;
-            var user = Users.Where(x => x.UID == uid).FirstOrDefault();
+            var user = Users.Where(x => x.UID.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
             Application.Current.Dispatcher.Invoke(() => Users.Remove(user));   // removing disconnected user;
@@ -122,15 +122,6 @@ namespace ReversedClient.ViewModel
 
 
 
-        public void DisconnectFromServer()
-        {
-
-            Process.GetProcesses().ToList().FindAll(n => n.ProcessName == "ReversedClient")?.ForEach(p => p.Kill());
-            //
-        }
-
-
-
         /// <summary>
         /// Open file dialog to choose a file to send.
         /// <br />
@@ -188,13 +179,24 @@ namespace ReversedClient.ViewModel
         }
 
 
+
+        /// <summary>
+        /// Connect to service.
+        /// <br />
+        /// Подключиться к сервису.
+        /// </summary>
         private void ConnectToService()
         {
             _server.ConnectToServer(currentUser.UserName);
         }
 
 
-
+        
+        /// <summary>
+        /// Show exception output message.
+        /// <br />
+        /// Показать вывод сообщения ошибки/исключения.
+        /// </summary>
         private void ShowErrorMessage(string sMessage)
         {
             MessageBox.Show(sMessage, "Exception", MessageBoxButton.OK, MessageBoxImage.Information);

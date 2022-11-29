@@ -11,6 +11,7 @@ namespace ReversedClient.ViewModel.Chatting
     public class MessengerChat : INotifyPropertyChanged
     {
 
+
         #region STATE
 
 
