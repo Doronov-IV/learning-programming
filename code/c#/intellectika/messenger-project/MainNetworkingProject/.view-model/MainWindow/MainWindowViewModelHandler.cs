@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -91,6 +92,18 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 CreateOrClearDownloads(name.Name);
             });
+        }
+
+
+
+        public void OnClearDatabaseTablesButtonClick()
+        {
+            using (SqlConnection connection = new("Server=.\\doronoviv;Database=MessengerDatabase;Trusted_Connection=True;Encrypt=false;"))
+            {
+                connection.Open();
+                SqlCommand command = new("USE MessengerDatabase; DELETE FROM Users; DELETE FROM Messages; DELETE FROM ChatUser; DELETE FROM Chats", connection);
+                command.ExecuteNonQuery();
+            }
         }
 
 
