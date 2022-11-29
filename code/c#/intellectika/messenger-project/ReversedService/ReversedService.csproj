@@ -19,6 +19,7 @@
     <Compile Include=".local-service\TerminalManager.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".net\ServiceController.cs" />
+    <Compile Include=".service-model\Message.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
     <Compile Include=".service-view\App.xaml.cs" />
@@ -26,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Simple.Wpf.Terminal" Version="2.3.53" />
     <PackageReference Include="ToggleSwitch" Version="1.2.0" />
