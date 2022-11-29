@@ -127,7 +127,7 @@ namespace ReversedClient.ViewModel.Chatting
         /// </summary>
         public void ClearMessages()
         {
-            MessageList.Clear();
+            MessageList = new();
         }
 
 

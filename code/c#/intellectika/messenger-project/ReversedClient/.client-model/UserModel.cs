@@ -16,7 +16,7 @@
         /// <br />
         /// Уникальный идентификатор пользователя;
         /// </summary>
-        public string UID { get; set; } = null!;
+        public string PublicId { get; set; } = null!;
 
     }
 }

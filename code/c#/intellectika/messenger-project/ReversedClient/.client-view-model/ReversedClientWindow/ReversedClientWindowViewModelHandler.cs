@@ -28,7 +28,7 @@ namespace ReversedClient.ViewModel
         private void RemoveUser()
         {
             var uid = _server.PacketReader.ReadMessage().Message;
-            var user = Users.Where(x => x.UID.Equals(uid)).FirstOrDefault();
+            var user = Users.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
             Application.Current.Dispatcher.Invoke(() => Users.Remove(user));   // removing disconnected user;
@@ -55,8 +55,8 @@ namespace ReversedClient.ViewModel
                         MessengerChat newActiveChat = new(addressee: Users.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(newActiveChat));
                     }
-                    ActiveChat.AddIncommingMessage(msgCopy.Message as string);
-                    SelectedContact = Users.First(u => u.UID == msg.Sender);
+                    Application.Current.Dispatcher.Invoke(() => ActiveChat.AddIncommingMessage(msgCopy.Message as string));
+                    SelectedContact = Users.First(u => u.PublicId == msg.Sender);
                 }
                 else // if we sent this message
                 {
@@ -95,7 +95,7 @@ namespace ReversedClient.ViewModel
             var user = new UserModel()
             {
                 UserName = _server.PacketReader.ReadMessage().Message as string,
-                UID = _server.PacketReader.ReadMessage().Message as string,
+                PublicId = _server.PacketReader.ReadMessage().Message as string,
             };
 
             /*
@@ -106,9 +106,9 @@ namespace ReversedClient.ViewModel
              */
 
             MessengerChat newChat;
-            if (!Users.Any(x => x.UID == user.UID))
+            if (!Users.Any(x => x.PublicId == user.PublicId))
             {
-                if (user.UID != currentUser.UID)
+                if (user.PublicId != currentUser.PublicId)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -225,7 +225,7 @@ namespace ReversedClient.ViewModel
             try
             {
                 // Debug feature [!]
-                currentUser.UID = currentUser.UserName;
+                currentUser.PublicId = currentUser.UserName;
 
                 chatWindowReference = new();
                 loginWindowReference = new();
