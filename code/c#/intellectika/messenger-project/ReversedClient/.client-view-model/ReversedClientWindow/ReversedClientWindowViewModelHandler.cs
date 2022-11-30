@@ -49,18 +49,18 @@ namespace ReversedClient.ViewModel
                 var msgCopy = msg;
                 if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
                 {
-                    var ActiveChat = ChatList.First(c => c.Addressee.UserName == msg.Sender);
-                    if (ActiveChat is null)
+                    var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId == msg.Sender);
+                    if (someChat is null)
                     {
-                        MessengerChat newActiveChat = new(addressee: OnlineMembers.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
-                        Application.Current.Dispatcher.Invoke(() => ChatList.Add(newActiveChat));
+                        someChat = new(addressee: OnlineMembers.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
+                        Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
                     }
-                    Application.Current.Dispatcher.Invoke(() => ActiveChat.AddIncommingMessage(msgCopy.Message as string));
-                    ActiveChat = ChatList.First(u => u.Addressee.PublicId == msg.Sender);
+                    Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.Message as string));
                 }
                 else // if we sent this message
                 {
-                    Application.Current.Dispatcher.Invoke(() => ActiveChat.AddOutgoingMessage(msg.Message as string));
+                    var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
+                    Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msg.Message as string));
                 }
             }
             catch (Exception ex)
@@ -114,8 +114,6 @@ namespace ReversedClient.ViewModel
                     {
                         OnlineMembers.Add(user);
                     });
-                    newChat = new MessengerChat(addressee: user, addresser: CurrentUser);
-                    chatList.Add(newChat);
                 }
             }
         }
@@ -160,8 +158,13 @@ namespace ReversedClient.ViewModel
             {
                 if (Message != string.Empty)
                 {
-                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, ActiveChat.Addressee.UserName, Message));
-                    //ActiveChat = 
+                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedOnlineMember.UserName, Message));
+                    var someChat = ChatList.FirstOrDefault(c => c.Addressee == SelectedOnlineMember);
+                    if (someChat is null)
+                    {
+                        someChat = new(addresser: CurrentUser, addressee: SelectedOnlineMember);
+                        ChatList.Add(someChat);
+                    }
                     Message = string.Empty;
                 }
 

@@ -36,6 +36,9 @@ namespace ReversedClient.ViewModel
         /// <inheritdoc cref="ActiveChat"/>
         private MessengerChat activeChat;
 
+        /// <inheritdoc cref="SelectedOnlineMember"/>
+        private UserModel selectedOnlineMember;
+
 
         /// <inheritdoc cref="CurrentUser"/>
         private UserModel currentUser;
@@ -54,7 +57,7 @@ namespace ReversedClient.ViewModel
 
 
         /// <inheritdoc cref="UserFile"/>
-        private FileInfo userFile;
+        private FileInfo? userFile;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -126,6 +129,29 @@ namespace ReversedClient.ViewModel
 
 
         /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        public UserModel SelectedOnlineMember
+        {
+            get { return selectedOnlineMember; }
+            set
+            {
+                selectedOnlineMember = value;
+                OnPropertyChanged(nameof(SelectedOnlineMember));
+
+                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.UserName.Equals(selectedOnlineMember.UserName));
+                if (someExistingChat is null)
+                {
+                    someExistingChat = new(addresser: CurrentUser, addressee: SelectedOnlineMember);
+                }
+                ActiveChat= someExistingChat;
+            }
+        }
+
+
+        /// <summary>
         /// The instance representing current client info;
         /// <br />
         /// Объект, который содержит в себе данные текущего клиента;
@@ -146,7 +172,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Список чатов.
         /// </summary>
-        private ObservableCollection<MessengerChat> ChatList
+        public ObservableCollection<MessengerChat> ChatList
         {
             get { return chatList; }
             set
@@ -194,7 +220,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Файл, прикреплённый к пользовательскому сообщению.
         /// </summary>
-        public FileInfo UserFile
+        public FileInfo? UserFile
         {
             get { return userFile; }
             set
@@ -289,8 +315,8 @@ namespace ReversedClient.ViewModel
             message = string.Empty;
 
             onlineMembers = new ObservableCollection<UserModel>();
-            serviceTransmitter = new();
 
+            serviceTransmitter = new();
             serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
             serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;

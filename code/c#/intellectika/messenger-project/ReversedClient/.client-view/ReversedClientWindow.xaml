@@ -35,25 +35,73 @@
 
         <!--#region Listviews-->
 
-        <ListView 
-                Margin="0"
-              BorderBrush="{x:Null}" Foreground="#E50A0A0A"     
-            FontFamily="Bookman Old Style"
-          SelectedItem="{Binding SelectedContact}" Grid.ColumnSpan="2">
-        </ListView>
+        <DockPanel Background="LightGray" Grid.Column="0" Margin="0"
+                    >
 
-        <StackPanel Background="LightGray" Grid.ColumnSpan="2" Margin="0"/>
+            <TabControl Margin="0,5,0,0" Background="Transparent">
+                <TabItem Header="Chats">
+                    <ListView   
+                      BorderBrush="{x:Null}" Foreground="#E50A0A0A"
+                    Margin="0,10,0,0" FontFamily="Bookman Old Style"
+                  SelectedItem="{Binding ActiveChat}" Grid.Column="0"
+                 Background="Transparent" ItemsSource="{Binding ChatList}"
+                 >
+                        <ListView.ItemTemplate>
 
+                            <DataTemplate>
 
-        <ListView
-                  ItemsSource="{Binding Path=ActiveChat.MessageList}" Margin="0,10,0,0" 
-                BorderBrush="{x:Null}" Grid.Column="1" 
-              Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" HorizontalAlignment="Center" Width="542" Height="519" VerticalAlignment="Top"
+                                <TextBlock Text="{Binding Path=Addressee.UserName}"/>
+
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+
+                <TabItem Header="Online">
+                    <ListView   
+                      Margin="0,10,0,0" FontFamily="Bookman Old Style"
+                     BorderBrush="{x:Null}" Foreground="#E50A0A0A"
+                   SelectedItem="{Binding SelectedOnlineMember}" Grid.Column="0"
+                 Background="Transparent" ItemsSource="{Binding OnlineMembers}"
+                 >
+                        <ListView.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <TextBlock Text="{Binding UserName}"/>
+
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+
+        <Grid Background="LightSteelBlue" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ListView Background="Transparent"
+                ItemsSource="{Binding Path=ActiveChat.MessageList}" 
+              Margin="0,5,0,0" BorderBrush="{x:Null}" 
+            Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
          />
 
-        <StackPanel 
-            Grid.Column="1" Background="LightSteelBlue"
-         />
+            <TextBox 
+                Margin="20,0,80,10" VerticalAlignment="Bottom"
+               Text="{Binding Message}" 
+              Style="{StaticResource SendMessageTextBox}"
+             />
+
+            <Button
+                Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Margin="0,0,10,7"
+              Content="Send" Command="{Binding SendMessageCommand}" 
+            Height="20" Width="50"/>
+        </Grid>
 
         <!--#endregion Listviews-->
 
