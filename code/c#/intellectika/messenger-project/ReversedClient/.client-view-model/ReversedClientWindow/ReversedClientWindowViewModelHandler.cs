@@ -27,7 +27,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RemoveUser()
         {
-            var uid = server.PacketReader.ReadMessage().Message;
+            var uid = serviceTransmitter.PacketReader.ReadMessage().Message;
             var user = Users.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
@@ -45,7 +45,7 @@ namespace ReversedClient.ViewModel
         {
             try 
             {
-                var msg = server.PacketReader.ReadMessage(); // reading new message via our packet reader;
+                var msg = serviceTransmitter.PacketReader.ReadMessage(); // reading new message via our packet reader;
                 var msgCopy = msg;
                 if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
                 {
@@ -94,8 +94,8 @@ namespace ReversedClient.ViewModel
             // create new user instance;
             var user = new UserModel()
             {
-                UserName = server.PacketReader.ReadMessage().Message as string,
-                PublicId = server.PacketReader.ReadMessage().Message as string,
+                UserName = serviceTransmitter.PacketReader.ReadMessage().Message as string,
+                PublicId = serviceTransmitter.PacketReader.ReadMessage().Message as string,
             };
 
             /*
@@ -160,14 +160,14 @@ namespace ReversedClient.ViewModel
             {
                 if (Message != string.Empty)
                 {
-                    server.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
+                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
                     //ActiveChat = 
                     Message = string.Empty;
                 }
 
                 if (UserFile != null)
                 {
-                    server.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
+                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
                     Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add($"File sent."));
                     UserFile = null;
                 }
@@ -187,7 +187,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void ConnectToService()
         {
-            server.ConnectToServer(currentUser.UserName);
+            serviceTransmitter.ConnectToServer(currentUser.UserName);
         }
 
 
@@ -230,7 +230,7 @@ namespace ReversedClient.ViewModel
                 _chatWindowReference = new();
                 _loginWindowReference = new();
 
-                Server.ConnectToServer(currentUser.UserName);
+                ServiceTransmitter.ConnectToServer(currentUser.UserName);
 
                 //// [!] In this particular order;
                 //

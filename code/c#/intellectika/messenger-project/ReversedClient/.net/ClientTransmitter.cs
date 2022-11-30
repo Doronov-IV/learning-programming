@@ -7,11 +7,11 @@ using System.Windows;
 namespace Debug.Net
 {
     /// <summary>
-    /// A service that manages both connections and reading/writing data on lower level;
+    /// An instance that provides client with basic datalink operations such as: connectoin, data receipt, data sending;
     /// <br />
-    /// Сервис, который отвечает за подключения и чтение/запись данных на более низком уровне;
+    /// Абстракция, которая предоставляет клиенту возможность проводить основные сетевые действия, такие как: подключение, приём данных, передача данных;
     /// </summary>
-    public class ClientReciever
+    public class ClientTransmitter
     {
 
 
@@ -176,7 +176,7 @@ namespace Debug.Net
             }
             catch (Exception ex)
             {
-                MessageBox.Show("The server is currently down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("The serviceTransmitter is currently down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             
         }
@@ -332,7 +332,7 @@ namespace Debug.Net
                             break;
 
                         default:
-                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientReciever, method: ReadPackets.");
+                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPackets.");
                             break;
                     }
                 }
@@ -355,7 +355,7 @@ namespace Debug.Net
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ClientReciever()
+        public ClientTransmitter()
         {
             _serviceSocket = new TcpClient();
         }

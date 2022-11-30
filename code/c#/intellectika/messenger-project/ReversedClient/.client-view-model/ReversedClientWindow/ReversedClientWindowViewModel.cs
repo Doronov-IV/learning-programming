@@ -22,21 +22,24 @@ namespace ReversedClient.ViewModel
         #region PROPERTIES - Object State
 
 
+
         /// <inheritdoc cref="Users"/>
         private ObservableCollection<UserModel> users;
+
 
         /// <inheritdoc cref="TheContactsString"/>
         private string theContactsString;
 
+
+        /// <inheritdoc cref="ActiveChat"/>
         private MessengerChat activeChat;
+
 
         /// <inheritdoc cref="CurrentUser"/>
         private UserModel currentUser;
 
 
-        private UserModel selectedContact;
-
-
+        /// <inheritdoc cref="ChatList"/>
         private ObservableCollection<MessengerChat> chatList;
 
 
@@ -51,8 +54,9 @@ namespace ReversedClient.ViewModel
         /// <inheritdoc cref="UserFile"/>
         private FileInfo userFile;
 
-        /// <inheritdoc cref="Server"/>
-        private ClientReciever server;
+
+        /// <inheritdoc cref="ServiceTransmitter"/>
+        private ClientTransmitter serviceTransmitter;
 
 
         /// <summary>
@@ -63,18 +67,26 @@ namespace ReversedClient.ViewModel
         private IDialogService _dialogService;
 
 
+        /// <summary>
+        /// A reference to the client login window that comes first on application launch.
+        /// <br />
+        /// Ссылка на окно клиента, которое выходит первым при запуске приложения.
+        /// </summary>
         private ClientLoginWindow _loginWindowReference;
 
 
+        /// <summary>
+        /// A reference to the chat window that comes on user succsessful authorisation.
+        /// <br />
+        /// Ссылка на окно чата, которое выходит при успешной авторизации пользователя.
+        /// </summary>
         private ReversedClientWindow _chatWindowReference;
 
 
-
-
         /// <summary>
-        /// The Users observable collection.
+        /// The observable collection of known users [Obsolete].
         /// <br />
-        /// Обозреваемая коллекция пользователей.
+        /// Обозреваемая коллекция пользователей [Устарело].
         /// </summary>
         public ObservableCollection<UserModel> Users 
         {
@@ -89,21 +101,10 @@ namespace ReversedClient.ViewModel
 
 
         /// <summary>
-        /// The 'Contacts' string.
+        /// A chat that user has clicked upon. 'Null' by default.
         /// <br />
-        /// Надпись "Контакты".
+        /// Чат, на который кликнул пользователь. "Null" по умолчанию.
         /// </summary>
-        public string TheContactsString
-        {
-            get { return theContactsString; }
-            set
-            {
-                theContactsString = value;
-                OnPropertyChanged(nameof(TheContactsString));
-            }
-        }
-
-
         public MessengerChat ActiveChat
         {
             get { return activeChat; }
@@ -115,12 +116,10 @@ namespace ReversedClient.ViewModel
         }
 
 
-
-
         /// <summary>
-        /// The name of the user to connect;
+        /// The instance representing current client info;
         /// <br />
-        /// Имя пользователя, для подключения;
+        /// Объект, который содержит в себе данные текущего клиента;
         /// </summary>
         public UserModel CurrentUser
         {
@@ -133,24 +132,11 @@ namespace ReversedClient.ViewModel
         }
 
 
-        public UserModel SelectedContact
-        {
-            get { return selectedContact; }
-            set
-            {
-                selectedContact = value;
-                OnPropertyChanged(nameof(SelectedContact));
-
-                if (ChatList.First(c => c.Addressee == SelectedContact) is null) 
-                    ChatList.Add(new(addresser: CurrentUser, addressee: SelectedContact));
-
-                ActiveChat = ChatList.First(c => c.Addressee == SelectedContact);
-
-                OnPropertyChanged(nameof(ActiveChat.MessageList));
-            }
-        }
-
-
+        /// <summary>
+        /// A list of chats.
+        /// <br />
+        /// Список чатов.
+        /// </summary>
         private ObservableCollection<MessengerChat> ChatList
         {
             get { return chatList; }
@@ -160,7 +146,6 @@ namespace ReversedClient.ViewModel
                 OnPropertyChanged(nameof(ChatList));
             }
         }
-
 
 
         /// <summary>
@@ -179,9 +164,6 @@ namespace ReversedClient.ViewModel
         }
 
 
-
-
-
         /// <summary>
         /// Message input string.
         /// <br />
@@ -196,7 +178,6 @@ namespace ReversedClient.ViewModel
                 OnPropertyChanged(nameof(Message));
             }
         }
-
 
 
         /// <summary>
@@ -215,19 +196,16 @@ namespace ReversedClient.ViewModel
         }
 
 
-
         /// <summary>
-        /// An instance of a 'ClientReciever';
+        /// An instance of a 'ClientTransmitter' to communicate with the service;
         /// <br />
-        /// Экземпляр класса "ClientReciever";
+        /// Экземпляр класса "ClientTransmitter" для коммуникации с сервисом;
         /// </summary>
-        public ClientReciever Server
+        public ClientTransmitter ServiceTransmitter
         {
-            get { return server; }
-            set { server = value; }
+            get { return serviceTransmitter; }
+            set { serviceTransmitter = value; }
         }
-
-
 
 
 
@@ -304,13 +282,13 @@ namespace ReversedClient.ViewModel
             message = string.Empty;
 
             users = new ObservableCollection<UserModel>();
-            server = new();
+            serviceTransmitter = new();
 
-            server.connectedEvent += ConnectUser;                           // user connection;
-            server.fileReceivedEvent += RecieveFile;                        // file receipt;
-            server.msgReceivedEvent += RecieveMessage;                      // message receipt;
-            server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            //server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
+            serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
+            serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
+            serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
+            //serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
 
             users.CollectionChanged += OnUsersCollectionChanged;
 
@@ -322,7 +300,7 @@ namespace ReversedClient.ViewModel
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(OnSignInButtonClick);
 
-            server.SendOutput += ShowErrorMessage;
+            serviceTransmitter.SendOutput += ShowErrorMessage;
         }
 
 
