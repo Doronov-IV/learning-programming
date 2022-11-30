@@ -183,7 +183,7 @@ namespace Debug.Net
             }
             catch (Exception ex)
             {
-                MessageBox.Show("The serviceTransmitter is currently down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("The service is down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
