@@ -23,12 +23,14 @@ namespace ReversedClient.ViewModel
 
 
 
-        /// <inheritdoc cref="Users"/>
-        private ObservableCollection<UserModel> users;
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                               ↓   FIELDS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-        /// <inheritdoc cref="TheContactsString"/>
-        private string theContactsString;
+        /// <inheritdoc cref="OnlineMembers"/>
+        private ObservableCollection<UserModel> onlineMembers;
 
 
         /// <inheritdoc cref="ActiveChat"/>
@@ -83,19 +85,26 @@ namespace ReversedClient.ViewModel
         private ReversedClientWindow _chatWindowReference;
 
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
         /// <summary>
-        /// The observable collection of known users [Obsolete].
+        /// The observable collection of known online users.
         /// <br />
-        /// Обозреваемая коллекция пользователей [Устарело].
+        /// Обозреваемая коллекция пользователей в сети.
         /// </summary>
-        public ObservableCollection<UserModel> Users 
+        public ObservableCollection<UserModel> OnlineMembers 
         {
-            get { return users; }
+            get { return onlineMembers; }
             set
             {
-                users = value;
+                onlineMembers = value;
 
-                OnPropertyChanged(nameof(Users));
+                OnPropertyChanged(nameof(OnlineMembers));
             }
         }
 
@@ -276,12 +285,10 @@ namespace ReversedClient.ViewModel
             userFile = null;
             _dialogService = new AttachFileDialogService();
 
-            theContactsString = "contacts";
-
             currentUser = new();
             message = string.Empty;
 
-            users = new ObservableCollection<UserModel>();
+            onlineMembers = new ObservableCollection<UserModel>();
             serviceTransmitter = new();
 
             serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
@@ -289,8 +296,6 @@ namespace ReversedClient.ViewModel
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
             serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
             //serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
-
-            users.CollectionChanged += OnUsersCollectionChanged;
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new (ConnectToService);

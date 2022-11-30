@@ -28,10 +28,10 @@ namespace ReversedClient.ViewModel
         private void RemoveUser()
         {
             var uid = serviceTransmitter.PacketReader.ReadMessage().Message;
-            var user = Users.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
+            var user = OnlineMembers.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user));   // removing disconnected user;
+            Application.Current.Dispatcher.Invoke(() => OnlineMembers.Remove(user));   // removing disconnected user;
         }
 
 
@@ -52,11 +52,11 @@ namespace ReversedClient.ViewModel
                     var ActiveChat = ChatList.First(c => c.Addressee.UserName == msg.Sender);
                     if (ActiveChat is null)
                     {
-                        MessengerChat newActiveChat = new(addressee: Users.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
+                        MessengerChat newActiveChat = new(addressee: OnlineMembers.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(newActiveChat));
                     }
                     Application.Current.Dispatcher.Invoke(() => ActiveChat.AddIncommingMessage(msgCopy.Message as string));
-                    SelectedContact = Users.First(u => u.PublicId == msg.Sender);
+                    ActiveChat = ChatList.First(u => u.Addressee.PublicId == msg.Sender);
                 }
                 else // if we sent this message
                 {
@@ -106,13 +106,13 @@ namespace ReversedClient.ViewModel
              */
 
             MessengerChat newChat;
-            if (!Users.Any(x => x.PublicId == user.PublicId))
+            if (!OnlineMembers.Any(x => x.PublicId == user.PublicId))
             {
                 if (user.PublicId != currentUser.PublicId)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        Users.Add(user);
+                        OnlineMembers.Add(user);
                     });
                     newChat = new MessengerChat(addressee: user, addresser: CurrentUser);
                     chatList.Add(newChat);
@@ -160,14 +160,14 @@ namespace ReversedClient.ViewModel
             {
                 if (Message != string.Empty)
                 {
-                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
+                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, ActiveChat.Addressee.UserName, Message));
                     //ActiveChat = 
                     Message = string.Empty;
                 }
 
                 if (UserFile != null)
                 {
-                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
+                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, ActiveChat.Addressee.UserName, UserFile));
                     Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add($"File sent."));
                     UserFile = null;
                 }
@@ -247,19 +247,6 @@ namespace ReversedClient.ViewModel
             {
                 MessageBox.Show($"Unable to connect.\n\nException: {ex.Message}", "Exception intercepted", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-
-
-        /// <summary>
-        /// Users collection changed handler.
-        /// <br />
-        /// Обработчик изменения коллекции пользователей.
-        /// </summary>
-        public void OnUsersCollectionChanged(object? sender, EventArgs e)
-        {
-            if (Users.Count != 1) TheContactsString = "contacts";
-            else TheContactsString = "contact";
         }
 
 
