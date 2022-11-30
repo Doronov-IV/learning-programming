@@ -23,7 +23,53 @@ namespace ReversedClient.ViewModel
 
 
         /// <inheritdoc cref="Users"/>
-        private ObservableCollection<UserModel> _Users;
+        private ObservableCollection<UserModel> users;
+
+        /// <inheritdoc cref="TheContactsString"/>
+        private string theContactsString;
+
+        private MessengerChat activeChat;
+
+        /// <inheritdoc cref="CurrentUser"/>
+        private UserModel currentUser;
+
+
+        private UserModel selectedContact;
+
+
+        private ObservableCollection<MessengerChat> chatList;
+
+
+        /// <inheritdoc cref="WindowHeaderString"/>
+        private string windowHeaderString;
+
+
+        /// <inheritdoc cref="Message"/>
+        private string message;
+
+
+        /// <inheritdoc cref="UserFile"/>
+        private FileInfo userFile;
+
+        /// <inheritdoc cref="Server"/>
+        private ClientReciever server;
+
+
+        /// <summary>
+        /// The service of the file selection dialog.
+        /// <br />
+        /// Сервис диалога выбора файла.
+        /// </summary>
+        private IDialogService _dialogService;
+
+
+        private ClientLoginWindow _loginWindowReference;
+
+
+        private ReversedClientWindow _chatWindowReference;
+
+
+
 
         /// <summary>
         /// The Users observable collection.
@@ -32,38 +78,31 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ObservableCollection<UserModel> Users 
         {
-            get { return _Users; }
+            get { return users; }
             set
             {
-                _Users = value;
+                users = value;
 
                 OnPropertyChanged(nameof(Users));
             }
         }
 
 
-
-
-        /// <inheritdoc cref="TheContactsString"/>
-        private string _TheMembersString;
-
         /// <summary>
-        /// The 'Members' string.
+        /// The 'Contacts' string.
         /// <br />
-        /// Надпись "Участники".
+        /// Надпись "Контакты".
         /// </summary>
         public string TheContactsString
         {
-            get { return _TheMembersString; }
+            get { return theContactsString; }
             set
             {
-                _TheMembersString = value;
+                theContactsString = value;
                 OnPropertyChanged(nameof(TheContactsString));
             }
         }
 
-
-        private MessengerChat activeChat;
 
         public MessengerChat ActiveChat
         {
@@ -76,11 +115,6 @@ namespace ReversedClient.ViewModel
         }
 
 
-
-
-
-        /// <inheritdoc cref="CurrentUser"/>
-        private UserModel currentUser;
 
 
         /// <summary>
@@ -99,15 +133,12 @@ namespace ReversedClient.ViewModel
         }
 
 
-        private UserModel _selectedContact;
-
-
         public UserModel SelectedContact
         {
-            get { return _selectedContact; }
+            get { return selectedContact; }
             set
             {
-                _selectedContact = value;
+                selectedContact = value;
                 OnPropertyChanged(nameof(SelectedContact));
 
                 if (ChatList.First(c => c.Addressee == SelectedContact) is null) 
@@ -118,9 +149,6 @@ namespace ReversedClient.ViewModel
                 OnPropertyChanged(nameof(ActiveChat.MessageList));
             }
         }
-
-
-        private ObservableCollection<MessengerChat> chatList;
 
 
         private ObservableCollection<MessengerChat> ChatList
@@ -134,8 +162,6 @@ namespace ReversedClient.ViewModel
         }
 
 
-        /// <inheritdoc cref="WindowHeaderString"/>
-        private string _windowHeaderString;
 
         /// <summary>
         /// The header of the wpf window. Corrensponds to the user name.
@@ -144,18 +170,17 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public string WindowHeaderString
         {
-            get { return _windowHeaderString; }
+            get { return windowHeaderString; }
             set
             {
-                _windowHeaderString = value;
+                windowHeaderString = value;
                 OnPropertyChanged(nameof(WindowHeaderString));
             }
         }
 
 
 
-        /// <inheritdoc cref="Message"/>
-        private string _message;
+
 
         /// <summary>
         /// Message input string.
@@ -164,16 +189,15 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public string Message 
         {
-            get { return _message; }
+            get { return message; }
             set
             {
-                _message = value;
+                message = value;
                 OnPropertyChanged(nameof(Message));
             }
         }
 
-        /// <inheritdoc cref="UserFile"/>
-        private FileInfo _userFile;
+
 
         /// <summary>
         /// The file attached to the user message.
@@ -182,17 +206,15 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public FileInfo UserFile
         {
-            get { return _userFile; }
+            get { return userFile; }
             set
             {
-                _userFile = value;
+                userFile = value;
                 OnPropertyChanged(nameof(UserFile));
             }
         }
 
 
-        /// <inheritdoc cref="Server"/>
-        private ClientReciever _server;
 
         /// <summary>
         /// An instance of a 'ClientReciever';
@@ -201,25 +223,9 @@ namespace ReversedClient.ViewModel
         /// </summary>
         public ClientReciever Server
         {
-            get { return _server; }
-            set { _server = value; }
+            get { return server; }
+            set { server = value; }
         }
-
-
-
-        /// <summary>
-        /// The service of the file selection dialog.
-        /// <br />
-        /// Сервис диалога выбора файла.
-        /// </summary>
-        private IDialogService _DialogService;
-
-
-
-        private ClientLoginWindow loginWindowReference;
-
-
-        private ReversedClientWindow chatWindowReference;
 
 
 
@@ -289,24 +295,24 @@ namespace ReversedClient.ViewModel
         public ReversedClientWindowViewModel()
         {
             chatList = new();
-            _userFile = null;
-            _DialogService = new AttachFileDialogService();
+            userFile = null;
+            _dialogService = new AttachFileDialogService();
 
-            _TheMembersString = "contacts";
+            theContactsString = "contacts";
 
             currentUser = new();
-            _message = string.Empty;
+            message = string.Empty;
 
-            _Users = new ObservableCollection<UserModel>();
-            _server = new();
+            users = new ObservableCollection<UserModel>();
+            server = new();
 
-            _server.connectedEvent += ConnectUser;                           // user connection;
-            _server.fileReceivedEvent += RecieveFile;                        // file receipt;
-            _server.msgReceivedEvent += RecieveMessage;                      // message receipt;
-            _server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            //_server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            server.connectedEvent += ConnectUser;                           // user connection;
+            server.fileReceivedEvent += RecieveFile;                        // file receipt;
+            server.msgReceivedEvent += RecieveMessage;                      // message receipt;
+            server.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
+            //server.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
 
-            _Users.CollectionChanged += OnUsersCollectionChanged;
+            users.CollectionChanged += OnUsersCollectionChanged;
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new (ConnectToService);
@@ -316,7 +322,7 @@ namespace ReversedClient.ViewModel
             // we need to manage windows right after we connect;
             SignInButtonClickCommand = new(OnSignInButtonClick);
 
-            _server.SendOutput += ShowErrorMessage;
+            server.SendOutput += ShowErrorMessage;
         }
 
 

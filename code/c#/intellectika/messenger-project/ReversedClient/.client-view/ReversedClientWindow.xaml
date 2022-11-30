@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="{Binding WindowHeaderString}" Height="600" Width="750"
         >
-        
+
     <Grid Background="#FFFAFAFA">
 
 
@@ -25,9 +25,7 @@
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="149*"/>
-
-            <RowDefinition Height="13*"/>
+            <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
 
@@ -38,31 +36,24 @@
         <!--#region Listviews-->
 
         <ListView 
-                  ItemsSource="{Binding Users}" HorizontalAlignment="Left" 
-                Margin="15,60,0,20" Width="154" Background="{x:Null}" 
-              BorderBrush="{x:Null}" Foreground="#E50A0A0A" 
+                Margin="0"
+              BorderBrush="{x:Null}" Foreground="#E50A0A0A"     
             FontFamily="Bookman Old Style"
-            SelectedItem="{Binding SelectedContact}">
-
-
-            <ListView.ItemTemplate>
-
-                <DataTemplate>
-
-                    <TextBlock Text="{Binding UserName}"/>
-
-                </DataTemplate>
-
-            </ListView.ItemTemplate>
-
-
+          SelectedItem="{Binding SelectedContact}" Grid.ColumnSpan="2">
         </ListView>
+
+        <StackPanel Background="LightGray" Grid.ColumnSpan="2" Margin="0"/>
 
 
         <ListView
-                  ItemsSource="{Binding Path=ActiveChat.MessageList}" Margin="20,31,20,20" 
-                Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="1" 
-              Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"/>
+                  ItemsSource="{Binding Path=ActiveChat.MessageList}" Margin="0,10,0,0" 
+                BorderBrush="{x:Null}" Grid.Column="1" 
+              Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" HorizontalAlignment="Center" Width="542" Height="519" VerticalAlignment="Top"
+         />
+
+        <StackPanel 
+            Grid.Column="1" Background="LightSteelBlue"
+         />
 
         <!--#endregion Listviews-->
 
@@ -70,41 +61,11 @@
 
         <!--#region Bottom controls-->
 
-        <TextBox 
-                Style="{StaticResource SendMessageTextBox}" 
-              Text="{Binding Message}" 
-            Grid.Column="1" Grid.Row="2" Margin="20,0,0,0" Height="19"
-          VerticalAlignment="Center" HorizontalAlignment="Left" Width="444"/>
-
-        <Button
-                Grid.Column="1" Grid.Row="2"
-              Content="Send" Command="{Binding SendMessageCommand}" 
-            Margin="482,12,20,12"/>
-
-
-        <Button 
-                  Height="20" Width="70"
-                Content="Attach File" Command="{Binding SelectFileCommand}" 
-              HorizontalAlignment="Right" Margin="0,12,10,0" 
-            Grid.Row="1" VerticalAlignment="Top"/>
-
         <!--#endregion Bottom controls-->
 
 
 
         <!--#region Labels-->
-
-        <Label
-              Content="{Binding Users.Count}" HorizontalAlignment="Left" 
-            VerticalAlignment="Top" Margin="15,31,0,0" 
-          FontFamily="Bookman Old Style" Foreground="#E50A0A0A" 
-        Height="24" Width="31"/>
-
-        <Label
-            Content="{Binding TheContactsString}" HorizontalAlignment="Left" 
-          VerticalAlignment="Top" Margin="51,31,0,0" 
-        Background="#FFFAFAFA" Foreground="#E50A0A0A" 
-      FontFamily="Bookman Old Style" Height="24" Width="89"/>
 
         <!--#endregion Labels-->
 

@@ -27,7 +27,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void RemoveUser()
         {
-            var uid = _server.PacketReader.ReadMessage().Message;
+            var uid = server.PacketReader.ReadMessage().Message;
             var user = Users.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
@@ -45,7 +45,7 @@ namespace ReversedClient.ViewModel
         {
             try 
             {
-                var msg = _server.PacketReader.ReadMessage(); // reading new message via our packet reader;
+                var msg = server.PacketReader.ReadMessage(); // reading new message via our packet reader;
                 var msgCopy = msg;
                 if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
                 {
@@ -94,8 +94,8 @@ namespace ReversedClient.ViewModel
             // create new user instance;
             var user = new UserModel()
             {
-                UserName = _server.PacketReader.ReadMessage().Message as string,
-                PublicId = _server.PacketReader.ReadMessage().Message as string,
+                UserName = server.PacketReader.ReadMessage().Message as string,
+                PublicId = server.PacketReader.ReadMessage().Message as string,
             };
 
             /*
@@ -131,14 +131,14 @@ namespace ReversedClient.ViewModel
         {
             try
             {
-                if (_DialogService.OpenFileDialog())
+                if (_dialogService.OpenFileDialog())
                 {
-                    UserFile = new(_DialogService.FilePath);
+                    UserFile = new(_dialogService.FilePath);
                 }
             }
             catch (Exception ex)
             {
-                _DialogService.ShowMessage(ex.Message);
+                _dialogService.ShowMessage(ex.Message);
             }
         }
 
@@ -160,14 +160,14 @@ namespace ReversedClient.ViewModel
             {
                 if (Message != string.Empty)
                 {
-                    _server.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
+                    server.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedContact.UserName, Message));
                     //ActiveChat = 
                     Message = string.Empty;
                 }
 
                 if (UserFile != null)
                 {
-                    _server.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
+                    server.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, SelectedContact.UserName, UserFile));
                     Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add($"File sent."));
                     UserFile = null;
                 }
@@ -187,7 +187,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void ConnectToService()
         {
-            _server.ConnectToServer(currentUser.UserName);
+            server.ConnectToServer(currentUser.UserName);
         }
 
 
@@ -227,20 +227,20 @@ namespace ReversedClient.ViewModel
                 // Debug feature [!]
                 currentUser.PublicId = currentUser.UserName;
 
-                chatWindowReference = new();
-                loginWindowReference = new();
+                _chatWindowReference = new();
+                _loginWindowReference = new();
 
                 Server.ConnectToServer(currentUser.UserName);
 
                 //// [!] In this particular order;
                 //
                 WindowHeaderString = currentUser.UserName + " - common chat";
-                chatWindowReference.Show();
+                _chatWindowReference.Show();
                 //
 
-                loginWindowReference.Close();
+                _loginWindowReference.Close();
                 Application.Current.MainWindow.Close();
-                Application.Current.MainWindow = chatWindowReference;
+                Application.Current.MainWindow = _chatWindowReference;
                 // ===============================
             }
             catch (Exception ex)
