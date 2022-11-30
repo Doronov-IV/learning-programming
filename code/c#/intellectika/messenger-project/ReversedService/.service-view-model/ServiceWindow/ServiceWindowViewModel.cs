@@ -157,10 +157,7 @@ namespace ReversedService.ViewModel.ServiceWindow
             ClearLogCommand = new(CustomTerminalManager.ClearLog);
             Service.SendServiceOutput += CustomTerminalManager.AddMessage;
 
-            using (MessengerDatabaseContext context = new())
-            {
-
-            }
+            using (MessengerDatabaseContext context = new()) { }
         }
 
 

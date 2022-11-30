@@ -140,7 +140,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
-        private async Task ProcessAsync()
+        public async Task ProcessAsync()
         {
             await Task.Run(() => Process());
         }
@@ -153,6 +153,37 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         #region CONSTRUCTION - Object Lifetime
+
+
+        public bool Authorize()
+        {
+            _packetReader = new PackageReader(ClientSocket.GetStream());
+
+            var opCode = _packetReader.ReadByte();
+
+            var authorizationQueue = _packetReader.ReadMessage();
+
+            var queue = authorizationQueue.Message as string;
+
+            var strings = queue.Split("|");
+
+            string login, password;
+            login = password = string.Empty;
+
+            if (strings.Length == 2)
+            {
+                login = strings[0];
+                password = strings[1];
+            }
+            else if (strings.Length == 1) 
+                login = password = strings[0];
+
+            if (StaticServiceHub.CheckAuthorizationPair(login, password))
+            {
+                return true;
+            }
+            else return false;
+        }
 
 
         /// <summary>
@@ -187,8 +218,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             //имени пользователя присваивается прочитанная строка
             CurrentUserName = msgRef.Message as string;
             CurrentUID = CurrentUserName;
-
-            ProcessAsync();
         }
 
 

@@ -190,7 +190,7 @@ namespace ReversedClient.ViewModel
         /// </summary>
         private void ConnectToService()
         {
-            serviceTransmitter.ConnectToServer(currentUser.UserName);
+            serviceTransmitter.ConnectToServer(currentUser.UserName, Login, Pass);
         }
 
 
@@ -227,24 +227,33 @@ namespace ReversedClient.ViewModel
         {
             try
             {
-                // Debug feature [!]
-                currentUser.PublicId = currentUser.UserName;
+                if (!string.IsNullOrEmpty(Pass) && !string.IsNullOrEmpty(Login))
+                {
+                    CurrentUser.UserName = Login;
 
-                _chatWindowReference = new();
-                _loginWindowReference = new();
+                    // Debug feature [!]
+                    currentUser.PublicId = currentUser.UserName;
 
-                ServiceTransmitter.ConnectToServer(currentUser.UserName);
+                    _chatWindowReference = new();
+                    _loginWindowReference = new();
 
-                //// [!] In this particular order;
-                //
-                WindowHeaderString = currentUser.UserName + " - common chat";
-                _chatWindowReference.Show();
-                //
+                    ServiceTransmitter.ConnectToServer(currentUser.UserName, Login, Pass);
 
-                _loginWindowReference.Close();
-                Application.Current.MainWindow.Close();
-                Application.Current.MainWindow = _chatWindowReference;
-                // ===============================
+                    //// [!] In this particular order;
+                    //
+                    WindowHeaderString = currentUser.UserName + " - common chat";
+                    _chatWindowReference.Show();
+                    //
+
+                    _loginWindowReference.Close();
+                    Application.Current.MainWindow.Close();
+                    Application.Current.MainWindow = _chatWindowReference;
+                    // ===============================
+                }
+                else
+                {
+                    MessageBox.Show("Neither login nor password should be empty!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                }
             }
             catch (Exception ex)
             {

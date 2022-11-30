@@ -36,6 +36,7 @@ namespace ReversedClient.ViewModel
         /// <inheritdoc cref="ActiveChat"/>
         private MessengerChat activeChat;
 
+
         /// <inheritdoc cref="SelectedOnlineMember"/>
         private UserModel selectedOnlineMember;
 
@@ -54,6 +55,14 @@ namespace ReversedClient.ViewModel
 
         /// <inheritdoc cref="Message"/>
         private string message;
+
+
+
+        private string pass;
+
+        
+
+        private string login;
 
 
         /// <inheritdoc cref="UserFile"/>
@@ -163,6 +172,38 @@ namespace ReversedClient.ViewModel
             {
                 currentUser = value;
                 OnPropertyChanged(nameof(CurrentUser));
+            }
+        }
+
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        public string Pass
+        {
+            get { return pass; }
+            set
+            {
+                pass = value;
+                OnPropertyChanged(nameof(Pass));
+            }
+        }
+
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        public string Login
+        {
+            get { return login; }
+            set
+            {
+                login = value;
+                OnPropertyChanged(nameof(Login));
             }
         }
 

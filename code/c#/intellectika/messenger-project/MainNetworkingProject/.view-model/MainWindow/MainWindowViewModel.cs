@@ -20,7 +20,9 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         public DelegateCommand LaunchServiceCommand { get; }
         public DelegateCommand KillServiceCommand { get; }
         public DelegateCommand ClearFoldersCommand { get; }
-        public DelegateCommand ClearTablesCommand { get; }
+        public DelegateCommand ClearMessagesCommand { get; }
+        public DelegateCommand ClearAuthorizationCommand { get; }
+
 
 
         #endregion COMMANDS
@@ -97,7 +99,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);
             KillServiceCommand = new(OnKillServiceButtonClick);
             ClearFoldersCommand = new(OnClearFoldersButtonClickInParallel);
-            ClearTablesCommand = new(OnClearDatabaseTablesButtonClick);
+            ClearMessagesCommand = new(OnClearMessagesButtonClick);
+            ClearAuthorizationCommand = new(OnAutorizationButtonClick);
         }
 
 

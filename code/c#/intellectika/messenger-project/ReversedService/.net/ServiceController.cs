@@ -108,8 +108,19 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
                     client = new ServiceReciever(_Listener.AcceptTcpClient(), this);
-                    _UserList.Add(client);
-                    BroadcastConnection();
+
+                    if (client.Authorize())
+                    {
+                        _UserList.Add(client);
+
+                        BroadcastConnection();
+
+                        client.ProcessAsync();
+                    }
+                    else
+                    {
+                        PassOutputMessage($"Authorization failed.");
+                    }
                 }
             }
             catch { }
@@ -335,6 +346,16 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     context.SaveChanges();
                 }
             }
+        }
+
+
+        public bool CheckAuthorizationPair(string login, string password)
+        {
+            //using (MessengerDatabaseContext context = new())
+            //{
+            //    if (context.AuthorizationPairs.Contains())
+            //}
+            return true;
         }
 
 

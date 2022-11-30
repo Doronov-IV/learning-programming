@@ -145,7 +145,7 @@ namespace Debug.Net
         /// <br />
         /// Никнейм, который пользователь выбрал на логине;
         /// </param>
-        public async void ConnectToServer(string userName)
+        public async void ConnectToServer(string userName, string login, string pass)
         {
             try
             {
@@ -170,7 +170,14 @@ namespace Debug.Net
                         connectPacket.WriteMessage(new TextMessagePackage(userName, "@All", userName));
 
                         _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+
+                        connectPacket.WriteOpCode(0);
+
+                        connectPacket.WriteMessage(new TextMessagePackage(userName, "@All", $"{login}|{pass}"));
+
+                        _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
                     }
+
                     ReadPackets();
                 }
             }
@@ -178,7 +185,6 @@ namespace Debug.Net
             {
                 MessageBox.Show("The serviceTransmitter is currently down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-            
         }
 
 
