@@ -1,4 +1,4 @@
-﻿using ReversedClient.ViewModel;
+﻿using ReversedClient.ViewModel.ClientChatWindow;
 
 namespace ReversedClient.client_view
 {

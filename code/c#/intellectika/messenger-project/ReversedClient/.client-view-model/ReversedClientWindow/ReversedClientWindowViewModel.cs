@@ -2,12 +2,12 @@
 using System.Windows;
 using Debug.Net;
 using ReversedClient.Model.Basics;
-using ReversedClient.ViewModel.Chatting;
+using ReversedClient.ViewModel.Misc;
 using ReversedClient.Properties;
 using System.Windows.Interop;
 
 
-namespace ReversedClient.ViewModel
+namespace ReversedClient.ViewModel.ClientChatWindow
 {
     /// <summary>
     /// A view-model for the client window;
@@ -86,7 +86,7 @@ namespace ReversedClient.ViewModel
         /// <br />
         /// Ссылка на окно клиента, которое выходит первым при запуске приложения.
         /// </summary>
-        private ClientLoginWindow _loginWindowReference;
+        private ReversedClientWindow _loginWindowReference;
 
 
         /// <summary>

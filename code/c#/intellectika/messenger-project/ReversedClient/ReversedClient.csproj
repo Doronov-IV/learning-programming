@@ -22,6 +22,8 @@
   <ItemGroup>
     <Compile Include=".client-model\UserModel.cs" />
     <Compile Include=".client-view-model\chatting\MessengerChat.cs" />
+    <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModel.cs" />
+    <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModelHandler.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
     <Compile Include=".net\ClientTransmitter.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
@@ -68,6 +70,11 @@
 	  <Reference Include="Toolbox">
 	    <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
 	  </Reference>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include=".client-view-model\ClientSignUpWindow\" />
 	</ItemGroup>
 
 </Project>

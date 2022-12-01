@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace ReversedClient.ViewModel
+namespace ReversedClient.ViewModel.ClientChatWindow
 {
     public partial class ReversedClientWindowViewModel
     {
