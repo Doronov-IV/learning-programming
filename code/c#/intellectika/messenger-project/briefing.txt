@@ -1,0 +1,2 @@
+01.12.22 
+I stopped on writing registration query to service from client and its receipt on the service.
