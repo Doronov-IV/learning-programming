@@ -1,13 +1,14 @@
 ﻿using Debug.Net;
 using ReversedClient.ViewModel.Misc;
 
-namespace ReversedClient.ViewModel.ClientLoginWindow
+namespace ReversedClient.ViewModel.ClientSignUpWindow
 {
-    public partial class ClientLoginWindowViewModel : INotifyPropertyChanged
+    public partial class ClientSignUpWindowViewModel : INotifyPropertyChanged
     {
 
 
         #region STATE
+
 
 
         /// <inheritdoc cref="UserData"/>
@@ -56,7 +57,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         #region COMMANDS
 
 
-        public DelegateCommand SignInButtonClickCommand { get; }
+        public DelegateCommand RegisterCommand { get; }
 
 
         #endregion COMMANDS
@@ -74,16 +75,24 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ClientLoginWindowViewModel()
+        public ClientSignUpWindowViewModel(ClientTransmitter clientRadio)
         {
-            userData = new UserDTO();
-
-            serviceTransmitter = new();
-            serviceTransmitter.SendOutput += ShowErrorMessage;
-
-            SignInButtonClickCommand = new(OnSignInButtonClick);
+            RegisterCommand = new(OnRegisterButtonClick);
+            userData = new();
         }
 
+
+
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public ClientSignUpWindowViewModel(ClientTransmitter clientRadio, string login) : this(clientRadio)
+        {
+            userData.Login = login;
+        }
 
 
 
@@ -115,9 +124,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
 
 
 
-
         #endregion CONSTRUCTION
-
 
 
     }

@@ -1,4 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Processing;
+using ReversedClient.ViewModel.Misc;
+using System.IO.Packaging;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -285,6 +287,23 @@ namespace Debug.Net
             {
                 messagePacket = null;
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+            }
+        }
+
+
+        public void SendNewClientData(UserDTO userData)
+        {
+            var messagePacket = new PackageBuilder();
+            var signUpMessage = new TextMessagePackage(sender: userData.Login, reciever: "Service", message: $"{userData.Password}");
+            messagePacket.WriteOpCode(1);
+            messagePacket.WriteMessage(signUpMessage);
+            try
+            {
+                _serviceSocket.Client.Send(messagePacket.GetPacketBytes());
+            }
+            catch (Exception ex)
+            {
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
         }
 

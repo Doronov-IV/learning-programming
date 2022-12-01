@@ -1,6 +1,7 @@
 ﻿using NetworkingAuxiliaryLibrary.ClientService;
 using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
+using ReversedService.Model.Entities;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -74,9 +75,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </param>
         public delegate void PendOutputDelegate(string sOutputMessage);
 
-        /// <summary>
-        /// @see public delegate void PendOutputDelegate(string sOutputMessage);
-        /// </summary>
+        /// <inheritdoc cref="PendOutputDelegate"/>
         public event PendOutputDelegate SendOutput;
 
 
@@ -155,7 +154,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         #region CONSTRUCTION - Object Lifetime
 
 
-        public bool Authorize()
+        /// <summary>
+        /// Read an authorization pair from client network connection.
+        /// <br />
+        /// Считать данные авторизации от клиентского сетевого соединения.
+        /// </summary>
+        public bool ReadAuthorizationPair()
         {
             _packetReader = new PackageReader(ClientSocket.GetStream());
 
@@ -167,18 +171,17 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             var strings = queue.Split("|");
 
-            string login, password;
-            login = password = string.Empty;
+            AuthorizationPair pair = new();
 
             if (strings.Length == 2)
             {
-                login = strings[0];
-                password = strings[1];
+                pair.Login = strings[0];
+                pair.PasswordHash = strings[1];
             }
             else if (strings.Length == 1) 
-                login = password = strings[0];
+                pair.Login = pair.PasswordHash = strings[0];
 
-            if (StaticServiceHub.CheckAuthorizationPair(login, password))
+            if (StaticServiceHub.AskDatabaseAboutAuthorizationPair(pair))
             {
                 return true;
             }

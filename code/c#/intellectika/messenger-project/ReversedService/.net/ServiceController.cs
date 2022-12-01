@@ -111,7 +111,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                     TextMessagePackage response = new();
 
-                    if (client.Authorize())
+                    if (client.ReadAuthorizationPair())
                     {
                         client.ClientSocket.Client.Send(new byte[1] { 1 });
 
@@ -292,6 +292,16 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+        /// <summary>
+        /// Send broadcasted message to the database.
+        /// <br />
+        /// Отправить рассылаемое сообщение в б/д.
+        /// </summary>
+        /// <param name="package">
+        /// Message package to be sent.
+        /// <br />
+        /// Пакет сообщения для отправки.
+        /// </param>
         public void SendMessageToTheDb(MessagePackage package)
         {
             if (package is not null)
@@ -357,22 +367,34 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
-        public bool CheckAuthorizationPair(string login, string password)
+
+        /// <summary>
+        /// Ask database whether this pair is valid for authorization or not.
+        /// <br />
+        /// Спросить б/д, можно ли авторизовать владельца этой пары или нет.
+        /// </summary>
+        /// <param name="pair">
+        /// The pair for authorization.
+        /// <br />
+        /// Пара для авторизации.
+        /// </param>
+        /// <returns>
+        /// True - if pair is valid combination of login and password, otherwise false.
+        /// <br />
+        /// "True" - если пара является действующей комбинацией логина и пароля, иначе "false".
+        /// </returns>
+        public bool AskDatabaseAboutAuthorizationPair(AuthorizationPair pair)
         {
             bool bRes = false;
-
-            AuthorizationPair pair = new();
-            pair.Login = login;
-            pair.PasswordHash = password;
 
             AuthorizationPair? result;
             using (MessengerDatabaseContext context = new())
             {
                 foreach (var el in context.AuthorizationPairs)
                 {
-                    if (el.Login.Equals(login))
+                    if (el.Login.Equals(pair.Login))
                     {
-                        if (el.PasswordHash.Equals(password)) return true;
+                        if (el.PasswordHash.Equals(pair.PasswordHash)) return true;
                     }
                 }
             }

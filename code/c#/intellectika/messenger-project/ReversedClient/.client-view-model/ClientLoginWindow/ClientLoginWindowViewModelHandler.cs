@@ -30,17 +30,6 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
                     {
                         MessageBox.Show("Authorization failed due to the incurrect data input.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                     }
-
-                    ////// [!] In this particular order;
-                    ////
-                    //WindowHeaderString = currentUser.UserName + " - common chat";
-                    //_chatWindowReference.Show();
-                    ////
-
-                    //_loginWindowReference.Close();
-                    //Application.Current.MainWindow.Close();
-                    //Application.Current.MainWindow = _chatWindowReference;
-                    //// ===============================
                 }
                 else
                 {
