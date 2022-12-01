@@ -6,11 +6,12 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
     public partial class ClientLoginWindowViewModel : INotifyPropertyChanged
     {
 
+
         #region STATE
 
 
         /// <inheritdoc cref="UserData"/>
-        private static UserDTO userData;
+        private UserDTO userData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -23,7 +24,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public static UserDTO UserData
+        public UserDTO UserData
         {
             get { return userData; }
             set
@@ -53,6 +54,11 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
 
 
         #region COMMANDS
+
+
+        public DelegateCommand SignInButtonClickCommand { get; }
+
+
         #endregion COMMANDS
 
 
@@ -70,7 +76,12 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// </summary>
         public ClientLoginWindowViewModel()
         {
+            userData= new UserDTO();
 
+            serviceTransmitter = new();
+            serviceTransmitter.SendOutput += ShowErrorMessage;
+
+            SignInButtonClickCommand = new(OnSignInButtonClick);
         }
 
 

@@ -109,8 +109,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 {
                     client = new ServiceReciever(_Listener.AcceptTcpClient(), this);
 
+                    TextMessagePackage response = new();
+
                     if (client.Authorize())
                     {
+                        client.ClientSocket.Client.Send(new byte[1] { 1 });
+
                         _UserList.Add(client);
 
                         BroadcastConnection();
@@ -119,6 +123,10 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     }
                     else
                     {
+                        client.ClientSocket.Client.Send(new byte[1] { 0 });
+
+                        response = new("Service", "Client", "Authorization failed.");
+
                         PassOutputMessage($"Authorization failed.");
                     }
                 }
@@ -360,7 +368,13 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             AuthorizationPair? result;
             using (MessengerDatabaseContext context = new())
             {
-                bRes = context.AuthorizationPairs.Contains(pair);
+                foreach (var el in context.AuthorizationPairs)
+                {
+                    if (el.Login.Equals(login))
+                    {
+                        if (el.PasswordHash.Equals(password)) return true;
+                    }
+                }
             }
 
             return bRes;

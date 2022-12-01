@@ -145,7 +145,7 @@ namespace Debug.Net
         /// <br />
         /// Никнейм, который пользователь выбрал на логине;
         /// </param>
-        public async void ConnectToServer(string userName, string login, string pass)
+        public async Task<bool> ConnectToServer(string login, string pass)
         {
             try
             {
@@ -161,29 +161,36 @@ namespace Debug.Net
                     if (cancellationTokenSource.IsCancellationRequested)
                         cancellationTokenSource = new();
 
-                    if (!string.IsNullOrEmpty(userName))
-                    {
-                        var connectPacket = new PackageBuilder();
 
-                        connectPacket.WriteOpCode(0);
+                    var connectPacket = new PackageBuilder();
 
-                        connectPacket.WriteMessage(new TextMessagePackage(userName, "@All", userName));
+                    connectPacket.WriteOpCode(0);
 
-                        _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+                    connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
 
-                        connectPacket.WriteOpCode(0);
+                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                        connectPacket.WriteMessage(new TextMessagePackage(userName, "Service", $"{login}|{pass}"));
+                    connectPacket.WriteOpCode(0);
 
-                        _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
-                    }
+                    connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
 
-                    ReadPackets();
+                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+
+                    var result = PacketReader.ReadByte();
+
+                    if (result != 1) return false;
+                    else return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("The service is down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                return false;
             }
         }
 
@@ -298,7 +305,7 @@ namespace Debug.Net
         /// <br />
         /// Прочитать входящий пакет. Пакет - это специальное сообщение, отправленное объектом "ServiceHub", чтобы структурировать обработку разных событий;
         /// </summary>
-        private void ReadPackets()
+        public void ReadPackets()
         {
             Task.Run(() =>
             {

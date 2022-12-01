@@ -111,10 +111,7 @@ namespace ReversedService.Migrations
             modelBuilder.Entity("ReversedService.Model.Entities.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CurrentNickname")
                         .IsRequired()
@@ -124,13 +121,7 @@ namespace ReversedService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -173,7 +164,7 @@ namespace ReversedService.Migrations
                 {
                     b.HasOne("ReversedService.Model.Entities.AuthorizationPair", "AuthorizationPair")
                         .WithOne("User")
-                        .HasForeignKey("ReversedService.Model.Entities.User", "UserId")
+                        .HasForeignKey("ReversedService.Model.Entities.User", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,4 +1,6 @@
-﻿using ReversedClient.ViewModel.ClientChatWindow;
+﻿using Debug.Net;
+using ReversedClient.ViewModel.ClientChatWindow;
+using ReversedClient.ViewModel.Misc;
 
 namespace ReversedClient.client_view
 {
@@ -11,11 +13,15 @@ namespace ReversedClient.client_view
         {
             InitializeComponent();
 
-            ClientLoginWindow? clientLoginWindow = Application.Current.MainWindow as ClientLoginWindow;
+            DataContext = new ReversedClientWindowViewModel();
+        }
 
-            ReversedClientWindowViewModel? context = clientLoginWindow?.DataContext as ReversedClientWindowViewModel;
 
-            DataContext = context;
+        public ReversedClientWindow(UserDTO userTransferObject, ClientTransmitter clientRadio)
+        {
+            InitializeComponent();
+
+            DataContext = new ReversedClientWindowViewModel(userTransferObject, clientRadio);
         }
     }
 }

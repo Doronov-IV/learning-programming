@@ -1,4 +1,6 @@
-﻿namespace ReversedClient.ViewModel.ClientLoginWindow
+﻿using ReversedClient.client_view;
+
+namespace ReversedClient.ViewModel.ClientLoginWindow
 {
     public partial class ClientLoginWindowViewModel
     {
@@ -11,32 +13,34 @@
         /// <br />
         /// Обработать клик по кнопке 'Sign In';
         /// </summary>
-        public void OnSignInButtonClick()
+        public async void OnSignInButtonClick()
         {
             try
             {
                 if (!string.IsNullOrEmpty(UserData.Password) && !string.IsNullOrEmpty(UserData.Login))
                 {
-                    CurrentUser.UserName = UserData.Login;
+                    if (await ServiceTransmitter.ConnectToServer(UserData.Login, UserData.Password))
+                    {
+                        ReversedClientWindow window = new ReversedClientWindow(UserData, ServiceTransmitter);
+                        window.Show();
 
-                    // Debug feature [!]
-                    currentUser.PublicId = currentUser.UserName;
+                        Application.Current.MainWindow.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Authorization failed due to the incurrect data input.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    }
 
-                    _chatWindowReference = new();
-                    _loginWindowReference = new();
+                    ////// [!] In this particular order;
+                    ////
+                    //WindowHeaderString = currentUser.UserName + " - common chat";
+                    //_chatWindowReference.Show();
+                    ////
 
-                    ServiceTransmitter.ConnectToServer(currentUser.UserName, UserData.Login, UserData.Password);
-
-                    //// [!] In this particular order;
-                    //
-                    WindowHeaderString = currentUser.UserName + " - common chat";
-                    _chatWindowReference.Show();
-                    //
-
-                    _loginWindowReference.Close();
-                    Application.Current.MainWindow.Close();
-                    Application.Current.MainWindow = _chatWindowReference;
-                    // ===============================
+                    //_loginWindowReference.Close();
+                    //Application.Current.MainWindow.Close();
+                    //Application.Current.MainWindow = _chatWindowReference;
+                    //// ===============================
                 }
                 else
                 {
@@ -47,6 +51,13 @@
             {
                 MessageBox.Show($"Unable to connect.\n\nException: {ex.Message}", "Exception intercepted", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+
+        private void ShowErrorMessage(string message)
+        {
+            MessageBox.Show($"{message}", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
 
 

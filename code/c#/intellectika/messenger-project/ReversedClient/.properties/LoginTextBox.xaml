@@ -22,9 +22,9 @@
                                      Foreground="Gray"
                                      CaretBrush="Gray"
                                      Margin="8,0,0,0"
-                                     Text="{Binding Path=Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                     Text="{Binding Path=UserData.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.InputBindings>
-                                    <KeyBinding Command="{Binding SendCommand}" Key="Return"/>
+                                    <KeyBinding Command="{Binding SignInButtonClickCommand}" Key="Return"/>
                                 </TextBox.InputBindings>
                             </TextBox>
 

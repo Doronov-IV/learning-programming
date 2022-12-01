@@ -322,7 +322,17 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ReversedClientWindowViewModel()
+        public ReversedClientWindowViewModel() : this(new(),new())
+        {
+        }
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public ReversedClientWindowViewModel(UserDTO userTransferObject, ClientTransmitter clientRadio)
         {
             chatList = new();
             userFile = null;
@@ -333,20 +343,18 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             onlineMembers = new ObservableCollection<UserModel>();
 
-            serviceTransmitter = new();
+            serviceTransmitter = clientRadio;
             serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
             serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
             serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
             //serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            ServiceTransmitter.ReadPackets();
 
             // may be obsolete. tests needed;
-            ConnectToServerCommand = new (ConnectToService);
-            SendMessageCommand = new (SendMessage);
-            SelectFileCommand = new (SelectFile);
-
-            // we need to manage windows right after we connect;
-            SignInButtonClickCommand = new(OnSignInButtonClick);
+            ConnectToServerCommand = new(ConnectToService);
+            SendMessageCommand = new(SendMessage);
+            SelectFileCommand = new(SelectFile);
 
             serviceTransmitter.SendOutput += ShowErrorMessage;
         }

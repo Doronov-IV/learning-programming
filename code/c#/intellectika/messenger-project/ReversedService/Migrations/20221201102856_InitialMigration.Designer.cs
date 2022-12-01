@@ -11,8 +11,8 @@ using ReversedService.Model.Context;
 namespace ReversedService.Migrations
 {
     [DbContext(typeof(MessengerDatabaseContext))]
-    [Migration("20221129091540_FixMessagesTableName")]
-    partial class FixMessagesTableName
+    [Migration("20221201102856_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,30 @@ namespace ReversedService.Migrations
                     b.HasIndex("UserListId");
 
                     b.ToTable("ChatUser");
+                });
+
+            modelBuilder.Entity("ReversedService.Model.Entities.AuthorizationPair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuthorizationPairs");
                 });
 
             modelBuilder.Entity("ReversedService.Model.Entities.Chat", b =>
@@ -90,10 +114,7 @@ namespace ReversedService.Migrations
             modelBuilder.Entity("ReversedService.Model.Entities.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CurrentNickname")
                         .IsRequired()
@@ -140,6 +161,23 @@ namespace ReversedService.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Chat");
+                });
+
+            modelBuilder.Entity("ReversedService.Model.Entities.User", b =>
+                {
+                    b.HasOne("ReversedService.Model.Entities.AuthorizationPair", "AuthorizationPair")
+                        .WithOne("User")
+                        .HasForeignKey("ReversedService.Model.Entities.User", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuthorizationPair");
+                });
+
+            modelBuilder.Entity("ReversedService.Model.Entities.AuthorizationPair", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ReversedService.Model.Entities.Chat", b =>

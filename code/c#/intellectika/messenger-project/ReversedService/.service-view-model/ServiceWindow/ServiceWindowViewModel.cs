@@ -1,5 +1,7 @@
 ﻿using ReversedService.LocalService;
 using ReversedService.Model.Context;
+using ReversedService.Model.Entities;
+using System.Linq;
 using Toolbox.Flags;
 using Tools.Flags;
 
@@ -136,6 +138,57 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
 
+        #region LOGIC
+
+
+        private void SeedAdmins()
+        {
+            using (MessengerDatabaseContext context = new())
+            {
+                User admin1 = new User();
+                admin1.PublicId = "Admin_Alpha";
+                admin1.CurrentNickname = "Admin_Alpha";
+                admin1.MessageList = new();
+                admin1.ChatList = new();
+
+                User admin2 = new User();
+                admin2.PublicId = "Admin_Bravo";
+                admin2.CurrentNickname = "Admin_Bravo";
+                admin2.MessageList = new();
+                admin2.ChatList = new();
+
+                if (!(context.Users.Contains(admin1) && context.Users.Contains(admin2)))
+                {
+                    context.Users.Add(admin1);
+                    context.Users.Add(admin2);
+                }
+
+                AuthorizationPair adminPair1 = new AuthorizationPair();
+                adminPair1.PasswordHash = "admin";
+                adminPair1.Login = "adminA";
+                adminPair1.User = admin1;
+
+                AuthorizationPair adminPair2 = new AuthorizationPair();
+                adminPair2.PasswordHash = "admin";
+                adminPair2.Login = "adminB";
+                adminPair2.User = admin2;
+
+                if (!(context.AuthorizationPairs.Contains(adminPair1) && context.AuthorizationPairs.Contains(adminPair2)))
+                {
+                    context.AuthorizationPairs.Add(adminPair1);
+                    context.AuthorizationPairs.Add(adminPair2);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+
+        #endregion LOGIC
+
+
+
+
         #region CONSTRUCTION
 
 
@@ -157,7 +210,14 @@ namespace ReversedService.ViewModel.ServiceWindow
             ClearLogCommand = new(CustomTerminalManager.ClearLog);
             Service.SendServiceOutput += CustomTerminalManager.AddMessage;
 
-            using (MessengerDatabaseContext context = new()) { }
+            try
+            {
+                SeedAdmins();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Admins already seeded.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
 

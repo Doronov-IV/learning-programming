@@ -102,7 +102,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 connection.Open();
                 SqlCommand command = new(
-                    "USE MessengerDatabase; DELETE FROM Users; DBCC CHECKIDENT ('[Users]', RESEED, 0); " +
+                    "USE MessengerDatabase; DELETE FROM Users; --DBCC CHECKIDENT ('[Users]', RESEED, 0); " +
                     "DELETE FROM Messages; DBCC CHECKIDENT ('[Messages]', RESEED, 0); " +
                     "DELETE FROM ChatUser;" +
                     "DELETE FROM Chats DBCC CHECKIDENT ('[Chats]', RESEED, 0);"
@@ -118,7 +118,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 connection.Open();
                 SqlCommand command = new(
-                    "USE MessengerDatabase; DELETE FROM AuthorizationPairs; DBCC CHECKIDENT ('[Users]', RESEED, 0);"
+                    "USE MessengerDatabase; DELETE FROM AuthorizationPairs; DBCC CHECKIDENT ('[AuthorizationPairs]', RESEED, 0);"
                     , connection);
                 command.ExecuteNonQuery();
             }
