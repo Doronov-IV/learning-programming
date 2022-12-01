@@ -11,6 +11,8 @@ namespace ReversedService.Model.Configs
 
             authorizationPairBuilder.Property(p => p.Login).IsRequired();
             authorizationPairBuilder.Property(p => p.PasswordHash).IsRequired();
+
+            authorizationPairBuilder.HasOne(p => p.User).WithOne(u => u.AuthorizationPair).HasForeignKey("User", "UserId");
         }
 
     }

@@ -15,12 +15,17 @@
         {
             try
             {
-                if (!string.IsNullOrEmpty(Pass) && !string.IsNullOrEmpty(Login))
+                if (!string.IsNullOrEmpty(UserData.Password) && !string.IsNullOrEmpty(UserData.Login))
                 {
+                    CurrentUser.UserName = UserData.Login;
+
+                    // Debug feature [!]
+                    currentUser.PublicId = currentUser.UserName;
+
                     _chatWindowReference = new();
                     _loginWindowReference = new();
 
-                    ServiceTransmitter.ConnectToServer(currentUser.UserName, Login, Pass);
+                    ServiceTransmitter.ConnectToServer(currentUser.UserName, UserData.Login, UserData.Password);
 
                     //// [!] In this particular order;
                     //
@@ -35,7 +40,7 @@
                 }
                 else
                 {
-                    MessageBox.Show("Neither login nor password should be empty!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show("Neither login nor password should be empty.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
             catch (Exception ex)

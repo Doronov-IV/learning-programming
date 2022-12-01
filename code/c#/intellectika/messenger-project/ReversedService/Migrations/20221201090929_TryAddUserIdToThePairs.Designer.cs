@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReversedService.Model.Context;
 
@@ -10,9 +11,11 @@ using ReversedService.Model.Context;
 namespace ReversedService.Migrations
 {
     [DbContext(typeof(MessengerDatabaseContext))]
-    partial class MessengerDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221201090929_TryAddUserIdToThePairs")]
+    partial class TryAddUserIdToThePairs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -29,6 +29,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
+        private UserDTO currentUserDTO;
+
+
         /// <inheritdoc cref="OnlineMembers"/>
         private ObservableCollection<UserModel> onlineMembers;
 
@@ -55,14 +58,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         /// <inheritdoc cref="Message"/>
         private string message;
-
-
-
-        private string pass;
-
-        
-
-        private string login;
 
 
         /// <inheritdoc cref="UserFile"/>
@@ -102,6 +97,19 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
+        
+
+
+
+        public UserDTO CurrentUserDTO
+        {
+            get { return currentUserDTO; }
+            set
+            {
+                currentUserDTO= value;
+                OnPropertyChanged(nameof(CurrentUserDTO));
+            }
+        }
 
 
         /// <summary>
@@ -172,38 +180,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 currentUser = value;
                 OnPropertyChanged(nameof(CurrentUser));
-            }
-        }
-
-
-        /// <summary>
-        /// .
-        /// <br />
-        /// .
-        /// </summary>
-        public string Pass
-        {
-            get { return pass; }
-            set
-            {
-                pass = value;
-                OnPropertyChanged(nameof(Pass));
-            }
-        }
-
-
-        /// <summary>
-        /// .
-        /// <br />
-        /// .
-        /// </summary>
-        public string Login
-        {
-            get { return login; }
-            set
-            {
-                login = value;
-                OnPropertyChanged(nameof(Login));
             }
         }
 

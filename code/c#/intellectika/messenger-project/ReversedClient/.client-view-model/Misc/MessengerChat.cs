@@ -1,7 +1,7 @@
 ﻿using ReversedClient.Model;
 using ReversedClient.Model.Basics;
 
-namespace ReversedClient.ViewModel.Chatting
+namespace ReversedClient.ViewModel.Misc
 {
     /// <summary>
     /// An abstraction that helps client handle all chat events.

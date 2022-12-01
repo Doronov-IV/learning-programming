@@ -1,6 +1,6 @@
 ﻿using ReversedClient.client_view;
 using ReversedClient.Model.Basics;
-using ReversedClient.ViewModel.Chatting;
+using ReversedClient.ViewModel.Misc;
 using System;
 using System.Collections.Generic;
 using System.Linq;

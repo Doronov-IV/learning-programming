@@ -1,4 +1,5 @@
-﻿using ReversedClient.ViewModel.Misc;
+﻿using Debug.Net;
+using ReversedClient.ViewModel.Misc;
 
 namespace ReversedClient.ViewModel.ClientLoginWindow
 {
@@ -9,7 +10,11 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
 
 
         /// <inheritdoc cref="UserData"/>
-        private UserDTO userData;
+        private static UserDTO userData;
+
+
+        /// <inheritdoc cref="ServiceTransmitter"/>
+        private ClientTransmitter serviceTransmitter;
 
 
 
@@ -18,7 +23,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserDTO UserData
+        public static UserDTO UserData
         {
             get { return userData; }
             set
@@ -27,6 +32,19 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
                 OnPropertyChanged(nameof(UserData));
             }
         }
+
+
+        /// <summary>
+        /// An instance of a 'ClientTransmitter' to communicate with the service;
+        /// <br />
+        /// Экземпляр класса "ClientTransmitter" для коммуникации с сервисом;
+        /// </summary>
+        public ClientTransmitter ServiceTransmitter
+        {
+            get { return serviceTransmitter; }
+            set { serviceTransmitter = value; }
+        }
+
 
 
         #endregion STATE

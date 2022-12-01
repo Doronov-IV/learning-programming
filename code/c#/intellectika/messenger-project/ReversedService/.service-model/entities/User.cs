@@ -18,6 +18,9 @@
         public List<Message>? MessageList { get; set; }
 
 
+        public AuthorizationPair AuthorizationPair { get; set; } = null!;
+
+
         /// <summary>
         /// Default constructor.
         /// <br />
