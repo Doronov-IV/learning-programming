@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 
-namespace Debug.Net
+namespace Net.Transmition
 {
     /// <summary>
     /// An instance that provides client with basic datalink operations such as: connectoin, data receipt, data sending;
@@ -137,16 +137,27 @@ namespace Debug.Net
 
 
 
+
         /// <summary>
         /// Connect user to the service;
         /// <br />
         /// Подключить пользователя к сервису;
         /// </summary>
-        /// <param name="userName">
-        /// The nickname of the user chosen on login;
+        /// <param name="login">
+        /// .
         /// <br />
-        /// Никнейм, который пользователь выбрал на логине;
+        /// .
         /// </param>
+        /// <param name="pass">
+        /// .
+        /// <br />
+        /// .
+        /// </param>
+        /// <returns>
+        /// .
+        /// <br />
+        /// .
+        /// </returns>
         public async Task<bool> ConnectToServer(string login, string pass)
         {
             try
@@ -291,11 +302,23 @@ namespace Debug.Net
         }
 
 
+
+
+        /// <summary>
+        /// Send data of the client that wants to register.
+        /// <br />
+        /// Отправить даные клиента, который хочет зарегистрироваться.
+        /// </summary>
+        /// <param name="userData">
+        /// New user data, packed in DTO.
+        /// <br />
+        /// Данные нового пользователя, упакованные в "DTO".
+        /// </param>
         public void SendNewClientData(UserDTO userData)
         {
             var messagePacket = new PackageBuilder();
             var signUpMessage = new TextMessagePackage(sender: userData.Login, reciever: "Service", message: $"{userData.Password}");
-            messagePacket.WriteOpCode(1);
+            messagePacket.WriteOpCode(1); // write another code, since code '1' is for sign in
             messagePacket.WriteMessage(signUpMessage);
             try
             {

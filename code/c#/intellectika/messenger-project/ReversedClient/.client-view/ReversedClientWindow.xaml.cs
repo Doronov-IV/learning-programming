@@ -1,4 +1,4 @@
-﻿using Debug.Net;
+﻿using Net.Transmition;
 using ReversedClient.ViewModel.ClientChatWindow;
 using ReversedClient.ViewModel.Misc;
 

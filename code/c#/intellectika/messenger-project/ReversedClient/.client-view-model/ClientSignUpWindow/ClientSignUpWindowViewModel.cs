@@ -1,4 +1,4 @@
-﻿using Debug.Net;
+﻿using Net.Transmition;
 using ReversedClient.ViewModel.Misc;
 
 namespace ReversedClient.ViewModel.ClientSignUpWindow
