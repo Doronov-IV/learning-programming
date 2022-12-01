@@ -173,7 +173,7 @@ namespace Debug.Net
 
                         connectPacket.WriteOpCode(0);
 
-                        connectPacket.WriteMessage(new TextMessagePackage(userName, "@All", $"{login}|{pass}"));
+                        connectPacket.WriteMessage(new TextMessagePackage(userName, "Service", $"{login}|{pass}"));
 
                         _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
                     }

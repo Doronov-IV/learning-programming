@@ -351,11 +351,19 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
         public bool CheckAuthorizationPair(string login, string password)
         {
-            //using (MessengerDatabaseContext context = new())
-            //{
-            //    if (context.AuthorizationPairs.Contains())
-            //}
-            return true;
+            bool bRes = false;
+
+            AuthorizationPair pair = new();
+            pair.Login = login;
+            pair.PasswordHash = password;
+
+            AuthorizationPair? result;
+            using (MessengerDatabaseContext context = new())
+            {
+                bRes = context.AuthorizationPairs.Contains(pair);
+            }
+
+            return bRes;
         }
 
 
