@@ -49,7 +49,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Объект, который предоставляет помощь в чтении/записи сообщений;
         /// </summary>
-        PackageReader _packetReader;
+        private PackageReader _packetReader;
 
 
         /// <summary>
