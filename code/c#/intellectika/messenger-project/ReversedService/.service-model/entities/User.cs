@@ -12,6 +12,9 @@
         public string CurrentNickname { get; set; } = null!;
 
 
+        public string Login { get; set; } = null!;
+
+
         public List<Chat>? ChatList { get; set; }
 
 

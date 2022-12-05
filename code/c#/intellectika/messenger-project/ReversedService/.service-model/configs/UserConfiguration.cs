@@ -11,6 +11,7 @@ namespace ReversedService.Model.Configs
 
             userBuilder.Property(u => u.PublicId).IsRequired();
             userBuilder.Property(u => u.CurrentNickname).IsRequired();
+            userBuilder.Property(u => u.Login).IsRequired();
 
             userBuilder.HasMany(u => u.ChatList).WithMany(c => c.UserList);
         }
