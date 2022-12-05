@@ -11,6 +11,7 @@ global using Tools.Formatting;
 
 global using NetworkingAuxiliaryLibrary.Processing;
 global using NetworkingAuxiliaryLibrary.Packages;
+global using NetworkingAuxiliaryLibrary.Objects;
 
 namespace AuthorizationServiceProject.Controls
 {
@@ -22,7 +23,7 @@ namespace AuthorizationServiceProject.Controls
         #region STATE
 
 
-        //
+         
 
 
         #endregion STATE

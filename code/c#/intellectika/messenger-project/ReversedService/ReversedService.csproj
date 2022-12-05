@@ -71,10 +71,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Reference Include="NetworkingAuxiliaryLibrary">
 	    <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
 	  </Reference>

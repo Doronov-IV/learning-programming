@@ -1,7 +1,7 @@
-﻿namespace ReversedClient.ViewModel.Misc
+﻿namespace NetworkingAuxiliaryLibrary.Objects
 {
     /// <summary>
-    /// Фn object to encapsulate user data transfered to various windows.
+    /// An object to encapsulate user data transfered to various windows.
     /// <br />
     /// Объект для инкапсуляции пользовательских данных для передачи разным окнам.
     /// </summary>
@@ -33,7 +33,6 @@
             set
             {
                 login = value;
-                //OnPropertyChanged(nameof(Login));
             }
         }
 
@@ -49,7 +48,6 @@
             set
             {
                 password = value;
-                //OnPropertyChanged(nameof(Password));
             }
         }
 

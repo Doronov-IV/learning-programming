@@ -10,7 +10,9 @@
   <ItemGroup>
     <Compile Include=".controls\Application.cs" />
     <Compile Include=".controls\Program.cs" />
+    <Compile Include=".net\ServiceController.cs" />
+    <Compile Include=".net\ServiceReciever.cs" />
 	<Reference Include="..\..\..\..\tools\precompiled-dll\Toolbox.dll" />
-	<Reference Include="..\..\NetworkingAuxiliaryLibrary\bin\Debug\net6.0\NetworkingAuxiliaryLibrary.dll"/>
+	<Reference Include="..\..\NetworkingAuxiliaryLibrary\bin\Debug\net6.0\NetworkingAuxiliaryLibrary.dll" />
   </ItemGroup>
 </Project>

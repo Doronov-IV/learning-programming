@@ -1,4 +1,5 @@
 ﻿using NetworkingAuxiliaryLibrary.ClientService;
+using NetworkingAuxiliaryLibrary.Objects;
 using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
 using ReversedService.Model.Entities;
@@ -159,7 +160,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Считать данные авторизации от клиентского сетевого соединения.
         /// </summary>
-        public bool ReadAuthorizationPair()
+        public UserDTO ReadAuthorizationPair()
         {
             _packetReader = new PackageReader(ClientSocket.GetStream());
 
@@ -181,14 +182,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             else if (strings.Length == 1) 
                 pair.Login = pair.PasswordHash = strings[0];
 
-            if (StaticServiceHub.AskDatabaseAboutAuthorizationPair(pair))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new UserDTO(login: pair.Login, password: pair.PasswordHash);
         }
 
 

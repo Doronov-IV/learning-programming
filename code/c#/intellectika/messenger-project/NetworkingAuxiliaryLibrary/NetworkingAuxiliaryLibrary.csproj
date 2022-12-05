@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".net\auxiliary\objects\UserDTO.cs" />
     <Compile Include=".net\auxiliary\packs\FileMessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\MessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />

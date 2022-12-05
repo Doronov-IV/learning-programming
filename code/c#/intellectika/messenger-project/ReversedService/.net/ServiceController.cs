@@ -1,6 +1,7 @@
 ﻿using ReversedService.ViewModel.ServiceWindow;
 using ReversedService.Model.Entities;
 using ReversedService.Model.Context;
+using NetworkingAuxiliaryLibrary.Objects;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -111,7 +112,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                     TextMessagePackage response = new();
 
-                    if (client.ReadAuthorizationPair())
+                    var res = client.ReadAuthorizationPair();
+
+                    bool isUserInDatabase = CheckAuthorizationPair(res);
+
+                    if (isUserInDatabase)
                     {
                         client.ClientSocket.Client.Send(new byte[1] { 1 });
 
@@ -383,23 +388,20 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// "True" - если пара является действующей комбинацией логина и пароля, иначе "false".
         /// </returns>
-        public bool AskDatabaseAboutAuthorizationPair(AuthorizationPair pair)
+        public bool CheckAuthorizationPair(UserDTO pair)
         {
-            bool bRes = false;
-
-            AuthorizationPair? result;
             using (MessengerDatabaseContext context = new())
             {
                 foreach (var el in context.AuthorizationPairs)
                 {
                     if (el.Login.Equals(pair.Login))
                     {
-                        if (el.PasswordHash.Equals(pair.PasswordHash)) return true;
+                        if (el.PasswordHash.Equals(pair.Password)) return true;
                     }
                 }
             }
 
-            return bRes;
+            return false;
         }
 
 
