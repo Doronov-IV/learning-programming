@@ -61,6 +61,24 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
+        public async void OnLaunchAuthorizerButtonClick()
+        {
+            await Task.Run(() =>
+            {
+                Process.GetProcesses().ToList().Find(n => n.ProcessName == "AuthorizationService")?.Kill();
+
+                using (var process = new Process())
+                {
+                    process.StartInfo.FileName = "../../../../AuthorizationService/AuthorizationServiceProject/bin/Release/net6.0/AuthorizationServiceProject.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../AuthorizationService/AuthorizationServiceProject/bin/Release/net6.0";
+                    process.StartInfo.Arguments = "-noexit";
+                    process.StartInfo.CreateNoWindow = false;
+                    process.Start();
+                }
+            });
+        }
+
+
         /// <summary>
         /// Kill service process (obsolete but needed to be kept anyway).
         /// <br />
@@ -112,13 +130,13 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
-        public void OnAutorizationButtonClick()
+        public void OnClearAutorizationButtonClick()
         {
-            using (SqlConnection connection = new("Server=.\\doronoviv;Database=MessengerDatabase;Trusted_Connection=True;Encrypt=false;"))
+            using (SqlConnection connection = new("Server=.\\doronoviv;Database=MessengerAuthorizationDatabase;Trusted_Connection=True;Encrypt=false;"))
             {
                 connection.Open();
                 SqlCommand command = new(
-                    "USE MessengerDatabase; DELETE FROM AuthorizationPairs; DBCC CHECKIDENT ('[AuthorizationPairs]', RESEED, 0);"
+                    "USE MessengerAuthorizationDatabase; DELETE FROM Users; DBCC CHECKIDENT ('[Users]', RESEED, 0);"
                     , connection);
                 command.ExecuteNonQuery();
             }

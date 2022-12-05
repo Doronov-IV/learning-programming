@@ -22,9 +22,6 @@ namespace ReversedService.Model.Context
         public DbSet<Chat> Chats { get; set; } = null!;
 
 
-        public DbSet<AuthorizationPair> AuthorizationPairs { get; set; } = null!;
-
-
 
         #endregion STATE
 
@@ -55,7 +52,6 @@ namespace ReversedService.Model.Context
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
             modelBuilder.ApplyConfiguration(new ChatConfiguration());
-            modelBuilder.ApplyConfiguration(new AuthorizationPairConfiguration());
         }
 
 

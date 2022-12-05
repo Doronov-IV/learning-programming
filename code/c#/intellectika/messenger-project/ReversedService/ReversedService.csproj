@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 	  <StartupObject>ReversedService.App</StartupObject>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>service.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +24,10 @@
     <Compile Include=".local-service\TerminalManager.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".net\ServiceController.cs" />
-    <Compile Include=".service-model\configs\AuthorizationPairConfiguration.cs" />
     <Compile Include=".service-model\configs\ChatConfiguration.cs" />
     <Compile Include=".service-model\configs\MessageConfiguration.cs" />
     <Compile Include=".service-model\configs\UserConfiguration.cs" />
     <Compile Include=".service-model\context\MessengerDatabaseContext.cs" />
-    <Compile Include=".service-model\entities\AuthorizationPair.cs" />
     <Compile Include=".service-model\entities\Chat.cs" />
     <Compile Include=".service-model\entities\Message.cs" />
     <Compile Include=".service-model\entities\User.cs" />
@@ -62,6 +61,7 @@
     <Content Include=".config\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="service.ico" />
     <Page Include=".properties\DefaultTerminalStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

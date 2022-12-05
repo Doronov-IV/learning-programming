@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>authorizer.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,8 +19,12 @@
     <Content Include=".config\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="authorizer.ico" />
+    <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
 	<Reference Include="..\..\..\..\tools\precompiled-dll\Toolbox.dll" />
-	<Reference Include="..\..\NetworkingAuxiliaryLibrary\bin\Debug\net6.0\NetworkingAuxiliaryLibrary.dll" />
+	<Reference Include="NetworkingAuxiliaryLibrary">
+	  <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+	</Reference>
   </ItemGroup>
 
   <ItemGroup>

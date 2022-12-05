@@ -12,7 +12,10 @@ namespace AuthorizationServiceProject.Net
         #region STATE
 
 
-        private TcpListener listener;
+        private TcpListener clientListener;
+
+
+        private TcpListener serviceListener;
 
 
         private TcpClient messangerService;
@@ -71,18 +74,21 @@ namespace AuthorizationServiceProject.Net
             {
                 ServiceReciever newClient;
 
-                listener.Start();
+                clientListener.Start();
 
                 while (true)
                 {
-                    newClient = new(listener.AcceptTcpClient(), this);
+                    newClient = new(clientListener.AcceptTcpClient(), this);
 
                     UserList.Add(newClient);
 
                     newClient.ProcessAsync();
                 }
             }
-            catch { }
+            catch (Exception ex) 
+            {
+                SendOutputMessage("Exception: " + ex.Message);
+            }
         }
 
 
@@ -157,11 +163,12 @@ namespace AuthorizationServiceProject.Net
 
         public void SendLoginToService(ServiceReciever user)
         {
+            if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+
             if (messangerService.Connected)
             {
                 TextMessagePackage package= new TextMessagePackage("authorizer", "messanger", $"{user.CurrentUser.Login}");
                 PackageBuilder builder = new();
-                builder.WriteOpCode(16);
                 builder.WriteMessage(package);
                 messangerService.Client.Send(builder.GetPacketBytes());
             }
@@ -197,8 +204,8 @@ namespace AuthorizationServiceProject.Net
         public ServiceController()
         {
             _userList = new();
-            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
-            messangerService = new TcpClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7791));
+            clientListener = new ( new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7222));
+            messangerService = new();
         }
 
 

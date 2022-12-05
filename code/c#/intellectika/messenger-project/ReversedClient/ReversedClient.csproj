@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	<StartupObject>ReversedClient.App</StartupObject>
+	<ApplicationIcon>client.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <ApplicationDefinition Include=".client-view\App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Content Include="client.ico" />
     <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
     <Page Include=".client-view\ClientLoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

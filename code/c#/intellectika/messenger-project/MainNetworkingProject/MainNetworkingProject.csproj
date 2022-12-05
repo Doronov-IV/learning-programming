@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>MainNetworkingProject.App</StartupObject>
 	 <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+	 <ApplicationIcon>controls.ico</ApplicationIcon>
   </PropertyGroup>
 
 
@@ -21,6 +22,11 @@
 		<SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Include="controls.ico" />
   </ItemGroup>
 
 

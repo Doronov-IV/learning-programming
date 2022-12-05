@@ -23,15 +23,22 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Актуальный список пользователей;
         /// </summary>
-        private List<ServiceReciever> _UserList = null!;
+        private List<ServiceReciever> userList = null!;
 
 
         /// <summary>
-        /// The main TCP listener;
+        /// The main TCP userListenner;
         /// <br />
         /// Основной слушатель;
         /// </summary>
-        private TcpListener _Listener = null!;
+        private TcpListener userListenner = null!;
+
+        /// <summary>
+        /// The main TCP userListenner;
+        /// <br />
+        /// Основной слушатель;
+        /// </summary>
+        private TcpListener authorizationServiceListenner = null!;
 
 
         /// <inheritdoc cref="IsRunning"/>
@@ -93,11 +100,16 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         {
             try
             {
-                _UserList = new List<ServiceReciever>();
+                userList = new List<ServiceReciever>();
 
-                _Listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
+                userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
 
-                _Listener.Start();
+                userListenner.Start();
+                authorizationServiceListenner.Start();
+
+                var authorizer = new ServiceReciever(authorizationServiceListenner.AcceptTcpClient(), this);
+                PackageReader reader = new (authorizer.ClientSocket.GetStream());
+
 
                 if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                     ServiceWindowViewModel.cancellationTokenSource = new();
@@ -108,32 +120,21 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
-                    client = new ServiceReciever(_Listener.AcceptTcpClient(), this);
+                    var msg = reader.ReadMessage();
 
-                    TextMessagePackage response = new();
+                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" accepted.");
 
-                    var res = client.ReadAuthorizationPair();
 
-                    bool isUserInDatabase = CheckAuthorizationPair(res);
 
-                    if (isUserInDatabase)
-                    {
-                        client.ClientSocket.Client.Send(new byte[1] { 1 });
+                    client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
 
-                        _UserList.Add(client);
+                    client.CurrentUserName = client.CurrentUID = msg.Message as string;
 
-                        BroadcastConnection();
+                    userList.Add(client);
 
-                        client.ProcessAsync();
-                    }
-                    else
-                    {
-                        client.ClientSocket.Client.Send(new byte[1] { 0 });
+                    BroadcastConnection();
 
-                        response = new("Service", "Client", "Authorization failed.");
-
-                        PassOutputMessage($"Authorization failed.");
-                    }
+                    client.ProcessAsync();
                 }
             }
             catch { }
@@ -147,11 +148,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void Stop()
         {
-            _Listener.Stop();
+            userListenner.Stop();
 
-            _UserList.ForEach(u => u.ClientSocket.Close());
+            userList.ForEach(u => u.ClientSocket.Close());
 
-            _UserList = new();
+            userList = new();
 
             IsRunning = false;
         }
@@ -169,9 +170,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         public void BroadcastConnection()
         {
             var broadcastPacket = new PackageBuilder();
-            foreach (var user in _UserList)
+            foreach (var user in userList)
             {
-                foreach (var usr in _UserList)
+                foreach (var usr in userList)
                 {
                     broadcastPacket.WriteOpCode(1); // code '1' means new user has connected;
                     broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All",usr.CurrentUserName));
@@ -196,7 +197,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             msgPacket.WriteOpCode(5);
             msgPacket.WritePackageLength(package);
             msgPacket.WriteMessage(package);
-            foreach (var user in _UserList)
+            foreach (var user in userList)
             {
                 if (package.Reciever != "@All")
                 {
@@ -236,7 +237,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             var bytes = msgPacket.GetPacketBytes();
             const int bufferSize = 4096;
             byte[] buffer;
-            Parallel.ForEach(_UserList, (user) =>
+            Parallel.ForEach(userList, (user) =>
             {
                 if (user.CurrentUID != filePackage.Sender && user.CurrentUID == filePackage.Reciever)
                 {
@@ -278,11 +279,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </param>
         public void BroadcastDisconnect(string uid)
         {
-            var disconnectedUser = _UserList.Where(x => x.CurrentUID.ToString() == uid).FirstOrDefault();
-            _UserList.Remove(disconnectedUser);            // removing user;
+            var disconnectedUser = userList.Where(x => x.CurrentUID.ToString() == uid).FirstOrDefault();
+            userList.Remove(disconnectedUser);            // removing user;
 
             var broadcastPacket = new PackageBuilder();
-            foreach (var user in _UserList)
+            foreach (var user in userList)
             {
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
                 broadcastPacket.WriteMessage(new TextMessagePackage(uid, "@All", uid)); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
@@ -373,39 +374,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
-        /// <summary>
-        /// Ask database whether this pair is valid for authorization or not.
-        /// <br />
-        /// Спросить б/д, можно ли авторизовать владельца этой пары или нет.
-        /// </summary>
-        /// <param name="pair">
-        /// The pair for authorization.
-        /// <br />
-        /// Пара для авторизации.
-        /// </param>
-        /// <returns>
-        /// True - if pair is valid combination of login and password, otherwise false.
-        /// <br />
-        /// "True" - если пара является действующей комбинацией логина и пароля, иначе "false".
-        /// </returns>
-        public bool CheckAuthorizationPair(UserDTO pair)
-        {
-            using (MessengerDatabaseContext context = new())
-            {
-                foreach (var el in context.AuthorizationPairs)
-                {
-                    if (el.Login.Equals(pair.Login))
-                    {
-                        if (el.PasswordHash.Equals(pair.Password)) return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-
-
 
 
 
@@ -442,7 +410,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public ServiceController()
         {
-            _UserList = new List<ServiceReciever>();
+            userList = new List<ServiceReciever>();
+
+            authorizationServiceListenner = new (new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
         }
 
 

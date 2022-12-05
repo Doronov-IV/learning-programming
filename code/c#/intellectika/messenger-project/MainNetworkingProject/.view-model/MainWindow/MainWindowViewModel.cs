@@ -18,11 +18,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
         public DelegateCommand LaunchClientCommand { get; }
         public DelegateCommand LaunchServiceCommand { get; }
+        public DelegateCommand LaunchAuthorizerCommand { get; }
         public DelegateCommand KillServiceCommand { get; }
         public DelegateCommand ClearFoldersCommand { get; }
         public DelegateCommand ClearMessagesCommand { get; }
         public DelegateCommand ClearAuthorizationCommand { get; }
-
 
 
         #endregion COMMANDS
@@ -67,6 +67,9 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 // destination 2 (service);
                 extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
         "\\code\\c#\\intellectika\\messenger-project\\ReversedService\\.net"));
+                // destination 3 (authorizer);
+                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
+        "\\code\\c#\\intellectika\\messenger-project\\AuthorizationService\\AuthorizationServiceProject\\.net"));
                 // extracting;
                 LibraryExtractor networkingLibraryExtractor = new(targetInfo, extractorDestinations);
                 networkingLibraryExtractor.Extract();
@@ -97,10 +100,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             LaunchClientCommand = new(OnLaunchClientButtonClickAsync);
             LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);
+            LaunchAuthorizerCommand = new(OnLaunchAuthorizerButtonClick);
             KillServiceCommand = new(OnKillServiceButtonClick);
             ClearFoldersCommand = new(OnClearFoldersButtonClickInParallel);
             ClearMessagesCommand = new(OnClearMessagesButtonClick);
-            ClearAuthorizationCommand = new(OnAutorizationButtonClick);
+            ClearAuthorizationCommand = new(OnClearAutorizationButtonClick);
         }
 
 

@@ -31,9 +31,15 @@
         <Button 
                 Content="Launch Service" 
                 Command="{Binding LaunchServiceCommand}" 
-                Grid.Column="4" Margin="20" Grid.Row="5"
+                Grid.Column="5" Margin="20" Grid.Row="4"
          />
-        
+
+        <Button 
+                Content="Launch Authorizer" 
+                Command="{Binding LaunchAuthorizerCommand}" 
+                Grid.Column="5" Margin="15,20,15,20" Grid.Row="3"
+         />
+
         <Button 
             Content="Cancel Service" 
             Command="{Binding KillServiceCommand}" 

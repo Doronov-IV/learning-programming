@@ -156,37 +156,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Read an authorization pair from client network connection.
-        /// <br />
-        /// Считать данные авторизации от клиентского сетевого соединения.
-        /// </summary>
-        public UserDTO ReadAuthorizationPair()
-        {
-            _packetReader = new PackageReader(ClientSocket.GetStream());
-
-            var opCode = _packetReader.ReadByte();
-
-            var authorizationQueue = _packetReader.ReadMessage();
-
-            var queue = authorizationQueue.Message as string;
-
-            var strings = queue.Split("|");
-
-            AuthorizationPair pair = new();
-
-            if (strings.Length == 2)
-            {
-                pair.Login = strings[0];
-                pair.PasswordHash = strings[1];
-            }
-            else if (strings.Length == 1) 
-                pair.Login = pair.PasswordHash = strings[0];
-
-            return new UserDTO(login: pair.Login, password: pair.PasswordHash);
-        }
-
-
-        /// <summary>
         /// Parametrised constructor;
         /// <br />
         /// Конструктор с параметрами;
@@ -210,14 +179,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             ClientSocket = client;
 
             _packetReader = new PackageReader(ClientSocket.GetStream());
-
-            var opCode = _packetReader.ReadByte();
-
-            var msgRef = _packetReader.ReadMessage();
-
-            //имени пользователя присваивается прочитанная строка
-            CurrentUserName = msgRef.Message as string;
-            CurrentUID = CurrentUserName;
         }
 
 

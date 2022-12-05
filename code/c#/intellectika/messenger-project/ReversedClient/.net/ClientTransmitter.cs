@@ -30,10 +30,10 @@ namespace Net.Transmition
         /// <br />
         /// Текущий эндпоинт сервиса;
         /// </summary>
-        private IPEndPoint messangerServiceEndPoint = new(localHostIpAddress, 7991);
+        private IPEndPoint messangerServiceEndPoint = new(localHostIpAddress, 7333);
 
 
-        private IPEndPoint authorizationServiceEndPoint = new(localHostIpAddress, 7891);
+        private IPEndPoint authorizationServiceEndPoint = new(localHostIpAddress, 7222);
 
 
         /// <summary>
@@ -185,12 +185,6 @@ namespace Net.Transmition
                     connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
 
                     _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
-
-                    //connectPacket.WriteOpCode(0);
-                    //
-                    //connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
-                    //
-                    //_serviceSocket.Client.Send(connectPacket.GetPacketBytes());
 
                     var result = PacketReader.ReadByte();
 
