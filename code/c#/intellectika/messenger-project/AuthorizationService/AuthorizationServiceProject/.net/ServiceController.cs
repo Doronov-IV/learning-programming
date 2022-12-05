@@ -1,7 +1,9 @@
 ﻿using AuthorizationServiceProject.Net;
 using Toolbox.Flags;
+using AuthorizationServiceProject.Model.Context;
+using AuthorizationServiceProject.Model.Entities;
 
-namespace AuthorizationServiceProject.net
+namespace AuthorizationServiceProject.Net
 {
     public class ServiceController
     {
@@ -11,6 +13,9 @@ namespace AuthorizationServiceProject.net
 
 
         private TcpListener listener;
+
+
+        private TcpClient messangerService;
 
 
         /// <inheritdoc cref="UserList">
@@ -66,16 +71,106 @@ namespace AuthorizationServiceProject.net
             {
                 ServiceReciever newClient;
 
+                listener.Start();
+
                 while (true)
                 {
                     newClient = new(listener.AcceptTcpClient(), this);
 
-                    TextMessagePackage response = new();
+                    UserList.Add(newClient);
 
-                    var res = newClient.ReadAuthorizationData();
+                    newClient.ProcessAsync();
                 }
             }
             catch { }
+        }
+
+
+        public bool CheckAuthorizationData(UserDTO pair)
+        {
+            bool bRes = false;
+            using (AuthorizationDatabaseContext context = new())
+            {
+                foreach (var el in context.Users)
+                {
+                    if (el.Login.Equals(pair.Login))
+                    {
+                        if (el.PasswordHash.Equals(pair.Password))
+                        {
+                            bRes = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return bRes;
+        }
+
+
+
+        public bool AddNewUser(UserDTO user)
+        {
+            bool doesContain = CheckPresentUser(user);
+            using (AuthorizationDatabaseContext context = new())
+            {
+                if (!doesContain)
+                {
+                    UserModel newUser = new();
+                    newUser.Login = user.Login;
+                    newUser.PasswordHash = user.Password;
+                    context.Users.Add(newUser);
+
+                    context.SaveChanges();
+                }
+            }
+            return !doesContain;
+        }
+
+
+
+        public bool CheckPresentUser(UserDTO user)
+        {
+            bool doesContain = false;
+            using (AuthorizationDatabaseContext context = new())
+            {
+                foreach (var item in context.Users)
+                {
+                    if (item.Login.Equals(user.Login))
+                    {
+                        doesContain = true;
+                        break;
+                    }
+                }
+            }
+            return doesContain;
+        }
+
+
+
+        public void SendClientResponse(ServiceReciever client, bool checkResult)
+        {
+            if (checkResult) client.ClientSocket.Client.Send(BitConverter.GetBytes(1));
+            else client.ClientSocket.Client.Send(BitConverter.GetBytes(0));
+        }
+
+
+        public void SendLoginToService(ServiceReciever user)
+        {
+            if (messangerService.Connected)
+            {
+                TextMessagePackage package= new TextMessagePackage("authorizer", "messanger", $"{user.CurrentUser.Login}");
+                PackageBuilder builder = new();
+                builder.WriteOpCode(16);
+                builder.WriteMessage(package);
+                messangerService.Client.Send(builder.GetPacketBytes());
+            }
+        }
+
+
+        public void SendOutputMessage(string message)
+        {
+            SendServiceOutput.Invoke(message);
         }
 
 
@@ -84,6 +179,8 @@ namespace AuthorizationServiceProject.net
 
 
         #region LOGIC
+
+
         #endregion LOGIC
 
 
@@ -101,6 +198,7 @@ namespace AuthorizationServiceProject.net
         {
             _userList = new();
             listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
+            messangerService = new TcpClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7791));
         }
 
 

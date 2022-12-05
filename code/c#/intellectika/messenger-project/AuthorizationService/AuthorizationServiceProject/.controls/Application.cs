@@ -13,6 +13,12 @@ global using NetworkingAuxiliaryLibrary.Processing;
 global using NetworkingAuxiliaryLibrary.Packages;
 global using NetworkingAuxiliaryLibrary.Objects;
 
+
+global using Microsoft.EntityFrameworkCore.Design;
+global using Microsoft.EntityFrameworkCore;
+using AuthorizationServiceProject.Net;
+using AuthorizationServiceProject.Model.Context;
+
 namespace AuthorizationServiceProject.Controls
 {
     public class Application
@@ -61,7 +67,9 @@ namespace AuthorizationServiceProject.Controls
         /// </summary>
         private void Run()
         {
-
+            ServiceController controller = new();
+            controller.SendServiceOutput += Console.WriteLine;
+            controller.Run();
         }
 
 
@@ -82,7 +90,7 @@ namespace AuthorizationServiceProject.Controls
         /// </summary>
         public Application()
         {
-
+            using (AuthorizationDatabaseContext context = new()) { }
         }
 
 

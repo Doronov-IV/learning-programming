@@ -30,7 +30,10 @@ namespace Net.Transmition
         /// <br />
         /// Текущий эндпоинт сервиса;
         /// </summary>
-        private IPEndPoint serviceEndPoint = new(localHostIpAddress, 7891);
+        private IPEndPoint messangerServiceEndPoint = new(localHostIpAddress, 7991);
+
+
+        private IPEndPoint authorizationServiceEndPoint = new(localHostIpAddress, 7891);
 
 
         /// <summary>
@@ -168,7 +171,7 @@ namespace Net.Transmition
                     /// 
                     /// - Client connection [!]
                     ///
-                    await _serviceSocket.ConnectAsync(serviceEndPoint);
+                    await _serviceSocket.ConnectAsync(authorizationServiceEndPoint);
                     PacketReader = new(_serviceSocket.GetStream());
 
                     if (cancellationTokenSource.IsCancellationRequested)
@@ -177,17 +180,17 @@ namespace Net.Transmition
 
                     var connectPacket = new PackageBuilder();
 
-                    connectPacket.WriteOpCode(0);
+                    connectPacket.WriteOpCode(1);
 
                     connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
 
                     _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                    connectPacket.WriteOpCode(0);
-
-                    connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
-
-                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+                    //connectPacket.WriteOpCode(0);
+                    //
+                    //connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
+                    //
+                    //_serviceSocket.Client.Send(connectPacket.GetPacketBytes());
 
                     var result = PacketReader.ReadByte();
 
