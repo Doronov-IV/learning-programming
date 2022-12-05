@@ -156,14 +156,28 @@ namespace AuthorizationServiceProject.Net
 
         public void SendClientResponse(ServiceReciever client, bool checkResult)
         {
-            if (checkResult) client.ClientSocket.Client.Send(BitConverter.GetBytes(1));
-            else client.ClientSocket.Client.Send(BitConverter.GetBytes(0));
+            PackageBuilder builder = new PackageBuilder();
+            TextMessagePackage package;
+
+            if (checkResult) package = new ("Authorizer", "User", "Granted");
+            else package = new ("Authorizer", "User", "Denied");
+
+            builder.WriteMessage(package);
+
+            client.ClientSocket.Client.Send(builder.GetPacketBytes());
         }
 
 
         public void SendLoginToService(ServiceReciever user)
         {
-            if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+            try
+            {
+                if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+            }
+            catch (Exception ex)
+            {
+                SendOutputMessage("Messenger service is down.");
+            }
 
             if (messangerService.Connected)
             {
@@ -188,6 +202,35 @@ namespace AuthorizationServiceProject.Net
         #region LOGIC
 
 
+        private void TrySeedAdmins()
+        {
+            using (AuthorizationDatabaseContext context = new())
+            {
+                UserModel admin1 = new();
+                UserModel admin2 = new();
+
+                admin1.Login = "admin_alpha";
+                admin2.Login = "admin_bravo";
+
+                admin1.PasswordHash = admin2.PasswordHash = "admin";
+
+                foreach (var user in context.Users)
+                {
+                    if (user.Login.Equals(admin1.Login))
+                    {
+                        context.Dispose();
+                        return;
+                    }
+                }
+
+                context.Users.Add(admin1);
+                context.Users.Add(admin2);
+
+                context.SaveChanges();
+            }
+        }
+
+
         #endregion LOGIC
 
 
@@ -206,6 +249,8 @@ namespace AuthorizationServiceProject.Net
             _userList = new();
             clientListener = new ( new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7222));
             messangerService = new();
+
+            TrySeedAdmins();
         }
 
 

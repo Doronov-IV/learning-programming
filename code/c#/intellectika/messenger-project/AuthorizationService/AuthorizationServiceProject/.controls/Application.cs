@@ -16,8 +16,8 @@ global using NetworkingAuxiliaryLibrary.Objects;
 
 global using Microsoft.EntityFrameworkCore.Design;
 global using Microsoft.EntityFrameworkCore;
-using AuthorizationServiceProject.Net;
-using AuthorizationServiceProject.Model.Context;
+global using AuthorizationServiceProject.Net;
+global using AuthorizationServiceProject.Model.Context;
 
 namespace AuthorizationServiceProject.Controls
 {

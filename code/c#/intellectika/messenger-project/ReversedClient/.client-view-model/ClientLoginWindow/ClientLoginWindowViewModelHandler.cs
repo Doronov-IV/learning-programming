@@ -13,13 +13,13 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Обработать клик по кнопке 'Sign In';
         /// </summary>
-        public async void OnSignInButtonClick()
+        public void OnSignInButtonClick()
         {
             try
             {
                 if (!string.IsNullOrEmpty(UserData.Password) && !string.IsNullOrEmpty(UserData.Login))
                 {
-                    if (await ServiceTransmitter.ConnectToServer(UserData.Login, UserData.Password))
+                    if (ServiceTransmitter.ConnectToServer(UserData.Login, UserData.Password))
                     {
                         ReversedClientWindow window = new ReversedClientWindow(UserData, ServiceTransmitter);
                         window.Show();

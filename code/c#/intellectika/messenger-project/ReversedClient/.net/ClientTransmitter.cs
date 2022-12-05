@@ -161,7 +161,7 @@ namespace Net.Transmition
         /// <br />
         /// .
         /// </returns>
-        public async Task<bool> ConnectToServer(string login, string pass)
+        public bool ConnectToServer(string login, string pass)
         {
             try
             {
@@ -171,7 +171,8 @@ namespace Net.Transmition
                     /// 
                     /// - Client connection [!]
                     ///
-                    await _serviceSocket.ConnectAsync(authorizationServiceEndPoint);
+                    _serviceSocket.ConnectAsync(authorizationServiceEndPoint);
+                }
                     PacketReader = new(_serviceSocket.GetStream());
 
                     if (cancellationTokenSource.IsCancellationRequested)
@@ -186,15 +187,11 @@ namespace Net.Transmition
 
                     _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                    var result = PacketReader.ReadByte();
+                    var result = PacketReader.ReadMessage().Message as string;
 
-                    if (result != 1) return false;
+                    if (result.Equals("Denied")) return false;
                     else return true;
-                }
-                else
-                {
-                    return false;
-                }
+               
             }
             catch (Exception ex)
             {
