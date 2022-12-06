@@ -13,7 +13,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Обработать клик по кнопке 'Sign In';
         /// </summary>
-        public void OnSignInButtonClick()
+        public async void OnSignInButtonClick()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Unable to connect.\n\nException: {ex.Message}", "Exception intercepted", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Exception: {ex.Message}", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -265,7 +265,7 @@ namespace Net.Transmition
             {
                 cancellationTokenSource.Cancel();
 
-                authorizationSocket.Close();
+                messengerSocket.Close();
 
                 currentUserDisconnectEvent?.Invoke();
             }
@@ -450,6 +450,7 @@ namespace Net.Transmition
                         case 10:
                             otherUserDisconnectEvent?.Invoke(); // client disconnection;
                             break;
+
                         case byte.MaxValue:
                             Disconnect();
                             break;

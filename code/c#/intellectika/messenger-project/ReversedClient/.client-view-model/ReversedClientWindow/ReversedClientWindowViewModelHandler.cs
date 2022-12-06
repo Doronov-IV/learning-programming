@@ -230,7 +230,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         {
             ReversedClient.client_view.ClientLoginWindow window = new();
             window.Show();
-
             Application.Current.MainWindow.Close();
         }
 
