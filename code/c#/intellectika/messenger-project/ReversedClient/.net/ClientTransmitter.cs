@@ -69,15 +69,15 @@ namespace Net.Transmition
         /// <br />
         /// Вспомогательный объект, который необходим, чтобы упростить чтение/запись сообщений;
         /// </summary>
-        public PackageReader AuthorizationPacketReader
-        {
-            get; set;
-        }
+        private PackageReader authorizationPacketReader;
 
-        public PackageReader MessangerPacketReader
-        {
-            get; set;
-        }
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        private PackageReader messangerPacketReader;
 
 
 
@@ -158,12 +158,7 @@ namespace Net.Transmition
         /// <br />
         /// Подключить пользователя к сервису;
         /// </summary>
-        /// <param name="login">
-        /// .
-        /// <br />
-        /// .
-        /// </param>
-        /// <param name="pass">
+        /// <param name="user">
         /// .
         /// <br />
         /// .
@@ -185,7 +180,7 @@ namespace Net.Transmition
                     ///
                     authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
                 }
-                    AuthorizationPacketReader = new(authorizationSocket.GetStream());
+                    authorizationPacketReader = new(authorizationSocket.GetStream());
 
                     if (cancellationTokenSource.IsCancellationRequested)
                         cancellationTokenSource = new();
@@ -199,7 +194,7 @@ namespace Net.Transmition
 
                     authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                    var result = AuthorizationPacketReader.ReadMessage().Message as string;
+                    var result = authorizationPacketReader.ReadMessage().Message as string;
 
                     if (result.Equals("Denied")) return false;
                     else return true;
@@ -220,7 +215,7 @@ namespace Net.Transmition
             {
                 messengerSocket.Connect(messangerServiceEndPoint);
 
-                MessangerPacketReader = new(messengerSocket.GetStream());
+                messangerPacketReader = new(messengerSocket.GetStream());
 
                 if (cancellationTokenSource.IsCancellationRequested)
                     cancellationTokenSource = new();
@@ -361,11 +356,11 @@ namespace Net.Transmition
         public User GetResponseData()
         {
             User res = null;
-            var code = MessangerPacketReader.ReadByte();
+            var code = messangerPacketReader.ReadByte();
             if (code == 12)
             {
                 Span<byte> data = new();
-                MessangerPacketReader.Read(data);
+                messangerPacketReader.Read(data); // 0 is being read :\
 
                 res = HyperSerializer<User>.Deserialize(data);
             }
@@ -400,7 +395,7 @@ namespace Net.Transmition
 
                     try
                     {
-                        opCode = AuthorizationPacketReader.ReadByte();
+                        opCode = authorizationPacketReader.ReadByte();
                     }
                     catch (Exception e)
                     {
