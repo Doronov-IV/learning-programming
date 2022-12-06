@@ -69,7 +69,11 @@ namespace Net.Transmition
         /// <br />
         /// Вспомогательный объект, который необходим, чтобы упростить чтение/запись сообщений;
         /// </summary>
-        private PackageReader authorizationPacketReader;
+        private PackageReader _authorizationPacketReader;
+
+
+
+
 
 
         /// <summary>
@@ -77,7 +81,7 @@ namespace Net.Transmition
         /// <br />
         /// .
         /// </summary>
-        private PackageReader messangerPacketReader;
+        private PackageReader _messangerPacketReader;
 
 
 
@@ -140,6 +144,26 @@ namespace Net.Transmition
         public event PendOutputDelegate SendOutput;
 
 
+        public PackageReader AuthorizationPacketReader
+        {
+            get { return _authorizationPacketReader; }
+            set
+            {
+                _authorizationPacketReader = value;
+            }
+        }
+
+
+        public PackageReader MessangerPacketReader
+        {
+            get { return _messangerPacketReader; }
+            set
+            {
+                _messangerPacketReader = value;
+            }
+        }
+
+
 
 
         #endregion PROPERTIES - public & private Properties
@@ -180,7 +204,7 @@ namespace Net.Transmition
                     ///
                     authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
                 }
-                    authorizationPacketReader = new(authorizationSocket.GetStream());
+                    _authorizationPacketReader = new(authorizationSocket.GetStream());
 
                     if (cancellationTokenSource.IsCancellationRequested)
                         cancellationTokenSource = new();
@@ -194,7 +218,7 @@ namespace Net.Transmition
 
                     authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                    var result = authorizationPacketReader.ReadMessage().Message as string;
+                    var result = _authorizationPacketReader.ReadMessage().Message as string;
 
                     if (result.Equals("Denied")) return false;
                     else return true;
@@ -215,7 +239,7 @@ namespace Net.Transmition
             {
                 messengerSocket.Connect(messangerServiceEndPoint);
 
-                messangerPacketReader = new(messengerSocket.GetStream());
+                _messangerPacketReader = new(messengerSocket.GetStream());
 
                 if (cancellationTokenSource.IsCancellationRequested)
                     cancellationTokenSource = new();
@@ -356,11 +380,16 @@ namespace Net.Transmition
         public User GetResponseData()
         {
             User res = null;
-            var code = messangerPacketReader.ReadByte();
+            var code = _messangerPacketReader.ReadByte();
             if (code == 12)
             {
-                Span<byte> data = new();
-                messangerPacketReader.Read(data); // 0 is being read :\
+                var bufferLength = _messangerPacketReader.ReadInt32();
+
+                byte[] buffer = new byte[bufferLength];
+
+                _messangerPacketReader.Read(buffer, 0, bufferLength);
+
+                Span<byte> data = new(buffer);
 
                 res = HyperSerializer<User>.Deserialize(data);
             }
@@ -395,7 +424,7 @@ namespace Net.Transmition
 
                     try
                     {
-                        opCode = authorizationPacketReader.ReadByte();
+                        opCode = _authorizationPacketReader.ReadByte();
                     }
                     catch (Exception e)
                     {

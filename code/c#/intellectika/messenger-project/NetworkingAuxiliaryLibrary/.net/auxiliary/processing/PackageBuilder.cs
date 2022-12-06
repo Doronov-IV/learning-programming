@@ -93,6 +93,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// </param>
         public void WriteByteSpan(Span<byte> span)
         {
+            _memoryStream.Write(BitConverter.GetBytes(span.Length));
             _memoryStream.Write(span);
         }
 

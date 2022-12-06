@@ -29,7 +29,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RemoveUser()
         {
-            var uid = serviceTransmitter.authorizationPacketReader.ReadMessage().Message;
+            var uid = serviceTransmitter.MessangerPacketReader.ReadMessage().Message;
             var user = OnlineMembers.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
@@ -47,7 +47,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         {
             try 
             {
-                var msg = serviceTransmitter.authorizationPacketReader.ReadMessage(); // reading new message via our packet reader;
+                var msg = serviceTransmitter.MessangerPacketReader.ReadMessage(); // reading new message via our packet reader;
                 var msgCopy = msg;
                 if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
                 {
@@ -96,8 +96,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             // create new user instance;
             var user = new UserModel()
             {
-                UserName = serviceTransmitter.authorizationPacketReader.ReadMessage().Message as string,
-                PublicId = serviceTransmitter.authorizationPacketReader.ReadMessage().Message as string,
+                UserName = serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
+                PublicId = serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
             };
 
             /*

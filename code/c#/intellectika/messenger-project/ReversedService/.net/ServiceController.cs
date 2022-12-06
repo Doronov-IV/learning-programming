@@ -102,47 +102,46 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void RunClientHeed()
         {
-            try
+            userList = new List<ServiceReciever>();
+
+            userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
+
+            userListenner.Start();
+
+
+            if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+                ServiceWindowViewModel.cancellationTokenSource = new();
+
+            PackageReader reader;
+
+            ServiceReciever client;
+
+            IsRunning = true;
+
+            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
             {
-                userList = new List<ServiceReciever>();
+                client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
 
-                userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
+                reader = new(client.ClientSocket.GetStream());
 
-                userListenner.Start();
+                var msg = reader.ReadMessage();
 
+                SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
 
-                if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
-                    ServiceWindowViewModel.cancellationTokenSource = new();
+                userList.Add(client);
 
-                PackageReader reader;
+                var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
-                ServiceReciever client;
+                client.CurrentUserName = user.CurrentNickname;
+                client.CurrentUID = user.PublicId;
 
-                IsRunning = true;
+                SendUserInfo(client, user);
 
-                while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
-                {
-                    client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
+                BroadcastConnection();
 
-                    reader = new(client.ClientSocket.GetStream());
+                client.ProcessAsync();
 
-                    var msg = reader.ReadMessage();
-
-                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
-
-                    userList.Add(client);
-
-                    var user = GetUserFromDatabaseByLogin(msg.Message as string);
-
-                    SendUserInfo(client, user);
-
-                    BroadcastConnection();
-
-                    client.ProcessAsync();
-
-                }
             }
-            catch { }
         }
 
 
@@ -213,9 +212,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 foreach (var usr in userList)
                 {
+                    var usrName = new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUserName);
+                    var usrUID = new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUID);
+
                     broadcastPacket.WriteOpCode(1); // code '1' means new user has connected;
-                    broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All",usr.CurrentUserName));
-                    broadcastPacket.WriteMessage(new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUID));
+                    broadcastPacket.WriteMessage(usrName);
+                    broadcastPacket.WriteMessage(usrUID);
 
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }

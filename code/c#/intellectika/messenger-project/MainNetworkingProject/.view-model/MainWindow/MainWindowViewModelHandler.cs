@@ -70,7 +70,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 using (var process = new Process())
                 {
                     process.StartInfo.FileName = "../../../../AuthorizationService/bin/Release/net6.0/AuthorizationServiceProject.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../AuthorizationService/AuthorizationServiceProject/bin/Release/net6.0";
+                    process.StartInfo.WorkingDirectory = "../../../../AuthorizationService/bin/Release/net6.0";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
