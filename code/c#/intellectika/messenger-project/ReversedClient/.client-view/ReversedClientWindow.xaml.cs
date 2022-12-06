@@ -1,4 +1,5 @@
 ﻿using Net.Transmition;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedClient.ViewModel.ClientChatWindow;
 using ReversedClient.ViewModel.Misc;
 
@@ -17,11 +18,11 @@ namespace ReversedClient.client_view
         }
 
 
-        public ReversedClientWindow(UserDTO userTransferObject, ClientTransmitter clientRadio)
+        public ReversedClientWindow(User userData, ClientTransmitter clientRadio)
         {
             InitializeComponent();
 
-            DataContext = new ReversedClientWindowViewModel(userTransferObject, clientRadio);
+            DataContext = new ReversedClientWindowViewModel(userData, clientRadio);
         }
     }
 }

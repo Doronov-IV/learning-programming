@@ -1,4 +1,4 @@
-﻿using ReversedService.Model.Entities;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace ReversedService.Model.Configs
 {

@@ -1,6 +1,6 @@
 ﻿using ReversedService.LocalService;
 using ReversedService.Model.Context;
-using ReversedService.Model.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System.Linq;
 using Toolbox.Flags;
 using Tools.Flags;

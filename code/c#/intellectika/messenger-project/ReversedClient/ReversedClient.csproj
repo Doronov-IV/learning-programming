@@ -24,9 +24,9 @@
     <Compile Include=".client-model\UserModel.cs" />
     <Compile Include=".client-view-model\ClientSignUpWindow\ClientSignUpWindowViewModel.cs" />
     <Compile Include=".client-view-model\ClientSignUpWindow\ClientSignUpWindowViewModelHandler.cs" />
-    <Compile Include=".client-view-model\Misc\MessengerChat.cs" />
     <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModel.cs" />
     <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModelHandler.cs" />
+    <Compile Include=".client-view-model\Misc\MessengerChat.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
     <Compile Include=".net\ClientTransmitter.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HyperSerializer" Version="1.0.13" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 

@@ -18,5 +18,29 @@
         /// </summary>
         public string PublicId { get; set; } = null!;
 
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public UserModel()
+        {
+
+        }
+
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public UserModel(string userName, string publicId)
+        {
+            UserName = userName;
+            PublicId = publicId;
+        }
     }
 }

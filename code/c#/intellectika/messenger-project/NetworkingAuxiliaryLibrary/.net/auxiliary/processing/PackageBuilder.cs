@@ -82,6 +82,22 @@ namespace NetworkingAuxiliaryLibrary.Processing
 
 
         /// <summary>
+        /// Write serialized data;
+        /// <br />
+        /// Записать сериализованные данные;
+        /// </summary>
+        /// <param name="span">
+        /// Binary data;
+        /// <br />
+        /// Бинарные данные;
+        /// </param>
+        public void WriteByteSpan(Span<byte> span)
+        {
+            _memoryStream.Write(span);
+        }
+
+
+        /// <summary>
         /// Get all packet bytes including code, message length and the message itself;
         /// <br />
         /// Получить байты пакета, включая код, длину сообщения и само сообщение;

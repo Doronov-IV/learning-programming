@@ -1,4 +1,4 @@
-﻿namespace ReversedService.Model.Entities
+﻿namespace NetworkingAuxiliaryLibrary.Objects.Entities
 {
     public class User
     {

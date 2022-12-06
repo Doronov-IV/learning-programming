@@ -1,5 +1,6 @@
-﻿using NetworkingAuxiliaryLibrary.Processing;
-using ReversedClient.ViewModel.Misc;
+﻿using Hyper;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Processing;
 using System.IO.Packaging;
 using System.Net;
 using System.Net.Sockets;
@@ -57,7 +58,10 @@ namespace Net.Transmition
         /// <br />
         /// Предоставляет клиенские подключения для сервиса;
         /// </summary>
-        private TcpClient _serviceSocket;
+        private TcpClient authorizationSocket;
+
+
+        private TcpClient messengerSocket;
 
 
         /// <summary>
@@ -161,19 +165,19 @@ namespace Net.Transmition
         /// <br />
         /// .
         /// </returns>
-        public bool ConnectToServer(string login, string pass)
+        public bool ConnectAndAuthorize(UserDTO user)
         {
             try
             {
                 //Если клиент не подключен
-                if (!_serviceSocket.Connected)
+                if (!authorizationSocket.Connected)
                 {
                     /// 
                     /// - Client connection [!]
                     ///
-                    _serviceSocket.ConnectAsync(authorizationServiceEndPoint);
+                    authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
                 }
-                    PacketReader = new(_serviceSocket.GetStream());
+                    PacketReader = new(authorizationSocket.GetStream());
 
                     if (cancellationTokenSource.IsCancellationRequested)
                         cancellationTokenSource = new();
@@ -183,9 +187,9 @@ namespace Net.Transmition
 
                     connectPacket.WriteOpCode(1);
 
-                    connectPacket.WriteMessage(new TextMessagePackage($"{login}", "Service", $"{login}|{pass}"));
+                    connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
 
-                    _serviceSocket.Client.Send(connectPacket.GetPacketBytes());
+                    authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
                     var result = PacketReader.ReadMessage().Message as string;
 
@@ -202,6 +206,27 @@ namespace Net.Transmition
         }
 
 
+        public void ConnectAndSendLoginToService(UserDTO user)
+        {
+            if (!messengerSocket.Connected)
+            {
+                messengerSocket.ConnectAsync(messangerServiceEndPoint);
+
+                PacketReader = new(authorizationSocket.GetStream());
+
+                if (cancellationTokenSource.IsCancellationRequested)
+                    cancellationTokenSource = new();
+
+
+                var connectPacket = new PackageBuilder();
+
+                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}"));
+
+                authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
+            }
+        }
+
+
         /// <summary>
         /// Disconnect client from service;
         /// <br />
@@ -209,11 +234,11 @@ namespace Net.Transmition
         /// </summary>
         public void Disconnect()
         {
-            if (_serviceSocket.Connected)
+            if (authorizationSocket.Connected)
             {
                 cancellationTokenSource.Cancel();
 
-                _serviceSocket.Close();
+                authorizationSocket.Close();
 
                 currentUserDisconnectEvent?.Invoke();
             }
@@ -237,7 +262,7 @@ namespace Net.Transmition
             messagePacket.WriteMessage(package);
             try
             {
-                _serviceSocket.Client.Send(messagePacket.GetPacketBytes());
+                authorizationSocket.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
             {
@@ -277,11 +302,11 @@ namespace Net.Transmition
                             {
                                 buffer = new byte[bufferSize];
                                 stream.Read(buffer, 0, bufferSize);
-                                _serviceSocket.Client.Send(buffer, SocketFlags.Partial);
+                                authorizationSocket.Client.Send(buffer, SocketFlags.Partial);
                             }
                         }
                     }
-                else _serviceSocket.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
+                else authorizationSocket.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
                 });
             }
             catch (Exception ex)
@@ -316,7 +341,7 @@ namespace Net.Transmition
             messagePacket.WriteMessage(signUpMessage);
             try
             {
-                _serviceSocket.Client.Send(messagePacket.GetPacketBytes());
+                authorizationSocket.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
             {
@@ -324,6 +349,20 @@ namespace Net.Transmition
             }
         }
 
+
+        public User GetResponseData()
+        {
+            User res = null;
+            var code = PacketReader.ReadByte();
+            if (code == 12)
+            {
+                Span<byte> data = new();
+                PacketReader.Read(data);
+
+                res = HyperSerializer<User>.Deserialize(data);
+            }
+            return res;
+        }
 
 
         #endregion API - public Behavior
@@ -406,7 +445,8 @@ namespace Net.Transmition
         /// </summary>
         public ClientTransmitter()
         {
-            _serviceSocket = new TcpClient();
+            authorizationSocket = new TcpClient();
+            messengerSocket = new TcpClient();
         }
 
 

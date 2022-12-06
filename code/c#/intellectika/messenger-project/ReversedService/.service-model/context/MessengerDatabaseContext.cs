@@ -1,4 +1,4 @@
-﻿using ReversedService.Model.Entities;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedService.Model.Configs;
 using ReversedService.service_view;
 using ReversedService.ViewModel.ServiceWindow;

@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />
+    <Compile Include=".net\auxiliary\objects\entities\Message.cs" />
+    <Compile Include=".net\auxiliary\objects\entities\User.cs" />
     <Compile Include=".net\auxiliary\objects\UserDTO.cs" />
     <Compile Include=".net\auxiliary\packs\FileMessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\MessagePackage.cs" />

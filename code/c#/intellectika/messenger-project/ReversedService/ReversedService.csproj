@@ -28,9 +28,6 @@
     <Compile Include=".service-model\configs\MessageConfiguration.cs" />
     <Compile Include=".service-model\configs\UserConfiguration.cs" />
     <Compile Include=".service-model\context\MessengerDatabaseContext.cs" />
-    <Compile Include=".service-model\entities\Chat.cs" />
-    <Compile Include=".service-model\entities\Message.cs" />
-    <Compile Include=".service-model\entities\User.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModel.cs" />
     <Compile Include=".service-view-model\ServiceWindow\ServiceWindowViewModelHandler.cs" />
     <Compile Include=".service-view\App.xaml.cs" />
@@ -38,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HyperSerializer" Version="1.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>

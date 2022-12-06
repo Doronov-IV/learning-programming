@@ -1,5 +1,6 @@
 ﻿using ReversedClient.client_view;
 using System.Windows;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using Net.Transmition;
 using ReversedClient.Model.Basics;
 using ReversedClient.ViewModel.Misc;
@@ -332,9 +333,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ReversedClientWindowViewModel(UserDTO userTransferObject, ClientTransmitter clientRadio)
+        public ReversedClientWindowViewModel(User userData, ClientTransmitter clientRadio)
         {
-            chatList = new();
+            FillChats(chatList, userData);
+
+            windowHeaderString = userData.CurrentNickname;
+
+
             userFile = null;
             _dialogService = new AttachFileDialogService();
 

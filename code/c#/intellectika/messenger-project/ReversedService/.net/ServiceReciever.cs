@@ -2,7 +2,7 @@
 using NetworkingAuxiliaryLibrary.Objects;
 using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
-using ReversedService.Model.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {

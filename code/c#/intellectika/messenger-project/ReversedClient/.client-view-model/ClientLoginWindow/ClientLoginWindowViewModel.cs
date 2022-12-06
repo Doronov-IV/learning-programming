@@ -1,5 +1,6 @@
 ﻿using Net.Transmition;
-using ReversedClient.ViewModel.Misc;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace ReversedClient.ViewModel.ClientLoginWindow
 {
@@ -10,8 +11,10 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         #region STATE
 
 
-        /// <inheritdoc cref="UserData"/>
-        private UserDTO userData;
+        /// <inheritdoc cref="_userDTOdata"/>
+        private UserDTO _userDTOdata;
+
+        private User _fullUserData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -24,13 +27,24 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserDTO UserData
+        public UserDTO UserDTOdata
         {
-            get { return userData; }
+            get { return _userDTOdata; }
             set
             {
-                userData = value;
-                OnPropertyChanged(nameof(UserData));
+                _userDTOdata = value;
+                OnPropertyChanged(nameof(UserDTOdata));
+            }
+        }
+
+
+        public User FullUserData
+        {
+            get { return _fullUserData; }
+            set
+            {
+                _fullUserData = value;
+                OnPropertyChanged(nameof(FullUserData));
             }
         }
 
@@ -76,7 +90,7 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         /// </summary>
         public ClientLoginWindowViewModel()
         {
-            userData = new UserDTO();
+            _userDTOdata = new UserDTO();
 
             serviceTransmitter = new();
             serviceTransmitter.SendOutput += ShowErrorMessage;

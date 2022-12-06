@@ -17,11 +17,14 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
         {
             try
             {
-                if (!string.IsNullOrEmpty(UserData.Password) && !string.IsNullOrEmpty(UserData.Login))
+                if (!string.IsNullOrEmpty(_userDTOdata.Password) && !string.IsNullOrEmpty(_userDTOdata.Login))
                 {
-                    if (ServiceTransmitter.ConnectToServer(UserData.Login, UserData.Password))
+                    if (ServiceTransmitter.ConnectAndAuthorize(_userDTOdata))
                     {
-                        ReversedClientWindow window = new ReversedClientWindow(UserData, ServiceTransmitter);
+                        ServiceTransmitter.ConnectAndSendLoginToService(_userDTOdata);
+                        FullUserData = ServiceTransmitter.GetResponseData();
+
+                        ReversedClientWindow window = new ReversedClientWindow(FullUserData, ServiceTransmitter);
                         window.Show();
 
                         Application.Current.MainWindow.Close();

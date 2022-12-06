@@ -1,7 +1,8 @@
 ﻿using ReversedService.ViewModel.ServiceWindow;
-using ReversedService.Model.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedService.Model.Context;
 using NetworkingAuxiliaryLibrary.Objects;
+using Hyper;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -32,13 +33,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// Основной слушатель;
         /// </summary>
         private TcpListener userListenner = null!;
-
-        /// <summary>
-        /// The main TCP userListenner;
-        /// <br />
-        /// Основной слушатель;
-        /// </summary>
-        private TcpListener authorizationServiceListenner = null!;
 
 
         /// <inheritdoc cref="IsRunning"/>
@@ -105,11 +99,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
 
                 userListenner.Start();
-                authorizationServiceListenner.Start();
 
-                var authorizer = new ServiceReciever(authorizationServiceListenner.AcceptTcpClient(), this);
-                PackageReader reader = new (authorizer.ClientSocket.GetStream());
-
+                PackageReader reader;
 
                 if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                     ServiceWindowViewModel.cancellationTokenSource = new();
@@ -120,21 +111,24 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
-                    var msg = reader.ReadMessage();
-
-                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" accepted.");
-
-
-
                     client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
 
-                    client.CurrentUserName = client.CurrentUID = msg.Message as string;
+                    reader = new(client.ClientSocket.GetStream());
+
+                    var msg = reader.ReadMessage();
+
+                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
 
                     userList.Add(client);
+
+                    var user = GetUserFromDatabaseByLogin(msg.Message as string);
+
+                    SendUserInfo(client, user);
 
                     BroadcastConnection();
 
                     client.ProcessAsync();
+
                 }
             }
             catch { }
@@ -393,6 +387,42 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        public User GetUserFromDatabaseByLogin(string login)
+        {
+            User res = null;
+
+            using (MessengerDatabaseContext context = new())
+            {
+                foreach (var user in context.Users)
+                {
+                    if (user.Login.Equals(login))
+                    {
+                        res = user;
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+
+        private void SendUserInfo(ServiceReciever reciever, User user)
+        {
+            Span<byte> bytes = new();
+
+            bytes = HyperSerializer<User>.Serialize(user);
+
+            PackageBuilder builder = new();
+
+            builder.WriteOpCode(12);
+
+            builder.WriteByteSpan(bytes);
+
+            reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
+        }
+
+
 
         #endregion API - public Behavior
 
@@ -411,8 +441,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         public ServiceController()
         {
             userList = new List<ServiceReciever>();
-
-            authorizationServiceListenner = new (new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
         }
 
 

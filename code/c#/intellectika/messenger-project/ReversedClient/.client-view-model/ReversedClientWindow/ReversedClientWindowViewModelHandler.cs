@@ -1,5 +1,6 @@
 ﻿using ReversedClient.client_view;
 using ReversedClient.Model.Basics;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedClient.ViewModel.Misc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Windows.Media.Converters;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -190,7 +192,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void ConnectToService()
         {
-            serviceTransmitter.ConnectToServer(CurrentUserDTO.Login, CurrentUserDTO.Password);
+            serviceTransmitter.ConnectAndAuthorize(CurrentUserDTO);
         }
 
 
@@ -205,6 +207,23 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             MessageBox.Show(sMessage, "Exception", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+
+        private void FillChats(ObservableCollection<MessengerChat> chatList, User user)
+        {
+            foreach (Chat chat in user.ChatList)
+            {
+                var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault();
+                var chatRef = new MessengerChat(addresser: currentUser, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId));
+
+                foreach (var message in chat.MessageList)
+                {
+                    if (message.AuthorId.Equals(currentUser.PublicId)) chatRef.AddOutgoingMessage(message.Contents);
+                    else chatRef.AddIncommingMessage(message.Contents);
+                }
+
+                chatList.Add(chatRef);
+            }
+        }
 
 
         #endregion LOGIC - internal behavior
