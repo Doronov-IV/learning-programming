@@ -21,9 +21,11 @@
     </Content>
     <Content Include="authorizer.ico" />
     <None Include=".net\NetworkingAuxiliaryLibrary.dll" />
-	<Reference Include="..\..\..\..\tools\precompiled-dll\Toolbox.dll" />
 	<Reference Include="NetworkingAuxiliaryLibrary">
 	  <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+	</Reference>
+	<Reference Include="Toolbox">
+	  <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
 	</Reference>
   </ItemGroup>
 
