@@ -46,10 +46,10 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 /// Toolbox
 
                 // target;
-                FileInfo dllTargetInfo = new(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.dll");
+                FileInfo dllTargetInfo = new(@"..\..\..\..\..\..\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.dll");
                 // destination (precomplied dll folder);
                 List<DirectoryInfo> toolsExtractorDestinations = new();
-                toolsExtractorDestinations.Add(new DirectoryInfo(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\tools\precompiled-dll"));
+                toolsExtractorDestinations.Add(new DirectoryInfo(@"..\..\..\..\..\..\tools\precompiled-dll"));
                 // extracting;
                 LibraryExtractor toolsLibraryExtractor = new(dllTargetInfo, toolsExtractorDestinations);
                 toolsLibraryExtractor.Extract();
@@ -58,18 +58,14 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 /// NET
 
                 // target;
-                FileInfo targetInfo = new("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning\\code\\c#\\" +
-        "intellectika\\messenger-project\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
+                FileInfo targetInfo = new("..\\..\\..\\..\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
                 // destination 1 (client);
                 List<DirectoryInfo> extractorDestinations = new();
-                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
-                    "\\code\\c#\\intellectika\\messenger-project\\ReversedClient\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\ReversedClient\\.net"));
                 // destination 2 (service);
-                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
-        "\\code\\c#\\intellectika\\messenger-project\\ReversedService\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\ReversedService\\.net"));
                 // destination 3 (authorizer);
-                extractorDestinations.Add(new DirectoryInfo("C:\\Users\\i.doronov\\source\\repos\\computer-science-learning" +
-        "\\code\\c#\\intellectika\\messenger-project\\AuthorizationService\\AuthorizationServiceProject\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\AuthorizationService\\.net"));
                 // extracting;
                 LibraryExtractor networkingLibraryExtractor = new(targetInfo, extractorDestinations);
                 networkingLibraryExtractor.Extract();
