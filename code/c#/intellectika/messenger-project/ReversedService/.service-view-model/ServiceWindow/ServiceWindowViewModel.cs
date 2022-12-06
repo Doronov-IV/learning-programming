@@ -112,9 +112,9 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
         /// <summary>
-        /// Binding checkbox with the 'Run' method;
+        /// Binding checkbox with the 'RunClientHeed' method;
         /// <br />
-        /// Привязка чекбокса с методом "Run";
+        /// Привязка чекбокса с методом "RunClientHeed";
         /// </summary>
         public DelegateCommand RunServiceCommand { get; }
 

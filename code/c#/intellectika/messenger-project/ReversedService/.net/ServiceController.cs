@@ -3,6 +3,8 @@ using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedService.Model.Context;
 using NetworkingAuxiliaryLibrary.Objects;
 using Hyper;
+using System.Windows.Interop;
+using System.Linq;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -33,6 +35,14 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// Основной слушатель;
         /// </summary>
         private TcpListener userListenner = null!;
+
+
+        /// <summary>
+        /// The main TCP userListenner;
+        /// <br />
+        /// Основной слушатель;
+        /// </summary>
+        private TcpListener authorizationServiceListenner = null!;
 
 
         /// <inheritdoc cref="IsRunning"/>
@@ -86,11 +96,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Run controller;
+        /// RunClientHeed controller;
         /// <br />
         /// Запустить контроллер;
         /// </summary>
-        public void Run()
+        public void RunClientHeed()
         {
             try
             {
@@ -100,10 +110,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 userListenner.Start();
 
-                PackageReader reader;
 
                 if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                     ServiceWindowViewModel.cancellationTokenSource = new();
+
+                PackageReader reader;
 
                 ServiceReciever client;
 
@@ -135,6 +146,39 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        public void RunAuthorizerHeed()
+        {
+            authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+
+            authorizationServiceListenner.Start();
+
+            if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+                ServiceWindowViewModel.cancellationTokenSource = new();
+
+            PackageReader reader = default;
+
+            try
+            {
+                var authorizer = new ServiceReciever(authorizationServiceListenner.AcceptTcpClient(), this);
+                reader = new(authorizer.ClientSocket.GetStream());
+            }
+            catch { }
+
+            try
+            {
+                while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+                {
+                    var msg = reader.ReadMessage().Message as string;
+
+                    CheckIncommingLogin(msg);
+
+                    SendServiceOutput.Invoke($"Login \"{msg}\" read.");
+                }
+            }
+            catch { }
+        }
+
+
         /// <summary>
         /// Stop service.
         /// <br />
@@ -142,7 +186,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void Stop()
         {
-            userListenner.Stop();
+            if (userListenner is not null) userListenner.Stop();
+            if (authorizationServiceListenner is not null) authorizationServiceListenner.Stop();
 
             userList.ForEach(u => u.ClientSocket.Close());
 
@@ -420,6 +465,35 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             builder.WriteByteSpan(bytes);
 
             reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
+        }
+
+
+        private void CheckIncommingLogin(string login)
+        {
+            bool isPresentFlag = false;
+            using (MessengerDatabaseContext context = new())
+            {
+                foreach (var user in context.Users)
+                {
+                    if (user.Login.Equals(login))
+                    {
+                        isPresentFlag = true;
+                        break;
+                    }
+                }
+
+                if (!isPresentFlag)
+                {
+                    User newUser = new();
+                    newUser.Id = context.Users.Count() + 1;
+                    newUser.Login = login;
+                    newUser.CurrentNickname = "User" + context.Users.Count();
+                    newUser.PublicId = "User" + context.Users.Count();
+
+                    context.Users.Add(newUser);
+                    context.SaveChanges();
+                }
+            }
         }
 
 

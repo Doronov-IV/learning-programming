@@ -129,6 +129,7 @@ namespace AuthorizationServiceProject.Net
                             if (bAuthorizationRes)
                             {
                                 controller.SendClientResponse(this, bAuthorizationRes);
+                                controller.SendLoginToService(this);
                                 SendOutput.Invoke($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] user has connected with login \"{CurrentUser.Login}\".");
                             }
                             else controller.SendClientResponse(this, bAuthorizationRes);

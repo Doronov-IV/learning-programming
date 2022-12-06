@@ -171,6 +171,27 @@ namespace AuthorizationServiceProject.Net
         }
 
 
+        public void SendLoginToService(ServiceReciever user)
+        {
+            try
+            {
+                if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+            }
+            catch (Exception ex)
+            {
+                SendOutputMessage("Messenger service is down.");
+            }
+
+            if (messangerService.Connected)
+            {
+                TextMessagePackage package = new TextMessagePackage("authorizer", "messanger", $"{user.CurrentUser.Login}");
+                PackageBuilder builder = new();
+                builder.WriteMessage(package);
+                messangerService.Client.Send(builder.GetPacketBytes());
+            }
+        }
+
+
         #endregion API
 
 
