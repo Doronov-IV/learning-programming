@@ -18,8 +18,9 @@ namespace ReversedService.ViewModel.ServiceWindow
         {
             CustomTerminalManager.AddMessage("Service on.");
             ProcessingStatus.ToggleCompletion();
-            Task.Run(() => Service.RunAuthorizerHeed());
-            await Task.Run(() => Service.RunClientHeed());
+            var task1 = Service.RunAuthorizerHeed();
+            var task2 = Service.RunClientHeed();
+            await Task.WhenAll(task1, task2);
         }
 
 
@@ -31,6 +32,7 @@ namespace ReversedService.ViewModel.ServiceWindow
         public void OnShutdownClick()
         {
             CustomTerminalManager.AddMessage("Service off.");
+            Service.BroadcastShutdown();
             Service.Stop();
             cancellationTokenSource.Cancel();
             ProcessingStatus.ToggleProcessing();

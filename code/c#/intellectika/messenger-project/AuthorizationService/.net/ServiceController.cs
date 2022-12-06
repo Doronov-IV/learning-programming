@@ -73,6 +73,15 @@ namespace AuthorizationServiceProject.Net
 
                 clientListener.Start();
 
+                try
+                {
+                    if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+                }
+                catch (Exception ex)
+                {
+                    SendOutputMessage("Messenger service is down.");
+                }
+
                 while (true)
                 {
                     newClient = new(clientListener.AcceptTcpClient(), this);

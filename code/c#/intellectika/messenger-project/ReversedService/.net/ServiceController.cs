@@ -37,6 +37,9 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         private TcpListener userListenner = null!;
 
 
+        private ServiceReciever authorizer;
+
+
         /// <summary>
         /// The main TCP userListenner;
         /// <br />
@@ -100,7 +103,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Запустить контроллер;
         /// </summary>
-        public void RunClientHeed()
+        public async Task RunClientHeed()
         {
             userList = new List<ServiceReciever>();
 
@@ -114,38 +117,45 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             PackageReader reader;
 
-            ServiceReciever client;
+            ServiceReciever client = null;
+
+            MessagePackage msg = null;
 
             IsRunning = true;
 
             while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
             {
-                client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
+                await Task.Run(() => { client = new ServiceReciever(userListenner.AcceptTcpClient(), this); });
 
-                reader = new(client.ClientSocket.GetStream());
+                if (client is not null)
+                {
+                    reader = new(client.ClientSocket.GetStream());
 
-                var msg = reader.ReadMessage();
+                    await Task.Run(() => { msg = reader.ReadMessage(); });
 
-                SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
+                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
 
-                userList.Add(client);
+                    if (msg is not null)
+                    {
+                        userList.Add(client);
 
-                var user = GetUserFromDatabaseByLogin(msg.Message as string);
+                        var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
-                client.CurrentUserName = user.CurrentNickname;
-                client.CurrentUID = user.PublicId;
+                        client.CurrentUserName = user.CurrentNickname;
+                        client.CurrentUID = user.PublicId;
 
-                SendUserInfo(client, user);
+                        SendUserInfo(client, user);
 
-                BroadcastConnection();
+                        BroadcastConnection();
 
-                client.ProcessAsync();
-
+                        client.ProcessAsync();
+                    }
+                }
             }
         }
 
 
-        public void RunAuthorizerHeed()
+        public async Task RunAuthorizerHeed()
         {
             authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
 
@@ -156,22 +166,34 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             PackageReader reader = default;
 
-            try
+            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested && authorizer is null)
             {
-                var authorizer = new ServiceReciever(authorizationServiceListenner.AcceptTcpClient(), this);
-                reader = new(authorizer.ClientSocket.GetStream());
+                await Task.Run(() =>
+                {
+                    authorizer = new(authorizationServiceListenner.AcceptTcpClient(), this);
+                    reader = new(authorizer.ClientSocket.GetStream());
+                });
             }
-            catch { }
+
+            string msg = string.Empty;
 
             try
             {
                 while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 {
-                    var msg = reader.ReadMessage().Message as string;
+                    msg = null;
+                    try
+                    {
+                        if (authorizer != null && authorizer.ClientSocket.Connected)
+                            await Task.Run(() => msg = reader.ReadMessage().Message as string);
+                    }
+                    catch { }
+                    if (msg != null)
+                    {
+                        CheckIncommingLogin(msg);
 
-                    CheckIncommingLogin(msg);
-
-                    SendServiceOutput.Invoke($"Login \"{msg}\" read.");
+                        SendServiceOutput.Invoke($"Login \"{msg}\" read.");
+                    }
                 }
             }
             catch { }
@@ -335,7 +357,15 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
-
+        public void BroadcastShutdown()
+        {
+            PackageBuilder builder = new();
+            builder.WriteOpCode(byte.MaxValue);
+            foreach (var user in userList)
+            {
+                user.ClientSocket.Client.Send(builder.GetPacketBytes());
+            }
+        }
 
 
 
@@ -517,6 +547,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         public ServiceController()
         {
             userList = new List<ServiceReciever>();
+            authorizer = null;
         }
 
 

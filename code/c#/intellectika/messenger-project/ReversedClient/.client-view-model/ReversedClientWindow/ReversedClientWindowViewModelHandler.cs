@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows.Media.Converters;
+using System.Runtime.CompilerServices;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -223,6 +224,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                 chatList.Add(chatRef);
             }
+        }
+
+        private void DisconnectFromServer()
+        {
+            ReversedClient.client_view.ClientLoginWindow window = new();
+            window.Show();
+
+            Application.Current.MainWindow.Close();
         }
 
 

@@ -353,8 +353,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
             serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            //serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
-            ServiceTransmitter.ReadPackets();
+            serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            ServiceTransmitter.ReadPacketsAsync();
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new(ConnectToService);

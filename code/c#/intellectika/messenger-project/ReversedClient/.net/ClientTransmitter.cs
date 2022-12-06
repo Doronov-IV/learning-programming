@@ -412,9 +412,9 @@ namespace Net.Transmition
         /// <br />
         /// Прочитать входящий пакет. Пакет - это специальное сообщение, отправленное объектом "ServiceHub", чтобы структурировать обработку разных событий;
         /// </summary>
-        public void ReadPackets()
+        public async Task ReadPacketsAsync()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 byte opCode = 0;
                 while (true)
@@ -424,7 +424,7 @@ namespace Net.Transmition
 
                     try
                     {
-                        opCode = _authorizationPacketReader.ReadByte();
+                        opCode = _messangerPacketReader.ReadByte();
                     }
                     catch (Exception e)
                     {
@@ -450,9 +450,12 @@ namespace Net.Transmition
                         case 10:
                             otherUserDisconnectEvent?.Invoke(); // client disconnection;
                             break;
+                        case byte.MaxValue:
+                            Disconnect();
+                            break;
 
                         default:
-                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPackets.");
+                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPacketsAsync.");
                             break;
                     }
                 }
