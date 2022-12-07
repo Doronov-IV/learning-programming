@@ -25,9 +25,11 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
                         FullUserData = ServiceTransmitter.GetResponseData();
 
                         ReversedClientWindow window = new ReversedClientWindow(FullUserData, ServiceTransmitter);
-                        window.Show();
 
-                        Application.Current.MainWindow.Close();
+                        window.Owner = Application.Current.MainWindow;
+                        Application.Current.MainWindow.Hide();
+
+                        window.Show();
                     }
                     else
                     {

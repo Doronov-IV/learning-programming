@@ -228,9 +228,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void DisconnectFromServer()
         {
-            ReversedClient.client_view.ClientLoginWindow window = new();
-            window.Show();
-            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow.Show();
         }
 
 

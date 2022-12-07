@@ -117,12 +117,19 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+
+
         #region API - public Behavior
 
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   LISTENNING   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+        
+
         /// <summary>
-        /// Listen clients in a loop async;
+        /// Listen to clients in a loop async;
         /// <br />
         /// Асинхронно слушать клиентов в цикле;
         /// </summary>
@@ -177,6 +184,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        /// <summary>
+        /// Listen to authorization service in a loop async;
+        /// <br />
+        /// Асинхронно слушать сервис авторизации в цикле;
+        /// </summary>
         public async Task ListenAuthorizerAsync()
         {
             authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
@@ -229,20 +241,23 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public void Stop()
         {
-            if (userListenner is not null) userListenner.Stop();
-            if (authorizationServiceListenner is not null) authorizationServiceListenner.Stop();
+            userListenner?.Stop();
+            authorizationServiceListenner?.Stop();
 
-            userList.ForEach(u => u.ClientSocket.Close());
+            userList.ForEach(u => u.ClientSocket?.Close());
+            authorizationServiceListenner?.Stop();
 
             userList = new();
-
             Status.ToggleProcessing();
         }
 
 
 
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                           ↓   BROADCASTING   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+        
 
         /// <summary>
         /// Broadcast a notification message to all users about the new user connection;
@@ -297,7 +312,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
-
+        // broadcasting file;
+        /*
         /// <summary>
         /// Send file to all clients.
         /// <br />
@@ -349,7 +365,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             });
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
-
+        */
 
 
         /// <summary>
@@ -371,7 +387,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             foreach (var user in userList)
             {
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
-                broadcastPacket.WriteMessage(new TextMessagePackage(uid, "@All", uid)); // it also passes disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users list;
+                broadcastPacket.WriteMessage(new TextMessagePackage(uid, "@All", uid)); // it also sends disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
@@ -379,6 +395,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        /// <summary>
+        /// Broadcast service shutdown message to the users and authorizer service.
+        /// <br />
+        /// Транслировать выключение сервиса пользователям и сервису авторизации.
+        /// </summary>
         public void BroadcastShutdown()
         {
             PackageBuilder builder = new();
@@ -391,6 +412,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                          ↓   DB COMMUNICATION   ↓                        ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
         /// <summary>
         /// Send broadcasted message to the database.
         /// <br />
@@ -401,7 +428,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Пакет сообщения для отправки.
         /// </param>
-        public void SendMessageToTheDb(MessagePackage package)
+        public void AddNewMessageToTheDb(MessagePackage package)
         {
             if (package is not null)
             {
@@ -466,26 +493,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
-
-
-
-
         /// <summary>
-        /// Pass the message out to another object that might have the ability to output this message.
+        /// Return user reference by searching with user login.
         /// <br />
-        /// Передать сообщение другому объекту, который может иметь возможность вывести его куда-нибудь.
+        /// Вернуть ссылку на пользователя в результате поиска по логину пользователя.
         /// </summary>
-        /// <param name="sMessage">
-        /// Message text.
-        /// <br />
-        /// Текст сообщения.
-        /// </param>
-        public void PassOutputMessage(string sMessage)
-        {
-            SendServiceOutput.Invoke(sMessage);
-        }
-
-
         public User GetUserFromDatabaseByLogin(string login)
         {
             User res = null;
@@ -506,6 +518,52 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                               ↓   OUTPUT   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+        
+
+        /// <summary>
+        /// Pass the message out to another object that might have the ability to output this message.
+        /// <br />
+        /// Передать сообщение другому объекту, который может иметь возможность вывести его куда-нибудь.
+        /// </summary>
+        /// <param name="sMessage">
+        /// Message text.
+        /// <br />
+        /// Текст сообщения.
+        /// </param>
+        public void PassOutputMessage(string sMessage)
+        {
+            SendServiceOutput.Invoke(sMessage);
+        }
+
+
+
+        #endregion API - public Behavior
+
+
+
+
+
+
+
+        #region LOGIC
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   DATA SYNC   ↓                            ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+        /// <summary>
+        /// Send user reference found to the provided reciever.
+        /// <br />
+        /// Выслать ссылку на пользователя указанному получателю.
+        /// </summary>
         private void SendUserInfo(ServiceReciever reciever, User user)
         {
             Span<byte> bytes = new();
@@ -522,6 +580,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         }
 
 
+        /// <summary>
+        /// Check login provided in the table of users.
+        /// <br />
+        /// Проверить предоставленный логин в таблице пользователей.
+        /// </summary>
         private void CheckIncommingLogin(string login)
         {
             bool isPresentFlag = false;
@@ -538,21 +601,37 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
                 if (!isPresentFlag)
                 {
-                    User newUser = new();
-                    newUser.Id = context.Users.Count() + 1;
-                    newUser.Login = login;
-                    newUser.CurrentNickname = "User" + context.Users.Count();
-                    newUser.PublicId = "User" + context.Users.Count();
-
-                    context.Users.Add(newUser);
-                    context.SaveChanges();
+                    AddNewUserByLogin(login);
                 }
             }
         }
 
 
+        /// <summary>
+        /// Add new instance to the table users with only a login.
+        /// <br />
+        /// Добавить новый экземпляр в таблицу пользователей, используя только логин.
+        /// </summary>
+        private void AddNewUserByLogin(string login)
+        {
+            using (MessengerDatabaseContext context = new())
+            {
+                User newUser = new();
+                newUser.Id = context.Users.Count() + 1;
+                newUser.Login = login;
+                newUser.CurrentNickname = "User" + context.Users.Count();
+                newUser.PublicId = "User" + context.Users.Count();
 
-        #endregion API - public Behavior
+                context.Users.Add(newUser);
+                context.SaveChanges();
+            }
+        }
+
+
+
+        #endregion LOGIC
+
+
 
 
 
