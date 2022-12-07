@@ -1,2 +1,2 @@
-02.12.2022
-I fixed correct authorization after the incorrect one with the positive result.
+07.12.2022
+To fix: otyobs + authorizer refactoring + "choose contact".
