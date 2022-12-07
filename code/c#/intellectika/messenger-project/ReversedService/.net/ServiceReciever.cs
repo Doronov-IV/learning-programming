@@ -58,7 +58,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Объект класса "ServiceController", общий для всех клиентов;
         /// </summary>
-        private static ServiceController StaticServiceHub = null!;
+        private static ServiceController staticController = null!;
 
 
 
@@ -112,14 +112,14 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     {
                         case 5:
                             var msg = _packetReader.ReadMessage();
-                            StaticServiceHub.SendMessageToTheDb(msg);
+                            staticController.SendMessageToTheDb(msg);
                             SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" says: {msg.Message as string}.");
-                            StaticServiceHub.BroadcastMessage(msg);
+                            staticController.BroadcastMessage(msg);
                             break;
                         case 6:
                             var fileMsg = _packetReader.ReadFile(UserName: CurrentUserName);
                             SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" sent a file.");
-                            StaticServiceHub.BroadcastFileInParallel(fileMsg as FileMessagePackage);
+                            staticController.BroadcastFileInParallel(fileMsg as FileMessagePackage);
                             break;
                         default:
                             break;
@@ -127,10 +127,10 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 }
                 catch (Exception ex)
                 {
-                    if (StaticServiceHub.IsRunning)
+                    if (staticController.Status.IsRunning)
                     {
                         SendOutput.Invoke($"User {CurrentUserName} (id = {CurrentUID.ToString()}) has disconnected!");
-                        StaticServiceHub.BroadcastDisconnect(CurrentUID.ToString());
+                        staticController.BroadcastDisconnect(CurrentUID.ToString());
                         ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
                         break;
                     }
@@ -172,7 +172,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </param>
         public ServiceReciever(TcpClient client, ServiceController serviceHub)
         {
-            ServiceReciever.StaticServiceHub = serviceHub;
+            ServiceReciever.staticController = serviceHub;
 
             SendOutput += serviceHub.PassOutputMessage;
 

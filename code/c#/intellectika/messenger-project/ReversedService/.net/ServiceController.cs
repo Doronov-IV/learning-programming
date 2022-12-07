@@ -2,9 +2,11 @@
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedService.Model.Context;
 using NetworkingAuxiliaryLibrary.Objects;
+using Tools.Flags;
 using Hyper;
 using System.Windows.Interop;
 using System.Linq;
+using Toolbox.Flags;
 
 namespace NetworkingAuxiliaryLibrary.ClientService
 {
@@ -19,6 +21,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
         #region PROPERTIES - State of an Object
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                               ↓   FIELDS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -37,6 +44,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         private TcpListener userListenner = null!;
 
 
+        /// <summary>
+        /// Authorizer service reference.
+        /// <br />
+        /// Ссылка на сервис авторизации.
+        /// </summary>
         private ServiceReciever authorizer;
 
 
@@ -48,8 +60,15 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         private TcpListener authorizationServiceListenner = null!;
 
 
-        /// <inheritdoc cref="IsRunning"/>
-        private bool _isRunning;
+        /// <inheritdoc cref="Status"/>
+        private CustomProcessingStatus _status;
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -57,18 +76,22 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Работает ли сервис;
         /// </summary>
-        public bool IsRunning
+        public CustomProcessingStatus Status
         {
-            get { return _isRunning; }
+            get { return _status; }
             set
             {
-                _isRunning = value;
-                OnPropertyChanged(nameof(IsRunning));
+                _status = value;
+                OnPropertyChanged(nameof(Status));
             }
         }
 
 
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                               ↓   OUTPUT   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <summary>
@@ -99,29 +122,26 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// RunClientHeed controller;
+        /// Listen clients in a loop async;
         /// <br />
-        /// Запустить контроллер;
+        /// Асинхронно слушать клиентов в цикле;
         /// </summary>
-        public async Task RunClientHeed()
+        public async Task ListenClientsAsync()
         {
-            userList = new List<ServiceReciever>();
-
+            // create and start listenner
             userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
-
             userListenner.Start();
 
-
+            // check for cancellation token state
             if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
                 ServiceWindowViewModel.cancellationTokenSource = new();
 
+            // create basic references for reading clients
             PackageReader reader;
-
             ServiceReciever client = null;
-
             MessagePackage msg = null;
 
-            IsRunning = true;
+            Status.ToggleCompletion();
 
             while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
             {
@@ -152,10 +172,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     }
                 }
             }
+
+            Status.ToggleProcessing();
         }
 
 
-        public async Task RunAuthorizerHeed()
+        public async Task ListenAuthorizerAsync()
         {
             authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
 
@@ -187,7 +209,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                         if (authorizer != null && authorizer.ClientSocket.Connected)
                             await Task.Run(() => msg = reader.ReadMessage().Message as string);
                     }
-                    catch { }
+                    catch { /* Notofication exception */}
                     if (msg != null)
                     {
                         CheckIncommingLogin(msg);
@@ -214,7 +236,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             userList = new();
 
-            IsRunning = false;
+            Status.ToggleProcessing();
         }
 
 
@@ -548,6 +570,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         {
             userList = new List<ServiceReciever>();
             authorizer = null;
+            Status = new();
         }
 
 

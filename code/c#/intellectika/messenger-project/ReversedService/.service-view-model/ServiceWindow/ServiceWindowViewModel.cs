@@ -112,9 +112,9 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
         /// <summary>
-        /// Binding checkbox with the 'RunClientHeed' method;
+        /// Binding checkbox with the 'ListenClientsAsync' method;
         /// <br />
-        /// Привязка чекбокса с методом "RunClientHeed";
+        /// Привязка чекбокса с методом "ListenClientsAsync";
         /// </summary>
         public DelegateCommand RunServiceCommand { get; }
 

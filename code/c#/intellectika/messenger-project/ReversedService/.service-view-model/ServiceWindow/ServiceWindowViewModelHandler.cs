@@ -18,8 +18,8 @@ namespace ReversedService.ViewModel.ServiceWindow
         {
             CustomTerminalManager.AddMessage("Service on.");
             ProcessingStatus.ToggleCompletion();
-            var task1 = Service.RunAuthorizerHeed();
-            var task2 = Service.RunClientHeed();
+            var task1 = Service.ListenAuthorizerAsync();
+            var task2 = Service.ListenClientsAsync();
             await Task.WhenAll(task1, task2);
         }
 
