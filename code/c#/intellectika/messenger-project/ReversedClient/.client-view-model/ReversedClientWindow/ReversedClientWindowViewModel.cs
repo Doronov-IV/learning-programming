@@ -262,6 +262,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+
+        public delegate void WindowSwapDelegate();
+
+        public event WindowSwapDelegate Disconnection;
+
+
         #endregion PROPERTIES - Object State
 
 
@@ -353,7 +359,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
             serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            serviceTransmitter.currentUserDisconnectEvent += DisconnectFromServer;      // current user disconnection;
+            serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;      // current user disconnection;
             ServiceTransmitter.ReadPacketsAsync();
 
             // may be obsolete. tests needed;

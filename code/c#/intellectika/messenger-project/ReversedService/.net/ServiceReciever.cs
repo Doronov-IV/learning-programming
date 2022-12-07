@@ -140,6 +140,11 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
+        /// <summary>
+        /// Put 'Process' method in a separate task.
+        /// <br />
+        /// Положить метод "Process" в отдельный task.
+        /// </summary>
         public async Task ProcessAsync()
         {
             await Task.Run(() => Process());
@@ -153,6 +158,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         #region CONSTRUCTION - Object Lifetime
+
 
 
         /// <summary>
@@ -180,6 +186,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             _packetReader = new PackageReader(ClientSocket.GetStream());
         }
+
 
 
         #endregion CONSTRUCTION - Object Lifetime

@@ -1,8 +1,7 @@
 ﻿using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 
-namespace ReversedClient.ViewModel.ClientLoginWindow
+namespace ReversedClient.ViewModel.ClientStartupWindow
 {
     public partial class ClientLoginWindowViewModel : INotifyPropertyChanged
     {
@@ -59,6 +58,14 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
             get { return serviceTransmitter; }
             set { serviceTransmitter = value; }
         }
+
+
+
+
+
+        public delegate void WindowSwapDelegate();
+
+        public event WindowSwapDelegate SuccessfulClientAuthorization;
 
 
 

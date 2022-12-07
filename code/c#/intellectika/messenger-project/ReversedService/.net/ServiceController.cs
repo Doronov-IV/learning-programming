@@ -19,7 +19,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
     {
 
 
-        #region PROPERTIES - State of an Object
+        #region STATE - Fields and Properties
 
 
 
@@ -45,7 +45,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Authorizer service reference.
+        /// Authorizer _service reference.
         /// <br />
         /// Ссылка на сервис авторизации.
         /// </summary>
@@ -72,7 +72,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Is service running;
+        /// Is _service running;
         /// <br />
         /// Работает ли сервис;
         /// </summary>
@@ -112,7 +112,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
-        #endregion PROPERTIES - State of an Object
+        #endregion STATE - Fields and Properties
 
 
 
@@ -126,7 +126,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                             ↓   LISTENNING   ↓                           ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
-        
+
 
         /// <summary>
         /// Listen to clients in a loop async;
@@ -152,7 +152,16 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
             while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
             {
-                await Task.Run(() => { client = new ServiceReciever(userListenner.AcceptTcpClient(), this); });
+                client = null;
+
+                await Task.Run(() => 
+                {
+                    try
+                    {
+                        client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
+                    }
+                    catch { /* Notification Exception */ }
+                });
 
                 if (client is not null)
                 {
@@ -185,7 +194,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Listen to authorization service in a loop async;
+        /// Listen to authorization _service in a loop async;
         /// <br />
         /// Асинхронно слушать сервис авторизации в цикле;
         /// </summary>
@@ -204,8 +213,12 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             {
                 await Task.Run(() =>
                 {
-                    authorizer = new(authorizationServiceListenner.AcceptTcpClient(), this);
-                    reader = new(authorizer.ClientSocket.GetStream());
+                    try
+                    {
+                        authorizer = new(authorizationServiceListenner.AcceptTcpClient(), this);
+                        reader = new(authorizer.ClientSocket.GetStream());
+                    }
+                    catch { /* Notification Exception */ }
                 });
             }
 
@@ -235,7 +248,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         /// <summary>
-        /// Stop service.
+        /// Stop _service.
         /// <br />
         /// Остановить сервис.
         /// </summary>
@@ -386,17 +399,17 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             var broadcastPacket = new PackageBuilder();
             foreach (var user in userList)
             {
-                broadcastPacket.WriteOpCode(10);    // on user disconnection, service recieves the code-10 operation and broadcasts the "disconnect message";  
+                broadcastPacket.WriteOpCode(10);    // on user disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
                 broadcastPacket.WriteMessage(new TextMessagePackage(uid, "@All", uid)); // it also sends disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
-            BroadcastMessage(new TextMessagePackage(disconnectedUser.CurrentUID, "@All" ,$"{disconnectedUser.CurrentUserName} Disconnected!"));
+            //BroadcastMessage(new TextMessagePackage(disconnectedUser.CurrentUID, "@All" ,$"{disconnectedUser.CurrentUserName} Disconnected!"));
         }
 
 
         /// <summary>
-        /// Broadcast service shutdown message to the users and authorizer service.
+        /// Broadcast _service shutdown message to the users and authorizer _service.
         /// <br />
         /// Транслировать выключение сервиса пользователям и сервису авторизации.
         /// </summary>
@@ -550,7 +563,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
-        #region LOGIC
+        #region LOGIC - private Behavior
 
 
 
@@ -629,7 +642,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
 
-        #endregion LOGIC
+        #endregion LOGIC - private Behavior
 
 
 

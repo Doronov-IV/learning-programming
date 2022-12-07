@@ -226,9 +226,30 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             }
         }
 
-        private void DisconnectFromServer()
+
+        private void DisconnectFromService()
         {
-            Application.Current.MainWindow.Show();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Window closeWindow = null;
+                Window showWindow = null;
+
+                foreach (Window win in Application.Current.Windows)
+                {
+                    if (win is ReversedClientWindow)
+                    {
+                        closeWindow = win;
+                    }
+                    else if (win is ClientLoginWindow)
+                    {
+                        showWindow = win;
+                    }
+                }
+
+                Application.Current.MainWindow = showWindow;
+                showWindow.Show();
+                closeWindow.Close();
+            });
         }
 
 

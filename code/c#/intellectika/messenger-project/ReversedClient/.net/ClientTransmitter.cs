@@ -235,10 +235,18 @@ namespace Net.Transmition
 
         public void ConnectAndSendLoginToService(UserDTO user)
         {
-            if (!messengerSocket.Connected)
+            try
             {
                 messengerSocket.Connect(messangerServiceEndPoint);
+            }
+            catch (Exception ex)
+            {
+                messengerSocket = new();
+                messengerSocket.Connect(messangerServiceEndPoint);
+            }
 
+            if (messengerSocket.Connected)
+            {
                 _messangerPacketReader = new(messengerSocket.GetStream());
 
                 if (cancellationTokenSource.IsCancellationRequested)

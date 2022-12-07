@@ -1,4 +1,4 @@
-﻿using ReversedClient.ViewModel.ClientLoginWindow;
+﻿using ReversedClient.ViewModel.ClientStartupWindow;
 
 namespace ReversedClient.client_view
 {
@@ -12,6 +12,8 @@ namespace ReversedClient.client_view
             InitializeComponent();
 
             DataContext = new ClientLoginWindowViewModel();
+
+            Name = "ClientLoginWindow";
         }
     }
 }

@@ -15,6 +15,8 @@ namespace ReversedClient.client_view
             InitializeComponent();
 
             DataContext = new ReversedClientWindowViewModel();
+
+            SetDefaultName();
         }
 
 
@@ -23,6 +25,14 @@ namespace ReversedClient.client_view
             InitializeComponent();
 
             DataContext = new ReversedClientWindowViewModel(userData, clientRadio);
+
+            SetDefaultName();
+        }
+
+
+        public void SetDefaultName()
+        {
+            Name = "ReversedClientWindow";
         }
     }
 }

@@ -8,7 +8,7 @@ using Tools.Flags;
 namespace ReversedService.ViewModel.ServiceWindow
 {
     /// <summary>
-    /// The service window view-model;
+    /// The _service window view-model;
     /// <br />
     /// Вью-модель окна сервиса;
     /// </summary>
@@ -17,43 +17,57 @@ namespace ReversedService.ViewModel.ServiceWindow
 
 
 
-        #region PROPERTIES
+        #region STATE - Fields and Properties
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                               ↓   FIELDS   ↓                             ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
 
 
         /// <inheritdoc cref="Service"/>
-        private ServiceController service;
+        private ServiceController _service;
+
 
         /// <inheritdoc cref="CustomTerminalManager"/>
-        private TerminalManager customTerminalManager;
+        private TerminalManager _customTerminalManager;
+
 
         /// <inheritdoc cref="ServiceTrigger"/>
-        private bool serviceTrigger;
+        private bool _serviceTrigger;
+
 
         /// <inheritdoc cref="ProcessingStatus"/>
-        private CustomProcessingStatus processingStatus;
+        private CustomProcessingStatus _processingStatus;
 
 
         /// <summary>
-        /// .
+        /// The main CTS to be able to stop service work w/o closing the application.
         /// <br />
-        /// .
+        /// Основной CTS для того, чтобы можно было останавливать работу сервиса не закрывая приложения.
         /// </summary>
         public static CancellationTokenSource cancellationTokenSource = new();
 
 
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
         /// <summary>
-        /// An instance of the service-wrapper class;
+        /// An instance of the _service-wrapper class;
         /// <br />
         /// Экземпляр класса-обёртки сервиса;
         /// </summary>
         public ServiceController Service
         {
-            get { return service; }
+            get { return _service; }
             set
             {
-                service = value;
+                _service = value;
                 OnPropertyChanged(nameof(Service));
             }
         }
@@ -66,43 +80,56 @@ namespace ReversedService.ViewModel.ServiceWindow
         /// </summary>
         public TerminalManager CustomTerminalManager
         {
-            get { return customTerminalManager; }
+            get { return _customTerminalManager; }
             set
             {
-                customTerminalManager = value;
+                _customTerminalManager = value;
                 OnPropertyChanged(nameof(CustomTerminalManager));
             }
         }
 
 
+        /// <summary>
+        /// The status of _service work.
+        /// <br />
+        /// Статус работы сервиса.
+        /// </summary>
         public CustomProcessingStatus ProcessingStatus
         {
-            get { return processingStatus; }
+            get { return _processingStatus; }
             set
             {
-                processingStatus = value;
+                _processingStatus = value;
                 OnPropertyChanged(nameof(ProcessingStatus));
             }
         }
 
 
+        /// <summary>
+        /// 'True' - if _service is processing at the moment, otherwise 'false'.
+        /// <br />
+        /// "True", если сервис работает в данный момент, иначе "false".
+        /// </summary>
         public bool ServiceTrigger
         {
-            get { return serviceTrigger; }
+            get { return _serviceTrigger; }
             set
             {
-                serviceTrigger = value;
+                _serviceTrigger = value;
                 
                 OnPropertyChanged(nameof(ServiceTrigger));
 
-                if (serviceTrigger && ProcessingStatus.IsNotRunning) 
+                if (_serviceTrigger && ProcessingStatus.IsNotRunning) 
                     OnRunClick();
                 else OnShutdownClick();
             }
         }
 
 
-        #endregion PROPERTIES
+
+        #endregion STATE - Fields and Properties
+
+
 
 
 
@@ -127,26 +154,18 @@ namespace ReversedService.ViewModel.ServiceWindow
         public DelegateCommand StopServiceCommand { get; }
 
 
+        /// <summary>
+        /// Clear service message log command.
+        /// <br />
+        /// Команда очистки лога сообщений сервиса.
+        /// </summary>
         public DelegateCommand ClearLogCommand { get; }
-
-        public DelegateCommand SendLineCommand { get; }
 
 
 
         #endregion COMMANDS
 
 
-
-
-        #region LOGIC
-
-
-        private void SeedAdmins()
-        {
-        }
-
-
-        #endregion LOGIC
 
 
 
@@ -163,23 +182,12 @@ namespace ReversedService.ViewModel.ServiceWindow
         public ServiceWindowViewModel()
         {
             Service = new();
-            customTerminalManager = new TerminalManager();
+            _customTerminalManager = new TerminalManager();
 
             ProcessingStatus = new();
-            serviceTrigger = false;
-
-            SendLineCommand = new(CustomTerminalManager.AddLine);
+            _serviceTrigger = false;
             ClearLogCommand = new(CustomTerminalManager.ClearLog);
             Service.SendServiceOutput += CustomTerminalManager.AddMessage;
-
-            try
-            {
-                SeedAdmins();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Admins already seeded.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
         }
 
 

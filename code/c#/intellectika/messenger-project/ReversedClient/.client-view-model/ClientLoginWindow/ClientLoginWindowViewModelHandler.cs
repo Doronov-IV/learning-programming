@@ -1,6 +1,6 @@
 ﻿using ReversedClient.client_view;
 
-namespace ReversedClient.ViewModel.ClientLoginWindow
+namespace ReversedClient.ViewModel.ClientStartupWindow
 {
     public partial class ClientLoginWindowViewModel
     {
@@ -26,10 +26,24 @@ namespace ReversedClient.ViewModel.ClientLoginWindow
 
                         ReversedClientWindow window = new ReversedClientWindow(FullUserData, ServiceTransmitter);
 
-                        window.Owner = Application.Current.MainWindow;
-                        Application.Current.MainWindow.Hide();
+                        Window closeWindow = null;
+                        Window showWindow = null;
 
-                        window.Show();
+                        foreach (Window win in Application.Current.Windows)
+                        {
+                            if (win.Name.Equals("ReversedClientWindow"))
+                            {
+                                showWindow = win;
+                            }
+                            else if (win.Name.Equals("ClientLoginWindow"))
+                            {
+                                closeWindow = win;
+                            }
+                        }
+
+                        Application.Current.MainWindow = showWindow;
+                        showWindow.Show();
+                        closeWindow.Hide();
                     }
                     else
                     {

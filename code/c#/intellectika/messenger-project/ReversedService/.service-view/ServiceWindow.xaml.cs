@@ -24,7 +24,7 @@ namespace ReversedService.service_view
             var vmRef = DataContext as ServiceWindowViewModel;
             vmRef.Service.BroadcastShutdown();
 
-            Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
+            Application.Current.Shutdown();
         }
     }
 }

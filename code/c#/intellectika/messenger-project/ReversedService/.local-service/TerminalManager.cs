@@ -4,7 +4,7 @@ using System.Windows.Threading;
 namespace ReversedService.LocalService
 {
     /// <summary>
-    /// An intermediate between terminal object and view model of the service window.
+    /// An intermediate between terminal object and view model of the _service window.
     /// <br />
     /// Посредник между объектом терминала и вью моделью окна сервиса.
     /// </summary>
@@ -12,7 +12,7 @@ namespace ReversedService.LocalService
     {
 
 
-        #region STATE
+        #region STATE - Fields and Properties
 
 
 
@@ -25,6 +25,7 @@ namespace ReversedService.LocalService
         private AsyncObservableCollection<string> log;
 
 
+        /// <inheritdoc cref="Line"/>
         private string line;
 
 
@@ -52,6 +53,11 @@ namespace ReversedService.LocalService
         }
 
 
+        /// <summary>
+        /// A command input line.
+        /// <br />
+        /// Строка ввода команды.
+        /// </summary>
         public string Line
         {
             get { return line; }
@@ -66,13 +72,14 @@ namespace ReversedService.LocalService
 
 
 
-        #endregion STATE
+        #endregion STATE - Fields and Properties
 
 
 
 
 
-        #region API
+        #region API - public Behavior
+
 
 
         /// <summary>
@@ -92,6 +99,11 @@ namespace ReversedService.LocalService
         }
 
 
+        /// <summary>
+        /// Add line from this instance 'Line' property.
+        /// <br />
+        /// Добавить строку из свойства "Line" этого экземпляра.
+        /// </summary>
         public void AddLine()
         {
             AddMessage(Line);
@@ -100,13 +112,19 @@ namespace ReversedService.LocalService
 
 
 
+        /// <summary>
+        /// Clear message list.
+        /// <br />
+        /// Очистить список сообщений.
+        /// </summary>
         public void ClearLog()
         {
             Log = new();
         }
 
 
-        #endregion API
+
+        #endregion API - public Behavior
 
 
 

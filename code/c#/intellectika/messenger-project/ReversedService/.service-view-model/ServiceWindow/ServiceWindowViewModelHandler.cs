@@ -6,7 +6,7 @@ namespace ReversedService.ViewModel.ServiceWindow
     {
 
 
-        #region CONTROLS HANDLERS
+        #region CONTROL HANDLERS
 
 
         /// <summary>
@@ -39,6 +39,6 @@ namespace ReversedService.ViewModel.ServiceWindow
         }
 
 
-        #endregion CONTROLS HANDLERS
+        #endregion CONTROL HANDLERS
     }
 }
