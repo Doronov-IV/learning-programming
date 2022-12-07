@@ -41,9 +41,9 @@ namespace AuthorizationServiceProject.Controls
 
 
         /// <summary>
-        /// Loop private 'Run' method.
+        /// Loop private 'ListenToClients' method.
         /// <br />
-        /// Зациклить приватный метод "Run".
+        /// Зациклить приватный метод "ListenToClients".
         /// </summary>
         public void Start()
         {
@@ -61,7 +61,7 @@ namespace AuthorizationServiceProject.Controls
 
 
         /// <summary>
-        /// Run the application.
+        /// ListenToClients the application.
         /// <br />
         /// Запустить приложение.
         /// </summary>
@@ -69,7 +69,7 @@ namespace AuthorizationServiceProject.Controls
         {
             ServiceController controller = new();
             controller.SendServiceOutput += Console.WriteLine;
-            controller.Run();
+            controller.ListenToClients();
         }
 
 

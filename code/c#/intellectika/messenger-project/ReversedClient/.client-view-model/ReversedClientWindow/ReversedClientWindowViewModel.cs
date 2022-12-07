@@ -77,22 +77,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private IDialogService _dialogService;
 
 
-        /// <summary>
-        /// A reference to the client login window that comes first on application launch.
-        /// <br />
-        /// Ссылка на окно клиента, которое выходит первым при запуске приложения.
-        /// </summary>
-        private ReversedClientWindow _loginWindowReference;
-
-
-        /// <summary>
-        /// A reference to the chat window that comes on user succsessful authorisation.
-        /// <br />
-        /// Ссылка на окно чата, которое выходит при успешной авторизации пользователя.
-        /// </summary>
-        private ReversedClientWindow _chatWindowReference;
-
-
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -342,6 +326,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public ReversedClientWindowViewModel(User userData, ClientTransmitter clientRadio)
         {
             FillChats(chatList, userData);
+            if (chatList is null) chatList = new();
 
             windowHeaderString = userData.CurrentNickname;
 

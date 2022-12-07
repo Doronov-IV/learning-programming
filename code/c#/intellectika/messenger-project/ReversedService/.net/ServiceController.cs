@@ -232,6 +232,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     try
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
+                            if (reader is not null)
                             await Task.Run(() => msg = reader.ReadMessage().Message as string);
                     }
                     catch { /* Notofication exception */}

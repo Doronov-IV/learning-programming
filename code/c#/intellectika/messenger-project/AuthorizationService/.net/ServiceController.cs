@@ -22,6 +22,9 @@ namespace AuthorizationServiceProject.Net
         private List<ServiceReciever> _userList;
 
 
+        private IPEndPoint staticMessangerServiceEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111);
+
+
 
         /// <summary>
         /// A list of users.
@@ -65,7 +68,7 @@ namespace AuthorizationServiceProject.Net
         #region API
 
 
-        public void Run()
+        public void ListenToClients()
         {
             try
             {
@@ -75,11 +78,11 @@ namespace AuthorizationServiceProject.Net
 
                 try
                 {
-                    if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+                    if (!messangerService.Connected) messangerService.Connect(staticMessangerServiceEndpoint);
                 }
                 catch (Exception ex)
                 {
-                    SendOutputMessage("Messenger service is down.");
+                    SendOutputMessage("Messenger service was down. Renewing connection.");
                 }
 
                 while (true)
@@ -184,11 +187,21 @@ namespace AuthorizationServiceProject.Net
         {
             try
             {
-                if (!messangerService.Connected) messangerService.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+                if (!messangerService.Connected) messangerService.Connect(staticMessangerServiceEndpoint);
             }
             catch (Exception ex)
             {
-                SendOutputMessage("Messenger service is down.");
+                SendOutputMessage("\tMessenger service was down. Renewing connection....");
+                try
+                {
+                    messangerService = new();
+                    messangerService.Connect(staticMessangerServiceEndpoint);
+                }
+                catch (Exception inex)
+                {
+                    SendOutputMessage("\tSomething went wrong. Connection was not renewed. Shutting down.\n");
+                    System.Environment.Exit(0);
+                }
             }
 
             if (messangerService.Connected)
