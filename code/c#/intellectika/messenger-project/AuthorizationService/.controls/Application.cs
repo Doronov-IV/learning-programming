@@ -14,10 +14,13 @@ global using NetworkingAuxiliaryLibrary.Packages;
 global using NetworkingAuxiliaryLibrary.Objects;
 
 
-global using Microsoft.EntityFrameworkCore.Design;
 global using Microsoft.EntityFrameworkCore;
 global using AuthorizationServiceProject.Net;
+global using Microsoft.EntityFrameworkCore.Design;
 global using AuthorizationServiceProject.Model.Context;
+
+global using Spectre.Console;
+
 
 namespace AuthorizationServiceProject.Controls
 {
@@ -29,7 +32,7 @@ namespace AuthorizationServiceProject.Controls
         #region STATE
 
 
-         
+        //
 
 
         #endregion STATE
@@ -37,13 +40,15 @@ namespace AuthorizationServiceProject.Controls
 
 
 
+
         #region API
 
 
+
         /// <summary>
-        /// Loop private 'ListenToClients' method.
+        /// Loop private 'Run' method.
         /// <br />
-        /// Зациклить приватный метод "ListenToClients".
+        /// Зациклить приватный метод "Run".
         /// </summary>
         public void Start()
         {
@@ -51,7 +56,9 @@ namespace AuthorizationServiceProject.Controls
         }
 
 
+
         #endregion API
+
 
 
 
@@ -61,20 +68,20 @@ namespace AuthorizationServiceProject.Controls
 
 
         /// <summary>
-        /// ListenToClients the application.
+        /// Run the application.
         /// <br />
         /// Запустить приложение.
         /// </summary>
         private void Run()
         {
             ServiceController controller = new();
-            controller.SendServiceOutput += Console.WriteLine;
-            controller.ListenToClients();
+            controller.ListenToClientConnections();
         }
 
 
 
         #endregion LOGIC
+
 
 
 
@@ -92,6 +99,7 @@ namespace AuthorizationServiceProject.Controls
         {
             using (AuthorizationDatabaseContext context = new()) { }
         }
+
 
 
         #endregion CONSTRUCTION

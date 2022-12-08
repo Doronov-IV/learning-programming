@@ -2,6 +2,7 @@
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using ReversedClient.ViewModel.ClientChatWindow;
 using ReversedClient.ViewModel.Misc;
+using System.Windows.Shell;
 
 namespace ReversedClient.client_view
 {
@@ -33,6 +34,12 @@ namespace ReversedClient.client_view
         public void SetDefaultName()
         {
             Name = "ReversedClientWindow";
+        }
+
+
+        public void OnClosing(object? sender, CancelEventArgs args)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

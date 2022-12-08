@@ -1,7 +1,14 @@
 ﻿using AuthorizationServiceProject.Net;
+using AuthorizationServiceProject.Style;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace AuthorizationServiceProject.Net
 {
+    /// <summary>
+    /// A wrapper which attaches to a user TcpClient.
+    /// <br />
+    /// Обёртка, которая привязывается к TcpClient'у пользователя.
+    /// </summary>
     public class ServiceReciever
     {
 
@@ -9,21 +16,39 @@ namespace AuthorizationServiceProject.Net
         #region STATE
 
 
-
-        private UserDTO? _currentUser = null;
-
-
+        /// <summary>
+        /// Deserializaing reader.
+        /// <br />
+        /// Десериализатор.
+        /// </summary>
         private PackageReader? reader = null;
 
 
+        /// <summary>
+        /// Reference to the controller.
+        /// <br />
+        /// Ссылка на контроллер.
+        /// </summary>
         private ServiceController? controller = null;
 
 
+        /// <inheritdoc cref="CurrentUser"/>
+        private UserDTO? _currentUser = null;
+
+
+        /// <inheritdoc cref="ClientSocket"/>
         private TcpClient? _clientSocket = null;
 
 
 
 
+
+
+        /// <summary>
+        /// A reference to the TcpClient whose socket is attached to the client.
+        /// <br />
+        /// Ссылка на TcpClient, чей сокет привязан к клиенту.
+        /// </summary>
         public TcpClient? ClientSocket
         {
             get { return _clientSocket; }
@@ -31,6 +56,11 @@ namespace AuthorizationServiceProject.Net
         }
 
 
+        /// <summary>
+        /// Attached user data.
+        /// <br />
+        /// Информация привязанного пользователя.
+        /// </summary>
         public UserDTO? CurrentUser
         {
             get { return _currentUser; }
@@ -39,31 +69,22 @@ namespace AuthorizationServiceProject.Net
 
 
 
-
-        /// <summary>
-        /// A delegate for transeffring output to other objects;
-        /// <br />
-        /// Делегат для передачи аутпута другим объектам;
-        /// </summary>
-        /// <param name="sOutputMessage">
-        /// A message that we want to see somewhere (в данном случае, в консоли сервера и в пользовательском клиенте);
-        /// <br />
-        /// Сообщение, которое мы хотим где-то увидеть (в данном случае, в консоли сервера и в пользовательском клиенте);
-        /// </param>
-        public delegate void PendOutputDelegate(string sOutputMessage);
-
-        /// <inheritdoc cref="PendOutputDelegate"/>
-        public event PendOutputDelegate SendOutput;
-
-
-
         #endregion STATE
+
+
 
 
 
 
         #region API
 
+
+
+        /// <summary>
+        /// Parse incomming text message into UserDTO object.
+        /// <br />
+        /// Спарсить входящее текстовое сообщение в объект типа UserDTO.
+        /// </summary>
         public UserDTO ReadAuthorizationData(MessagePackage message)
         {
             var queue = message.Message as string;
@@ -85,6 +106,11 @@ namespace AuthorizationServiceProject.Net
 
 
 
+        /// <summary>
+        /// Run processing in a new task.
+        /// <br />
+        /// Запустить обработку в новой задаче.
+        /// </summary>
         public async void ProcessAsync()
         {
             await Task.Run(() => Process());
@@ -96,9 +122,19 @@ namespace AuthorizationServiceProject.Net
 
 
 
+
+
+
+
         #region LOGIC
 
 
+
+        /// <summary>
+        /// Process client input.
+        /// <br />
+        /// Обрабатывать инпут клиента.
+        /// </summary>
         private void Process()
         {
             while (true)
@@ -114,9 +150,9 @@ namespace AuthorizationServiceProject.Net
 
                             var msg = reader.ReadMessage();
                             CurrentUser = ReadAuthorizationData(msg);
-                            bool bRes = controller.AddNewUser(CurrentUser);
+                            bool bRes = controller.TryAddNewUser(CurrentUser);
                             controller.SendClientResponse(this, bRes);
-                            SendOutput.Invoke($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] user has registered and connected with login \"{CurrentUser.Login}\".");
+                            AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user has [underline]registered and connected[/] with login [green]\"{CurrentUser.Login}\"[/].\n"));
 
                             break;
 
@@ -125,12 +161,13 @@ namespace AuthorizationServiceProject.Net
 
                             var signInMessage = reader.ReadMessage();
                             CurrentUser = ReadAuthorizationData(signInMessage);
-                            bool bAuthorizationRes = controller.CheckPresentUser(CurrentUser);
+
+                            bool bAuthorizationRes = controller.UserIsPresentInDatabase(CurrentUser);
                             if (bAuthorizationRes)
                             {
                                 controller.SendClientResponse(this, bAuthorizationRes);
-                                controller.SendLoginToService(this);
-                                SendOutput.Invoke($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] user has connected with login \"{CurrentUser.Login}\".");
+                                if (controller.TrySendLoginToService(this))
+                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user has [underline]connected[/] with login [green]\"{CurrentUser.Login}\"[/].\n"));
                             }
                             else controller.SendClientResponse(this, bAuthorizationRes);
 
@@ -140,14 +177,17 @@ namespace AuthorizationServiceProject.Net
                 }
                 catch (Exception ex)
                 {
-                    SendOutput.Invoke($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] user \"{CurrentUser.Login}\" has disconnected.");
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user [green]\"{CurrentUser.Login}\"[/] has [underline]disconnected[/].\n"));
                     break;
                 }
             }
         }
 
 
+
         #endregion LOGIC
+
+
 
 
 
@@ -182,7 +222,6 @@ namespace AuthorizationServiceProject.Net
         {
             this.controller = controller;
             _clientSocket = client;
-            SendOutput += controller.SendOutputMessage;
             reader = new(ClientSocket.GetStream());
         }
 

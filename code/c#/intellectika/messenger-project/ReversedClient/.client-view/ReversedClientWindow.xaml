@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ReversedClient.client_view"
         mc:Ignorable="d"
         Title="{Binding WindowHeaderString}" Height="600" Width="750"
+        Closing="OnClosing"
         >
 
     <Grid Background="#FFFAFAFA">
