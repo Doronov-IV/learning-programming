@@ -141,8 +141,7 @@ namespace AuthorizationServiceProject.Net
             {
                 try
                 {
-                    var operationCode = reader.ReadByte();
-
+                    var operationCode = reader.ReadByte(); // read first byte from the stream;
                     switch (operationCode)
                     {
                         case 0:
@@ -150,11 +149,15 @@ namespace AuthorizationServiceProject.Net
 
                             var msg = reader.ReadMessage();
                             CurrentUser = ReadAuthorizationData(msg);
-                            bool bRes = controller.TryAddNewUser(CurrentUser);
-                            controller.SendClientResponse(this, bRes);
-                            AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user has [underline]registered and connected[/] with login [green]\"{CurrentUser.Login}\"[/].\n"));
+                            bool bSuccessfulRegistration = controller.TryAddNewUser(CurrentUser);
+                            if (bSuccessfulRegistration)
+                            {
+                                AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserRegistration(CurrentUser.Login)}"));
+                            }
+                            controller.SendClientResponse(this, bSuccessfulRegistration);
 
                             break;
+
 
                         case 1:
 
@@ -166,18 +169,18 @@ namespace AuthorizationServiceProject.Net
                             if (bAuthorizationRes)
                             {
                                 controller.SendClientResponse(this, bAuthorizationRes);
-                                if (controller.TrySendLoginToService(this))
-                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user has [underline]connected[/] with login [green]\"{CurrentUser.Login}\"[/].\n"));
+
+                                if (controller.TrySendLoginToService(this)) // if the other service is online and we have sent data to it;
+                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserConnection(CurrentUser.Login)}"));
                             }
                             else controller.SendClientResponse(this, bAuthorizationRes);
-
 
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} user [green]\"{CurrentUser.Login}\"[/] has [underline]disconnected[/].\n"));
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserDisconnection(CurrentUser.Login)}"));
                     break;
                 }
             }
