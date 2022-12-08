@@ -28,6 +28,7 @@
     <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModelHandler.cs" />
     <Compile Include=".client-view-model\Misc\MessengerChat.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ReversedClientWindowViewModelHandler.cs" />
+    <Compile Include=".local-service\WpfWindowsManager.cs" />
     <Compile Include=".net\ClientTransmitter.cs" />
     <Compile Include=".properties\dialogs\AttachFileDialogService.cs" />
     <Compile Include=".properties\dialogs\IDialogService.cs" />

@@ -438,6 +438,8 @@ namespace Net.Transmition
                     {
                         Disconnect();
                     }
+
+
                     switch (opCode)
                     {
                         case 0:

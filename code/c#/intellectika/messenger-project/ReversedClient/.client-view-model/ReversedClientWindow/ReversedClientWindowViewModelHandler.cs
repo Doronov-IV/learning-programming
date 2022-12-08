@@ -1,15 +1,16 @@
 ﻿using ReversedClient.client_view;
-using ReversedClient.Model.Basics;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
+using System.Runtime.CompilerServices;
+using System.Windows.Media.Converters;
 using ReversedClient.ViewModel.Misc;
-using System;
+using ReversedClient.LocalService;
+using ReversedClient.Model.Basics;
 using System.Collections.Generic;
+using System.Windows.Threading;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Windows.Media.Converters;
-using System.Runtime.CompilerServices;
+using System;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -50,12 +51,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 var msg = serviceTransmitter.MessangerPacketReader.ReadMessage(); // reading new message via our packet reader;
                 var msgCopy = msg;
-                if (currentUser.UserName != msg.Sender) // if the message was sent to us from other user
+                if (_currentUserModel.UserName != msg.Sender) // if the message was sent to us from other user
                 {
                     var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId == msg.Sender);
                     if (someChat is null)
                     {
-                        someChat = new(addressee: OnlineMembers.First(u => u.UserName == msg.Sender), addresser: CurrentUser);
+                        someChat = new(addressee: OnlineMembers.First(u => u.UserName == msg.Sender), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.Message as string));
@@ -81,7 +82,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RecieveFile()
         {
-            Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add("File recieved."));
+            Application.Current.Dispatcher.Invoke(() => _activeChat.MessageList.Add("File recieved."));
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
@@ -111,7 +112,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             MessengerChat newChat;
             if (!OnlineMembers.Any(x => x.PublicId == user.PublicId))
             {
-                if (user.PublicId != currentUser.PublicId)
+                if (user.PublicId != _currentUserModel.PublicId)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -132,14 +133,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         {
             try
             {
-                if (_dialogService.OpenFileDialog())
+                if (dialogService.OpenFileDialog())
                 {
-                    UserFile = new(_dialogService.FilePath);
+                    UserFile = new(dialogService.FilePath);
                 }
             }
             catch (Exception ex)
             {
-                _dialogService.ShowMessage(ex.Message);
+                dialogService.ShowMessage(ex.Message);
             }
         }
 
@@ -161,11 +162,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 if (Message != string.Empty)
                 {
-                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(currentUser.UserName, SelectedOnlineMember.UserName, Message));
+                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.UserName, SelectedOnlineMember.UserName, Message));
                     var someChat = ChatList.FirstOrDefault(c => c.Addressee == SelectedOnlineMember);
                     if (someChat is null)
                     {
-                        someChat = new(addresser: CurrentUser, addressee: SelectedOnlineMember);
+                        someChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);
                         ChatList.Add(someChat);
                     }
                     Message = string.Empty;
@@ -173,8 +174,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                 if (UserFile != null)
                 {
-                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(currentUser.UserName, ActiveChat.Addressee.UserName, UserFile));
-                    Application.Current.Dispatcher.Invoke(() => activeChat.MessageList.Add($"File sent."));
+                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(_currentUserModel.UserName, ActiveChat.Addressee.UserName, UserFile));
+                    Application.Current.Dispatcher.Invoke(() => _activeChat.MessageList.Add($"File sent."));
                     UserFile = null;
                 }
             }
@@ -214,11 +215,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             foreach (Chat chat in user.ChatList)
             {
                 var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault();
-                var chatRef = new MessengerChat(addresser: currentUser, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId));
+                var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId));
 
                 foreach (var message in chat.MessageList)
                 {
-                    if (message.AuthorId.Equals(currentUser.PublicId)) chatRef.AddOutgoingMessage(message.Contents);
+                    if (message.AuthorId.Equals(_currentUserModel.PublicId)) chatRef.AddOutgoingMessage(message.Contents);
                     else chatRef.AddIncommingMessage(message.Contents);
                 }
 
@@ -229,27 +230,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void DisconnectFromService()
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Window closeWindow = null;
-                Window showWindow = null;
-
-                foreach (Window win in Application.Current.Windows)
-                {
-                    if (win is ReversedClientWindow)
-                    {
-                        closeWindow = win;
-                    }
-                    else if (win is ClientLoginWindow)
-                    {
-                        showWindow = win;
-                    }
-                }
-
-                Application.Current.MainWindow = showWindow;
-                showWindow.Show();
-                closeWindow.Close();
-            });
+            WpfWindowsManager.FromChatToLogin(currentServiceSiteUser.Login);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using ReversedClient.client_view;
+using ReversedClient.LocalService;
 
 namespace ReversedClient.ViewModel.ClientStartupWindow
 {
@@ -24,26 +25,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                         ServiceTransmitter.ConnectAndSendLoginToService(_userDTOdata);
                         FullUserData = ServiceTransmitter.GetResponseData();
 
-                        ReversedClientWindow window = new ReversedClientWindow(FullUserData, ServiceTransmitter);
-
-                        Window closeWindow = null;
-                        Window showWindow = null;
-
-                        foreach (Window win in Application.Current.Windows)
-                        {
-                            if (win.Name.Equals("ReversedClientWindow"))
-                            {
-                                showWindow = win;
-                            }
-                            else if (win.Name.Equals("ClientLoginWindow"))
-                            {
-                                closeWindow = win;
-                            }
-                        }
-
-                        Application.Current.MainWindow = showWindow;
-                        showWindow.Show();
-                        closeWindow.Hide();
+                        WpfWindowsManager.FromLoginToChat(FullUserData, ServiceTransmitter);
                     }
                     else
                     {

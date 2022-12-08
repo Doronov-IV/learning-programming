@@ -30,23 +30,26 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-        private UserDTO currentUserDTO;
+        private UserDTO _currentUserDTO;
+
+
+        private User currentServiceSiteUser;
 
 
         /// <inheritdoc cref="OnlineMembers"/>
-        private ObservableCollection<UserModel> onlineMembers;
+        private ObservableCollection<UserModel> _onlineMembers;
 
 
         /// <inheritdoc cref="ActiveChat"/>
-        private MessengerChat activeChat;
+        private MessengerChat _activeChat;
 
 
         /// <inheritdoc cref="SelectedOnlineMember"/>
-        private UserModel selectedOnlineMember;
+        private UserModel _selectedOnlineMember;
 
 
-        /// <inheritdoc cref="CurrentUser"/>
-        private UserModel currentUser;
+        /// <inheritdoc cref="CurrentUserModel"/>
+        private UserModel _currentUserModel;
 
 
         /// <inheritdoc cref="ChatList"/>
@@ -74,7 +77,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Сервис диалога выбора файла.
         /// </summary>
-        private IDialogService _dialogService;
+        private IDialogService dialogService;
 
 
 
@@ -88,10 +91,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         public UserDTO CurrentUserDTO
         {
-            get { return currentUserDTO; }
+            get { return _currentUserDTO; }
             set
             {
-                currentUserDTO= value;
+                _currentUserDTO= value;
                 OnPropertyChanged(nameof(CurrentUserDTO));
             }
         }
@@ -104,10 +107,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ObservableCollection<UserModel> OnlineMembers 
         {
-            get { return onlineMembers; }
+            get { return _onlineMembers; }
             set
             {
-                onlineMembers = value;
+                _onlineMembers = value;
 
                 OnPropertyChanged(nameof(OnlineMembers));
             }
@@ -121,10 +124,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public MessengerChat ActiveChat
         {
-            get { return activeChat; }
+            get { return _activeChat; }
             set
             {
-                activeChat = value;
+                _activeChat = value;
                 OnPropertyChanged(nameof(ActiveChat));
             }
         }
@@ -137,16 +140,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public UserModel SelectedOnlineMember
         {
-            get { return selectedOnlineMember; }
+            get { return _selectedOnlineMember; }
             set
             {
-                selectedOnlineMember = value;
+                _selectedOnlineMember = value;
                 OnPropertyChanged(nameof(SelectedOnlineMember));
 
-                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.UserName.Equals(selectedOnlineMember.UserName));
+                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.UserName.Equals(_selectedOnlineMember.UserName));
                 if (someExistingChat is null)
                 {
-                    someExistingChat = new(addresser: CurrentUser, addressee: SelectedOnlineMember);
+                    someExistingChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);
                 }
                 ActiveChat= someExistingChat;
             }
@@ -158,13 +161,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Объект, который содержит в себе данные текущего клиента;
         /// </summary>
-        public UserModel CurrentUser
+        public UserModel CurrentUserModel
         {
-            get { return currentUser; }
+            get { return _currentUserModel; }
             set
             {
-                currentUser = value;
-                OnPropertyChanged(nameof(CurrentUser));
+                _currentUserModel = value;
+                OnPropertyChanged(nameof(CurrentUserModel));
             }
         }
 
@@ -326,18 +329,18 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public ReversedClientWindowViewModel(User userData, ClientTransmitter clientRadio)
         {
             FillChats(chatList, userData);
+            currentServiceSiteUser = userData;
             if (chatList is null) chatList = new();
 
             windowHeaderString = userData.CurrentNickname;
 
-
             userFile = null;
-            _dialogService = new AttachFileDialogService();
+            dialogService = new AttachFileDialogService();
 
-            currentUser = new();
+            _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.PublicId);
             message = string.Empty;
 
-            onlineMembers = new ObservableCollection<UserModel>();
+            _onlineMembers = new ObservableCollection<UserModel>();
 
             serviceTransmitter = clientRadio;
             serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;

@@ -13,7 +13,15 @@ namespace ReversedClient.client_view
 
             DataContext = new ClientLoginWindowViewModel();
 
-            Name = "ClientLoginWindow";
+            Name = nameof(ClientLoginWindow);
+        }
+
+
+        public ClientLoginWindow(string userLogin) : this()
+        {
+            var VMRef = DataContext as ClientLoginWindowViewModel;
+
+            VMRef.UserDTOdata.Login = userLogin;
         }
     }
 }
