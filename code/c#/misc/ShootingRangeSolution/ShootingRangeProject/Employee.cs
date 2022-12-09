@@ -1,4 +1,4 @@
-﻿namespace ShootingRangeProject
+﻿namespace ShootingRange
 {
     public class Employee
     {
