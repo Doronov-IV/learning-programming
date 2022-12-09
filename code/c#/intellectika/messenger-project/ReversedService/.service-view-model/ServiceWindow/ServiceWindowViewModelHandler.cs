@@ -20,7 +20,7 @@ namespace ReversedService.ViewModel.ServiceWindow
             ProcessingStatus.ToggleCompletion();
             var task1 = Service.ListenAuthorizerAsync();
             var task2 = Service.ListenClientsAsync();
-            await Task.WhenAll(task1, task2);
+            await Task.WhenAny(task1, task2);
         }
 
 

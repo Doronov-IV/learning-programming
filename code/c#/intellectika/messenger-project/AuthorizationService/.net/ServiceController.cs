@@ -82,7 +82,7 @@ namespace AuthorizationServiceProject.Net
         {
             try
             {
-                AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetGreetings()));
+                AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetGreeting()));
 
                 ServiceReciever newClient;
 

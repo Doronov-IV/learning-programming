@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ShootingRangeProject
 {
-    public interface IInterfaceable
+    public interface IEmployeeDataAccess
     {
-        public void Foo();
+        public Employee GetEmployeeDetails(int id);
     }
 }

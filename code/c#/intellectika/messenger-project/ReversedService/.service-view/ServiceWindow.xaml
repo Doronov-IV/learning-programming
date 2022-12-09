@@ -78,7 +78,7 @@
 
         <CheckBox 
             Grid.Column="2" Content="On" Margin="0,20,30,0"
-            IsChecked="{Binding ServiceTrigger}"
+            IsChecked="{Binding ServiceTrigger, Mode=TwoWay}"
             VerticalAlignment="Top" HorizontalAlignment="Right"
          />
 

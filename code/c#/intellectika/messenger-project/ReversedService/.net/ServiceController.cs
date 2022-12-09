@@ -200,6 +200,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// </summary>
         public async Task ListenAuthorizerAsync()
         {
+            authorizer = null;
+
             authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
 
             authorizationServiceListenner.Start();
@@ -232,7 +234,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     try
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
-                            if (reader is not null)
+                            if (reader is not null) // it is null
                             await Task.Run(() => msg = reader.ReadMessage().Message as string);
                     }
                     catch { /* Notofication exception */}

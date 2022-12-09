@@ -1,6 +1,8 @@
 ﻿using Hyper;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Processing;
+using ReversedClient.ViewModel.ClientChatWindow;
+using ReversedClient.ViewModel.ClientStartupWindow;
 using System.IO.Packaging;
 using System.Net;
 using System.Net.Sockets;
@@ -422,55 +424,53 @@ namespace Net.Transmition
         /// </summary>
         public async Task ReadPacketsAsync()
         {
-            await Task.Run(() =>
+            byte opCode = 77;
+            while (!ClientTransmitter.cancellationTokenSource.IsCancellationRequested)
             {
-                byte opCode = 0;
-                while (true)
+                try
                 {
-
-                    if (cancellationTokenSource.IsCancellationRequested) break;
-
-                    try
+                    await Task.Run(() =>
+                    opCode = _messangerPacketReader.ReadByte());
+                }
+                catch (Exception e)
+                {
+                }
+                finally
+                {
+                    if (opCode != 77)
                     {
-                        opCode = _messangerPacketReader.ReadByte();
-                    }
-                    catch (Exception e)
-                    {
-                        Disconnect();
-                    }
+                        switch (opCode)
+                        {
+                            case 0:
+                                break;
 
+                            case 1:
+                                connectedEvent?.Invoke(); // client connection;
+                                break;
 
-                    switch (opCode)
-                    {
-                        case 0:
-                            break;
+                            case 5:
+                                msgReceivedEvent?.Invoke(); // message recieved;
+                                break;
 
-                        case 1:
-                            connectedEvent?.Invoke(); // client connection;
-                            break;
+                            case 6:
+                                fileReceivedEvent?.Invoke(); // file  recieved;
+                                break;
 
-                        case 5:
-                            msgReceivedEvent?.Invoke(); // message recieved;
-                            break;
+                            case 10:
+                                otherUserDisconnectEvent?.Invoke(); // client disconnection;
+                                break;
 
-                        case 6:
-                            fileReceivedEvent?.Invoke(); // file  recieved;
-                            break;
+                            case byte.MaxValue:
+                                Disconnect();
+                                break;
 
-                        case 10:
-                            otherUserDisconnectEvent?.Invoke(); // client disconnection;
-                            break;
-
-                        case byte.MaxValue:
-                            Disconnect();
-                            break;
-
-                        default:
-                            SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPacketsAsync.");
-                            break;
+                            default:
+                                SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPacketsAsync.");
+                                break;
+                        }
                     }
                 }
-            });
+            }
         }
 
 

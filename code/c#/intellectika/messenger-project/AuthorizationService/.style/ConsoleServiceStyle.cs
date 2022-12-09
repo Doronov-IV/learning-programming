@@ -14,9 +14,9 @@
 		/// <br />
 		/// Получить строку типа Spectre.Markup, содержащую приветствие.
 		/// </summary>
-		public static string GetGreetings()
+		public static string GetGreeting()
 		{
-			return $"\t[yellow on blue]Welcome to Authorizer service. Service online.[/]\n";
+			return $"           [yellow on blue]Welcome to Authorizer service. Listenning started.[/]\n";
 		}
 
 

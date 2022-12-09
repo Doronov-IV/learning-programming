@@ -31,7 +31,7 @@ namespace ReversedClient.LocalService
 
                 Application.Current.MainWindow = showWindow;
                 showWindow.Show();
-                closeWindow.Close();
+                closeWindow.Hide();
             });
         }
 
@@ -39,12 +39,12 @@ namespace ReversedClient.LocalService
 
         public static void FromChatToLogin(string userLogin)
         {
+            
+
+            Window closeWindow = null;
+            Window showWindow = null;
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ClientLoginWindow window = new(userLogin);
-
-                Window closeWindow = null;
-                Window showWindow = null;
 
                 foreach (Window win in Application.Current.Windows)
                 {
@@ -58,10 +58,17 @@ namespace ReversedClient.LocalService
                     }
                 }
 
-                Application.Current.MainWindow = showWindow;
                 showWindow.Show();
-                closeWindow.Close();
+                closeWindow.Hide();
             });
+
+            
+
+            //ClientLoginWindow window = new ClientLoginWindow(userLogin);
+            //window.Show();
+            //Application.Current.MainWindow.Close();
+
+
         }
 
 

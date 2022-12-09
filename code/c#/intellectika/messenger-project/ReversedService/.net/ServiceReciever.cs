@@ -100,10 +100,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
             // we invoke it here cause we cannot do this in the constructor while delegate object is still not initialized;
             SendOutput.Invoke($"[{DateTime.Now}] user has connected with the name: {CurrentUserName}");
 
-            while (true)
+            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
             {
-
-                if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested) break;
 
                 try
                 {
