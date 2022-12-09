@@ -16,7 +16,9 @@
 		/// </summary>
 		public static string GetGreeting()
 		{
-			return $"           [yellow on blue]Welcome to Authorizer service. Listenning started.[/]\n";
+			string tenSpacesTabChar = string.Empty;
+			for (int i = 0, iSize = 10; i < iSize; i++) tenSpacesTabChar += " ";
+			return $"{tenSpacesTabChar}[yellow on blue]Welcome to Authorizer service. Listenning started.[/]\n";
 		}
 
 
