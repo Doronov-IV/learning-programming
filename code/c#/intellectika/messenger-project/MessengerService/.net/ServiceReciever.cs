@@ -53,13 +53,6 @@ namespace MessengerService.Datalink
         private PackageReader _packetReader;
 
 
-        /// <summary>
-        /// A 'ServiceController' object instance common for all users;
-        /// <br />
-        /// Объект класса "ServiceController", общий для всех клиентов;
-        /// </summary>
-        private static ServiceController staticController = null!;
-
 
 
 
