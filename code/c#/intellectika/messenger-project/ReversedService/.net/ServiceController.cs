@@ -158,18 +158,22 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 {
                     try
                     {
-                        client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
+                        client = new ServiceReciever(userListenner.AcceptTcpClient());
                     }
                     catch { /* Notification Exception */ }
                 });
 
                 if (client is not null)
                 {
+                    client.SendOutput += PassOutputMessage;
+                    client.ProcessFileMessageEvent += AddNewMessageToTheDb;
+                    client.ProcessFileMessageEvent += BroadcastMessage;
+
                     reader = new(client.ClientSocket.GetStream());
 
                     await Task.Run(() => { msg = reader.ReadMessage(); });
 
-                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
+                    SendServiceOutput.Invoke($"User \"{msg.Message as string}\" has connected.");
 
                     if (msg is not null)
                     {
@@ -217,7 +221,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 {
                     try
                     {
-                        authorizer = new(authorizationServiceListenner.AcceptTcpClient(), this);
+                        authorizer = new(authorizationServiceListenner.AcceptTcpClient());
                         reader = new(authorizer.ClientSocket.GetStream());
                     }
                     catch { /* Notification Exception */ }

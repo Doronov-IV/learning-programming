@@ -429,8 +429,7 @@ namespace Net.Transmition
             {
                 try
                 {
-                    await Task.Run(() =>
-                    opCode = _messangerPacketReader.ReadByte());
+                    await Task.Run(() => opCode = _messangerPacketReader.ReadByte());
                 }
                 catch (Exception e)
                 {
