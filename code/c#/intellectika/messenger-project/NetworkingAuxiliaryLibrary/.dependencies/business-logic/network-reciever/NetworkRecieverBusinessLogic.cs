@@ -70,14 +70,18 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
                         case 5:
 
                             var textMessage = reader.ReadMessage();
-                            Dependency.GetNetworkRecieverData().InvokeTextMessageEvent(textMessage);
-                            // invoke text message receipt;
+                            Dependency.GetNetworkRecieverData().InvokeTextMessageEvents(textMessage); // controller will broadcast it as well as show output;
+                            break;
+
+
+                        default:
+
                             break;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    Dependency.GetNetworkRecieverData().InvokeDisconnectionEvents();
                 }
             }
         }

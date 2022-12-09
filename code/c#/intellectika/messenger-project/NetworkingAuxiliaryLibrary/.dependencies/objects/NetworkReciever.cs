@@ -17,10 +17,21 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.DataAccess
         public event MessageRecievedDelegate ProcessTextMessage;
         public event MessageRecievedDelegate SendMessageOutput;
 
-        public void InvokeTextMessageEvent(MessagePackage recievedMessage)
+        public void InvokeTextMessageEvents(MessagePackage recievedMessage)
         {
             ProcessTextMessage?.Invoke(recievedMessage);
-            SendMessageOutPut?.Invoke(recievedMessage);
+            SendMessageOutput?.Invoke(recievedMessage);
+        }
+
+        public delegate void UserDisconnectionEvent(IUserDataAccess disconnectedUser);
+
+        public event UserDisconnectionEvent ProcessDisconnection;
+        public event UserDisconnectionEvent SendDisconnectionOutput;
+
+        public void InvokeDisconnectionEvents(IUserDataAccess disconnectedUser)
+        {
+            ProcessDisconnection?.Invoke(disconnectedUser);
+            SendDisconnectionOutput?.Invoke(disconnectedUser);
         }
 
     }
