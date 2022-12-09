@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace NetworkingAuxiliaryLibrary.Dependencies
 {
-    public static class TcpListenerFactory
+    public static class TcpListenerDataAccessFactory
     {
 
 

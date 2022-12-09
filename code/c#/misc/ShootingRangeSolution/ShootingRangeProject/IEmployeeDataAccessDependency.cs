@@ -9,5 +9,6 @@ namespace ShootingRange
     public interface IEmployeeDataAccessDependency
     {
         public void SetDependency(IEmployeeDataAccess employeeDataAccess);
+
     }
 }

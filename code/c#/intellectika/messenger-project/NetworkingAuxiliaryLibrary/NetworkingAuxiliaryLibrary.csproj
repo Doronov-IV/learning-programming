@@ -16,7 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include=".dependencies\factories\TcpListenerFactory.cs" />
+    <Compile Include=".dependencies\business-logic\network-reciever\NetworkRecieverBusinessLogic.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\INetworkControllerDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\CommonNetworkRecieverDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccessDependency.cs" />
+    <Compile Include=".dependencies\data-access\user\IUserDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\user\IUserDataAccessDependency.cs" />
+    <Compile Include=".dependencies\objects\NetworkController.cs" />
+    <Compile Include=".dependencies\objects\NetworkReciever.cs" />
+    <Compile Include=".dependencies\factories\TcpListenerDataAccessFactory.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Message.cs" />
     <Compile Include=".net\auxiliary\objects\entities\User.cs" />
@@ -34,8 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include=".dependencies\business-logic\" />
-    <Folder Include=".dependencies\data-access\" />
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
