@@ -1,12 +1,15 @@
 ﻿using NetworkingAuxiliaryLibrary.Dependencies.DataAccess;
 using NetworkingAuxiliaryLibrary.Dependencies.Objects;
-
+using System.Net.Sockets;
 namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
 {
     public class NetworkRecieverBusinessLogic : INetworkRecieverDataAccessDependency
     {
 
         #region DI/IOC
+
+
+        private NetworkReciever reciever;
 
 
         private INetworkRecieverDataAccess _dependency;
@@ -23,29 +26,6 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
         }
 
 
-        /// <summary>
-        /// Default constructor.
-        /// <br />
-        /// Конструктор по умолчанию.
-        /// </summary>
-        public NetworkRecieverBusinessLogic()
-        {
-            _dependency = null;
-        }
-
-
-
-        /// <summary>
-        /// Default constructor.
-        /// <br />
-        /// Конструктор по умолчанию.
-        /// </summary>
-        public NetworkRecieverBusinessLogic(INetworkRecieverDataAccess networkRecieverDataAccess)
-        {
-            SetDependency(networkRecieverDataAccess);
-        }
-
-
         #endregion DI/IOC
 
 
@@ -53,26 +33,23 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
         #region LOGIC
 
 
-        public void Process()
+        public void RecieveAsync()
         {
             // connect message
-
-            var reader = Dependency.GetNetworkRecieverData().PackageReader;
 
             while (true)
             {
                 try
                 {
-                    var operationCode = reader.ReadByte();
+                    var operationCode = reciever.PackageReader.ReadByte();
 
                     switch (operationCode)
                     {
                         case 5:
 
-                            var textMessage = reader.ReadMessage();
-                            Dependency.GetNetworkRecieverData().InvokeTextMessageEvents(textMessage); // controller will broadcast it as well as show output;
+                            var textMessage = reciever.PackageReader.ReadMessage();
+                            reciever.InvokeTextMessageEvents(textMessage); // controller will broadcast it as well as show output;
                             break;
-
 
                         default:
 
@@ -81,13 +58,34 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
                 }
                 catch (Exception ex)
                 {
-                    Dependency.GetNetworkRecieverData().InvokeDisconnectionEvents();
+                    reciever.InvokeDisconnectionEvents();
+                    reciever.ClientSocket.Close();
+                    break;
                 }
             }
         }
 
 
         #endregion LOGIC
+
+
+
+        #region CONSTRUCTION
+
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public NetworkRecieverBusinessLogic(TcpClient client)
+        {
+            reciever = Dependency.GetNetworkRecieverData(client);
+        }
+
+
+        #endregion CONSTRUCTION
 
 
 

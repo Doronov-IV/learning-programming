@@ -28,10 +28,18 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.DataAccess
         public event UserDisconnectionEvent ProcessDisconnection;
         public event UserDisconnectionEvent SendDisconnectionOutput;
 
-        public void InvokeDisconnectionEvents(IUserDataAccess disconnectedUser)
+        public void InvokeDisconnectionEvents()
         {
-            ProcessDisconnection?.Invoke(disconnectedUser);
-            SendDisconnectionOutput?.Invoke(disconnectedUser);
+            ProcessDisconnection?.Invoke(User);
+            SendDisconnectionOutput?.Invoke(User);
+        }
+
+
+        public NetworkReciever(TcpClient client)
+        {
+            ClientSocket = client;
+
+            PackageReader = new(ClientSocket.GetStream());
         }
 
     }
