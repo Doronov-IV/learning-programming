@@ -299,61 +299,11 @@ namespace Net.Transmition
             messagePacket.WriteMessage(package);
             try
             {
-                authorizationSocket.Client.Send(messagePacket.GetPacketBytes());
+                messengerSocket.Client.Send(messagePacket.GetPacketBytes());
             }
             catch (Exception ex)
             {
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
-            }
-        }
-
-
-        /// <summary>
-        /// Send file to the service.
-        /// <br />
-        /// Отправить файл на сервис.
-        /// </summary>
-        /// <param name="info">
-        /// Attached file.
-        /// <br />
-        /// Прикреплённый файл.
-        /// </param>
-        public async void SendFileToServerAsync(FileMessagePackage filePackage)
-        {
-            PackageBuilder messagePacket = new();
-            messagePacket.WriteOpCode(6);
-            messagePacket.WriteMessage(filePackage);
-
-            var bytes = messagePacket.GetPacketBytes();
-            const int bufferSize = 4096;
-            byte[] buffer;
-            try
-            {
-                await Task.Run(() =>
-                {
-                    if (bytes.Length > bufferSize)
-                    {
-                        using (MemoryStream stream = new(bytes))
-                        {
-                            while (stream.Position != stream.Length)
-                            {
-                                buffer = new byte[bufferSize];
-                                stream.Read(buffer, 0, bufferSize);
-                                authorizationSocket.Client.Send(buffer, SocketFlags.Partial);
-                            }
-                        }
-                    }
-                else authorizationSocket.Client.Send(messagePacket.GetPacketBytes(), SocketFlags.Partial);
-                });
-            }
-            catch (Exception ex)
-            {
-                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
-            }
-            finally
-            {
-                messagePacket = null;
-                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
             }
         }
 

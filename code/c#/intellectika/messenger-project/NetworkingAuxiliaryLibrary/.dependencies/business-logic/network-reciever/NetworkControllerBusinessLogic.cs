@@ -90,7 +90,7 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
                         {
                             if (!incommingMessage.Reciever.Equals("Authorizer")) // just in case;
                             {
-                                SynchronizeChats();
+                                //SynchronizeChats();
                             }
                         }
                         else // user sent message to user;

@@ -1,11 +1,13 @@
-﻿using ReversedService.ViewModel.ServiceWindow;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
-using ReversedService.Model.Context;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Style.Messenger;
 using NetworkingAuxiliaryLibrary.Objects;
+using NetworkingAuxiliaryLibrary.Style.Common;
+using MessengerService.Model.Context;
 using Tools.Flags;
 using Hyper;
 using System.Linq;
 using Toolbox.Flags;
+using Spectre.Console;
 
 namespace MessengerService.Datalink
 {
@@ -87,30 +89,6 @@ namespace MessengerService.Datalink
 
 
 
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                               ↓   OUTPUT   ↓                             ↓    ///
-        /////////////////////////////////////////////////////////////////////////////////////// 
-
-
-        /// <summary>
-        /// A delegate for transeffring output to other objects;
-        /// <br />
-        /// Делегат для передачи аутпута другим объектам;
-        /// </summary>
-        /// <param name="sOutputMessage">
-        /// A message that we want to see somewhere (In this case, in a server console);
-        /// <br />
-        /// Сообщение, которое мы хотим где-то увидеть (в данном случае, в консоли сервера);
-        /// </param>
-        public delegate void ServiceOutputDelegate(string sOutputMessage);
-
-
-        /// <inheritdoc cref="ServiceOutputDelegate"/>
-        public event ServiceOutputDelegate SendServiceOutput;
-
-
-
         #endregion STATE - Fields and Properties
 
 
@@ -138,10 +116,6 @@ namespace MessengerService.Datalink
             userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
             userListenner.Start();
 
-            // check for cancellation token state
-            if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
-                ServiceWindowViewModel.cancellationTokenSource = new();
-
             // create basic references for reading clients
             PackageReader reader;
             ServiceReciever client = null;
@@ -149,30 +123,23 @@ namespace MessengerService.Datalink
 
             Status.ToggleCompletion();
 
-            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+            while (true)
             {
                 client = null;
 
-                await Task.Run(() => 
-                {
-                    try
-                    {
-                        client = new ServiceReciever(userListenner.AcceptTcpClient());
-                    }
-                    catch { /* Notification Exception */ }
-                });
+                await Task.Run(() => client = new ServiceReciever(userListenner.AcceptTcpClient()));
 
                 if (client is not null)
                 {
-                    client.SendOutput += PassOutputMessage;
-                    client.ProcessFileMessageEvent += AddNewMessageToTheDb;
+                    client.ProcessTextMessageEvent += AddNewMessageToTheDb;
                     client.ProcessFileMessageEvent += BroadcastMessage;
+                    client.UserDisconnected += BroadcastDisconnect;
 
                     reader = new(client.ClientSocket.GetStream());
 
-                    await Task.Run(() => { msg = reader.ReadMessage(); });
+                    await Task.Run(() => msg = reader.ReadMessage());
 
-                    SendServiceOutput.Invoke($"User \"{msg.Message as string}\" has connected.");
+                    AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetUserConnection(msg.Message as string)));
 
                     if (msg is not null)
                     {
@@ -180,8 +147,8 @@ namespace MessengerService.Datalink
 
                         var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
-                        client.CurrentUserName = user.CurrentNickname;
-                        client.CurrentUID = user.PublicId;
+                        client.CurrentUser.CurrentNickname = user.CurrentNickname;
+                        client.CurrentUser.PublicId = user.PublicId;
 
                         SendUserInfo(client, user);
 
@@ -209,12 +176,9 @@ namespace MessengerService.Datalink
 
             authorizationServiceListenner.Start();
 
-            if (ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
-                ServiceWindowViewModel.cancellationTokenSource = new();
-
             PackageReader reader = default;
 
-            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested && authorizer is null)
+            while (authorizer is null)
             {
                 await Task.Run(() =>
                 {
@@ -227,25 +191,25 @@ namespace MessengerService.Datalink
                 });
             }
 
-            string msg = string.Empty;
+            MessagePackage msg = null;
 
             try
             {
-                while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+                while (true)
                 {
                     msg = null;
                     try
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
                             if (reader is not null) // it is null
-                            await Task.Run(() => msg = reader.ReadMessage().Message as string);
+                            await Task.Run(() => msg = reader.ReadMessage());
                     }
                     catch { /* Notofication exception */}
                     if (msg != null)
                     {
-                        CheckIncommingLogin(msg);
+                        CheckIncommingLogin(msg.Message as string);
 
-                        SendServiceOutput.Invoke($"Login \"{msg}\" read.");
+                        AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetLoginReceiptStyle(msg)));
                     }
                 }
             }
@@ -290,8 +254,8 @@ namespace MessengerService.Datalink
             {
                 foreach (var usr in userList)
                 {
-                    var usrName = new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUserName);
-                    var usrUID = new TextMessagePackage(usr.CurrentUID, "@All", usr.CurrentUID);
+                    var usrName = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.CurrentNickname);
+                    var usrUID = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.PublicId);
 
                     broadcastPacket.WriteOpCode(1); // code '1' means new user has connected;
                     broadcastPacket.WriteMessage(usrName);
@@ -320,7 +284,7 @@ namespace MessengerService.Datalink
             {
                 if (package.Reciever != "@All")
                 {
-                    if (user.CurrentUID == package.Reciever || user.CurrentUID == package.Sender)
+                    if (user.CurrentUser.PublicId == package.Reciever || user.CurrentUser.PublicId == package.Sender)
                     {
                         user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
                     
@@ -329,62 +293,6 @@ namespace MessengerService.Datalink
                 else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
             }
         }
-
-
-        // broadcasting file;
-        /*
-        /// <summary>
-        /// Send file to all clients.
-        /// <br />
-        /// Разослать файл всем клиентам.
-        /// </summary>
-        /// <param name="info">
-        /// Broadcasted file.
-        /// <br />
-        /// Транслируемый файл.
-        /// </param>
-        /// <param name="SenderId">
-        /// The id of the newReciever-user.
-        /// <br />
-        /// Идентификатор отправителя.
-        /// </param>
-        public void BroadcastFileInParallel(FileMessagePackage filePackage)
-        {
-            var msgPacket = new PackageBuilder();
-            msgPacket.WriteOpCode(6);
-            msgPacket.WriteMessage(filePackage);
-
-            var bytes = msgPacket.GetPacketBytes();
-            const int bufferSize = 4096;
-            byte[] buffer;
-            Parallel.ForEach(userList, (user) =>
-            {
-                if (user.CurrentUID != filePackage.Sender && user.CurrentUID == filePackage.Reciever)
-                {
-                    if (bytes.Length > bufferSize)
-                    {
-                        using (MemoryStream stream = new(bytes))
-                        {
-                            while (stream.Position != stream.Length)
-                            {
-                                if (stream.Length - stream.Position >= bufferSize)
-                                    buffer = new byte[bufferSize];
-                                else
-                                {
-                                    buffer = new byte[stream.Length - stream.Position];
-                                }
-                                stream.Read(buffer, 0, buffer.Length);
-                                user.ClientSocket.Client.Send(buffer, SocketFlags.Partial);
-                                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-                            }
-                        }
-                    }
-                    else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
-                }
-            });
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-        }
-        */
 
 
         /// <summary>
@@ -397,16 +305,16 @@ namespace MessengerService.Datalink
         /// <br />
         /// id пользователя, чтобы найти его и удалить из списка пользователей;
         /// </param>
-        public void BroadcastDisconnect(string uid)
+        public void BroadcastDisconnect(User userData)
         {
-            var disconnectedUser = userList.Where(x => x.CurrentUID.ToString() == uid).FirstOrDefault();
+            var disconnectedUser = userList.Where(x => x.CurrentUser.PublicId.Equals(userData.PublicId)).FirstOrDefault();
             userList.Remove(disconnectedUser);            // removing user;
 
             var broadcastPacket = new PackageBuilder();
             foreach (var user in userList)
             {
                 broadcastPacket.WriteOpCode(10);    // on user disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
-                broadcastPacket.WriteMessage(new TextMessagePackage(uid, "@All", uid)); // it also sends disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
+                broadcastPacket.WriteMessage(new TextMessagePackage(userData.PublicId, "@All", userData.PublicId)); // it also sends disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
@@ -535,30 +443,6 @@ namespace MessengerService.Datalink
 
             return res;
         }
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                               ↓   OUTPUT   ↓                             ↓    ///
-        /////////////////////////////////////////////////////////////////////////////////////// 
-        
-
-        /// <summary>
-        /// Pass the message out to another object that might have the ability to output this message.
-        /// <br />
-        /// Передать сообщение другому объекту, который может иметь возможность вывести его куда-нибудь.
-        /// </summary>
-        /// <param name="sMessage">
-        /// Message text.
-        /// <br />
-        /// Текст сообщения.
-        /// </param>
-        public void PassOutputMessage(string sMessage)
-        {
-            SendServiceOutput.Invoke(sMessage);
-        }
-
 
 
         #endregion API - public Behavior

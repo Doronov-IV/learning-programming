@@ -1,6 +1,7 @@
 ﻿using AuthorizationServiceProject.Net;
-using AuthorizationServiceProject.Style;
+using NetworkingAuxiliaryLibrary.Style.Authorizer;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Style.Common;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -152,7 +153,7 @@ namespace AuthorizationServiceProject.Net
                             bool bSuccessfulRegistration = controller.TryAddNewUser(CurrentUser);
                             if (bSuccessfulRegistration)
                             {
-                                AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserRegistration(CurrentUser.Login)}"));
+                                AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserRegistrationStyle(CurrentUser.Login)}"));
                             }
                             controller.SendClientResponse(this, bSuccessfulRegistration);
 
@@ -171,7 +172,7 @@ namespace AuthorizationServiceProject.Net
                                 controller.SendClientResponse(this, bAuthorizationRes);
 
                                 if (controller.TrySendLoginToService(this)) // if the other service is online and we have sent data to it;
-                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserConnection(CurrentUser.Login)}"));
+                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserConnection(CurrentUser.Login)}"));
                             }
                             else controller.SendClientResponse(this, bAuthorizationRes);
 
@@ -180,7 +181,7 @@ namespace AuthorizationServiceProject.Net
                 }
                 catch (Exception ex)
                 {
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserDisconnection(CurrentUser.Login)}"));
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserDisconnection(CurrentUser.Login)}"));
                     break;
                 }
             }

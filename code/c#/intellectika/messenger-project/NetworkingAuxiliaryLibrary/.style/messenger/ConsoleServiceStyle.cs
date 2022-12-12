@@ -9,13 +9,13 @@ namespace NetworkingAuxiliaryLibrary.Style.Messenger
 
         public static string GetClientMessageStyle(MessagePackage message)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user [green]{message.Sender}[/] says to [green]{message.Reciever}[/]: \"[/cyan1]{message.Message as string}[/]\".\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user [green]{message.Sender}[/] says to [green]{message.Reciever}[/]: \"[cyan1]{message.Message as string}[/]\".\n";
         }
 
 
         public static string GetLoginReceiptStyle(MessagePackage message)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} login [teal]\"{message.Message as string}\"[/] has been recieved from [purple]Authorizer[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} login [mediumspringgreen]\"{message.Message as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
         }
 
     }

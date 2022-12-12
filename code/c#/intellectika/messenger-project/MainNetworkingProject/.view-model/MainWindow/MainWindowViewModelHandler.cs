@@ -47,12 +47,12 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         {
             await Task.Run(() =>
             {
-                Process.GetProcesses().ToList().Find(n => n.ProcessName == "ReversedService")?.Kill();
+                Process.GetProcesses().ToList().Find(n => n.ProcessName == "MessengerService")?.Kill();
 
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../ReversedService/bin/Release/net6.0-windows/ReversedService.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedService/bin/Release/net6.0-windows";
+                    process.StartInfo.FileName = "../../../../MessengerService/bin/Release/net7.0/MessengerService.exe";
+                    process.StartInfo.WorkingDirectory = "../../../../MessengerService/bin/Release/net7.0";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();

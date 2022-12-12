@@ -15,11 +15,24 @@ namespace NetworkingAuxiliaryLibrary.Style.Common
         /// <br />
         /// Получить строку типа Spectre.Markup, содержащую приветствие.
         /// </summary>
-        public static string GetGreeting(string serviceName)
+        public static string GetAuthorizerGreeting()
         {
             string tenSpacesTabChar = string.Empty;
-            for (int i = 0, iSize = 10; i < iSize; i++) tenSpacesTabChar += " ";
-            return $"{tenSpacesTabChar}[yellow on blue]Welcome to {serviceName} service. Listenning started.[/]\n";
+            tenSpacesTabChar += "[black on white]   GTM+3  [/] ";
+            return $"{tenSpacesTabChar}[skyblue2]Welcome to [/][purple_1]Authorizer[/][skyblue2] service. Listenning started.[/]\n";
+        }
+
+
+        /// <summary>
+        /// Get the spectre markup string containing greeting.
+        /// <br />
+        /// Получить строку типа Spectre.Markup, содержащую приветствие.
+        /// </summary>
+        public static string GetMessengerGreeting()
+        {
+            string tenSpacesTabChar = string.Empty;
+            tenSpacesTabChar += "[black on white]   GTM+3  [/] ";
+            return $"{tenSpacesTabChar}[skyblue2]Welcome to [/][red]Messenger[/][skyblue2] service. Listenning started.[/]\n";
         }
 
 

@@ -56,7 +56,7 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
                                 string userNameMessage = tempRecieverReference.PackageReader.ReadMessage().Message as string;
                                 string userPublicId = tempRecieverReference.PackageReader.ReadMessage().Message as string;
 
-                                var user = tempRecieverReference.User.GetPublicUserData(userNameMessage, userPublicId);
+                                //var user = tempRecieverReference.User.GetPublicUserData(userNameMessage, userPublicId);
 
 
 

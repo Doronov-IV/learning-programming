@@ -1,10 +1,8 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using ReversedService.Model.Configs;
-using ReversedService.service_view;
-using ReversedService.ViewModel.ServiceWindow;
+using MessengerService.Model.Configs;
 using Microsoft.Extensions.Configuration;
 
-namespace ReversedService.Model.Context
+namespace MessengerService.Model.Context
 {
     public class MessengerDatabaseContext : DbContext
     {

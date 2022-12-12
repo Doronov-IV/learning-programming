@@ -1,8 +1,10 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects;
-using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System;
+using Spectre.Console;
+using NetworkingAuxiliaryLibrary.Style.Messenger;
+using NetworkingAuxiliaryLibrary.Style.Common;
 
 namespace MessengerService.Datalink
 {
@@ -20,20 +22,7 @@ namespace MessengerService.Datalink
 
 
 
-        /// <summary>
-        /// The name of a user, aka login and nickname;
-        /// <br />
-        /// Имя пользователя, так же логин и никнейм;
-        /// </summary>
-        public string CurrentUserName { get; set; }
-
-
-        /// <summary>
-        /// Grants a global id (in form of four hexadecimal values);
-        /// <br />
-        /// Предоставляет глобальный идентификатор;
-        /// </summary>
-        public string CurrentUID { get; set; }
+        public User CurrentUser { get; set; }
 
 
 
@@ -54,26 +43,6 @@ namespace MessengerService.Datalink
 
 
 
-
-
-
-        /// <summary>
-        /// A delegate for transeffring output to other objects;
-        /// <br />
-        /// Делегат для передачи аутпута другим объектам;
-        /// </summary>
-        /// <param name="sOutputMessage">
-        /// A message that we want to see somewhere (в данном случае, в консоли сервера и в пользовательском клиенте);
-        /// <br />
-        /// Сообщение, которое мы хотим где-то увидеть (в данном случае, в консоли сервера и в пользовательском клиенте);
-        /// </param>
-        public delegate void PendOutputDelegate(string sOutputMessage);
-
-        /// <inheritdoc cref="PendOutputDelegate"/>
-        public event PendOutputDelegate SendOutput;
-
-
-
         #endregion PROPERTIES - State of an Object
 
 
@@ -88,6 +57,10 @@ namespace MessengerService.Datalink
         public event MessageRecievedDelegate ProcessTextMessageEvent;
 
         public event MessageRecievedDelegate ProcessFileMessageEvent;
+
+        public delegate void UserTypeDelegate(User userData);
+
+        public event UserTypeDelegate UserDisconnected;
 
 
         #endregion API
@@ -106,10 +79,7 @@ namespace MessengerService.Datalink
         /// </summary>
         private void Process()
         {
-            // we invoke it here cause we cannot do this in the constructor while delegate object is still not initialized;
-            SendOutput.Invoke($"[{DateTime.Now}] user has connected with the name: {CurrentUserName}");
-
-            while (!ServiceWindowViewModel.cancellationTokenSource.IsCancellationRequested)
+            while (true)
             {
 
                 try
@@ -121,17 +91,7 @@ namespace MessengerService.Datalink
 
                             var textMessage = _packetReader.ReadMessage();
                             ProcessTextMessageEvent.Invoke(textMessage);
-                            SendOutput.Invoke($"[{DateTime.Now.ToString("dd.MM.yy HH:mm")}] user \"{CurrentUserName}\" says: {textMessage.Message as string}.");
-
-                            break;
-
-
-                        case 6:
-
-                            // file messages are temporally unavailable in dev version;
-                            //var fileMessage = _packetReader.ReadFile(UserName: CurrentUserName);
-                            //ProcessFileMessageEvent.Invoke(fileMessage);
-                            //SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" sent a file.");
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessage)));
 
                             break;
 
@@ -143,13 +103,10 @@ namespace MessengerService.Datalink
                 }
                 catch (Exception ex)
                 {
-                    if (staticController.Status.IsRunning)
-                    {
-                        SendOutput.Invoke($"User {CurrentUserName} (id = {CurrentUID.ToString()}) has disconnected!");
-                        staticController.BroadcastDisconnect(CurrentUID.ToString());
-                        ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
-                        break;
-                    }
+                    AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetUserDisconnection(CurrentUser.Login)));
+                    UserDisconnected.Invoke(CurrentUser);
+                    ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;
+                    break;
                 }
             }
         }
@@ -195,7 +152,7 @@ namespace MessengerService.Datalink
         public ServiceReciever(TcpClient client)
         {
             ClientSocket = client;
-
+            CurrentUser = new();
             _packetReader = new PackageReader(ClientSocket.GetStream());
         }
 

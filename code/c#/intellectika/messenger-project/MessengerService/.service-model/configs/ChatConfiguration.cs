@@ -1,6 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
 
-namespace ReversedService.Model.Configs
+namespace MessengerService.Model.Configs
 {
     public class ChatConfiguration : IEntityTypeConfiguration<Chat>
     {

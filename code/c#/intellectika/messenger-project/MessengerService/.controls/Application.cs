@@ -16,11 +16,15 @@ global using Tools.Formatting;
 
 global using NetworkingAuxiliaryLibrary.Packages;
 global using NetworkingAuxiliaryLibrary.Processing;
-global using NetworkingAuxiliaryLibrary.Dependencies;
+global using NetworkingAuxiliaryLibrary;
 global using NetworkingAuxiliaryLibrary.Objects;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+using MessengerService.Datalink;
+using Spectre.Console;
+using NetworkingAuxiliaryLibrary.Style.Common;
 
 namespace MessengerService.Controls
 {
@@ -36,9 +40,9 @@ namespace MessengerService.Controls
         /// <br />
         /// Зациклить метод "Run".
         /// </summary>
-        public void Start()
+        public async Task Start()
         {
-            Run();
+            await Run();
         }
 
 
@@ -57,12 +61,13 @@ namespace MessengerService.Controls
         /// <br />
         /// Запустить приложение.
         /// </summary>
-        private void Run()
+        private async Task Run()
         {
-            ProcessingStatus.ToggleCompletion();
-            var task1 = Service.ListenAuthorizerAsync();
-            var task2 = Service.ListenClientsAsync();
-            await Task.WhenAny(task1, task2);
+            AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetMessengerGreeting()));
+            ServiceController controller = new();
+            var task1 = controller.ListenAuthorizerAsync();
+            var task2 = controller.ListenClientsAsync();
+            await Task.WhenAll(task1, task2);
         }
 
 

@@ -2,7 +2,8 @@
 using Toolbox.Flags;
 using AuthorizationServiceProject.Model.Context;
 using AuthorizationServiceProject.Model.Entities;
-using AuthorizationServiceProject.Style;
+using NetworkingAuxiliaryLibrary.Style.Common;
+using NetworkingAuxiliaryLibrary.Style.Authorizer;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -82,7 +83,7 @@ namespace AuthorizationServiceProject.Net
         {
             try
             {
-                AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetGreeting()));
+                AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetAuthorizerGreeting()));
 
                 ServiceReciever newClient;
 
@@ -94,7 +95,7 @@ namespace AuthorizationServiceProject.Net
                 }
                 catch (Exception ex)
                 {
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} [blue]Messenger service is currently down.[/]\n"));
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [yellow]Messenger service is currently down.[/]\n"));
                 }
 
                 while (true)
@@ -150,8 +151,8 @@ namespace AuthorizationServiceProject.Net
             TextMessagePackage package;
 
             // 'true' - access granted. else 'false'
-            if (checkResult) package = new("", "", "Granted");
-            else package = new("", "", "Denied");
+            if (checkResult) package = new("Authorizer", "Client", "Granted");
+            else package = new("Authorizer", "Client", "Denied");
 
             builder.WriteMessage(package);
 
@@ -172,16 +173,16 @@ namespace AuthorizationServiceProject.Net
             }
             catch (Exception ex)
             {
-                AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} [blue]Messenger service was down. Trying to renew connection...[/]\n"));
+                AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [yellow]Messenger service was down. Trying to renew connection...[/]\n"));
                 try
                 {
                     messengerServiceSocket = new();
                     messengerServiceSocket.Connect(staticMessengerServiceEndpoint);
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} [yellow on green]Connection renewed.[/]\n"));
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [yellow on green]Connection renewed.[/]\n"));
                 }
                 catch (Exception inex)
                 {
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetCurrentTime()} [white on red]Messenger service is still down. Client data was not sent.[/]\n"));
+                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [white on red]Messenger service is still down. Client data was not sent.[/]\n"));
                     //System.Environment.Exit(0); // console application manual shutdown
                     return false;
                 }
@@ -189,7 +190,7 @@ namespace AuthorizationServiceProject.Net
 
             if (messengerServiceSocket.Connected)
             {
-                TextMessagePackage package = new TextMessagePackage("authorizer", "messanger", $"{user.CurrentUser.Login}");
+                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", $"{user.CurrentUser.Login}");
                 PackageBuilder builder = new();
                 builder.WriteMessage(package);
                 messengerServiceSocket.Client.Send(builder.GetPacketBytes());

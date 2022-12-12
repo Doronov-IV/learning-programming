@@ -63,7 +63,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 List<DirectoryInfo> extractorDestinations = new();
                 extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\ReversedClient\\.net"));
                 // destination 2 (service);
-                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\ReversedService\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\MessengerService\\.net"));
                 // destination 3 (authorizer);
                 extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\AuthorizationService\\.net"));
                 // extracting;

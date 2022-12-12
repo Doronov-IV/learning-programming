@@ -23,7 +23,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                     if (ServiceTransmitter.ConnectAndAuthorize(_userDTOdata))
                     {
                         ServiceTransmitter.ConnectAndSendLoginToService(_userDTOdata);
-                        FullUserData = ServiceTransmitter.GetResponseData();
+                        FullUserData = ServiceTransmitter.GetResponseData(); // deadlock
 
                         WpfWindowsManager.FromLoginToChat(FullUserData, ServiceTransmitter);
                     }
@@ -39,7 +39,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Exception: {ex.Message}", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Service is down. Consider connecting later.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

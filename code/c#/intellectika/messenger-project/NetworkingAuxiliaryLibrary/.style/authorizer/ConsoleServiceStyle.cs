@@ -1,6 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Style.Common;
 
-namespace NetworkingAuxiliaryLibrary.ConsoleServiceStyle.Authorizer
+namespace NetworkingAuxiliaryLibrary.Style.Authorizer
 {
     /// <summary>
     /// A bunch of style and markup features using 'Spectre.Console' nuget.

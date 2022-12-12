@@ -16,7 +16,6 @@
     <Compile Include=".model\entities\UserModel.cs" />
     <Compile Include=".net\ServiceController.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
-    <Compile Include=".style\ConsoleServiceStyle.cs" />
     <Content Include=".config\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -44,5 +43,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Spectre.Console" Version="0.45.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".style\" />
   </ItemGroup>
 </Project>
