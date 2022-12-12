@@ -23,6 +23,11 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.DataAccess
             SendMessageOutput?.Invoke(recievedMessage);
         }
 
+        public delegate void UserConnectionEvent(IUserDataAccess connectedUser);
+
+        public event UserConnectionEvent ProcessConnection;
+        public event UserConnectionEvent SendConnectionOutput;
+
         public delegate void UserDisconnectionEvent(IUserDataAccess disconnectedUser);
 
         public event UserDisconnectionEvent ProcessDisconnection;

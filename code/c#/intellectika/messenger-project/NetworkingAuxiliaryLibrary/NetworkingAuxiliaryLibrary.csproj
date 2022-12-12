@@ -16,8 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".dependencies\business-logic\network-reciever\NetworkControllerBusinessLogic.cs" />
     <Compile Include=".dependencies\business-logic\network-reciever\NetworkRecieverBusinessLogic.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\CommonNetworkControllerDataAccess.cs" />
     <Compile Include=".dependencies\data-access\network-controller\INetworkControllerDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\INetworkControllerDataAccessDependency.cs" />
     <Compile Include=".dependencies\data-access\network-reciever\CommonNetworkRecieverDataAccess.cs" />
     <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccess.cs" />
     <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccessDependency.cs" />

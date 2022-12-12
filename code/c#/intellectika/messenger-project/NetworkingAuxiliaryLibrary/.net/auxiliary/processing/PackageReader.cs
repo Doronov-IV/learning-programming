@@ -107,7 +107,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
         /// Считать файл из сетевого стрима.
         /// </summary>
         /// <param name="UserName">
-        /// Name of the reciever.
+        /// Name of the tempRecieverReference.
         /// <br />
         /// Имя получателя.
         /// </param>

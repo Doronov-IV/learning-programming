@@ -6,10 +6,11 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
     public class NetworkRecieverBusinessLogic : INetworkRecieverDataAccessDependency
     {
 
-        #region DI/IOC
+
+        #region DI/IoC
 
 
-        private NetworkReciever reciever;
+        private NetworkReciever tempRecieverReference;
 
 
         private INetworkRecieverDataAccess _dependency;
@@ -26,66 +27,73 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
         }
 
 
-        #endregion DI/IOC
+        #endregion DI/IoC
 
 
 
-        #region LOGIC
 
 
-        public void RecieveAsync()
+        public async Task RecieveAsync()
         {
             // connect message
-
+            byte operationCode = 77;
             while (true)
             {
                 try
                 {
-                    var operationCode = reciever.PackageReader.ReadByte();
+                    await Task.Run(() => operationCode = tempRecieverReference.PackageReader.ReadByte());
 
-                    switch (operationCode)
+                    if (operationCode != 77)
                     {
-                        case 5:
+                        switch (operationCode)
+                        {
+                            case 0:
+                                
+                                break;
 
-                            var textMessage = reciever.PackageReader.ReadMessage();
-                            reciever.InvokeTextMessageEvents(textMessage); // controller will broadcast it as well as show output;
-                            break;
+                            case 1:
 
-                        default:
+                                string userNameMessage = tempRecieverReference.PackageReader.ReadMessage().Message as string;
+                                string userPublicId = tempRecieverReference.PackageReader.ReadMessage().Message as string;
 
-                            break;
+                                tempRecieverReference.User.GetPublicUserData(userNameMessage, userPublicId);
+
+                                break;
+
+                            case 5:
+
+                                var textMessage = tempRecieverReference.PackageReader.ReadMessage();
+                                tempRecieverReference.InvokeTextMessageEvents(textMessage); // controller will broadcast it as well as show output;
+                                break;
+
+                            default:
+
+                                break;
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    reciever.InvokeDisconnectionEvents();
-                    reciever.ClientSocket.Close();
+                    tempRecieverReference.InvokeDisconnectionEvents();
+                    tempRecieverReference.ClientSocket.Close();
                     break;
                 }
             }
         }
 
 
-        #endregion LOGIC
-
-
-
-        #region CONSTRUCTION
 
 
 
         /// <summary>
-        /// Default constructor.
+        /// TcpClient constructor.
         /// <br />
-        /// Конструктор по умолчанию.
+        /// Конструктор через TcpClient.
         /// </summary>
         public NetworkRecieverBusinessLogic(TcpClient client)
         {
-            reciever = Dependency.GetNetworkRecieverData(client);
+            tempRecieverReference = Dependency.GetNetworkRecieverData(client);
         }
-
-
-        #endregion CONSTRUCTION
 
 
 

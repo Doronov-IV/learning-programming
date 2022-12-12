@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace NetworkingAuxiliaryLibrary.Packages
 {
     /// <summary>
-    /// Order: sender, reciever, filename, file. Every argument is prefixed with its length.
+    /// Order: sender, tempRecieverReference, filename, file. Every argument is prefixed with its length.
     /// <br />
-    /// Порядок: sender, reciever, filename, file. Каждый параметр начинается с его длины.
+    /// Порядок: sender, tempRecieverReference, filename, file. Каждый параметр начинается с его длины.
     /// </summary>
     public class FileMessagePackage : MessagePackage
     {
@@ -298,7 +298,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// Никнейм отправителя сообщения.
         /// </param>
         /// <param name="reciever">
-        /// Message reciever nickname.
+        /// Message tempRecieverReference nickname.
         /// <br />
         /// Никнейм получателя.
         /// </param>
