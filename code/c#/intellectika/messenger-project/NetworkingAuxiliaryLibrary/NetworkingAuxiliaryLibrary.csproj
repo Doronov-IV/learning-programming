@@ -24,8 +24,10 @@
     <Compile Include=".dependencies\data-access\network-reciever\CommonNetworkRecieverDataAccess.cs" />
     <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccess.cs" />
     <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccessDependency.cs" />
-    <Compile Include=".dependencies\data-access\user\IUserDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\user\CustomUserDataAccess.cs" />
     <Compile Include=".dependencies\data-access\user\IUserDataAccessDependency.cs" />
+    <Compile Include=".dependencies\data-access\user\DatabaseUserDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\user\IUserDataAccess.cs" />
     <Compile Include=".dependencies\objects\NetworkController.cs" />
     <Compile Include=".dependencies\objects\NetworkReciever.cs" />
     <Compile Include=".dependencies\factories\TcpListenerDataAccessFactory.cs" />
@@ -38,6 +40,9 @@
     <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
+    <Compile Include=".style\authorizer\ConsoleServiceStyle.cs" />
+    <Compile Include=".style\common\ConsoleServiceStyleCommon.cs" />
+    <Compile Include=".style\messenger\ConsoleServiceStyle.cs" />
   </ItemGroup>
 
   <ItemGroup>

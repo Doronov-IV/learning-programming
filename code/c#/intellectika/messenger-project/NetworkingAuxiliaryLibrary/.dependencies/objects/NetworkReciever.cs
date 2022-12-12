@@ -28,6 +28,11 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.DataAccess
         public event UserConnectionEvent ProcessConnection;
         public event UserConnectionEvent SendConnectionOutput;
 
+        public void InvokeConnectionEvents()
+        {
+
+        }
+
         public delegate void UserDisconnectionEvent(IUserDataAccess disconnectedUser);
 
         public event UserDisconnectionEvent ProcessDisconnection;

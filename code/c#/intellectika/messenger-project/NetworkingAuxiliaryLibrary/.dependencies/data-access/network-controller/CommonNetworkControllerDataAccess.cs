@@ -1,5 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Dependencies.DataAccess;
 using NetworkingAuxiliaryLibrary.Dependencies.Objects;
+using System.Net.Sockets;
 
 namespace NetworkingAuxiliaryLibrary.Dependencies.DataAccess
 {
