@@ -4,18 +4,17 @@ using ReversedService.Model.Context;
 using NetworkingAuxiliaryLibrary.Objects;
 using Tools.Flags;
 using Hyper;
-using System.Windows.Interop;
 using System.Linq;
 using Toolbox.Flags;
 
-namespace NetworkingAuxiliaryLibrary.ClientService
+namespace MessengerService.Datalink
 {
     /// <summary>
     /// A controller for ServiceReciever instance to broadcast recieved data to every users.
     /// <br />
     /// Контроллер экземпляра "ServiceReciever" для рассылки полученных данных всем пользователям
     /// </summary>
-    public class ServiceController : INotifyPropertyChanged
+    public class ServiceController
     {
 
 
@@ -158,18 +157,22 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 {
                     try
                     {
-                        client = new ServiceReciever(userListenner.AcceptTcpClient(), this);
+                        client = new ServiceReciever(userListenner.AcceptTcpClient());
                     }
                     catch { /* Notification Exception */ }
                 });
 
                 if (client is not null)
                 {
+                    client.SendOutput += PassOutputMessage;
+                    client.ProcessFileMessageEvent += AddNewMessageToTheDb;
+                    client.ProcessFileMessageEvent += BroadcastMessage;
+
                     reader = new(client.ClientSocket.GetStream());
 
                     await Task.Run(() => { msg = reader.ReadMessage(); });
 
-                    SendServiceOutput.Invoke($"Login \"{msg.Message as string}\" has connected.");
+                    SendServiceOutput.Invoke($"User \"{msg.Message as string}\" has connected.");
 
                     if (msg is not null)
                     {
@@ -217,7 +220,7 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                 {
                     try
                     {
-                        authorizer = new(authorizationServiceListenner.AcceptTcpClient(), this);
+                        authorizer = new(authorizationServiceListenner.AcceptTcpClient());
                         reader = new(authorizer.ClientSocket.GetStream());
                     }
                     catch { /* Notification Exception */ }

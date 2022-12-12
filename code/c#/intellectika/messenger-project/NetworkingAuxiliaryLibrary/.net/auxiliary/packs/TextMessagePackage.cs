@@ -191,7 +191,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// Никнейм отправителя сообщения.
         /// </param>
         /// <param name="reciever">
-        /// Message reciever nickname.
+        /// Message tempRecieverReference nickname.
         /// <br />
         /// Никнейм получателя.
         /// </param>

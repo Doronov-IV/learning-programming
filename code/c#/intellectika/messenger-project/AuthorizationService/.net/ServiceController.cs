@@ -150,8 +150,8 @@ namespace AuthorizationServiceProject.Net
             TextMessagePackage package;
 
             // 'true' - access granted. else 'false'
-            if (checkResult) package = new("Authorizer", "User", "Granted");
-            else package = new("Authorizer", "User", "Denied");
+            if (checkResult) package = new("", "", "Granted");
+            else package = new("", "", "Denied");
 
             builder.WriteMessage(package);
 

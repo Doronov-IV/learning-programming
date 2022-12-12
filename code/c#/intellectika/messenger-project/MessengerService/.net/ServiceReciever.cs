@@ -1,10 +1,10 @@
-﻿using NetworkingAuxiliaryLibrary.ClientService;
-using NetworkingAuxiliaryLibrary.Objects;
+﻿using NetworkingAuxiliaryLibrary.Objects;
 using ReversedService.ViewModel.ServiceWindow;
 using System.Net.Sockets;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
+using System;
 
-namespace NetworkingAuxiliaryLibrary.ClientService
+namespace MessengerService.Datalink
 {
 
     /// <summary>
@@ -53,13 +53,6 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         private PackageReader _packetReader;
 
 
-        /// <summary>
-        /// A 'ServiceController' object instance common for all users;
-        /// <br />
-        /// Объект класса "ServiceController", общий для всех клиентов;
-        /// </summary>
-        private static ServiceController staticController = null!;
-
 
 
 
@@ -82,6 +75,22 @@ namespace NetworkingAuxiliaryLibrary.ClientService
 
 
         #endregion PROPERTIES - State of an Object
+
+
+
+
+        #region API
+
+
+        public delegate void MessageRecievedDelegate(MessagePackage recievedMessage);
+
+
+        public event MessageRecievedDelegate ProcessTextMessageEvent;
+
+        public event MessageRecievedDelegate ProcessFileMessageEvent;
+
+
+        #endregion API
 
 
 
@@ -109,17 +118,26 @@ namespace NetworkingAuxiliaryLibrary.ClientService
                     switch (opCode)
                     {
                         case 5:
-                            var msg = _packetReader.ReadMessage();
-                            staticController.AddNewMessageToTheDb(msg);
-                            SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" says: {msg.Message as string}.");
-                            staticController.BroadcastMessage(msg);
+
+                            var textMessage = _packetReader.ReadMessage();
+                            ProcessTextMessageEvent.Invoke(textMessage);
+                            SendOutput.Invoke($"[{DateTime.Now.ToString("dd.MM.yy HH:mm")}] user \"{CurrentUserName}\" says: {textMessage.Message as string}.");
+
                             break;
+
+
                         case 6:
-                            var fileMsg = _packetReader.ReadFile(UserName: CurrentUserName);
-                            SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" sent a file.");
-                            //staticController.BroadcastFileInParallel(fileMsg as FileMessagePackage);
+
+                            // file messages are temporally unavailable in dev version;
+                            //var fileMessage = _packetReader.ReadFile(UserName: CurrentUserName);
+                            //ProcessFileMessageEvent.Invoke(fileMessage);
+                            //SendOutput.Invoke($"[{DateTime.Now}] user \"{CurrentUserName}\" sent a file.");
+
                             break;
+
+
                         default:
+
                             break;
                     }
                 }
@@ -174,12 +192,8 @@ namespace NetworkingAuxiliaryLibrary.ClientService
         /// <br />
         /// Экземпляр объекта класса "ServiceController";
         /// </param>
-        public ServiceReciever(TcpClient client, ServiceController serviceHub)
+        public ServiceReciever(TcpClient client)
         {
-            ServiceReciever.staticController = serviceHub;
-
-            SendOutput += serviceHub.PassOutputMessage;
-
             ClientSocket = client;
 
             _packetReader = new PackageReader(ClientSocket.GetStream());

@@ -1,0 +1,24 @@
+﻿using NetworkingAuxiliaryLibrary.Style.Common;
+
+namespace NetworkingAuxiliaryLibrary.ConsoleServiceStyle.Authorizer
+{
+    /// <summary>
+    /// A bunch of style and markup features using 'Spectre.Console' nuget.
+    /// <br />
+    /// Набор стилей и разметок, использующий нюгет "Spectre.Console".
+    /// </summary>
+    public static class ConsoleServiceStyle
+    {
+
+        /// <summary>
+        /// Get the spectre markup string containing user registration and connection message.
+        /// <br />
+        /// Получить строку типа Spectre.Markup, содержащую сообщение о регистрации и подключении пользователя.
+        /// </summary>
+        public static string GetUserRegistrationStyle(string userLogin)
+        {
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user has [underline]registrated and connected[/] with login [green]\"{userLogin}\"[/].\n";
+        }
+
+    }
+}

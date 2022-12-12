@@ -16,6 +16,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".dependencies\business-logic\network-reciever\NetworkControllerBusinessLogic.cs" />
+    <Compile Include=".dependencies\business-logic\network-reciever\NetworkRecieverBusinessLogic.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\CommonNetworkControllerDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\INetworkControllerDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-controller\INetworkControllerDataAccessDependency.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\CommonNetworkRecieverDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\network-reciever\INetworkRecieverDataAccessDependency.cs" />
+    <Compile Include=".dependencies\data-access\user\CustomUserDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\user\IUserDataAccessDependency.cs" />
+    <Compile Include=".dependencies\data-access\user\DatabaseUserDataAccess.cs" />
+    <Compile Include=".dependencies\data-access\user\IUserDataAccess.cs" />
+    <Compile Include=".dependencies\objects\NetworkController.cs" />
+    <Compile Include=".dependencies\objects\NetworkReciever.cs" />
+    <Compile Include=".dependencies\factories\TcpListenerDataAccessFactory.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Message.cs" />
     <Compile Include=".net\auxiliary\objects\entities\User.cs" />
@@ -25,11 +40,20 @@
     <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
+    <Compile Include=".style\authorizer\ConsoleServiceStyle.cs" />
+    <Compile Include=".style\common\ConsoleServiceStyleCommon.cs" />
+    <Compile Include=".style\messenger\ConsoleServiceStyle.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
