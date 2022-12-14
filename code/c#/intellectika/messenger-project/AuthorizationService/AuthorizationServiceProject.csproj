@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove=".style\**" />
+    <EmbeddedResource Remove=".style\**" />
+    <None Remove=".style\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include=".controls\Application.cs" />
     <Compile Include=".controls\Program.cs" />
     <Compile Include=".model\configs\UserModelConfiguration.cs" />
@@ -43,9 +49,5 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Spectre.Console" Version="0.45.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include=".style\" />
   </ItemGroup>
 </Project>

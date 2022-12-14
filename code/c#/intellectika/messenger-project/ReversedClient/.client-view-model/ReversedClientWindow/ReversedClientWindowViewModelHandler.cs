@@ -171,13 +171,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     }
                     Message = string.Empty;
                 }
-
-                if (UserFile != null)
-                {
-                    serviceTransmitter.SendFileToServerAsync(new FileMessagePackage(_currentUserModel.UserName, ActiveChat.Addressee.UserName, UserFile));
-                    Application.Current.Dispatcher.Invoke(() => _activeChat.MessageList.Add($"File sent."));
-                    UserFile = null;
-                }
             }
             catch(Exception ex)
             {
