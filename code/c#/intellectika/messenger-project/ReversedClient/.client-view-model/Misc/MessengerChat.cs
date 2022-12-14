@@ -1,5 +1,7 @@
 ﻿using ReversedClient.Model;
 using ReversedClient.Model.Basics;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects;
 
 namespace ReversedClient.ViewModel.Misc
 {
@@ -100,7 +102,7 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddIncommingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addressee.UserName}: " + message);
+            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addressee.PublicId}: " + message);
         }
 
 
@@ -116,7 +118,39 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddOutgoingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.Hour}:{DateTime.Now.Minute}] " + $"{Addresser.UserName}: " + message);
+            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addresser}: " + message);
+        }
+
+
+        /// <summary>
+        /// Add incomming message.
+        /// <br />
+        /// Добавить входящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddIncommingMessage(Message message)
+        {
+            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents);
+        }
+
+
+        /// <summary>
+        /// Add outgoing message.
+        /// <br />
+        /// Добавить исходящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddOutgoingMessage(Message message)
+        {
+            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents);
         }
 
 

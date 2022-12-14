@@ -24,8 +24,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             var popierdolinyUser = UserParser.ParseToDTO(user);
             var parsedUser = UserParser.ParseFromDTO(popierdolinyUser);
-
-            Console.WriteLine(parsedUser.ChatList[0].MessageList[0].Contents);
+            var aaaaa = parsedUser.ChatList[0].MessageList[0];
+            Console.WriteLine($"{aaaaa.Date} {aaaaa.Time} {aaaaa.Contents}");
         }
     }
 }

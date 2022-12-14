@@ -12,6 +12,10 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects
 
         public string Contents { get; set; }
 
+        public string Date { get; set; }
+
+        public string Time { get; set; }
+
 
         /// <summary>
         /// Default constructor.

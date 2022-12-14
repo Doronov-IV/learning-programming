@@ -11,6 +11,9 @@ namespace MyApp
     public static class UserParser
     {
 
+
+        #region API
+
         public static UserServerSideDTO ParseToDTO(User user)
         {
             UserServerSideDTO res = new();
@@ -25,17 +28,9 @@ namespace MyApp
                 chatDto.Members = new string[user.ChatList[i].UserList.Count];
                 chatDto.Messages = new MessageDTO[user.ChatList[i].MessageList.Count];
 
-                for (int j = 0, jSize = user.ChatList[i].UserList.Count; j < jSize; j++)
-                {
-                    chatDto.Members[j] = user.ChatList[i].UserList[j].PublicId;
-                }
+                ParseChatMembers(ref chatDto, user.ChatList[i]);
 
-                for (int j = 0, jSize = user.ChatList[i].MessageList.Count; j < jSize; j++)
-                {
-                    chatDto.Messages[j] = new MessageDTO();
-                    chatDto.Messages[j].Sender = user.ChatList[i].MessageList[j].Author.PublicId;
-                    chatDto.Messages[j].Contents = user.ChatList[i].MessageList[j].Contents;
-                }
+                ParseChatMessages(ref chatDto, user.ChatList[i]);
 
                 res.ChatArray[i] = chatDto;
             }
@@ -65,6 +60,8 @@ namespace MyApp
                 {
                     Message tempMessage = new();
                     tempMessage.Author = complexChat.UserList.First(m => m.PublicId.Equals(message.Sender));
+                    tempMessage.Date = message.Date;
+                    tempMessage.Time = message.Time;
 
                     tempMessage.Chat = complexChat;
 
@@ -78,5 +75,57 @@ namespace MyApp
             }
             return res;
         }
+
+
+        #endregion API
+
+
+
+
+
+
+        #region SERIALIZATION
+
+
+
+        private static void ParseChatMembers(ref ChatDTO chatDto, Chat unparsedChat)
+        {
+            for (int j = 0, jSize = unparsedChat.UserList.Count; j < jSize; j++)
+            {
+                chatDto.Members[j] = unparsedChat.UserList[j].PublicId;
+            }
+        }
+
+
+        private static void ParseChatMessages(ref ChatDTO chatDto, Chat unparsedChat)
+        {
+            for (int j = 0, jSize = unparsedChat.MessageList.Count; j < jSize; j++)
+            {
+                chatDto.Messages[j] = new MessageDTO();
+                chatDto.Messages[j].Sender = unparsedChat.MessageList[j].Author.PublicId;
+                chatDto.Messages[j].Contents = unparsedChat.MessageList[j].Contents;
+                chatDto.Messages[j].Date = unparsedChat.MessageList[j].Date;
+                chatDto.Messages[j].Time = unparsedChat.MessageList[j].Time;
+            }
+        }
+
+
+
+        #endregion SERIALIZATION
+
+
+
+
+
+
+        #region SERIALIZATION
+
+
+
+        //
+
+
+
+        #endregion SERIALIZATION
     }
 }

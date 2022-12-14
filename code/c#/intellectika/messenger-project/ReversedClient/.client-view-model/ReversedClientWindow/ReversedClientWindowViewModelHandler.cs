@@ -215,8 +215,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                 foreach (var message in chat.MessageList)
                 {
-                    if (message.AuthorId.Equals(_currentUserModel.PublicId)) chatRef.AddOutgoingMessage(message.Contents);
-                    else chatRef.AddIncommingMessage(message.Contents);
+                    if (message.AuthorId.Equals(_currentUserModel.PublicId)) chatRef.AddOutgoingMessage(message);
+                    else chatRef.AddIncommingMessage(message);
                 }
 
 
