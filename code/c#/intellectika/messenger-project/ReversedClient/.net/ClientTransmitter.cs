@@ -1,6 +1,6 @@
-﻿using Hyper;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Processing;
+using Newtonsoft.Json;
 using ReversedClient.ViewModel.ClientChatWindow;
 using ReversedClient.ViewModel.ClientStartupWindow;
 using System.IO.Packaging;
@@ -194,7 +194,7 @@ namespace Net.Transmition
         /// <br />
         /// .
         /// </returns>
-        public bool ConnectAndAuthorize(UserDTO user)
+        public bool ConnectAndAuthorize(UserClientSideDTO user)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace Net.Transmition
         }
 
 
-        public void ConnectAndSendLoginToService(UserDTO user)
+        public void ConnectAndSendLoginToService(UserClientSideDTO user)
         {
             try
             {
@@ -320,7 +320,7 @@ namespace Net.Transmition
         /// <br />
         /// Данные нового пользователя, упакованные в "DTO".
         /// </param>
-        public void SendNewClientData(UserDTO userData)
+        public void SendNewClientData(UserClientSideDTO userData)
         {
             var messagePacket = new PackageBuilder();
             var signUpMessage = new TextMessagePackage(sender: userData.Login, reciever: "Service", message: $"{userData.Password}");
@@ -343,15 +343,9 @@ namespace Net.Transmition
             var code = _messangerPacketReader.ReadByte();
             if (code == 12)
             {
-                var bufferLength = _messangerPacketReader.ReadInt32();
+                var msg = _messangerPacketReader.ReadMessage();
 
-                byte[] buffer = new byte[bufferLength];
-
-                _messangerPacketReader.Read(buffer, 0, bufferLength);
-
-                Span<byte> data = new(buffer);
-
-                res = HyperSerializer<User>.Deserialize(data);
+                res = JsonConvert.DeserializeObject(msg.Message as string) as User;
             }
             return res;
         }

@@ -1,13 +1,16 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Messenger;
+using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
 using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using MessengerService.Model.Context;
 using Tools.Flags;
-using Hyper;
+using Newtonsoft.Json;
 using System.Linq;
 using Toolbox.Flags;
 using Spectre.Console;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MessengerService.Datalink
 {
@@ -431,7 +434,7 @@ namespace MessengerService.Datalink
 
             using (MessengerDatabaseContext context = new())
             {
-                foreach (var user in context.Users)
+                foreach (var user in context.Users.Include(u => u.ChatList).Include(u => u.MessageList))
                 {
                     if (user.Login.Equals(login))
                     {
@@ -469,15 +472,21 @@ namespace MessengerService.Datalink
         /// </summary>
         private void SendUserInfo(ServiceReciever reciever, User user)
         {
-            Span<byte> bytes = new();
+            string userJson = string.Empty;
 
-            bytes = HyperSerializer<User>.Serialize(user);
+            var userServerSideDto = UserParser.ParseToDTO(user);
+
+            userJson = JsonConvert.SerializeObject(userServerSideDto);
 
             PackageBuilder builder = new();
 
+            TextMessagePackage pack = new("Messenger", "Client", userJson);
+
+            var aaaaaaaa = JsonConvert.DeserializeObject(pack.Message as string) as User;
+
             builder.WriteOpCode(12);
 
-            builder.WriteByteSpan(bytes);
+            builder.WriteMessage(pack);
 
             reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
         }

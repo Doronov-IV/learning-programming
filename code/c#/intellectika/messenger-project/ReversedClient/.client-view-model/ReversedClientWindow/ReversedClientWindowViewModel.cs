@@ -30,7 +30,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-        private UserDTO _currentUserDTO;
+        private UserClientSideDTO _currentUserDTO;
 
 
         private User currentServiceSiteUser;
@@ -89,7 +89,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
-        public UserDTO CurrentUserDTO
+        public UserClientSideDTO CurrentUserDTO
         {
             get { return _currentUserDTO; }
             set

@@ -5,7 +5,7 @@
     /// <br />
     /// Объект для инкапсуляции пользовательских данных для передачи разным окнам.
     /// </summary>
-    public class UserDTO
+    public class UserClientSideDTO
     {
 
 
@@ -67,7 +67,7 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public UserDTO()
+        public UserClientSideDTO()
         {
             login = string.Empty;
             password= string.Empty;
@@ -80,7 +80,7 @@
         /// <br />
         /// Конструктор с параметрами.
         /// </summary>
-        public UserDTO(string login, string password)
+        public UserClientSideDTO(string login, string password)
         {
             this.password = password;
             this.login = login;

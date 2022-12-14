@@ -7,7 +7,7 @@
 
 
         /// <summary>
-        /// Contents if the message.
+        /// Contents of the message.
         /// <br />
         /// Содержимое сообщения.
         /// </summary>

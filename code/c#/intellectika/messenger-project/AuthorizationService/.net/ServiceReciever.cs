@@ -34,7 +34,7 @@ namespace AuthorizationServiceProject.Net
 
 
         /// <inheritdoc cref="CurrentUser"/>
-        private UserDTO? _currentUser = null;
+        private UserClientSideDTO? _currentUser = null;
 
 
         /// <inheritdoc cref="ClientSocket"/>
@@ -62,7 +62,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Информация привязанного пользователя.
         /// </summary>
-        public UserDTO? CurrentUser
+        public UserClientSideDTO? CurrentUser
         {
             get { return _currentUser; }
             set { _currentUser = value; }
@@ -86,13 +86,13 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Спарсить входящее текстовое сообщение в объект типа UserDTO.
         /// </summary>
-        public UserDTO ReadAuthorizationData(MessagePackage message)
+        public UserClientSideDTO ReadAuthorizationData(MessagePackage message)
         {
             var queue = message.Message as string;
 
             var strings = queue.Split("|");
 
-            UserDTO pair = new();
+            UserClientSideDTO pair = new();
 
             if (strings.Length == 2)
             {
@@ -102,7 +102,7 @@ namespace AuthorizationServiceProject.Net
             else if (strings.Length == 1)
                 pair.Login = pair.Password = strings[0];
 
-            return new UserDTO(login: pair.Login, password: pair.Password);
+            return new UserClientSideDTO(login: pair.Login, password: pair.Password);
         }
 
 

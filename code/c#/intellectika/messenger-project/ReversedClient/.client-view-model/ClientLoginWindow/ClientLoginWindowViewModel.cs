@@ -11,7 +11,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
 
 
         /// <inheritdoc cref="_userDTOdata"/>
-        private UserDTO _userDTOdata;
+        private UserClientSideDTO _userDTOdata;
 
         private User _fullUserData;
 
@@ -26,7 +26,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserDTO UserDTOdata
+        public UserClientSideDTO UserDTOdata
         {
             get { return _userDTOdata; }
             set
@@ -97,7 +97,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         public ClientLoginWindowViewModel()
         {
-            _userDTOdata = new UserDTO();
+            _userDTOdata = new UserClientSideDTO();
 
             serviceTransmitter = new();
             serviceTransmitter.SendOutput += ShowErrorMessage;

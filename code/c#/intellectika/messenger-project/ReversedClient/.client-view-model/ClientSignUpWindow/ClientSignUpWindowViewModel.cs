@@ -12,7 +12,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
         /// <inheritdoc cref="UserData"/>
-        private UserDTO userData;
+        private UserClientSideDTO userData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -25,7 +25,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserDTO UserData
+        public UserClientSideDTO UserData
         {
             get { return userData; }
             set

@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Range\Range.csproj" />
+    <Reference Include="NetworkingAuxiliaryLibrary">
+      <HintPath>..\MessengerService\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

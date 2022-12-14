@@ -123,7 +123,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Проверить данные пользователя.
         /// </summary>
-        public bool CheckAuthorizationData(UserDTO pair)
+        public bool CheckAuthorizationData(UserClientSideDTO pair)
         {
             bool bRes = false;
             using (AuthorizationDatabaseContext context = new())
@@ -215,7 +215,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// "True" - если процесс прошёл успешно, если пользователь уже есть в базе -  "false".
         /// </returns>
-        public bool TryAddNewUser(UserDTO user)
+        public bool TryAddNewUser(UserClientSideDTO user)
         {
             bool doesContain = UserIsPresentInDatabase(user);
             using (AuthorizationDatabaseContext context = new())
@@ -245,7 +245,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// "True" - если данные совпадают, иначе "false".
         /// </returns>
-        public bool UserIsPresentInDatabase(UserDTO user)
+        public bool UserIsPresentInDatabase(UserClientSideDTO user)
         {
             bool doesContain = false;
             using (AuthorizationDatabaseContext context = new())
