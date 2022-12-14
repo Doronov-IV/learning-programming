@@ -11,6 +11,8 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
     public static class UserParser
     {
 
+        #region API
+
         public static UserServerSideDTO ParseToDTO(User user)
         {
             UserServerSideDTO res = new();
@@ -24,18 +26,10 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
                 ChatDTO chatDto = new();
                 chatDto.Members = new string[user.ChatList[i].UserList.Count];
                 chatDto.Messages = new MessageDTO[user.ChatList[i].MessageList.Count];
-                
-                for (int j = 0, jSize = user.ChatList[i].UserList.Count; j < jSize; j++)
-                {
-                    chatDto.Members[j] = user.ChatList[i].UserList[j].PublicId;
-                }
 
-                for (int j = 0, jSize = user.ChatList[i].MessageList.Count; j < jSize; j++)
-                {
-                    chatDto.Messages[j] = new MessageDTO();
-                    chatDto.Messages[j].Sender = user.ChatList[i].MessageList[j].Author.PublicId;
-                    chatDto.Messages[j].Contents = user.ChatList[i].MessageList[j].Contents;
-                }
+                ParseChatMembers(ref chatDto, user.ChatList[i]);
+
+                ParseChatMessages(ref chatDto, user.ChatList[i]);
 
                 res.ChatArray[i] = chatDto;
             }
@@ -78,5 +72,55 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
             }
             return res;
         }
+
+
+        #endregion API
+
+
+
+
+
+
+        #region SERIALIZATION
+
+
+
+        private static void ParseChatMembers(ref ChatDTO chatDto, Chat unparsedChat)
+        {
+            for (int j = 0, jSize = unparsedChat.UserList.Count; j < jSize; j++)
+            {
+                chatDto.Members[j] = unparsedChat.UserList[j].PublicId;
+            }
+        }
+
+
+        private static void ParseChatMessages(ref ChatDTO chatDto, Chat unparsedChat)
+        {
+            for (int j = 0, jSize = unparsedChat.MessageList.Count; j < jSize; j++)
+            {
+                chatDto.Messages[j] = new MessageDTO();
+                chatDto.Messages[j].Sender = unparsedChat.MessageList[j].Author.PublicId;
+                chatDto.Messages[j].Contents = unparsedChat.MessageList[j].Contents;
+            }
+        }
+
+
+
+        #endregion SERIALIZATION
+
+
+
+
+
+
+        #region SERIALIZATION
+
+
+
+        //
+
+
+
+        #endregion SERIALIZATION
     }
 }
