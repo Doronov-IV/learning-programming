@@ -364,8 +364,8 @@ namespace MessengerService.Datalink
                     Message newMessage = new();
 
                     newMessage.Contents = package.Message as string;
-                    newMessage.Date = DateTime.Now.Date.ToString();
-                    newMessage.Time = DateTime.Now.TimeOfDay.ToString();
+                    newMessage.Date = DateTime.Now.ToString("dd.MM.yy");
+                    newMessage.Time = DateTime.Now.ToString("HH:mm:ss");
 
                     // check if db knows the sender
                     User newSender = new();

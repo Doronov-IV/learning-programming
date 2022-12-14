@@ -109,7 +109,7 @@ namespace AuthorizationServiceProject.Net
             }
             catch (Exception ex) 
             {
-                AnsiConsole.Write(new Markup("[red]Exception.[/] " + ex.Message + "\n"));
+                AnsiConsole.Write(new Markup("[red on white]Unexpected Exception on client listenning.[/] " + ex.Message + "\n"));
             }
         }
 
@@ -140,7 +140,6 @@ namespace AuthorizationServiceProject.Net
                     }
                 }
             }
-
             return bRes;
         }
 

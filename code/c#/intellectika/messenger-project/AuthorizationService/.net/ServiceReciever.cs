@@ -181,8 +181,16 @@ namespace AuthorizationServiceProject.Net
                 }
                 catch (Exception ex)
                 {
-                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserDisconnection(CurrentUser.Login)}"));
-                    break;
+                    if (ex is IOException)
+                    {
+                        AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserDisconnection(CurrentUser.Login)}"));
+                        break;
+                    }
+                    else
+                    {
+                        AnsiConsole.Write(new Markup("[red on white]Unexpected Exception.[/] " + ex.Message + "\n"));
+                        break;
+                    }
                 }
             }
         }

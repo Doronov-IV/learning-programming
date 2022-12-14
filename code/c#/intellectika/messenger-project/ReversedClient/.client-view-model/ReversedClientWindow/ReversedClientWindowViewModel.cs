@@ -326,7 +326,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ReversedClientWindowViewModel(User userData, ClientTransmitter clientRadio)
+        public ReversedClientWindowViewModel(User userData, ClientTransmitter clientSocket)
         {
             FillChats(chatList, userData);
             currentServiceSiteUser = userData;
@@ -342,7 +342,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             _onlineMembers = new ObservableCollection<UserModel>();
 
-            serviceTransmitter = clientRadio;
+            serviceTransmitter = clientSocket;
             serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
             serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
             serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;

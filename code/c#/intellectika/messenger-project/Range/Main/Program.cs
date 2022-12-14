@@ -8,7 +8,6 @@ namespace Range.Main
     {
         public static void Main(string[] args)
         {
-            TryPasswordEncryption();
         }
 
 
