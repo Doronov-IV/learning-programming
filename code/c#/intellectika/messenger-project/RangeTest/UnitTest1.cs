@@ -15,10 +15,33 @@ namespace RangeTest
             string password = "25emaful";
 
             var hashedPass = SecurePasswordHasher.Hash(password, 5);
-
-            var result = SecurePasswordHasher.Verify("w", hashedPass);
+            var result = SecurePasswordHasher.Verify(password, hashedPass);
 
             Assert.That(result, Is.True);
+        }
+
+
+        [Test]
+        public void Verify_WrongPassword_False()
+        {
+            string password = "25emaful";
+
+            var hashedPass = SecurePasswordHasher.Hash(password, 5);
+            var result = SecurePasswordHasher.Verify("w", hashedPass);
+
+            Assert.That(result, Is.False);
+        }
+
+
+        [Test]
+        public void Verify_UnicodeFalseSymbols_False()
+        {
+            string password = "25emaful";
+
+            var hashedPass = SecurePasswordHasher.Hash(password, 5);
+            var result = SecurePasswordHasher.Verify("25åmàful", hashedPass);
+
+            Assert.That(result, Is.False);
         }
     }
 }
