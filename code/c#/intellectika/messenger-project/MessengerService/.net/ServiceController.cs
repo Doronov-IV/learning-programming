@@ -150,8 +150,7 @@ namespace MessengerService.Datalink
 
                         var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
-                        client.CurrentUser.CurrentNickname = user.CurrentNickname;
-                        client.CurrentUser.PublicId = user.PublicId;
+                        client.CurrentUser = user;
 
                         SendUserInfo(client, user);
 
@@ -481,8 +480,6 @@ namespace MessengerService.Datalink
             PackageBuilder builder = new();
 
             TextMessagePackage pack = new("Messenger", "Client", userJson);
-
-            var aaaaaaaa = JsonConvert.DeserializeObject(pack.Message as string) as User;
 
             builder.WriteOpCode(12);
 

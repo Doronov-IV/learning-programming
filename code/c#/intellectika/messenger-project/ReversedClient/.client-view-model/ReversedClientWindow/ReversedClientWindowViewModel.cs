@@ -328,16 +328,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ReversedClientWindowViewModel(User userData, ClientTransmitter clientSocket)
         {
-            FillChats(chatList, userData);
-            currentServiceSiteUser = userData;
             if (chatList is null) chatList = new();
+            _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.PublicId);
+            FillChats(userData);
+            currentServiceSiteUser = userData;
 
             windowHeaderString = userData.CurrentNickname;
 
             userFile = null;
             dialogService = new AttachFileDialogService();
 
-            _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.PublicId);
             message = string.Empty;
 
             _onlineMembers = new ObservableCollection<UserModel>();

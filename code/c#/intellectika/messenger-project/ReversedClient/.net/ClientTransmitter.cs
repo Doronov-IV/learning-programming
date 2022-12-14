@@ -1,4 +1,6 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
+﻿using NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects;
+using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Processing;
 using Newtonsoft.Json;
 using ReversedClient.ViewModel.ClientChatWindow;
@@ -345,7 +347,9 @@ namespace Net.Transmition
             {
                 var msg = _messangerPacketReader.ReadMessage();
 
-                res = JsonConvert.DeserializeObject(msg.Message as string) as User;
+                var tempRef = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
+
+                res = UserParser.ParseFromDTO(tempRef);
             }
             return res;
         }

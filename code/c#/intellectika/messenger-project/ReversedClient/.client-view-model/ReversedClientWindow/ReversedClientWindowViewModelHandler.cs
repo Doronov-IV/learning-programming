@@ -203,12 +203,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
-        private void FillChats(ObservableCollection<MessengerChat> chatList, User user)
+        private void FillChats(User user)
         {
             foreach (Chat chat in user.ChatList)
             {
                 var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault();
                 var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId));
+
+                chatRef.Addresser = CurrentUserModel;
+                chatRef.Addressee = new(usrRef.CurrentNickname, usrRef.PublicId);
 
                 foreach (var message in chat.MessageList)
                 {
@@ -216,7 +219,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     else chatRef.AddIncommingMessage(message.Contents);
                 }
 
-                chatList.Add(chatRef);
+
+                ChatList.Add(chatRef);
             }
         }
 

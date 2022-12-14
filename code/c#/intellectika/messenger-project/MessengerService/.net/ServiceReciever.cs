@@ -21,8 +21,17 @@ namespace MessengerService.Datalink
         #region PROPERTIES - State of an Object
 
 
+        private volatile TcpClient _clientSocket;
 
-        public User CurrentUser { get; set; }
+        private volatile User _currentUSer;
+
+
+
+        public User CurrentUser 
+        {
+            get => _currentUSer;
+            set => _currentUSer = value;
+        }
 
 
 
@@ -31,7 +40,7 @@ namespace MessengerService.Datalink
         /// <br />
         /// Сокет подключения клиента;
         /// </summary>
-        public TcpClient ClientSocket { get; set; }
+        public TcpClient ClientSocket { get => _clientSocket; set => _clientSocket = value; }
 
 
         /// <summary>
@@ -39,7 +48,7 @@ namespace MessengerService.Datalink
         /// <br />
         /// Объект, который предоставляет помощь в чтении/записи сообщений;
         /// </summary>
-        private PackageReader _packetReader;
+        private volatile PackageReader packetReader;
 
 
 
@@ -84,12 +93,12 @@ namespace MessengerService.Datalink
 
                 try
                 {
-                    var opCode = _packetReader.ReadByte();
+                    var opCode = packetReader.ReadByte();
                     switch (opCode)
                     {
                         case 5:
 
-                            var textMessage = _packetReader.ReadMessage();
+                            var textMessage = packetReader.ReadMessage();
                             ProcessTextMessageEvent.Invoke(textMessage);
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessage)));
 
@@ -153,7 +162,7 @@ namespace MessengerService.Datalink
         {
             ClientSocket = client;
             CurrentUser = new();
-            _packetReader = new PackageReader(ClientSocket.GetStream());
+            packetReader = new PackageReader(ClientSocket.GetStream());
         }
 
 
