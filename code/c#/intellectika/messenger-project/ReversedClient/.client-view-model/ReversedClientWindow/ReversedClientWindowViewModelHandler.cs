@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System;
 
+using Tools.Formatting;
+
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
     public partial class ReversedClientWindowViewModel
@@ -71,7 +73,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     {
                         if (message.Contains(msg.Message as string) && message.Contains(msg.Sender))
                         {
-                            newMessage = message + " ✓✓";
+                            newMessage = message + "✓";
                             oldMessage = message;
                         }
                     }
@@ -88,9 +90,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                             newMessageList.Add(newMessage);
                         }
                     }
-
                     someChat.MessageList = newMessageList;
-                    OnPropertyChanged(nameof(someChat.MessageList));
 
                     OnPropertyChanged(nameof(ActiveChat));
                 }
@@ -239,6 +239,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void FillChats(User user)
         {
+            foreach (Chat chat in user.ChatList)
+            {
+                chat.MessageList.Sort((Message A, Message B) =>
+                {
+                    if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return 1;
+                    else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return -1;
+                    else return 0;
+                });
+            }
+
             foreach (Chat chat in user.ChatList)
             {
                 var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault(); // user ref is assigned to null somehow

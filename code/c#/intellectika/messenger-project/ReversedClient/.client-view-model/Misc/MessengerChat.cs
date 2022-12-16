@@ -106,6 +106,7 @@ namespace ReversedClient.ViewModel.Misc
         }
 
 
+
         public void AddCheckedIncommingMessage(string message)
         {
             MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addressee.PublicId}: " + message + " ✓✓");
@@ -124,7 +125,23 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddOutgoingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addresser.PublicId}: " + message);
+            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addresser.PublicId}: " + message + " ✓");
+        }
+
+
+        /// <summary>
+        /// Add checked outgoing message.
+        /// <br />
+        /// Добавить отмеченное входящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddCheckedOutgoingMessage(Message message)
+        {
+            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents + " ✓✓");
         }
 
 
@@ -141,12 +158,6 @@ namespace ReversedClient.ViewModel.Misc
         public void AddIncommingMessage(Message message)
         {
             MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents);
-        }
-
-
-        public void AddCheckedOutgoingMessage(Message message)
-        {
-            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents + " ✓✓");
         }
 
 

@@ -448,7 +448,6 @@ namespace MessengerService.Datalink
                     }
                 }
             }
-
             return res;
         }
 

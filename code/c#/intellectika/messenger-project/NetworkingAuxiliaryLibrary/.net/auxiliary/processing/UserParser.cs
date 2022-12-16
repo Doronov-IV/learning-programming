@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Tools.Formatting;
+
 namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
 {
     public static class UserParser
@@ -60,7 +62,7 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
                     Message tempMessage = new();
                     tempMessage.Author = complexChat.UserList.First(m => m.PublicId.Equals(message.Sender));
                     tempMessage.Date = message.Date;
-                    tempMessage.Time = message.Time;
+                    tempMessage.Time = StringDateTime.FromThreeToTwoSections(message.Time);
 
                     tempMessage.Chat = complexChat;
 
@@ -104,7 +106,7 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
                 chatDto.Messages[j].Sender = unparsedChat.MessageList[j].Author.PublicId;
                 chatDto.Messages[j].Contents = unparsedChat.MessageList[j].Contents;
                 chatDto.Messages[j].Date = unparsedChat.MessageList[j].Date;
-                chatDto.Messages[j].Time = unparsedChat.MessageList[j].Time;
+                chatDto.Messages[j].Time = StringDateTime.FromThreeToTwoSections(unparsedChat.MessageList[j].Time);
             }
         }
 
