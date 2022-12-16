@@ -207,8 +207,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         {
             foreach (Chat chat in user.ChatList)
             {
-                var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault();
-                var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId));
+                var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault(); // user ref is assigned to null somehow
+                var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId)); 
 
                 chatRef.Addresser = CurrentUserModel;
                 chatRef.Addressee = new(usrRef.CurrentNickname, usrRef.PublicId);

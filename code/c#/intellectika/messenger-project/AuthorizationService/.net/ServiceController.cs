@@ -285,11 +285,17 @@ namespace AuthorizationServiceProject.Net
             {
                 UserModel admin1 = new();
                 UserModel admin2 = new();
+                UserModel admin3 = new();
+                UserModel admin4 = new();
+                UserModel admin5 = new();
 
                 admin1.Login = "admin_alpha";
                 admin2.Login = "admin_bravo";
+                admin3.Login = "admin_charlie";
+                admin4.Login = "admin_delta";
+                admin5.Login = "admin_echo";
 
-                admin1.PasswordHash = admin2.PasswordHash = "admin";
+                admin1.PasswordHash = admin2.PasswordHash = admin3.PasswordHash = admin4.PasswordHash = admin5.PasswordHash = "admin";
 
                 foreach (var user in context.Users)
                 {
@@ -302,6 +308,9 @@ namespace AuthorizationServiceProject.Net
 
                 context.Users.Add(admin1);
                 context.Users.Add(admin2);
+                context.Users.Add(admin3);
+                context.Users.Add(admin4);
+                context.Users.Add(admin5);
 
                 context.SaveChanges();
             }

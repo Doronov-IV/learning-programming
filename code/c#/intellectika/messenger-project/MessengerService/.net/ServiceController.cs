@@ -148,6 +148,8 @@ namespace MessengerService.Datalink
                     {
                         userList.Add(client);
 
+                        CheckIncommingLogin(msg.Message as string);
+
                         var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
                         client.CurrentUser = user;
@@ -411,6 +413,8 @@ namespace MessengerService.Datalink
                         }
                         else newChat = existingChat;
                     }
+                    newSender.ChatList.Add(newChat);
+                    newReciever.ChatList.Add(newChat);
                     newChat.MessageList.Add(newMessage);
                     newMessage.Chat = newChat;
 
@@ -433,7 +437,9 @@ namespace MessengerService.Datalink
 
             using (MessengerDatabaseContext context = new())
             {
-                foreach (var user in context.Users.Include(u => u.ChatList).Include(u => u.MessageList))
+                List<User> debugList = context.Users.Include(u => u.ChatList).Include(u => u.MessageList).ToList();
+
+                foreach (var user in debugList)
                 {
                     if (user.Login.Equals(login))
                     {
