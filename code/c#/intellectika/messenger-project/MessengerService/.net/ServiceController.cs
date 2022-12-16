@@ -135,7 +135,7 @@ namespace MessengerService.Datalink
                 if (client is not null)
                 {
                     client.ProcessTextMessageEvent += AddNewMessageToTheDb;
-                    client.ProcessFileMessageEvent += BroadcastMessage;
+                    client.ProcessTextMessageEvent += BroadcastMessage;
                     client.UserDisconnected += BroadcastDisconnect;
 
                     reader = new(client.ClientSocket.GetStream());
@@ -291,7 +291,7 @@ namespace MessengerService.Datalink
                     if (user.CurrentUser.PublicId == package.Reciever || user.CurrentUser.PublicId == package.Sender)
                     {
                         user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
-                    
+
                     }
                 }
                 else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
@@ -413,8 +413,8 @@ namespace MessengerService.Datalink
                         }
                         else newChat = existingChat;
                     }
-                    newSender.ChatList.Add(newChat);
-                    newReciever.ChatList.Add(newChat);
+                    //newSender.ChatList.Add(newChat);
+                    //newReciever.ChatList.Add(newChat);
                     newChat.MessageList.Add(newMessage);
                     newMessage.Chat = newChat;
 

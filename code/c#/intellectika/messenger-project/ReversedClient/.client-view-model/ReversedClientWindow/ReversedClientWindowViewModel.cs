@@ -146,7 +146,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 _selectedOnlineMember = value;
                 OnPropertyChanged(nameof(SelectedOnlineMember));
 
-                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.UserName.Equals(_selectedOnlineMember.UserName));
+                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(_selectedOnlineMember.UserName));
                 if (someExistingChat is null)
                 {
                     someExistingChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);

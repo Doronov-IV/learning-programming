@@ -51,7 +51,7 @@
 
                             <DataTemplate>
 
-                                <TextBlock Text="{Binding Path=Addressee.UserName}"/>
+                                <TextBlock Text="{Binding Path=Addressee.PublicId}"/>
 
                             </DataTemplate>
 
