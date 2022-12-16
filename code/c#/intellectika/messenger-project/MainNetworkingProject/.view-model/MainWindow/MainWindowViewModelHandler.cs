@@ -28,8 +28,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
             {
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../ReversedClient/bin/Release/net6.0-windows/ReversedClient.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../ReversedClient/bin/Release/net6.0-windows";
+                    process.StartInfo.FileName = "../../../ReversedClient/bin/Release/net6.0-windows/ReversedClient.exe";
+                    process.StartInfo.WorkingDirectory = "../../../ReversedClient/bin/Release/net6.0-windows";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
@@ -51,8 +51,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../MessengerService/bin/Release/net7.0/MessengerService.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../MessengerService/bin/Release/net7.0";
+                    process.StartInfo.FileName = "../../../MessengerService/bin/Release/net7.0/MessengerService.exe";
+                    process.StartInfo.WorkingDirectory = "../../../MessengerService/bin/Release/net7.0";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();
@@ -69,8 +69,8 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
                 using (var process = new Process())
                 {
-                    process.StartInfo.FileName = "../../../../AuthorizationService/bin/Release/net6.0/AuthorizationServiceProject.exe";
-                    process.StartInfo.WorkingDirectory = "../../../../AuthorizationService/bin/Release/net6.0";
+                    process.StartInfo.FileName = "../../../AuthorizationService/bin/Release/net6.0/AuthorizationServiceProject.exe";
+                    process.StartInfo.WorkingDirectory = "../../../AuthorizationService/bin/Release/net6.0";
                     process.StartInfo.Arguments = "-noexit";
                     process.StartInfo.CreateNoWindow = false;
                     process.Start();

@@ -46,28 +46,30 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                 /// Toolbox
 
                 // target;
-                FileInfo dllTargetInfo = new(@"..\..\..\..\..\..\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.dll");
+                FileInfo dllTargetInfo1 = new(@"..\..\..\..\..\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.dll");
+                FileInfo dllTargetInfo2 = new(@"..\..\..\..\..\tools\toolbox\Toolbox\bin\Debug\net6.0\Toolbox.pdb");
                 // destination (precomplied dll folder);
                 List<DirectoryInfo> toolsExtractorDestinations = new();
-                toolsExtractorDestinations.Add(new DirectoryInfo(@"..\..\..\..\..\..\tools\precompiled-dll"));
+                toolsExtractorDestinations.Add(new DirectoryInfo(@"..\..\..\..\..\tools\precompiled-dll"));
                 // extracting;
-                LibraryExtractor toolsLibraryExtractor = new(dllTargetInfo, toolsExtractorDestinations);
+                LibraryExtractor toolsLibraryExtractor = new(new List<FileInfo>() { dllTargetInfo1, dllTargetInfo2 }, toolsExtractorDestinations);
                 toolsLibraryExtractor.Extract();
 
 
                 /// NET
 
                 // target;
-                FileInfo targetInfo = new("..\\..\\..\\..\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
+                FileInfo targetInfo1 = new("..\\..\\..\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.dll");
+                FileInfo targetInfo2 = new("..\\..\\..\\NetworkingAuxiliaryLibrary\\bin\\Release\\net6.0\\NetworkingAuxiliaryLibrary.pdb");
                 // destination 1 (client);
                 List<DirectoryInfo> extractorDestinations = new();
-                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\ReversedClient\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\ReversedClient\\.net"));
                 // destination 2 (service);
-                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\MessengerService\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\MessengerService\\.net"));
                 // destination 3 (authorizer);
-                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\..\\AuthorizationService\\.net"));
+                extractorDestinations.Add(new DirectoryInfo("..\\..\\..\\AuthorizationService\\.net"));
                 // extracting;
-                LibraryExtractor networkingLibraryExtractor = new(targetInfo, extractorDestinations);
+                LibraryExtractor networkingLibraryExtractor = new(new List<FileInfo>() { targetInfo1, targetInfo2}, extractorDestinations);
                 networkingLibraryExtractor.Extract();
             }
             catch { }

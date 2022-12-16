@@ -110,8 +110,13 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                 lRes.AddRange(binMessage);
 
+                Int32 tempDebugSize = new Int32();
+                tempDebugSize = lRes.Count;
+                int tempDebugSizeSerializationInfo2 = 0;
 
-                lRes.InsertRange(0, BitConverter.GetBytes(lRes.Count));
+                byte[] tempDebugSizeSerializationInfo1 = (BitConverter.GetBytes(lRes.Count));
+                tempDebugSizeSerializationInfo2 = BitConverter.ToInt32(tempDebugSizeSerializationInfo1);
+                lRes.InsertRange(0, BitConverter.GetBytes(tempDebugSizeSerializationInfo2));
 
                 _Data = lRes.ToArray();
 

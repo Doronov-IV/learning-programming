@@ -491,6 +491,8 @@ namespace MessengerService.Datalink
 
             builder.WriteMessage(pack);
 
+            var debugSize = builder.GetPacketBytes().Length;
+
             reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
         }
 

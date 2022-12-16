@@ -19,18 +19,18 @@ namespace Tools.Toolbox
 
 
         /// <inheritdoc cref="Target"/>
-        private FileInfo? _target;
+        private List<FileInfo>? _target;
 
         /// <inheritdoc cref="Destinations"/>
         private List<DirectoryInfo>? _destinations;
 
 
         /// <summary>
-        /// The file of the library to copy.
+        /// The files of the library to copy.
         /// <br />
-        /// Файл копируемой библиотеки.
+        /// Файлы копируемой библиотеки.
         /// </summary>
-        public FileInfo? Target
+        public List<FileInfo>? Target
         {
             get => _target;
             set => _target = value;
@@ -68,23 +68,35 @@ namespace Tools.Toolbox
             // if target and destinatons are not null;
             if (_target != null && _destinations != null)
             {
+                bool bAllFilesExist = true;
+
+                foreach (FileInfo file in Target)
+                {
+                    if (!File.Exists(file.FullName))
+                    {
+                        bAllFilesExist = false;
+                    }
+                }
+
                 // if target file exists;
-                if (File.Exists(Target?.FullName))
+                if (bAllFilesExist)
                 {
                     // copy targer file to the destinatons;
                     foreach (var dir in Destinations)
                     {
-                        targetFileNewPath = dir.FullName + @"\" + Target?.Name;
-                        if (dir.Exists)
+                        foreach (var file in Target)
                         {
-                            if (File.Exists(targetFileNewPath)) File.Delete(targetFileNewPath);
-                            File.Copy(Target?.FullName, targetFileNewPath);
+                            targetFileNewPath = dir.FullName + @"\" + file.Name;
+                            if (dir.Exists)
+                            {
+                                if (File.Exists(targetFileNewPath)) File.Delete(targetFileNewPath);
+                                File.Copy(file.FullName, targetFileNewPath);
+                            }
                         }
                     }
                 }
             }
         }
-
 
         #endregion API
 
@@ -110,7 +122,7 @@ namespace Tools.Toolbox
         /// <br />
         /// Список папок назначения.
         /// </param>
-        public LibraryExtractor(FileInfo Target, List<DirectoryInfo> Destinations)
+        public LibraryExtractor(List<FileInfo> Target, List<DirectoryInfo> Destinations)
         {
             this.Target = Target;
             this.Destinations = Destinations;
