@@ -1,0 +1,19 @@
+﻿<Window x:Class="ReversedClient.client_view.ClientSignUpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReversedClient.client_view"
+        mc:Ignorable="d"
+        Title="ClientSignUp" Height="450" Width="400">
+    <Grid>
+        <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Left" Margin="140,80,0,0" TextWrapping="Wrap" Text="{Binding UserDTOdata.Login}" VerticalAlignment="Top" Width="120"/>
+        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding UserDTOdata.Password}" HorizontalAlignment="Left" Margin="140,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
+        <Label Content="Nobody will see your login-nickname." HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top"/>
+        <Button Content="Register" Command="{Binding RegisterCommand}" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
+        <TextBox Style="{StaticResource PublicIdTextBox}" HorizontalAlignment="Center" Margin="0,160,0,0" TextWrapping="Wrap" Text="{Binding UserDTOdata.PublicId}" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+
+
+</Window>

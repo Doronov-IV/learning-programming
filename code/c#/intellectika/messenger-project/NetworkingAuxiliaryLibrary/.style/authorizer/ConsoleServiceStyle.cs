@@ -17,7 +17,7 @@ namespace NetworkingAuxiliaryLibrary.Style.Authorizer
         /// </summary>
         public static string GetUserRegistrationStyle(string userLogin)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user has [underline]registrated and connected[/] with login [green]\"{userLogin}\"[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user has [underline]registrated and connected[/] with _login [green]\"{userLogin}\"[/].\n";
         }
 
     }

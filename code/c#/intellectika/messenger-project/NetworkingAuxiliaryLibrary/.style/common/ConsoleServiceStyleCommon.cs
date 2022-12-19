@@ -56,7 +56,7 @@ namespace NetworkingAuxiliaryLibrary.Style.Common
         /// </summary>
         public static string GetUserConnection(string userLogin)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user has [underline]connected[/] with login [green]\"{userLogin}\"[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user has [underline]connected[/] with _login [green]\"{userLogin}\"[/].\n";
         }
 
 

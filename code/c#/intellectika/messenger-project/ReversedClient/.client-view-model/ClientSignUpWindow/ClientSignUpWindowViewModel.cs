@@ -16,10 +16,6 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         private UserClientTechnicalDTO _userData;
 
 
-        /// <inheritdoc cref="ServiceTransmitter"/>
-        private ClientTransmitter _serviceTransmitter;
-
-
 
         /// <summary>
         /// An instance of an object to encapsulate user data transfered to another windows.
@@ -34,18 +30,6 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
                 _userData = value;
                 OnPropertyChanged(nameof(UserData));
             }
-        }
-
-
-        /// <summary>
-        /// An instance of a 'ClientTransmitter' to communicate with the service;
-        /// <br />
-        /// Экземпляр класса "ClientTransmitter" для коммуникации с сервисом;
-        /// </summary>
-        public ClientTransmitter ServiceTransmitter
-        {
-            get { return _serviceTransmitter; }
-            set { _serviceTransmitter = value; }
         }
 
 
@@ -81,7 +65,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ClientSignUpWindowViewModel(ClientTransmitter clientRadio)
+        public ClientSignUpWindowViewModel()
         {
             RegisterCommand = new(OnRegisterButtonClick);
             _userData = new();
@@ -95,9 +79,9 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public ClientSignUpWindowViewModel(ClientTransmitter clientRadio, string login) : this(clientRadio)
+        public ClientSignUpWindowViewModel(UserClientTechnicalDTO userData) : this()
         {
-            _userData.Login = login;
+            UserData = userData;
         }
 
 

@@ -77,7 +77,7 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.BusinessLogic
 
                         if (incommingMessage.Sender.Equals("Authorizer")) 
                         {
-                            if (incommingMessage.Reciever.Equals("Messenger")) // authorizer sent login to messenger;
+                            if (incommingMessage.Reciever.Equals("Messenger")) // authorizer sent _login to messenger;
                             {
                                 CheckLoginPresence(incommingMessage);
                             }

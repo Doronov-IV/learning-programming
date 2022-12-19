@@ -14,11 +14,15 @@
 
 
         /// <inheritdoc cref="Login"/>
-        private string login;
+        private string _login;
+
+
+        /// <inheritdoc cref="PublicId"/>
+        private string _publicId;
 
 
         /// <inheritdoc cref="Password"/>
-        private string password;
+        private string _password;
 
 
 
@@ -29,10 +33,25 @@
         /// </summary>
         public string Login
         {
-            get { return login; }
+            get { return _login; }
             set
             {
-                login = value;
+                _login = value;
+            }
+        }
+
+
+        /// <summary>
+        /// The public id of the user.
+        /// <br />
+        /// Публичный id пользователя.
+        /// </summary>
+        public string PublicId
+        {
+            get { return _publicId; }
+            set
+            {
+                _publicId = value;
             }
         }
 
@@ -44,10 +63,10 @@
         /// </summary>
         public string Password
         {
-            get { return password; }
+            get { return _password; }
             set
             {
-                password = value;
+                _password = value;
             }
         }
 
@@ -69,8 +88,8 @@
         /// </summary>
         public UserClientTechnicalDTO()
         {
-            login = string.Empty;
-            password= string.Empty;
+            _login = string.Empty;
+            _password= string.Empty;
         }
 
 
@@ -82,8 +101,8 @@
         /// </summary>
         public UserClientTechnicalDTO(string login, string password)
         {
-            this.password = password;
-            this.login = login;
+            this._password = password;
+            this._login = login;
         }
 
 

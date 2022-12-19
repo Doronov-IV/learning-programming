@@ -27,6 +27,7 @@
     <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModel.cs" />
     <Compile Include=".client-view-model\ClientLoginWindow\ClientLoginWindowViewModelHandler.cs" />
     <Compile Include=".client-view-model\ReversedClientWindow\ClientMessengerWindowViewModelHandler.cs" />
+    <Compile Include=".client-view\ClientSignUpWindow.xaml.cs" />
     <Compile Include=".local-service\ChatParser.cs" />
     <Compile Include=".local-service\WpfWindowsManager.cs" />
     <Compile Include=".net\ClientTransmitter.cs" />
@@ -54,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include=".client-view\ClientMessengerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".client-view\ClientSignUpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".properties\PublicIdTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include=".properties\SendMessageTextBox.xaml">

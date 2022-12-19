@@ -15,7 +15,7 @@ namespace NetworkingAuxiliaryLibrary.Style.Messenger
 
         public static string GetLoginReceiptStyle(MessagePackage message)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} login [mediumspringgreen]\"{message.Message as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} _login [mediumspringgreen]\"{message.Message as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
         }
 
     }

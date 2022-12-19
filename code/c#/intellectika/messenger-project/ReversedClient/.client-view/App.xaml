@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="../.properties/LoginTextBox.xaml"/>
                 <ResourceDictionary Source="../.properties/PasswordTextBox.xaml"/>
                 <ResourceDictionary Source="../.properties/SendMessageTextBox.xaml"/>
+                <ResourceDictionary Source="../.properties/PublicIdTextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
