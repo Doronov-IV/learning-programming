@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects
+namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
     public class ChatDTO
     {

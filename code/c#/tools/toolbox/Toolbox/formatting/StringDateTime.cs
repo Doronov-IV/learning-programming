@@ -21,6 +21,23 @@ namespace Tools.Formatting
             return dateOrTimeAsset.Replace(separationChar, "");
         }
 
+
+
+        /// <summary>
+        /// .
+        /// <br />
+        /// .
+        /// </summary>
+        /// <param name="time">
+        /// 
+        /// <br />
+        /// 
+        /// </param>
+        /// <returns>
+        /// 
+        /// <br />
+        /// 
+        /// </returns>
         public static string FromThreeToTwoSections(string time)
         {
             string sRes = string.Empty;
@@ -31,6 +48,9 @@ namespace Tools.Formatting
             }
             return sRes;
         }
+
+
+
 
     }
 }

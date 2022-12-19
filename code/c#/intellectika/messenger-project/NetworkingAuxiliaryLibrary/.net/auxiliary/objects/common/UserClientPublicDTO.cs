@@ -1,6 +1,6 @@
-﻿namespace ReversedClient.Model.Basics
+﻿namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
-    public class UserModel
+    public class UserClientPublicDTO
     {
 
         /// <summary>
@@ -25,7 +25,7 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public UserModel()
+        public UserClientPublicDTO()
         {
 
         }
@@ -37,7 +37,7 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public UserModel(string userName, string publicId)
+        public UserClientPublicDTO(string userName, string publicId)
         {
             UserName = userName;
             PublicId = publicId;

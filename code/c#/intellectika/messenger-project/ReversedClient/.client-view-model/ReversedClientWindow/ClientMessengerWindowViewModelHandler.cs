@@ -1,22 +1,22 @@
-﻿using ReversedClient.client_view;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Converters;
-using ReversedClient.ViewModel.Misc;
 using ReversedClient.LocalService;
-using ReversedClient.Model.Basics;
 using System.Collections.Generic;
+using ReversedClient.client_view;
 using System.Windows.Threading;
 using System.Threading.Tasks;
+using ReversedClient.Model;
 using System.Linq;
 using System.Text;
 using System;
 
 using Tools.Formatting;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
-    public partial class ReversedClientWindowViewModel
+    public partial class ClientMessengerWindowViewModel
     {
 
 
@@ -33,7 +33,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RemoveUser()
         {
-            var uid = serviceTransmitter.MessangerPacketReader.ReadMessage().Message;
+            var uid = _serviceTransmitter.MessangerPacketReader.ReadMessage().Message;
             var user = OnlineMembers.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
@@ -43,7 +43,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// Recieve user message;
+        /// Recieve user _message;
         /// <br />
         /// Получить сообщение от пользователя;
         /// </summary>
@@ -51,9 +51,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         {
             try 
             {
-                var msg = serviceTransmitter.MessangerPacketReader.ReadMessage(); // reading new message via our packet reader;
+                var msg = _serviceTransmitter.MessangerPacketReader.ReadMessage(); // reading new _message via our packet reader;
                 var msgCopy = msg;
-                if (_currentUserModel.PublicId != msg.Sender) // if the message was sent to us from other user
+                if (_currentUserModel.PublicId != msg.Sender) // if the _message was sent to us from other user
                 {
                     var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId == msg.Sender);
                     if (someChat is null)
@@ -64,7 +64,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.Message as string));
                 }
-                else // if we sent this message
+                else // if we sent this _message
                 {
                     var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
                     string newMessage = string.Empty;
@@ -124,10 +124,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public void ConnectUser()
         {
             // create new user instance;
-            var user = new UserModel()
+            var user = new UserClientPublicDTO()
             {
-                UserName = serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
-                PublicId = serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
+                UserName = _serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
+                PublicId = _serviceTransmitter.MessangerPacketReader.ReadMessage().Message as string,
             };
 
             /*
@@ -175,9 +175,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// Send a message to the service;
+        /// Send a _message to the service;
         /// <br />
-        /// Is needed to nullify the chat message field after sending;
+        /// Is needed to nullify the chat _message field after sending;
         /// <br />
         /// <br />
         /// Отправить сообщение на сервис;
@@ -190,12 +190,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 if (Message != string.Empty)
                 {
-                    UserModel currentAddressee = null;
+                    UserClientPublicDTO currentAddressee = null;
                     if (SelectedOnlineMember is not null) currentAddressee = SelectedOnlineMember;
                     else if (ActiveChat is not null) currentAddressee = ActiveChat.Addressee;
                     else throw new NullReferenceException("[Custom] No target was selected.");
 
-                    serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.PublicId, currentAddressee.PublicId, Message));
+                    _serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.PublicId, currentAddressee.PublicId, Message));
                     var someChat = ChatList.FirstOrDefault(c => (c.Addressee.PublicId.Equals(currentAddressee.PublicId)));
                     if (someChat is null)
                     {
@@ -221,13 +221,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void ConnectToService()
         {
-            serviceTransmitter.ConnectAndAuthorize(CurrentUserDTO);
+            _serviceTransmitter.ConnectAndAuthorize(CurrentUserTechnicalDTO);
         }
 
 
         
         /// <summary>
-        /// Show exception output message.
+        /// Show exception output _message.
         /// <br />
         /// Показать вывод сообщения ошибки/исключения.
         /// </summary>
@@ -237,41 +237,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
-        private void FillChats(User user)
-        {
-            foreach (Chat chat in user.ChatList)
-            {
-                chat.MessageList.Sort((Message A, Message B) =>
-                {
-                    if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return 1;
-                    else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return -1;
-                    else return 0;
-                });
-            }
-
-            foreach (Chat chat in user.ChatList)
-            {
-                var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault(); // user ref is assigned to null somehow
-                var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserModel(usrRef.CurrentNickname, usrRef.PublicId)); 
-
-                chatRef.Addresser = CurrentUserModel;
-                chatRef.Addressee = new(usrRef.CurrentNickname, usrRef.PublicId);
-
-                foreach (var message in chat.MessageList)
-                {
-                    if (message.Author.PublicId.Equals(_currentUserModel.PublicId)) chatRef.AddCheckedOutgoingMessage(message);
-                    else chatRef.AddIncommingMessage(message);
-                }
-
-
-                ChatList.Add(chatRef);
-            }
-        }
-
-
         private void DisconnectFromService()
         {
-            WpfWindowsManager.FromChatToLogin(currentServiceSiteUser.Login);
+            WpfWindowsManager.MoveFromChatToLogin(CurrentUserTechnicalDTO.Login);
         }
 
 

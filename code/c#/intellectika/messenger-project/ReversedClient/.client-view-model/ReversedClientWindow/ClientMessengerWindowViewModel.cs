@@ -1,12 +1,12 @@
-﻿using ReversedClient.client_view;
-using System.Windows;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
-using Net.Transmition;
-using ReversedClient.Model.Basics;
-using ReversedClient.ViewModel.Misc;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.LocalService;
+using ReversedClient.client_view;
 using ReversedClient.Properties;
 using System.Windows.Interop;
-
+using ReversedClient.Model;
+using Net.Transmition;
+using System.Windows;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -15,7 +15,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
     /// <br />
     /// Вью-модель для окна клиента;
     /// </summary>
-    public partial class ReversedClientWindowViewModel : INotifyPropertyChanged
+    public partial class ClientMessengerWindowViewModel : INotifyPropertyChanged
     {
 
 
@@ -30,14 +30,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-        private UserClientSideDTO _currentUserDTO;
-
-
-        private User currentServiceSiteUser;
+        /// <inheritdoc cref="CurrentUserTechnicalDTO"/>
+        private UserClientTechnicalDTO _currentUserTechnicalDTO;
 
 
         /// <inheritdoc cref="OnlineMembers"/>
-        private ObservableCollection<UserModel> _onlineMembers;
+        private ObservableCollection<UserClientPublicDTO> _onlineMembers;
 
 
         /// <inheritdoc cref="ActiveChat"/>
@@ -45,31 +43,31 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <inheritdoc cref="SelectedOnlineMember"/>
-        private UserModel _selectedOnlineMember;
+        private UserClientPublicDTO _selectedOnlineMember;
 
 
         /// <inheritdoc cref="CurrentUserModel"/>
-        private UserModel _currentUserModel;
+        private UserClientPublicDTO _currentUserModel;
 
 
         /// <inheritdoc cref="ChatList"/>
-        private ObservableCollection<MessengerChat> chatList;
+        private ObservableCollection<MessengerChat> _chatList;
 
 
         /// <inheritdoc cref="WindowHeaderString"/>
-        private string windowHeaderString;
+        private string _windowHeaderString;
 
 
         /// <inheritdoc cref="Message"/>
-        private string message;
+        private string _message;
 
 
         /// <inheritdoc cref="UserFile"/>
-        private FileInfo? userFile;
+        private FileInfo? _userFile;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
-        private ClientTransmitter serviceTransmitter;
+        private ClientTransmitter _serviceTransmitter;
 
 
         /// <summary>
@@ -85,17 +83,17 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
-        
 
 
 
-        public UserClientSideDTO CurrentUserDTO
+
+        public UserClientTechnicalDTO CurrentUserTechnicalDTO
         {
-            get { return _currentUserDTO; }
+            get { return _currentUserTechnicalDTO; }
             set
             {
-                _currentUserDTO= value;
-                OnPropertyChanged(nameof(CurrentUserDTO));
+                _currentUserTechnicalDTO = value;
+                OnPropertyChanged(nameof(CurrentUserTechnicalDTO));
             }
         }
 
@@ -105,7 +103,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Обозреваемая коллекция пользователей в сети.
         /// </summary>
-        public ObservableCollection<UserModel> OnlineMembers 
+        public ObservableCollection<UserClientPublicDTO> OnlineMembers 
         {
             get { return _onlineMembers; }
             set
@@ -138,7 +136,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// .
         /// </summary>
-        public UserModel SelectedOnlineMember
+        public UserClientPublicDTO SelectedOnlineMember
         {
             get { return _selectedOnlineMember; }
             set
@@ -161,7 +159,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Объект, который содержит в себе данные текущего клиента;
         /// </summary>
-        public UserModel CurrentUserModel
+        public UserClientPublicDTO CurrentUserModel
         {
             get { return _currentUserModel; }
             set
@@ -179,10 +177,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ObservableCollection<MessengerChat> ChatList
         {
-            get { return chatList; }
+            get { return _chatList; }
             set
             {
-                chatList = value;
+                _chatList = value;
                 OnPropertyChanged(nameof(ChatList));
             }
         }
@@ -195,10 +193,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public string WindowHeaderString
         {
-            get { return windowHeaderString; }
+            get { return _windowHeaderString; }
             set
             {
-                windowHeaderString = value;
+                _windowHeaderString = value;
                 OnPropertyChanged(nameof(WindowHeaderString));
             }
         }
@@ -211,26 +209,26 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public string Message 
         {
-            get { return message; }
+            get { return _message; }
             set
             {
-                message = value;
+                _message = value;
                 OnPropertyChanged(nameof(Message));
             }
         }
 
 
         /// <summary>
-        /// The file attached to the user message.
+        /// The file attached to the user _message.
         /// <br />
         /// Файл, прикреплённый к пользовательскому сообщению.
         /// </summary>
         public FileInfo? UserFile
         {
-            get { return userFile; }
+            get { return _userFile; }
             set
             {
-                userFile = value;
+                _userFile = value;
                 OnPropertyChanged(nameof(UserFile));
             }
         }
@@ -243,8 +241,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientTransmitter ServiceTransmitter
         {
-            get { return serviceTransmitter; }
-            set { serviceTransmitter = value; }
+            get { return _serviceTransmitter; }
+            set { _serviceTransmitter = value; }
         }
 
 
@@ -316,7 +314,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ReversedClientWindowViewModel() : this(new(),new())
+        public ClientMessengerWindowViewModel() : this(new(),new())
         {
         }
 
@@ -326,28 +324,29 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ReversedClientWindowViewModel(User userData, ClientTransmitter clientSocket)
+        public ClientMessengerWindowViewModel(UserServerSideDTO userData, ClientTransmitter clientSocket)
         {
-            if (chatList is null) chatList = new();
-            _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.PublicId);
-            FillChats(userData);
-            currentServiceSiteUser = userData;
+            if (_chatList is null) _chatList = new();
+            _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.CurrentPublicId);
 
-            windowHeaderString = userData.CurrentNickname;
+            ChatParser.FillChats(userData, ref _chatList);
+            OnPropertyChanged(nameof(ChatList));
 
-            userFile = null;
+            _windowHeaderString = userData.CurrentNickname;
+
+            _userFile = null;
             dialogService = new AttachFileDialogService();
 
-            message = string.Empty;
+            _message = string.Empty;
 
-            _onlineMembers = new ObservableCollection<UserModel>();
+            _onlineMembers = new ObservableCollection<UserClientPublicDTO>();
 
-            serviceTransmitter = clientSocket;
-            serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
-            serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
-            serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // message receipt;
-            serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;      // current user disconnection;
+            _serviceTransmitter = clientSocket;
+            _serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
+            _serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
+            _serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // _message receipt;
+            _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
+            _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;      // current user disconnection;
             ServiceTransmitter.ReadPacketsAsync();
 
             // may be obsolete. tests needed;
@@ -355,7 +354,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             SendMessageCommand = new(SendMessage);
             SelectFileCommand = new(SelectFile);
 
-            serviceTransmitter.SendOutput += ShowErrorMessage;
+            _serviceTransmitter.SendOutput += ShowErrorMessage;
         }
 
 

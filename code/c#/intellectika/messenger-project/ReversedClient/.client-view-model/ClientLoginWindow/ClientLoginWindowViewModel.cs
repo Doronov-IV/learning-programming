@@ -1,4 +1,5 @@
 ﻿using Net.Transmition;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace ReversedClient.ViewModel.ClientStartupWindow
@@ -11,7 +12,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
 
 
         /// <inheritdoc cref="_userDTOdata"/>
-        private UserClientSideDTO _userDTOdata;
+        private UserClientTechnicalDTO _userDTOdata;
 
         private User _fullUserData;
 
@@ -26,7 +27,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserClientSideDTO UserDTOdata
+        public UserClientTechnicalDTO UserDTOdata
         {
             get { return _userDTOdata; }
             set
@@ -97,7 +98,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         public ClientLoginWindowViewModel()
         {
-            _userDTOdata = new UserClientSideDTO();
+            _userDTOdata = new UserClientTechnicalDTO();
 
             serviceTransmitter = new();
             serviceTransmitter.SendOutput += ShowErrorMessage;

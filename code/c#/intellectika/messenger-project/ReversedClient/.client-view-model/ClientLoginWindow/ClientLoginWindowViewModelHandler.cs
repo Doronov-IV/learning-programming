@@ -23,9 +23,9 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                     if (ServiceTransmitter.ConnectAndAuthorize(_userDTOdata))
                     {
                         ServiceTransmitter.ConnectAndSendLoginToService(_userDTOdata);
-                        FullUserData = ServiceTransmitter.GetResponseData(); // deadlock
+                        var ServerSideUserDTOdata = ServiceTransmitter.GetResponseData(); // deadlock
 
-                        WpfWindowsManager.FromLoginToChat(FullUserData, ServiceTransmitter);
+                        WpfWindowsManager.MoveFromLoginToChat(ServerSideUserDTOdata, ServiceTransmitter);
                     }
                     else
                     {

@@ -1,15 +1,15 @@
-﻿using NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects;
-using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Processing;
-using Newtonsoft.Json;
-using ReversedClient.ViewModel.ClientChatWindow;
+﻿using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
 using ReversedClient.ViewModel.ClientStartupWindow;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.ViewModel.ClientChatWindow;
+using NetworkingAuxiliaryLibrary.Processing;
 using System.IO.Packaging;
-using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Newtonsoft.Json;
 using System.Windows;
+using System.Net;
 
 namespace Net.Transmition
 {
@@ -138,7 +138,7 @@ namespace Net.Transmition
         /// Делегат для передачи аутпута другим объектам;
         /// </summary>
         /// <param name="sOutputMessage">
-        /// A message that we want to see somewhere (в данном случае, в консоли сервера и в пользовательском клиенте);
+        /// A _message that we want to see somewhere (в данном случае, в консоли сервера и в пользовательском клиенте);
         /// <br />
         /// Сообщение, которое мы хотим где-то увидеть (в данном случае, в консоли сервера и в пользовательском клиенте);
         /// </param>
@@ -182,21 +182,21 @@ namespace Net.Transmition
 
 
         /// <summary>
-        /// Connect user to the service;
+        /// Conntect to the authorization service and proceed to authorization;
         /// <br />
-        /// Подключить пользователя к сервису;
+        /// Подключиться к сервису авторизации и пройти процесс авторизации;
         /// </summary>
         /// <param name="user">
-        /// .
+        /// User technical DTO containing their private data.
         /// <br />
-        /// .
+        /// "Технический" DTO пользователя, содержащий его личную информацию.
         /// </param>
         /// <returns>
-        /// .
+        /// 'True' - if authorization successful, otherwise 'false'.
         /// <br />
-        /// .
+        /// "True" - есди авторизация успешна, иначе "false".
         /// </returns>
-        public bool ConnectAndAuthorize(UserClientSideDTO user)
+        public bool ConnectAndAuthorize(UserClientTechnicalDTO user)
         {
             try
             {
@@ -237,7 +237,18 @@ namespace Net.Transmition
         }
 
 
-        public void ConnectAndSendLoginToService(UserClientSideDTO user)
+
+        /// <summary>
+        /// Connect to the messenger service and send a query for current user data.
+        /// <br />
+        /// Подключиться к сервису сообщений и запросить данные текущего пользователя.
+        /// </summary>
+        /// <param name="user">
+        /// User technical DTO containing their private data.
+        /// <br />
+        /// "Технический" DTO пользователя, содержащий его личную информацию.
+        /// </param>
+        public void ConnectAndSendLoginToService(UserClientTechnicalDTO user)
         {
             try
             {
@@ -266,10 +277,11 @@ namespace Net.Transmition
         }
 
 
+
         /// <summary>
-        /// Disconnect client from service;
+        /// Disconnect client from messenger service;
         /// <br />
-        /// Отключить клиент от сервиса;
+        /// Отключить клиент от сервиса мессенжера;
         /// </summary>
         public void Disconnect()
         {
@@ -284,13 +296,14 @@ namespace Net.Transmition
         }
 
 
+
         /// <summary>
-        /// Send user's message to the service;
+        /// Send user's _message to the service;
         /// <br />
         /// Отправить сообщение пользователя на сервис;
         /// </summary>
         /// <param name="message">
-        /// User's message;
+        /// User's _message;
         /// <br />
         /// Сообщение пользователя;
         /// </param>
@@ -322,7 +335,7 @@ namespace Net.Transmition
         /// <br />
         /// Данные нового пользователя, упакованные в "DTO".
         /// </param>
-        public void SendNewClientData(UserClientSideDTO userData)
+        public void SendNewClientData(UserClientTechnicalDTO userData)
         {
             var messagePacket = new PackageBuilder();
             var signUpMessage = new TextMessagePackage(sender: userData.Login, reciever: "Service", message: $"{userData.Password}");
@@ -339,17 +352,21 @@ namespace Net.Transmition
         }
 
 
-        public User GetResponseData()
+
+        /// <summary>
+        /// Get the data sent by messenger in response for client data request after successful authorization.
+        /// <br />
+        /// Получить данные от мессенжера, в ответ на запрос пользователя после удачной авторизации.
+        /// </summary>
+        public UserServerSideDTO GetResponseData()
         {
-            User res = null;
+            UserServerSideDTO res = null;
             var code = _messangerPacketReader.ReadByte();
             if (code == 12)
             {
                 var msg = _messangerPacketReader.ReadMessage();
 
-                var tempRef = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
-
-                res = UserParser.ParseFromDTO(tempRef);
+                res = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
             }
             return res;
         }
@@ -366,7 +383,7 @@ namespace Net.Transmition
 
 
         /// <summary>
-        /// Read the incomming packet. A packet is a specific message, sent by ServiceHub to handle different actions;
+        /// Read the incomming packet. A packet is a specific _message, sent by ServiceHub to handle different actions;
         /// <br />
         /// Прочитать входящий пакет. Пакет - это специальное сообщение, отправленное объектом "ServiceHub", чтобы структурировать обработку разных событий;
         /// </summary>
@@ -396,7 +413,7 @@ namespace Net.Transmition
                                 break;
 
                             case 5:
-                                msgReceivedEvent?.Invoke(); // message recieved;
+                                msgReceivedEvent?.Invoke(); // _message recieved;
                                 break;
 
                             case 6:
@@ -412,7 +429,7 @@ namespace Net.Transmition
                                 break;
 
                             default:
-                                SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPacketsAsync.");
+                                SendOutput.Invoke("Operation code out of [1,5,6,10]. This is a debug _message.\nproject: ReversedClient, class: ClientTransmitter, method: ReadPacketsAsync.");
                                 break;
                         }
                     }

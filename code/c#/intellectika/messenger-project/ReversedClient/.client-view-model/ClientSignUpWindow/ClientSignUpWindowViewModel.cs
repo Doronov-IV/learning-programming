@@ -1,5 +1,6 @@
 ﻿using Net.Transmition;
-using ReversedClient.ViewModel.Misc;
+using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.Model;
 
 namespace ReversedClient.ViewModel.ClientSignUpWindow
 {
@@ -12,7 +13,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
         /// <inheritdoc cref="UserData"/>
-        private UserClientSideDTO userData;
+        private UserClientTechnicalDTO userData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -25,7 +26,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserClientSideDTO UserData
+        public UserClientTechnicalDTO UserData
         {
             get { return userData; }
             set

@@ -1,9 +1,8 @@
-﻿using ReversedClient.Model;
-using ReversedClient.Model.Basics;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Net.Auxiliary.Objects;
+﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
-namespace ReversedClient.ViewModel.Misc
+namespace ReversedClient.Model
 {
     /// <summary>
     /// An abstraction that helps client handle all chat events.
@@ -23,11 +22,11 @@ namespace ReversedClient.ViewModel.Misc
 
 
         /// <inheritdoc cref="Addresser"/>
-        private UserModel addresser;
+        private UserClientPublicDTO addresser;
 
 
         /// <inheritdoc cref="Addressee"/>
-        private UserModel addressee;
+        private UserClientPublicDTO addressee;
 
 
 
@@ -53,7 +52,7 @@ namespace ReversedClient.ViewModel.Misc
         /// <br />
         /// Пользователь-адрессант.
         /// </summary>
-        public UserModel Addresser
+        public UserClientPublicDTO Addresser
         {
             get { return addresser; }
             set
@@ -69,7 +68,7 @@ namespace ReversedClient.ViewModel.Misc
         /// <br />
         /// Адрессуемый пользователь.
         /// </summary>
-        public UserModel Addressee
+        public UserClientPublicDTO Addressee
         {
             get { return addressee; }
             set
@@ -91,7 +90,7 @@ namespace ReversedClient.ViewModel.Misc
 
 
         /// <summary>
-        /// Add incomming message.
+        /// Add incomming _message.
         /// <br />
         /// Добавить входящее сообщение.
         /// </summary>
@@ -114,7 +113,7 @@ namespace ReversedClient.ViewModel.Misc
 
 
         /// <summary>
-        /// Add outgoing message.
+        /// Add outgoing _message.
         /// <br />
         /// Добавить исходящее сообщение.
         /// </summary>
@@ -130,7 +129,7 @@ namespace ReversedClient.ViewModel.Misc
 
 
         /// <summary>
-        /// Add checked outgoing message.
+        /// Add checked outgoing _message.
         /// <br />
         /// Добавить отмеченное входящее сообщение.
         /// </summary>
@@ -141,12 +140,12 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddCheckedOutgoingMessage(Message message)
         {
-            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents + " ✓✓");
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents + " ✓✓");
         }
 
 
         /// <summary>
-        /// Add incomming message.
+        /// Add incomming _message.
         /// <br />
         /// Добавить входящее сообщение.
         /// </summary>
@@ -157,12 +156,12 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddIncommingMessage(Message message)
         {
-            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents);
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents);
         }
 
 
         /// <summary>
-        /// Add outgoing message.
+        /// Add outgoing _message.
         /// <br />
         /// Добавить исходящее сообщение.
         /// </summary>
@@ -173,7 +172,55 @@ namespace ReversedClient.ViewModel.Misc
         /// </param>
         public void AddOutgoingMessage(Message message)
         {
-            MessageList.Add($"[{message.Time}] " + $"{message.Author.PublicId}: " + message.Contents);
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents);
+        }
+
+
+        /// <summary>
+        /// Add checked outgoing _message.
+        /// <br />
+        /// Добавить отмеченное входящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddCheckedOutgoingMessage(MessageDTO message)
+        {
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Sender}: " + message.Contents + " ✓✓");
+        }
+
+
+        /// <summary>
+        /// Add incomming _message.
+        /// <br />
+        /// Добавить входящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddIncommingMessage(MessageDTO message)
+        {
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Sender}: " + message.Contents);
+        }
+
+
+        /// <summary>
+        /// Add outgoing _message.
+        /// <br />
+        /// Добавить исходящее сообщение.
+        /// </summary>
+        /// <param name="message">
+        /// A new mesasge.
+        /// <br />
+        /// Новое сообщение.
+        /// </param>
+        public void AddOutgoingMessage(MessageDTO message)
+        {
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Sender}: " + message.Contents);
         }
 
 
@@ -226,7 +273,7 @@ namespace ReversedClient.ViewModel.Misc
         /// <br />
         /// Ссылка на адрессуемого.
         /// </param>
-        public MessengerChat(UserModel addresser, UserModel addressee) : this()
+        public MessengerChat(UserClientPublicDTO addresser, UserClientPublicDTO addressee) : this()
         {
             this.addresser = addresser;
             this.addressee = addressee;

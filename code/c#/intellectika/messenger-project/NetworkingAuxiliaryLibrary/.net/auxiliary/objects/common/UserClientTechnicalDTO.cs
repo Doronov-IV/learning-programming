@@ -1,11 +1,11 @@
-﻿namespace NetworkingAuxiliaryLibrary.Objects
+﻿namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
     /// <summary>
     /// An object to encapsulate user data transfered to various windows.
     /// <br />
     /// Объект для инкапсуляции пользовательских данных для передачи разным окнам.
     /// </summary>
-    public class UserClientSideDTO
+    public class UserClientTechnicalDTO
     {
 
 
@@ -67,7 +67,7 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public UserClientSideDTO()
+        public UserClientTechnicalDTO()
         {
             login = string.Empty;
             password= string.Empty;
@@ -80,7 +80,7 @@
         /// <br />
         /// Конструктор с параметрами.
         /// </summary>
-        public UserClientSideDTO(string login, string password)
+        public UserClientTechnicalDTO(string login, string password)
         {
             this.password = password;
             this.login = login;

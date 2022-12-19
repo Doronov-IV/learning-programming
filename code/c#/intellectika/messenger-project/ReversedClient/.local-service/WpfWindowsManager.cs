@@ -1,25 +1,46 @@
 ﻿using ReversedClient.client_view;
 using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace ReversedClient.LocalService
 {
+    /// <summary>
+    /// A service that provides a set of actions, required for working with multiple wpf windows in the same project.
+    /// <br />
+    /// Сервис, который предоставляет набор действий, необходимых для работы с несколькими окнами WPF в одном проекте.
+    /// </summary>
     public static class WpfWindowsManager
     {
 
 
-        public static void FromLoginToChat(User fullUserData, ClientTransmitter serviceTransmitter)
+        /// <summary>
+        /// Move from login window to the messenger one.
+        /// <br />
+        /// Переместиться из окна логина в окно чата.
+        /// </summary>
+        /// <param name="fullUserData">
+        /// A set of data, which has been retrieved from MessengerService and is to be passed to the corresponding view-model.
+        /// <br />
+        /// Набор данных, полученных из MessengerService'а, для передачи в соответствующую вью-модель.
+        /// </param>
+        /// <param name="serviceTransmitter">
+        /// An instance of a user's network reciever, set up and running.
+        /// <br />
+        /// Экземпляр пользовательского коммуникатора, настроенный и запущенный.
+        /// </param>
+        public static void MoveFromLoginToChat(UserServerSideDTO fullUserData, ClientTransmitter serviceTransmitter)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ReversedClientWindow window = new ReversedClientWindow(fullUserData, serviceTransmitter);
+                ClientMessengerWindow window = new ClientMessengerWindow(fullUserData, serviceTransmitter);
 
                 Window closeWindow = null;
                 Window showWindow = null;
 
                 foreach (Window win in Application.Current.Windows)
                 {
-                    if (win is ReversedClientWindow)
+                    if (win is ClientMessengerWindow)
                     {
                         showWindow = win;
                     }
@@ -37,10 +58,13 @@ namespace ReversedClient.LocalService
 
 
 
-        public static void FromChatToLogin(string userLogin)
+        /// <summary>
+        /// Move from chat window to the login one. Typically is called when the user disconnects.
+        /// <br />
+        /// Переместиться из окна чата в окно логина. Обычно используется, когда пользователь утратит соединение.
+        /// </summary>
+        public static void MoveFromChatToLogin(string userLogin)
         {
-            
-
             Window closeWindow = null;
             Window showWindow = null;
             Application.Current.Dispatcher.Invoke(() =>
@@ -48,7 +72,7 @@ namespace ReversedClient.LocalService
 
                 foreach (Window win in Application.Current.Windows)
                 {
-                    if (win is ReversedClientWindow)
+                    if (win is ClientMessengerWindow)
                     {
                         closeWindow = win;
                     }
@@ -61,14 +85,6 @@ namespace ReversedClient.LocalService
                 showWindow.Show();
                 closeWindow.Hide();
             });
-
-            
-
-            //ClientLoginWindow window = new ClientLoginWindow(userLogin);
-            //window.Show();
-            //Application.Current.MainWindow.Close();
-
-
         }
 
 
