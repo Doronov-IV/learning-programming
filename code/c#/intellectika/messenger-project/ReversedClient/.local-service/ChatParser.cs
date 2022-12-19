@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Objects.Common;
+﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using ReversedClient.Model;
 
 namespace ReversedClient.LocalService
@@ -13,61 +12,11 @@ namespace ReversedClient.LocalService
     public static class ChatParser
     {
 
-
         /// <summary>
         /// Parse chat list of a user into an view-model observable collection.
         /// <br />
         /// Спарсить список чатов пользователя в ObservableCollection вью-модели.
         /// </summary>
-        public static void FillChats(User user, ref ObservableCollection<MessengerChat> ChatList)
-        {
-            SortChats(ref user);
-
-            UserClientPublicDTO _currentUserModel = new(user.CurrentNickname, user.PublicId);
-
-            // actually parsing chats;
-            foreach (Chat chat in user.ChatList)
-            {
-                var usrRef = chat.UserList.Select(u => u).Where(u => !u.PublicId.Equals(user.PublicId)).FirstOrDefault(); // user ref is assigned to null somehow
-                var chatRef = new MessengerChat(addresser: _currentUserModel, addressee: new UserClientPublicDTO(usrRef.CurrentNickname, usrRef.PublicId));
-
-                foreach (var message in chat.MessageList)
-                {
-                    if (message.Author.PublicId.Equals(_currentUserModel.PublicId)) chatRef.AddCheckedOutgoingMessage(message);
-                    else chatRef.AddIncommingMessage(message);
-                }
-
-                ChatList.Add(chatRef);
-            }
-        }
-
-
-
-        /// <summary>
-        /// Sort messages in a user's chat list.
-        /// <br />
-        /// Отсортировать сообщения в списке чатов пользователя.
-        /// </summary>
-        private static void SortChats(ref User user)
-        {
-            foreach (Chat chat in user.ChatList)
-            {
-                chat.MessageList.Sort((Message A, Message B) =>
-                {
-                    if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return 1;
-                    else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return -1;
-                    else
-                    {
-                        if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return 1;
-                        else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return -1;
-                        else return 0;
-                    }
-                });
-            }
-        }
-
-
-
         public static void FillChats(UserServerSideDTO user, ref ObservableCollection<MessengerChat> ChatList)
         {
             SortChats(ref user);
@@ -89,6 +38,11 @@ namespace ReversedClient.LocalService
         }
 
 
+        /// <summary>
+        /// Sort messages in a user's chat list.
+        /// <br />
+        /// Отсортировать сообщения в списке чатов пользователя.
+        /// </summary>
         private static void SortChats(ref UserServerSideDTO user)
         {
             foreach (ChatDTO chat in user.ChatArray)
@@ -106,5 +60,6 @@ namespace ReversedClient.LocalService
                 });
             }
         } 
+
     }
 }

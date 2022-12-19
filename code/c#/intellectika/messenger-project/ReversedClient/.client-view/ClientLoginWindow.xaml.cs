@@ -21,7 +21,7 @@ namespace ReversedClient.client_view
         {
             var VMRef = DataContext as ClientLoginWindowViewModel;
 
-            VMRef.UserDTOdata.Login = userLogin;
+            VMRef.LocalUserTechnicalData.Login = userLogin;
         }
     }
 }

@@ -1,9 +1,13 @@
 ﻿using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Common;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 
 namespace ReversedClient.ViewModel.ClientStartupWindow
 {
+    /// <summary>
+    /// A client authorization window view-model.
+    /// <br />
+    /// Вью-модель окна авторизации клиента.
+    /// </summary>
     public partial class ClientLoginWindowViewModel : INotifyPropertyChanged
     {
 
@@ -11,10 +15,12 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         #region STATE
 
 
-        /// <inheritdoc cref="_userDTOdata"/>
-        private UserClientTechnicalDTO _userDTOdata;
+        /// <inheritdoc cref="LocalUserTechnicalData"/>
+        private UserClientTechnicalDTO _localUserTechnicalData;
 
-        private User _fullUserData;
+
+        /// <inheritdoc cref="FullUserServiceData">
+        private UserServerSideDTO _fullUserServiceData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
@@ -27,24 +33,29 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br />
         /// Экземпляр объекта для инкапсуляции пользовательских данных для передачи другим окнам.
         /// </summary>
-        public UserClientTechnicalDTO UserDTOdata
+        public UserClientTechnicalDTO LocalUserTechnicalData
         {
-            get { return _userDTOdata; }
+            get { return _localUserTechnicalData; }
             set
             {
-                _userDTOdata = value;
-                OnPropertyChanged(nameof(UserDTOdata));
+                _localUserTechnicalData = value;
+                OnPropertyChanged(nameof(LocalUserTechnicalData));
             }
         }
 
 
-        public User FullUserData
+        /// <summary>
+        /// An instance of an object to encapsulate user data got from messenger service response.
+        /// <br />
+        /// Экземпляр объекта, хранящий данные пользователя, полученные от сервиса.
+        /// </summary>
+        public UserServerSideDTO FullUserServiceData
         {
-            get { return _fullUserData; }
+            get { return _fullUserServiceData; }
             set
             {
-                _fullUserData = value;
-                OnPropertyChanged(nameof(FullUserData));
+                _fullUserServiceData = value;
+                OnPropertyChanged(nameof(FullUserServiceData));
             }
         }
 
@@ -61,16 +72,8 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         }
 
 
-
-
-
-        public delegate void WindowSwapDelegate();
-
-        public event WindowSwapDelegate SuccessfulClientAuthorization;
-
-
-
         #endregion STATE
+
 
 
 
@@ -78,6 +81,11 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         #region COMMANDS
 
 
+        /// <summary>
+        /// A Prism command to handle 'SignIn' button click.
+        /// <br /> 
+        /// Команда Prism, для обработки клика по кнопке "SignIn".
+        /// </summary>
         public DelegateCommand SignInButtonClickCommand { get; }
 
 
@@ -86,8 +94,8 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
 
 
 
-        #region CONSTRUCTION
 
+        #region CONSTRUCTION
 
 
 
@@ -98,14 +106,13 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         public ClientLoginWindowViewModel()
         {
-            _userDTOdata = new UserClientTechnicalDTO();
+            _localUserTechnicalData = new UserClientTechnicalDTO();
 
             serviceTransmitter = new();
             serviceTransmitter.SendOutput += ShowErrorMessage;
 
             SignInButtonClickCommand = new(OnSignInButtonClick);
         }
-
 
 
 

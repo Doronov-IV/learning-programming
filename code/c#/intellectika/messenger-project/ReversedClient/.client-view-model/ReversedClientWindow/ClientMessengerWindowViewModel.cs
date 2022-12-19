@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Objects.Common;
+﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using ReversedClient.LocalService;
 using ReversedClient.client_view;
 using ReversedClient.Properties;

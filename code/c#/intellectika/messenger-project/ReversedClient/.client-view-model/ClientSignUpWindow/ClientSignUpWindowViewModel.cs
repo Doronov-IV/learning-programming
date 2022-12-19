@@ -1,6 +1,6 @@
-﻿using Net.Transmition;
-using NetworkingAuxiliaryLibrary.Objects.Common;
+﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using ReversedClient.Model;
+using Net.Transmition;
 
 namespace ReversedClient.ViewModel.ClientSignUpWindow
 {
@@ -13,11 +13,11 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
         /// <inheritdoc cref="UserData"/>
-        private UserClientTechnicalDTO userData;
+        private UserClientTechnicalDTO _userData;
 
 
         /// <inheritdoc cref="ServiceTransmitter"/>
-        private ClientTransmitter serviceTransmitter;
+        private ClientTransmitter _serviceTransmitter;
 
 
 
@@ -28,10 +28,10 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// </summary>
         public UserClientTechnicalDTO UserData
         {
-            get { return userData; }
+            get { return _userData; }
             set
             {
-                userData = value;
+                _userData = value;
                 OnPropertyChanged(nameof(UserData));
             }
         }
@@ -44,8 +44,8 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// </summary>
         public ClientTransmitter ServiceTransmitter
         {
-            get { return serviceTransmitter; }
-            set { serviceTransmitter = value; }
+            get { return _serviceTransmitter; }
+            set { _serviceTransmitter = value; }
         }
 
 
@@ -58,6 +58,11 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         #region COMMANDS
 
 
+        /// <summary>
+        /// A Prism command to handle 'Register' button click.
+        /// <br />
+        /// Команда Prism, для обработки клика по кнопке "Register".
+        /// </summary>
         public DelegateCommand RegisterCommand { get; }
 
 
@@ -79,7 +84,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         public ClientSignUpWindowViewModel(ClientTransmitter clientRadio)
         {
             RegisterCommand = new(OnRegisterButtonClick);
-            userData = new();
+            _userData = new();
         }
 
 
@@ -92,7 +97,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// </summary>
         public ClientSignUpWindowViewModel(ClientTransmitter clientRadio, string login) : this(clientRadio)
         {
-            userData.Login = login;
+            _userData.Login = login;
         }
 
 

@@ -18,14 +18,14 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         {
             try
             {
-                if (!string.IsNullOrEmpty(_userDTOdata.Password) && !string.IsNullOrEmpty(_userDTOdata.Login))
+                if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
                 {
-                    if (ServiceTransmitter.ConnectAndAuthorize(_userDTOdata))
+                    if (ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
                     {
-                        ServiceTransmitter.ConnectAndSendLoginToService(_userDTOdata);
-                        var ServerSideUserDTOdata = ServiceTransmitter.GetResponseData(); // deadlock
+                        ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData);
+                        FullUserServiceData = ServiceTransmitter.GetResponseData(); // deadlock
 
-                        WpfWindowsManager.MoveFromLoginToChat(ServerSideUserDTOdata, ServiceTransmitter);
+                        WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, ServiceTransmitter);
                     }
                     else
                     {
