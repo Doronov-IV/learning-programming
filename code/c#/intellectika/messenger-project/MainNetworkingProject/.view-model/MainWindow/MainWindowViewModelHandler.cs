@@ -1,7 +1,14 @@
 ﻿using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.Json.Nodes;
 using System.Threading;
+using Tools.Toolbox;
+
+using Newtonsoft.Json;
+
+using NetworkingAuxiliaryLibrary.Dependencies.Factories;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
 {
@@ -181,6 +188,32 @@ namespace MainNetworkingProject.ViewModel.MainWindow
                     catch { }
                 }
             }
+        }
+
+
+        private void CreateNetworkingConfigFile()
+        {
+            List<string> listOfProjects = new();
+
+            DirectoryInfo directoryInfo;
+
+            listOfProjects.AddRange( new List<string>() { "ReversedClient", "MessengerService", "AithorizationService"});
+
+            NetworkingConfiguration config = new() { ClientAddress = Utilizer.GetLocalIPAddress(), MessengerAddress = Utilizer.GetLocalIPAddress(), AuthorizerAddress = Utilizer.GetLocalIPAddress() };
+
+            var jsonString = JsonConvert.SerializeObject(config);
+
+            listOfProjects.ForEach(p =>
+            {
+                directoryInfo = new(@$"..\..\..\{p}\.config");
+
+                Directory.CreateDirectory(directoryInfo.FullName);
+
+                string fileName = directoryInfo.FullName + "/networking-config.json";
+
+                File.WriteAllText(fileName, jsonString);
+               
+            });
         }
 
 

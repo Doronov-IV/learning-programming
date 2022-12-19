@@ -10,6 +10,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Windows;
 using System.Net;
+using ReversedClient.LocalService;
 
 namespace Net.Transmition
 {
@@ -29,16 +30,6 @@ namespace Net.Transmition
         //
         // EndPoint
         //
-
-        /// <summary>
-        /// Current service EndPoint;
-        /// <br />
-        /// Текущий эндпоинт сервиса;
-        /// </summary>
-        private IPEndPoint messangerServiceEndPoint = new(localHostIpAddress, 7333);
-
-
-        private IPEndPoint authorizationServiceEndPoint = new(localHostIpAddress, 7222);
 
 
         /// <summary>
@@ -204,7 +195,7 @@ namespace Net.Transmition
                 /// 
                 /// - Client connection [!]
                 ///
-                authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
+                authorizationSocket.ConnectAsync(NetworkConfigurator.GetAuthorizerEndPoint());
             }
                 _authorizationPacketReader = new(authorizationSocket.GetStream());
 
@@ -238,12 +229,12 @@ namespace Net.Transmition
         {
             try
             {
-                messengerSocket.Connect(messangerServiceEndPoint);
+                messengerSocket.Connect(NetworkConfigurator.GetMessengerEndPoint());
             }
             catch (Exception ex)
             {
                 messengerSocket = new();
-                messengerSocket.Connect(messangerServiceEndPoint);
+                messengerSocket.Connect(NetworkConfigurator.GetMessengerEndPoint());
             }
 
             if (messengerSocket.Connected)
@@ -308,7 +299,7 @@ namespace Net.Transmition
 
         public bool RegisterNewUser(UserClientTechnicalDTO userData)
         {
-            if (!authorizationSocket.Connected) authorizationSocket.Connect(authorizationServiceEndPoint);
+            if (!authorizationSocket.Connected) authorizationSocket.Connect(NetworkConfigurator.GetAuthorizerEndPoint());
 
             SendNewClientData(userData);
 

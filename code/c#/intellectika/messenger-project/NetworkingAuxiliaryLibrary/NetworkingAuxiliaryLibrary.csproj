@@ -32,6 +32,7 @@
     <Compile Include=".dependencies\objects\NetworkController.cs" />
     <Compile Include=".dependencies\objects\NetworkReciever.cs" />
     <Compile Include=".net\auxiliary\objects\common\ChatDTO.cs" />
+    <Compile Include=".net\auxiliary\objects\common\NetworkingConfiguration.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientPublicDTO.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Message.cs" />

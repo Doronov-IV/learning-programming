@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include=".controls\Application.cs" />
     <Compile Include=".controls\Program.cs" />
+    <Compile Include=".local-service\NetworkConfigurator.cs" />
     <Compile Include=".net\ServiceController.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
     <Compile Include=".service-model\configs\ChatConfiguration.cs" />

@@ -31,6 +31,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Nuke.Common" Version="6.2.1" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
@@ -44,6 +45,9 @@
 
 
   <ItemGroup>
+    <Reference Include="NetworkingAuxiliaryLibrary">
+      <HintPath>..\MessengerService\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Toolbox">
       <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
     </Reference>
