@@ -11,6 +11,7 @@ using System.Linq;
 using Toolbox.Flags;
 using Spectre.Console;
 using System.IdentityModel.Tokens.Jwt;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace MessengerService.Datalink
 {
@@ -148,8 +149,6 @@ namespace MessengerService.Datalink
                     {
                         userList.Add(client);
 
-                        CheckIncommingLogin(msg.Message as string);
-
                         var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
                         client.CurrentUser = user;
@@ -211,7 +210,7 @@ namespace MessengerService.Datalink
                     catch { /* Notofication exception */}
                     if (msg != null)
                     {
-                        CheckIncommingLogin(msg.Message as string);
+                        CheckIncommingRegistrationData(msg);
 
                         AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetLoginReceiptStyle(msg)));
                     }
@@ -247,7 +246,7 @@ namespace MessengerService.Datalink
         
 
         /// <summary>
-        /// Broadcast a notification message to all users about the new user connection;
+        /// Broadcast a notification message to all users about the new userData connection;
         /// <br />
         /// Транслировать уведомление для всех пользователей о подключении нового пользователя;
         /// </summary>
@@ -261,7 +260,7 @@ namespace MessengerService.Datalink
                     var usrName = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.CurrentNickname);
                     var usrUID = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.PublicId);
 
-                    broadcastPacket.WriteOpCode(1); // code '1' means new user has connected;
+                    broadcastPacket.WriteOpCode(1); // code '1' means new userData has connected;
                     broadcastPacket.WriteMessage(usrName);
                     broadcastPacket.WriteMessage(usrUID);
 
@@ -273,7 +272,7 @@ namespace MessengerService.Datalink
 
 
         /// <summary>
-        /// Send message to all users. Mostly use to deliver one user's message to all other ones;
+        /// Send message to all users. Mostly use to deliver one userData's message to all other ones;
         /// <br />
         /// Отправить сообщение всем пользователям. В основном, используется, чтобы переслать сообщение одного пользователя всем остальным;
         /// </summary>
@@ -300,25 +299,25 @@ namespace MessengerService.Datalink
 
 
         /// <summary>
-        /// Broadcast a notification message to all users about some user disconnection;
+        /// Broadcast a notification message to all users about some userData disconnection;
         /// <br />
         /// Транслировать уведомление для всех пользователей о том, что один из пользователей отключился;
         /// </summary>
         /// <param name="uid">
-        /// id of the user in order to find and delete him from the user list;
+        /// id of the userData in order to find and delete him from the userData list;
         /// <br />
         /// id пользователя, чтобы найти его и удалить из списка пользователей;
         /// </param>
         public void BroadcastDisconnect(User userData)
         {
             var disconnectedUser = userList.Where(x => x.CurrentUser.PublicId.Equals(userData.PublicId)).FirstOrDefault();
-            userList.Remove(disconnectedUser);            // removing user;
+            userList.Remove(disconnectedUser);            // removing userData;
 
             var broadcastPacket = new PackageBuilder();
             foreach (var user in userList)
             {
-                broadcastPacket.WriteOpCode(10);    // on user disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
-                broadcastPacket.WriteMessage(new TextMessagePackage(userData.PublicId, "@All", userData.PublicId)); // it also sends disconnected user id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
+                broadcastPacket.WriteOpCode(10);    // on userData disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
+                broadcastPacket.WriteMessage(new TextMessagePackage(userData.PublicId, "@All", userData.PublicId)); // it also sends disconnected userData id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
             }
 
@@ -427,7 +426,7 @@ namespace MessengerService.Datalink
 
 
         /// <summary>
-        /// Return user reference by searching with user login.
+        /// Return userData reference by searching with userData login.
         /// <br />
         /// Вернуть ссылку на пользователя в результате поиска по логину пользователя.
         /// </summary>
@@ -470,7 +469,7 @@ namespace MessengerService.Datalink
 
 
         /// <summary>
-        /// Send user reference found to the provided reciever.
+        /// Send userData reference found to the provided reciever.
         /// <br />
         /// Выслать ссылку на пользователя указанному получателю.
         /// </summary>
@@ -496,19 +495,16 @@ namespace MessengerService.Datalink
         }
 
 
-        /// <summary>
-        /// Check login provided in the table of users.
-        /// <br />
-        /// Проверить предоставленный логин в таблице пользователей.
-        /// </summary>
-        private void CheckIncommingLogin(string login)
+        private void CheckIncommingRegistrationData(MessagePackage pack)
         {
+            var userData = SubstractUserData(pack);
+
             bool isPresentFlag = false;
             using (MessengerDatabaseContext context = new())
             {
                 foreach (var user in context.Users)
                 {
-                    if (user.Login.Equals(login))
+                    if (userData.Login.Equals(user.Login))
                     {
                         isPresentFlag = true;
                         break;
@@ -517,9 +513,26 @@ namespace MessengerService.Datalink
 
                 if (!isPresentFlag)
                 {
-                    AddNewUserByLogin(login);
+                    AddNewUserByLogin(userData.Login, userData.PublicId);
                 }
             }
+        }
+
+
+        private UserClientTechnicalDTO SubstractUserData(MessagePackage pack)
+        {
+            UserClientTechnicalDTO userData = new();
+            var queue = pack.Message as string;
+            var strings = queue.Split("|");
+            if (strings.Length == 2)
+            {
+                userData.Login = strings[0];
+                userData.PublicId = strings[1];
+            }
+            else if (strings.Length == 1)
+                userData.Login = userData.PublicId = strings[0];
+
+            return userData;
         }
 
 
@@ -528,15 +541,15 @@ namespace MessengerService.Datalink
         /// <br />
         /// Добавить новый экземпляр в таблицу пользователей, используя только логин.
         /// </summary>
-        private void AddNewUserByLogin(string login)
+        private void AddNewUserByLogin(string login, string publicId)
         {
             using (MessengerDatabaseContext context = new())
             {
                 User newUser = new();
                 newUser.Id = context.Users.Count() + 1;
                 newUser.Login = login;
-                newUser.CurrentNickname = "User" + context.Users.Count();
-                newUser.PublicId = "User" + context.Users.Count();
+                newUser.CurrentNickname = publicId;
+                newUser.PublicId = publicId;
 
                 context.Users.Add(newUser);
                 context.SaveChanges();

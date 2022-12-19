@@ -34,13 +34,19 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                 }
                 else
                 {
-                    MessageBox.Show("Neither login nor password should be empty.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show("Both login and password fields are required to proceed.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Service is down. Consider connecting later.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        public async void OnSignUpButtonClick()
+        {
+            WpfWindowsManager.MoveFromLoginToRegister(_localUserTechnicalData, serviceTransmitter);
         }
 
 

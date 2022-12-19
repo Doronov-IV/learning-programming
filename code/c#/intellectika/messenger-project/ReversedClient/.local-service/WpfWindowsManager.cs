@@ -57,6 +57,62 @@ namespace ReversedClient.LocalService
         }
 
 
+        public static void MoveFromLoginToRegister(UserClientTechnicalDTO userData, ClientTransmitter transmitter)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ClientSignUpWindow window = new(userData, transmitter);
+
+                Window closeWindow = null;
+                Window showWindow = null;
+
+                foreach (Window win in Application.Current.Windows)
+                {
+                    if (win is ClientSignUpWindow)
+                    {
+                        showWindow = win;
+                    }
+                    else if (win is ClientLoginWindow)
+                    {
+                        closeWindow = win;
+                    }
+                }
+
+                Application.Current.MainWindow = showWindow;
+                showWindow.Show();
+                closeWindow.Hide();
+            });
+        }
+
+
+        public static void FromRegisterToLogin(UserClientTechnicalDTO userData, ClientTransmitter transmitter)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ClientLoginWindow window = new(userData, transmitter);
+
+                Window closeWindow = null;
+                Window showWindow = null;
+
+                foreach (Window win in Application.Current.Windows)
+                {
+                    if (win is ClientLoginWindow)
+                    {
+                        showWindow = win;
+                    }
+                    else if (win is ClientSignUpWindow)
+                    {
+                        closeWindow = win;
+                    }
+                }
+
+                Application.Current.MainWindow = showWindow;
+                showWindow.Show();
+                closeWindow.Hide();
+            });
+        }
+
+
 
         /// <summary>
         /// Move from chat window to the login one. Typically is called when the user disconnects.

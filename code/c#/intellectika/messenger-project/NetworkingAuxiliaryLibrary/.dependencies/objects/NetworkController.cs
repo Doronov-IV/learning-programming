@@ -27,7 +27,7 @@ namespace NetworkingAuxiliaryLibrary.Dependencies.Objects
         {
             Listener = listener;
             ConnectionList = new();
-            Listener = TcpListenerDataAccessFactory.GetLocalMessengerUserListener();
+            //Listener = TcpListenerDataAccessFactory.GetLocalMessengerClientListener();
             ProcessingStatus = new();
         }
 

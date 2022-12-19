@@ -7,11 +7,43 @@
         mc:Ignorable="d"
         Title="ClientSignUp" Height="450" Width="400">
     <Grid>
-        <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Left" Margin="140,80,0,0" TextWrapping="Wrap" Text="{Binding UserDTOdata.Login}" VerticalAlignment="Top" Width="120"/>
-        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding UserDTOdata.Password}" HorizontalAlignment="Left" Margin="140,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
-        <Label Content="Nobody will see your login-nickname." HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top"/>
-        <Button Content="Register" Command="{Binding RegisterCommand}" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
-        <TextBox Style="{StaticResource PublicIdTextBox}" HorizontalAlignment="Center" Margin="0,160,0,0" TextWrapping="Wrap" Text="{Binding UserDTOdata.PublicId}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBox 
+              Style="{StaticResource SignUpLoginTextBox}" HorizontalAlignment="Center" 
+             Margin="0,0,0,338" TextWrapping="Wrap" Width="120"
+            Text="{Binding UserData.Login}" Height="16" VerticalAlignment="Bottom"
+         />
+
+        <TextBox 
+               Style="{StaticResource PublicIdTextBox}" Margin="0,0,0,298" 
+              HorizontalAlignment="Center" TextWrapping="Wrap" Width="120"
+            Text="{Binding UserData.PublicId}" Height="16" VerticalAlignment="Bottom" 
+         />
+
+        <TextBox 
+             Text="{Binding UserData.Password}" MaxLength="16" Width="120"
+            Style="{StaticResource SignUpPasswordTextBox}" Margin="0,0,0,258"
+           HorizontalAlignment="Center" Height="16" VerticalAlignment="Bottom"
+         />
+
+        <TextBox 
+             Text="{Binding RepeatedPassword}" MaxLength="16" Width="120"
+            Style="{StaticResource RepeatPasswordTextBox}" Margin="0,0,0,218"
+           HorizontalAlignment="Center" Height="16" VerticalAlignment="Bottom"
+         />
+
+
+        <Label 
+              Content="Other users will be able to see your public id." 
+             HorizontalAlignment="Center" Margin="0,307,0,0" 
+            VerticalAlignment="Top"
+         />
+
+
+        <Button 
+               Content="Register" Command="{Binding RegisterCommand}" 
+              HorizontalAlignment="Center" Margin="0,253,0,0"
+             VerticalAlignment="Top" Height="25" Width="60"/>
 
     </Grid>
 

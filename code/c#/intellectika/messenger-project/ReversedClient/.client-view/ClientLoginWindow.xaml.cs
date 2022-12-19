@@ -1,4 +1,6 @@
-﻿using ReversedClient.ViewModel.ClientStartupWindow;
+﻿using Net.Transmition;
+using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.ViewModel.ClientStartupWindow;
 
 namespace ReversedClient.client_view
 {
@@ -17,11 +19,9 @@ namespace ReversedClient.client_view
         }
 
 
-        public ClientLoginWindow(string userLogin) : this()
+        public ClientLoginWindow(UserClientTechnicalDTO userData, ClientTransmitter transmitter) : this()
         {
-            var VMRef = DataContext as ClientLoginWindowViewModel;
-
-            VMRef.LocalUserTechnicalData.Login = userLogin;
+            DataContext = new ClientLoginWindowViewModel(new(userData.Login, "", ""), transmitter);
         }
     }
 }

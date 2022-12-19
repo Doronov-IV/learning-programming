@@ -313,7 +313,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию;
         /// </summary>
-        public ClientMessengerWindowViewModel() : this(new(),new())
+        public ClientMessengerWindowViewModel()
         {
         }
 

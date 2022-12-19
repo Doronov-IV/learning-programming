@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.ViewModel.ClientSignUpWindow;
+using ReversedClient.ViewModel.ClientStartupWindow;
 
 namespace ReversedClient.client_view
 {
@@ -12,12 +15,16 @@ namespace ReversedClient.client_view
         public ClientSignUpWindow()
         {
             InitializeComponent();
+
+            DataContext = new ClientSignUpWindowViewModel();
+
+            Name = nameof(ClientSignUpWindow);
         }
 
 
-        public ClientSignUpWindow(UserClientTechnicalDTO user)
+        public ClientSignUpWindow(UserClientTechnicalDTO user, ClientTransmitter transmitter) : this()
         {
-
+            DataContext = new ClientSignUpWindowViewModel(user, transmitter);
         }
     }
 }

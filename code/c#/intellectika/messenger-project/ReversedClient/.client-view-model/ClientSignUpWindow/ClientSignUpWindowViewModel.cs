@@ -16,6 +16,13 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         private UserClientTechnicalDTO _userData;
 
 
+        /// <inheritdoc cref="RepeatedPassword"/>
+        private string _repeatedPassword;
+
+
+        private ClientTransmitter transmitter;
+
+
 
         /// <summary>
         /// An instance of an object to encapsulate user data transfered to another windows.
@@ -29,6 +36,22 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
             {
                 _userData = value;
                 OnPropertyChanged(nameof(UserData));
+            }
+        }
+
+
+        /// <summary>
+        /// A temporal property for user password correctness check.
+        /// <br />
+        /// Временное свойство для проверки корректности пароля пользователя.
+        /// </summary>
+        public string RepeatedPassword
+        {
+            get { return _repeatedPassword; }
+            set
+            {
+                _repeatedPassword = value;
+                OnPropertyChanged(nameof(RepeatedPassword));
             }
         }
 
@@ -79,9 +102,10 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public ClientSignUpWindowViewModel(UserClientTechnicalDTO userData) : this()
+        public ClientSignUpWindowViewModel(UserClientTechnicalDTO userData, ClientTransmitter transmitter) : this()
         {
-            UserData = userData;
+            this.transmitter = transmitter;
+            UserData.Login = userData.Login;
         }
 
 

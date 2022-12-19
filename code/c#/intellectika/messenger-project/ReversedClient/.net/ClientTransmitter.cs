@@ -198,42 +198,28 @@ namespace Net.Transmition
         /// </returns>
         public bool ConnectAndAuthorize(UserClientTechnicalDTO user)
         {
-            try
+            //Если клиент не подключен
+            if (!authorizationSocket.Connected)
             {
-                //Если клиент не подключен
-                if (!authorizationSocket.Connected)
-                {
-                    /// 
-                    /// - Client connection [!]
-                    ///
-                    authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
-                }
-                    _authorizationPacketReader = new(authorizationSocket.GetStream());
-
-                    if (cancellationTokenSource.IsCancellationRequested)
-                        cancellationTokenSource = new();
-
-
-                    var connectPacket = new PackageBuilder();
-
-                    connectPacket.WriteOpCode(1);
-
-                    connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
-
-                    authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
-
-                    var result = _authorizationPacketReader.ReadMessage().Message as string;
-
-                    if (result.Equals("Denied")) return false;
-                    else return true;
-               
+                /// 
+                /// - Client connection [!]
+                ///
+                authorizationSocket.ConnectAsync(authorizationServiceEndPoint);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("The service is down.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                _authorizationPacketReader = new(authorizationSocket.GetStream());
 
-                return false;
-            }
+                var connectPacket = new PackageBuilder();
+
+                connectPacket.WriteOpCode(1);
+
+                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
+
+                authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
+
+                var result = _authorizationPacketReader.ReadMessage().Message as string;
+
+                if (result.Equals("Denied")) return false;
+                else return true;
         }
 
 
@@ -262,11 +248,7 @@ namespace Net.Transmition
 
             if (messengerSocket.Connected)
             {
-                _messangerPacketReader = new(messengerSocket.GetStream());
-
-                if (cancellationTokenSource.IsCancellationRequested)
-                    cancellationTokenSource = new();
-
+                MessangerPacketReader = new(messengerSocket.GetStream());
 
                 var connectPacket = new PackageBuilder();
 
@@ -324,32 +306,20 @@ namespace Net.Transmition
 
 
 
-
-        /// <summary>
-        /// Send data of the client that wants to register.
-        /// <br />
-        /// Отправить даные клиента, который хочет зарегистрироваться.
-        /// </summary>
-        /// <param name="userData">
-        /// New user data, packed in DTO.
-        /// <br />
-        /// Данные нового пользователя, упакованные в "DTO".
-        /// </param>
-        public void SendNewClientData(UserClientTechnicalDTO userData)
+        public bool RegisterNewUser(UserClientTechnicalDTO userData)
         {
-            var messagePacket = new PackageBuilder();
-            var signUpMessage = new TextMessagePackage(sender: userData.Login, reciever: "Service", message: $"{userData.Password}");
-            messagePacket.WriteOpCode(1); // write another code, since code '1' is for sign in
-            messagePacket.WriteMessage(signUpMessage);
-            try
-            {
-                authorizationSocket.Client.Send(messagePacket.GetPacketBytes());
-            }
-            catch (Exception ex)
-            {
-                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
-            }
+            if (!authorizationSocket.Connected) authorizationSocket.Connect(authorizationServiceEndPoint);
+
+            SendNewClientData(userData);
+
+            PackageReader _authorizationPacketReader = new(authorizationSocket.GetStream());
+
+            var result = _authorizationPacketReader.ReadMessage().Message as string;
+
+            if (result.Equals("Denied")) return false;
+            else return true;
         }
+
 
 
 
@@ -389,8 +359,10 @@ namespace Net.Transmition
         /// </summary>
         public async Task ReadPacketsAsync()
         {
+            if (_messangerPacketReader is null) _messangerPacketReader = new(messengerSocket.GetStream());
+
             byte opCode = 77;
-            while (!ClientTransmitter.cancellationTokenSource.IsCancellationRequested)
+            while (true)
             {
                 try
                 {
@@ -439,6 +411,34 @@ namespace Net.Transmition
 
 
 
+        /// <summary>
+        /// Send data of the client that wants to register.
+        /// <br />
+        /// Отправить даные клиента, который хочет зарегистрироваться.
+        /// </summary>
+        /// <param name="userData">
+        /// New user data, packed in DTO.
+        /// <br />
+        /// Данные нового пользователя, упакованные в "DTO".
+        /// </param>
+        private void SendNewClientData(UserClientTechnicalDTO userData)
+        {
+            var messagePacket = new PackageBuilder();
+            var signUpMessage = new TextMessagePackage(sender: userData.PublicId, reciever: "Service", message: $"{userData.Login}|{userData.Password}");
+            messagePacket.WriteOpCode(0);
+            messagePacket.WriteMessage(signUpMessage);
+            try
+            {
+                authorizationSocket.Client.Send(messagePacket.GetPacketBytes());
+            }
+            catch (Exception ex)
+            {
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
+            }
+        }
+
+
+
         #endregion LOGIC - internal Behavior
 
 
@@ -455,6 +455,7 @@ namespace Net.Transmition
         /// </summary>
         public ClientTransmitter()
         {
+            
             authorizationSocket = new TcpClient();
             messengerSocket = new TcpClient();
         }

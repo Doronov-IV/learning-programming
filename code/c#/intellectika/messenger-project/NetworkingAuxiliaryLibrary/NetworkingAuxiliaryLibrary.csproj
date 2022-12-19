@@ -28,9 +28,9 @@
     <Compile Include=".dependencies\data-access\user\IUserDataAccessDependency.cs" />
     <Compile Include=".dependencies\data-access\user\DatabaseUserDataAccess.cs" />
     <Compile Include=".dependencies\data-access\user\IUserDataAccess.cs" />
+    <Compile Include=".dependencies\factories\IpEndPointDataAccessFactory.cs" />
     <Compile Include=".dependencies\objects\NetworkController.cs" />
     <Compile Include=".dependencies\objects\NetworkReciever.cs" />
-    <Compile Include=".dependencies\factories\TcpListenerDataAccessFactory.cs" />
     <Compile Include=".net\auxiliary\objects\common\ChatDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientPublicDTO.cs" />
     <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />

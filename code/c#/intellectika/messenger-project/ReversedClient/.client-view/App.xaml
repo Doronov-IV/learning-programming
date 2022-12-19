@@ -10,8 +10,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../.properties/LoginTextBox.xaml"/>
                 <ResourceDictionary Source="../.properties/PasswordTextBox.xaml"/>
+                <ResourceDictionary Source="../.properties/RepeatPasswordTextBox.xaml"/>
                 <ResourceDictionary Source="../.properties/SendMessageTextBox.xaml"/>
                 <ResourceDictionary Source="../.properties/PublicIdTextBox.xaml"/>
+                <ResourceDictionary Source="../.properties/SignUpLoginTextBox.xaml"/>
+                <ResourceDictionary Source="../.properties/SignUpPasswordTextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

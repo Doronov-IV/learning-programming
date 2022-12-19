@@ -99,10 +99,11 @@
         /// <br />
         /// Конструктор с параметрами.
         /// </summary>
-        public UserClientTechnicalDTO(string login, string password)
+        public UserClientTechnicalDTO(string login, string password, string publicId)
         {
             this._password = password;
             this._login = login;
+            this._publicId = publicId;
         }
 
 

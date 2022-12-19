@@ -1,9 +1,9 @@
 ﻿global using System.Collections.Generic;
-global using Microsoft.Extensions.DependencyInjection;
 global using System.Threading.Tasks;
 global using System.Linq;
 global using System.Text;
 global using System;
+using Tools.Toolbox;
 
 namespace ShootingRange
 {
@@ -11,7 +11,7 @@ namespace ShootingRange
     {
         public static async Task Main(string[] args)
         {
-            
+            Console.WriteLine(Utilizer.GetLocalIPAddress());
         }
     }
 }

@@ -19,21 +19,24 @@ namespace ReversedClient.LocalService
         /// </summary>
         public static void FillChats(UserServerSideDTO user, ref ObservableCollection<MessengerChat> ChatList)
         {
-            SortChats(ref user);
-
-            foreach (ChatDTO chat in user.ChatArray)
+            if (user.ChatArray is not null && user.ChatArray.Length != 0)
             {
-                var userRef = chat.Members.Select(u => u).Where(u => !u.Equals(user.CurrentPublicId)).FirstOrDefault();
-                var chatRef = new MessengerChat(addresser: new(user.CurrentNickname, user.CurrentPublicId), addressee: new(userRef, userRef));
+                SortChats(ref user);
 
-                foreach (var message in chat.Messages)
+                foreach (ChatDTO chat in user.ChatArray)
                 {
-                    
-                    if (message.Sender.Equals(user.CurrentPublicId)) chatRef.AddCheckedOutgoingMessage(message);
-                    else chatRef.AddIncommingMessage(message);
-                }
+                    var userRef = chat.Members.Select(u => u).Where(u => !u.Equals(user.CurrentPublicId)).FirstOrDefault();
+                    var chatRef = new MessengerChat(addresser: new(user.CurrentNickname, user.CurrentPublicId), addressee: new(userRef, userRef));
 
-                ChatList.Add(chatRef);
+                    foreach (var message in chat.Messages)
+                    {
+
+                        if (message.Sender.Equals(user.CurrentPublicId)) chatRef.AddCheckedOutgoingMessage(message);
+                        else chatRef.AddIncommingMessage(message);
+                    }
+
+                    ChatList.Add(chatRef);
+                }
             }
         }
 

@@ -60,6 +60,17 @@
     <Page Include=".client-view\ClientSignUpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include=".properties\SignUpPasswordTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".properties\SignUpLoginTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".properties\RepeatPasswordTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include=".properties\PublicIdTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

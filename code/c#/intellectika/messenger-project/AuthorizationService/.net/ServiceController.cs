@@ -4,6 +4,7 @@ using AuthorizationServiceProject.Model.Context;
 using AuthorizationServiceProject.Model.Entities;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Style.Authorizer;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -123,7 +124,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Проверить данные пользователя.
         /// </summary>
-        public bool CheckAuthorizationData(UserClientSideDTO pair)
+        public bool CheckAuthorizationData(UserClientTechnicalDTO pair)
         {
             bool bRes = false;
             using (AuthorizationDatabaseContext context = new())
@@ -189,7 +190,7 @@ namespace AuthorizationServiceProject.Net
 
             if (messengerServiceSocket.Connected)
             {
-                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", $"{user.CurrentUser.Login}");
+                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", $"{user.CurrentUser.Login}|{user.CurrentUser.PublicId}");
                 PackageBuilder builder = new();
                 builder.WriteMessage(package);
                 messengerServiceSocket.Client.Send(builder.GetPacketBytes());
@@ -215,7 +216,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// "True" - если процесс прошёл успешно, если пользователь уже есть в базе -  "false".
         /// </returns>
-        public bool TryAddNewUser(UserClientSideDTO user)
+        public bool TryAddNewUser(UserClientTechnicalDTO user)
         {
             bool doesContain = UserIsPresentInDatabase(user);
             using (AuthorizationDatabaseContext context = new())
@@ -245,7 +246,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// "True" - если данные совпадают, иначе "false".
         /// </returns>
-        public bool UserIsPresentInDatabase(UserClientSideDTO user)
+        public bool UserIsPresentInDatabase(UserClientTechnicalDTO user)
         {
             bool doesContain = false;
             using (AuthorizationDatabaseContext context = new())

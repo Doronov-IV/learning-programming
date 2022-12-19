@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="ClientLoginWindow" Height="450" Width="400">
     <Grid>
-        <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="{Binding Path=UserDTOdata.Login}" VerticalAlignment="Top" Width="120"/>
-        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding Path=UserDTOdata.Password}" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
-        <Label Content="Nobody will see your login-nickname." HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top"/>
-        <Button Content="Sign In" Command="{Binding SignInButtonClickCommand}" HorizontalAlignment="Center" Margin="0,179,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
+        <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalUserTechnicalData.Login}" VerticalAlignment="Top" Width="120"/>
+        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding Path=LocalUserTechnicalData.Password}" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
+        <Button Content="Sign In" Command="{Binding SignInCommand}" HorizontalAlignment="Center" Margin="0,0,0,220" Width="60" Height="25" VerticalAlignment="Bottom"/>
+        <Button Content="Sign Up" Command="{Binding SignUpCommand}" HorizontalAlignment="Center" Margin="0,0,0,180" Width="60" Height="25" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

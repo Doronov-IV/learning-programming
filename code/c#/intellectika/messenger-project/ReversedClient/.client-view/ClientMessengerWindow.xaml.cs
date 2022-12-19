@@ -22,13 +22,9 @@ namespace ReversedClient.client_view
         }
 
 
-        public ClientMessengerWindow(UserServerSideDTO userData, ClientTransmitter clientRadio)
+        public ClientMessengerWindow(UserServerSideDTO userData, ClientTransmitter clientRadio) : this()
         {
-            InitializeComponent();
-
             DataContext = new ClientMessengerWindowViewModel(userData, clientRadio);
-
-            SetDefaultName();
         }
 
 

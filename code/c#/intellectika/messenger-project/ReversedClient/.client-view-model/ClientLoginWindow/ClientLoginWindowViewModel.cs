@@ -86,7 +86,10 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br /> 
         /// Команда Prism, для обработки клика по кнопке "SignIn".
         /// </summary>
-        public DelegateCommand SignInButtonClickCommand { get; }
+        public DelegateCommand SignInCommand { get; }
+
+
+        public DelegateCommand SignUpCommand { get; }
 
 
         #endregion COMMANDS
@@ -111,7 +114,20 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
             serviceTransmitter = new();
             serviceTransmitter.SendOutput += ShowErrorMessage;
 
-            SignInButtonClickCommand = new(OnSignInButtonClick);
+            SignInCommand = new(OnSignInButtonClick);
+            SignUpCommand = new(OnSignUpButtonClick);
+        }
+
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public ClientLoginWindowViewModel(UserClientTechnicalDTO userData, ClientTransmitter transmitter) : this()
+        {
+            LocalUserTechnicalData.Login = userData.Login;
+            serviceTransmitter = transmitter;
         }
 
 

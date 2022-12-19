@@ -2,6 +2,8 @@
 using NetworkingAuxiliaryLibrary.Style.Authorizer;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Style.Common;
+using NetworkingAuxiliaryLibrary.Objects.Common;
+using Microsoft.VisualBasic;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -34,7 +36,7 @@ namespace AuthorizationServiceProject.Net
 
 
         /// <inheritdoc cref="CurrentUser"/>
-        private UserClientSideDTO? _currentUser = null;
+        private UserClientTechnicalDTO? _currentUser = null;
 
 
         /// <inheritdoc cref="ClientSocket"/>
@@ -62,7 +64,7 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Информация привязанного пользователя.
         /// </summary>
-        public UserClientSideDTO? CurrentUser
+        public UserClientTechnicalDTO? CurrentUser
         {
             get { return _currentUser; }
             set { _currentUser = value; }
@@ -86,23 +88,22 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Спарсить входящее текстовое сообщение в объект типа UserDTO.
         /// </summary>
-        public UserClientSideDTO ReadAuthorizationData(MessagePackage message)
+        public UserClientTechnicalDTO ReadAuthorizationData(MessagePackage message)
         {
+            UserClientTechnicalDTO userData = new();
             var queue = message.Message as string;
-
             var strings = queue.Split("|");
-
-            UserClientSideDTO pair = new();
-
             if (strings.Length == 2)
             {
-                pair.Login = strings[0];
-                pair.Password = strings[1];
+                userData.Login = strings[0];
+                userData.Password = strings[1];
             }
             else if (strings.Length == 1)
-                pair.Login = pair.Password = strings[0];
+                userData.Login = userData.Password = strings[0];
 
-            return new UserClientSideDTO(login: pair.Login, password: pair.Password);
+            userData.PublicId = message.Sender;
+
+            return userData;
         }
 
 
@@ -153,6 +154,7 @@ namespace AuthorizationServiceProject.Net
                             bool bSuccessfulRegistration = controller.TryAddNewUser(CurrentUser);
                             if (bSuccessfulRegistration)
                             {
+                                controller.TrySendLoginToService(this);
                                 AnsiConsole.Write(new Markup($"{ConsoleServiceStyle.GetUserRegistrationStyle(CurrentUser.Login)}"));
                             }
                             controller.SendClientResponse(this, bSuccessfulRegistration);
@@ -167,14 +169,7 @@ namespace AuthorizationServiceProject.Net
                             CurrentUser = ReadAuthorizationData(signInMessage);
 
                             bool bAuthorizationRes = controller.UserIsPresentInDatabase(CurrentUser);
-                            if (bAuthorizationRes)
-                            {
-                                controller.SendClientResponse(this, bAuthorizationRes);
-
-                                if (controller.TrySendLoginToService(this)) // if the other service is online and we have sent data to it;
-                                    AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserConnection(CurrentUser.Login)}"));
-                            }
-                            else controller.SendClientResponse(this, bAuthorizationRes);
+                            controller.SendClientResponse(this, bAuthorizationRes);
 
                             break;
                     }
