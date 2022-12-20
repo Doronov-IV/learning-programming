@@ -22,38 +22,6 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         private async void OnSignInButtonClick()
         {
-            /*
-            int waitingTimeSpan = 200;
-            // first and main try;
-            try
-            {
-                await MakeConnectionEffort();
-            }
-            catch (Exception ex)
-            {
-                // second try;
-                Task.Delay(waitingTimeSpan).Wait(); // waiting some time in case it was some multithreading issue;
-                try
-                {
-                    await MakeConnectionEffort();
-                }
-                catch
-                {
-                    // third try;
-                    Task.Delay(waitingTimeSpan).Wait(); // 
-                    try
-                    {
-                        await MakeConnectionEffort();
-                    }
-                    catch
-                    {
-                        // the server(s) is(are) down after all;
-                        MessageBox.Show($"Service is down. Consider connecting later.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            */
-
             await MakeConnectionEffort();
         }
 
