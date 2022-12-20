@@ -29,34 +29,70 @@ namespace Net.Transmition
 
 
         /// <summary>
-        /// Provides client connections fo the service;
+        /// An instance that serves as a flag for client windows changing.
         /// <br />
-        /// Предоставляет клиенские подключения для сервиса;
+        /// Объект, который служит для перемещения между окнами клиента.
+        /// </summary>
+        private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+
+
+        /// <summary>
+        /// Provides client connections fo the authorization service;
+        /// <br />
+        /// Предоставляет клиенские подключения для сервиса авторизации;
         /// </summary>
         private TcpClient authorizationSocket;
 
 
+        /// <summary>
+        /// Provides client connections fo the messenger service;
+        /// <br />
+        /// Предоставляет клиенские подключения для сервиса месенжера;
+        /// </summary>
         private TcpClient messengerSocket;
 
 
-        /// <summary>
-        /// An auxiliary object to make reading/writing messages easier;
-        /// <br />
-        /// Вспомогательный объект, который необходим, чтобы упростить чтение/запись сообщений;
-        /// </summary>
+
+        ///<inheritdoc cref="AuthorizationPacketReader"/>
         private PackageReader _authorizationPacketReader;
 
 
-
+        ///<inheritdoc cref="MessengerPacketReader"/>
+        private PackageReader _messengerPacketReader;
 
 
 
         /// <summary>
-        /// .
+        /// An object that provides aid in reading authorizer networkstream data.
         /// <br />
-        /// .
+        /// Объект, который помогает читать данные из сетевого стрима авторизатора.
         /// </summary>
-        private PackageReader _messangerPacketReader;
+        public PackageReader AuthorizationPacketReader
+        {
+            get { return _authorizationPacketReader; }
+            set
+            {
+                _authorizationPacketReader = value;
+            }
+        }
+
+
+        /// <summary>
+        /// An object that provides aid in reading messenger networkstream data.
+        /// <br />
+        /// Объект, который помогает читать данные из сетевого стрима мессенжера.
+        /// </summary>
+        public PackageReader MessengerPacketReader
+        {
+            get { return _messengerPacketReader; }
+            set
+            {
+                _messengerPacketReader = value;
+            }
+        }
+
+
 
 
 
@@ -98,11 +134,6 @@ namespace Net.Transmition
 
 
 
-        private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-
-
-
         /// <summary>
         /// A delegate for transeffring output to other objects;
         /// <br />
@@ -117,27 +148,6 @@ namespace Net.Transmition
 
         /// <inheritdoc cref="PendOutputDelegate"/>
         public event PendOutputDelegate SendOutput;
-
-
-        public PackageReader AuthorizationPacketReader
-        {
-            get { return _authorizationPacketReader; }
-            set
-            {
-                _authorizationPacketReader = value;
-            }
-        }
-
-
-        public PackageReader MessangerPacketReader
-        {
-            get { return _messangerPacketReader; }
-            set
-            {
-                _messangerPacketReader = value;
-            }
-        }
-
 
 
 
@@ -217,7 +227,7 @@ namespace Net.Transmition
 
             if (messengerSocket.Connected)
             {
-                MessangerPacketReader = new(messengerSocket.GetStream());
+                MessengerPacketReader = new(messengerSocket.GetStream());
 
                 var connectPacket = new PackageBuilder();
 
@@ -275,6 +285,11 @@ namespace Net.Transmition
 
 
 
+        /// <summary>
+        /// Sign up new user based on user technical dto.
+        /// <br />
+        /// Зарегистрировать нового пользователя, основанного на техническом объекте.
+        /// </summary>
         public bool RegisterNewUser(UserClientTechnicalDTO userData)
         {
             if (!authorizationSocket.Connected) authorizationSocket.Connect(NetworkConfigurator.ClientAuthorizerEndPoint);
@@ -300,10 +315,10 @@ namespace Net.Transmition
         public UserServerSideDTO GetResponseData()
         {
             UserServerSideDTO res = null;
-            var code = _messangerPacketReader.ReadByte();
+            var code = _messengerPacketReader.ReadByte();
             if (code == 12)
             {
-                var msg = _messangerPacketReader.ReadMessage();
+                var msg = _messengerPacketReader.ReadMessage();
 
                 res = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
             }
@@ -328,14 +343,14 @@ namespace Net.Transmition
         /// </summary>
         public async Task ReadPacketsAsync()
         {
-            if (_messangerPacketReader is null) _messangerPacketReader = new(messengerSocket.GetStream());
+            if (_messengerPacketReader is null) _messengerPacketReader = new(messengerSocket.GetStream());
 
             byte opCode = 77;
             while (true)
             {
                 try
                 {
-                    await Task.Run(() => opCode = _messangerPacketReader.ReadByte());
+                    await Task.Run(() => opCode = _messengerPacketReader.ReadByte());
                 }
                 catch (Exception e)
                 {
