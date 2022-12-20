@@ -3,6 +3,7 @@ using ReversedClient.ViewModel.ClientStartupWindow;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using ReversedClient.ViewModel.ClientChatWindow;
+using NetworkingAuxiliaryLibrary.Net.Config;
 using NetworkingAuxiliaryLibrary.Processing;
 using System.IO.Packaging;
 using System.Net.Sockets;
@@ -25,27 +26,6 @@ namespace Net.Transmition
 
         #region PROPERTIES - public & private Properties
 
-
-
-        //
-        // EndPoint
-        //
-
-
-        /// <summary>
-        /// Localhost address;
-        /// <br />
-        /// Адрес локалхоста;
-        /// </summary>
-        private static IPAddress localHostIpAddress = IPAddress.Parse("127.0.0.1");
-
-
-        /// <summary>
-        /// A field you can insert your address into;
-        /// <br />
-        /// Поле, в которое вы можете вписать свой адрес;
-        /// </summary>
-        private static IPAddress otherHostIpAddress = IPAddress.Parse("127.0.0.1");
 
 
         /// <summary>
@@ -192,10 +172,7 @@ namespace Net.Transmition
             //Если клиент не подключен
             if (!authorizationSocket.Connected)
             {
-                /// 
-                /// - Client connection [!]
-                ///
-                authorizationSocket.ConnectAsync(NetworkConfigurator.GetAuthorizerEndPoint());
+                authorizationSocket.ConnectAsync(NetworkConfigurator.ClientAuthorizerEndPoint);
             }
                 _authorizationPacketReader = new(authorizationSocket.GetStream());
 
@@ -229,12 +206,12 @@ namespace Net.Transmition
         {
             try
             {
-                messengerSocket.Connect(NetworkConfigurator.GetMessengerEndPoint());
+                messengerSocket.Connect(NetworkConfigurator.ClientMessengerEndPoint);
             }
             catch (Exception ex)
             {
                 messengerSocket = new();
-                messengerSocket.Connect(NetworkConfigurator.GetMessengerEndPoint());
+                messengerSocket.Connect(NetworkConfigurator.ClientMessengerEndPoint);
             }
 
             if (messengerSocket.Connected)
@@ -299,7 +276,7 @@ namespace Net.Transmition
 
         public bool RegisterNewUser(UserClientTechnicalDTO userData)
         {
-            if (!authorizationSocket.Connected) authorizationSocket.Connect(NetworkConfigurator.GetAuthorizerEndPoint());
+            if (!authorizationSocket.Connected) authorizationSocket.Connect(NetworkConfigurator.ClientAuthorizerEndPoint);
 
             SendNewClientData(userData);
 

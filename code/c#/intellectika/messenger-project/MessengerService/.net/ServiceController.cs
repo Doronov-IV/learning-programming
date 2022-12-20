@@ -2,6 +2,7 @@
 using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Messenger;
 using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
+using NetworkingAuxiliaryLibrary.Net.Config;
 using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using MessengerService.Model.Context;
@@ -117,7 +118,7 @@ namespace MessengerService.Datalink
         public async Task ListenClientsAsync()
         {
             // create and start listenner
-            userListenner = new TcpListener(IPAddress.Parse("127.0.0.1"), 7333);
+            userListenner = new TcpListener(IPAddress.Any, NetworkConfigurator.ClientMessengerPort);
             userListenner.Start();
 
             // create basic references for reading clients
@@ -175,7 +176,7 @@ namespace MessengerService.Datalink
         {
             authorizer = null;
 
-            authorizationServiceListenner = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111));
+            authorizationServiceListenner = new(new IPEndPoint(IPAddress.Any, NetworkConfigurator.AuthorizerMessengerPort));
 
             authorizationServiceListenner.Start();
 

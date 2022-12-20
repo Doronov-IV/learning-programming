@@ -46,6 +46,8 @@
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
     <Compile Include=".net\auxiliary\processing\UserParser.cs" />
+    <Compile Include=".net\config\NetworkConfigurator.cs" />
+    <Compile Include=".net\config\NetworkConfiguration.cs" />
     <Compile Include=".style\authorizer\ConsoleServiceStyle.cs" />
     <Compile Include=".style\common\ConsoleServiceStyleCommon.cs" />
     <Compile Include=".style\messenger\ConsoleServiceStyle.cs" />
@@ -53,6 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 

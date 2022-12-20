@@ -5,6 +5,7 @@ using AuthorizationServiceProject.Model.Entities;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Style.Authorizer;
 using NetworkingAuxiliaryLibrary.Objects.Common;
+using NetworkingAuxiliaryLibrary.Net.Config;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -36,13 +37,6 @@ namespace AuthorizationServiceProject.Net
         /// </summary>
         private TcpClient messengerServiceSocket;
 
-
-        /// <summary>
-        /// A reference to the current messenger service endpoint.
-        /// <br />
-        /// Ссылка на текущий endpoint сервиса сообщений.
-        /// </summary>
-        private IPEndPoint staticMessengerServiceEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7111);
 
 
         /// <inheritdoc cref="UserList">
@@ -92,7 +86,7 @@ namespace AuthorizationServiceProject.Net
 
                 try
                 {
-                    if (!messengerServiceSocket.Connected) messengerServiceSocket.Connect(staticMessengerServiceEndpoint);
+                    if (!messengerServiceSocket.Connected) messengerServiceSocket.Connect(NetworkConfigurator.AuthorizerMessengerEndPoint);
                 }
                 catch (Exception ex)
                 {
@@ -169,7 +163,7 @@ namespace AuthorizationServiceProject.Net
         {
             try
             {
-                if (!messengerServiceSocket.Connected) messengerServiceSocket.Connect(staticMessengerServiceEndpoint);
+                if (!messengerServiceSocket.Connected) messengerServiceSocket.Connect(NetworkConfigurator.AuthorizerMessengerEndPoint);
             }
             catch (Exception ex)
             {
@@ -177,7 +171,7 @@ namespace AuthorizationServiceProject.Net
                 try
                 {
                     messengerServiceSocket = new();
-                    messengerServiceSocket.Connect(staticMessengerServiceEndpoint);
+                    messengerServiceSocket.Connect(NetworkConfigurator.AuthorizerMessengerEndPoint);
                     AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [yellow on green]Connection renewed.[/]\n"));
                 }
                 catch (Exception inex)
@@ -337,10 +331,10 @@ namespace AuthorizationServiceProject.Net
         public ServiceController()
         {
             _userList = new();
-            clientListener = new ( new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7222));
+            clientListener = new ( new IPEndPoint(IPAddress.Any, NetworkConfigurator.ClientAuthorizerPort));
             messengerServiceSocket = new();
 
-            TrySeedAdmins();
+            //TrySeedAdmins();
         }
 
 

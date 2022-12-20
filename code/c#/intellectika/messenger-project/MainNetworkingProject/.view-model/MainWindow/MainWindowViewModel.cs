@@ -95,7 +95,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         public MainWindowViewModel()
         {
             ExtractLibraries();
-            //CreateNetworkingConfigFile();
+            CreateNetworkingConfigFile();
 
             LaunchClientCommand = new(OnLaunchClientButtonClickAsync);
             LaunchServiceCommand = new(OnLaunchServiceButtonClickAsync);

@@ -8,7 +8,7 @@ using Tools.Toolbox;
 using Newtonsoft.Json;
 
 using NetworkingAuxiliaryLibrary.Dependencies.Factories;
-using NetworkingAuxiliaryLibrary.Objects.Common;
+using NetworkingAuxiliaryLibrary.Net.Config;
 
 namespace MainNetworkingProject.ViewModel.MainWindow
 {
@@ -197,9 +197,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
             DirectoryInfo directoryInfo;
 
-            listOfProjects.AddRange( new List<string>() { "ReversedClient", "MessengerService", "AithorizationService"});
+            listOfProjects.AddRange( new List<string>() { "ReversedClient", "MessengerService", "AuthorizationService"});
 
-            NetworkingConfiguration config = new() { ClientAddress = Utilizer.GetLocalIPAddress(), MessengerAddress = Utilizer.GetLocalIPAddress(), AuthorizerAddress = Utilizer.GetLocalIPAddress() };
+            NetworkConfiguration config = new();
+
+            config.addresses = new string[3] {  Utilizer.GetLocalIPAddress(), Utilizer.GetLocalIPAddress() , Utilizer.GetLocalIPAddress() };
 
             var jsonString = JsonConvert.SerializeObject(config);
 
@@ -209,7 +211,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
                 Directory.CreateDirectory(directoryInfo.FullName);
 
-                string fileName = directoryInfo.FullName + "/networking-config.json";
+                string fileName = directoryInfo.FullName + "/network-config.json";
 
                 File.WriteAllText(fileName, jsonString);
                
