@@ -20,22 +20,26 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
         {
             UserServerSideDTO res = new();
 
+            List<Chat> userSortedChatList = new(user.ChatList);
+            SortChats(ref userSortedChatList);
+
             res.CurrentNickname = user.CurrentNickname;
             res.CurrentPublicId = user.PublicId;
-            res.ChatArray = new ChatDTO[user.ChatList.Count];
+            res.ChatArray = new ChatDTO[userSortedChatList.Count];
 
-            for (int i = 0, iSize = user.ChatList.Count; i < iSize; i++)
+            for (int i = 0, iSize = userSortedChatList.Count; i < iSize; i++)
             {
                 ChatDTO chatDto = new();
-                chatDto.Members = new string[user.ChatList[i].UserList.Count];
-                chatDto.Messages = new MessageDTO[user.ChatList[i].MessageList.Count];
+                chatDto.Members = new string[userSortedChatList[i].UserList.Count];
+                chatDto.Messages = new MessageDTO[userSortedChatList[i].MessageList.Count];
 
-                ParseChatMembers(ref chatDto, user.ChatList[i]);
+                ParseChatMembers(ref chatDto, userSortedChatList[i]);
 
-                ParseChatMessages(ref chatDto, user.ChatList[i]);
+                ParseChatMessages(ref chatDto, userSortedChatList[i]);
 
                 res.ChatArray[i] = chatDto;
             }
+
             return res;
         }
 
@@ -80,6 +84,38 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
 
 
         #endregion API
+
+
+
+
+        #region LOGIC
+
+
+        /// <summary>
+        /// Sort messages in a user's chat list.
+        /// <br />
+        /// Отсортировать сообщения в списке чатов пользователя.
+        /// </summary>
+        private static void SortChats(ref List<Chat> sortedChatList)
+        {
+            foreach (Chat chat in sortedChatList)
+            {
+                chat.MessageList.Sort((Message A, Message B) =>
+                {
+                    if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return 1;
+                    else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return -1;
+                    else
+                    {
+                        if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return 1;
+                        else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return -1;
+                        else return 0;
+                    }
+                });
+            }
+        }
+
+
+        #endregion LOGIC
 
 
 

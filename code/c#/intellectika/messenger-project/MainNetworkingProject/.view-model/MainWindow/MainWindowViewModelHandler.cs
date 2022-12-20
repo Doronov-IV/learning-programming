@@ -191,6 +191,11 @@ namespace MainNetworkingProject.ViewModel.MainWindow
         }
 
 
+        /// <summary>
+        /// Create initial JSON network-config file.
+        /// <br />
+        /// Создать изначальный json-файл сетевого конфига.
+        /// </summary>
         private void CreateNetworkingConfigFile()
         {
             List<string> listOfProjects = new();

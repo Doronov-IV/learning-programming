@@ -21,7 +21,6 @@ namespace ReversedClient.LocalService
         {
             if (user.ChatArray is not null && user.ChatArray.Length != 0)
             {
-                SortChats(ref user);
 
                 foreach (ChatDTO chat in user.ChatArray)
                 {
@@ -37,30 +36,6 @@ namespace ReversedClient.LocalService
 
                     ChatList.Add(chatRef);
                 }
-            }
-        }
-
-
-        /// <summary>
-        /// Sort messages in a user's chat list.
-        /// <br />
-        /// Отсортировать сообщения в списке чатов пользователя.
-        /// </summary>
-        private static void SortChats(ref UserServerSideDTO user)
-        {
-            foreach (ChatDTO chat in user.ChatArray)
-            {
-                chat.Messages.ToList().Sort((MessageDTO A, MessageDTO B) =>
-                {
-                    if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return 1;
-                    else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Date)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Date))) return -1;
-                    else
-                    {
-                        if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) > Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return 1;
-                        else if (Int32.Parse(StringDateTime.RemoveSeparation(A.Time)) < Int32.Parse(StringDateTime.RemoveSeparation(B.Time))) return -1;
-                        else return 0;
-                    }
-                });
             }
         } 
 
