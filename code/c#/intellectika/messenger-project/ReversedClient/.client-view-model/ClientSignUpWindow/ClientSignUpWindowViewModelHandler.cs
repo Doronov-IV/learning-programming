@@ -11,6 +11,11 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
 
+        /// <summary>
+        /// Handle 'Register' button click.
+        /// <br />
+        /// Обработать клик кнопки "Register".
+        /// </summary>
         private void OnRegisterButtonClick()
         {
             try
@@ -54,9 +59,18 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
 
+        /// <summary>
+        /// A check for user to enter all the required fields.
+        /// <br />
+        /// Проверка для пользователя на ввод всех необходимых полей.
+        /// </summary>
         public bool AllFieldsAreInitialized()
         {
-            return !string.IsNullOrEmpty(UserData.Login) && !string.IsNullOrEmpty(UserData.Password) && !string.IsNullOrEmpty(UserData.PublicId) && !string.IsNullOrEmpty(RepeatedPassword);
+            return 
+                   !string.IsNullOrEmpty(UserData.Login)
+                && !string.IsNullOrEmpty(UserData.Password)
+                && !string.IsNullOrEmpty(UserData.PublicId)
+                && !string.IsNullOrEmpty(RepeatedPassword);
         }
 
 

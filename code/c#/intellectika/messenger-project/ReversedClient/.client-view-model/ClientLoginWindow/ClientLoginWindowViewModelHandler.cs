@@ -10,11 +10,17 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
 
 
         /// <summary>
-        /// Handle the 'Sign In' button;
+        /// Handle the 'Sign In' button click.
         /// <br />
-        /// Обработать клик по кнопке 'Sign In';
+        /// It uses try-catch syntax to recursively make three efforts of connection.
+        /// If all of them are in vain, 'throw' a message box into the user.
+        /// <br />
+        /// <br />
+        /// Обработать клик по кнопке 'Sign In'. Использует синтакс try-catch, чтобы рекурсивно сделать три попытки подключиться.
+        /// <br />
+        /// Если все они провалились, "выбросить" юхеру месседжбокс.
         /// </summary>
-        public async void OnSignInButtonClick()
+        private void OnSignInButtonClick()
         {
             // first and main try;
             try
@@ -79,13 +85,24 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         }
 
 
-        public async void OnSignUpButtonClick()
+
+        /// <summary>
+        /// A handler for the registration button click which sends user to the registration window.
+        /// <br />
+        /// Обработчик клика кнопки регистрации, который отсылает пользователя в окно регистрации.
+        /// </summary>
+        private async void OnSignUpButtonClick()
         {
             WpfWindowsManager.MoveFromLoginToRegister(_localUserTechnicalData, serviceTransmitter);
         }
 
 
 
+        /// <summary>
+        /// Debug method.
+        /// <br />
+        /// Метод для дебага.
+        /// </summary>
         private void ShowErrorMessage(string message)
         {
             MessageBox.Show($"{message}", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);

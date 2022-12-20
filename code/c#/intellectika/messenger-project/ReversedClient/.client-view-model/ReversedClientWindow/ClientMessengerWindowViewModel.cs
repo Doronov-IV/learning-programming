@@ -131,9 +131,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// .
+        /// The menu item representing selected online user from the 'Online' tab.
         /// <br />
-        /// .
+        /// Пункт меню, который представляет собой выбранного пользователя "в сети", из вкладки "Online".
         /// </summary>
         public UserClientPublicDTO SelectedOnlineMember
         {
@@ -243,13 +243,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             get { return _serviceTransmitter; }
             set { _serviceTransmitter = value; }
         }
-
-
-
-
-        public delegate void WindowSwapDelegate();
-
-        public event WindowSwapDelegate Disconnection;
 
 
         #endregion PROPERTIES - Object State

@@ -88,7 +88,11 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         public DelegateCommand SignInCommand { get; }
 
-
+        /// <summary>
+        /// A Prism command to handle 'SignUp' button click.
+        /// <br /> 
+        /// Команда Prism, для обработки клика по кнопке "SignUp".
+        /// </summary>
         public DelegateCommand SignUpCommand { get; }
 
 

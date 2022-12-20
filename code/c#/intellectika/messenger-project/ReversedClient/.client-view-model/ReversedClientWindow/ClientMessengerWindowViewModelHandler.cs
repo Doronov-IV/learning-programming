@@ -203,6 +203,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                         ChatList.Add(someChat);
                     }
                     someChat.AddOutgoingMessage(Message);
+                    ActiveChat = someChat;
                     Message = string.Empty;
                 }
             }
