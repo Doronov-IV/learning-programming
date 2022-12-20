@@ -20,40 +20,41 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br />
         /// Если все они провалились, "выбросить" юхеру месседжбокс.
         /// </summary>
-        private void OnSignInButtonClick()
+        private async void OnSignInButtonClick()
         {
+            /*
+            int waitingTimeSpan = 200;
             // first and main try;
             try
             {
-                MakeConnectionEffort();
+                await MakeConnectionEffort();
             }
-
             catch (Exception ex)
             {
                 // second try;
-                Task.Delay(20).Wait();
+                Task.Delay(waitingTimeSpan).Wait(); // waiting some time in case it was some multithreading issue;
                 try
                 {
-                    MakeConnectionEffort();
+                    await MakeConnectionEffort();
                 }
-
                 catch
                 {
                     // third try;
-                    Task.Delay(20).Wait();
+                    Task.Delay(waitingTimeSpan).Wait(); // 
                     try
                     {
-                        MakeConnectionEffort();
+                        await MakeConnectionEffort();
                     }
-
                     catch
                     {
                         // the server(s) is(are) down after all;
                         MessageBox.Show($"Service is down. Consider connecting later.", "Unable to connect", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
                 }
             }
+            */
+
+            await MakeConnectionEffort();
         }
 
 
@@ -62,14 +63,14 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// <br />
         /// Сделать попытку подклюяиться к сервису авторизации.
         /// </summary>
-        private void MakeConnectionEffort()
+        private async Task MakeConnectionEffort()
         {
             if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
             {
-                if (ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
+                if (await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
                 {
                     ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData);
-                    FullUserServiceData = ServiceTransmitter.GetResponseData(); // deadlock
+                    FullUserServiceData = ServiceTransmitter.GetResponseData();
 
                     WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, ServiceTransmitter);
                 }

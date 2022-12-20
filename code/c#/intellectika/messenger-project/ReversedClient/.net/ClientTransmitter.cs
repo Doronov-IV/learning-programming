@@ -167,27 +167,28 @@ namespace Net.Transmition
         /// <br />
         /// "True" - есди авторизация успешна, иначе "false".
         /// </returns>
-        public bool ConnectAndAuthorize(UserClientTechnicalDTO user)
+        public async Task<bool> ConnectAndAuthorize(UserClientTechnicalDTO user)
         {
             //Если клиент не подключен
             if (!authorizationSocket.Connected)
             {
-                authorizationSocket.ConnectAsync(NetworkConfigurator.ClientAuthorizerEndPoint);
+                await authorizationSocket.ConnectAsync(NetworkConfigurator.ClientAuthorizerEndPoint);
             }
-                _authorizationPacketReader = new(authorizationSocket.GetStream());
 
-                var connectPacket = new PackageBuilder();
+            _authorizationPacketReader = new(authorizationSocket.GetStream());
 
-                connectPacket.WriteOpCode(1);
+            var connectPacket = new PackageBuilder();
 
-                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
+            connectPacket.WriteOpCode(1);
 
-                authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
+            connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
 
-                var result = _authorizationPacketReader.ReadMessage().Message as string;
+            authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
-                if (result.Equals("Denied")) return false;
-                else return true;
+            var result = _authorizationPacketReader.ReadMessage().Message as string;
+
+            if (result.Equals("Denied")) return false;
+            else return true;
         }
 
 
