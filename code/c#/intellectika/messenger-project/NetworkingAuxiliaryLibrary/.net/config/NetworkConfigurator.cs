@@ -88,8 +88,8 @@ namespace NetworkingAuxiliaryLibrary.Net.Config
 
         #region ENDPOINTS
 
-        private static IPEndPoint _clientMessengerEndPoint = new(ClientIPAddress, _clientMessengerPort);
-        private static IPEndPoint _clientAuthorizerEndPoint = new(ClientIPAddress, _clientAuthorizerPort);
+        private static IPEndPoint _clientMessengerEndPoint = new(MessengerIPAddress, _clientMessengerPort);
+        private static IPEndPoint _clientAuthorizerEndPoint = new(AuthorizerIPAddress, _clientAuthorizerPort);
         private static IPEndPoint _authorizerMessengerEndPoint = new(MessengerIPAddress, _authorizerMessengerPort);
 
         public static IPEndPoint ClientMessengerEndPoint { get => _clientMessengerEndPoint; }
