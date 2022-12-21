@@ -213,16 +213,23 @@ namespace Net.Transmition
         /// <br />
         /// "Технический" DTO пользователя, содержащий его личную информацию.
         /// </param>
-        public void ConnectAndSendLoginToService(UserClientTechnicalDTO user)
+        public bool ConnectAndSendLoginToService(UserClientTechnicalDTO user)
         {
             try
             {
                 messengerSocket.Connect(NetworkConfigurator.ClientMessengerEndPoint);
             }
-            catch (Exception ex)
+            catch (Exception exSocketObsolete)
             {
-                messengerSocket = new();
-                messengerSocket.Connect(NetworkConfigurator.ClientMessengerEndPoint);
+                try 
+                { 
+                    messengerSocket = new();
+                    messengerSocket.Connect(NetworkConfigurator.ClientMessengerEndPoint);
+                }
+                catch (Exception exServiceDown)
+                {
+                    SendOutput("Server is down. Concider connecting later.");
+                }
             }
 
             if (messengerSocket.Connected)
@@ -234,7 +241,11 @@ namespace Net.Transmition
                 connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}"));
 
                 messengerSocket.Client.Send(connectPacket.GetPacketBytes());
+
+                return true;
             }
+
+            return false;
         }
 
 
