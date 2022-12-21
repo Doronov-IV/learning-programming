@@ -71,10 +71,17 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     string oldMessage = string.Empty;
                     foreach (var message in someChat.MessageList)
                     {
-                        if (message.Contains(msg.Message as string) && message.Contains(msg.Sender))
+                        if (message.Contains(msg.Sender)) // if we sent it
                         {
-                            newMessage = message + "✓";
-                            oldMessage = message;
+                            if (message.Contains(msg.Message as string)) // if we sent if from current client
+                            {
+                                newMessage = message + "✓";
+                                oldMessage = message;
+                            }
+                            else // otherwise, if we sent it from other device
+                            {
+                                Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msgCopy.Message as string) + "✓✓"));
+                            }
                         }
                     }
 
