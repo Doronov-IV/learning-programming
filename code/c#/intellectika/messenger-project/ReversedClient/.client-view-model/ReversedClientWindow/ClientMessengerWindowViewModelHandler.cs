@@ -57,7 +57,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 // if the _message was sent to us from other user
                 if (_currentUserModel.PublicId != msg.Sender)
                 {
-                    var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId == msg.Sender);
+                    var someChat = ChatList.Select(c => c).Where(c => c.Addressee.PublicId == msg.Sender).FirstOrDefault();
                     if (someChat is null)
                     {
                         someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.Sender), addresser: CurrentUserModel);
@@ -231,6 +231,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        /// <summary>
+        /// Add or sign out and outhoing message sent by client on recieving from service.
+        /// <br />
+        /// Добавить или отметить исходящее сообщение, отправленное клиентом, при получении его от сервиса.
+        /// </summary>
         private void VisualizeOutgoingMessage(MessagePackage msg)
         {
             var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
@@ -244,6 +249,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 newMessage = oldMessage + "✓";
             }
             else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msg.Message as string) + " ✓✓"));
+
 
             ObservableCollection<string> newMessageList = new();
             foreach (string message in someChat.MessageList)

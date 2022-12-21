@@ -62,10 +62,7 @@ namespace MessengerService.Datalink
 
         public delegate void MessageRecievedDelegate(MessagePackage recievedMessage);
 
-
         public event MessageRecievedDelegate ProcessTextMessageEvent;
-
-        public event MessageRecievedDelegate ProcessFileMessageEvent;
 
         public delegate void UserTypeDelegate(User userData);
 
