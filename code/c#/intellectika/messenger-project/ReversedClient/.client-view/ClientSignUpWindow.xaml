@@ -3,47 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ReversedClient.client_view"
+        xmlns:local="clr-namespace:ReversedClient.client_view" 
         mc:Ignorable="d"
-        Title="ClientSignUp" Height="450" Width="400">
+        Title="ClientSignUp" Height="450" Width="400"
+        Closing="OnClosing">
     <Grid>
 
         <TextBox 
               Style="{StaticResource SignUpLoginTextBox}" HorizontalAlignment="Center" 
-             Margin="0,0,0,338" TextWrapping="Wrap" Width="120"
-            Text="{Binding UserData.Login}" Height="16" VerticalAlignment="Bottom"
+             Margin="0,0,0,320" TextWrapping="Wrap" Width="120"
+            Text="{Binding UserData.Login}" Height="30" VerticalAlignment="Bottom"
          />
 
         <TextBox 
-               Style="{StaticResource PublicIdTextBox}" Margin="0,0,0,298" 
+               Style="{StaticResource PublicIdTextBox}" Margin="0,0,0,280" 
               HorizontalAlignment="Center" TextWrapping="Wrap" Width="120"
-            Text="{Binding UserData.PublicId}" Height="16" VerticalAlignment="Bottom" 
+            Text="{Binding UserData.PublicId}" Height="30" VerticalAlignment="Bottom" 
          />
 
         <TextBox 
              Text="{Binding UserData.Password}" MaxLength="16" Width="120"
-            Style="{StaticResource SignUpPasswordTextBox}" Margin="0,0,0,258"
-           HorizontalAlignment="Center" Height="16" VerticalAlignment="Bottom"
+            Style="{StaticResource SignUpPasswordTextBox}" Margin="0,0,0,240"
+           HorizontalAlignment="Center" Height="30" VerticalAlignment="Bottom"
          />
 
         <TextBox 
              Text="{Binding RepeatedPassword}" MaxLength="16" Width="120"
-            Style="{StaticResource RepeatPasswordTextBox}" Margin="0,0,0,218"
-           HorizontalAlignment="Center" Height="16" VerticalAlignment="Bottom"
+            Style="{StaticResource RepeatPasswordTextBox}" Margin="0,0,0,200"
+           HorizontalAlignment="Center" Height="30" VerticalAlignment="Bottom"
          />
 
 
         <Label 
               Content="Other users will be able to see your public id." 
-             HorizontalAlignment="Center" Margin="0,307,0,0" 
+             HorizontalAlignment="Center" Margin="0,348,0,0" 
             VerticalAlignment="Top"
          />
 
 
         <Button 
                Content="Register" Command="{Binding RegisterCommand}" 
-              HorizontalAlignment="Center" Margin="0,253,0,0"
-             VerticalAlignment="Top" Height="25" Width="60"/>
+              HorizontalAlignment="Center" Margin="0,291,0,0"
+             VerticalAlignment="Top" Height="30" Width="100"/>
 
     </Grid>
 

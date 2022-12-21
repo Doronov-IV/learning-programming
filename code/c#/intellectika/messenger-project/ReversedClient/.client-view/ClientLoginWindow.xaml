@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view"
         mc:Ignorable="d"
-        Title="ClientLoginWindow" Height="450" Width="400">
+        Title="ClientLoginWindow" Height="450" Width="400"
+        Closing="OnClosing">
     <Grid>
         <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalUserTechnicalData.Login}" VerticalAlignment="Top" Width="120"/>
-        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding Path=LocalUserTechnicalData.Password}" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
-        <Button Content="Sign In" Command="{Binding SignInCommand}" HorizontalAlignment="Center" Margin="0,0,0,220" Width="60" Height="25" VerticalAlignment="Bottom"/>
-        <Button Content="Sign Up" Command="{Binding SignUpCommand}" HorizontalAlignment="Center" Margin="0,0,0,180" Width="60" Height="25" VerticalAlignment="Bottom"/>
+        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding Path=LocalUserTechnicalData.Password}" HorizontalAlignment="Center" Margin="0,133,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
+        <Button Content="Sign In" Command="{Binding SignInCommand}" HorizontalAlignment="Center" Width="90" Height="30" VerticalAlignment="Center"/>
+        <Button Content="Sign Up" Command="{Binding SignUpCommand}" HorizontalAlignment="Center" Margin="0,272,0,0" Width="90" Height="30" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -23,5 +23,10 @@ namespace ReversedClient.client_view
         {
             DataContext = new ClientLoginWindowViewModel(new(userData.Login, "", ""), transmitter);
         }
+
+        public void OnClosing(object? sender, EventArgs args)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

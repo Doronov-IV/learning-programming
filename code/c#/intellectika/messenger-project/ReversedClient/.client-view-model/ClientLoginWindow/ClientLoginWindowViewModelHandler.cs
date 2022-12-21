@@ -33,25 +33,32 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         private async Task MakeConnectionEffort()
         {
-            if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
+            try
             {
-                if (await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
+                if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
                 {
-                    if (ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData))
+                    if (await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
                     {
-                        FullUserServiceData = ServiceTransmitter.GetResponseData();
-                        
-                        WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, ServiceTransmitter);
+                        if (ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData))
+                        {
+                            FullUserServiceData = ServiceTransmitter.GetResponseData();
+
+                            WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, ServiceTransmitter);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Authorization failed due to the incurrect data input.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Authorization failed due to the incurrect data input.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show("Both login and password fields are required to proceed.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
-            else
+            catch(Exception ex) 
             {
-                MessageBox.Show("Both login and password fields are required to proceed.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
+
             }
         }
 

@@ -37,9 +37,11 @@
     <Compile Include=".client-view\App.xaml.cs" />
     <Compile Include=".client-view\ClientLoginWindow.xaml.cs" />
     <Compile Include=".client-view\ClientMessengerWindow.xaml.cs" />
+    <Compile Include=".properties\ChatMessageList.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.2.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
@@ -83,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include=".properties\LoginTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include=".properties\ChatMessageList.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

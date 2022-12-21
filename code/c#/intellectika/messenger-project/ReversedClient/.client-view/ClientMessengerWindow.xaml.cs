@@ -5,6 +5,11 @@ using System.Windows.Shell;
 using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 
+using MaterialDesignThemes.Wpf;
+using MaterialDesignThemes.MahApps;
+
+using MaterialDesignColors;
+
 namespace ReversedClient.client_view
 {
     /// <summary>
