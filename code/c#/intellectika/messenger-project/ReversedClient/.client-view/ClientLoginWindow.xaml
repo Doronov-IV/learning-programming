@@ -4,15 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view"
+        xmlns:password="clr-namespace:ReversedClient.LocalService"
         mc:Ignorable="d"
-        Title="ClientLoginWindow" Height="450" Width="400"
+        Title="ClientLoginWindow" Height="500" Width="400"
         Closing="OnClosing">
     <Grid>
-        <TextBox Style="{StaticResource LoginTextBox}" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Height="30"
-                 Text="{Binding Path=LocalUserTechnicalData.Login}" VerticalAlignment="Top" Width="120"/>
-        <TextBox Style="{StaticResource PasswordTextBox}" Text="{Binding Path=LocalUserTechnicalData.Password}" HorizontalAlignment="Center" Height="30"
-                 Margin="0,133,0,0" VerticalAlignment="Top" Width="120" MaxLength="16"/>
-        <Button Content="Sign In" Command="{Binding SignInCommand}" HorizontalAlignment="Center" Width="90" Height="30" VerticalAlignment="Center"/>
-        <Button Content="Sign Up" Command="{Binding SignUpCommand}" HorizontalAlignment="Center" Margin="0,250,0,0" Width="90" Height="30" VerticalAlignment="Top"/>
+
+        <TextBox
+                Padding ="3" Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                HorizontalAlignment="Center" Margin="0,100,0,0" TextWrapping="Wrap" 
+                Height="25" Text="{Binding Path=LocalUserTechnicalData.Login}" 
+                VerticalAlignment="Top" Width="120"
+         />
+
+
+        <PasswordBox  
+                    HorizontalAlignment="Center" VerticalAlignment="Top" 
+                    Margin="0,145,0,0" Padding="3" MaxLength="16"
+                    Height="25" Width="120" FontSize="14" 
+            
+                    Style="{DynamicResource MaterialDesignOutlinedRevealPasswordBox}" 
+                    password:PasswordBoxAssistant.BindPassword="True" 
+                    password:PasswordBoxAssistant.BoundPassword=
+                    "{Binding Path=LocalUserTechnicalData.Password, 
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+         />
+
+
+        <Button 
+               Padding="2" FontSize="14" Width="90" Height="25" Margin="0,210,0,0"
+               HorizontalAlignment="Center" VerticalAlignment="Top"
+               Content="Sign In" Command="{Binding SignInCommand}" 
+         />
+
+
+        <Button 
+               Width="90" Height="25" FontSize="14" Padding="2" Margin="0,270,0,0"
+               HorizontalAlignment="Center" VerticalAlignment="Top" 
+               Content="Sign Up" Command="{Binding SignUpCommand}" 
+         />
+
     </Grid>
 </Window>

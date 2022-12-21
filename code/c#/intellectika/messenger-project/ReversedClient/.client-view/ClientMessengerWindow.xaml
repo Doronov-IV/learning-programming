@@ -50,13 +50,17 @@
                       BorderBrush="{x:Null}" Foreground="#E50A0A0A"
                     Margin="0,10,0,10" FontFamily="Bookman Old Style"
                   SelectedItem="{Binding ActiveChat}" Grid.Column="0"
-                 Background="Transparent" ItemsSource="{Binding ChatList}" Width="185"
-                 >
+                 Background="Transparent" ItemsSource="{Binding ChatList}"
+                Width="185" HorizontalAlignment="Left">
+                        
                         <ListView.ItemTemplate>
 
                             <DataTemplate>
 
-                                <TextBlock Text="{Binding Path=Addressee.PublicId}"/>
+                                <TextBlock 
+                                    Text="{Binding Path=Addressee.PublicId}"
+                                    Width="185" HorizontalAlignment="Left"
+                                 />
 
                             </DataTemplate>
 
@@ -89,24 +93,31 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            
+            
 
-            <ListView Background="Transparent"
-                ItemsSource="{Binding Path=ActiveChat.MessageList}" 
-              Margin="0,5,10,50" BorderBrush="{x:Null}" 
-            Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
-         />
-
-            <TextBox 
-                Margin="10,0,90,10" VerticalAlignment="Bottom"
-               Text="{Binding Message}" Height="30"
-              Style="{StaticResource SendMessageTextBox}"
+            <ListView 
+                    Background="Transparent"
+                    ItemsSource="{Binding Path=ActiveChat.MessageList}" 
+                    Margin="0,5,10,50" BorderBrush="{x:Null}" 
+                    Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
              />
 
-            <Button VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                Margin="0,0,10,10"
-              Content="Send" Command="{Binding SendMessageCommand}" 
-            Height="30" Width="74"/>
+            <TextBox 
+                    Margin="10,0,90,10" VerticalAlignment="Bottom"
+                    Text="{Binding Message}" Height="30"
+                    Style="{StaticResource SendMessageTextBox}"
+             />
+
+            <Button 
+                   VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                   Margin="0,0,10,10"
+                   Content="Send" Command="{Binding SendMessageCommand}" 
+                   Height="30" Width="74"
+             />
+            
         </Grid>
+        
 
         <!--#endregion Listviews-->
 
