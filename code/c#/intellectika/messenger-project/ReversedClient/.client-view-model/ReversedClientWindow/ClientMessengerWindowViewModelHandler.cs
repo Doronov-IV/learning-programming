@@ -13,6 +13,7 @@ using System;
 
 using Tools.Formatting;
 using NetworkingAuxiliaryLibrary.Objects.Common;
+using System.Windows.Interop;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -22,7 +23,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
-        #region LOGIC - internal behavior
+        #region Transmition handlers
 
 
 
@@ -49,11 +50,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RecieveMessage()
         {
+            var msg = _serviceTransmitter.MessengerPacketReader.ReadMessage(); // reading new _message via our packet reader
+            var msgCopy = msg;
             try 
             {
-                var msg = _serviceTransmitter.MessengerPacketReader.ReadMessage(); // reading new _message via our packet reader;
-                var msgCopy = msg;
-                if (_currentUserModel.PublicId != msg.Sender) // if the _message was sent to us from other user
+                // if the _message was sent to us from other user
+                if (_currentUserModel.PublicId != msg.Sender)
                 {
                     var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId == msg.Sender);
                     if (someChat is null)
@@ -64,47 +66,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.Message as string));
                 }
-                else // if we sent this _message
+                // if we sent this _message
+                else
                 {
-                    var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
-                    string newMessage = string.Empty;
-                    string oldMessage = string.Empty;
-                    foreach (var message in someChat.MessageList)
-                    {
-                        if (message.Contains(msg.Sender)) // if we sent it
-                        {
-                            if (message.Contains(msg.Message as string)) // if we sent if from current client
-                            {
-                                newMessage = message + "✓";
-                                oldMessage = message;
-                            }
-                            else // otherwise, if we sent it from other device
-                            {
-                                Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msgCopy.Message as string) + "✓✓"));
-                            }
-                        }
-                    }
-
-                    ObservableCollection<string> newMessageList = new();
-                    foreach (string message in someChat.MessageList)
-                    {
-                        if (!message.Equals(oldMessage))
-                        {
-                            newMessageList.Add(message);
-                        }
-                        else
-                        {
-                            newMessageList.Add(newMessage);
-                        }
-                    }
-                    someChat.MessageList = newMessageList;
-
-                    OnPropertyChanged(nameof(ActiveChat));
+                    VisualizeOutgoingMessage(msgCopy);
                 }
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show($"Message collection changing exception: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -251,7 +221,50 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
-        #endregion LOGIC - internal behavior
+        #endregion Transmition handlers
+
+
+
+
+
+        #region LOGIC
+
+
+
+        private void VisualizeOutgoingMessage(MessagePackage msg)
+        {
+            var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
+            string newMessage = string.Empty;
+            string oldMessage = string.Empty;
+
+
+            oldMessage = someChat.MessageList.Select(m => m).Where(m => (m.Contains(msg.Sender) && m.Contains(msg.Message as string) && !m.Contains("✓✓"))).FirstOrDefault();
+            if (oldMessage is not null)
+            {
+                newMessage = oldMessage + "✓";
+            }
+            else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msg.Message as string) + " ✓✓"));
+
+            ObservableCollection<string> newMessageList = new();
+            foreach (string message in someChat.MessageList)
+            {
+                if (!message.Equals(oldMessage))
+                {
+                    newMessageList.Add(message);
+                }
+                else
+                {
+                    newMessageList.Add(newMessage);
+                }
+            }
+            someChat.MessageList = newMessageList;
+
+            OnPropertyChanged(nameof(ActiveChat));
+        }
+
+
+
+        #endregion LOGIC
 
 
 
