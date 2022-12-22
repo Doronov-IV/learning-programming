@@ -81,6 +81,15 @@ namespace NetworkingAuxiliaryLibrary.Processing
         }
 
 
+        public void WriteJsonMessage(string jsonMessage)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(jsonMessage);
+
+            _memoryStream.Write(BitConverter.GetBytes(bytes.Length));
+            _memoryStream.Write(bytes);
+        }
+
+
         /// <summary>
         /// Write serialized data;
         /// <br />

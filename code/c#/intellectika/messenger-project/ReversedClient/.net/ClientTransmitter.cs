@@ -197,6 +197,12 @@ namespace Net.Transmition
 
             var connectPacket = new PackageBuilder();
 
+            var message = new JsonMessagePackage();
+            message.Sender = user.Login;
+            message.Reciever = "Service";
+            message.Date = message.Time = "dnm";
+            // ok, I've had enough, i'm getiing builder;
+
             connectPacket.WriteOpCode(1);
 
             connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", "dnm", "dnm", $"{user.Login}|{user.Password}"));

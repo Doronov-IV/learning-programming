@@ -83,7 +83,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void DeleteMessageAfterServiceRespond()
         {
-            var msg = _serviceTransmitter.MessengerPacketReader.ReadMessage();
+            var msg = JsonConvert.DeserializeObject<JsonMessagePackage>(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             var msgCopy = msg;
             try
             {
