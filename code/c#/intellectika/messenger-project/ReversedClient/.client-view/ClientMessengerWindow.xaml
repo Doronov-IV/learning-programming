@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view"
-        xmlns:footer="clr-namespace:ReversedClient.properties"
+        xmlns:footer="clr-namespace:ReversedClient.Properties"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         mc:Ignorable="d"
         Title="{Binding WindowHeaderString}" Height="600" Width="750"
@@ -97,7 +97,9 @@
 
 
 
-            <ListView  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListView  
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    materialDesign:ScrollBarAssist.ThumbCornerRadius="3"
                     Background="Transparent"
                     ItemsSource="{Binding Path=ActiveChat.MessageList}" 
                     Margin="0,5,10,50" BorderBrush="{x:Null}" 

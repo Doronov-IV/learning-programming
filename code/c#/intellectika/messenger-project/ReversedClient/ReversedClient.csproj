@@ -38,7 +38,6 @@
     <Compile Include=".client-view\App.xaml.cs" />
     <Compile Include=".client-view\ClientLoginWindow.xaml.cs" />
     <Compile Include=".client-view\ClientMessengerWindow.xaml.cs" />
-    <Compile Include=".properties\ChatMessageList.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -87,9 +86,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include=".properties\LoginTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include=".properties\ChatMessageList.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
