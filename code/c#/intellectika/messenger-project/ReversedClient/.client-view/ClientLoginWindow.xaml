@@ -31,7 +31,8 @@
                     Style="{DynamicResource MaterialDesignOutlinedRevealPasswordBox}" 
                     password:PasswordBoxAssistant.BindPassword="True" 
                     password:PasswordBoxAssistant.BoundPassword=
-                    "{Binding LocalUserTechnicalData.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    "{Binding LocalUserTechnicalData.Password, 
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
          />
 
 

@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view" 
+        xmlns:password="clr-namespace:ReversedClient.LocalService"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="ClientSignUp" Height="450" Width="400"
         Closing="OnClosing">
     <Grid>
@@ -12,39 +14,56 @@
         <TextBox  
                 HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                 TextWrapping="Wrap" Width="120" Height="25" Margin="0,0,0,320" Padding="2"
+                materialDesign:HintAssist.Hint="Login"
+            
                 Text="{Binding UserData.Login}" 
                 Style="{DynamicResource MaterialDesignOutlinedTextBox}" 
          />
 
         <TextBox 
-               Style="{DynamicResource PublicIdTextBox}" Margin="0,0,0,280" 
-              HorizontalAlignment="Center" TextWrapping="Wrap" Width="120"
-            Text="{Binding UserData.PublicId}" Height="30" VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
+                Width="120" Margin="0,0,0,280" Height="25" Padding="2"  
+                materialDesign:HintAssist.Hint="¹Public Id"
+            
+                Text="{Binding Path=UserData.PublicId}"
+                Style="{DynamicResource MaterialDesignOutlinedTextBox}"          
          />
 
-        <TextBox 
-             Text="{Binding UserData.Password}" MaxLength="16" Width="120"
-            Style="{DynamicResource SignUpPasswordTextBox}" Margin="0,0,0,240"
-           HorizontalAlignment="Center" Height="30" VerticalAlignment="Bottom"
+        <PasswordBox 
+                HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
+                Width="120" Margin="0,0,0,240" Height="25" Padding="2"  
+                materialDesign:HintAssist.Hint="Password"
+            
+                Style="{DynamicResource MaterialDesignOutlinedRevealPasswordBox}" 
+                password:PasswordBoxAssistant.BindPassword="True" 
+                password:PasswordBoxAssistant.BoundPassword=
+                "{Binding UserData.Password, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
          />
 
-        <TextBox 
-             Text="{Binding RepeatedPassword}" MaxLength="16" Width="120"
-            Style="{DynamicResource RepeatPasswordTextBox}" Margin="0,0,0,200"
-           HorizontalAlignment="Center" Height="30" VerticalAlignment="Bottom"
+        <PasswordBox 
+                HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
+                Width="120" Margin="0,0,0,200" Height="25" Padding="2"  
+                materialDesign:HintAssist.Hint="Repeat password"
+            
+                Style="{DynamicResource MaterialDesignOutlinedRevealPasswordBox}" 
+                password:PasswordBoxAssistant.BindPassword="True" 
+                password:PasswordBoxAssistant.BoundPassword=
+                "{Binding RepeatedPassword, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
          />
 
 
         <Label 
-              Content="Other users will be able to see your public id." 
-             HorizontalAlignment="Center" Margin="0,348,0,0" 
-            VerticalAlignment="Top"
+              Content="¹Other users will be able to see your public id." 
+              VerticalAlignment="Top" HorizontalAlignment="Center" 
+              Margin="0,350,0,0" 
          />
 
 
         <Button 
                Content="Register" Command="{Binding RegisterCommand}" 
-              HorizontalAlignment="Center" Margin="0,291,0,0"
+              HorizontalAlignment="Center" Margin="0,280,0,0"
              VerticalAlignment="Top" Height="30" Width="100"/>
 
     </Grid>

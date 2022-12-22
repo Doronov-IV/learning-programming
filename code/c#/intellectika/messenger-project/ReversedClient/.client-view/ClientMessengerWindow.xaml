@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReversedClient.client_view"
         xmlns:footer="clr-namespace:ReversedClient.properties"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         mc:Ignorable="d"
         Title="{Binding WindowHeaderString}" Height="600" Width="750"
         Closing="OnClosing"
