@@ -60,9 +60,11 @@ namespace MessengerService.Datalink
         #region API
 
 
-        public delegate void MessageRecievedDelegate(MessagePackage recievedMessage);
+        public delegate void MessageTypeDelegate(MessagePackage recievedMessage);
 
-        public event MessageRecievedDelegate ProcessTextMessageEvent;
+        public event MessageTypeDelegate ProcessTextMessageEvent;
+
+        public event MessageTypeDelegate MessageDeletedEvent;
 
         public delegate void UserTypeDelegate(User userData);
 
@@ -93,11 +95,21 @@ namespace MessengerService.Datalink
                     var opCode = packetReader.ReadByte();
                     switch (opCode)
                     {
+                        // text message recieved;
                         case 5:
 
                             var textMessage = packetReader.ReadMessage();
                             ProcessTextMessageEvent.Invoke(textMessage);
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessage)));
+
+                            break;
+
+                        // text message deletion;
+                        case 6:
+
+                            var textMessageForDeletion = packetReader.ReadMessage();
+                            MessageDeletedEvent.Invoke(textMessageForDeletion);
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessageForDeletion)));
 
                             break;
 

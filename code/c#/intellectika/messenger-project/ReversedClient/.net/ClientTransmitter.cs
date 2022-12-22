@@ -111,11 +111,11 @@ namespace Net.Transmition
         public event Action msgReceivedEvent;
 
         /// <summary>
-        /// File receipt event.
+        /// When some user decides to delete their message.
         /// <br />
-        /// Событие получения файла.
+        /// Когда некий пользователь решает удалить своё сообщение.
         /// </summary>
-        public event Action fileReceivedEvent;
+        public event Action messageDeletionEvent;
 
         /// <summary>
         /// Other user disconnection event;
@@ -199,7 +199,7 @@ namespace Net.Transmition
 
             connectPacket.WriteOpCode(1);
 
-            connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}|{user.Password}"));
+            connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", "dnm", "dnm", $"{user.Login}|{user.Password}"));
 
             authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
@@ -246,7 +246,7 @@ namespace Net.Transmition
 
                 var connectPacket = new PackageBuilder();
 
-                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", $"{user.Login}"));
+                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", "dnm", "dnm", $"{user.Login}"));
 
                 messengerSocket.Client.Send(connectPacket.GetPacketBytes());
 
@@ -345,6 +345,22 @@ namespace Net.Transmition
         }
 
 
+        public void SendMessageDeletionToServer(MessagePackage pack)
+        {
+            var messagePacket = new PackageBuilder();
+            messagePacket.WriteOpCode(6);
+            messagePacket.WriteMessage(pack);
+            try
+            {
+                messengerSocket.Client.Send(messagePacket.GetPacketBytes());
+            }
+            catch (Exception ex)
+            {
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
+            }
+        }
+
+
         #endregion API - public Behavior
 
 
@@ -392,7 +408,7 @@ namespace Net.Transmition
                                 break;
 
                             case 6:
-                                fileReceivedEvent?.Invoke(); // file  recieved;
+                                messageDeletionEvent?.Invoke(); // file  recieved;
                                 break;
 
                             case 10:
@@ -427,7 +443,7 @@ namespace Net.Transmition
         private void SendNewClientData(UserClientTechnicalDTO userData)
         {
             var messagePacket = new PackageBuilder();
-            var signUpMessage = new TextMessagePackage(sender: userData.PublicId, reciever: "Service", message: $"{userData.Login}|{userData.Password}");
+            var signUpMessage = new TextMessagePackage(sender: userData.PublicId, reciever: "Service", "does not matter", "does not matter", message: $"{userData.Login}|{userData.Password}");
             messagePacket.WriteOpCode(0);
             messagePacket.WriteMessage(signUpMessage);
             try

@@ -100,6 +100,15 @@ namespace NetworkingAuxiliaryLibrary.Processing
             return package;
         }
 
+
+
+        public string ReadJsonMessage()
+        {
+            byte[] tempArray = ReadMessageBytes();
+
+            return BitConverter.ToString(tempArray);
+        }
+
         
         /// <summary>
         /// Read file from the network stream.

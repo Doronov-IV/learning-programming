@@ -34,12 +34,7 @@ namespace MessengerService.Datalink
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
-        /// <summary>
-        /// A list of current users;
-        /// <br />
-        /// Актуальный список пользователей;
-        /// </summary>
-        private List<ServiceReciever> userList = null!;
+        private ServiceBroadcaster broadcaster;
 
 
         /// <summary>
@@ -70,11 +65,34 @@ namespace MessengerService.Datalink
         private CustomProcessingStatus _status;
 
 
+        /// <inheritdoc cref="UserList"/>
+        private List<ServiceReciever> _userList = null!;
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                             ↓   PROPERTIES   ↓                           ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+        /// <summary>
+        /// A list of current users;
+        /// <br />
+        /// Актуальный список пользователей;
+        /// </summary>
+        public List<ServiceReciever> UserList
+        {
+            get 
+            { 
+                return _userList; 
+            }
+            set 
+            {
+                _userList = value; 
+            }
+        }
 
 
         /// <summary>
@@ -84,11 +102,13 @@ namespace MessengerService.Datalink
         /// </summary>
         public CustomProcessingStatus Status
         {
-            get { return _status; }
+            get 
+            { 
+                return _status; 
+            }
             set
             {
                 _status = value;
-                OnPropertyChanged(nameof(Status));
             }
         }
 
@@ -137,8 +157,12 @@ namespace MessengerService.Datalink
                 if (client is not null)
                 {
                     client.ProcessTextMessageEvent += AddNewMessageToTheDb;
-                    client.ProcessTextMessageEvent += BroadcastMessage;
-                    client.UserDisconnected += BroadcastDisconnect;
+                    client.ProcessTextMessageEvent += broadcaster.BroadcastMessage;
+
+                    client.UserDisconnected += broadcaster.BroadcastDisconnect;
+
+                    client.MessageDeletedEvent += DeleteMessageFromDb;
+                    client.MessageDeletedEvent += broadcaster.BroadcastMessageDeletion;
 
                     reader = new(client.ClientSocket.GetStream());
 
@@ -148,7 +172,7 @@ namespace MessengerService.Datalink
 
                     if (msg is not null)
                     {
-                        userList.Add(client);
+                        _userList.Add(client);
 
                         var user = GetUserFromDatabaseByLogin(msg.Message as string);
 
@@ -156,7 +180,7 @@ namespace MessengerService.Datalink
 
                         SendUserInfo(client, user);
 
-                        BroadcastConnection();
+                        broadcaster.BroadcastConnection();
 
                         client.ProcessAsync();
                     }
@@ -218,127 +242,6 @@ namespace MessengerService.Datalink
                 }
             }
             catch { }
-        }
-
-
-        /// <summary>
-        /// Stop _service.
-        /// <br />
-        /// Остановить сервис.
-        /// </summary>
-        public void Stop()
-        {
-            userListenner?.Stop();
-            authorizationServiceListenner?.Stop();
-
-            userList.ForEach(u => u.ClientSocket?.Close());
-            authorizationServiceListenner?.Stop();
-
-            userList = new();
-            Status.ToggleProcessing();
-        }
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                           ↓   BROADCASTING   ↓                           ↓    ///
-        /////////////////////////////////////////////////////////////////////////////////////// 
-        
-
-        /// <summary>
-        /// Broadcast a notification message to all users about the new userData connection;
-        /// <br />
-        /// Транслировать уведомление для всех пользователей о подключении нового пользователя;
-        /// </summary>
-        public void BroadcastConnection()
-        {
-            var broadcastPacket = new PackageBuilder();
-            foreach (var user in userList)
-            {
-                foreach (var usr in userList)
-                {
-                    var usrName = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.CurrentNickname);
-                    var usrUID = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", usr.CurrentUser.PublicId);
-
-                    broadcastPacket.WriteOpCode(1); // code '1' means new userData has connected;
-                    broadcastPacket.WriteMessage(usrName);
-                    broadcastPacket.WriteMessage(usrUID);
-
-                    user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
-                }
-            }
-        }
-
-
-
-        /// <summary>
-        /// Send message to all users. Mostly use to deliver one userData's message to all other ones;
-        /// <br />
-        /// Отправить сообщение всем пользователям. В основном, используется, чтобы переслать сообщение одного пользователя всем остальным;
-        /// </summary>
-        /// <param name="message"></param>
-        public void BroadcastMessage(MessagePackage package)
-        {
-            var msgPacket = new PackageBuilder();
-            msgPacket.WriteOpCode(5);
-            msgPacket.WritePackageLength(package);
-            msgPacket.WriteMessage(package);
-            foreach (var user in userList)
-            {
-                if (package.Reciever != "@All")
-                {
-                    if (user.CurrentUser.PublicId == package.Reciever || user.CurrentUser.PublicId == package.Sender)
-                    {
-                        user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
-
-                    }
-                }
-                else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
-            }
-        }
-
-
-        /// <summary>
-        /// Broadcast a notification message to all users about some userData disconnection;
-        /// <br />
-        /// Транслировать уведомление для всех пользователей о том, что один из пользователей отключился;
-        /// </summary>
-        /// <param name="uid">
-        /// id of the userData in order to find and delete him from the userData list;
-        /// <br />
-        /// id пользователя, чтобы найти его и удалить из списка пользователей;
-        /// </param>
-        public void BroadcastDisconnect(User userData)
-        {
-            var disconnectedUser = userList.Where(x => x.CurrentUser.PublicId.Equals(userData.PublicId)).FirstOrDefault();
-            userList.Remove(disconnectedUser);            // removing userData;
-
-            var broadcastPacket = new PackageBuilder();
-            foreach (var user in userList)
-            {
-                broadcastPacket.WriteOpCode(10);    // on userData disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
-                broadcastPacket.WriteMessage(new TextMessagePackage(userData.PublicId, "@All", userData.PublicId)); // it also sends disconnected userData id (not sure where that goes, mb viewmodel delegate) so we can pull it out from users
-                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
-            }
-
-            //BroadcastMessage(new TextMessagePackage(disconnectedUser.CurrentUID, "@All" ,$"{disconnectedUser.CurrentUserName} Disconnected!"));
-        }
-
-
-        /// <summary>
-        /// Broadcast _service shutdown message to the users and authorizer _service.
-        /// <br />
-        /// Транслировать выключение сервиса пользователям и сервису авторизации.
-        /// </summary>
-        public void BroadcastShutdown()
-        {
-            PackageBuilder builder = new();
-            builder.WriteOpCode(byte.MaxValue);
-            foreach (var user in userList)
-            {
-                user.ClientSocket.Client.Send(builder.GetPacketBytes());
-            }
         }
 
 
@@ -452,6 +355,29 @@ namespace MessengerService.Datalink
         }
 
 
+
+        public void DeleteMessageFromDb(MessagePackage message)
+        {
+            using (MessengerDatabaseContext context = new())
+            {
+                var messageToDelete = context.Messages.Where(m => m.Date.Equals(message.Date) && m.Time.Equals(message.Time) && m.Contents.Equals(message.Message)).FirstOrDefault();
+
+                if (messageToDelete is not null)
+                {
+                    var chatContainingMessageToDelete = context.Chats.Select(c => c).Where(c => c.MessageList.Contains(messageToDelete)).FirstOrDefault();
+                    chatContainingMessageToDelete.MessageList.Remove(messageToDelete);
+
+                    var userThatHasThatMessage = context.Users.Where(u => u.MessageList.Contains(messageToDelete)).FirstOrDefault();
+                    userThatHasThatMessage.MessageList.Remove(messageToDelete);
+
+                    context.Messages.Remove(messageToDelete);
+                }
+                else throw new InvalidDataException("[Custom] Message queried for deletion was not found on the messenger database.");
+            }
+            
+        }
+
+
         #endregion API - public Behavior
 
 
@@ -484,7 +410,7 @@ namespace MessengerService.Datalink
 
             PackageBuilder builder = new();
 
-            TextMessagePackage pack = new("Messenger", "Client", userJson);
+            TextMessagePackage pack = new("Messenger", "Client", "dnm", "dnm", userJson);
 
             builder.WriteOpCode(12);
 
@@ -577,37 +503,11 @@ namespace MessengerService.Datalink
         /// </summary>
         public ServiceController()
         {
-            userList = new List<ServiceReciever>();
+            _userList = new List<ServiceReciever>();
             authorizer = null;
             Status = new();
+            broadcaster = new(this);
         }
-
-
-
-        #region Property changed
-
-
-        /// <summary>
-        /// Propery changed event handler;
-        /// <br />
-        /// Делегат-обработчик события 'property changed';
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-
-        /// <summary>
-        /// Handler-method of the 'property changed' delegate;
-        /// <br />
-        /// Метод-обработчик делегата 'property changed';
-        /// </summary>
-        /// <param name="propName">The name of the property;<br />Имя свойства;</param>
-        private void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-
-        #endregion Property changed
 
 
 

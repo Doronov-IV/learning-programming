@@ -145,8 +145,8 @@ namespace AuthorizationServiceProject.Net
             TextMessagePackage package;
 
             // 'true' - access granted. else 'false'
-            if (checkResult) package = new("Authorizer", "Client", "Granted");
-            else package = new("Authorizer", "Client", "Denied");
+            if (checkResult) package = new("Authorizer", "Client" ,"dnm","dnm", "Granted");
+            else package = new("Authorizer", "Client","dnm","dnm", "Denied");
 
             builder.WriteMessage(package);
 
@@ -184,7 +184,7 @@ namespace AuthorizationServiceProject.Net
 
             if (messengerServiceSocket.Connected)
             {
-                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", $"{user.CurrentUser.Login}|{user.CurrentUser.PublicId}");
+                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", "dnm", "dnm", $"{user.CurrentUser.Login}|{user.CurrentUser.PublicId}");
                 PackageBuilder builder = new();
                 builder.WriteMessage(package);
                 messengerServiceSocket.Client.Send(builder.GetPacketBytes());

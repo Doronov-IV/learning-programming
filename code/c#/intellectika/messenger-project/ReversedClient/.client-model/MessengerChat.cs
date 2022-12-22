@@ -234,6 +234,18 @@ namespace ReversedClient.Model
             MessageList = new();
         }
 
+        
+        public static string FromClientChatMessageToPackageMessage(string chatMessage)
+        {
+            string sRes = string.Empty;
+            for (int i = 0, iSize = chatMessage.Length; i < iSize; i++)
+            {
+                if (i < chatMessage.Length-3 && i > 5)
+                sRes += chatMessage[i];
+            }
+            return sRes;
+        }
+
 
 
         #endregion API

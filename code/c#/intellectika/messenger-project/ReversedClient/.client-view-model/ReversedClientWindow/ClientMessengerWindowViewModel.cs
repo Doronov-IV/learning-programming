@@ -69,6 +69,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private ClientTransmitter _serviceTransmitter;
 
 
+        private UserServerSideDTO acceptedUserData;
+
+
+        private string _selectedMessage;
+
+
         /// <summary>
         /// The service of the file selection dialog.
         /// <br />
@@ -245,6 +251,20 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+        public string SelectedMessage
+        {
+            get
+            {
+                return _selectedMessage;
+            }
+            set
+            {
+                _selectedMessage = value;
+                OnPropertyChanged(nameof(SelectedMessage));
+            }
+        }
+
+
         #endregion PROPERTIES - Object State
 
 
@@ -318,6 +338,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, ClientTransmitter clientSocket)
         {
+            acceptedUserData = userData;
             if (_chatList is null) _chatList = new();
             _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.CurrentPublicId);
 
@@ -335,7 +356,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
-            _serviceTransmitter.fileReceivedEvent += RecieveFile;                        // file receipt;
+            _serviceTransmitter.messageDeletionEvent += DeleteMessageAfterServiceRespond;                        // file receipt;
             _serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // _message receipt;
             _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
             _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;      // current user disconnection;

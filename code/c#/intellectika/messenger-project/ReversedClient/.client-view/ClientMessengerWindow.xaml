@@ -101,17 +101,22 @@
             <ListView  
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     Background="Transparent"
+                    SelectedItem="SelectedMessage"
                     ItemsSource="{Binding Path=ActiveChat.MessageList}" 
                     Margin="0,5,5,50" BorderBrush="{x:Null}" 
                     Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
              >
 
-                <ListView.ItemTemplate>
+                <ListView.InputBindings>
+                    <KeyBinding Key="Delete" Command="{Binding DeleteMessageCommand}"/>
+                </ListView.InputBindings>
+
+                    <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <TextBlock 
                                 TextWrapping="Wrap" Padding="2" 
-                                Text="{Binding .}" 
+                                Text="{Binding .}"                               
                                 MaxWidth="{Binding RelativeSource=
                                 {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
                                 />

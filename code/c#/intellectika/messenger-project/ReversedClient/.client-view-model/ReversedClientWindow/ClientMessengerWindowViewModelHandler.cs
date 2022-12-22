@@ -14,6 +14,7 @@ using System;
 using Tools.Formatting;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using System.Windows.Interop;
+using Newtonsoft.Json;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -50,14 +51,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RecieveMessage()
         {
-            var msg = _serviceTransmitter.MessengerPacketReader.ReadMessage(); // reading new _message via our packet reader
+            var msg = JsonConvert.DeserializeObject<JsonMessagePackage>(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             var msgCopy = msg;
+
             try 
             {
                 // if the _message was sent to us from other user
                 if (_currentUserModel.PublicId != msg.Sender)
                 {
-                    var someChat = ChatList.Select(c => c).Where(c => c.Addressee.PublicId == msg.Sender).FirstOrDefault();
+                    var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.Sender).FirstOrDefault();
                     if (someChat is null)
                     {
                         someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.Sender), addresser: CurrentUserModel);
@@ -76,6 +78,48 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 MessageBox.Show($"Message collection changing exception: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        private void DeleteMessageAfterServiceRespond()
+        {
+            var msg = _serviceTransmitter.MessengerPacketReader.ReadMessage();
+            var msgCopy = msg;
+            try
+            {
+                var someChat = ChatList.Where(c => c.MessageList.Contains(msg.Message)).FirstOrDefault();
+                MessengerChat someChatCopy = new(addresser: someChat.Addresser, addressee: someChat.Addressee);
+                if (someChat is not null)
+                {
+                    foreach (string message in someChat.MessageList)
+                    {
+                        if (!(message.Contains(StringDateTime.FromThreeToTwoSections(msg.Time)) && message.Contains(msg.Message as string)))
+                            someChatCopy.MessageList.Add(message);
+                    }
+
+                    someChat = someChatCopy;
+                    OnPropertyChanged(nameof(ChatList));
+                }
+                else MessageBox.Show($"Error. Chat not found. (transmitter, VM-handler)", "Unexpected scenario", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception: {ex.Message} (transmitter, VM-handler)", "Unexpected exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void InitiateMessageDeletion()
+        {
+            var message = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
+
+            var chat = acceptedUserData.ChatArray.Where(c => c == c.Messages.Where(m => m.Contents.Equals(message))).FirstOrDefault();
+
+            MessageDTO dto = chat.Messages.Where(m => m.Contents.Equals(message)).FirstOrDefault();
+
+            TextMessagePackage pack = new(sender: ActiveChat.Addresser.PublicId, reciever: ActiveChat.Addressee.PublicId, date: dto.Date, time: dto.Time,  message: message);
+
+            _serviceTransmitter.SendMessageDeletionToServer(pack);
         }
 
 
@@ -172,7 +216,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     else if (ActiveChat is not null) currentAddressee = ActiveChat.Addressee;
                     else throw new NullReferenceException("[Custom] No target was selected.");
 
-                    _serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.PublicId, currentAddressee.PublicId, Message));
+                    _serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.PublicId, currentAddressee.PublicId, date: DateTime.Now.ToString("dd.MM.yyyy"), time: DateTime.Now.ToString("HH:MM:ss"), Message));
                     var someChat = ChatList.FirstOrDefault(c => (c.Addressee.PublicId.Equals(currentAddressee.PublicId)));
                     if (someChat is null)
                     {
@@ -181,6 +225,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     }
                     someChat.AddOutgoingMessage(Message);
                     ActiveChat = someChat;
+
+                    MessageDTO dto = new();
+                    var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
+                    dto.Time = DateTime.Now.ToString("HH:mm:ss");
+                    dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
+                    dto.Sender = ActiveChat.Addresser.PublicId;
+                    dto.Contents = Message;
+                    chatDto.Messages.ToList().Add(dto);
+
                     Message = string.Empty;
                 }
             }

@@ -42,6 +42,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         #region BOOLEAN
 
 
+
         /// <summary>
         /// 'True' if all properties are initialized, otherwise 'false'.
         /// <br />
@@ -49,7 +50,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// </summary>
         public override bool Initialized
         {
-            get { return _sender != string.Empty && (_message != null && _message as string != string.Empty) && _reciever != string.Empty; }
+            get { return _sender != string.Empty && (_message != null && _message as string != string.Empty) && _reciever != string.Empty && _date != string.Empty && _time != string.Empty; }
         }
 
 
@@ -88,12 +89,20 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                 byte[] binReciever = Encoding.UTF8.GetBytes(_reciever);
 
+                byte[] binDate = Encoding.UTF8.GetBytes(_date);
+
+                byte[] binTime  = Encoding.UTF8.GetBytes(_time);
+
                 byte[] binMessage = Encoding.UTF8.GetBytes(_message as string);
 
 
                 byte[] binSenderLength = BitConverter.GetBytes(binSender.Length);
 
                 byte[] binRecieverLength = BitConverter.GetBytes(binReciever.Length);
+
+                byte[] binDateLength = BitConverter.GetBytes(binDate.Length);
+
+                byte[] binTimeLength = BitConverter.GetBytes(binTime.Length);
 
                 byte[] binMessageLength = BitConverter.GetBytes(binMessage.Length);
 
@@ -102,11 +111,19 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                 lRes.AddRange(binRecieverLength);
 
+                lRes.AddRange(binDateLength);
+
+                lRes.AddRange(binTimeLength);
+
                 lRes.AddRange(binMessageLength);
 
                 lRes.AddRange(binSender);
 
                 lRes.AddRange(binReciever);
+
+                lRes.AddRange(binDate);
+
+                lRes.AddRange(binTime);
 
                 lRes.AddRange(binMessage);
 
@@ -145,12 +162,20 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                         int recieverLength = binReader.ReadInt32();
 
+                        int dateLength = binReader.ReadInt32();
+
+                        int timeLength = binReader.ReadInt32();
+
                         int messageLength = binReader.ReadInt32();
 
 
                         byte[] binSender = new byte[senderLength];
 
                         byte[] binReciever = new byte[recieverLength];
+
+                        byte[] binDate = new byte[dateLength];
+
+                        byte[] binTime = new byte[timeLength];
 
                         byte[] binMessage = new byte[messageLength];
 
@@ -159,6 +184,10 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                         memoryStream.Read(binReciever, 0, recieverLength);
 
+                        memoryStream.Read(binDate, 0, dateLength);
+
+                        memoryStream.Read(binTime, 0, timeLength);
+
                         memoryStream.Read(binMessage, 0, messageLength);
 
 
@@ -166,13 +195,17 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
                         _reciever = Encoding.UTF8.GetString(binReciever);
 
+                        _date = Encoding.UTF8.GetString(binDate);
+
+                        _time= Encoding.UTF8.GetString(binTime);
+
                         _message = Encoding.UTF8.GetString(binMessage);
                     }
                 }
             }
             else throw new Exception("The 'Data' field was not assigned or was built incorrectly. (Text Message Package)");
 
-            return new TextMessagePackage(Sender, Reciever, Message as string);
+            return new TextMessagePackage(Sender, Reciever, Date, Time, Message as string);
         }
 
 
@@ -200,15 +233,27 @@ namespace NetworkingAuxiliaryLibrary.Packages
         /// <br />
         /// Никнейм получателя.
         /// </param>
+        /// <param name="date">
+        /// Date of sending.
+        /// <br />
+        /// Дата отправки.
+        /// </param>
+        /// <param name="time">
+        /// Time of sendign.
+        /// <br />
+        /// Время отправки.
+        /// </param>
         /// <param name="message">
         /// Message text.
         /// <br />
         /// Текст сообщения.
         /// </param>
-        public TextMessagePackage(string sender, string reciever, string message)
+        public TextMessagePackage(string sender, string reciever, string date, string time, string message)
         {
             _sender = sender;
             _reciever = reciever;
+            _date = date;
+            _time = time;
             _message = message;
 
             Assemble();
@@ -236,6 +281,8 @@ namespace NetworkingAuxiliaryLibrary.Packages
                 _sender = temp.Sender;
                 _reciever = temp.Reciever;
                 _message = temp.Message;
+                _date = temp.Date;
+                _time = temp.Time;
             }
             catch (Exception ex)
             {
@@ -255,6 +302,8 @@ namespace NetworkingAuxiliaryLibrary.Packages
             _sender = string.Empty;
             _reciever = string.Empty;
             _message = string.Empty;
+            _date = string.Empty;
+            _time = string.Empty;
 
             _Data = null;
         }
