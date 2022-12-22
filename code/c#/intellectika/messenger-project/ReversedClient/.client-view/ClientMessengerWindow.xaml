@@ -94,15 +94,38 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            
 
-            <ListView 
+
+
+            <ListView  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     Background="Transparent"
                     ItemsSource="{Binding Path=ActiveChat.MessageList}" 
                     Margin="0,5,10,50" BorderBrush="{x:Null}" 
                     Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
-             />
+             >
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock 
+                                TextWrapping="Wrap" Padding="5" 
+                                Text="{Binding .}" 
+                                MaxWidth="{Binding RelativeSource=
+                                {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
+                                />
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                    <!--ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel-->
+
+            </ListView>
+
 
             <TextBox 
                     Margin="10,0,90,10" VerticalAlignment="Bottom"
