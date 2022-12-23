@@ -309,6 +309,25 @@ namespace Net.Transmition
         }
 
 
+        public void SendJsonMessageToServer(JsonMessagePackage package)
+        {
+            var builder = new PackageBuilder();
+
+            builder.WriteOpCode(5);
+
+            builder.WriteJsonMessage(JsonConvert.SerializeObject(package));
+
+            try
+            {
+                messengerSocket.Client.Send(builder.GetPacketBytes());
+            }
+            catch (Exception ex)
+            {
+                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
+            }
+        }
+
+
 
         /// <summary>
         /// Sign up new user based on user technical dto.
