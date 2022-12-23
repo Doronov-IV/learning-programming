@@ -125,19 +125,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// Recieve a file from the network stream.
-        /// <br />
-        /// Получить файл из сетевого стрима.
-        /// </summary>
-        private void RecieveFile()
-        {
-            Application.Current.Dispatcher.Invoke(() => _activeChat.MessageList.Add("File recieved."));
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-        }
-
-
-
-        /// <summary>
         /// Connect new user;
         /// <br />
         /// Подключить нового пользователя;
