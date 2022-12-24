@@ -11,7 +11,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public string GetSender();
 
-        public string GetReceiver();
+        public string GetReciever();
 
         public string GetDate();
 
