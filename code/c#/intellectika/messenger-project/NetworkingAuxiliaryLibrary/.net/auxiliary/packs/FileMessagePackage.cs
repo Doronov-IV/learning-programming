@@ -11,7 +11,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
     /// <br />
     /// Порядок: sender, tempRecieverReference, filename, file. Каждый параметр начинается с его длины.
     /// </summary>
-    public class FileMessagePackage : MessagePackage
+    public class FileMessagePackage : MessagePackage, IMessage
     {
 
 
@@ -279,6 +279,45 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
 
         #endregion API
+
+
+
+
+
+        #region IMessage
+
+
+        public string GetSender()
+        {
+            return _sender;
+        }
+
+
+        public string GetReciever()
+        {
+            return _reciever;
+        }
+
+
+        public string GetDate()
+        {
+            return _date;
+        }
+
+
+        public string GetTime()
+        {
+            return _time;
+        }
+
+
+        public object GetMessage()
+        {
+            return _message;
+        }
+
+
+        #endregion IMessage
 
 
 
