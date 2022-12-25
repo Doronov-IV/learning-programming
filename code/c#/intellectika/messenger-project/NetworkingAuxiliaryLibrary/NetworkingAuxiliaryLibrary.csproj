@@ -48,6 +48,7 @@
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
     <Compile Include=".net\auxiliary\processing\UserParser.cs" />
+    <Compile Include=".net\com\Communique.cs" />
     <Compile Include=".net\config\NetworkConfigurator.cs" />
     <Compile Include=".net\config\NetworkConfiguration.cs" />
     <Compile Include=".style\authorizer\ConsoleServiceStyle.cs" />
