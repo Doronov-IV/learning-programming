@@ -19,31 +19,6 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 
 # Roadmap
 
-## Console
+## See
 
-### C++ procedural (~ 6 months)
- Syntax and basic algorythms. Loops, sortings, files, structures, etc.
-
-### OOP via C++ (~ 3 months)
- Introduction to OOP, basic principles. The Gang of Four patterns.
-
-### Introduction to .NET and C# (~ 3 months)
- Basic .NET concepts. New syntax and mechanisms.
- Introduction to the delegation. Basic delegation mechanics.
-
-## Visual
-
-### Ado Net + EFC  via  Win Forms + WPF (~ 3 months)
- An introduction to Visual interfaces. Brief former ADO NET api.
- Then, switch to the wpf and an introduction to EFC.
-
-### Concurrency & Network programming (~ 1 month)
- Threads, tasks and synchronization basics. Then, switch to networks: sockets and clients.
-
-## Intellectika
-
-### Delegation (~ 1 week)
-Basic syntax via practice on a custom 'Paint'-like application using GDI+. Implementing graphics actions with lambda-expressions, dealling with closure. Actions stacking dispatch for managing delegate data in collections.
-
-### Concurrency (actual)
-Basic api, working on a custom application that calculates PI number via Monte Carlo technique.
+[Roadmap page](https://github.com/DoronovIV/computer-science-learning/wiki/Roadmap)
