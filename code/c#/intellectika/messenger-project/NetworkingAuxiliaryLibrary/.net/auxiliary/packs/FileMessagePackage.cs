@@ -11,7 +11,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
     /// <br />
     /// Порядок: sender, tempRecieverReference, filename, file. Каждый параметр начинается с его длины.
     /// </summary>
-    public class FileMessagePackage : MessagePackage, IMessage
+    public class FileMessagePackage : MessagePackage
     {
 
 

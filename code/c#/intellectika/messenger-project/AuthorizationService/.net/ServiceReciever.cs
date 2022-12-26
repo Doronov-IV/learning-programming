@@ -88,10 +88,10 @@ namespace AuthorizationServiceProject.Net
         /// <br />
         /// Спарсить входящее текстовое сообщение в объект типа UserDTO.
         /// </summary>
-        public UserClientTechnicalDTO ReadAuthorizationData(MessagePackage message)
+        public UserClientTechnicalDTO ReadAuthorizationData(IMessage message)
         {
             UserClientTechnicalDTO userData = new();
-            var queue = message.Message as string;
+            var queue = message.GetMessage() as string;
             var strings = queue.Split("|");
             if (strings.Length == 2)
             {
@@ -101,7 +101,7 @@ namespace AuthorizationServiceProject.Net
             else if (strings.Length == 1)
                 userData.Login = userData.Password = strings[0];
 
-            userData.PublicId = message.Sender;
+            userData.PublicId = message.GetSender();
 
             return userData;
         }
@@ -149,8 +149,8 @@ namespace AuthorizationServiceProject.Net
                         case 0:
 
 
-                            var msg = reader.ReadMessage();
-                            CurrentUser = ReadAuthorizationData(msg);
+                            var msg = reader.ReadJsonMessage();
+                            CurrentUser = ReadAuthorizationData(JsonMessageFactory.GetUnserializedPackage(msg));
                             bool bSuccessfulRegistration = controller.TryAddNewUser(CurrentUser);
                             if (bSuccessfulRegistration)
                             {
@@ -165,8 +165,8 @@ namespace AuthorizationServiceProject.Net
                         case 1:
 
 
-                            var signInMessage = reader.ReadMessage();
-                            CurrentUser = ReadAuthorizationData(signInMessage);
+                            var signInMessage = reader.ReadJsonMessage();
+                            CurrentUser = ReadAuthorizationData(JsonMessageFactory.GetUnserializedPackage(signInMessage));
 
                             bool bAuthorizationRes = controller.UserIsPresentInDatabase(CurrentUser);
                             controller.SendClientResponse(this, bAuthorizationRes);

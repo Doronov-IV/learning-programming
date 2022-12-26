@@ -142,13 +142,13 @@ namespace AuthorizationServiceProject.Net
         public void SendClientResponse(ServiceReciever client, bool checkResult)
         {
             PackageBuilder builder = new PackageBuilder();
-            TextMessagePackage package;
+            string package;
 
             // 'true' - access granted. else 'false'
-            if (checkResult) package = new("Authorizer", "Client" ,"dnm","dnm", "Granted");
-            else package = new("Authorizer", "Client","dnm","dnm", "Denied");
+            if (checkResult) package = JsonMessageFactory.GetJsonMessageSimplified("Authorizer", "Client", "Granted");
+            else package = JsonMessageFactory.GetJsonMessageSimplified("Authorizer", "Client", "Denied");
 
-            builder.WriteMessage(package);
+            builder.WriteJsonMessage(package);
 
             client.ClientSocket.Client.Send(builder.GetPacketBytes());
         }
@@ -184,9 +184,8 @@ namespace AuthorizationServiceProject.Net
 
             if (messengerServiceSocket.Connected)
             {
-                TextMessagePackage package = new TextMessagePackage("Authorizer", "Messenger", "dnm", "dnm", $"{user.CurrentUser.Login}|{user.CurrentUser.PublicId}");
                 PackageBuilder builder = new();
-                builder.WriteMessage(package);
+                builder.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified("Authorizer", "Messenger", $"{user.CurrentUser.Login}|{user.CurrentUser.PublicId}"));
                 messengerServiceSocket.Client.Send(builder.GetPacketBytes());
                 return true;
             }

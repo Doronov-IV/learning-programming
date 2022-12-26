@@ -144,7 +144,7 @@ namespace MessengerService.Datalink
             // create basic references for reading clients
             PackageReader reader;
             ServiceReciever client = null;
-            MessagePackage msg = null;
+            JsonMessagePackage msg = null;
 
             Status.ToggleCompletion();
 
@@ -166,7 +166,7 @@ namespace MessengerService.Datalink
 
                     reader = new(client.ClientSocket.GetStream());
 
-                    await Task.Run(() => msg = reader.ReadMessage());
+                    await Task.Run(() => msg = JsonMessageFactory.GetUnserializedPackage(reader.ReadJsonMessage()));
 
                     AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetUserConnection(msg.Message as string)));
 
@@ -219,7 +219,7 @@ namespace MessengerService.Datalink
                 });
             }
 
-            MessagePackage msg = null;
+            JsonMessagePackage msg = null;
 
             try
             {
@@ -230,7 +230,7 @@ namespace MessengerService.Datalink
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
                             if (reader is not null) // it is null
-                            await Task.Run(() => msg = reader.ReadMessage());
+                            await Task.Run(() => msg = JsonMessageFactory.GetUnserializedPackage(reader.ReadJsonMessage()));
                     }
                     catch { /* Notofication exception */}
                     if (msg != null)
@@ -262,7 +262,7 @@ namespace MessengerService.Datalink
         /// <br />
         /// Пакет сообщения для отправки.
         /// </param>
-        public void AddNewMessageToTheDb(MessagePackage package)
+        public void AddNewMessageToTheDb(IMessage package)
         {
             if (package is not null)
             {
@@ -270,17 +270,17 @@ namespace MessengerService.Datalink
                 {
                     Message newMessage = new();
 
-                    newMessage.Contents = package.Message as string;
+                    newMessage.Contents = package.GetMessage() as string;
                     newMessage.Date = DateTime.Now.ToString("dd.MM.yy");
                     newMessage.Time = DateTime.Now.ToString("HH:mm:ss");
 
                     // check if db knows the sender
                     User newSender = new();
-                    var existingSender = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.Sender));
+                    var existingSender = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
                     if (existingSender is null)
                     {
-                        newSender.PublicId = package.Sender;
-                        newSender.CurrentNickname = package.Sender;
+                        newSender.PublicId = package.GetSender();
+                        newSender.CurrentNickname = package.GetSender();
                         newSender.MessageList = new();
                         newSender.ChatList = new();
 
@@ -291,11 +291,11 @@ namespace MessengerService.Datalink
 
                     // check if db knows the reciever
                     User newReciever = new();
-                    var existingReciever = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.Reciever));
+                    var existingReciever = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetReciever()));
                     if (existingReciever is null)
                     {
-                        newReciever.PublicId = package.Reciever;
-                        newReciever.CurrentNickname = package.Reciever;
+                        newReciever.PublicId = package.GetReciever();
+                        newReciever.CurrentNickname = package.GetReciever();
                         newReciever.MessageList = new();
                         newReciever.ChatList = new();
 
@@ -305,7 +305,7 @@ namespace MessengerService.Datalink
 
                     // check if it isn't a new chat
                     Chat newChat = new();
-                    if (package.Reciever != "@All")
+                    if (package.GetReciever() != "@All")
                     {
                         var existingChat = context.Chats.FirstOrDefault(c => c.UserList.Contains(newSender) && c.UserList.Contains(newReciever) && c.UserList.Count == 2);
                         if (existingChat is null)
@@ -356,11 +356,11 @@ namespace MessengerService.Datalink
 
 
 
-        public void DeleteMessageFromDb(MessagePackage message)
+        public void DeleteMessageFromDb(IMessage message)
         {
             using (MessengerDatabaseContext context = new())
             {
-                var messageToDelete = context.Messages.Where(m => m.Date.Equals(message.Date) && m.Time.Equals(message.Time) && m.Contents.Equals(message.Message)).FirstOrDefault();
+                var messageToDelete = context.Messages.Where(m => m.Date.Equals(message.GetDate()) && m.Time.Equals(message.GetTime()) && m.Contents.Equals(message.GetMessage())).FirstOrDefault();
 
                 if (messageToDelete is not null)
                 {
@@ -410,11 +410,9 @@ namespace MessengerService.Datalink
 
             PackageBuilder builder = new();
 
-            TextMessagePackage pack = new("Messenger", "Client", "dnm", "dnm", userJson);
-
             builder.WriteOpCode(12);
 
-            builder.WriteMessage(pack);
+            builder.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified("Messenger", "Client", userJson));
 
             var debugSize = builder.GetPacketBytes().Length;
 
@@ -422,7 +420,7 @@ namespace MessengerService.Datalink
         }
 
 
-        private void CheckIncommingRegistrationData(MessagePackage pack)
+        private void CheckIncommingRegistrationData(IMessage pack)
         {
             var userData = SubstractUserData(pack);
 
@@ -446,10 +444,10 @@ namespace MessengerService.Datalink
         }
 
 
-        private UserClientTechnicalDTO SubstractUserData(MessagePackage pack)
+        private UserClientTechnicalDTO SubstractUserData(IMessage pack)
         {
             UserClientTechnicalDTO userData = new();
-            var queue = pack.Message as string;
+            var queue = pack.GetMessage() as string;
             var strings = queue.Split("|");
             if (strings.Length == 2)
             {

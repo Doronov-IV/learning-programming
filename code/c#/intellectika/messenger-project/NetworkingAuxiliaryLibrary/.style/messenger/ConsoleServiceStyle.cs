@@ -7,15 +7,15 @@ namespace NetworkingAuxiliaryLibrary.Style.Messenger
     {
 
 
-        public static string GetClientMessageStyle(MessagePackage message)
+        public static string GetClientMessageStyle(IMessage message)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user [green]{message.Sender}[/] says to [green]{message.Reciever}[/]: \"[cyan1]{message.Message as string}[/]\".\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} user [green]{message.GetSender()}[/] says to [green]{message.GetReciever()}[/]: \"[cyan1]{message.GetMessage() as string}[/]\".\n";
         }
 
 
-        public static string GetLoginReceiptStyle(MessagePackage message)
+        public static string GetLoginReceiptStyle(IMessage message)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} _login [mediumspringgreen]\"{message.Message as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} login [mediumspringgreen]\"{message.GetMessage() as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
         }
 
     }

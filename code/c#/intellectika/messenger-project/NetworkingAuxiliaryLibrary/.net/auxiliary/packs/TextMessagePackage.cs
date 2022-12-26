@@ -12,7 +12,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
     /// <br />
     /// Порядок: Sender, Reciever, Message.
     /// </summary>
-    public class TextMessagePackage : MessagePackage, IMessage
+    public class TextMessagePackage : MessagePackage
     {
 
 

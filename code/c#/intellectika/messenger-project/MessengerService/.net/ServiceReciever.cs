@@ -60,7 +60,7 @@ namespace MessengerService.Datalink
         #region API
 
 
-        public delegate void MessageTypeDelegate(MessagePackage recievedMessage);
+        public delegate void MessageTypeDelegate(JsonMessagePackage recievedMessage);
 
         public event MessageTypeDelegate ProcessTextMessageEvent;
 
@@ -98,18 +98,18 @@ namespace MessengerService.Datalink
                         // text message recieved;
                         case 5:
 
-                            var textMessage = packetReader.ReadMessage();
-                            ProcessTextMessageEvent.Invoke(textMessage);
-                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessage)));
+                            var textMessage = packetReader.ReadJsonMessage();
+                            ProcessTextMessageEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessage));
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(JsonMessageFactory.GetUnserializedPackage(textMessage))));
 
                             break;
 
                         // text message deletion;
                         case 6:
 
-                            var textMessageForDeletion = packetReader.ReadMessage();
-                            MessageDeletedEvent.Invoke(textMessageForDeletion);
-                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(textMessageForDeletion)));
+                            var textMessageForDeletion = packetReader.ReadJsonMessage();
+                            MessageDeletedEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion));
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
 
                             break;
 

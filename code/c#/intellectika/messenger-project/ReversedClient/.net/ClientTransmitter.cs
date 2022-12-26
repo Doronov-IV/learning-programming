@@ -197,19 +197,13 @@ namespace Net.Transmition
 
             var connectPacket = new PackageBuilder();
 
-            var message = new JsonMessagePackage();
-            message.Sender = user.Login;
-            message.Reciever = "Service";
-            message.Date = message.Time = "dnm";
-            // ok, I've had enough, i'm getiing builder ;
-
             connectPacket.WriteOpCode(1);
 
-            connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", "dnm", "dnm", $"{user.Login}|{user.Password}"));
+            connectPacket.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified("Client", "Authorizer", $"{user.Login}|{user.Password}"));
 
             authorizationSocket.Client.Send(connectPacket.GetPacketBytes());
 
-            var result = _authorizationPacketReader.ReadMessage().Message as string;
+            var result = JsonMessageFactory.GetUnserializedPackage(_authorizationPacketReader.ReadJsonMessage()).Message as string;
 
             if (result.Equals("Denied")) return false;
             else return true;
@@ -252,7 +246,7 @@ namespace Net.Transmition
 
                 var connectPacket = new PackageBuilder();
 
-                connectPacket.WriteMessage(new TextMessagePackage($"{user.Login}", "Service", "dnm", "dnm", $"{user.Login}"));
+                connectPacket.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified("Client", "Messenger", user.Login));
 
                 messengerSocket.Client.Send(connectPacket.GetPacketBytes());
 
@@ -293,33 +287,14 @@ namespace Net.Transmition
         /// <br />
         /// Сообщение пользователя;
         /// </param>
-        public void SendMessageToServer(TextMessagePackage package)
+        public void SendMessageToServer(string assembledJsonMessage)
         {
             var messagePacket = new PackageBuilder();
             messagePacket.WriteOpCode(5);
-            messagePacket.WriteMessage(package);
+            messagePacket.WriteJsonMessage(assembledJsonMessage);
             try
             {
                 messengerSocket.Client.Send(messagePacket.GetPacketBytes());
-            }
-            catch (Exception ex)
-            {
-                SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
-            }
-        }
-
-
-        public void SendJsonMessageToServer(JsonMessagePackage package)
-        {
-            var builder = new PackageBuilder();
-
-            builder.WriteOpCode(5);
-
-            builder.WriteJsonMessage(JsonConvert.SerializeObject(package));
-
-            try
-            {
-                messengerSocket.Client.Send(builder.GetPacketBytes());
             }
             catch (Exception ex)
             {
@@ -362,7 +337,7 @@ namespace Net.Transmition
             var code = _messengerPacketReader.ReadByte();
             if (code == 12)
             {
-                var msg = _messengerPacketReader.ReadMessage();
+                var msg = JsonMessageFactory.GetUnserializedPackage(_messengerPacketReader.ReadJsonMessage());
 
                 res = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
             }
@@ -370,11 +345,11 @@ namespace Net.Transmition
         }
 
 
-        public void SendMessageDeletionToServer(MessagePackage pack)
+        public void SendMessageDeletionToServer(string assembledJsonMessage)
         {
             var messagePacket = new PackageBuilder();
             messagePacket.WriteOpCode(6);
-            messagePacket.WriteMessage(pack);
+            messagePacket.WriteJsonMessage(assembledJsonMessage);
             try
             {
                 messengerSocket.Client.Send(messagePacket.GetPacketBytes());

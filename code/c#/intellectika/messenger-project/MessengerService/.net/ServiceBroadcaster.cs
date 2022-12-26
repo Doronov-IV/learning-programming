@@ -36,12 +36,9 @@ namespace MessengerService.Datalink
             {
                 foreach (var usr in controllerReference.UserList)
                 {
-                    var usrName = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", "dnm", "dnm", usr.CurrentUser.CurrentNickname);
-                    var usrUID = new TextMessagePackage(usr.CurrentUser.PublicId, "@All", "dnm", "dnm", usr.CurrentUser.PublicId);
-
-                    broadcastPacket.WriteOpCode(1); // code '1' means new userData has connected;
-                    broadcastPacket.WriteMessage(usrName);
-                    broadcastPacket.WriteMessage(usrUID);
+                    // code '1' means new user has connected;
+                    broadcastPacket.WriteOpCode(1);
+                    broadcastPacket.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified(sender: usr.CurrentUser.PublicId, reciever: "Messenger", message: usr.CurrentUser.CurrentNickname));
 
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }
@@ -56,12 +53,12 @@ namespace MessengerService.Datalink
         /// Отправить сообщение всем пользователям. В основном, используется, чтобы переслать сообщение одного пользователя всем остальным;
         /// </summary>
         /// <param name="message"></param>
-        public void BroadcastMessage(MessagePackage package)
+        public void BroadcastMessage(JsonMessagePackage package)
         {
             var msgPacket = new PackageBuilder();
             msgPacket.WriteOpCode(5);
-            msgPacket.WritePackageLength(package);
-            msgPacket.WriteMessage(package);
+            //msgPacket.WritePackageLength(package);
+            msgPacket.WriteJsonMessage(JsonMessageFactory.GetSerializedMessage(package));
             foreach (var user in controllerReference.UserList)
             {
                 if (package.Reciever != "@All")
@@ -69,7 +66,6 @@ namespace MessengerService.Datalink
                     if (user.CurrentUser.PublicId == package.Reciever || user.CurrentUser.PublicId == package.Sender)
                     {
                         user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
-
                     }
                 }
                 else user.ClientSocket.Client.Send(msgPacket.GetPacketBytes(), SocketFlags.Partial);
@@ -89,12 +85,16 @@ namespace MessengerService.Datalink
         /// </param>
         public void BroadcastDisconnect(User userData)
         {
+            // removing disconnected user from collection;
             var disconnectedUser = controllerReference.UserList.Where(x => x.CurrentUser.PublicId.Equals(userData.PublicId)).FirstOrDefault();
-            controllerReference.UserList.Remove(disconnectedUser);            // removing userData;
+            controllerReference.UserList.Remove(disconnectedUser);
 
+            // write notification message;
             var broadcastPacket = new PackageBuilder();
             broadcastPacket.WriteOpCode(10);    // on userData disconnection, _service recieves the code-10 operation and broadcasts the "disconnect message";  
-            broadcastPacket.WriteMessage(new TextMessagePackage(userData.PublicId, "@All", "dnm", "dnm", userData.PublicId)); // it also sends disconnected userData id;
+            broadcastPacket.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified(userData.PublicId, "Everyone", userData.PublicId)); // it also sends disconnected userData id;
+
+            // send notification to everyone;
             foreach (var user in controllerReference.UserList)
             {
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes(), SocketFlags.Partial);
@@ -108,11 +108,11 @@ namespace MessengerService.Datalink
         /// <br />
         /// Распространить уведомление о том, что один пользователь удалил своё сообщение.
         /// </summary>
-        public void BroadcastMessageDeletion(MessagePackage message)
+        public void BroadcastMessageDeletion(JsonMessagePackage message)
         {
             PackageBuilder builder = new();
             builder.WriteOpCode(6);
-            builder.WriteMessage(message);
+            builder.WriteJsonMessage(JsonMessageFactory.GetSerializedMessage(message));
             var specificChatUsers = controllerReference.UserList.Where(u => u.CurrentUser.PublicId.Equals(message.Sender) || u.CurrentUser.PublicId.Equals(message.Reciever));
 
             foreach (var user in specificChatUsers)

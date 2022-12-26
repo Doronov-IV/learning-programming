@@ -106,7 +106,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
         {
             byte[] tempArray = ReadMessageBytes();
 
-            return BitConverter.ToString(tempArray);
+            return Encoding.UTF8.GetString(tempArray);
         }
 
         

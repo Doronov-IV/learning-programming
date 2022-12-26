@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{6D70
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkingAuxiliaryLibrary", "..\NetworkingAuxiliaryLibrary\NetworkingAuxiliaryLibrary.csproj", "{BE482CED-ADB4-44A2-B887-48C8D7E80010}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Range", "Range", "{67305ABE-0719-4469-A05F-DD580C7B5D7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

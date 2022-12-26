@@ -1,20 +1,7 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using System.Runtime.CompilerServices;
-using System.Windows.Media.Converters;
-using ReversedClient.LocalService;
-using System.Collections.Generic;
-using ReversedClient.client_view;
-using System.Windows.Threading;
-using System.Threading.Tasks;
-using ReversedClient.Model;
-using System.Linq;
-using System.Text;
-using System;
-
-using Tools.Formatting;
-using NetworkingAuxiliaryLibrary.Objects.Common;
-using System.Windows.Interop;
+﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using Newtonsoft.Json;
+using ReversedClient.LocalService;
+using ReversedClient.Model;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -51,22 +38,22 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RecieveMessage()
         {
-            var msg = JsonConvert.DeserializeObject<JsonMessagePackage>(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
-            var msgCopy = msg;
+            IMessage msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
+            IMessage msgCopy = msg;
 
             try 
             {
                 // if the _message was sent to us from other user
-                if (_currentUserModel.PublicId != msg.Sender)
+                if (_currentUserModel.PublicId != msg.GetSender())
                 {
-                    var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.Sender).FirstOrDefault();
+                    var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
                     if (someChat is null)
                     {
-                        someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.Sender), addresser: CurrentUserModel);
+                        someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
                     }
 
-                    Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.Message as string));
+                    Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
                 }
                 // if we sent this _message
                 else
@@ -83,7 +70,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void DeleteMessageAfterServiceRespond()
         {
-            var msg = JsonConvert.DeserializeObject<JsonMessagePackage>(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
+            var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             var msgCopy = msg;
             try
             {
@@ -111,14 +98,26 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void InitiateMessageDeletion()
         {
-            var message = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
+            // retrieve message we want to delete
+            var messageContentString = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
 
-            var chat = acceptedUserData.ChatArray.Where(c => c == c.Messages.Where(m => m.Contents.Equals(message))).FirstOrDefault();
+            // search chat with it
+            var chatWithDeletedMessage = acceptedUserData.ChatArray.Where(c => c == c.Messages.Where(m => m.Contents.Equals(messageContentString))).FirstOrDefault();
 
-            MessageDTO dto = chat.Messages.Where(m => m.Contents.Equals(message)).FirstOrDefault();
+            // get full message by the chat we got
+            MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
 
-            TextMessagePackage pack = new(sender: ActiveChat.Addresser.PublicId, reciever: ActiveChat.Addressee.PublicId, date: dto.Date, time: dto.Time,  message: message);
+            // make a message to server with full info
+            var pack = JsonMessageFactory.GetJsonMessage
+            (
+                sender: ActiveChat.Addresser.PublicId, 
+                reciever: ActiveChat.Addressee.PublicId, 
+                date: deletedMessageDto.Date, 
+                time: deletedMessageDto.Time, 
+                message: messageContentString
+            );
 
+            // send deletion request
             _serviceTransmitter.SendMessageDeletionToServer(pack);
         }
 
@@ -131,11 +130,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public void ConnectUser()
         {
+            JsonMessagePackage userNameAndIdPackage;
+
+            userNameAndIdPackage = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
+
+
             // create new user instance;
             var user = new UserClientPublicDTO()
             {
-                UserName = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message as string,
-                PublicId = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message as string,
+                UserName = userNameAndIdPackage.Message as string,
+                PublicId = userNameAndIdPackage.Sender,
             };
 
             /*
@@ -185,7 +189,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <summary>
         /// Send a _message to the service;
         /// <br />
-        /// Is needed to nullify the chat _message field after sending;
+        /// Is needed to nullify the chatWithDeletedMessage _message field after sending;
         /// <br />
         /// <br />
         /// Отправить сообщение на сервис;
@@ -203,7 +207,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     else if (ActiveChat is not null) currentAddressee = ActiveChat.Addressee;
                     else throw new NullReferenceException("[Custom] No target was selected.");
 
-                    _serviceTransmitter.SendMessageToServer(new TextMessagePackage(_currentUserModel.PublicId, currentAddressee.PublicId, date: DateTime.Now.ToString("dd.MM.yyyy"), time: DateTime.Now.ToString("HH:MM:ss"), Message));
+                    _serviceTransmitter.SendMessageToServer(JsonMessageFactory.GetJsonMessage
+                    (
+                        sender: _currentUserModel.PublicId, 
+                        reciever: currentAddressee.PublicId, 
+                        date: DateTime.Now.ToString("dd.MM.yyyy"),
+                        time: DateTime.Now.ToString("HH:MM:ss"),
+                        message: Message
+
+                    ));
+
                     var someChat = ChatList.FirstOrDefault(c => (c.Addressee.PublicId.Equals(currentAddressee.PublicId)));
                     if (someChat is null)
                     {
@@ -212,6 +225,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     }
                     someChat.AddOutgoingMessage(Message);
                     ActiveChat = someChat;
+
 
                     MessageDTO dto = new();
                     var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
@@ -272,23 +286,23 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// Add or sign out and outhoing message sent by client on recieving from service.
+        /// Add or sign out and outhoing messageContentString sent by client on recieving from service.
         /// <br />
         /// Добавить или отметить исходящее сообщение, отправленное клиентом, при получении его от сервиса.
         /// </summary>
-        private void VisualizeOutgoingMessage(MessagePackage msg)
+        private void VisualizeOutgoingMessage(IMessage msg)
         {
-            var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.Reciever));
+            var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.GetReciever()));
             string newMessage = string.Empty;
             string oldMessage = string.Empty;
 
 
-            oldMessage = someChat.MessageList.Select(m => m).Where(m => (m.Contains(msg.Sender) && m.Contains(msg.Message as string) && !m.Contains("✓✓"))).FirstOrDefault();
+            oldMessage = someChat.MessageList.Select(m => m).Where(m => (m.Contains(msg.GetSender()) && m.Contains(msg.GetMessage() as string) && !m.Contains("✓✓"))).FirstOrDefault();
             if (oldMessage is not null)
             {
                 newMessage = oldMessage + "✓";
             }
-            else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msg.Message as string) + " ✓✓"));
+            else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msg.GetMessage() as string) + " ✓✓"));
 
 
             ObservableCollection<string> newMessageList = new();
