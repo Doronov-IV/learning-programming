@@ -21,4 +21,4 @@ And I think, after a quarter of a century, I've finally found a bit of informati
 
 ## See
 
-[Roadmap page](https://github.com/DoronovIV/computer-science-learning/wiki/Roadmap)
+[Roadmap wiki page](https://github.com/DoronovIV/computer-science-learning/wiki/Roadmap)
