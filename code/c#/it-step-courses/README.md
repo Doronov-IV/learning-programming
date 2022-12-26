@@ -1,4 +1,4 @@
-# "ITStep"/"Top" courses
+# 'ITStep' (renamed to 'Top') courses
 You are in a "ITStep courses" node.
 Issue: 
 
@@ -7,11 +7,9 @@ The sub-nodes are pretty self-explanatory so I would not bother documenting them
 
 ## Sub nodes
 
-### Node "Exams"
-Contains my exam projects our teachers would assign to us to make sure we got some topics.
-Currently, it contains only our latest teacher assignmets since Andrei Sobol had different kind of convention, when students should provide some specific array of homeworks (which were pretty tough).
+### Node 'Andrei Sobol'
+Contains homeworks for about half a year period, including learning syntax via console applications, introduction to Windows Forms and WPF. The last one was used to work on ADO.NET and EFC technologies.
+This time was pretty pleasant and cosy, Andrei's teaching manner was sometimes unsure and overextensive but this came with a lot of productivity and most of useful information. And his programming coding style was not just high, but somewhat inspiring which resulted in lots of motivation for me.
 
-### Node "Homework"
-It's just a place where I could complete homeworks assigned by my teachers.
-The "Alexander Surov" node is currently empty since his classes were a painful experience for me, and I had already started intellectika courses by that time.
-The "Andrei Sobol" node on the other side has a complete colletion of workload for he is my teacher in both ITStep and intellectika.
+### Node 'Alexander Surov'
+Is almost empty. This segment was short and undesirable. The homeworks, unlike Andrei's, were not manualy designed, but kept stock from ITStep courses which are really boring and unproductive. Besides this, Alexander's teaching style was ... somewhat chaotic and muddled, so nobody really wanted to spend time on it.
