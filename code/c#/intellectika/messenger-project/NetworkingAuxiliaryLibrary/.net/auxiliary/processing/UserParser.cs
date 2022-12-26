@@ -143,7 +143,7 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
                 chatDto.Messages[j].Sender = unparsedChat.MessageList[j].Author.PublicId;
                 chatDto.Messages[j].Contents = unparsedChat.MessageList[j].Contents;
                 chatDto.Messages[j].Date = unparsedChat.MessageList[j].Date;
-                chatDto.Messages[j].Time = StringDateTime.FromThreeToTwoSections(unparsedChat.MessageList[j].Time);
+                chatDto.Messages[j].Time = unparsedChat.MessageList[j].Time;
             }
         }
 

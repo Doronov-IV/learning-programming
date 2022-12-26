@@ -238,10 +238,21 @@ namespace ReversedClient.Model
         public static string FromClientChatMessageToPackageMessage(string chatMessage)
         {
             string sRes = string.Empty;
-            for (int i = 0, iSize = chatMessage.Length; i < iSize; i++)
+            int nColonIndex = 0;
+
+            for (int i = 0, iSize = chatMessage.Length - 3; i < iSize; i++)
             {
-                if (i < chatMessage.Length-3 && i > 5)
-                sRes += chatMessage[i];
+                if (chatMessage[i].Equals(':') && chatMessage[i+1].Equals(' '))
+                {
+                    nColonIndex = i + 1;
+                    break;
+                }
+            }
+
+            for (int i = 0, iSize = chatMessage.Length - 3; i < iSize; i++)
+            {
+                if (i > nColonIndex)
+                    sRes += chatMessage[i];
             }
             return sRes;
         }

@@ -101,10 +101,10 @@
             <ListView  
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     Background="Transparent"
-                    SelectedItem="SelectedMessage"
+                    SelectedItem="{Binding SelectedMessage}"
                     ItemsSource="{Binding Path=ActiveChat.MessageList}" 
                     Margin="0,5,5,50" BorderBrush="{x:Null}" 
-                    Foreground="#FF0A0A0A" FontFamily="Bookman Old Style" 
+                    Foreground="#FF0A0A0A" FontFamily="Bookman Old Style"
              >
 
                 <ListView.InputBindings>

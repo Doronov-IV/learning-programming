@@ -360,7 +360,23 @@ namespace MessengerService.Datalink
         {
             using (MessengerDatabaseContext context = new())
             {
-                var messageToDelete = context.Messages.Where(m => m.Date.Equals(message.GetDate()) && m.Time.Equals(message.GetTime()) && m.Contents.Equals(message.GetMessage())).FirstOrDefault();
+
+                int deletedMessageAuthorId = context.Users.Where(u => u.MessageList.Where(m => m.Time.Equals(message.GetTime()) && m.Date.Equals(message.GetDate()) && m.Contents.Equals(message.GetMessage() as string)).FirstOrDefault().AuthorId == u.Id)));
+
+                Message messageToDelete = null;
+
+                foreach (var messageItem in context.Messages)
+                {
+                    if (messageItem.Date.Equals(message.GetDate()) && messageItem.Time.Contains(message.GetTime()) && messageItem.Contents.Equals(message.GetMessage() as string))
+                    {
+                        var deletedMessageAuthor = context.Users.Where(u => u.Id == messageItem.AuthorId).FirstOrDefault();
+                            
+                       if (deletedMessageAuthor is not null)
+                        {
+                            if (deletedMessageAuthor.PublicId.Equals(message.GetSender())) messageToDelete = messageItem;
+                        }
+                    }
+                }
 
                 if (messageToDelete is not null)
                 {

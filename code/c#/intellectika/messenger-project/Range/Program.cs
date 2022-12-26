@@ -8,20 +8,12 @@ namespace Range // Note: actual namespace depends on the project name.
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-
-            var jsonString = JsonMessageFactory.GetJsonMessageSimplified("Mario", "Luigi", "Some text idk");
-
-            PackageBuilder builder = new();
-            builder.WriteJsonMessage(jsonString);
-
-            var aaaaaa = builder.GetPacketBytes();
-
-            var stringForDebug = Encoding.UTF8.GetString(aaaaaa);
-
-            Console.WriteLine(stringForDebug);
-
+            Console.WriteLine($"Main start. Thread {Thread.CurrentThread.ManagedThreadId}");
+            Application app = new();
+            app.Run();
+            Console.WriteLine($"Main end.");
         }
     }
 }

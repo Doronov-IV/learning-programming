@@ -312,6 +312,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public DelegateCommand SelectFileCommand { get; }
 
 
+        public DelegateCommand DeleteMessageCommand { get; }
+
+
 
         #endregion COMMANDS - Prism Commands
 
@@ -366,6 +369,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             ConnectToServerCommand = new(ConnectToService);
             SendMessageCommand = new(SendMessage);
             SelectFileCommand = new(SelectFile);
+            DeleteMessageCommand = new(InitiateMessageDeletion);
 
             _serviceTransmitter.SendOutput += ShowErrorMessage;
         }

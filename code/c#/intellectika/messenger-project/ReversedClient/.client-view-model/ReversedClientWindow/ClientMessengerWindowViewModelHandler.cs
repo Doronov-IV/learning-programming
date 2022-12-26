@@ -101,8 +101,28 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             // retrieve message we want to delete
             var messageContentString = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
 
+            ChatDTO chatWithDeletedMessage = null;
+
             // search chat with it
-            var chatWithDeletedMessage = acceptedUserData.ChatArray.Where(c => c == c.Messages.Where(m => m.Contents.Equals(messageContentString))).FirstOrDefault();
+            bool bMatchFlag;
+
+            foreach (var chat in acceptedUserData.ChatArray)
+            {
+                bMatchFlag = false;
+                foreach (var message in chat.Messages)
+                {
+                    if (message.Contents.Equals(messageContentString))
+                    {
+                        chatWithDeletedMessage = chat;
+                        bMatchFlag = true;
+                        break;
+                    }
+                }
+
+                if (bMatchFlag) break;
+            }
+
+            if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
 
             // get full message by the chat we got
             MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
