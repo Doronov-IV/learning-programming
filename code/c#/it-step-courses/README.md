@@ -1,9 +1,5 @@
 # 'ITStep' (renamed to 'Top') courses
 You are in a "ITStep courses" node.
-Issue: 
-
-This node was kept as a depository for some private courses activities I used to attend.
-The sub-nodes are pretty self-explanatory so I would not bother documenting them. 
 
 ## Sub nodes
 
