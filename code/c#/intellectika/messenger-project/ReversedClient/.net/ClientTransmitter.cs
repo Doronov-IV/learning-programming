@@ -201,7 +201,7 @@ namespace Net.Transmition
             message.Sender = user.Login;
             message.Reciever = "Service";
             message.Date = message.Time = "dnm";
-            // ok, I've had enough, i'm getiing builder;
+            // ok, I've had enough, i'm getiing builder ;
 
             connectPacket.WriteOpCode(1);
 
