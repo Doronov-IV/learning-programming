@@ -41,12 +41,14 @@
     <Compile Include=".net\auxiliary\objects\common\UserClientTechnicalDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserServerSideDTO.cs" />
     <Compile Include=".net\auxiliary\packs\FileMessagePackage.cs" />
+    <Compile Include=".net\auxiliary\packs\IMessage.cs" />
     <Compile Include=".net\auxiliary\packs\JsonMessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\MessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
     <Compile Include=".net\auxiliary\processing\UserParser.cs" />
+    <Compile Include=".net\com\Communique.cs" />
     <Compile Include=".net\config\NetworkConfigurator.cs" />
     <Compile Include=".net\config\NetworkConfiguration.cs" />
     <Compile Include=".style\authorizer\ConsoleServiceStyle.cs" />

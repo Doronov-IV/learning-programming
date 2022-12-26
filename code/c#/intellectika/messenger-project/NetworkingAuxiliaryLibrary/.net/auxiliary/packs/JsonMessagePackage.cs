@@ -2,7 +2,7 @@
 
 namespace NetworkingAuxiliaryLibrary.Packages
 {
-    public class JsonMessagePackage
+    public class JsonMessagePackage : IMessage
     {
 
 
@@ -85,6 +85,45 @@ namespace NetworkingAuxiliaryLibrary.Packages
             get { return _message; }
             set { _message = value; }
         }
+
+
+
+
+
+        #region IMessage
+
+
+        public string GetSender()
+        {
+            return _sender;
+        }
+
+
+        public string GetReciever()
+        {
+            return _reciever;
+        }
+
+
+        public string GetDate()
+        {
+            return _date;
+        }
+
+
+        public string GetTime()
+        {
+            return _time;
+        }
+
+
+        public object GetMessage()
+        {
+            return _message;
+        }
+
+
+        #endregion IMessage
 
 
     }
