@@ -123,47 +123,51 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private void InitiateMessageDeletion()
         {
-            // retrieve message we want to delete
-            var messageContentString = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
-
-            ChatDTO chatWithDeletedMessage = null;
-
-            // search chat with it
-            bool bMatchFlag;
-
-            foreach (var chat in acceptedUserData.ChatArray)
+            if (SelectedMessage.Contains(" ✓✓"))
             {
-                bMatchFlag = false;
-                foreach (var message in chat.Messages)
+
+                // retrieve message we want to delete
+                var messageContentString = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
+
+                ChatDTO chatWithDeletedMessage = null;
+
+                // search chat with it
+                bool bMatchFlag;
+
+                foreach (var chat in acceptedUserData.ChatArray)
                 {
-                    if (message.Contents.Equals(messageContentString))
+                    bMatchFlag = false;
+                    foreach (var message in chat.Messages)
                     {
-                        chatWithDeletedMessage = chat;
-                        bMatchFlag = true;
-                        break;
+                        if (message.Contents.Equals(messageContentString))
+                        {
+                            chatWithDeletedMessage = chat;
+                            bMatchFlag = true;
+                            break;
+                        }
                     }
+
+                    if (bMatchFlag) break;
                 }
 
-                if (bMatchFlag) break;
+                if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
+
+                // get full message by the chat we got
+                MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
+
+                // make a message to server with full info
+                var pack = JsonMessageFactory.GetJsonMessage
+                (
+                    sender: ActiveChat.Addresser.PublicId,
+                    reciever: ActiveChat.Addressee.PublicId,
+                    date: deletedMessageDto.Date,
+                    time: deletedMessageDto.Time,
+                    message: messageContentString
+                );
+
+                // send deletion request
+                _serviceTransmitter.SendMessageDeletionToServer(pack);
             }
-
-            if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
-
-            // get full message by the chat we got
-            MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
-
-            // make a message to server with full info
-            var pack = JsonMessageFactory.GetJsonMessage
-            (
-                sender: ActiveChat.Addresser.PublicId, 
-                reciever: ActiveChat.Addressee.PublicId, 
-                date: deletedMessageDto.Date, 
-                time: deletedMessageDto.Time, 
-                message: messageContentString
-            );
-
-            // send deletion request
-            _serviceTransmitter.SendMessageDeletionToServer(pack);
         }
 
 
