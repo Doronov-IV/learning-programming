@@ -358,11 +358,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             _onlineMembers = new ObservableCollection<UserClientPublicDTO>();
 
             _serviceTransmitter = clientSocket;
-            _serviceTransmitter.connectedEvent += ConnectUser;                           // user connection;
-            _serviceTransmitter.messageDeletionEvent += DeleteMessageAfterServiceRespond;                        // file receipt;
-            _serviceTransmitter.msgReceivedEvent += RecieveMessage;                      // _message receipt;
-            _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                  // other user disconnection;
-            _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;      // current user disconnection;
+            _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;
+            _serviceTransmitter.mesageDeletedEvent += DeleteCurrentClientMessageAfterServiceRespond;   // current user message deletion;
+            //_serviceTransmitter.otherClientMessageDeletedEvent += DeleteOherClientMessageAfterServiceRespond;      // other user message deletion;
+            _serviceTransmitter.msgReceivedEvent += RecieveMessage;                                                  // message receipt;
+            _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                                              // other user disconnection;
+            _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;                                 // current user disconnection;
             ServiceTransmitter.ReadPacketsAsync();
 
             // may be obsolete. tests needed;

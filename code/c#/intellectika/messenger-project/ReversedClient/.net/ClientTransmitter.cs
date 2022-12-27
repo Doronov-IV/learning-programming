@@ -111,11 +111,11 @@ namespace Net.Transmition
         public event Action msgReceivedEvent;
 
         /// <summary>
-        /// When some user decides to delete their message.
+        /// When current user decides to delete their message.
         /// <br />
         /// Когда некий пользователь решает удалить своё сообщение.
         /// </summary>
-        public event Action messageDeletionEvent;
+        public event Action mesageDeletedEvent;
 
         /// <summary>
         /// Other user disconnection event;
@@ -404,11 +404,11 @@ namespace Net.Transmition
                                 break;
 
                             case 5:
-                                msgReceivedEvent?.Invoke(); // _message recieved;
+                                msgReceivedEvent?.Invoke(); // message recieved;
                                 break;
 
                             case 6:
-                                messageDeletionEvent?.Invoke(); // file  recieved;
+                                mesageDeletedEvent?.Invoke(); // current client message deleted;
                                 break;
 
                             case 10:

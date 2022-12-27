@@ -68,7 +68,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
-        private void DeleteMessageAfterServiceRespond()
+        private void DeleteCurrentClientMessageAfterServiceRespond()
         {
             var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             var msgCopy = msg;
@@ -82,7 +82,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 {
                     foreach (var message in chat.MessageList)
                     {
-                        string messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessage(msg);
+                        string messageToCompareForDebug = string.Empty; 
+                        if (msg.Sender.Equals(chat.Addresser.PublicId)) messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForCurrentUser(msg);
+                        else messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForOtherUser(msg);
+
                         if (messageToCompareForDebug.Equals(message))
                         {
                             someChat = chat;

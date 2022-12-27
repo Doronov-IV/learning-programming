@@ -258,9 +258,14 @@ namespace ReversedClient.Model
         }
 
 
-        public static string FromPackageMessageToClientChatMessage(IMessage packageMessage)
+        public static string FromPackageMessageToClientChatMessageForCurrentUser(IMessage packageMessage)
         {
             return $"[{StringDateTime.FromThreeToTwoSections(packageMessage.GetTime())}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage() + " ✓✓";
+        }
+
+        public static string FromPackageMessageToClientChatMessageForOtherUser(IMessage packageMessage)
+        {
+            return $"[{StringDateTime.FromThreeToTwoSections(packageMessage.GetTime())}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage();
         }
 
 
