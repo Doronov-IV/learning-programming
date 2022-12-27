@@ -278,7 +278,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
-                    chatDto.Messages.ToList().Add(dto);
+                    //chatDto.Messages.ToList().Add(dto);
+                    chatDto.Messages = chatDto.Messages.Append(dto).ToArray();
 
                     Message = string.Empty;
                 }

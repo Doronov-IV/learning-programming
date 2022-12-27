@@ -4,13 +4,19 @@
     {
         public static bool IsMessageIdenticalToAnotherOne(IMessage messageOne, IMessage messageTwo)
         {
-            return
-            (
-                   messageOne.GetMessage().Equals(messageTwo.GetMessage())
-                && messageOne.GetDate().Equals(messageTwo.GetDate())
-                && messageOne.GetTime().Equals(messageTwo.GetTime())
-                && messageOne.GetSender().Equals(messageTwo.GetSender())
-            );
+            bool bMessageMatch = false;
+            bool bDateMatch = false;
+            bool bTimeMatch = false;
+            bool bSenderMatch = false;
+
+            bMessageMatch = messageOne.GetMessage().Equals(messageTwo.GetMessage());
+            bDateMatch = messageOne.GetDate().Equals(messageTwo.GetDate());
+            bTimeMatch = messageOne.GetTime().Equals(messageTwo.GetTime());
+            bSenderMatch = messageOne.GetSender().Equals(messageTwo.GetSender());
+
+            bool result = bMessageMatch && bDateMatch && bTimeMatch && bSenderMatch;
+
+            return result;
         }
     }
 }

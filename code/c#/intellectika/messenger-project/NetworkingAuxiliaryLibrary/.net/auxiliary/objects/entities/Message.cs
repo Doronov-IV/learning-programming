@@ -1,4 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Packages;
+using Tools.Formatting;
+using Tools.Toolbox;
 
 namespace NetworkingAuxiliaryLibrary.Objects.Entities
 {
@@ -61,7 +63,7 @@ namespace NetworkingAuxiliaryLibrary.Objects.Entities
 
         public string GetDate()
         {
-            return Date;
+            return StringDateTime.FromThreeToTwoSections(Date);
         }
 
 

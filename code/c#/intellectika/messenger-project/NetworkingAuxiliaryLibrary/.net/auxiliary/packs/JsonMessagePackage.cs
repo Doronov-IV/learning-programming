@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Tools.Formatting;
 
 namespace NetworkingAuxiliaryLibrary.Packages
 {
@@ -107,7 +108,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public string GetDate()
         {
-            return _date;
+            return StringDateTime.FromThreeToTwoSections(_date);
         }
 
 
