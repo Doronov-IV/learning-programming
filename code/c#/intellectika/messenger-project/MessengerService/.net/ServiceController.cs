@@ -369,7 +369,7 @@ namespace MessengerService.Datalink
                 {
                     foreach (var messageIntem in user.MessageList)
                     {
-                        if (IsMessageIdenticalToAnotherOne(messageIntem, message))
+                        if (MessageParser.IsMessageIdenticalToAnotherOne(messageIntem, message))
                         {
                             messageToDelete = messageIntem;
                             deletedMessageAuthorId = user.Id;
@@ -398,18 +398,6 @@ namespace MessengerService.Datalink
                 else throw new InvalidDataException("[Custom] Message queried for deletion was not found on the messenger database.");
             }
             
-        }
-
-
-        private bool IsMessageIdenticalToAnotherOne(IMessage messageOne, IMessage messageTwo)
-        {
-            return 
-            (
-                   messageOne.GetMessage().Equals(messageTwo.GetMessage()) 
-                && messageOne.GetDate().Equals(messageTwo.GetDate()) 
-                && messageOne.GetTime().Equals(messageTwo.GetTime()) 
-                && messageOne.GetSender().Equals(messageTwo.GetSender())
-            );
         }
 
 

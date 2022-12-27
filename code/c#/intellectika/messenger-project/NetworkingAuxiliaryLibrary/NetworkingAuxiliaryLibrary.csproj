@@ -45,6 +45,7 @@
     <Compile Include=".net\auxiliary\packs\JsonMessageFactory.cs" />
     <Compile Include=".net\auxiliary\packs\JsonMessagePackage.cs" />
     <Compile Include=".net\auxiliary\packs\MessagePackage.cs" />
+    <Compile Include=".net\auxiliary\packs\MessageParser.cs" />
     <Compile Include=".net\auxiliary\packs\TextMessagePackage.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />

@@ -74,7 +74,19 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             var msgCopy = msg;
             try
             {
-                var someChat = ChatList.Where(c => c.MessageList.Contains(msg.Message)).FirstOrDefault();
+                var somaeChat = ChatList.Where(c => c.MessageList.Contains(msg.Message)).FirstOrDefault();
+
+                ChatDTO someChat = null;
+
+                foreach (var chat in ChatList)
+                {
+                    foreach (var message in chat.MessageList)
+                    {
+                        if ()
+                    }
+                }
+
+
                 MessengerChat someChatCopy = new(addresser: someChat.Addresser, addressee: someChat.Addressee);
                 if (someChat is not null)
                 {

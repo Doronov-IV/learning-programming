@@ -258,6 +258,11 @@ namespace ReversedClient.Model
         }
 
 
+        public static string FromPackageMessageToClientChatMessage(IMessage packageMessage)
+        {
+            return $"[{DateTime.Now.ToString("HH:mm")}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage() + " ✓✓";
+        }
+
 
         #endregion API
 
