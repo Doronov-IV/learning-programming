@@ -100,7 +100,7 @@ namespace MessengerService.Datalink
 
                             var textMessage = packetReader.ReadJsonMessage();
                             ProcessTextMessageEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessage));
-                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(JsonMessageFactory.GetUnserializedPackage(textMessage))));
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageReceiptStyle(JsonMessageFactory.GetUnserializedPackage(textMessage))));
 
                             break;
 
@@ -109,7 +109,7 @@ namespace MessengerService.Datalink
 
                             var textMessageForDeletion = packetReader.ReadJsonMessage();
                             MessageDeletedEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion));
-                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
+                            AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageDeletionStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
 
                             break;
 

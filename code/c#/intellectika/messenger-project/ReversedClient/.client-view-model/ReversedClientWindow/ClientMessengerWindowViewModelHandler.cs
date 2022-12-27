@@ -1,5 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using Newtonsoft.Json;
+using ReversedClient.ClientModel;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
 
@@ -44,7 +45,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             try 
             {
                 // if the _message was sent to us from other user
-                if (_currentUserModel.PublicId != msg.GetSender())
+                if (!_currentUserModel.PublicId.Equals(msg.GetSender()))
                 {
                     var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
                     if (someChat is null)
@@ -52,8 +53,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                         someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
                     }
-
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
+                    //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
                 }
                 // if we sent this _message
                 else
@@ -71,48 +72,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private void DeleteCurrentClientMessageAfterServiceRespond()
         {
             var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
-            var msgCopy = msg;
             try
             {
-                MessengerChat someChat = null;
-                string deletedChatMessage = string.Empty;
-                bool breakFlag = false;
+                MessageEraser eraser = new(msg, ChatList);
+                eraser.DeleteMessage();
+                ChatList = eraser.ChatList;
+                OnPropertyChanged(nameof(ChatList));
 
-                foreach (var chat in ChatList)
-                {
-                    foreach (var message in chat.MessageList)
-                    {
-                        string messageToCompareForDebug = string.Empty; 
-                        if (msg.Sender.Equals(chat.Addresser.PublicId)) messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForCurrentUser(msg);
-                        else messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForOtherUser(msg);
-
-                        if (messageToCompareForDebug.Equals(message))
-                        {
-                            someChat = chat;
-                            deletedChatMessage = message;
-                            breakFlag = true;
-                            break;
-                        }
-                    }
-                    if (breakFlag) break;
-                }
-
-
-                MessengerChat someChatCopy = new(addresser: someChat.Addresser, addressee: someChat.Addressee);
-                if (someChat is not null)
-                {
-                    foreach (string message in someChat.MessageList)
-                    {
-                        if (message.Equals(deletedChatMessage)) { }
-                        else someChatCopy.MessageList.Add(message);
-                    }
-
-                    someChat.MessageList.Remove(deletedChatMessage);
-                    someChat = someChatCopy;
-                    ActiveChat = someChat;
-                    OnPropertyChanged(nameof(ActiveChat));
-                }
-                else MessageBox.Show($"Error. Chat not found. (transmitter, VM-handler)", "Unexpected scenario", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -272,7 +238,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                         someChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);
                         ChatList.Add(someChat);
                     }
-                    someChat.AddOutgoingMessage(Message);
+                    someChat.AddOutgoingMessage(Message + " ✓");
                     ActiveChat = someChat;
 
 
@@ -352,7 +318,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 newMessage = oldMessage + "✓";
             }
-            else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage((msg.GetMessage() as string) + " ✓✓"));
+            else
+                if (msg.GetSender().Equals(acceptedUserData.CurrentPublicId))
+                    Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage((msg.GetMessage() as string) + " ✓✓"));
+                else Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msg.GetMessage() as string));
 
 
             ObservableCollection<string> newMessageList = new();

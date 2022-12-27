@@ -124,7 +124,7 @@ namespace ReversedClient.Model
         /// </param>
         public void AddOutgoingMessage(string message)
         {
-            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addresser.PublicId}: " + message + " ✓");
+            MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addresser.PublicId}: " + message);
         }
 
 

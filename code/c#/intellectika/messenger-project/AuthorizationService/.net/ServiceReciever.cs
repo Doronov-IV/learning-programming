@@ -169,6 +169,10 @@ namespace AuthorizationServiceProject.Net
                             CurrentUser = ReadAuthorizationData(JsonMessageFactory.GetUnserializedPackage(signInMessage));
 
                             bool bAuthorizationRes = controller.UserIsPresentInDatabase(CurrentUser);
+                            if (bAuthorizationRes)
+                            {
+                                AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetUserConnection(CurrentUser.Login)}"));
+                            }
                             controller.SendClientResponse(this, bAuthorizationRes);
 
                             break;
