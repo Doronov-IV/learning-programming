@@ -20,6 +20,7 @@
                 t2.RunSynchronously();
 
                 return t2;
+
             }, TaskContinuationOptions.AttachedToParent);
 
             Console.WriteLine("Run end.");

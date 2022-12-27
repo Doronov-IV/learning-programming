@@ -14,6 +14,7 @@ namespace Range // Note: actual namespace depends on the project name.
             Application app = new();
             app.Run();
             Console.WriteLine($"Main end.");
+            Console.ReadKey();
         }
     }
 }

@@ -361,22 +361,27 @@ namespace MessengerService.Datalink
             using (MessengerDatabaseContext context = new())
             {
 
-                int deletedMessageAuthorId = context.Users.Where(u => u.MessageList.Where(m => m.Time.Equals(message.GetTime()) && m.Date.Equals(message.GetDate()) && m.Contents.Equals(message.GetMessage() as string)).FirstOrDefault().AuthorId == u.Id)));
-
+                int deletedMessageAuthorId = 0;
+                bool breakFlag = false;
                 Message messageToDelete = null;
 
-                foreach (var messageItem in context.Messages)
+                foreach (var user in context.Users.Include(u => u.MessageList))
                 {
-                    if (messageItem.Date.Equals(message.GetDate()) && messageItem.Time.Contains(message.GetTime()) && messageItem.Contents.Equals(message.GetMessage() as string))
+                    foreach (var messageIntem in user.MessageList)
                     {
-                        var deletedMessageAuthor = context.Users.Where(u => u.Id == messageItem.AuthorId).FirstOrDefault();
-                            
-                       if (deletedMessageAuthor is not null)
+                        if (IsMessageIdenticalToAnotherOne(messageIntem, message))
                         {
-                            if (deletedMessageAuthor.PublicId.Equals(message.GetSender())) messageToDelete = messageItem;
+                            messageToDelete = messageIntem;
+                            deletedMessageAuthorId = user.Id;
+                            breakFlag = true;
+                            break;
                         }
                     }
+
+                    if (breakFlag) break;
                 }
+
+                
 
                 if (messageToDelete is not null)
                 {
@@ -387,10 +392,24 @@ namespace MessengerService.Datalink
                     userThatHasThatMessage.MessageList.Remove(messageToDelete);
 
                     context.Messages.Remove(messageToDelete);
+
+                    context.SaveChanges();
                 }
                 else throw new InvalidDataException("[Custom] Message queried for deletion was not found on the messenger database.");
             }
             
+        }
+
+
+        private bool IsMessageIdenticalToAnotherOne(IMessage messageOne, IMessage messageTwo)
+        {
+            return 
+            (
+                   messageOne.GetMessage().Equals(messageTwo.GetMessage()) 
+                && messageOne.GetDate().Equals(messageTwo.GetDate()) 
+                && messageOne.GetTime().Equals(messageTwo.GetTime()) 
+                && messageOne.GetSender().Equals(messageTwo.GetSender())
+            );
         }
 
 

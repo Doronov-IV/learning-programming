@@ -1,6 +1,8 @@
-﻿namespace NetworkingAuxiliaryLibrary.Objects.Entities
+﻿using NetworkingAuxiliaryLibrary.Packages;
+
+namespace NetworkingAuxiliaryLibrary.Objects.Entities
 {
-    public class Message
+    public class Message : IMessage
     {
 
         public int Id { get; set; }
@@ -38,6 +40,44 @@
         {
 
         }
+
+
+
+        #region IMessage
+
+
+        public string GetSender()
+        {
+            return Author.PublicId;
+        }
+
+
+        public string GetReciever()
+        {
+            throw new NotImplementedException();
+            return string.Empty;
+        }
+
+
+        public string GetDate()
+        {
+            return Date;
+        }
+
+
+        public string GetTime()
+        {
+            return Time;
+        }
+
+
+        public object GetMessage()
+        {
+            return Contents;
+        }
+
+
+        #endregion IMessage
 
     }
 }
