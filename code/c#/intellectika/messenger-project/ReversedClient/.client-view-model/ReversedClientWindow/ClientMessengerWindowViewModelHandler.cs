@@ -74,16 +74,24 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             var msgCopy = msg;
             try
             {
-                var somaeChat = ChatList.Where(c => c.MessageList.Contains(msg.Message)).FirstOrDefault();
-
-                ChatDTO someChat = null;
+                MessengerChat someChat = null;
+                string deletedChatMessage = string.Empty;
+                bool breakFlag = false;
 
                 foreach (var chat in ChatList)
                 {
                     foreach (var message in chat.MessageList)
                     {
-                        if ()
+                        string messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessage(msg);
+                        if (messageToCompareForDebug.Equals(message))
+                        {
+                            someChat = chat;
+                            deletedChatMessage = message;
+                            breakFlag = true;
+                            break;
+                        }
                     }
+                    if (breakFlag) break;
                 }
 
 
@@ -92,12 +100,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 {
                     foreach (string message in someChat.MessageList)
                     {
-                        if (!(message.Contains(StringDateTime.FromThreeToTwoSections(msg.Time)) && message.Contains(msg.Message as string)))
-                            someChatCopy.MessageList.Add(message);
+                        if (message.Equals(deletedChatMessage)) { }
+                        else someChatCopy.MessageList.Add(message);
                     }
 
+                    someChat.MessageList.Remove(deletedChatMessage);
                     someChat = someChatCopy;
-                    OnPropertyChanged(nameof(ChatList));
+                    ActiveChat = someChat;
+                    OnPropertyChanged(nameof(ActiveChat));
                 }
                 else MessageBox.Show($"Error. Chat not found. (transmitter, VM-handler)", "Unexpected scenario", MessageBoxButton.OK, MessageBoxImage.Error);
             }

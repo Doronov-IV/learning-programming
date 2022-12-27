@@ -260,7 +260,7 @@ namespace ReversedClient.Model
 
         public static string FromPackageMessageToClientChatMessage(IMessage packageMessage)
         {
-            return $"[{DateTime.Now.ToString("HH:mm")}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage() + " ✓✓";
+            return $"[{StringDateTime.FromThreeToTwoSections(packageMessage.GetTime())}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage() + " ✓✓";
         }
 
 
