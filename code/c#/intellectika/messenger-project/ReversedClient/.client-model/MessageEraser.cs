@@ -6,6 +6,7 @@ namespace ReversedClient.ClientModel
     public class MessageEraser
     {
 
+
         #region STATE
 
 
@@ -51,11 +52,14 @@ namespace ReversedClient.ClientModel
 
 
 
-
         #region API
 
 
-
+        /// <summary>
+        /// Delete a message in a list of chats.
+        /// <br />
+        /// Удалить сообщение в массиве чатов.
+        /// </summary>
         public void DeleteMessage(IMessage message, ObservableCollection<MessengerChat> chatList)
         {
             Message = message;
@@ -64,6 +68,12 @@ namespace ReversedClient.ClientModel
         }
 
 
+
+        /// <summary>
+        /// Delete the message from the list of chats, according to properties.
+        /// <br />
+        /// Удалить сообщения из массива чатов, в соответствии со свойствами.
+        /// </summary>
         public void DeleteMessage()
         {
             if (Message is not null && ChatList is not null)
@@ -102,8 +112,8 @@ namespace ReversedClient.ClientModel
         }
 
 
-        #endregion API
 
+        #endregion API
 
 
 
@@ -113,6 +123,11 @@ namespace ReversedClient.ClientModel
 
 
 
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
         public MessageEraser() 
         {
             _message = null;
@@ -120,6 +135,11 @@ namespace ReversedClient.ClientModel
         }
 
 
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
         public MessageEraser(IMessage message, ObservableCollection<MessengerChat> chatList)
         {
             _message = message;
