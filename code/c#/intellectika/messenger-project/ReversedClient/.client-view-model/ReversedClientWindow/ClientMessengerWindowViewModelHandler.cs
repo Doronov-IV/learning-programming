@@ -93,7 +93,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
 
                 // retrieve message we want to delete
-                var messageContentString = MessengerChat.FromClientChatMessageToPackageMessage(SelectedMessage);
+                var messageContentString = ClientMessageAdapter.FromListViewChatToPackage(SelectedMessage);
 
                 ChatDTO chatWithDeletedMessage = null;
 

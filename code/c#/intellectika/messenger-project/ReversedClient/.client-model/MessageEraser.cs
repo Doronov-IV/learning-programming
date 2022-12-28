@@ -87,8 +87,8 @@ namespace ReversedClient.ClientModel
                     foreach (var message in chat.MessageList)
                     {
                         string messageToCompareForDebug = string.Empty;
-                        if (Message.GetSender().Equals(chat.Addresser.PublicId)) messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForCurrentUser(Message);
-                        else messageToCompareForDebug = MessengerChat.FromPackageMessageToClientChatMessageForOtherUser(Message);
+                        if (Message.GetSender().Equals(chat.Addresser.PublicId)) messageToCompareForDebug = ClientMessageAdapter.FromPackageToChatListViewCurrentUser(Message);
+                        else messageToCompareForDebug = ClientMessageAdapter.FromPackageToChatListViewOtherUser(Message);
 
                         if (messageToCompareForDebug.Equals(message))
                         {

@@ -234,40 +234,6 @@ namespace ReversedClient.Model
             MessageList = new();
         }
 
-        
-        public static string FromClientChatMessageToPackageMessage(string chatMessage)
-        {
-            string sRes = string.Empty;
-            int nColonIndex = 0;
-
-            for (int i = 0, iSize = chatMessage.Length - 3; i < iSize; i++)
-            {
-                if (chatMessage[i].Equals(':') && chatMessage[i+1].Equals(' '))
-                {
-                    nColonIndex = i + 1;
-                    break;
-                }
-            }
-
-            for (int i = 0, iSize = chatMessage.Length - 3; i < iSize; i++)
-            {
-                if (i > nColonIndex)
-                    sRes += chatMessage[i];
-            }
-            return sRes;
-        }
-
-
-        public static string FromPackageMessageToClientChatMessageForCurrentUser(IMessage packageMessage)
-        {
-            return $"[{StringDateTime.FromThreeToTwoSections(packageMessage.GetTime())}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage() + " ✓✓";
-        }
-
-        public static string FromPackageMessageToClientChatMessageForOtherUser(IMessage packageMessage)
-        {
-            return $"[{StringDateTime.FromThreeToTwoSections(packageMessage.GetTime())}] " + $"{packageMessage.GetSender()}: " + packageMessage.GetMessage();
-        }
-
 
         #endregion API
 
