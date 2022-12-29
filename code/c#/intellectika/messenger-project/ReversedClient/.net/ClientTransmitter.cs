@@ -317,9 +317,11 @@ namespace Net.Transmition
 
             PackageReader _authorizationPacketReader = new(authorizationSocket.GetStream());
 
-            var result = _authorizationPacketReader.ReadMessage().Message as string;
+            var resultRaw = _authorizationPacketReader.ReadJsonMessage();
 
-            if (result.Equals("Denied")) return false;
+            var result = JsonMessageFactory.GetUnserializedPackage(resultRaw);
+
+            if (result.GetMessage().Equals("Denied")) return false;
             else return true;
         }
 
@@ -443,9 +445,9 @@ namespace Net.Transmition
         private void SendNewClientData(UserClientTechnicalDTO userData)
         {
             var messagePacket = new PackageBuilder();
-            var signUpMessage = new TextMessagePackage(sender: userData.PublicId, reciever: "Service", "does not matter", "does not matter", message: $"{userData.Login}|{userData.Password}");
+            var signUpMessage = JsonMessageFactory.GetJsonMessageSimplified(sender: userData.PublicId, reciever: "Service", message: $"{userData.Login}|{userData.Password}");
             messagePacket.WriteOpCode(0);
-            messagePacket.WriteMessage(signUpMessage);
+            messagePacket.WriteJsonMessage(signUpMessage);
             try
             {
                 authorizationSocket.Client.Send(messagePacket.GetPacketBytes());

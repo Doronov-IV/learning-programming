@@ -285,6 +285,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// Make all actions needed for the ui side.
+        /// <br />
+        /// Выполнить все необходимые со стороные UI действия.
+        /// </summary>
         private void DisconnectFromService()
         {
             WpfWindowsManager.MoveFromChatToLogin(CurrentUserTechnicalDTO.Login);
