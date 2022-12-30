@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <Compile Include=".client-model\ClientMessageAdapter.cs" />
-    <Compile Include=".client-model\MessageEraser.cs" />
+    <Compile Include=".local-service\MessageEraser.cs" />
     <Compile Include=".client-model\MessengerChat.cs" />
     <Compile Include=".client-view-model\ClientSignUpWindow\ClientSignUpWindowViewModel.cs" />
     <Compile Include=".client-view-model\ClientSignUpWindow\ClientSignUpWindowViewModelHandler.cs" />

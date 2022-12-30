@@ -1,6 +1,5 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using Newtonsoft.Json;
-using ReversedClient.ClientModel;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
 

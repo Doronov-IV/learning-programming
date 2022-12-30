@@ -1,7 +1,7 @@
 ﻿using ReversedClient.Model;
 using System.Windows.Interop;
 
-namespace ReversedClient.ClientModel
+namespace ReversedClient.LocalService
 {
     public class MessageEraser
     {
