@@ -84,9 +84,32 @@ namespace Range
             int nNewSize = Count + 1;
             int nOldSize = Count;
 
-            array = new IDataType[nNewSize];
+            var newArray = new IDataType[nNewSize];
 
-            array[nOldSize] = item;
+            newArray[nOldSize] = item;
+
+            for (int i = 0, iSize = Count; i < iSize; i++)
+            {
+                newArray[i] = array[i];
+            }
+
+            array = newArray;
+        }
+
+        public void AddRange(IEnumerable<IDataType> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
+
+        public void ForEach(Action<IDataType> action)
+        {
+            foreach(var item in array)
+            {
+                action(item);
+            }
         }
     }
 }

@@ -38,5 +38,10 @@ namespace Range
         {
             _value = value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 }
