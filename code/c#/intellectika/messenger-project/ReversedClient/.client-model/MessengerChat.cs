@@ -90,7 +90,7 @@ namespace ReversedClient.Model
 
 
         /// <summary>
-        /// Add incomming _message.
+        /// Add incomming message.
         /// <br />
         /// Добавить входящее сообщение.
         /// </summary>
