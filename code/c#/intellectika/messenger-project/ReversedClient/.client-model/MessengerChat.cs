@@ -106,6 +106,11 @@ namespace ReversedClient.Model
 
 
 
+        /// <summary>
+        /// Add new message, gotten from service and sent by current client.
+        /// <br />
+        /// Добавить новое сообщение, полученное от сервиса и высланное текущим клиентом.
+        /// </summary>  
         public void AddCheckedIncommingMessage(string message)
         {
             MessageList.Add($"[{DateTime.Now.ToString("HH:mm")}] " + $"{Addressee.PublicId}: " + message + " ✓✓");
