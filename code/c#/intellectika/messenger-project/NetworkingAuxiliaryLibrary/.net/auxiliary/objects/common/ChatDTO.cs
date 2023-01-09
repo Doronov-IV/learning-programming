@@ -20,7 +20,8 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
         /// </summary>
         public ChatDTO()
         {
-
+            Members = new List<string>().ToArray();
+            Messages = new List<MessageDTO>().ToArray();
         }
 
     }

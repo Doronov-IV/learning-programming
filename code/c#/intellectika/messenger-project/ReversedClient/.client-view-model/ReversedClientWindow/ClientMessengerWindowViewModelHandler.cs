@@ -243,11 +243,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     MessageDTO dto = new();
                     var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
+                    if (chatDto is null) chatDto = new();
+                    chatDto.Members.ToList().AddRange((new string[] { ActiveChat.Addressee.PublicId, ActiveChat.Addresser.PublicId }));
+
                     dto.Time = DateTime.Now.ToString("HH:mm:ss");
                     dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
-                    //chatDto.Messages.ToList().Add(dto);
                     chatDto.Messages = chatDto.Messages.Append(dto).ToArray();
 
                     Message = string.Empty;
