@@ -22,12 +22,18 @@ namespace AuthorizationServiceProject.Net
 
 
 
+        /// <inheritdoc cref="UserList">
+        private List<ServiceReciever> _userList;
+
+
+
         /// <summary>
         /// An instance to accept incomming connections.
         /// <br />
         /// Сущность для приёма входящих подключений.
         /// </summary>
         private TcpListener clientListener;
+
 
 
         /// <summary>
@@ -37,10 +43,6 @@ namespace AuthorizationServiceProject.Net
         /// </summary>
         private TcpClient messengerServiceSocket;
 
-
-
-        /// <inheritdoc cref="UserList">
-        private List<ServiceReciever> _userList;
 
 
 
@@ -59,7 +61,9 @@ namespace AuthorizationServiceProject.Net
         }
 
 
+
         #endregion STATE
+
 
 
 
@@ -259,58 +263,6 @@ namespace AuthorizationServiceProject.Net
 
         #endregion API
 
-
-
-
-
-
-        #region LOGIC
-
-
-        /// <summary>
-        /// Try seed database with default admin accounts in case they have been cleared.
-        /// <br />
-        /// Попробовать засидить базу дефолтными аккаунтами админов на случай, если их очистили.
-        /// </summary>
-        private void TrySeedAdmins()
-        {
-            using (AuthorizationDatabaseContext context = new())
-            {
-                UserModel admin1 = new();
-                UserModel admin2 = new();
-                UserModel admin3 = new();
-                UserModel admin4 = new();
-                UserModel admin5 = new();
-
-                admin1.Login = "admin_alpha";
-                admin2.Login = "admin_bravo";
-                admin3.Login = "admin_charlie";
-                admin4.Login = "admin_delta";
-                admin5.Login = "admin_echo";
-
-                admin1.PasswordHash = admin2.PasswordHash = admin3.PasswordHash = admin4.PasswordHash = admin5.PasswordHash = "admin";
-
-                foreach (var user in context.Users)
-                {
-                    if (user.Login.Equals(admin1.Login))
-                    {
-                        context.Dispose();
-                        return;
-                    }
-                }
-
-                context.Users.Add(admin1);
-                context.Users.Add(admin2);
-                context.Users.Add(admin3);
-                context.Users.Add(admin4);
-                context.Users.Add(admin5);
-
-                context.SaveChanges();
-            }
-        }
-
-
-        #endregion LOGIC
 
 
 

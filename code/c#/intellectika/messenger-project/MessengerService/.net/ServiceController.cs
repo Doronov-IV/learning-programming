@@ -239,7 +239,9 @@ namespace MessengerService.Datalink
                     {
                         CheckIncommingRegistrationData(msg);
 
-                        AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetLoginReceiptStyle(msg)));
+                        var userData = SubstractUserData(msg);
+
+                        AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetLoginReceiptStyle(userData.PublicId)));
                     }
                 }
             }

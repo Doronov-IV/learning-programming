@@ -19,9 +19,9 @@ namespace NetworkingAuxiliaryLibrary.Style.Messenger
         }
 
 
-        public static string GetLoginReceiptStyle(IMessage message)
+        public static string GetLoginReceiptStyle(string publicId)
         {
-            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} login [mediumspringgreen]\"{message.GetMessage() as string}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
+            return $"{ConsoleServiceStyleCommon.GetCurrentTime()} public id [mediumspringgreen]\"{publicId}\"[/] has been recieved from [purple_1]Authorizer[/].\n";
         }
 
     }
