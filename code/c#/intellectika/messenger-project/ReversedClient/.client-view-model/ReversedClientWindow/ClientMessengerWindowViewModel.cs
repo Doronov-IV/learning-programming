@@ -33,8 +33,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private UserClientTechnicalDTO _currentUserTechnicalDTO;
 
 
-        /// <inheritdoc cref="MemberList"/>
-        private ObservableCollection<UserClientPublicDTO> _memberList;
+        /// <inheritdoc cref="DefaultCommonMemberList"/>
+        private ObservableCollection<UserClientPublicDTO> _defaultCommonMemberList;
 
 
         /// <inheritdoc cref="ActiveChat"/>
@@ -49,8 +49,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private UserClientPublicDTO _currentUserModel;
 
 
-        /// <inheritdoc cref="ChatList"/>
-        private ObservableCollection<MessengerChat> _chatList;
+        /// <inheritdoc cref="DefaultCommonChatList"/>
+        private ObservableCollection<MessengerChat> _defaultCommonChatList;
 
 
         /// <inheritdoc cref="WindowHeaderString"/>
@@ -74,6 +74,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         private string _selectedMessage;
 
+        private string _memberSearchString;
+
+        private string _chatSearchString;
+
+
+        private ObservableCollection<UserClientPublicDTO> _memberList;
+
+        private ObservableCollection<MessengerChat> _chatList;
+
+
 
         /// <summary>
         /// The service of the file selection dialog.
@@ -90,6 +100,49 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
+
+        public string MemberSearchString
+        {
+            get { return _memberSearchString; }
+            set
+            {
+                OnPropertyChanged(nameof(MemberSearchString));
+
+
+            }
+        }
+
+        public string ChatSearchString
+        {
+            get { return _chatSearchString; }
+            set
+            {
+                OnPropertyChanged(nameof(ChatSearchString));
+
+
+            }
+        }
+
+
+        public ObservableCollection<UserClientPublicDTO> MemberList
+        {
+            get { return _memberList; }
+            set
+            {
+                _memberList = value;
+                OnPropertyChanged(nameof(MemberList));
+            }
+        }
+
+        public ObservableCollection<MessengerChat> ChatList
+        {
+            get { return _chatList; }
+            set
+            {
+                _chatList = value;
+                OnPropertyChanged(nameof(ChatList));
+            }
+        }
 
 
         public UserClientTechnicalDTO CurrentUserTechnicalDTO
@@ -108,14 +161,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Обозреваемая коллекция пользователей в сети.
         /// </summary>
-        public ObservableCollection<UserClientPublicDTO> MemberList 
+        public ObservableCollection<UserClientPublicDTO> DefaultCommonMemberList 
         {
-            get { return _memberList; }
+            get { return _defaultCommonMemberList; }
             set
             {
-                _memberList = value;
+                _defaultCommonMemberList = value;
 
-                OnPropertyChanged(nameof(MemberList));
+                OnPropertyChanged(nameof(DefaultCommonMemberList));
             }
         }
 
@@ -149,7 +202,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 _selectedOnlineMember = value;
                 OnPropertyChanged(nameof(SelectedOnlineMember));
 
-                var someExistingChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(_selectedOnlineMember.UserName));
+                var someExistingChat = DefaultCommonChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(_selectedOnlineMember.UserName));
                 if (someExistingChat is null)
                 {
                     someExistingChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);
@@ -180,13 +233,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Список чатов.
         /// </summary>
-        public ObservableCollection<MessengerChat> ChatList
+        public ObservableCollection<MessengerChat> DefaultCommonChatList
         {
-            get { return _chatList; }
+            get { return _defaultCommonChatList; }
             set
             {
-                _chatList = value;
-                OnPropertyChanged(nameof(ChatList));
+                _defaultCommonChatList = value;
+                OnPropertyChanged(nameof(DefaultCommonChatList));
             }
         }
 
@@ -344,12 +397,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, ClientTransmitter clientSocket)
         {
+            MemberList = DefaultCommonMemberList;
+            ChatList = DefaultCommonChatList;
+
             acceptedUserData = userData;
-            if (_chatList is null) _chatList = new();
+            if (_defaultCommonChatList is null) _defaultCommonChatList = new();
             _currentUserModel = new(userName: userData.CurrentNickname, publicId: userData.CurrentPublicId);
 
-            ChatParser.FillChats(userData, ref _chatList);
-            OnPropertyChanged(nameof(ChatList));
+            ChatParser.FillChats(userData, ref _defaultCommonChatList);
+            OnPropertyChanged(nameof(DefaultCommonChatList));
 
             _windowHeaderString = userData.CurrentNickname;
 
@@ -358,7 +414,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             _message = string.Empty;
 
-            _memberList = new ObservableCollection<UserClientPublicDTO>();
+            _defaultCommonMemberList = new ObservableCollection<UserClientPublicDTO>();
 
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;

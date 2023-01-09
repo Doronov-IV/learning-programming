@@ -23,10 +23,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private void RemoveUser()
         {
             var uid = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message;
-            var user = MemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
+            var user = DefaultCommonMemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => MemberList.Remove(user));   // removing disconnected user;
+            Application.Current.Dispatcher.Invoke(() => DefaultCommonMemberList.Remove(user));   // removing disconnected user;
         }
 
 
@@ -46,11 +46,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 // if the _message was sent to us from other user
                 if (!_currentUserModel.PublicId.Equals(msg.GetSender()))
                 {
-                    var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
+                    var someChat = DefaultCommonChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
                     if (someChat is null)
                     {
-                        someChat = new(addressee: MemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
-                        Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
+                        someChat = new(addressee: DefaultCommonMemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
+                        Application.Current.Dispatcher.Invoke(() => DefaultCommonChatList.Add(someChat));
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
                     //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
@@ -73,10 +73,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             try
             {
-                MessageEraser eraser = new(msg, ChatList);
+                MessageEraser eraser = new(msg, DefaultCommonChatList);
                 eraser.DeleteMessage();
-                ChatList = eraser.ChatList;
-                OnPropertyChanged(nameof(ChatList));
+                DefaultCommonChatList = eraser.ChatList;
+                OnPropertyChanged(nameof(DefaultCommonChatList));
 
             }
             catch (Exception ex)
@@ -164,13 +164,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
              */
 
             MessengerChat newChat;
-            if (!MemberList.Any(x => x.PublicId == user.PublicId))
+            if (!DefaultCommonMemberList.Any(x => x.PublicId == user.PublicId))
             {
                 if (user.PublicId != _currentUserModel.PublicId)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        MemberList.Add(user);
+                        DefaultCommonMemberList.Add(user);
                     });
                 }
             }
@@ -231,11 +231,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     ));
 
-                    var someChat = ChatList.FirstOrDefault(c => (c.Addressee.PublicId.Equals(currentAddressee.PublicId)));
+                    var someChat = DefaultCommonChatList.FirstOrDefault(c => (c.Addressee.PublicId.Equals(currentAddressee.PublicId)));
                     if (someChat is null)
                     {
                         someChat = new(addresser: CurrentUserModel, addressee: SelectedOnlineMember);
-                        ChatList.Add(someChat);
+                        DefaultCommonChatList.Add(someChat);
                     }
                     someChat.AddOutgoingMessage(Message + " ✓");
                     ActiveChat = someChat;
@@ -313,7 +313,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void VisualizeOutgoingMessage(IMessage msg)
         {
-            var someChat = ChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.GetReciever()));
+            var someChat = DefaultCommonChatList.FirstOrDefault(c => c.Addressee.PublicId.Equals(msg.GetReciever()));
             string newMessage = string.Empty;
             string oldMessage = string.Empty;
 

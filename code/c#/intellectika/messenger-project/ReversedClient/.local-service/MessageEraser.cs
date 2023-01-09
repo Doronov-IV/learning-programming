@@ -108,7 +108,7 @@ namespace ReversedClient.LocalService
                     someChat.MessageList.Remove(deletedChatMessage);
                 }
             }
-            else throw new NullReferenceException("[Custom] The Message and ChatList properties have not been set. You should use them or constructor.");
+            else throw new NullReferenceException("[Custom] The Message and DefaultCommonChatList properties have not been set. You should use them or constructor.");
         }
 
 

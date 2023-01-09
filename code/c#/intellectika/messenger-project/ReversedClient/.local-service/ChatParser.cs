@@ -5,9 +5,9 @@ namespace ReversedClient.LocalService
 {
 
     /// <summary>
-    /// A service for parsing 'ChatList' property of a 'User' object into a view-model 'ChatList' one.
+    /// A service for parsing 'DefaultCommonChatList' property of a 'User' object into a view-model 'DefaultCommonChatList' one.
     /// <br />
-    /// Сервис для парсинга свойства "ChatList" объекта класса "User" в свойство "ChatList" вью-модели.
+    /// Сервис для парсинга свойства "DefaultCommonChatList" объекта класса "User" в свойство "DefaultCommonChatList" вью-модели.
     /// </summary>
     public static class ChatParser
     {
