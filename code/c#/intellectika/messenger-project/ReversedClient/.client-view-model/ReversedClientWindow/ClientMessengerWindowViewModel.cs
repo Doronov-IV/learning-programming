@@ -69,18 +69,26 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private ClientTransmitter _serviceTransmitter;
 
 
-        private UserServerSideDTO acceptedUserData;
 
 
+
+        /// <inheritdoc cref="SelectedMessage"/>
         private string _selectedMessage;
 
+
+        /// <inheritdoc cref="MemberSearchString"/>
         private string _memberSearchString;
 
+
+        /// <inheritdoc cref="ChatSearchString"/>
         private string _chatSearchString;
 
 
+        /// <inheritdoc cref="MemberList"/>
         private ObservableCollection<UserClientPublicDTO> _memberList;
 
+
+        /// <inheritdoc cref="ChatList"/>
         private ObservableCollection<MessengerChat> _chatList;
 
 
@@ -93,6 +101,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private IDialogService dialogService;
 
 
+        /// <summary>
+        /// The user dto got from login window.
+        /// <br />
+        /// Пользовательская информация, полученная из окна логина.
+        /// </summary>
+        private UserServerSideDTO acceptedUserData;
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +117,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        /// <summary>
+        /// A string, used by the user to search in the list of members.
+        /// <br />
+        /// Строка, используемая пользователем для поиска в списке участников.
+        /// </summary>
         public string MemberSearchString
         {
             get { return _memberSearchString; }
@@ -119,6 +140,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             }
         }
 
+
+
+        /// <summary>
+        /// A string, used by user to search in the list of chats.
+        /// <br />
+        /// Строка, используемая пользователем для поиска в списке чатов.
+        /// </summary>
         public string ChatSearchString
         {
             get { return _chatSearchString; }
@@ -138,6 +166,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// The temporal list of members, used to represent the results of user search.
+        /// <br />
+        /// Временный список участников, используемый чтобы предоставить пользователю результат поиска.
+        /// </summary>
         public ObservableCollection<UserClientPublicDTO> MemberList
         {
             get 
@@ -154,6 +188,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// The temporal list of chats, used to represent the results of user search.
+        /// <br />
+        /// Временный список чатов, используемый чтобы предоставить пользователю результат поиска.
+        /// </summary>
         public ObservableCollection<MessengerChat> ChatList
         {
             get 
@@ -170,6 +210,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// An object, incapsulating user login and pass.
+        /// <br />
+        /// Объект, хранящий в себе логин и пароль пользователя.
+        /// </summary>
         public UserClientTechnicalDTO CurrentUserTechnicalDTO
         {
             get { return _currentUserTechnicalDTO; }
@@ -179,6 +225,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 OnPropertyChanged(nameof(CurrentUserTechnicalDTO));
             }
         }
+
 
 
         /// <summary>
@@ -198,6 +245,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         /// <summary>
         /// A chat that user has clicked upon. 'Null' by default.
         /// <br />
@@ -209,9 +257,18 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             set
             {
                 _activeChat = value;
+
+                if (_activeChat.Addressee.UserName.StartsWith("▪ "))
+                {
+                    var addresseeCopy = _activeChat.Addressee;
+                    addresseeCopy.UserName = ChatParser.FromUnreadToRead(_activeChat.Addressee.UserName);
+                    ActiveChat.Addressee = addresseeCopy;
+                    OnPropertyChanged(nameof(ActiveChat));
+                }
                 OnPropertyChanged(nameof(ActiveChat));
             }
         }
+
 
 
         /// <summary>
@@ -237,6 +294,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         /// <summary>
         /// The instance representing current client info;
         /// <br />
@@ -251,6 +309,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 OnPropertyChanged(nameof(CurrentUserModel));
             }
         }
+
 
 
         /// <summary>
@@ -269,6 +328,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         /// <summary>
         /// The header of the wpf window. Corrensponds to the user name.
         /// <br />
@@ -283,6 +343,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 OnPropertyChanged(nameof(WindowHeaderString));
             }
         }
+
 
 
         /// <summary>
@@ -301,6 +362,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         /// <summary>
         /// The file attached to the user _message.
         /// <br />
@@ -317,6 +379,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         /// <summary>
         /// An instance of a 'ClientTransmitter' to communicate with the service;
         /// <br />
@@ -329,6 +392,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// The message selected by user.
+        /// <br />
+        /// Сообщение, выбранное пользователем.
+        /// </summary>
         public string SelectedMessage
         {
             get
@@ -341,6 +410,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 OnPropertyChanged(nameof(SelectedMessage));
             }
         }
+
 
 
         #endregion PROPERTIES - Object State
@@ -380,14 +450,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// Команда для обработки нажатия кнопки "Войти".
         /// </summary>
         public DelegateCommand SignInButtonClickCommand { get; }
-
-
-        /// <summary>
-        /// A command for the 'Attach file' button.
-        /// <br />
-        /// Команда для кнопки "Attach file".
-        /// </summary>
-        public DelegateCommand SelectFileCommand { get; }
 
 
         public DelegateCommand DeleteMessageCommand { get; }
@@ -453,7 +515,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             // may be obsolete. tests needed;
             ConnectToServerCommand = new(ConnectToService);
             SendMessageCommand = new(SendMessage);
-            SelectFileCommand = new(SelectFile);
             DeleteMessageCommand = new(InitiateMessageDeletion);
             LogoutCommand = new(OnLogoutButtonPressed);
 

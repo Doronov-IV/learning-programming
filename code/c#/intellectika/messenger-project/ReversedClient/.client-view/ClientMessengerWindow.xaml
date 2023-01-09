@@ -67,7 +67,7 @@
                                     <StackPanel Orientation="Horizontal" Margin="2">
                                         <TextBlock 
                                 TextWrapping="Wrap" Padding="2" 
-                                Text="{Binding Path=Addressee.PublicId}" 
+                                Text="{Binding Path=Addressee.UserName, UpdateSourceTrigger=PropertyChanged}" 
                                 MaxWidth="{Binding RelativeSource=
                                 {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
                                 />

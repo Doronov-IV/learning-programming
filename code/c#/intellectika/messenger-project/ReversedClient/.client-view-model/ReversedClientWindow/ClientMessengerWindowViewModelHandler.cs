@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
+using System.Media;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -54,6 +55,15 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
                     //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
+
+                    if (!someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
+                    {
+                        var addresseeCopy = someChat.Addressee;
+                        addresseeCopy.UserName = ChatParser.FromReadToUnread(someChat.Addressee.UserName);
+                        someChat.Addressee = addresseeCopy;
+                        SystemSounds.Exclamation.Play();
+                        OnPropertyChanged(nameof(ChatList));
+                    }
                 }
                 // if we sent this _message
                 else
@@ -179,28 +189,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         /// <summary>
-        /// Open file dialog to choose a file to send.
-        /// <br />
-        /// Открыть файловый диалог, чтобы выбрать файл к отправке.
-        /// </summary>
-        public void SelectFile()
-        {
-            try
-            {
-                if (dialogService.OpenFileDialog())
-                {
-                    UserFile = new(dialogService.FilePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                dialogService.ShowMessage(ex.Message);
-            }
-        }
-
-
-
-        /// <summary>
         /// Send a _message to the service;
         /// <br />
         /// Is needed to nullify the chatWithDeletedMessage _message field after sending;
@@ -298,6 +286,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
         #endregion Transmition handlers
 
 
@@ -361,11 +350,21 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        /// <summary>
+        /// Handle the logout button click.
+        /// <br />
+        /// Обработать клик по кнопке "Выход".
+        /// </summary>
         private void OnLogoutButtonPressed()
         {
-            ServiceTransmitter.Dispose();
+            var vRes = MessageBox.Show("Are you sure you want to log off?", "Logging Off", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            WpfWindowsManager.MoveFromChatToLogin(string.Empty);
+            if (vRes == MessageBoxResult.Yes)
+            {
+                ServiceTransmitter.Dispose();
+
+                WpfWindowsManager.MoveFromChatToLogin(string.Empty);
+            }
         }
 
 

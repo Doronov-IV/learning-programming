@@ -354,12 +354,12 @@ namespace Net.Transmition
             var code = _messengerPacketReader.ReadByte();
             if (code == 12)
             {
+                // reading user data;
                 var msg = JsonMessageFactory.GetUnserializedPackage(_messengerPacketReader.ReadJsonMessage());
-
                 res = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
 
+                // reading list of users;
                 var msgList = JsonMessageFactory.GetUnserializedPackage(_messengerPacketReader.ReadJsonMessage());
-
                 list = JsonConvert.DeserializeObject<List<UserClientPublicDTO>>(msgList.Message as string);
             }
             return (res, list);

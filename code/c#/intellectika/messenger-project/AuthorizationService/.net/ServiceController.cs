@@ -177,7 +177,6 @@ namespace AuthorizationServiceProject.Net
                 catch (Exception inex)
                 {
                     AnsiConsole.Write(new Markup($"{ConsoleServiceStyleCommon.GetCurrentTime()} [white on red]Messenger service is still down. Client data was not sent.[/]\n"));
-                    //System.Environment.Exit(0); // console application manual shutdown
                     return false;
                 }
             }
