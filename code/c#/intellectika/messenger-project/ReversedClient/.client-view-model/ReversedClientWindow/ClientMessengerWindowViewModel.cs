@@ -106,9 +106,16 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             get { return _memberSearchString; }
             set
             {
+                _memberSearchString = value;
                 OnPropertyChanged(nameof(MemberSearchString));
 
-
+                if (!string.IsNullOrEmpty(_memberSearchString))
+                {
+                    ObservableCollection<UserClientPublicDTO> tempCollection = new(DefaultCommonMemberList.Where(m => m.PublicId.StartsWith(_memberSearchString)).ToList());
+                    if (tempCollection is null) tempCollection = new ObservableCollection<UserClientPublicDTO>();
+                    MemberList = tempCollection;
+                }
+                else MemberList = DefaultCommonMemberList;
             }
         }
 
@@ -117,16 +124,28 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             get { return _chatSearchString; }
             set
             {
+                _chatSearchString = value;
                 OnPropertyChanged(nameof(ChatSearchString));
 
-
+                if (!string.IsNullOrEmpty(_chatSearchString))
+                {
+                    ObservableCollection<MessengerChat> tempCollection = new(DefaultCommonChatList.Where(m => m.Addressee.PublicId.StartsWith(_chatSearchString)).ToList());
+                    if (tempCollection is null) tempCollection = new ObservableCollection<MessengerChat>();
+                    ChatList = tempCollection;
+                }
+                else ChatList = DefaultCommonChatList;
             }
         }
 
 
         public ObservableCollection<UserClientPublicDTO> MemberList
         {
-            get { return _memberList; }
+            get 
+            {
+                if (!string.IsNullOrEmpty(_memberSearchString))
+                    return _memberList;
+                else return _defaultCommonMemberList;
+            }
             set
             {
                 _memberList = value;
@@ -136,7 +155,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
         public ObservableCollection<MessengerChat> ChatList
         {
-            get { return _chatList; }
+            get 
+            {
+                if (!string.IsNullOrEmpty(_chatSearchString))
+                    return _chatList;
+                else return _defaultCommonChatList;
+            }
             set
             {
                 _chatList = value;
