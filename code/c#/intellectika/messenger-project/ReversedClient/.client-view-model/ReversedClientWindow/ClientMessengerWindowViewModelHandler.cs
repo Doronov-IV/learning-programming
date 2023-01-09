@@ -359,7 +359,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        private void OnLogoutButtonPressed()
+        {
+            ServiceTransmitter.Dispose();
 
+            WpfWindowsManager.MoveFromChatToLogin(string.Empty);
+        }
 
 
 

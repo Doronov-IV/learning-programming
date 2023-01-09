@@ -148,11 +148,11 @@
              />
 
         </Grid>
-        
+
         <Button 
-            Content="" Command="{Binding LogoutCommand}"
-            Margin="0,569,0,0"  Height="15" Width="22"
-            HorizontalAlignment="Left" VerticalAlignment="Top"
+                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Height="20" Width="20" Margin="10"
+                Content="" Command="{Binding LogoutCommand}"
          />
 
 

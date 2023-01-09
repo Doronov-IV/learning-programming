@@ -137,7 +137,7 @@ namespace ReversedClient.LocalService
                         showWindow = win;
                     }
                 }
-
+                showWindow = new ClientLoginWindow();
                 showWindow.Show();
                 closeWindow.Hide();
             });

@@ -20,7 +20,7 @@ namespace Net.Transmition
     /// <br />
     /// Абстракция, которая предоставляет клиенту возможность проводить основные сетевые действия, такие как: подключение, приём данных, передача данных;
     /// </summary>
-    public class ClientTransmitter
+    public class ClientTransmitter : IDisposable
     {
 
 
@@ -53,6 +53,9 @@ namespace Net.Transmition
         private TcpClient messengerSocket;
 
 
+        ///<inheritdoc cref="Disposed"/>
+        private bool _disposed;
+
 
         ///<inheritdoc cref="AuthorizationPacketReader"/>
         private PackageReader _authorizationPacketReader;
@@ -61,6 +64,17 @@ namespace Net.Transmition
         ///<inheritdoc cref="MessengerPacketReader"/>
         private PackageReader _messengerPacketReader;
 
+
+
+        /// <summary>
+        /// 'True' - if this instance has already been disposed, otherwise 'false'.
+        /// <br />
+        /// "True", если от этого проекта уже избавились, иначе "false".
+        /// </summary>
+        public bool Disposed
+        {
+            get { return _disposed; }
+        }
 
 
         /// <summary>
@@ -476,9 +490,27 @@ namespace Net.Transmition
         /// </summary>
         public ClientTransmitter()
         {
-            
+            _disposed = false;
+
             authorizationSocket = new TcpClient();
+
             messengerSocket = new TcpClient();
+        }
+
+
+
+        /// <summary>
+        /// Flush the TcpClients and set the flag.
+        /// <br />
+        /// Освободить TcpClient'ы и установить флаг.
+        /// </summary>
+        public void Dispose()
+        {
+            _disposed = true;
+
+            authorizationSocket?.Dispose();
+
+            messengerSocket?.Dispose();
         }
 
 

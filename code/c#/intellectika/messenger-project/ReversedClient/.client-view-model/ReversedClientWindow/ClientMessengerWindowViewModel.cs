@@ -315,6 +315,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public DelegateCommand DeleteMessageCommand { get; }
 
 
+        public DelegateCommand LogoutCommand { get; }
+
+
 
         #endregion COMMANDS - Prism Commands
 
@@ -359,7 +362,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;
-            _serviceTransmitter.mesageDeletedEvent += DeleteCurrentClientMessageAfterServiceRespond;   // current user message deletion;
+            _serviceTransmitter.mesageDeletedEvent += DeleteCurrentClientMessageAfterServiceRespond;                 // current user message deletion;
             //_serviceTransmitter.otherClientMessageDeletedEvent += DeleteOherClientMessageAfterServiceRespond;      // other user message deletion;
             _serviceTransmitter.msgReceivedEvent += RecieveMessage;                                                  // message receipt;
             _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                                              // other user disconnection;
@@ -371,6 +374,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             SendMessageCommand = new(SendMessage);
             SelectFileCommand = new(SelectFile);
             DeleteMessageCommand = new(InitiateMessageDeletion);
+            LogoutCommand = new(OnLogoutButtonPressed);
 
             _serviceTransmitter.SendOutput += ShowErrorMessage;
         }

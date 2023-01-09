@@ -37,6 +37,11 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
             {
                 if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
                 {
+                    if (ServiceTransmitter.Disposed)
+                    {
+                        ServiceTransmitter = new();
+                    }
+
                     if (await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
                     {
                         if (ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData))
