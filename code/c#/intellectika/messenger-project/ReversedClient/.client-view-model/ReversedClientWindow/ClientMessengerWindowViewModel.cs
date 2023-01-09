@@ -153,6 +153,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             }
         }
 
+
         public ObservableCollection<MessengerChat> ChatList
         {
             get 
@@ -421,7 +422,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
-            DefaultCommonMemberList = new(memberList);
+            var alteredMemberList = memberList.Where(m => !m.PublicId.Equals(userData.CurrentPublicId));            // to exclude the possibility of writing messages to yourself;
+            DefaultCommonMemberList = new(alteredMemberList);
             MemberList = DefaultCommonMemberList;
             ChatList = DefaultCommonChatList;
 
@@ -438,8 +440,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             dialogService = new AttachFileDialogService();
 
             _message = string.Empty;
-
-            _defaultCommonMemberList = new ObservableCollection<UserClientPublicDTO>();
 
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;
