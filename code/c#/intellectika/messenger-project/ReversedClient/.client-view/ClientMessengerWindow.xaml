@@ -42,51 +42,68 @@
                     >
 
             <TabControl Margin="0,5,0,0" Background="Transparent" Height="561">
+
+
+
                 <TabItem Header="Chats">
 
+                    <StackPanel>
 
-
-
-                    <ListView   
+                        <TextBox 
+                            Text="{Binding ChatSearchString}"
+                            Margin="0,0,0,0" Padding="10,2,0,2"
+                        />
+                        
+                        <ListView   
                       BorderBrush="{x:Null}" Foreground="#E50A0A0A"
-                    Margin="0,10,0,0" FontFamily="Bookman Old Style"
+                    Margin="0,40,0,10" FontFamily="Bookman Old Style"
                   SelectedItem="{Binding ActiveChat}" Grid.Column="0"
                  Background="Transparent" ItemsSource="{Binding ChatList}"
                 Width="185" HorizontalAlignment="Left">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
-                                    <TextBlock 
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="2">
+                                        <TextBlock 
                                 TextWrapping="Wrap" Padding="2" 
                                 Text="{Binding Path=Addressee.PublicId}" 
                                 MaxWidth="{Binding RelativeSource=
                                 {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
                                 />
-                                </StackPanel>
+                                    </StackPanel>
 
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Online">
-                    <ListView   
-                      Margin="0,10,0,0" FontFamily="Bookman Old Style"
+                <TabItem Header="Members">
+
+                    <StackPanel>
+
+                        <TextBox
+                            Margin="0,0,0,0" Padding="10,2,0,2"
+                            Text="{Binding MembersSearchString}"
+                         />
+
+                        <ListView   
+                      Margin="0,40,0,10" FontFamily="Bookman Old Style"
                      BorderBrush="{x:Null}" Foreground="#E50A0A0A"
                    SelectedItem="{Binding SelectedOnlineMember}" Grid.Column="0"
-                 Background="Transparent" ItemsSource="{Binding OnlineMembers}"
+                 Background="Transparent" ItemsSource="{Binding MemberList}"
                  >
-                        <ListView.ItemTemplate>
+                            <ListView.ItemTemplate>
 
-                            <DataTemplate>
+                                <DataTemplate>
 
-                                <TextBlock Text="{Binding UserName}"/>
+                                    <TextBlock Text="{Binding UserName}"/>
 
-                            </DataTemplate>
+                                </DataTemplate>
 
-                        </ListView.ItemTemplate>
-                    </ListView>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </DockPanel>

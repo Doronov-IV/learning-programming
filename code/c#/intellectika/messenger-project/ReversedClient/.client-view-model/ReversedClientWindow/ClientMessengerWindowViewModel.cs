@@ -33,8 +33,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private UserClientTechnicalDTO _currentUserTechnicalDTO;
 
 
-        /// <inheritdoc cref="OnlineMembers"/>
-        private ObservableCollection<UserClientPublicDTO> _onlineMembers;
+        /// <inheritdoc cref="MemberList"/>
+        private ObservableCollection<UserClientPublicDTO> _memberList;
 
 
         /// <inheritdoc cref="ActiveChat"/>
@@ -108,14 +108,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Обозреваемая коллекция пользователей в сети.
         /// </summary>
-        public ObservableCollection<UserClientPublicDTO> OnlineMembers 
+        public ObservableCollection<UserClientPublicDTO> MemberList 
         {
-            get { return _onlineMembers; }
+            get { return _memberList; }
             set
             {
-                _onlineMembers = value;
+                _memberList = value;
 
-                OnPropertyChanged(nameof(OnlineMembers));
+                OnPropertyChanged(nameof(MemberList));
             }
         }
 
@@ -358,7 +358,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             _message = string.Empty;
 
-            _onlineMembers = new ObservableCollection<UserClientPublicDTO>();
+            _memberList = new ObservableCollection<UserClientPublicDTO>();
 
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;

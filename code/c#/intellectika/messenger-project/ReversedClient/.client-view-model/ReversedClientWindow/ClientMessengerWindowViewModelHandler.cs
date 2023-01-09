@@ -23,10 +23,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private void RemoveUser()
         {
             var uid = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message;
-            var user = OnlineMembers.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
+            var user = MemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => OnlineMembers.Remove(user));   // removing disconnected user;
+            Application.Current.Dispatcher.Invoke(() => MemberList.Remove(user));   // removing disconnected user;
         }
 
 
@@ -49,7 +49,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     var someChat = ChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
                     if (someChat is null)
                     {
-                        someChat = new(addressee: OnlineMembers.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
+                        someChat = new(addressee: MemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => ChatList.Add(someChat));
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
@@ -164,13 +164,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
              */
 
             MessengerChat newChat;
-            if (!OnlineMembers.Any(x => x.PublicId == user.PublicId))
+            if (!MemberList.Any(x => x.PublicId == user.PublicId))
             {
                 if (user.PublicId != _currentUserModel.PublicId)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        OnlineMembers.Add(user);
+                        MemberList.Add(user);
                     });
                 }
             }
