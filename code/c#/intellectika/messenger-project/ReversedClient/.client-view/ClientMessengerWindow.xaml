@@ -149,11 +149,27 @@
 
         </Grid>
 
-        <Button 
+        <Button
+                Padding="2"
+                Background="LightSteelBlue"
                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                Height="20" Width="20" Margin="10"
-                Content="" Command="{Binding LogoutCommand}"
-         />
+                Height="24" Width="24" Margin="10"
+                Command="{Binding LogoutCommand}"
+            
+         >
+
+            <materialDesign:PackIcon
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="24" Height="24" Margin="0" Kind="Logout"
+                Foreground="Black"
+                
+             />
+            
+
+        </Button>
+
+
+
 
 
         <!--#endregion Listviews-->
