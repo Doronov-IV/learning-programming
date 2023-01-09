@@ -419,8 +419,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ClientMessengerWindowViewModel(UserServerSideDTO userData, ClientTransmitter clientSocket)
+        public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
+            DefaultCommonMemberList = new(memberList);
             MemberList = DefaultCommonMemberList;
             ChatList = DefaultCommonChatList;
 

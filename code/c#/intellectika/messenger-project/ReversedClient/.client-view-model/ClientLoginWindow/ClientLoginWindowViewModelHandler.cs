@@ -46,9 +46,11 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                     {
                         if (ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData))
                         {
-                            FullUserServiceData = ServiceTransmitter.GetResponseData();
+                            var result = ServiceTransmitter.GetResponseData();
+                            FullUserServiceData = result.userData;
+                            var memberList = result.memberList;
 
-                            WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, ServiceTransmitter);
+                            WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, memberList, ServiceTransmitter);
                         }
                     }
                     else

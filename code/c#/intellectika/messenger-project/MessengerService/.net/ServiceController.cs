@@ -180,6 +180,8 @@ namespace MessengerService.Datalink
 
                         SendUserInfo(client, user);
 
+                        SendMembersList(client);
+
                         broadcaster.BroadcastConnection();
 
                         client.ProcessAsync();
@@ -438,6 +440,32 @@ namespace MessengerService.Datalink
             builder.WriteJsonMessage(JsonMessageFactory.GetJsonMessageSimplified("Messenger", "Client", userJson));
 
             var debugSize = builder.GetPacketBytes().Length;
+
+            reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
+        }
+
+        private void SendMembersList(ServiceReciever reciever)
+        {
+            List<UserClientPublicDTO> result = new();
+
+            using (MessengerDatabaseContext context = new())
+            {
+                foreach(var user in context.Users)
+                {
+                    UserClientPublicDTO dto = new();
+                    dto.UserName = user.CurrentNickname;
+                    dto.PublicId = user.PublicId;
+                    result.Add(dto);
+                }
+            }
+
+            var jsonResult = JsonConvert.SerializeObject(result);
+
+            PackageBuilder builder = new();
+
+            var json = JsonMessageFactory.GetJsonMessageSimplified("Messenger", "Client", jsonResult);
+
+            builder.WriteJsonMessage(json);
 
             reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
         }

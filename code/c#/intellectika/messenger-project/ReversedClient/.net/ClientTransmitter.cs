@@ -347,17 +347,22 @@ namespace Net.Transmition
         /// <br />
         /// Получить данные от мессенжера, в ответ на запрос пользователя после удачной авторизации.
         /// </summary>
-        public UserServerSideDTO GetResponseData()
+        public (UserServerSideDTO userData, List<UserClientPublicDTO> memberList) GetResponseData()
         {
             UserServerSideDTO res = null;
+            List<UserClientPublicDTO> list = null;
             var code = _messengerPacketReader.ReadByte();
             if (code == 12)
             {
                 var msg = JsonMessageFactory.GetUnserializedPackage(_messengerPacketReader.ReadJsonMessage());
 
                 res = JsonConvert.DeserializeObject(msg.Message as string, type: typeof(UserServerSideDTO)) as UserServerSideDTO;
+
+                var msgList = JsonMessageFactory.GetUnserializedPackage(_messengerPacketReader.ReadJsonMessage());
+
+                list = JsonConvert.DeserializeObject<List<UserClientPublicDTO>>(msgList.Message as string);
             }
-            return res;
+            return (res, list);
         }
 
 

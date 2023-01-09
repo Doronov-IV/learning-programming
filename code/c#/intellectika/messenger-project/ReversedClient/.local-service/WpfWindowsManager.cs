@@ -29,11 +29,11 @@ namespace ReversedClient.LocalService
         /// <br />
         /// Экземпляр пользовательского коммуникатора, настроенный и запущенный.
         /// </param>
-        public static void MoveFromLoginToChat(UserServerSideDTO fullUserData, ClientTransmitter serviceTransmitter)
+        public static void MoveFromLoginToChat(UserServerSideDTO fullUserData, List<UserClientPublicDTO> memberList, ClientTransmitter serviceTransmitter)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ClientMessengerWindow window = new ClientMessengerWindow(fullUserData, serviceTransmitter);
+                ClientMessengerWindow window = new ClientMessengerWindow(fullUserData, memberList, serviceTransmitter);
 
                 Window closeWindow = null;
                 Window showWindow = null;
