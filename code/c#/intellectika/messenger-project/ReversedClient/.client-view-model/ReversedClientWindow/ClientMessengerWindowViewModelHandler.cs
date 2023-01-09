@@ -251,7 +251,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
                     chatDto.Messages = chatDto.Messages.Append(dto).ToArray();
-
+                     
                     Message = string.Empty;
                 }
             }
