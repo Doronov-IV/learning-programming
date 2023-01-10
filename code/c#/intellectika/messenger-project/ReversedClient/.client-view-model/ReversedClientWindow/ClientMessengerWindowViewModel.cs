@@ -467,6 +467,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         #region CONSTRUCTION - Object Lifetime
 
 
+
         /// <summary>
         /// Default constructor;
         /// <br />

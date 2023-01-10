@@ -11,140 +11,22 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
-
         #region Transmition handlers
 
 
 
-        /// <summary>
-        /// Remove a user from the client list;
-        /// <br />
-        /// Удалить пользователя из списка клиентов;
-        /// </summary>
-        private void RemoveUser()
-        {
-            var uid = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message;
-            var user = DefaultCommonMemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
-
-            // foreach (var user in )
-            Application.Current.Dispatcher.Invoke(() => DefaultCommonMemberList.Remove(user));   // removing disconnected user;
-        }
-
+        /// Connection related
 
 
         /// <summary>
-        /// Recieve user _message;
+        /// Connect to service.
         /// <br />
-        /// Получить сообщение от пользователя;
+        /// Подключиться к сервису.
         /// </summary>
-        private void RecieveMessage()
+        private void ConnectToService()
         {
-            IMessage msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
-            IMessage msgCopy = msg;
-
-            try 
-            {
-                // if the _message was sent to us from other user
-                if (!_currentUserModel.PublicId.Equals(msg.GetSender()))
-                {
-                    var someChat = DefaultCommonChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
-                    if (someChat is null)
-                    {
-                        someChat = new(addressee: DefaultCommonMemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
-                        Application.Current.Dispatcher.Invoke(() => DefaultCommonChatList.Add(someChat));
-                    }
-                    Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
-                    //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
-
-                    if (!someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
-                    {
-                        var addresseeCopy = someChat.Addressee;
-                        addresseeCopy.UserName = ChatParser.FromReadToUnread(someChat.Addressee.UserName);
-                        someChat.Addressee = addresseeCopy;
-                        SystemSounds.Exclamation.Play();
-                        OnPropertyChanged(nameof(ChatList));
-                    }
-                }
-                // if we sent this _message
-                else
-                {
-                    VisualizeOutgoingMessage(msgCopy);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Message collection changing exception: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            _serviceTransmitter.ConnectAndAuthorize(CurrentUserTechnicalDTO);
         }
-
-
-        private void DeleteCurrentClientMessageAfterServiceRespond()
-        {
-            var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
-            try
-            {
-                MessageEraser eraser = new(msg, DefaultCommonChatList);
-                eraser.DeleteMessage();
-                DefaultCommonChatList = eraser.ChatList;
-                OnPropertyChanged(nameof(DefaultCommonChatList));
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Exception: {ex.Message} (transmitter, VM-handler)", "Unexpected exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-
-        private void InitiateMessageDeletion()
-        {
-            if (SelectedMessage.Contains(" ✓✓"))
-            {
-
-                // retrieve message we want to delete
-                var messageContentString = ClientMessageAdapter.FromListViewChatToPackage(SelectedMessage);
-
-                ChatDTO chatWithDeletedMessage = null;
-
-                // search chat with it
-                bool bMatchFlag;
-
-                foreach (var chat in acceptedUserData.ChatArray)
-                {
-                    bMatchFlag = false;
-                    foreach (var message in chat.Messages)
-                    {
-                        if (message.Contents.Equals(messageContentString))
-                        {
-                            chatWithDeletedMessage = chat;
-                            bMatchFlag = true;
-                            break;
-                        }
-                    }
-
-                    if (bMatchFlag) break;
-                }
-
-                if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
-
-                // get full message by the chat we got
-                MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
-
-                // make a message to server with full info
-                var pack = JsonMessageFactory.GetJsonMessage
-                (
-                    sender: ActiveChat.Addresser.PublicId,
-                    reciever: ActiveChat.Addressee.PublicId,
-                    date: deletedMessageDto.Date,
-                    time: deletedMessageDto.Time,
-                    message: messageContentString
-                );
-
-                // send deletion request
-                _serviceTransmitter.SendMessageDeletionToServer(pack);
-            }
-        }
-
 
 
         /// <summary>
@@ -186,6 +68,36 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             }
         }
 
+
+        /// <summary>
+        /// Remove a user from the client list;
+        /// <br />
+        /// Удалить пользователя из списка клиентов;
+        /// </summary>
+        private void RemoveUser()
+        {
+            var uid = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message;
+            var user = DefaultCommonMemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
+
+            // foreach (var user in )
+            Application.Current.Dispatcher.Invoke(() => DefaultCommonMemberList.Remove(user));   // removing disconnected user;
+        }
+
+
+        /// <summary>
+        /// Make all actions needed for the ui side.
+        /// <br />
+        /// Выполнить все необходимые со стороные UI действия.
+        /// </summary>
+        private void DisconnectFromService()
+        {
+            WpfWindowsManager.MoveFromChatToLogin(CurrentUserTechnicalDTO.Login);
+        }
+
+
+
+
+        /// Message transmittion
 
 
         /// <summary>
@@ -250,19 +162,52 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
-
         /// <summary>
-        /// Connect to service.
+        /// Recieve user _message;
         /// <br />
-        /// Подключиться к сервису.
+        /// Получить сообщение от пользователя;
         /// </summary>
-        private void ConnectToService()
+        private void RecieveMessage()
         {
-            _serviceTransmitter.ConnectAndAuthorize(CurrentUserTechnicalDTO);
+            IMessage msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
+            IMessage msgCopy = msg;
+
+            try
+            {
+                // if the _message was sent to us from other user
+                if (!_currentUserModel.PublicId.Equals(msg.GetSender()))
+                {
+                    var someChat = DefaultCommonChatList.Where(c => c.Addressee.PublicId == msg.GetSender()).FirstOrDefault();
+                    if (someChat is null)
+                    {
+                        someChat = new(addressee: DefaultCommonMemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
+                        Application.Current.Dispatcher.Invoke(() => DefaultCommonChatList.Add(someChat));
+                    }
+                    Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
+                    //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
+
+                    if (!someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
+                    {
+                        var addresseeCopy = someChat.Addressee;
+                        addresseeCopy.UserName = ChatParser.FromReadToUnread(someChat.Addressee.UserName);
+                        someChat.Addressee = addresseeCopy;
+                        SystemSounds.Exclamation.Play();
+                        OnPropertyChanged(nameof(ChatList));
+                    }
+                }
+                // if we sent this _message
+                else
+                {
+                    VisualizeOutgoingMessage(msgCopy);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Message collection changing exception: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
-        
         /// <summary>
         /// Show exception output _message.
         /// <br />
@@ -275,14 +220,84 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        /// Message Deletion
+
+
         /// <summary>
-        /// Make all actions needed for the ui side.
+        /// Delete a message that service sent here for deletion.
         /// <br />
-        /// Выполнить все необходимые со стороные UI действия.
+        /// Удалить сообщение, которое сервис прислал сюда для удаления.
         /// </summary>
-        private void DisconnectFromService()
+        private void DeleteCurrentClientMessageAfterServiceRespond()
         {
-            WpfWindowsManager.MoveFromChatToLogin(CurrentUserTechnicalDTO.Login);
+            var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
+            try
+            {
+                MessageEraser eraser = new(msg, DefaultCommonChatList);
+                eraser.DeleteMessage();
+                DefaultCommonChatList = eraser.ChatList;
+                OnPropertyChanged(nameof(DefaultCommonChatList));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception: {ex.Message} (transmitter, VM-handler)", "Unexpected exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        /// <summary>
+        /// Tell the messenger service that used would like to delete the selected message.
+        /// <br />
+        /// Сообщить сервису сообщений, что пользователь хотел бы удалить выбранное сообщение.
+        /// </summary>
+        private void InitiateMessageDeletion()
+        {
+            if (SelectedMessage.Contains(" ✓✓"))
+            {
+
+                // retrieve message we want to delete
+                var messageContentString = ClientMessageAdapter.FromListViewChatToPackage(SelectedMessage);
+
+                ChatDTO chatWithDeletedMessage = null;
+
+                // search chat with it
+                bool bMatchFlag;
+
+                foreach (var chat in acceptedUserData.ChatArray)
+                {
+                    bMatchFlag = false;
+                    foreach (var message in chat.Messages)
+                    {
+                        if (message.Contents.Equals(messageContentString))
+                        {
+                            chatWithDeletedMessage = chat;
+                            bMatchFlag = true;
+                            break;
+                        }
+                    }
+
+                    if (bMatchFlag) break;
+                }
+
+                if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
+
+                // get full message by the chat we got
+                MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
+
+                // make a message to server with full info
+                var pack = JsonMessageFactory.GetJsonMessage
+                (
+                    sender: ActiveChat.Addresser.PublicId,
+                    reciever: ActiveChat.Addressee.PublicId,
+                    date: deletedMessageDto.Date,
+                    time: deletedMessageDto.Time,
+                    message: messageContentString
+                );
+
+                // send deletion request
+                _serviceTransmitter.SendMessageDeletionToServer(pack);
+            }
         }
 
 
