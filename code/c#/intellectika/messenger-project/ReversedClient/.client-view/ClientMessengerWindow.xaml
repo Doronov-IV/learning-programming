@@ -38,13 +38,14 @@
 
         <!--#region Listviews-->
 
-        <DockPanel Background="LightGray" Grid.Column="0" Margin="0,0,0,40"
-                    >
+        
+        <DockPanel Background="LightGray" Grid.Column="0" Margin="0,0,0,40">
 
             <TabControl Margin="0,5,0,10" Background="Transparent">
 
 
-
+                <!--#region Chat ListView-->
+                
                 <TabItem Header="Chats">
 
                     <StackPanel>
@@ -72,11 +73,11 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="2">
                                         <TextBlock 
-                                TextWrapping="Wrap" Padding="2" 
-                                Text="{Binding Path=Addressee.UserName, UpdateSourceTrigger=PropertyChanged}" 
-                                MaxWidth="{Binding RelativeSource=
-                                {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
-                                />
+                                    TextWrapping="Wrap" Padding="2" 
+                                    Text="{Binding Path=Addressee.UserName, UpdateSourceTrigger=PropertyChanged}" 
+                                    MaxWidth="{Binding RelativeSource=
+                                    {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
+                                         />
                                     </StackPanel>
 
                                 </DataTemplate>
@@ -84,9 +85,13 @@
                         </ListView>
                     </StackPanel>
                 </TabItem>
+                <!--#endregion Chat ListView-->
 
+                
+                
+                <!--#region Member ListView-->
+                
                 <TabItem Header="Members">
-
                     <StackPanel>
 
                         <TextBox
@@ -95,19 +100,19 @@
                             Text="{Binding MemberSearchString, UpdateSourceTrigger=PropertyChanged}"
                          />
 
+                        <!-- members list view -->
                         <ListView  
+                            BorderBrush="{x:Null}" Foreground="#E50A0A0A"
+                            Margin="0,10,0,10" FontFamily="Bookman Old Style"
+                            VerticalContentAlignment="Top"
+                            ScrollViewer.CanContentScroll="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            Background="Transparent" ItemsSource="{Binding MemberList}"
                             MaxHeight="{Binding RelativeSource=
                             {RelativeSource AncestorType = {x:Type TabControl}}, Path=ActualHeight}"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            ScrollViewer.CanContentScroll="True"
-                            VerticalContentAlignment="Top"
-                            Margin="0,10,0,10" FontFamily="Bookman Old Style"
-                            BorderBrush="{x:Null}" Foreground="#E50A0A0A"
                             SelectedItem="{Binding SelectedOnlineMember}" Grid.Column="0"
-                            Background="Transparent" ItemsSource="{Binding MemberList}"
-                   
                          >
-                            
+
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="2">
@@ -116,16 +121,26 @@
                                     Text="{Binding Path=UserName}" 
                                     MaxWidth="{Binding RelativeSource=
                                     {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
-                                 />
+                                        />
                                     </StackPanel>
 
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+
                     </StackPanel>
                 </TabItem>
+
+                <!--#endregion Chat ListView-->
+
+
             </TabControl>
         </DockPanel>
+
+
+
+
+        <!--#region Chat Side -->
 
         <Grid Background="LightSteelBlue" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -133,7 +148,8 @@
             </Grid.ColumnDefinitions>
 
 
-
+            <!--#region Message ListView -->
+            
             <ListView  
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     Background="Transparent"
@@ -161,13 +177,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-                <!--ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel-->
-
             </ListView>
+
+            <!--#endregion Message ListView -->
 
 
             <TextBox 
@@ -185,6 +197,11 @@
 
         </Grid>
 
+        <!--#endregion Chat Side -->
+        
+
+
+        <!-- log out button -->
         <Button
                 Padding="2"
                 Background="LightSteelBlue"
@@ -200,27 +217,10 @@
                 Foreground="Black"
                 
              />
-            
+
 
         </Button>
 
-
-
-
-
-        <!--#endregion Listviews-->
-
-
-
-        <!--#region Bottom controls-->
-
-        <!--#endregion Bottom controls-->
-
-
-
-        <!--#region Labels-->
-
-        <!--#endregion Labels-->
 
 
     </Grid>
