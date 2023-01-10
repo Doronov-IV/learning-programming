@@ -451,7 +451,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public DelegateCommand SignInButtonClickCommand { get; }
 
-
+        
         public DelegateCommand DeleteMessageCommand { get; }
 
 

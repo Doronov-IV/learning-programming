@@ -51,7 +51,20 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
 
+        /// <summary>
+        /// Handle the 'Go Back' button click event.
+        /// <br />
+        /// Обработать событие клика по кнопке "Go Back".
+        /// </summary>
+        private void OnGetBackCommandButtonClick()
+        {
+            WpfWindowsManager.FromRegisterToLogin(null, null);
+        }
+
+
+
         #endregion HANDLING
+
 
 
 

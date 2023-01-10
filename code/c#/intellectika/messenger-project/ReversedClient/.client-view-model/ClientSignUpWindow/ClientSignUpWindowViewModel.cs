@@ -4,6 +4,11 @@ using Net.Transmition;
 
 namespace ReversedClient.ViewModel.ClientSignUpWindow
 {
+    /// <summary>
+    /// A view-model instance for the ClientSignUpWindow (a.k.a. registration window).
+    /// <br />
+    /// Экземпляр вью-модели для окна ClientSignUpWindow (так же известного, как окно регистрации).
+    /// </summary>
     public partial class ClientSignUpWindowViewModel : INotifyPropertyChanged
     {
 
@@ -62,7 +67,9 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
 
 
 
+
         #region COMMANDS
+
 
 
         /// <summary>
@@ -73,13 +80,22 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         public DelegateCommand RegisterCommand { get; }
 
 
+        /// <summary>
+        /// A Prism command to handle the 'Get Back' button click.
+        /// <br />
+        /// Команда Prism, для обработки клика по кнопке "Get Back".
+        /// </summary>
+        public DelegateCommand GetBackCommand { get; }
+
+
+
         #endregion COMMANDS
 
 
 
 
-        #region CONSTRUCTION
 
+        #region CONSTRUCTION
 
 
 
@@ -91,6 +107,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         public ClientSignUpWindowViewModel()
         {
             RegisterCommand = new(OnRegisterButtonClick);
+            GetBackCommand = new(OnGetBackCommandButtonClick);
             _userData = new();
         }
 
@@ -107,7 +124,6 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
             this.transmitter = transmitter;
             UserData.Login = userData.Login;
         }
-
 
 
 
