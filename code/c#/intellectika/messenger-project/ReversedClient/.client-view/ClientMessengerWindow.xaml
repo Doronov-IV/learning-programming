@@ -41,7 +41,7 @@
         <DockPanel Background="LightGray" Grid.Column="0" Margin="0,0,0,40"
                     >
 
-            <TabControl Margin="0,5,0,10" Background="Transparent" Height="561">
+            <TabControl Margin="0,5,0,10" Background="Transparent">
 
 
 
@@ -56,11 +56,17 @@
                         />
                         
                         <ListView   
-                      BorderBrush="{x:Null}" Foreground="#E50A0A0A"
-                    Margin="0,10,0,10" FontFamily="Bookman Old Style"
-                  SelectedItem="{Binding ActiveChat}" Grid.Column="0"
-                 Background="Transparent" ItemsSource="{Binding ChatList}"
-                Width="185" HorizontalAlignment="Left">
+                            MaxHeight="{Binding RelativeSource=
+                            {RelativeSource AncestorType = {x:Type TabControl}}, Path=ActualHeight}"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.CanContentScroll="True"
+                            VerticalContentAlignment="Top"
+                            BorderBrush="{x:Null}" Foreground="#E50A0A0A"
+                            Margin="0,10,0,0" FontFamily="Bookman Old Style"
+                            SelectedItem="{Binding ActiveChat}" Grid.Column="0"
+                            Background="Transparent" ItemsSource="{Binding ChatList}"
+                            Width="185" HorizontalAlignment="Left"
+                         >
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -90,6 +96,8 @@
                          />
 
                         <ListView  
+                            MaxHeight="{Binding RelativeSource=
+                            {RelativeSource AncestorType = {x:Type TabControl}}, Path=ActualHeight}"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             ScrollViewer.CanContentScroll="True"
                             VerticalContentAlignment="Top"
@@ -98,16 +106,17 @@
                             SelectedItem="{Binding SelectedOnlineMember}" Grid.Column="0"
                             Background="Transparent" ItemsSource="{Binding MemberList}"
                    
-                 >
+                         >
+                            
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="2">
                                         <TextBlock 
-                                TextWrapping="Wrap" Padding="2" 
-                                Text="{Binding Path=UserName}" 
-                                MaxWidth="{Binding RelativeSource=
-                                {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
-                                />
+                                    TextWrapping="Wrap" Padding="2" 
+                                    Text="{Binding Path=UserName}" 
+                                    MaxWidth="{Binding RelativeSource=
+                                    {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
+                                 />
                                     </StackPanel>
 
                                 </DataTemplate>
@@ -146,7 +155,7 @@
                                 Text="{Binding .}"                               
                                 MaxWidth="{Binding RelativeSource=
                                 {RelativeSource AncestorType = {x:Type ListView}}, Path=ActualWidth}" 
-                                />
+                             />
                         </StackPanel>
 
                     </DataTemplate>
