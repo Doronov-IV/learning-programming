@@ -1,6 +1,0 @@
-08.12.22
-Deadlocks: when attempt to connect again, client deadlocks service waiting for authorizer.
-
-Attempt 1.
-Switch WhenAll to WhenAny in the service.
-UPD.: didn't help.
