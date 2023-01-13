@@ -32,7 +32,9 @@ namespace mvcproject
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            
+
+            MyStartup startupConfig = new();
+            startupConfig.Configure(app);
 
             await app.RunAsync();
 
