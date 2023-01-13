@@ -18,11 +18,11 @@ namespace emptyproject
 
         public void RunCustomApplication()
         {
-            AddMiddleware();
+            AddRestMiddleware();
         }
 
 
-        private void AddMiddleware()
+        private void AddRestMiddleware()
         {
             CurrentWebApplication.Run(async(context) =>
             {

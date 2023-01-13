@@ -186,7 +186,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
                     //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
 
-                    if (!someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
+                    if (ActiveChat is null || !someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
                     {
                         var addresseeCopy = someChat.Addressee;
                         addresseeCopy.UserName = ChatParser.FromReadToUnread(someChat.Addressee.UserName);
