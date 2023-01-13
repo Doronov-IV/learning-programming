@@ -3,9 +3,9 @@
     public class Person
     {
 
+        public string Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-
 
 
         /// <summary>
@@ -13,10 +13,21 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public Person(string name, int age)
+        public Person()
         {
+        }
+
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public Person(string id, string name, int age)
+        {
+            Id = id;
             Name = name;
-            age = Age;
+            Age = age;
         }
 
     }
