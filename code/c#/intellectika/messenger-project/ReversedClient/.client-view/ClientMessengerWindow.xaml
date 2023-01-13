@@ -57,7 +57,7 @@
                         />
                         
                         <ListView   
-                            MaxHeight="{Binding RelativeSource=
+                            Height="{Binding RelativeSource=
                             {RelativeSource AncestorType = {x:Type TabControl}}, Path=ActualHeight}"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             ScrollViewer.CanContentScroll="True"
@@ -108,7 +108,7 @@
                             ScrollViewer.CanContentScroll="True"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Background="Transparent" ItemsSource="{Binding MemberList}"
-                            MaxHeight="{Binding RelativeSource=
+                            Height="{Binding RelativeSource=
                             {RelativeSource AncestorType = {x:Type TabControl}}, Path=ActualHeight}"
                             SelectedItem="{Binding SelectedOnlineMember}" Grid.Column="0"
                          >

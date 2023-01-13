@@ -1,4 +1,5 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Common;
+﻿using Microsoft.VisualBasic;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,30 +15,31 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
     public static class UserParser
     {
 
+
         #region API
 
         public static UserServerSideDTO ParseToDTO(User user)
         {
             UserServerSideDTO res = new();
 
-            List<Chat> userSortedChatList = new(user.ChatList);
+            List<Chat> userSortedChatList = new();
             SortChats(ref userSortedChatList);
 
             res.CurrentNickname = user.CurrentNickname;
             res.CurrentPublicId = user.PublicId;
-            res.ChatArray = new List<ChatDTO>(userSortedChatList.Count);
+            res.ChatArray = new List<ChatDTO>();
 
             for (int i = 0, iSize = userSortedChatList.Count; i < iSize; i++)
             {
                 ChatDTO chatDto = new();
-                chatDto.Members = new List<string>(userSortedChatList[i].UserList.Count);
-                chatDto.Messages = new List<MessageDTO>(userSortedChatList[i].MessageList.Count);
+                chatDto.Members = new List<string>();
+                chatDto.Messages = new List<MessageDTO>();
 
                 ParseChatMembers(ref chatDto, userSortedChatList[i]);
 
                 ParseChatMessages(ref chatDto, userSortedChatList[i]);
 
-                res.ChatArray[i] = chatDto;
+                res.ChatArray.Add(chatDto);
             }
 
             return res;
@@ -130,7 +132,7 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
         {
             for (int j = 0, jSize = unparsedChat.UserList.Count; j < jSize; j++)
             {
-                chatDto.Members[j] = unparsedChat.UserList[j].PublicId;
+                chatDto.Members.Add(unparsedChat.UserList[j].PublicId);
             }
         }
 
@@ -139,11 +141,15 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
         {
             for (int j = 0, jSize = unparsedChat.MessageList.Count; j < jSize; j++)
             {
-                chatDto.Messages[j] = new MessageDTO();
-                chatDto.Messages[j].Sender = unparsedChat.MessageList[j].Author.PublicId;
-                chatDto.Messages[j].Contents = unparsedChat.MessageList[j].Contents;
-                chatDto.Messages[j].Date = unparsedChat.MessageList[j].Date;
-                chatDto.Messages[j].Time = unparsedChat.MessageList[j].Time;
+                var dto = new MessageDTO
+                    (
+                        sender: unparsedChat.MessageList[j].Author.PublicId,
+                        contents: unparsedChat.MessageList[j].Contents,
+                        date: unparsedChat.MessageList[j].Date,
+                        time: unparsedChat.MessageList[j].Time
+                    );
+
+                chatDto.Messages.Add(dto);
             }
         }
 

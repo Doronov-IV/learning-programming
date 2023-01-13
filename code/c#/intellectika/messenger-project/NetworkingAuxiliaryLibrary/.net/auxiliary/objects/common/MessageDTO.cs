@@ -27,5 +27,14 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
 
         }
 
+
+        public MessageDTO(string sender, string contents, string date, string time)
+        {
+            Sender = sender;
+            Contents = contents;
+            Date = date;
+            Time = time;
+        }
+
     }
 }
