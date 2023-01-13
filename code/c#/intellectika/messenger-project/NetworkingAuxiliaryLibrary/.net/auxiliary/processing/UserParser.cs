@@ -25,13 +25,13 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
 
             res.CurrentNickname = user.CurrentNickname;
             res.CurrentPublicId = user.PublicId;
-            res.ChatArray = new ChatDTO[userSortedChatList.Count];
+            res.ChatArray = new List<ChatDTO>(userSortedChatList.Count);
 
             for (int i = 0, iSize = userSortedChatList.Count; i < iSize; i++)
             {
                 ChatDTO chatDto = new();
-                chatDto.Members = new string[userSortedChatList[i].UserList.Count];
-                chatDto.Messages = new MessageDTO[userSortedChatList[i].MessageList.Count];
+                chatDto.Members = new List<string>(userSortedChatList[i].UserList.Count);
+                chatDto.Messages = new List<MessageDTO>(userSortedChatList[i].MessageList.Count);
 
                 ParseChatMembers(ref chatDto, userSortedChatList[i]);
 

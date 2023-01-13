@@ -13,7 +13,7 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
 
         public string CurrentPublicId { get; set; }
 
-        public ChatDTO[]? ChatArray { get; set; }
+        public List<ChatDTO>? ChatArray { get; set; }
 
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
         /// </summary>
         public UserServerSideDTO()
         {
-
+            ChatArray= new();
         }
 
     }

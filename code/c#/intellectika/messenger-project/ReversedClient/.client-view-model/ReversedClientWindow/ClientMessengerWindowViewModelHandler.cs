@@ -150,7 +150,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
-                    chatDto.Messages = chatDto.Messages.Append(dto).ToArray();
+                    chatDto.Messages.Add(dto);
                      
                     Message = string.Empty;
                 }
@@ -182,6 +182,17 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     {
                         someChat = new(addressee: DefaultCommonMemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => DefaultCommonChatList.Add(someChat));
+
+                        MessageDTO dto = new();
+                        dto.Sender = msg.GetSender();
+                        dto.Date = msg.GetDate();
+                        dto.Time = msg.GetTime();
+                        dto.Contents = msg.GetMessage() as string;
+                        ChatDTO chatDto = new();
+                        chatDto.Members.AddRange((new string[] { msg.GetSender(), CurrentUserModel.PublicId }));
+                        chatDto.Messages.Add(dto);
+
+                        acceptedUserData.ChatArray.Add(chatDto);
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
                     //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
@@ -266,18 +277,24 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                 foreach (var chat in acceptedUserData.ChatArray)
                 {
-                    bMatchFlag = false;
-                    foreach (var message in chat.Messages)
-                    {
-                        if (message.Contents.Equals(messageContentString))
-                        {
-                            chatWithDeletedMessage = chat;
-                            bMatchFlag = true;
-                            break;
-                        }
-                    }
+                    var chatNeeded = chat.Members?.FirstOrDefault(m => m.Equals(ActiveChat.Addressee.PublicId));
 
-                    if (bMatchFlag) break;
+                    if (chatNeeded is not null)
+                    {
+                        bMatchFlag = false;
+
+                        foreach (var message in chat.Messages)
+                        {
+                            if (message.Contents.Equals(messageContentString))
+                            {
+                                chatWithDeletedMessage = chat;
+                                bMatchFlag = true;
+                                break;
+                            }
+                        }
+
+                        if (bMatchFlag) break;
+                    }
                 }
 
                 if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");

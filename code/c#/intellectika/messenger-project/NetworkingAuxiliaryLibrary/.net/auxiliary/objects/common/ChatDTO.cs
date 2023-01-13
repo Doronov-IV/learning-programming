@@ -8,9 +8,9 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
     public class ChatDTO
     {
-        public string[]? Members { get; set; }
+        public List<string>? Members { get; set; }
 
-        public MessageDTO[]? Messages { get; set; }
+        public List<MessageDTO>? Messages { get; set; }
 
 
         /// <summary>
@@ -20,8 +20,8 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
         /// </summary>
         public ChatDTO()
         {
-            Members = new List<string>().ToArray();
-            Messages = new List<MessageDTO>().ToArray();
+            Members = new List<string>();
+            Messages = new List<MessageDTO>();
         }
 
     }
