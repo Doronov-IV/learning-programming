@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
 using System.Media;
+using System.Windows.Interop;
 
 namespace ReversedClient.ViewModel.ClientChatWindow
 {
@@ -140,7 +141,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     someChat.AddOutgoingMessage(Message + " ✓");
                     ActiveChat = someChat;
 
-
+                    if (acceptedUserData is null) acceptedUserData = new();
                     MessageDTO dto = new();
                     var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
                     if (chatDto is null) chatDto = new();
@@ -150,8 +151,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
+                    chatDto.Members.Add(ActiveChat.Addressee.PublicId);
+                    chatDto.Members.Add(ActiveChat.Addresser.PublicId);
                     chatDto.Messages.Add(dto);
                      
+                    acceptedUserData.ChatArray.Add(chatDto);
+
                     Message = string.Empty;
                 }
             }
