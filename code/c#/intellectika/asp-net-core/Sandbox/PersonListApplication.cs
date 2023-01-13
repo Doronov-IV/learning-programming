@@ -48,6 +48,11 @@ namespace emptyproject
                     await personListLogic.CreatePersonAsync(response, request);
                 }
 
+                else if (path == "/api/users" && request.Method.Equals("PUT"))
+                {
+                    await personListLogic.UpdatePersonAsync(response, request);
+                }
+
                 else if (Regex.IsMatch(path, expressionForGuid) && request.Method.Equals("DELETE"))
                 {
                     string? id = path.Value.Split("/")[3];
