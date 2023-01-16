@@ -87,6 +87,7 @@ namespace MessengerService.Datalink
         /// </summary>
         private void Process()
         {
+            object debugInfo = null;
             while (true)
             {
 
@@ -108,6 +109,7 @@ namespace MessengerService.Datalink
                         case 6:
 
                             var textMessageForDeletion = packetReader.ReadJsonMessage();
+                            debugInfo = textMessageForDeletion;
                             MessageDeletedEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion));
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageDeletionStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
 
@@ -121,6 +123,7 @@ namespace MessengerService.Datalink
                 }
                 catch (Exception ex)
                 {
+                    var errorState = debugInfo;
                     AnsiConsole.Write(new Markup(ConsoleServiceStyleCommon.GetUserDisconnection(CurrentUser.Login)));
                     UserDisconnected.Invoke(CurrentUser);
                     ClientSocket.Close(); // if this block is invoked, we can see that the client has disconnected and then we need to invoke the disconnection procedure;

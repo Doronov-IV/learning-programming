@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
+using System.Linq;
 using System.Media;
 using System.Windows.Interop;
 
@@ -127,7 +128,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                         sender: _currentUserModel.PublicId, 
                         reciever: currentAddressee.PublicId, 
                         date: DateTime.Now.ToString("dd.MM.yyyy"),
-                        time: DateTime.Now.ToString("HH:MM:ss"),
+                        time: DateTime.Now.ToString("HH:mm:ss"),
                         message: Message
 
                     ));
@@ -142,21 +143,26 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     ActiveChat = someChat;
 
                     if (acceptedUserData is null) acceptedUserData = new();
-                    MessageDTO dto = new();
-                    var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
-                    if (chatDto is null) chatDto = new();
-                    chatDto.Members.ToList().AddRange((new string[] { ActiveChat.Addressee.PublicId, ActiveChat.Addresser.PublicId }));
 
+                    MessageDTO dto = new();
                     dto.Time = DateTime.Now.ToString("HH:mm:ss");
                     dto.Date = DateTime.Now.ToString("dd.MM.yyyy");
                     dto.Sender = ActiveChat.Addresser.PublicId;
                     dto.Contents = Message;
-                    chatDto.Members.Add(ActiveChat.Addressee.PublicId);
-                    chatDto.Members.Add(ActiveChat.Addresser.PublicId);
-                    chatDto.Messages.Add(dto);
-                     
-                    acceptedUserData.ChatArray.Add(chatDto);
 
+                    var chatDto = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).FirstOrDefault();
+                    if (chatDto is null)
+                    {
+                        chatDto = new();
+                        chatDto.Members.ToList().AddRange((new string[] { ActiveChat.Addressee.PublicId, ActiveChat.Addresser.PublicId }));
+
+                        chatDto.Members.Add(ActiveChat.Addressee.PublicId);
+                        chatDto.Members.Add(ActiveChat.Addresser.PublicId);
+
+                        acceptedUserData.ChatArray.Add(chatDto);
+                    }
+
+                    chatDto.Messages.Add(dto);
                     Message = string.Empty;
                 }
             }
@@ -187,20 +193,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     {
                         someChat = new(addressee: DefaultCommonMemberList.First(u => u.PublicId == msg.GetSender()), addresser: CurrentUserModel);
                         Application.Current.Dispatcher.Invoke(() => DefaultCommonChatList.Add(someChat));
-
-                        MessageDTO dto = new();
-                        dto.Sender = msg.GetSender();
-                        dto.Date = msg.GetDate();
-                        dto.Time = msg.GetTime();
-                        dto.Contents = msg.GetMessage() as string;
-                        ChatDTO chatDto = new();
-                        chatDto.Members.AddRange((new string[] { msg.GetSender(), CurrentUserModel.PublicId }));
-                        chatDto.Messages.Add(dto);
-
-                        acceptedUserData.ChatArray.Add(chatDto);
                     }
                     Application.Current.Dispatcher.Invoke(() => someChat.AddIncommingMessage(msgCopy.GetMessage() as string));
-                    //Application.Current.Dispatcher.Invoke(() => someChat.AddOutgoingMessage(msgCopy.GetMessage() as string));
+
 
                     if (ActiveChat is null || !someChat.Addressee.PublicId.Equals(ActiveChat.Addressee.PublicId))
                     {
@@ -215,6 +210,54 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 else
                 {
                     VisualizeOutgoingMessage(msgCopy);
+                }
+
+                MessageDTO dto = new();
+                ChatDTO? chatDto = null;
+                dto.Sender = msg.GetSender();
+                dto.Date = msg.GetDate();
+                dto.Time = msg.GetTime();
+                dto.Contents = msg.GetMessage() as string;
+
+                bool chatAlreadyExists = false;
+                bool messageAlreadyPresent = false;
+                foreach (ChatDTO chat in acceptedUserData.ChatArray)
+                {
+                    chatAlreadyExists = false;
+                    foreach (var user in chat.Members)
+                    {
+                        if (!(user.Equals(msg.GetReciever()) || user.Equals(msg.GetSender()))) chatAlreadyExists = false;
+                        else chatAlreadyExists = true;
+                    }
+
+                    if (chatAlreadyExists)
+                    {
+                        chatDto = chat;
+
+                        foreach (var message in chat.Messages)
+                        {
+                            IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(message.Sender, "n/a", message.Date, message.Time, message.Contents));
+
+                            if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, msg))
+                            {
+                                messageAlreadyPresent = true;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                if (chatDto is null)
+                {
+                    chatDto = new();
+                    chatDto?.Members.AddRange((new string[] { msg.GetSender(), msg.GetReciever() }));
+                    chatDto?.Messages.Add(dto);
+                    acceptedUserData.ChatArray.Add(chatDto);
+                }
+                else
+                {
+                    if (!messageAlreadyPresent) chatDto?.Messages.Add(dto);
                 }
             }
             catch (Exception ex)
@@ -249,7 +292,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             try
             {
-                MessageEraser eraser = new(msg, DefaultCommonChatList);
+                MessageEraser eraser = new(msg, DefaultCommonChatList, acceptedUserData);
                 eraser.DeleteMessage();
                 DefaultCommonChatList = eraser.ChatList;
                 OnPropertyChanged(nameof(DefaultCommonChatList));
@@ -275,37 +318,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                 // retrieve message we want to delete
                 var messageContentString = ClientMessageAdapter.FromListViewChatToPackage(SelectedMessage);
 
-                ChatDTO chatWithDeletedMessage = null;
+                ChatDTO chatWithDeletedMessage = acceptedUserData.ChatArray.Where(c => c.Members.ToList().Contains(ActiveChat.Addressee.PublicId)).First();
 
-                // search chat with it
-                bool bMatchFlag;
-
-                foreach (var chat in acceptedUserData.ChatArray)
-                {
-                    var chatNeeded = chat.Members?.FirstOrDefault(m => m.Equals(ActiveChat.Addressee.PublicId));
-
-                    if (chatNeeded is not null)
-                    {
-                        bMatchFlag = false;
-
-                        foreach (var message in chat.Messages)
-                        {
-                            if (message.Contents.Equals(messageContentString))
-                            {
-                                chatWithDeletedMessage = chat;
-                                bMatchFlag = true;
-                                break;
-                            }
-                        }
-
-                        if (bMatchFlag) break;
-                    }
-                }
-
-                if (chatWithDeletedMessage is null) throw new NullReferenceException("[Custom] chat search algorythm is incorrect.");
+                var MessageIndex = ActiveChat.MessageList.IndexOf(SelectedMessage);
 
                 // get full message by the chat we got
-                MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.Where(m => m.Contents.Equals(messageContentString)).FirstOrDefault();
+                MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.ElementAt(MessageIndex);
 
                 // make a message to server with full info
                 var pack = JsonMessageFactory.GetJsonMessage

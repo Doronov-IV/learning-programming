@@ -1,4 +1,7 @@
-﻿using ReversedClient.Model;
+﻿using NetworkingAuxiliaryLibrary.Objects.Common;
+using NetworkingAuxiliaryLibrary.Objects.Entities;
+using Newtonsoft.Json;
+using ReversedClient.Model;
 using System.Windows.Interop;
 
 namespace ReversedClient.LocalService
@@ -17,6 +20,9 @@ namespace ReversedClient.LocalService
 
         /// <inheritdoc cref="ChatList"/>
         private ObservableCollection<MessengerChat>? _chatList;
+
+
+        private UserServerSideDTO? _userTableDTO;
 
 
 
@@ -46,6 +52,14 @@ namespace ReversedClient.LocalService
 
 
 
+        public UserServerSideDTO? UserTableDTO
+        {
+            get { return _userTableDTO; }
+            set { _userTableDTO = value; }
+        }
+
+
+
         #endregion STATE
 
 
@@ -60,7 +74,7 @@ namespace ReversedClient.LocalService
         /// <br />
         /// Удалить сообщение в массиве чатов.
         /// </summary>
-        public void DeleteMessage(IMessage message, ObservableCollection<MessengerChat> chatList)
+        public void DeleteMessage(IMessage message, ObservableCollection<MessengerChat> chatList, UserServerSideDTO userData)
         {
             Message = message;
             ChatList = chatList;
@@ -101,6 +115,26 @@ namespace ReversedClient.LocalService
                     if (breakFlag) break;
                 }
 
+                ChatDTO? chatInWhichToDelete = null;
+                MessageDTO? messageToDelete = null;
+
+                foreach (var chat in UserTableDTO.ChatArray)
+                {
+                    foreach (var message in chat.Messages)
+                    {
+                        IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(message.Sender, "n/a", message.Date, message.Time, message.Contents));
+
+                        if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, Message))
+                        {
+                            messageToDelete = message;
+                            chatInWhichToDelete = chat;
+                            break;
+                        }
+                    }
+                }
+
+                chatInWhichToDelete?.Messages?.Remove(messageToDelete);
+
 
                 MessengerChat someChatCopy = new(addresser: someChat.Addresser, addressee: someChat.Addressee);
                 if (someChat is not null)
@@ -140,10 +174,11 @@ namespace ReversedClient.LocalService
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public MessageEraser(IMessage message, ObservableCollection<MessengerChat> chatList)
+        public MessageEraser(IMessage message, ObservableCollection<MessengerChat> chatList, UserServerSideDTO userData)
         {
             _message = message;
             _chatList = chatList;
+            _userTableDTO = userData;
         }
 
 

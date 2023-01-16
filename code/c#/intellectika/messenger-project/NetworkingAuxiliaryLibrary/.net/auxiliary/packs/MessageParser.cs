@@ -1,4 +1,6 @@
-﻿namespace NetworkingAuxiliaryLibrary.Packages
+﻿using Tools.Formatting;
+
+namespace NetworkingAuxiliaryLibrary.Packages
 {
     public static class MessageParser
     {
@@ -11,12 +13,22 @@
 
             bMessageMatch = messageOne.GetMessage().Equals(messageTwo.GetMessage());
             bDateMatch = messageOne.GetDate().Equals(messageTwo.GetDate());
-            bTimeMatch = messageOne.GetTime().Equals(messageTwo.GetTime());
+            bTimeMatch = IsTimeAproximatelyEqual(messageOne.GetTime(), messageTwo.GetTime());
             bSenderMatch = messageOne.GetSender().Equals(messageTwo.GetSender());
 
             bool result = bMessageMatch && bDateMatch && bTimeMatch && bSenderMatch;
 
             return result;
+        }
+
+        public static bool IsTimeAproximatelyEqual(string timeOne, string timeTwo)
+        {
+            bool bRes = false;
+
+            int nTimeOne = Int32.Parse(StringDateTime.RemoveSeparation(timeOne));
+            int nTimeTwo = Int32.Parse(StringDateTime.RemoveSeparation(timeTwo));
+
+            return Math.Abs(nTimeTwo - nTimeOne) < 3;
         }
     }
 }
