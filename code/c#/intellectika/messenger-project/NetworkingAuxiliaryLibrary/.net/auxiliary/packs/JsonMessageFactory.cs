@@ -21,12 +21,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
             string sRes = string.Empty;
 
 
-            JsonMessagePackage package = new();
-            package.Sender = sender;
-            package.Reciever = reciever;
-            package.Date = date;
-            package.Time = time;
-            package.Message = message;
+            JsonMessagePackage package = new(sender, reciever, date, time, message);
 
             sRes = JsonConvert.SerializeObject(package);
 

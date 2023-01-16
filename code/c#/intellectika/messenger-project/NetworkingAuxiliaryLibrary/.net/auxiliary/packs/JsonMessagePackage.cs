@@ -90,6 +90,37 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
 
 
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public JsonMessagePackage(string sender, string reciever, string date, string time, object? message)
+        {
+            Sender = sender;
+            Reciever = reciever;
+            Date = date;
+            Time = time;
+            Message = message;
+        }
+
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public JsonMessagePackage()
+        {
+
+        }
+
+
+
+
+
+
 
         #region IMessage
 

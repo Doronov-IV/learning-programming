@@ -109,6 +109,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private UserServerSideDTO acceptedUserData;
 
 
+        /// <summary>
+        /// An object to track client messages.
+        /// <br />
+        /// Объект для отслеживания сообщений клиента.
+        /// </summary>
+        private ClientMessageTracker clientMessageTracker;
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -485,6 +493,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
+            clientMessageTracker = new(userData);
             var alteredMemberList = memberList.Where(m => !m.PublicId.Equals(userData.CurrentPublicId));            // to exclude the possibility of writing messages to yourself;
             DefaultCommonMemberList = new(alteredMemberList);
             MemberList = DefaultCommonMemberList;
@@ -507,7 +516,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             _serviceTransmitter = clientSocket;
             _serviceTransmitter.connectedEvent += ConnectUser;                                                       // user connection;
             _serviceTransmitter.mesageDeletedEvent += DeleteCurrentClientMessageAfterServiceRespond;                 // current user message deletion;
-            //_serviceTransmitter.otherClientMessageDeletedEvent += DeleteOherClientMessageAfterServiceRespond;      // other user message deletion;
             _serviceTransmitter.msgReceivedEvent += RecieveMessage;                                                  // message receipt;
             _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                                              // other user disconnection;
             _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;                                 // current user disconnection;

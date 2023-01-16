@@ -115,26 +115,6 @@ namespace ReversedClient.LocalService
                     if (breakFlag) break;
                 }
 
-                ChatDTO? chatInWhichToDelete = null;
-                MessageDTO? messageToDelete = null;
-
-                foreach (var chat in UserTableDTO.ChatArray)
-                {
-                    foreach (var message in chat.Messages)
-                    {
-                        IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(message.Sender, "n/a", message.Date, message.Time, message.Contents));
-
-                        if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, Message))
-                        {
-                            messageToDelete = message;
-                            chatInWhichToDelete = chat;
-                            break;
-                        }
-                    }
-                }
-
-                chatInWhichToDelete?.Messages?.Remove(messageToDelete);
-
 
                 MessengerChat someChatCopy = new(addresser: someChat.Addresser, addressee: someChat.Addressee);
                 if (someChat is not null)
