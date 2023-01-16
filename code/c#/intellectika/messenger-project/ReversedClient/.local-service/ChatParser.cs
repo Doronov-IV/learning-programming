@@ -19,9 +19,11 @@ namespace ReversedClient.LocalService
         /// Спарсить список чатов пользователя в ObservableCollection вью-модели.
         /// </summary>
         public static void FillChats(UserServerSideDTO user, ref ObservableCollection<MessengerChat> ChatList)
-        {
+        { 
+
             if (user.ChatArray is not null && user.ChatArray.Count != 0)
             {
+                user.SortMessageList();
 
                 foreach (ChatDTO chat in user.ChatArray)
                 {
@@ -34,7 +36,7 @@ namespace ReversedClient.LocalService
                         if (message.Sender.Equals(user.CurrentPublicId)) chatRef.AddCheckedOutgoingMessage(message);
                         else chatRef.AddIncommingMessage(message);
                     }
-
+                    
                     ChatList.Add(chatRef);
                 }
             }

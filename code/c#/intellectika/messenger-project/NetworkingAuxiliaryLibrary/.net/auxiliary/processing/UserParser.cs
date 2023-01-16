@@ -29,15 +29,15 @@ namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
             res.CurrentPublicId = user.PublicId;
             res.ChatArray = new List<ChatDTO>();
 
-            for (int i = 0, iSize = userSortedChatList.Count; i < iSize; i++)
+            foreach (var chat in user.ChatList)
             {
                 ChatDTO chatDto = new();
                 chatDto.Members = new List<string>();
                 chatDto.Messages = new List<MessageDTO>();
 
-                ParseChatMembers(ref chatDto, userSortedChatList[i]);
+                ParseChatMembers(ref chatDto, chat);
 
-                ParseChatMessages(ref chatDto, userSortedChatList[i]);
+                ParseChatMessages(ref chatDto, chat);
 
                 res.ChatArray.Add(chatDto);
             }
