@@ -33,16 +33,17 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// </summary>
         private async Task MakeConnectionEffort()
         {
-            try
-            {
-                if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
-                {
-                    if (ServiceTransmitter.Disposed)
-                    {
-                        ServiceTransmitter = new();
-                    }
 
-                    if (await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData))
+            if (!string.IsNullOrEmpty(_localUserTechnicalData.Password) && !string.IsNullOrEmpty(_localUserTechnicalData.Login))
+            {
+                if (ServiceTransmitter.Disposed)
+                {
+                    ServiceTransmitter = new();
+                }
+                try
+                {
+                    bool isAuthorized = await ServiceTransmitter.ConnectAndAuthorize(_localUserTechnicalData);
+                    if (isAuthorized)
                     {
                         if (ServiceTransmitter.ConnectAndSendLoginToService(_localUserTechnicalData))
                         {
@@ -58,15 +59,16 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                         MessageBox.Show("Authorization failed due to the incurrect data input.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Both login and password fields are required to proceed.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show("Server is down. Please, concider connectiong later.", "Server down", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            catch(Exception ex) 
+            else
             {
-
+                MessageBox.Show("Both login and password fields are required to proceed.", "Please, check your input", MessageBoxButton.OK, MessageBoxImage.Hand);
             }
+
         }
 
 

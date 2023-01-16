@@ -196,15 +196,7 @@ namespace Net.Transmition
             //Если клиент не подключен
             if (!authorizationSocket.Connected)
             {
-                try
-                {
-                    await authorizationSocket.ConnectAsync(NetworkConfigurator.ClientAuthorizerEndPoint);
-                }
-                catch 
-                {
-                    SendOutput.Invoke("Service is down. Please, concider connecting later.");
-                    return false;
-                }
+                await authorizationSocket.ConnectAsync(NetworkConfigurator.ClientAuthorizerEndPoint);
             }
 
             _authorizationPacketReader = new(authorizationSocket.GetStream());

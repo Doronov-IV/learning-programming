@@ -249,7 +249,7 @@ namespace AuthorizationServiceProject.Net
             {
                 foreach (var item in context.Users)
                 {
-                    if (item.Login.Equals(user.Login))
+                    if (item.Login.Equals(user.Login) && item.PasswordHash.Equals(user.Password))
                     {
                         doesContain = true;
                         break;
