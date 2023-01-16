@@ -364,10 +364,9 @@ namespace MessengerService.Datalink
         {
             using (MessengerDatabaseContext context = new())
             {
-
-                int deletedMessageAuthorId = 0;
-                bool breakFlag = false;
-                Message messageToDelete = null;
+                int deletedMessageAuthorId = default;
+                bool breakFlag = default;
+                Message? messageToDelete = default;
 
                 foreach (var user in context.Users.Include(u => u.MessageList))
                 {

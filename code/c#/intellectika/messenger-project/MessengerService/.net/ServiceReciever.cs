@@ -110,7 +110,14 @@ namespace MessengerService.Datalink
 
                             var textMessageForDeletion = packetReader.ReadJsonMessage();
                             debugInfo = textMessageForDeletion;
-                            MessageDeletedEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion));
+                            try
+                            {
+                                MessageDeletedEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion));
+                            }
+                            catch (InvalidDataException e)
+                            {
+                                AnsiConsole.Write(new Markup($"[black on white]{DateTime.Now.ToString("HH.mm.ss")} [/][red on white]Error 501. {e.GetType().Name} on message deletion.[/]"));
+                            }
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageDeletionStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
 
                             break;
