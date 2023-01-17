@@ -23,12 +23,10 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public static bool IsTimeAproximatelyEqual(string timeOne, string timeTwo)
         {
-            bool bRes = false;
-
             int nTimeOne = Int32.Parse(StringDateTime.RemoveSeparation(timeOne));
             int nTimeTwo = Int32.Parse(StringDateTime.RemoveSeparation(timeTwo));
 
-            return Math.Abs(nTimeTwo - nTimeOne) < 3;
+            return nTimeOne == nTimeTwo;
         }
     }
 }

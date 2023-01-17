@@ -63,7 +63,7 @@ namespace NetworkingAuxiliaryLibrary.Objects.Entities
 
         public string GetDate()
         {
-            return StringDateTime.FromThreeToTwoSections(Date);
+            return Date;
         }
 
 

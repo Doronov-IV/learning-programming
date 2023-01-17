@@ -128,8 +128,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     var jsonMessagePackage = new JsonMessagePackage(
                         sender: _currentUserModel.PublicId,
                         reciever: currentAddressee.PublicId,
-                        date: DateTime.Now.ToString(StringAssets.DatePattern),
-                        time: DateTime.Now.ToString("HH:mm:ss"),
+                        date: DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        time: DateTime.Now.ToString("HH:mm:ss:fff"),
                         message: Message);
 
                     var serializedJsonMessage = JsonMessageFactory.GetSerializedMessage(jsonMessagePackage);
