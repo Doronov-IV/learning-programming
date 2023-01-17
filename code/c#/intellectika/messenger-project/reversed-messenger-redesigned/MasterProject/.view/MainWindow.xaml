@@ -1,0 +1,68 @@
+﻿<Window x:Class="MasterProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MasterProject"
+        Title="Main Window Title" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button
+                Content="Launch Client" 
+                Command="{Binding LaunchClientCommand}" 
+                Grid.Column="5" Margin="20" Grid.Row="5"
+         />
+        
+        <Button 
+                Content="Launch Service" 
+                Command="{Binding LaunchServiceCommand}" 
+                Grid.Column="5" Margin="20" Grid.Row="4"
+         />
+
+        <Button 
+                Content="Launch Authorizer" 
+                Command="{Binding LaunchAuthorizerCommand}" 
+                Grid.Column="5" Margin="15,20,15,20" Grid.Row="3"
+         />
+
+        <Button 
+            Content="Cancel Service" 
+            Command="{Binding KillServiceCommand}" 
+            Margin="20" Grid.Row="5" Grid.Column="1"
+         />
+        
+        <Button 
+            Content="Clear Folders" 
+            Command="{Binding ClearFoldersCommand}"
+            Margin="20,20,20,20" Grid.Row="5" Grid.Column="0"
+         />
+
+        <Button
+            Content="Clear Messages"
+            Command="{Binding ClearMessagesCommand}"
+            Margin="20" Grid.Row="4" Grid.Column="0"
+         />
+
+
+        <Button
+            Content="Clear Authorization"
+            Command="{Binding ClearAuthorizationCommand}"
+            Margin="10,20,10,20" Grid.Row="3" Grid.Column="0"
+         />
+    </Grid>
+</Window>

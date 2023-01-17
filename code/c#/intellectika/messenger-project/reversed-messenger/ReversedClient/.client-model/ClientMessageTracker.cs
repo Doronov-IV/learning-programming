@@ -1,6 +1,7 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using Newtonsoft.Json;
+using ReversedClient.ViewModel.ClientChatWindow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,32 +20,6 @@ namespace ReversedClient.Model
     {
 
 
-        #region STATE
-
-
-
-        /// <inheritdoc cref="UserTracked"/>
-        private UserServerSideDTO? _userTracked;
-
-
-        /// <summary>
-        /// An instance of the client chatlist to track.
-        /// <br />
-        /// Экземпляр списка чатов клиента для отслеживания.
-        /// </summary>
-        public UserServerSideDTO? UserTracked
-        {
-            get { return _userTracked; }
-            set { _userTracked = value; }
-        }
-
-
-
-        #endregion STATE
-
-
-
-
 
         #region API
 
@@ -55,25 +30,28 @@ namespace ReversedClient.Model
         /// <br />
         /// Добавить сообщение в dto.
         /// </summary>
-        public void AddMessage(IMessage newMessage)
+        public void AddMessage(IMessage newMessage, ref UserServerSideDTO UserTracked)
         {
-            if (!IsMessageAlreadyPresent(newMessage))
+            if (!IsMessageAlreadyPresent(newMessage, ref UserTracked))
             {
-                MessageDTO dto = new(newMessage.GetSender(), newMessage.GetMessage() as string, DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"));
-
-                var chatDto = UserTracked.ChatArray.Where(c => c.Members.ToList().Contains(newMessage.GetSender()) || c.Members.ToList().Contains(newMessage.GetSender())).FirstOrDefault();
-
-                if (chatDto is null)
+                lock (ClientMessengerWindowViewModel.synchronizer)
                 {
-                    chatDto = new();
+                    MessageDTO dto = new(newMessage.GetSender(), newMessage.GetMessage() as string, DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"));
 
-                    chatDto.Members.Add(newMessage.GetSender());
-                    chatDto.Members.Add(newMessage.GetReciever());
+                    ChatDTO chatDto = GetChatWithMessage(newMessage, ref UserTracked);
 
-                    UserTracked.ChatArray.Add(chatDto);
+                    if (chatDto is null)
+                    {
+                        chatDto = new();
+
+                        chatDto.Members.Add(newMessage.GetSender());
+                        chatDto.Members.Add(newMessage.GetReciever());
+
+                        UserTracked.ChatArray.Add(chatDto);
+                    }
+
+                    chatDto.Messages.Add(dto);
                 }
-
-                chatDto.Messages.Add(dto);
             }
         }
 
@@ -83,28 +61,45 @@ namespace ReversedClient.Model
         /// <br />
         /// Удалить сообщение из dto.
         /// </summary>
-        public void DeleteMessage(IMessage deletionMessage)
+        public void DeleteMessage(IMessage deletionMessage, ref UserServerSideDTO UserTracked)
         {
-            ChatDTO? chatInWhichToDelete = null;
-            MessageDTO? messageToDelete = null;
-
-            foreach (var chat in UserTracked.ChatArray)
+            lock (ClientMessengerWindowViewModel.synchronizer)
             {
-                foreach (var message in chat.Messages)
-                {
-                    IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(message.Sender, "n/a", message.Date, message.Time, message.Contents));
+                ChatDTO? chatInWhichToDelete = null;
+                MessageDTO? messageToDelete = null;
 
-                    if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, deletionMessage))
+                foreach (var chat in UserTracked.ChatArray)
+                {
+                    foreach (var message in chat.Messages)
                     {
-                        messageToDelete = message;
-                        chatInWhichToDelete = chat;
-                        break;
+                        IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(message.Sender, "n/a", message.Date, message.Time, message.Contents));
+
+                        if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, deletionMessage))
+                        {
+                            messageToDelete = message;
+                            chatInWhichToDelete = chat;
+                            break;
+                        }
                     }
                 }
+                if (messageToDelete is not null) chatInWhichToDelete?.Messages?.Remove(messageToDelete);
+                else throw new NullReferenceException("[Custom] The message chosen for deletion was not found in the lists (client tracker, delete messasge method).");
             }
-            if (messageToDelete is not null) chatInWhichToDelete?.Messages?.Remove(messageToDelete);
-            else throw new NullReferenceException("[Custom] The message chosen for deletion was not found in the lists (client tracker, delete messasge method).");
         }
+
+
+
+
+
+
+        #endregion API
+
+
+
+
+
+        #region LOGIC
+
 
 
         /// <summary>
@@ -112,24 +107,27 @@ namespace ReversedClient.Model
         /// <br />
         /// "True" - если сообщение присутствует в dto, иначе "false".
         /// </summary>
-        public bool IsMessageAlreadyPresent(IMessage message)
+        private bool IsMessageAlreadyPresent(IMessage message, ref UserServerSideDTO UserTracked)
         {
             bool bRes = false;
 
-            if (IsChatAlreadyPresent(message))
+            lock (ClientMessengerWindowViewModel.synchronizer)
             {
-                UserTracked.ChatArray.ForEach((chat) =>
+                if (IsChatAlreadyPresent(message, ref UserTracked))
                 {
-                    chat.Messages.ForEach((msg) =>
+                    UserTracked.ChatArray.ForEach((chat) =>
                     {
-                        IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(msg.Sender, "n/a", msg.Date, msg.Time, msg.Contents));
-
-                        if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, message))
+                        chat.Messages.ForEach((msg) =>
                         {
-                            bRes = true;
-                        }
+                            IMessage tempMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(JsonMessageFactory.GetJsonMessage(msg.Sender, "n/a", msg.Date, msg.Time, msg.Contents));
+
+                            if (MessageParser.IsMessageIdenticalToAnotherOne(tempMessage, message))
+                            {
+                                bRes = true;
+                            }
+                        });
                     });
-                });
+                }
             }
 
             return bRes;
@@ -141,24 +139,46 @@ namespace ReversedClient.Model
         /// <br />
         /// "True" - если чат сообщения присутствует в dto, иначе "false".
         /// </summary>
-        public bool IsChatAlreadyPresent(IMessage newMessage)
+        private bool IsChatAlreadyPresent(IMessage newMessage, ref UserServerSideDTO UserTracked)
         {
-            bool bRes = false;
-            foreach (ChatDTO chat in UserTracked.ChatArray)
-            {
-                bRes = false;
-                foreach (var user in chat.Members)
-                {
-                    if (!(user.Equals(newMessage.GetReciever()) || user.Equals(newMessage.GetSender()))) bRes = false;
-                    else bRes = true;
-                }
-            }
-            return bRes;
+            return GetChatWithMessage(newMessage, ref UserTracked) is not null;
         }
 
 
 
-        #endregion API
+
+        private ChatDTO? GetChatWithMessage(IMessage message, ref UserServerSideDTO UserTracked)
+        {
+            ChatDTO? chatResult = null;
+
+            bool doAllMembersMatch = default;
+
+            foreach (var chat in UserTracked.ChatArray)
+            {
+                doAllMembersMatch = false;
+                foreach (var member in chat.Members)
+                {
+                    if (!(member.Equals(message.GetSender()) || member.Equals(message.GetReciever())))
+                    {
+                        doAllMembersMatch = false;
+                        break;
+                    }
+                    else doAllMembersMatch = true;
+                }
+
+                if (doAllMembersMatch)
+                {
+                    chatResult = chat;
+                    break;
+                }
+            }
+
+            return chatResult;
+        }
+
+
+
+        #endregion LOGIC
 
 
 
@@ -168,14 +188,15 @@ namespace ReversedClient.Model
 
 
 
+
         /// <summary>
-        /// Parametrized constructor.
+        /// Default constructor.
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public ClientMessageTracker(UserServerSideDTO userData)
+        public ClientMessageTracker()
         {
-            _userTracked = userData;
+
         }
 
 

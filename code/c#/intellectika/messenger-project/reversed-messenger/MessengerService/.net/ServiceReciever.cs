@@ -5,6 +5,7 @@ using System;
 using Spectre.Console;
 using NetworkingAuxiliaryLibrary.Style.Messenger;
 using NetworkingAuxiliaryLibrary.Style.Common;
+using NetworkingAuxiliaryLibrary.Assets;
 
 namespace MessengerService.Datalink
 {
@@ -116,8 +117,9 @@ namespace MessengerService.Datalink
                             }
                             catch (InvalidDataException e)
                             {
-                                AnsiConsole.Write(new Markup($"[black on white]{DateTime.Now.ToString("HH.mm.ss")} [/][red on white]Error 501. {e.GetType().Name} on message deletion.[/]"));
+                                AnsiConsole.Write(new Markup($"[black on white][{Asset.TimeSecondFormat}] [/][red on white]Error 501. {e.GetType().Name} on message deletion.[/]"));
                             }
+
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageDeletionStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));
 
                             break;

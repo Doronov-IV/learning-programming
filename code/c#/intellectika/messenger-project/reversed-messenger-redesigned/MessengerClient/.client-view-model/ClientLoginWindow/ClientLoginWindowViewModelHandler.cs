@@ -1,7 +1,7 @@
-﻿using ReversedClient.client_view;
-using ReversedClient.LocalService;
+﻿using MessengerClient.View;
+using MessengerClient.LocalService;
 
-namespace ReversedClient.ViewModel.ClientStartupWindow
+namespace MessengerClient.ViewModel.ClientStartupWindow
 {
     public partial class ClientLoginWindowViewModel
     {
@@ -51,7 +51,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                             FullUserServiceData = result.userData;
                             var memberList = result.memberList;
 
-                            await WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, memberList, ServiceTransmitter);
+                            WpfWindowsManager.MoveFromLoginToChat(FullUserServiceData, memberList, ServiceTransmitter);
                         }
                     }
                     else

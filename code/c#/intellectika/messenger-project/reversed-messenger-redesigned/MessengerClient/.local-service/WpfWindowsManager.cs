@@ -1,9 +1,9 @@
-﻿using ReversedClient.client_view;
+﻿using MessengerClient.View;
 using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 
-namespace ReversedClient.LocalService
+namespace MessengerClient.LocalService
 {
     /// <summary>
     /// A service that provides a set of actions, required for working with multiple wpf windows in the same project.
@@ -29,9 +29,9 @@ namespace ReversedClient.LocalService
         /// <br />
         /// Экземпляр пользовательского коммуникатора, настроенный и запущенный.
         /// </param>
-        public static async Task MoveFromLoginToChat(UserServerSideDTO fullUserData, List<UserClientPublicDTO> memberList, ClientTransmitter serviceTransmitter)
+        public static void MoveFromLoginToChat(UserServerSideDTO fullUserData, List<UserClientPublicDTO> memberList, ClientTransmitter serviceTransmitter)
         {
-            await Application.Current.Dispatcher.Invoke(async () =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 ClientMessengerWindow window = new ClientMessengerWindow(fullUserData, memberList, serviceTransmitter);
 
@@ -53,7 +53,6 @@ namespace ReversedClient.LocalService
                 Application.Current.MainWindow = showWindow;
                 showWindow.Show();
                 closeWindow.Hide();
-                await window.StartViewModelListenAsync();
             });
         }
 

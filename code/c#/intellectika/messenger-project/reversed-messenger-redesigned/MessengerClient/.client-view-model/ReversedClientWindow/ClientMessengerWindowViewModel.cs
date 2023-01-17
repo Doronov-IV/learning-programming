@@ -1,13 +1,13 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
-using ReversedClient.LocalService;
-using ReversedClient.client_view;
-using ReversedClient.Properties;
+using MessengerClient.LocalService;
+using MessengerClient.View;
+using MessengerClient.Properties;
 using System.Windows.Interop;
-using ReversedClient.Model;
+using MessengerClient.Model;
 using Net.Transmition;
 using System.Windows;
 
-namespace ReversedClient.ViewModel.ClientChatWindow
+namespace MessengerClient.ViewModel.ClientChatWindow
 {
     /// <summary>
     /// A view-model for the client window;
@@ -27,9 +27,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                               ↓   FIELDS   ↓                             ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
-
-
-        public static object synchronizer = new();
 
 
         /// <inheritdoc cref="CurrentUserTechnicalDTO"/>
@@ -496,7 +493,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
-            clientMessageTracker = new();
+            clientMessageTracker = new(userData);
             var alteredMemberList = memberList.Where(m => !m.PublicId.Equals(userData.CurrentPublicId));            // to exclude the possibility of writing messages to yourself;
             DefaultCommonMemberList = new(alteredMemberList);
             MemberList = DefaultCommonMemberList;
@@ -522,6 +519,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             _serviceTransmitter.msgReceivedEvent += RecieveMessage;                                                  // message receipt;
             _serviceTransmitter.otherUserDisconnectEvent += RemoveUser;                                              // other user disconnection;
             _serviceTransmitter.currentUserDisconnectEvent += DisconnectFromService;                                 // current user disconnection;
+            ServiceTransmitter.ReadPacketsAsync();
 
             // may be obsolete. tests needed;
             ConnectToServerCommand = new(ConnectToService);

@@ -1,12 +1,12 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
 using Newtonsoft.Json;
-using ReversedClient.LocalService;
-using ReversedClient.Model;
+using MessengerClient.LocalService;
+using MessengerClient.Model;
 using System.Linq;
 using System.Media;
 using System.Windows.Interop;
 
-namespace ReversedClient.ViewModel.ClientChatWindow
+namespace MessengerClient.ViewModel.ClientChatWindow
 {
     public partial class ClientMessengerWindowViewModel
     {
@@ -145,9 +145,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     if (acceptedUserData is null) acceptedUserData = new();
 
-                    clientMessageTracker.AddMessage(jsonMessagePackage, ref acceptedUserData); // tracker;
-
-                    var aaaaaa = acceptedUserData;
+                    clientMessageTracker.AddMessage(jsonMessagePackage); // tracker;
 
                     Message = string.Empty;
                 }
@@ -198,7 +196,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     VisualizeOutgoingMessage(msgCopy);
                 }
 
-                clientMessageTracker.AddMessage(msgCopy, ref acceptedUserData);
+                clientMessageTracker.AddMessage(msgCopy);
             }
             catch (Exception ex)
             {
@@ -234,7 +232,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 MessageEraser eraser = new(msg, DefaultCommonChatList, acceptedUserData);
                 eraser.DeleteMessage();
-                clientMessageTracker.DeleteMessage(msg, ref acceptedUserData);
+                clientMessageTracker.DeleteMessage(msg);
                 DefaultCommonChatList = eraser.ChatList;
                 OnPropertyChanged(nameof(DefaultCommonChatList));
 
@@ -334,13 +332,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             someChat.MessageList = newMessageList;
 
             OnPropertyChanged(nameof(ActiveChat));
-        }
-
-
-
-        public async Task StartListenningAsync()
-        {
-            await ServiceTransmitter.ReadPacketsAsync();
         }
 
 

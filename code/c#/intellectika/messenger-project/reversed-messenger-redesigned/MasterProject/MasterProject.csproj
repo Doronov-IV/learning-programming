@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <StartupObject>MasterProject.App</StartupObject>
+	 <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+	 <ApplicationIcon>controls.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".to-dll\**" />
+    <EmbeddedResource Remove=".to-dll\**" />
+    <None Remove=".to-dll\**" />
+    <Page Remove=".to-dll\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+	 <Compile Include=".view-model\MainWindow\MainWindowViewModelHandler.cs" />
+	 <Compile Include=".view-model\MainWindow\MainWindowViewModel.cs" />
+	 <Compile Include=".view\App.xaml.cs" />
+	 <Compile Include=".view\MainWindow.xaml.cs" />
+    <Page Include=".view\MainWindow.xaml" />
+    <ApplicationDefinition Include=".view\App.xaml">
+		<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		<SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Include="controls.ico" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include=".projects\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="NetworkingAuxiliaryLibrary">
+      <HintPath>..\MessengerClient\.net\NetworkingAuxiliaryLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolbox">
+      <HintPath>..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+	  </Project>

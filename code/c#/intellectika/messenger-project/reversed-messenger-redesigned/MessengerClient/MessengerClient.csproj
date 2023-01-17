@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	<StartupObject>ReversedClient.App</StartupObject>
@@ -99,7 +99,7 @@
 	    <HintPath>.net\NetworkingAuxiliaryLibrary.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Toolbox">
-	    <HintPath>..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+	    <HintPath>..\..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

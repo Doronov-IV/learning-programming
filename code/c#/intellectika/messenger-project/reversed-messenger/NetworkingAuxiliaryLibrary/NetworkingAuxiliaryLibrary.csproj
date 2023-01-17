@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include=".assets\Assets.cs" />
     <Compile Include=".dependencies\business-logic\network-reciever\NetworkControllerBusinessLogic.cs" />
     <Compile Include=".dependencies\business-logic\network-reciever\NetworkRecieverBusinessLogic.cs" />
     <Compile Include=".dependencies\data-access\network-controller\CommonNetworkControllerDataAccess.cs" />
@@ -66,7 +67,7 @@
 
   <ItemGroup>
     <Reference Include="Toolbox">
-      <HintPath>..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
+      <HintPath>..\..\..\..\tools\precompiled-dll\Toolbox.dll</HintPath>
     </Reference>
   </ItemGroup>
 

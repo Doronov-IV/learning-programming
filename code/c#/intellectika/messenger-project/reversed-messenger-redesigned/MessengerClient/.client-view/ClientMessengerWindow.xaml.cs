@@ -1,6 +1,6 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using ReversedClient.ViewModel.ClientChatWindow;
-using ReversedClient.Model;
+using MessengerClient.ViewModel.ClientChatWindow;
+using MessengerClient.Model;
 using System.Windows.Shell;
 using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Common;
@@ -10,7 +10,7 @@ using MaterialDesignThemes.MahApps;
 
 using MaterialDesignColors;
 
-namespace ReversedClient.client_view
+namespace MessengerClient.View
 {
     /// <summary>
     /// Interaction logic for ClientMessengerWindow.xaml
@@ -30,14 +30,6 @@ namespace ReversedClient.client_view
         public ClientMessengerWindow(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientRadio) : this()
         {
             DataContext = new ClientMessengerWindowViewModel(userData, memberList, clientRadio);
-        }
-
-
-        public async Task StartViewModelListenAsync()
-        {
-            var vmref = DataContext as ClientMessengerWindowViewModel;
-
-            await vmref.StartListenningAsync();
         }
 
 
