@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using System.Windows;
 using System.Net;
 using ReversedClient.LocalService;
+using NetworkingAuxiliaryLibrary.Assets.Enum.Client;
+using NetworkingAuxiliaryLibrary.Assets.Misc;
 
 namespace Net.Transmition
 {
@@ -402,33 +404,34 @@ namespace Net.Transmition
                 }
                 catch (Exception e)
                 {
+                    File.WriteAllText(@"..\..\..\.log\client-log.txt", $"\n{StringAssets.DateFormat}\t{StringAssets.TimeMillisecondFormat} Exception at client transmitter, Unit 'ReadPacketsAsync' block 'try'.\nException: {e.Message}\n{e.StackTrace}\n");
                 }
                 finally
                 {
-                    if (opCode != 77)
+                    if (opCode != (byte)EnumAssets.WaitingForMessage)
                     {
-                        switch (opCode)
+                        switch ((EnumAssets)opCode)
                         {
-                            case 0:
+                            case EnumAssets.Unknown:
                                 break;
 
-                            case 1:
+                            case EnumAssets.NewContact:
                                 connectedEvent?.Invoke(); // client connection;
                                 break;
 
-                            case 5:
+                            case EnumAssets.MessageRecieved:
                                 msgReceivedEvent?.Invoke(); // message recieved;
                                 break;
 
-                            case 6:
-                                mesageDeletedEvent?.Invoke(); // current client message deleted;
+                            case EnumAssets.MessageDeletionRequest:
+                                mesageDeletedEvent?.Invoke(); // client message deleted;
                                 break;
 
-                            case 10:
+                            case EnumAssets.ContactDisconnection:
                                 otherUserDisconnectEvent?.Invoke(); // client disconnection;
                                 break;
 
-                            case byte.MaxValue:
+                            case EnumAssets.ServerShutdown:
                                 Disconnect();
                                 break;
 

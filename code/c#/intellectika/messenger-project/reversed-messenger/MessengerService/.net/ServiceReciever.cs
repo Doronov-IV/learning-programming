@@ -6,6 +6,8 @@ using Spectre.Console;
 using NetworkingAuxiliaryLibrary.Style.Messenger;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Assets;
+using NetworkingAuxiliaryLibrary.Assets.Misc;
+using NetworkingAuxiliaryLibrary.Assets.Enum.Messenger;
 
 namespace MessengerService.Datalink
 {
@@ -95,10 +97,10 @@ namespace MessengerService.Datalink
                 try
                 {
                     var opCode = packetReader.ReadByte();
-                    switch (opCode)
+                    switch ((EnumAssets)opCode)
                     {
                         // text message recieved;
-                        case 5:
+                        case EnumAssets.MessageReceipt:
 
                             var textMessage = packetReader.ReadJsonMessage();
                             ProcessTextMessageEvent.Invoke(JsonMessageFactory.GetUnserializedPackage(textMessage));
@@ -107,7 +109,7 @@ namespace MessengerService.Datalink
                             break;
 
                         // text message deletion;
-                        case 6:
+                        case EnumAssets.MessageDeletionRequest:
 
                             var textMessageForDeletion = packetReader.ReadJsonMessage();
                             debugInfo = textMessageForDeletion;
@@ -117,7 +119,7 @@ namespace MessengerService.Datalink
                             }
                             catch (InvalidDataException e)
                             {
-                                AnsiConsole.Write(new Markup($"[black on white][{Asset.TimeSecondFormat}] [/][red on white]Error 501. {e.GetType().Name} on message deletion.[/]"));
+                                AnsiConsole.Write(new Markup($"[black on white][[{StringAssets.TimeSecondFormat}]] [/][red on white]Error 501. {e.GetType().Name} on message deletion.[/]"));
                             }
 
                             AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetClientMessageDeletionStyle(JsonMessageFactory.GetUnserializedPackage(textMessageForDeletion))));

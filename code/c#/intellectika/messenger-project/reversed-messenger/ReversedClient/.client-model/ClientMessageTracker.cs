@@ -83,7 +83,6 @@ namespace ReversedClient.Model
                     }
                 }
                 if (messageToDelete is not null) chatInWhichToDelete?.Messages?.Remove(messageToDelete);
-                else throw new NullReferenceException("[Custom] The message chosen for deletion was not found in the lists (client tracker, delete messasge method).");
             }
         }
 

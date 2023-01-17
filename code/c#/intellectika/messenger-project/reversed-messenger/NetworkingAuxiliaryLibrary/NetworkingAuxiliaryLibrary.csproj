@@ -16,7 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include=".assets\Assets.cs" />
+    <Compile Include=".assets\enum\authorizer\EnumAssets.cs" />
+    <Compile Include=".assets\enum\client\EnumAssets.cs" />
+    <Compile Include=".assets\enum\messenger\EnumAssets.cs" />
+    <Compile Include=".assets\misc\StringAssets.cs" />
     <Compile Include=".dependencies\business-logic\network-reciever\NetworkControllerBusinessLogic.cs" />
     <Compile Include=".dependencies\business-logic\network-reciever\NetworkRecieverBusinessLogic.cs" />
     <Compile Include=".dependencies\data-access\network-controller\CommonNetworkControllerDataAccess.cs" />

@@ -90,7 +90,7 @@ namespace Doronov.ConcurrencyExam.Forms
                 manualReset.WaitOne();
                 // Searching all system takes too long on ITStep computers, the teacher said this folder is enough;
                 // for now, this is ok. we cannot use await inside of another one;
-                ScanDirectoryAsync(new DirectoryInfo(@"C:\Users"));
+                ScanDirectoryAsync(new DirectoryInfo(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\intellectika\messenger-project\reversed-messenger\ReversedClient"));
 
                 //
                 //
@@ -125,13 +125,13 @@ namespace Doronov.ConcurrencyExam.Forms
             // if the lisft of words is empty, add something
             if (forbiddenWords.Count == 0)
             {
-                forbiddenWords.AddRange(new string[1] { "and" });
+                forbiddenWords.AddRange(new string[1] { "DateTime.Now.ToString(\"HH:mm:ss\")" });
             }
 
 
 
             // Searching all system takes too long on ITStep computers, the teacher said this folder is enough;
-            await Task.Run(() => Search(new DirectoryInfo(@"C:\Users")));
+            await Task.Run(() => Search(new DirectoryInfo(@"C:\Users\i.doronov\source\repos\computer-science-learning\code\c#\intellectika\messenger-project\reversed-messenger\ReversedClient")));
 
 
 

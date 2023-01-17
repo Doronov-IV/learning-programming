@@ -4,6 +4,7 @@ using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using Microsoft.VisualBasic;
+using NetworkingAuxiliaryLibrary.Assets.Enum.Authorizer;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -144,9 +145,9 @@ namespace AuthorizationServiceProject.Net
                 try
                 {
                     var operationCode = reader.ReadByte(); // read first byte from the stream;
-                    switch (operationCode)
+                    switch ((EnumAssets)operationCode)
                     {
-                        case 0:
+                        case EnumAssets.Registration:
 
 
                             var msg = reader.ReadJsonMessage();
@@ -162,7 +163,7 @@ namespace AuthorizationServiceProject.Net
                             break;
 
 
-                        case 1:
+                        case EnumAssets.Authorization:
 
 
                             var signInMessage = reader.ReadJsonMessage();

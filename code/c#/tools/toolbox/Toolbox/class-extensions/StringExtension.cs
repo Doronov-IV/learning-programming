@@ -20,7 +20,7 @@ namespace Tools.ClassExtensions
         /// <br />
         /// Сравнить одну строку с массивом строк;
         /// <br />
-        /// <see href = "https://improvingsoftware.com/2011/06/16/quick-tip-comparing-a-net-string-to-multiple-values/" >Source</see>
+        /// <see href = "https://improvingsoftware.com/2011/06/16/quick-tip-comparing-a-net-string-to-multiple-values/" >Source: </see>
         /// </summary>
         /// <param name="data">Source string;<br />Исходная строка;</param>
         /// <param name="compareType">Comparison type;<br />Тип сравнения;</param>

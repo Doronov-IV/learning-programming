@@ -1,7 +1,9 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Common;
+﻿using NetworkingAuxiliaryLibrary.Assets.Misc;
+using NetworkingAuxiliaryLibrary.Objects.Common;
 using Newtonsoft.Json;
 using ReversedClient.LocalService;
 using ReversedClient.Model;
+using System.Globalization;
 using System.Linq;
 using System.Media;
 using System.Windows.Interop;
@@ -126,7 +128,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     var jsonMessagePackage = new JsonMessagePackage(
                         sender: _currentUserModel.PublicId,
                         reciever: currentAddressee.PublicId,
-                        date: DateTime.Now.ToString("dd.MM.yyyy"),
+                        date: DateTime.Now.ToString(StringAssets.DatePattern),
                         time: DateTime.Now.ToString("HH:mm:ss"),
                         message: Message);
 
@@ -265,9 +267,10 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     var MessageIndex = ActiveChat.MessageList.IndexOf(SelectedMessage);
 
+
                     // get full jsonMessage by the chat we got
                     MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.ElementAt(MessageIndex);
-
+                    
                     // make a jsonMessage to server with full info
                     var pack = JsonMessageFactory.GetJsonMessage
                     (

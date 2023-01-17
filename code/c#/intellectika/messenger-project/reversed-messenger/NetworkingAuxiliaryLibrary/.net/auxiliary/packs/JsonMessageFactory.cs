@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetworkingAuxiliaryLibrary.Assets.Misc;
 
 namespace NetworkingAuxiliaryLibrary.Packages
 {
@@ -12,7 +13,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public static string GetJsonMessageSimplified(string sender, string reciever, object? message)
         {
-            return GetJsonMessage(sender, reciever, "n/a", "n/a", message);
+            return GetJsonMessage(sender, reciever, StringAssets.NonAccessable, StringAssets.NonAccessable, message);
         }
 
 
@@ -50,7 +51,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public static JsonMessagePackage GetUnserializedPackage(string unserializedJsonString)
         {
-            JsonMessagePackage jmpRes = JsonConvert.DeserializeObject<JsonMessagePackage>(unserializedJsonString);
+            JsonMessagePackage jmpRes = JsonConvert.DeserializeObject<JsonMessagePackage>(unserializedJsonString, new JsonSerializerSettings() { DateFormatString = StringAssets.DateFormat });
 
             return jmpRes;
         }
