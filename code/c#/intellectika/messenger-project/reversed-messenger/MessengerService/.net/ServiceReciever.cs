@@ -1,6 +1,5 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects;
 using System.Net.Sockets;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System;
 using Spectre.Console;
 using NetworkingAuxiliaryLibrary.Style.Messenger;

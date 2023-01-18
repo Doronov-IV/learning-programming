@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
 using NetworkingAuxiliaryLibrary.Objects.Common;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 using Tools.Formatting;
 
-namespace NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing
+namespace MessengerService.LocalService
 {
     public static class UserParser
     {

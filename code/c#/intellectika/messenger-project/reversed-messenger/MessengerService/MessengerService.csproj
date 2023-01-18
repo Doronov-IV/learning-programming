@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include=".controls\Application.cs" />
     <Compile Include=".controls\Program.cs" />
+    <Compile Include=".local-service\UserParser.cs" />
     <Compile Include=".net\ServiceBroadcaster.cs" />
     <Compile Include=".net\ServiceController.cs" />
     <Compile Include=".net\ServiceReciever.cs" />
@@ -18,6 +19,9 @@
     <Compile Include=".service-model\configs\MessageConfiguration.cs" />
     <Compile Include=".service-model\configs\UserConfiguration.cs" />
     <Compile Include=".service-model\context\MessengerDatabaseContext.cs" />
+    <Compile Include=".service-model\entities\Chat.cs" />
+    <Compile Include=".service-model\entities\Message.cs" />
+    <Compile Include=".service-model\entities\User.cs" />
   </ItemGroup>
 
   <ItemGroup>

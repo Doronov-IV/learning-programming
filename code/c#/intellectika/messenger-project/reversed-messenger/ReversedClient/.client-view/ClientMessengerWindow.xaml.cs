@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using ReversedClient.ViewModel.ClientChatWindow;
+﻿using ReversedClient.ViewModel.ClientChatWindow;
 using ReversedClient.Model;
 using System.Windows.Shell;
 using Net.Transmition;

@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using MessengerService.Model.Configs;
+﻿using MessengerService.Model.Configs;
 using Microsoft.Extensions.Configuration;
 
 namespace MessengerService.Model.Context

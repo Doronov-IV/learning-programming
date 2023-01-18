@@ -1,4 +1,4 @@
-﻿namespace NetworkingAuxiliaryLibrary.Objects.Entities
+﻿namespace MessengerService.Model.Entities
 {
     public class Chat
     {

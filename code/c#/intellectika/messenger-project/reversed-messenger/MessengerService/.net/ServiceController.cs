@@ -1,7 +1,5 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Objects;
+﻿using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Messenger;
-using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
 using NetworkingAuxiliaryLibrary.Net.Config;
 using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Style.Common;

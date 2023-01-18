@@ -1,6 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Net.Auxiliary.Processing;
-using ReversedClient.ViewModel.ClientStartupWindow;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
+﻿using ReversedClient.ViewModel.ClientStartupWindow;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using ReversedClient.ViewModel.ClientChatWindow;
 using NetworkingAuxiliaryLibrary.Net.Config;

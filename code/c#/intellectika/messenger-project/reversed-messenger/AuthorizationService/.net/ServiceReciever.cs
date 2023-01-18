@@ -1,6 +1,5 @@
 ﻿using AuthorizationServiceProject.Net;
 using NetworkingAuxiliaryLibrary.Style.Authorizer;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using Microsoft.VisualBasic;

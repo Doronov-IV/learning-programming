@@ -1,6 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-
-namespace MessengerService.Datalink
+﻿namespace MessengerService.Datalink
 {
     /// <summary>
     /// A service-instance for the 'ServiceController' that handles all its broadcasting.

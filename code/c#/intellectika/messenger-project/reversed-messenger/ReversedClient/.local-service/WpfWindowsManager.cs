@@ -1,6 +1,5 @@
 ﻿using ReversedClient.client_view;
 using Net.Transmition;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace ReversedClient.LocalService

@@ -1,5 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-using NetworkingAuxiliaryLibrary.Objects;
+﻿using NetworkingAuxiliaryLibrary.Objects;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 
 namespace ReversedClient.Model
@@ -143,9 +142,9 @@ namespace ReversedClient.Model
         /// <br />
         /// Новое сообщение.
         /// </param>
-        public void AddCheckedOutgoingMessage(Message message)
+        public void AddCheckedOutgoingMessage(IMessage message)
         {
-            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents + " ✓✓");
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.GetTime())}] " + $"{message.GetSender()}: " + message.GetMessage() + " ✓✓");
         }
 
 
@@ -159,9 +158,9 @@ namespace ReversedClient.Model
         /// <br />
         /// Новое сообщение.
         /// </param>
-        public void AddIncommingMessage(Message message)
+        public void AddIncommingMessage(IMessage message)
         {
-            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents);
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.GetTime())}] " + $"{message.GetSender()}: " + message.GetMessage());
         }
 
 
@@ -175,9 +174,9 @@ namespace ReversedClient.Model
         /// <br />
         /// Новое сообщение.
         /// </param>
-        public void AddOutgoingMessage(Message message)
+        public void AddOutgoingMessage(IMessage message)
         {
-            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.Time)}] " + $"{message.Author.PublicId}: " + message.Contents);
+            MessageList.Add($"[{StringDateTime.FromThreeToTwoSections(message.GetTime())}] " + $"{message.GetSender()}: " + message.GetSender());
         }
 
 

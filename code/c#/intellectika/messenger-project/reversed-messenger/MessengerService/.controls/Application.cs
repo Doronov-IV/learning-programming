@@ -21,10 +21,13 @@ global using NetworkingAuxiliaryLibrary.Objects;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using MessengerService.Model.Entities;
+global using MessengerService.LocalService;
 
 using MessengerService.Datalink;
 using Spectre.Console;
 using NetworkingAuxiliaryLibrary.Style.Common;
+
 
 namespace MessengerService.Controls
 {

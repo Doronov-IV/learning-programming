@@ -23,9 +23,6 @@
     <Compile Include=".net\auxiliary\objects\common\ChatDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\NetworkingConfiguration.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientPublicDTO.cs" />
-    <Compile Include=".net\auxiliary\objects\entities\Chat.cs" />
-    <Compile Include=".net\auxiliary\objects\entities\Message.cs" />
-    <Compile Include=".net\auxiliary\objects\entities\User.cs" />
     <Compile Include=".net\auxiliary\objects\common\MessageDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientTechnicalDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserServerSideDTO.cs" />
@@ -37,8 +34,6 @@
     <Compile Include=".net\auxiliary\packs\MessageParser.cs" />
     <Compile Include=".net\auxiliary\processing\PackageBuilder.cs" />
     <Compile Include=".net\auxiliary\processing\PackageReader.cs" />
-    <Compile Include=".net\auxiliary\processing\UserParser.cs" />
-    <Compile Include=".net\com\Communique.cs" />
     <Compile Include=".net\config\IpEndPointDataAccessFactory.cs" />
     <Compile Include=".net\config\NetworkConfigurator.cs" />
     <Compile Include=".net\config\NetworkConfiguration.cs" />

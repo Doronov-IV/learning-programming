@@ -1,5 +1,4 @@
 ﻿using NetworkingAuxiliaryLibrary.Objects.Common;
-using NetworkingAuxiliaryLibrary.Objects.Entities;
 using Newtonsoft.Json;
 using ReversedClient.ViewModel.ClientChatWindow;
 using System;

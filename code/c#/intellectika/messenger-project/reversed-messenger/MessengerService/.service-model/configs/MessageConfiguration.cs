@@ -1,6 +1,4 @@
-﻿using NetworkingAuxiliaryLibrary.Objects.Entities;
-
-namespace MessengerService.Model.Configs
+﻿namespace MessengerService.Model.Configs
 {
     public class MessageConfiguration : IEntityTypeConfiguration<Message>
     {

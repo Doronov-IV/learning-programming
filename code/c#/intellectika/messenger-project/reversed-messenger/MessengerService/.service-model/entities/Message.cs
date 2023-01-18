@@ -2,7 +2,7 @@
 using Tools.Formatting;
 using Tools.Toolbox;
 
-namespace NetworkingAuxiliaryLibrary.Objects.Entities
+namespace MessengerService.Model.Entities
 {
     public class Message : IMessage
     {
