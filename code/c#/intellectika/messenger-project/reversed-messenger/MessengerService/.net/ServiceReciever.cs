@@ -10,7 +10,6 @@ using NetworkingAuxiliaryLibrary.Assets.Enum.Messenger;
 
 namespace MessengerService.Datalink
 {
-
     /// <summary>
     /// A client reference used by server to manipulate with client data;
     /// <br />
@@ -23,18 +22,37 @@ namespace MessengerService.Datalink
         #region PROPERTIES - State of an Object
 
 
+
+        /// <summary>
+        /// An object that helps reading/writing messages;
+        /// <br />
+        /// Объект, который предоставляет помощь в чтении/записи сообщений;
+        /// </summary>
+        private volatile PackageReader packetReader;
+
+
+        /// <inheritdoc cref="ClientSocket"/>
         private volatile TcpClient _clientSocket;
 
+
+        /// <inheritdoc cref="CurrentUser"/>
         private volatile User _currentUSer;
 
 
 
+
+
+
+        /// <summary>
+        /// Current user info.
+        /// <br />
+        /// Информация о текущем пользователе.
+        /// </summary>
         public User CurrentUser 
         {
             get => _currentUSer;
             set => _currentUSer = value;
         }
-
 
 
         /// <summary>
@@ -45,21 +63,13 @@ namespace MessengerService.Datalink
         public TcpClient ClientSocket { get => _clientSocket; set => _clientSocket = value; }
 
 
-        /// <summary>
-        /// An object that helps reading/writing messages;
-        /// <br />
-        /// Объект, который предоставляет помощь в чтении/записи сообщений;
-        /// </summary>
-        private volatile PackageReader packetReader;
-
-
 
         #endregion PROPERTIES - State of an Object
 
 
 
 
-        #region API
+        #region API - public Contract
 
 
         public delegate void MessageTypeDelegate(JsonMessagePackage recievedMessage);
@@ -73,7 +83,7 @@ namespace MessengerService.Datalink
         public event UserTypeDelegate UserDisconnected;
 
 
-        #endregion API
+        #endregion API - public Contract
 
 
 

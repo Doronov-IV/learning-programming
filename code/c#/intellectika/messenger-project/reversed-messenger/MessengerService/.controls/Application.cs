@@ -35,7 +35,7 @@ namespace MessengerService.Controls
     {
 
 
-        #region API
+        #region API - public Contract
 
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace MessengerService.Controls
         }
 
 
-        #endregion API
+        #endregion API - public Contract
 
 
 

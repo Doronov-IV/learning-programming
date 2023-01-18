@@ -11,12 +11,24 @@ using Tools.Formatting;
 
 namespace MessengerService.LocalService
 {
+    /// <summary>
+    /// An adapter for transfering user data from d/b to the client.
+    /// <br />
+    /// Адаптер для передачи пользовательскиз данных из б/д в клиент.
+    /// </summary>
     public static class UserParser
     {
 
 
-        #region API
+        #region API - public Contract
 
+
+
+        /// <summary>
+        /// Get the private dto from the user entity instance.
+        /// <br />
+        /// Получить приватную dto пользователя из entity типа "user".
+        /// </summary>
         public static UserServerSideDTO ParseToDTO(User user)
         {
             UserServerSideDTO res = new();
@@ -45,6 +57,12 @@ namespace MessengerService.LocalService
         }
 
 
+
+        /// <summary>
+        /// Get an instance of user entity from the user dto one.
+        /// <br />
+        /// Получить экземпляр entity типа "user" из соответствующей dto.
+        /// </summary>
         public static User ParseFromDTO(UserServerSideDTO user)
         {
             User res = new();
@@ -84,12 +102,15 @@ namespace MessengerService.LocalService
         }
 
 
-        #endregion API
+
+        #endregion API - public Contract
+
 
 
 
 
         #region LOGIC
+
 
 
         /// <summary>
@@ -116,6 +137,7 @@ namespace MessengerService.LocalService
         }
 
 
+
         #endregion LOGIC
 
 
@@ -127,6 +149,11 @@ namespace MessengerService.LocalService
 
 
 
+        /// <summary>
+        /// Parse the member list of the chat.
+        /// <br />
+        /// Спарсить список участников чата.
+        /// </summary>
         private static void ParseChatMembers(ref ChatDTO chatDto, Chat unparsedChat)
         {
             for (int j = 0, jSize = unparsedChat.UserList.Count; j < jSize; j++)
@@ -136,6 +163,12 @@ namespace MessengerService.LocalService
         }
 
 
+
+        /// <summary>
+        /// Parse the message list of the chat.
+        /// <br />
+        /// Спарсить список сообщений чата.
+        /// </summary>
         private static void ParseChatMessages(ref ChatDTO chatDto, Chat unparsedChat)
         {
             for (int j = 0, jSize = unparsedChat.MessageList.Count; j < jSize; j++)
@@ -157,18 +190,5 @@ namespace MessengerService.LocalService
         #endregion SERIALIZATION
 
 
-
-
-
-
-        #region SERIALIZATION
-
-
-
-        //
-
-
-
-        #endregion SERIALIZATION
     }
 }

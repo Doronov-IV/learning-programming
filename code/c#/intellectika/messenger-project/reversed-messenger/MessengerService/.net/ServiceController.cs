@@ -358,6 +358,11 @@ namespace MessengerService.Datalink
 
 
 
+        /// <summary>
+        /// Delete the recieved message from the Db.
+        /// <br />
+        /// Удалить полученное сообщение из б/д.
+        /// </summary>
         public void DeleteMessageFromDb(IMessage message)
         {
             using (MessengerDatabaseContext context = new())
@@ -446,6 +451,13 @@ namespace MessengerService.Datalink
             reciever.ClientSocket.Client.Send(builder.GetPacketBytes());
         }
 
+
+
+        /// <summary>
+        /// Send the list of the members from the db to reciever.
+        /// <br />
+        /// Отправить список участников из б/д в клиент "reciever".
+        /// </summary>
         private void SendMembersList(ServiceReciever reciever)
         {
             List<UserClientPublicDTO> result = new();
@@ -473,6 +485,12 @@ namespace MessengerService.Datalink
         }
 
 
+
+        /// <summary>
+        /// Check the data of the new registered user sent from authorizer.
+        /// <br />
+        /// Проверить данные нового зарегистрированного пользователя от авторизатора.
+        /// </summary>
         private void CheckIncommingRegistrationData(IMessage pack)
         {
             var userData = SubstractUserData(pack);
@@ -497,6 +515,12 @@ namespace MessengerService.Datalink
         }
 
 
+
+        /// <summary>
+        /// Split the data sent from client to retrieve login and password.
+        /// <br />
+        /// Разделить данные, отправленные клиентом, чтобы получить логин и пароль.
+        /// </summary>
         private UserClientTechnicalDTO SubstractUserData(IMessage pack)
         {
             UserClientTechnicalDTO userData = new();
@@ -512,6 +536,7 @@ namespace MessengerService.Datalink
 
             return userData;
         }
+
 
 
         /// <summary>
