@@ -15,7 +15,7 @@ namespace ReversedClient.Model
     /// <br />
     /// Объект, который занимается управлением сообщений в DTO клиента.
     /// </summary>
-    public class ClientMessageTracker
+    public static class ClientMessageTracker
     {
 
 
@@ -29,7 +29,7 @@ namespace ReversedClient.Model
         /// <br />
         /// Добавить сообщение в dto.
         /// </summary>
-        public void AddMessage(IMessage newMessage, ref UserServerSideDTO UserTracked)
+        public static void AddMessage(IMessage newMessage, ref UserServerSideDTO UserTracked)
         {
             if (!IsMessageAlreadyPresent(newMessage, ref UserTracked))
             {
@@ -60,7 +60,7 @@ namespace ReversedClient.Model
         /// <br />
         /// Удалить сообщение из dto.
         /// </summary>
-        public void DeleteMessage(IMessage deletionMessage, ref UserServerSideDTO UserTracked)
+        public static void DeleteMessage(IMessage deletionMessage, ref UserServerSideDTO UserTracked)
         {
             lock (ClientMessengerWindowViewModel.synchronizer)
             {
@@ -105,7 +105,7 @@ namespace ReversedClient.Model
         /// <br />
         /// "True" - если сообщение присутствует в dto, иначе "false".
         /// </summary>
-        private bool IsMessageAlreadyPresent(IMessage message, ref UserServerSideDTO UserTracked)
+        private static bool IsMessageAlreadyPresent(IMessage message, ref UserServerSideDTO UserTracked)
         {
             bool bRes = false;
 
@@ -137,7 +137,7 @@ namespace ReversedClient.Model
         /// <br />
         /// "True" - если чат сообщения присутствует в dto, иначе "false".
         /// </summary>
-        private bool IsChatAlreadyPresent(IMessage newMessage, ref UserServerSideDTO UserTracked)
+        private static bool IsChatAlreadyPresent(IMessage newMessage, ref UserServerSideDTO UserTracked)
         {
             return GetChatWithMessage(newMessage, ref UserTracked) is not null;
         }
@@ -145,7 +145,12 @@ namespace ReversedClient.Model
 
 
 
-        private ChatDTO? GetChatWithMessage(IMessage message, ref UserServerSideDTO UserTracked)
+        /// <summary>
+        /// Get the chat containing the passed message.
+        /// <br />
+        /// Получить чат, содержащий переданное сообщение.
+        /// </summary>
+        private static ChatDTO? GetChatWithMessage(IMessage message, ref UserServerSideDTO UserTracked)
         {
             ChatDTO? chatResult = null;
 
@@ -177,29 +182,6 @@ namespace ReversedClient.Model
 
 
         #endregion LOGIC
-
-
-
-
-
-        #region CONSTRUCTION
-
-
-
-
-        /// <summary>
-        /// Default constructor.
-        /// <br />
-        /// Конструктор по умолчанию.
-        /// </summary>
-        public ClientMessageTracker()
-        {
-
-        }
-
-
-
-        #endregion CONSTRUCTION
 
 
     }

@@ -115,14 +115,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private UserServerSideDTO acceptedUserData;
 
 
-        /// <summary>
-        /// An object to track client messages.
-        /// <br />
-        /// Объект для отслеживания сообщений клиента.
-        /// </summary>
-        private ClientMessageTracker clientMessageTracker;
-
-
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -507,7 +499,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
             AlreadyDisconnected = default;
-            clientMessageTracker = new();
             var alteredMemberList = memberList.Where(m => !m.PublicId.Equals(userData.CurrentPublicId));            // to exclude the possibility of writing messages to yourself;
             DefaultCommonMemberList = new(alteredMemberList);
             MemberList = DefaultCommonMemberList;

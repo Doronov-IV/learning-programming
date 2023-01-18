@@ -16,6 +16,13 @@ namespace ReversedClient.client_view
     /// </summary>
     public partial class ClientMessengerWindow : Window
     {
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
         public ClientMessengerWindow()
         {
             InitializeComponent();
@@ -26,12 +33,24 @@ namespace ReversedClient.client_view
         }
 
 
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
         public ClientMessengerWindow(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientRadio) : this()
         {
             DataContext = new ClientMessengerWindowViewModel(userData, memberList, clientRadio);
         }
 
 
+
+        /// <summary>
+        /// Start listener in the view model.
+        /// <br />
+        /// Начать прослушивание во вью модели.
+        /// </summary>
         public async Task StartViewModelListenAsync()
         {
             var vmref = DataContext as ClientMessengerWindowViewModel;
@@ -40,15 +59,32 @@ namespace ReversedClient.client_view
         }
 
 
+
+        /// <summary>
+        /// Set the default window name.
+        /// <br />
+        /// Установить имя окна по умолчанию.
+        /// </summary>
         public void SetDefaultName()
         {
             Name = nameof(ClientMessengerWindow);
         }
 
 
+
+        /// <summary>
+        /// To be initiated on the window closing.
+        /// <br />
+        /// Выполнить при закрытии окна.
+        /// </summary>
         public void OnClosing(object? sender, CancelEventArgs args)
         {
+            var vmRef = DataContext as ClientMessengerWindowViewModel;
+            vmRef.AlreadyDisconnected = true;
+            vmRef.ServiceTransmitter.Dispose();
             Application.Current.Shutdown();
         }
+
+
     }
 }

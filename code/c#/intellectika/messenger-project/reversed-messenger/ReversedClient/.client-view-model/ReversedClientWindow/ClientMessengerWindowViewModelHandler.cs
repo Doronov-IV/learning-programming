@@ -150,7 +150,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     if (acceptedUserData is null) acceptedUserData = new();
 
-                    clientMessageTracker.AddMessage(jsonMessagePackage, ref acceptedUserData); // tracker;
+                    ClientMessageTracker.AddMessage(jsonMessagePackage, ref acceptedUserData); // tracker;
 
                     var aaaaaa = acceptedUserData;
 
@@ -203,7 +203,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     VisualizeOutgoingMessage(msgCopy);
                 }
 
-                clientMessageTracker.AddMessage(msgCopy, ref acceptedUserData);
+                ClientMessageTracker.AddMessage(msgCopy, ref acceptedUserData);
             }
             catch (Exception ex)
             {
@@ -239,7 +239,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             {
                 MessageEraser eraser = new(msg, DefaultCommonChatList, acceptedUserData);
                 eraser.DeleteMessage();
-                clientMessageTracker.DeleteMessage(msg, ref acceptedUserData);
+                ClientMessageTracker.DeleteMessage(msg, ref acceptedUserData);
                 DefaultCommonChatList = eraser.ChatList;
                 OnPropertyChanged(nameof(DefaultCommonChatList));
 

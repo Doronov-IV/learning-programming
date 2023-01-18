@@ -12,6 +12,13 @@ namespace ReversedClient.client_view
     /// </summary>
     public partial class ClientSignUpWindow : Window
     {
+
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
         public ClientSignUpWindow()
         {
             InitializeComponent();
@@ -22,12 +29,23 @@ namespace ReversedClient.client_view
         }
 
 
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
         public ClientSignUpWindow(UserClientTechnicalDTO user, ClientTransmitter transmitter) : this()
         {
             DataContext = new ClientSignUpWindowViewModel(user, transmitter);
         }
 
 
+        /// <summary>
+        /// To be initiated on window closing.
+        /// <br />
+        /// Выполнить при закрытии окна.
+        /// </summary>
         public void OnClosing(object? sender, EventArgs args)
         {
             Application.Current.Shutdown();
