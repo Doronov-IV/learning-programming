@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
+    /// <summary>
+    /// A simple representation of a server message entity instance that needs to be sent to client. It was created after discovery of the newtonsoft recursive serialization issue.
+    /// <br />
+    /// Простое представление экземпляра серверной сущности сообщения, которое должно быть отправлено клиенту. Оно было создано после обнаружения проблемы рекурсивной сериализации у newtonsoft.
+    /// </summary>
     public class MessageDTO
     {
         public string Sender { get; set; }

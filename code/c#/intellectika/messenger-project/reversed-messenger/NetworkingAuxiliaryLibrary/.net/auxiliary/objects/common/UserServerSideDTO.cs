@@ -8,6 +8,11 @@ using Tools.Formatting;
 
 namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
+    /// <summary>
+    /// A simple representation of a server user entity instance that needs to be sent to client. This instance includes the information that might NOT be shown to the user.
+    /// <br />
+    /// Простое представление экземпляра серверной сущности пользователя, которое должно быть отправлено клиенту. Данный экземпляр включает в себя информацию, которая НЕ может быть продемонстрированна пользователю.
+    /// </summary>
     public class UserServerSideDTO
     {
 
@@ -29,6 +34,12 @@ namespace NetworkingAuxiliaryLibrary.Objects.Common
         }
 
 
+
+        /// <summary>
+        /// Sort the list of the messages that comes from the database DbSet.
+        /// <br />
+        /// Отсортировать список сообщений, который приходит из DbSet'а б/д.
+        /// </summary>
         public void SortMessageList()
         {
             foreach (ChatDTO chat in ChatArray)

@@ -1,9 +1,9 @@
 ﻿namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
     /// <summary>
-    /// An object to encapsulate user data transfered to various windows.
+    /// A simple representation of a client instance that needs to be sent to various windows. This instance includes the information that might NOT be shown to the user.
     /// <br />
-    /// Объект для инкапсуляции пользовательских данных для передачи разным окнам.
+    /// Простое представление экземпляра пользователя, которое необходимо передавать в разные окна. Данный экземпляр включает в себя информацию, которая НЕ может быть продемонстрированна пользователю.
     /// </summary>
     public class UserClientTechnicalDTO
     {

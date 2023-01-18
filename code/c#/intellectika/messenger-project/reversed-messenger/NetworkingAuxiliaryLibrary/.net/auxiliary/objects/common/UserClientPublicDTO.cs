@@ -1,5 +1,10 @@
 ﻿namespace NetworkingAuxiliaryLibrary.Objects.Common
 {
+    /// <summary>
+    /// A simple representation of a server user entity instance that needs to be sent to client. This instance includes only the information that might be shown to the user.
+    /// <br />
+    /// Простое представление экземпляра серверной сущности пользователя, которое должно быть отправлено клиенту. Данный экземпляр включает в себя исключительно ту информацию, которая может быть продемонстрированна пользователю.
+    /// </summary>
     public class UserClientPublicDTO
     {
 
