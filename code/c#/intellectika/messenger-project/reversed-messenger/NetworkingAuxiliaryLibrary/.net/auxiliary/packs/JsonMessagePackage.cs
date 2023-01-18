@@ -139,7 +139,7 @@ namespace NetworkingAuxiliaryLibrary.Packages
 
         public string GetDate()
         {
-            return StringDateTime.FromThreeToTwoSections(_date);
+            return _date;
         }
 
 

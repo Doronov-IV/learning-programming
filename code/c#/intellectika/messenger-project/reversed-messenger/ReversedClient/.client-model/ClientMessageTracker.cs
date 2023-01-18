@@ -36,7 +36,7 @@ namespace ReversedClient.Model
             {
                 lock (ClientMessengerWindowViewModel.synchronizer)
                 {
-                    MessageDTO dto = new(newMessage.GetSender(), newMessage.GetMessage() as string, DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"));
+                    MessageDTO dto = new(newMessage.GetSender(), newMessage.GetMessage() as string, newMessage.GetDate(), newMessage.GetTime());
 
                     ChatDTO chatDto = GetChatWithMessage(newMessage, ref UserTracked);
 

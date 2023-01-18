@@ -4,6 +4,7 @@ global using System.Linq;
 global using System.Text;
 global using System;
 using Tools.Toolbox;
+using Tools.Formatting;
 
 namespace ShootingRange
 {
@@ -11,34 +12,28 @@ namespace ShootingRange
     {
         public static async Task Main(string[] args)
         {
-            var s1 = string.Format("{0},{1}", "abc", "cba");
-            var s2 = "abc";
-            var s4 = "cba";
-            s2 = s2 + s4;
-            var s3 = "abccba";
+            
+            string A = DateTime.Now.ToString("HH:mm:ss:fff");
+            string B = new string(A); 
+            string C = new string(A);
 
-            Console.WriteLine(s1 == s2);
-            Console.WriteLine((object)s1 == (object)s2);
-            Console.WriteLine(s2 == s3);
-            Console.WriteLine((object)s2 == (object)s3);
-
-            return;
-            Class @class = new() { name = "Aoba", age = 100 };
-
-            ChangeClass(@class);
-
-            Console.WriteLine(@class.name);
-
-            int a = 10;
-            int unkn;
-
-            ChangeVariable(a, out unkn);
-
-            Console.WriteLine(unkn);
+            var bRes = IsTimeAproximatelyEqual(B, C);
         }
 
         public static void ChangeClass(Class @class) => @class.name = "Hej";
         public static void ChangeVariable(int variable, out int res) => res = variable;
+
+
+        public static bool IsTimeAproximatelyEqual(string timeOne, string timeTwo)
+        {
+            int nTimeOne = Int32.Parse(StringDateTime.RemoveSeparation(timeOne));
+            int nTimeTwo = Int32.Parse(StringDateTime.RemoveSeparation(timeTwo));
+
+            int debugResOne = nTimeOne;
+            int debugResTwo = nTimeTwo;
+
+            return debugResOne == debugResTwo;
+        }
     }
 
 

@@ -11,9 +11,12 @@ namespace NetworkingAuxiliaryLibrary.Packages
             bool bTimeMatch = false;
             bool bSenderMatch = false;
 
-            bMessageMatch = messageOne.GetMessage().Equals(messageTwo.GetMessage());
+            bool debugInfoTime = IsTimeAproximatelyEqual(messageOne.GetTime(), messageTwo.GetTime());
+            bool debugInfoContent = messageOne.GetMessage().Equals(messageTwo.GetMessage());
+
+            bMessageMatch = debugInfoContent;
             bDateMatch = messageOne.GetDate().Equals(messageTwo.GetDate());
-            bTimeMatch = IsTimeAproximatelyEqual(messageOne.GetTime(), messageTwo.GetTime());
+            bTimeMatch = debugInfoTime;
             bSenderMatch = messageOne.GetSender().Equals(messageTwo.GetSender());
 
             bool result = bMessageMatch && bDateMatch && bTimeMatch && bSenderMatch;
@@ -26,7 +29,10 @@ namespace NetworkingAuxiliaryLibrary.Packages
             int nTimeOne = Int32.Parse(StringDateTime.RemoveSeparation(timeOne));
             int nTimeTwo = Int32.Parse(StringDateTime.RemoveSeparation(timeTwo));
 
-            return nTimeOne == nTimeTwo;
+            int debugResOne = nTimeOne;
+            int debugResTwo = nTimeTwo;
+
+            return debugResOne == debugResTwo;
         }
     }
 }

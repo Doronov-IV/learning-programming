@@ -372,7 +372,10 @@ namespace MessengerService.Datalink
                 {
                     foreach (var messageIntem in user.MessageList)
                     {
-                        if (MessageParser.IsMessageIdenticalToAnotherOne(messageIntem, message))
+                        var time1 = messageIntem.GetTime();
+                        var time2 = message.GetTime();
+                        bool areMessagesEqual = MessageParser.IsMessageIdenticalToAnotherOne(messageIntem, message);
+                        if (areMessagesEqual)
                         {
                             messageToDelete = messageIntem;
                             deletedMessageAuthorId = user.Id;

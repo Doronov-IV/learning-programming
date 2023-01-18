@@ -128,7 +128,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
                     var jsonMessagePackage = new JsonMessagePackage(
                         sender: _currentUserModel.PublicId,
                         reciever: currentAddressee.PublicId,
-                        date: DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        date: DateTime.Now.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
                         time: DateTime.Now.ToString("HH:mm:ss:fff"),
                         message: Message);
 
@@ -270,6 +270,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
                     // get full jsonMessage by the chat we got
                     MessageDTO deletedMessageDto = chatWithDeletedMessage.Messages.ElementAt(MessageIndex);
+
+                    var messageTime = deletedMessageDto.Time;
                     
                     // make a jsonMessage to server with full info
                     var pack = JsonMessageFactory.GetJsonMessage
