@@ -41,6 +41,7 @@ namespace ReversedClient.client_view
         }
 
 
+
         /// <summary>
         /// To be initiated on window closing.
         /// <br />
@@ -50,5 +51,7 @@ namespace ReversedClient.client_view
         {
             Application.Current.Shutdown();
         }
+
+
     }
 }

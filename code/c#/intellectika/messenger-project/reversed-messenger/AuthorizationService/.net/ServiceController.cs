@@ -113,9 +113,6 @@ namespace AuthorizationServiceProject.Net
 
 
 
-
-
-
         /// <summary>
         /// Check user authorization data.
         /// <br />

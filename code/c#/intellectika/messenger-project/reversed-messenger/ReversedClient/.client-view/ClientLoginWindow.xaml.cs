@@ -54,5 +54,7 @@ namespace ReversedClient.client_view
         {
             Application.Current.Shutdown();
         }
+
+
     }
 }

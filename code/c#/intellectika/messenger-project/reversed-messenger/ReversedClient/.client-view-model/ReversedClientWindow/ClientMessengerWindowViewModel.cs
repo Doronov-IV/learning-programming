@@ -99,12 +99,14 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private bool _alreadyDisconnected;
 
 
+
         /// <summary>
         /// The service of the file selection dialog.
         /// <br />
         /// Сервис диалога выбора файла.
         /// </summary>
         private IDialogService dialogService;
+
 
 
         /// <summary>
@@ -418,6 +420,12 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+
+        /// <summary>
+        /// Assures that the tcp client has already disconnected.
+        /// <br />
+        /// Подтверждает, что клиент уже отключен.
+        /// </summary>
         public bool AlreadyDisconnected
         {
             get { return _alreadyDisconnected; }
@@ -427,6 +435,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         #endregion PROPERTIES - Object State
+
 
 
 
@@ -473,6 +482,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
         #endregion COMMANDS - Prism Commands
+
 
 
 

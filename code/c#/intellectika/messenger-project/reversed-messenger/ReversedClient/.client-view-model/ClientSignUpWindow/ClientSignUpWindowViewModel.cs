@@ -21,10 +21,17 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
         private UserClientTechnicalDTO _userData;
 
 
+
         /// <inheritdoc cref="RepeatedPassword"/>
         private string _repeatedPassword;
 
 
+
+        /// <summary>
+        /// An instance of the transmitter for client-service communication.
+        /// <br />
+        /// Экземпляр трансмиттера для связи клиента и сервиса.
+        /// </summary>
         private ClientTransmitter transmitter;
 
 
@@ -43,6 +50,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
                 OnPropertyChanged(nameof(UserData));
             }
         }
+
 
 
         /// <summary>

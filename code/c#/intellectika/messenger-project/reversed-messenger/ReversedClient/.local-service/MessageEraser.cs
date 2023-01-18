@@ -21,9 +21,6 @@ namespace ReversedClient.LocalService
         private ObservableCollection<MessengerChat>? _chatList;
 
 
-        private UserServerSideDTO? _userTableDTO;
-
-
 
 
         /// <summary>
@@ -47,14 +44,6 @@ namespace ReversedClient.LocalService
         {
             get { return _chatList; }
             set { _chatList = value; }
-        }
-
-
-
-        public UserServerSideDTO? UserTableDTO
-        {
-            get { return _userTableDTO; }
-            set { _userTableDTO = value; }
         }
 
 
@@ -153,11 +142,10 @@ namespace ReversedClient.LocalService
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public MessageEraser(IMessage message, ObservableCollection<MessengerChat> chatList, UserServerSideDTO userData)
+        public MessageEraser(IMessage message, ObservableCollection<MessengerChat> chatList)
         {
             _message = message;
             _chatList = chatList;
-            _userTableDTO = userData;
         }
 
 

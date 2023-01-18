@@ -16,9 +16,9 @@ using NetworkingAuxiliaryLibrary.Assets.Misc;
 namespace Net.Transmition
 {
     /// <summary>
-    /// An instance that provides client with basic datalink operations such as: connectoin, data receipt, data sending;
+    /// An instance that provides client with basic datalink operations.
     /// <br />
-    /// Абстракция, которая предоставляет клиенту возможность проводить основные сетевые действия, такие как: подключение, приём данных, передача данных;
+    /// Абстракция, которая предоставляет клиенту возможность проводить основные сетевые действия.
     /// </summary>
     public class ClientTransmitter : IDisposable
     {
@@ -172,7 +172,6 @@ namespace Net.Transmition
 
 
         #region API - public Behavior
-
 
 
 
@@ -333,7 +332,6 @@ namespace Net.Transmition
 
 
 
-
         /// <summary>
         /// Get the data sent by messenger in response for client data request after successful authorization.
         /// <br />
@@ -358,6 +356,12 @@ namespace Net.Transmition
         }
 
 
+
+        /// <summary>
+        /// Send the message deletion request to the messenger.
+        /// <br />
+        /// Отправить запросс об удалении сообщения в мессенжер.
+        /// </summary>
         public void SendMessageDeletionToServer(string assembledJsonMessage)
         {
             var messagePacket = new PackageBuilder();
@@ -372,6 +376,7 @@ namespace Net.Transmition
                 SendOutput.Invoke($"You haven't connected yet.\n\nException: {ex.Message}");
             }
         }
+
 
 
         #endregion API - public Behavior
@@ -481,6 +486,7 @@ namespace Net.Transmition
         #region CONSTRUCTION - Object Lifetime
 
 
+
         /// <summary>
         /// Default constructor;
         /// <br />
@@ -513,6 +519,7 @@ namespace Net.Transmition
                 _disposed = true;
             }
         }
+
 
 
         #endregion CONSTRUCTION - Object Lifetime

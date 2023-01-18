@@ -7,7 +7,9 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
     public partial class ClientLoginWindowViewModel
     {
 
+
         #region HANDLING
+
 
 
         /// <summary>
@@ -110,7 +112,9 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         }
 
 
+
         #endregion HANDLING
+
 
     }
 }

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ReversedClient.LocalService
 {
+    /// <summary>
+    /// An expansion for the passwordbox control.
+    /// <br />
+    /// Расширение для контрола passwordbox.
+    /// </summary>
     public static class PasswordBoxAssistant
     {
         public static readonly DependencyProperty BoundPassword =

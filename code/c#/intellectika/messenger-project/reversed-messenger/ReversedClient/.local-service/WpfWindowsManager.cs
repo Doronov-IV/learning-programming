@@ -59,6 +59,12 @@ namespace ReversedClient.LocalService
         }
 
 
+
+        /// <summary>
+        /// Move from the login window to the register one.
+        /// <br />
+        /// Перейти от окна логина к окну регистрации.
+        /// </summary>
         public static void MoveFromLoginToRegister(UserClientTechnicalDTO userData, ClientTransmitter transmitter)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -87,6 +93,12 @@ namespace ReversedClient.LocalService
         }
 
 
+
+        /// <summary>
+        /// Move from registration window to the login one.
+        /// <br />
+        /// Перейти от окна регистрации к окну логина.
+        /// </summary>
         public static void FromRegisterToLogin(UserClientTechnicalDTO userData, ClientTransmitter transmitter)
         {
             Application.Current.Dispatcher.Invoke(() =>

@@ -30,7 +30,7 @@ namespace ReversedClient.ViewModel.ClientSignUpWindow
                         }
                         else
                         {
-                            MessageBox.Show($"This login or public id is already present on server.", "Try another one", MessageBoxButton.OK, MessageBoxImage.Hand);
+                            MessageBox.Show($"This login is already present on server.", "", MessageBoxButton.OK, MessageBoxImage.Hand);
                         }
                     }
                     else

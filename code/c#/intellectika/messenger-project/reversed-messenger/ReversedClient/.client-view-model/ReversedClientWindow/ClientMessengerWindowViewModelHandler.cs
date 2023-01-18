@@ -237,7 +237,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
             var msg = JsonMessageFactory.GetUnserializedPackage(_serviceTransmitter.MessengerPacketReader.ReadJsonMessage());
             try
             {
-                MessageEraser eraser = new(msg, DefaultCommonChatList, acceptedUserData);
+                MessageEraser eraser = new(msg, DefaultCommonChatList);
                 eraser.DeleteMessage();
                 ClientMessageTracker.DeleteMessage(msg, ref acceptedUserData);
                 DefaultCommonChatList = eraser.ChatList;
@@ -346,6 +346,11 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
 
 
+        /// <summary>
+        /// Start reading packets.
+        /// <br />
+        /// Начать читать пакеты.
+        /// </summary>
         public async Task StartListenningAsync()
         {
             await ServiceTransmitter.ReadPacketsAsync();

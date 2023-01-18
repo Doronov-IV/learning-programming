@@ -81,6 +81,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         #region COMMANDS
 
 
+
         /// <summary>
         /// A Prism command to handle 'SignIn' button click.
         /// <br /> 
@@ -94,6 +95,7 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
         /// Команда Prism, для обработки клика по кнопке "SignUp".
         /// </summary>
         public DelegateCommand SignUpCommand { get; }
+
 
 
         #endregion COMMANDS
