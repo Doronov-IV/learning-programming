@@ -1,6 +1,8 @@
 ﻿using ReversedClient.client_view;
 using Net.Transmition;
 using NetworkingAuxiliaryLibrary.Objects.Common;
+using ReversedClient.ViewModel.ClientStartupWindow;
+using ReversedClient.ViewModel.ClientChatWindow;
 
 namespace ReversedClient.LocalService
 {
@@ -125,7 +127,6 @@ namespace ReversedClient.LocalService
             Window showWindow = null;
             Application.Current.Dispatcher.Invoke(() =>
             {
-
                 foreach (Window win in Application.Current.Windows)
                 {
                     if (win is ClientMessengerWindow)
@@ -139,6 +140,9 @@ namespace ReversedClient.LocalService
                 }
                 showWindow = new ClientLoginWindow();
                 showWindow.Show();
+
+                var vmRef = closeWindow.DataContext as ClientMessengerWindowViewModel;
+                vmRef.ServiceTransmitter.Dispose();
                 closeWindow.Hide();
             });
         }

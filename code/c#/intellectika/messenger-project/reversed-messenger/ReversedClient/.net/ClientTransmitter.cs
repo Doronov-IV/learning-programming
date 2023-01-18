@@ -504,11 +504,14 @@ namespace Net.Transmition
         /// </summary>
         public void Dispose()
         {
-            _disposed = true;
+            if (!_disposed)
+            {
+                authorizationSocket?.Close();
 
-            authorizationSocket?.Dispose();
+                messengerSocket?.Close();
 
-            messengerSocket?.Dispose();
+                _disposed = true;
+            }
         }
 
 

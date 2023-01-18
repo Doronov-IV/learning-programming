@@ -21,6 +21,8 @@ global using AuthorizationServiceProject.Model.Context;
 
 global using Spectre.Console;
 
+global using NetworkingAuxiliaryLibrary.Net;
+
 
 namespace AuthorizationServiceProject.Controls
 {
@@ -32,7 +34,14 @@ namespace AuthorizationServiceProject.Controls
         #region STATE
 
 
-        //
+
+        /// <summary>
+        /// The global instance of the client controller to dispose all the tcp clients used by the application.
+        /// <br />
+        /// Глобальный экземпляр контроллера, чтобы диспозить все tcp клиенты, использованные в приложении.
+        /// </summary>
+        public static TcpClientController tcpClientController = new();
+
 
 
         #endregion STATE
@@ -40,8 +49,7 @@ namespace AuthorizationServiceProject.Controls
 
 
 
-
-        #region API
+        #region API - public Contract
 
 
 
@@ -57,7 +65,7 @@ namespace AuthorizationServiceProject.Controls
 
 
 
-        #endregion API
+        #endregion API - public Contract
 
 
 
@@ -80,6 +88,18 @@ namespace AuthorizationServiceProject.Controls
 
 
 
+        /// <summary>
+        /// To be initiated when the console is to be closed.
+        /// <br />
+        /// Выполнить, когда консоль будет закрыта.
+        /// </summary>
+        private void OnConsoleClosing(object? sender, EventArgs e)
+        {
+            tcpClientController.TryDisposeAll();
+        }
+
+
+
         #endregion LOGIC
 
 
@@ -98,6 +118,7 @@ namespace AuthorizationServiceProject.Controls
         public Application()
         {
             using (AuthorizationDatabaseContext context = new()) { }
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnConsoleClosing);
         }
 
 

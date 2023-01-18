@@ -22,6 +22,7 @@
     <Compile Include=".assets\misc\StringAssets.cs" />
     <Compile Include=".net\auxiliary\objects\common\ChatDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\NetworkingConfiguration.cs" />
+    <Compile Include=".net\auxiliary\objects\common\TcpClientController.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientPublicDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\MessageDTO.cs" />
     <Compile Include=".net\auxiliary\objects\common\UserClientTechnicalDTO.cs" />

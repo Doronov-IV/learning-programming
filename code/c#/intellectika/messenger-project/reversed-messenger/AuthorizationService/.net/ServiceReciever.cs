@@ -4,6 +4,7 @@ using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Objects.Common;
 using Microsoft.VisualBasic;
 using NetworkingAuxiliaryLibrary.Assets.Enum.Authorizer;
+using AuthorizationServiceProject.Controls;
 
 namespace AuthorizationServiceProject.Net
 {
@@ -231,6 +232,7 @@ namespace AuthorizationServiceProject.Net
         /// </param>
         public ServiceReciever(TcpClient client, ServiceController controller) : this()
         {
+            Application.tcpClientController.RegisterClient(client);
             this.controller = controller;
             _clientSocket = client;
             reader = new(ClientSocket.GetStream());

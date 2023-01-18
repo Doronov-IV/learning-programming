@@ -7,6 +7,7 @@ using NetworkingAuxiliaryLibrary.Style.Common;
 using NetworkingAuxiliaryLibrary.Assets;
 using NetworkingAuxiliaryLibrary.Assets.Misc;
 using NetworkingAuxiliaryLibrary.Assets.Enum.Messenger;
+using MessengerService.Controls;
 
 namespace MessengerService.Datalink
 {
@@ -192,6 +193,7 @@ namespace MessengerService.Datalink
         /// </param>
         public ServiceReciever(TcpClient client)
         {
+            Application.tcpClientController.RegisterClient(client);
             ClientSocket = client;
             CurrentUser = new();
             packetReader = new PackageReader(ClientSocket.GetStream());

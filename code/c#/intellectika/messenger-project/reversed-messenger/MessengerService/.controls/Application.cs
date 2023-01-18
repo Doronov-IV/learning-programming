@@ -27,12 +27,31 @@ global using MessengerService.LocalService;
 using MessengerService.Datalink;
 using Spectre.Console;
 using NetworkingAuxiliaryLibrary.Style.Common;
-
+using NetworkingAuxiliaryLibrary.Net;
 
 namespace MessengerService.Controls
 {
     public class Application
     {
+
+
+
+        #region STATE
+
+
+
+        /// <summary>
+        /// The global instance of the client controller to dispose all the tcp clients used by the application.
+        /// <br />
+        /// Глобальный экземпляр контроллера, чтобы диспозить все tcp клиенты, использованные в приложении.
+        /// </summary>
+        public static TcpClientController tcpClientController = new ();
+
+
+
+        #endregion STATE
+
+
 
 
         #region API - public Contract
@@ -75,6 +94,18 @@ namespace MessengerService.Controls
 
 
 
+        /// <summary>
+        /// To be initiated when the console is to be closed.
+        /// <br />
+        /// Выполнить, когда консоль будет закрыта.
+        /// </summary>
+        private void OnConsoleClosing(object? sender, EventArgs e)
+        {
+            tcpClientController.TryDisposeAll();
+        }
+
+
+
         #endregion LOGIC
 
 
@@ -92,8 +123,9 @@ namespace MessengerService.Controls
         /// </summary>
         public Application()
         {
-
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnConsoleClosing);
         }
+
 
 
         #endregion CONSTRUCTION

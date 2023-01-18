@@ -26,7 +26,6 @@ namespace AuthorizationServiceProject.Net
         private List<ServiceReciever> _userList;
 
 
-
         /// <summary>
         /// An instance to accept incomming connections.
         /// <br />
@@ -35,13 +34,13 @@ namespace AuthorizationServiceProject.Net
         private TcpListener clientListener;
 
 
-
         /// <summary>
         /// A messenger service socket.
         /// <br />
         /// Сокет сервиса сообщений.
         /// </summary>
         private TcpClient messengerServiceSocket;
+
 
 
 
@@ -69,7 +68,7 @@ namespace AuthorizationServiceProject.Net
 
 
 
-        #region API
+        #region API - public Contract
 
 
 
@@ -143,6 +142,12 @@ namespace AuthorizationServiceProject.Net
         }
 
 
+
+        /// <summary>
+        /// Sends the response of the client registration result.
+        /// <br />
+        /// Отправить клиенту ответ в виде результата регистрации клиента.
+        /// </summary>
         public void SendClientResponse(ServiceReciever client, bool checkResult)
         {
             PackageBuilder builder = new PackageBuilder();
@@ -156,6 +161,7 @@ namespace AuthorizationServiceProject.Net
 
             client.ClientSocket.Client.Send(builder.GetPacketBytes());
         }
+
 
 
         /// <summary>
@@ -261,7 +267,7 @@ namespace AuthorizationServiceProject.Net
 
 
 
-        #endregion API
+        #endregion API - public Contract
 
 
 
