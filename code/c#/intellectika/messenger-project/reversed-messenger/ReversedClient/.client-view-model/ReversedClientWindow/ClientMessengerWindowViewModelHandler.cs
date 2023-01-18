@@ -97,7 +97,8 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void DisconnectFromService()
         {
-            WpfWindowsManager.MoveFromChatToLogin(CurrentUserTechnicalDTO.Login);
+            AlreadyDisconnected = true;
+            WpfWindowsManager.MoveFromChatToLogin(string.Empty);
         }
 
 
@@ -374,8 +375,6 @@ namespace ReversedClient.ViewModel.ClientChatWindow
 
             if (vRes == MessageBoxResult.Yes)
             {
-                ServiceTransmitter.Dispose();
-
                 WpfWindowsManager.MoveFromChatToLogin(string.Empty);
             }
         }

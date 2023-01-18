@@ -1,5 +1,6 @@
 ﻿using ReversedClient.client_view;
 using ReversedClient.LocalService;
+using ReversedClient.ViewModel.ClientChatWindow;
 
 namespace ReversedClient.ViewModel.ClientStartupWindow
 {
@@ -61,11 +62,15 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Server is down. Please, concider connecting later.", "Server down", MessageBoxButton.OK, MessageBoxImage.Information);
-
                     if (Application.Current.MainWindow.Name.Equals(nameof(ClientMessengerWindow)))
                     {
-                        WpfWindowsManager.MoveFromChatToLogin(LocalUserTechnicalData.Login);
+                        var vmRef = Application.Current.MainWindow.DataContext as ClientMessengerWindowViewModel;
+
+                        if (!vmRef.AlreadyDisconnected)
+                        {
+                            MessageBox.Show("Server is down. Please, concider connecting later.", "Server down", MessageBoxButton.OK, MessageBoxImage.Information);
+                            WpfWindowsManager.MoveFromChatToLogin(LocalUserTechnicalData.Login);
+                        }
                     }
                 }
             }

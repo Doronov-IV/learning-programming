@@ -95,6 +95,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         private ObservableCollection<MessengerChat> _chatList;
 
 
+        /// <inheritdoc cref="AlreadyDisconnected"/>
+        private bool _alreadyDisconnected;
+
 
         /// <summary>
         /// The service of the file selection dialog.
@@ -423,6 +426,13 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         }
 
 
+        public bool AlreadyDisconnected
+        {
+            get { return _alreadyDisconnected; }
+            set { _alreadyDisconnected = value; }
+        }
+
+
 
         #endregion PROPERTIES - Object State
 
@@ -496,6 +506,7 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         public ClientMessengerWindowViewModel(UserServerSideDTO userData, List<UserClientPublicDTO> memberList, ClientTransmitter clientSocket)
         {
+            AlreadyDisconnected = default;
             clientMessageTracker = new();
             var alteredMemberList = memberList.Where(m => !m.PublicId.Equals(userData.CurrentPublicId));            // to exclude the possibility of writing messages to yourself;
             DefaultCommonMemberList = new(alteredMemberList);

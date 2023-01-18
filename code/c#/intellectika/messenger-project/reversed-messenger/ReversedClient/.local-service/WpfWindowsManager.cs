@@ -142,8 +142,9 @@ namespace ReversedClient.LocalService
                 showWindow.Show();
 
                 var vmRef = closeWindow.DataContext as ClientMessengerWindowViewModel;
-                vmRef.ServiceTransmitter.Dispose();
                 closeWindow.Hide();
+                vmRef.AlreadyDisconnected = true;
+                vmRef.ServiceTransmitter.Dispose();
             });
         }
 
