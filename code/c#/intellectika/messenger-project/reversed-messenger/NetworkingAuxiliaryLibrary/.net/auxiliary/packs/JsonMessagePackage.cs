@@ -3,6 +3,11 @@ using Tools.Formatting;
 
 namespace NetworkingAuxiliaryLibrary.Packages
 {
+    /// <summary>
+    /// The main text message protocol.
+    /// <br />
+    /// Основной протокол текстовых сообщений.
+    /// </summary>
     public class JsonMessagePackage : IMessage
     {
 

@@ -15,7 +15,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
     {
 
 
-        #region PROPERTIES
+        #region STATE
 
 
 
@@ -28,13 +28,13 @@ namespace NetworkingAuxiliaryLibrary.Processing
 
 
 
-        #endregion PROPERTIES
+        #endregion STATE
 
 
 
 
 
-        #region API
+        #region API - public Contract
 
 
 
@@ -82,6 +82,11 @@ namespace NetworkingAuxiliaryLibrary.Processing
 
 
 
+        /// <summary>
+        /// Deserialize and return raw json message (to be converted).
+        /// <br />
+        /// Десерериализовать и вернуть сырое json сообщение (для дальнейшей конвертации).
+        /// </summary>
         public string ReadJsonMessage()
         {
             byte[] tempArray = ReadMessageBytes();
@@ -89,34 +94,9 @@ namespace NetworkingAuxiliaryLibrary.Processing
             return Encoding.UTF8.GetString(tempArray);
         }
 
-        
-        /// <summary>
-        /// Read file from the network stream.
-        /// <br />
-        /// Считать файл из сетевого стрима.
-        /// </summary>
-        /// <param name="UserName">
-        /// Name of the tempRecieverReference.
-        /// <br />
-        /// Имя получателя.
-        /// </param>
-        /// <returns>
-        /// The info of the file read.
-        /// <br />
-        /// Информация о считанном файле.
-        /// </returns>
-        public MessagePackage ReadFile(string UserName)
-        {
-            byte[] tempArray = ReadMessageBytes();
-
-            FileMessagePackage package = new FileMessagePackage(tempArray);
-
-            return package;
-        }
 
 
-
-        #endregion API
+        #endregion API - public Contract
 
 
 

@@ -29,7 +29,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
 
 
 
-        #region API
+        #region API - public Contract
 
 
         /// <summary>
@@ -48,39 +48,12 @@ namespace NetworkingAuxiliaryLibrary.Processing
         }
 
 
+
         /// <summary>
-        /// When the service gets message, it serializes and deserializes it and looses the package length. That is why we need this action.
+        /// Write raw json message into byte array to travel the network.
         /// <br />
-        /// Когда сервис получает сообщение, он сериализует и десериализует его, теряя длину пакета. Поэтому, нам необходимо это действие.
+        /// Записать сырое json сообщения в массив байтов для передачи по сети.
         /// </summary>
-        public void WritePackageLength(MessagePackage package)
-        {
-            var len = BitConverter.GetBytes(package.Data.Length);
-            foreach (var item in len)
-            {
-                _memoryStream.WriteByte(item);
-            }
-        }
-
-        
-        /// <summary>
-        /// Write binary message;
-        /// <br />
-        /// Записать сообщение в бинарном виде;
-        /// </summary>
-        /// <param name="package">
-        /// Message package;
-        /// <br />
-        /// Пакет сообщения;
-        /// </param>
-        public void WriteMessage(MessagePackage package)
-        {
-            if (package.Assembled)
-                _memoryStream.Write(package.Data);
-            else throw new Exception("Message has not been assembled!");
-        }
-
-
         public void WriteJsonMessage(string jsonMessage)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(jsonMessage);
@@ -123,7 +96,7 @@ namespace NetworkingAuxiliaryLibrary.Processing
         }
 
 
-        #endregion API
+        #endregion API - public Contract
 
 
 
