@@ -43,7 +43,7 @@ namespace ReversedClient.client_view
 
         public void SetDefaultName()
         {
-            Name = "ClientMessengerWindow";
+            Name = nameof(ClientMessengerWindow);
         }
 
 

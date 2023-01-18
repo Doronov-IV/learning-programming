@@ -61,7 +61,12 @@ namespace ReversedClient.ViewModel.ClientStartupWindow
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Server is down. Please, concider connectiong later.", "Server down", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Server is down. Please, concider connecting later.", "Server down", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    if (Application.Current.MainWindow.Name.Equals(nameof(ClientMessengerWindow)))
+                    {
+                        WpfWindowsManager.MoveFromChatToLogin(LocalUserTechnicalData.Login);
+                    }
                 }
             }
             else
