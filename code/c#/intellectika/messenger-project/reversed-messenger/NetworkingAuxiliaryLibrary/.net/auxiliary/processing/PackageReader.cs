@@ -81,26 +81,6 @@ namespace NetworkingAuxiliaryLibrary.Processing
         }
 
 
-        /// <summary>
-        /// Read (text) message from the network stream.
-        /// <br />
-        /// Считать сообщение (текстовое) из сетевого стрима.
-        /// </summary>
-        /// <returns>
-        /// The text of the message in a line.
-        /// <br />
-        /// Текст сообщения в виде строки.
-        /// </returns>
-        public MessagePackage ReadMessage()
-        {
-            byte[] tempArray = ReadMessageBytes();
-
-            TextMessagePackage package = new TextMessagePackage(tempArray);
-
-            return package;
-        }
-
-
 
         public string ReadJsonMessage()
         {

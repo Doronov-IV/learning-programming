@@ -80,7 +80,9 @@ namespace ReversedClient.ViewModel.ClientChatWindow
         /// </summary>
         private void RemoveUser()
         {
-            var uid = _serviceTransmitter.MessengerPacketReader.ReadMessage().Message;
+            var msg = _serviceTransmitter.MessengerPacketReader.ReadJsonMessage();
+            var deserializedMessage = JsonConvert.DeserializeObject<JsonMessagePackage>(msg);
+            var uid = deserializedMessage.GetMessage();
             var user = DefaultCommonMemberList.Where(x => x.PublicId.Equals(uid)).FirstOrDefault();
 
             // foreach (var user in )
