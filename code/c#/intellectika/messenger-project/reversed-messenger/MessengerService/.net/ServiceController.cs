@@ -11,6 +11,7 @@ using Toolbox.Flags;
 using Spectre.Console;
 using System.IdentityModel.Tokens.Jwt;
 using NetworkingAuxiliaryLibrary.Objects.Common;
+using MessengerService.Model.Enums;
 
 namespace MessengerService.Datalink
 {
@@ -59,10 +60,6 @@ namespace MessengerService.Datalink
         private TcpListener authorizationServiceListenner = null!;
 
 
-        /// <inheritdoc cref="Status"/>
-        private CustomProcessingStatus _status;
-
-
         /// <inheritdoc cref="UserList"/>
         private List<ServiceReciever> _userList = null!;
 
@@ -93,24 +90,6 @@ namespace MessengerService.Datalink
         }
 
 
-        /// <summary>
-        /// Is _service running;
-        /// <br />
-        /// Работает ли сервис;
-        /// </summary>
-        public CustomProcessingStatus Status
-        {
-            get 
-            { 
-                return _status; 
-            }
-            set
-            {
-                _status = value;
-            }
-        }
-
-
 
         #endregion STATE - Fields and Properties
 
@@ -119,7 +98,7 @@ namespace MessengerService.Datalink
 
 
 
-        #region API - public Behavior
+        #region API - public Contract
 
 
 
@@ -141,10 +120,8 @@ namespace MessengerService.Datalink
 
             // create basic references for reading clients
             PackageReader reader;
-            ServiceReciever client = null;
+            ServiceReciever client;
             JsonMessagePackage msg = null;
-
-            Status.ToggleCompletion();
 
             while (true)
             {
@@ -156,9 +133,7 @@ namespace MessengerService.Datalink
                 {
                     client.ProcessTextMessageEvent += AddNewMessageToTheDb;
                     client.ProcessTextMessageEvent += broadcaster.BroadcastMessage;
-
                     client.UserDisconnected += broadcaster.BroadcastDisconnect;
-
                     client.MessageDeletedEvent += DeleteMessageFromDb;
                     client.MessageDeletedEvent += broadcaster.BroadcastMessageDeletion;
 
@@ -186,8 +161,6 @@ namespace MessengerService.Datalink
                     }
                 }
             }
-
-            Status.ToggleProcessing();
         }
 
 
@@ -210,34 +183,30 @@ namespace MessengerService.Datalink
             {
                 await Task.Run(() =>
                 {
-                    try
-                    {
-                        authorizer = new(authorizationServiceListenner.AcceptTcpClient());
-                        reader = new(authorizer.ClientSocket.GetStream());
-                    }
-                    catch { /* Notification Exception */ }
+                    authorizer = new(authorizationServiceListenner.AcceptTcpClient());
+                    reader = new(authorizer.ClientSocket.GetStream());
                 });
             }
 
-            JsonMessagePackage msg = null;
+            JsonMessagePackage? message;
 
             try
             {
                 while (true)
                 {
-                    msg = null;
+                    message = default;
                     try
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
                             if (reader is not null) // it is null
-                            await Task.Run(() => msg = JsonMessageFactory.GetUnserializedPackage(reader.ReadJsonMessage()));
+                                await Task.Run(() => message = JsonMessageFactory.GetUnserializedPackage(reader.ReadJsonMessage()));
                     }
                     catch { /* Notofication exception */}
-                    if (msg != null)
+                    if (message is not null)
                     {
-                        CheckIncommingRegistrationData(msg);
+                        CheckIncommingRegistrationData(message);
 
-                        var userData = SubstractUserData(msg);
+                        var userData = SubstractUserData(message);
 
                         AnsiConsole.Write(new Markup(ConsoleServiceStyle.GetLoginReceiptStyle(userData.PublicId)));
                     }
@@ -250,7 +219,7 @@ namespace MessengerService.Datalink
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                          ↓   DB COMMUNICATION   ↓                        ↓    ///
+        /// ↓                        ↓  API DB COMMUNICATION   ↓                       ↓    ///
         /////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -268,73 +237,36 @@ namespace MessengerService.Datalink
         {
             if (package is not null)
             {
+                // creating and initializing it with content text, date and time;
+                Message newMessage = new();
+                newMessage.Contents = (string)package.GetMessage();
+                newMessage.Date = package.GetDate();
+                newMessage.Time = package.GetTime();
+
+                // retrieving a sender;
+                var messageSender = TryAddUser(package, UserRoles.Sender) ?? throw new InvalidDataException("[Manual] Server failed to substract a sender from the message package. Please, inspect the user processing method.");
+                newMessage.Author = messageSender;
+
+                // processing the chat;
+                var messageChat = TryAddChat(package, messageSender) ?? throw new InvalidDataException("[Manual] Server failed to process the chat for the new message. Please, inspect the chat processing method.");
+                messageChat.MessageList?.Add(newMessage);
+                newMessage.Chat = messageChat;
+
+                // adding message to the db
                 using (MessengerDatabaseContext context = new())
                 {
-                    Message newMessage = new();
-
-                    newMessage.Contents = package.GetMessage() as string;
-                    newMessage.Date = package.GetDate();
-                    newMessage.Time = package.GetTime();
-
-                    // check if db knows the sender
-                    User newSender = new();
-                    var existingSender = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
-                    if (existingSender is null)
-                    {
-                        newSender.PublicId = package.GetSender();
-                        newSender.CurrentNickname = package.GetSender();
-                        newSender.MessageList = new();
-                        newSender.ChatList = new();
-
-                        context.Users.Add(newSender);
-                    }
-                    else newSender = existingSender;
-                    newMessage.Author = newSender;
-
-                    // check if db knows the reciever
-                    User newReciever = new();
-                    var existingReciever = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetReciever()));
-                    if (existingReciever is null)
-                    {
-                        newReciever.PublicId = package.GetReciever();
-                        newReciever.CurrentNickname = package.GetReciever();
-                        newReciever.MessageList = new();
-                        newReciever.ChatList = new();
-
-                        context.Users.Add(newReciever);
-                    }
-                    else newReciever = existingReciever;
-
-                    // check if it isn't a new chat
-                    Chat newChat = new();
-                    if (package.GetReciever() != "@All")
-                    {
-                        var existingChat = context.Chats.FirstOrDefault(c => c.UserList.Contains(newSender) && c.UserList.Contains(newReciever) && c.UserList.Count == 2);
-                        if (existingChat is null)
-                        {
-                            newChat.UserList.Add(newSender);
-                            newChat.UserList.Add(newReciever);
-                            context.Chats.Add(newChat);
-                        }
-                        else newChat = existingChat;
-                    }
-                    //newSender.ChatList.Add(newChat);
-                    //newReciever.ChatList.Add(newChat);
-                    newChat.MessageList.Add(newMessage);
-                    newMessage.Chat = newChat;
-
                     context.Messages.Add(newMessage);
-
                     context.SaveChanges();
                 }
             }
         }
 
 
+
         /// <summary>
-        /// Return userData reference by searching with userData login.
+        /// Get User reference by searching with their login.
         /// <br />
-        /// Вернуть ссылку на пользователя в результате поиска по логину пользователя.
+        /// Получить ссылку на пользователя в результате поиска по его логину.
         /// </summary>
         public User GetUserFromDatabaseByLogin(string login)
         {
@@ -371,37 +303,27 @@ namespace MessengerService.Datalink
                 bool breakFlag = default;
                 Message? messageToDelete = default;
 
-                foreach (var user in context.Users.Include(u => u.MessageList))
+                var user = context.Users.Include(u => u.MessageList).FirstOrDefault(u => u.PublicId.Equals(message.GetSender()));
+                foreach (var messageIntem in user.MessageList)
                 {
-                    foreach (var messageIntem in user.MessageList)
+                    if (MessageParser.IsMessageIdenticalToAnotherOne(messageIntem, message))
                     {
-                        var time1 = messageIntem.GetTime();
-                        var time2 = message.GetTime();
-                        bool areMessagesEqual = MessageParser.IsMessageIdenticalToAnotherOne(messageIntem, message);
-                        if (areMessagesEqual)
-                        {
-                            messageToDelete = messageIntem;
-                            deletedMessageAuthorId = user.Id;
-                            breakFlag = true;
-                            break;
-                        }
+                        messageToDelete = messageIntem;
+                        deletedMessageAuthorId = user.Id;
+                        breakFlag = true;
+                        break;
                     }
-
-                    if (breakFlag) break;
                 }
-
-                
 
                 if (messageToDelete is not null)
                 {
-                    var chatContainingMessageToDelete = context.Chats.Select(c => c).Where(c => c.MessageList.Contains(messageToDelete)).FirstOrDefault();
+                    Chat? chatContainingMessageToDelete = context.Chats.Select(c => c).Where(c => c.MessageList.Contains(messageToDelete)).FirstOrDefault();
                     chatContainingMessageToDelete.MessageList.Remove(messageToDelete);
 
                     var userThatHasThatMessage = context.Users.Where(u => u.MessageList.Contains(messageToDelete)).FirstOrDefault();
                     userThatHasThatMessage.MessageList.Remove(messageToDelete);
 
                     context.Messages.Remove(messageToDelete);
-
                     context.SaveChanges();
                 }
                 else throw new InvalidDataException("[Custom] Message queried for deletion was not found on the messenger database.");
@@ -410,7 +332,7 @@ namespace MessengerService.Datalink
         }
 
 
-        #endregion API - public Behavior
+        #endregion API - public Contract
 
 
 
@@ -419,6 +341,60 @@ namespace MessengerService.Datalink
 
 
         #region LOGIC - private Behavior
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /// ↓                       ↓  LOGIC DB COMMUNICATION   ↓                      ↓    ///
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+
+        /// <summary>
+        /// Get the user and add them to the db if they are not already present there.
+        /// <br />
+        /// Получить пользователя и добавить его в б/д, если он там ешё не числится.
+        /// </summary>
+        private User? TryAddUser(IMessage package, UserRoles role)
+        {
+            User? newSender = null;
+            using (MessengerDatabaseContext context = new())
+            {
+                var existingSender = context.Users.AsNoTracking().FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
+                if (existingSender is null)
+                {
+                    newSender = new(package, UserRoles.Sender);
+                    context.Users.Add(newSender);
+                    context.SaveChanges();
+                }
+                else newSender = existingSender;
+                context.Dispose();
+            }
+            return newSender;
+        }
+
+
+        /// <summary>
+        /// Get the chat of the message or create it, if it is not present at the db.
+        /// <br />
+        /// Получить чат сообщения, или создать его, если его ещё нет в б/д.
+        /// </summary>
+        private Chat? TryAddChat(IMessage package, User messageSender, MessengerDatabaseContext context)
+        {
+            Chat? messageChat = null;
+            var messageReciever = TryAddUser(package, UserRoles.Reciever);
+
+            var existingChat = context.Chats.Include(c => c.UserList).FirstOrDefault(c => c.UserList.Contains(messageSender) && c.UserList.Contains(messageReciever));
+            if (existingChat is null)
+            {
+                messageChat.UserList.Add(messageSender);
+                messageChat.UserList.Add(messageReciever);
+                context.Chats.Add(messageChat);
+                context.SaveChanges();
+            }
+            else messageChat = existingChat;
+
+            return messageChat;
+        }
 
 
 
@@ -561,6 +537,8 @@ namespace MessengerService.Datalink
 
 
 
+
+
         #endregion LOGIC - private Behavior
 
 
@@ -581,7 +559,6 @@ namespace MessengerService.Datalink
         {
             _userList = new List<ServiceReciever>();
             authorizer = null;
-            Status = new();
             broadcaster = new(this);
         }
 

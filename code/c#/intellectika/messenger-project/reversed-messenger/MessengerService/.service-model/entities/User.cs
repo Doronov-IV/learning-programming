@@ -1,4 +1,6 @@
-﻿namespace MessengerService.Model.Entities
+﻿using MessengerService.Model.Enums;
+
+namespace MessengerService.Model.Entities
 {
     [Serializable]
     public class User
@@ -27,5 +29,30 @@
             ChatList = new();
             MessageList = new();
         }
+
+
+
+        /// <summary>
+        /// Message paranetrized constructor.
+        /// 'role' - depends on creation context. 
+        /// <br />
+        /// Параметризованный конструктор по сообщению.
+        /// "role" - зависит от контекста создания.
+        /// </summary>
+        public User(IMessage message, UserRoles role) : base()
+        {
+            switch (role)
+            {
+                case UserRoles.Sender:
+                    CurrentNickname = PublicId = message.GetSender();
+                    break;
+
+                case UserRoles.Reciever:
+                    CurrentNickname = PublicId = message.GetReciever();
+                    break;
+            }
+        }
+
+
     }
 }
