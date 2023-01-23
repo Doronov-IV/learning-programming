@@ -237,25 +237,46 @@ namespace MessengerService.Datalink
         {
             if (package is not null)
             {
-                // creating and initializing it with content text, date and time;
-                Message newMessage = new();
-                newMessage.Contents = (string)package.GetMessage();
-                newMessage.Date = package.GetDate();
-                newMessage.Time = package.GetTime();
                 using (MessengerDatabaseContext context = new())
                 {
+                    Message newMessage = new();
 
-                    // retrieving a sender;
-                    var messageSender = TryAddUser(package, context, UserRoles.Sender) ?? throw new InvalidDataException("[Manual] Server failed to substract a sender from the message package. Please, inspect the user processing method.");
-                    newMessage.Author = messageSender;
+                    newMessage.Contents = package.GetMessage() as string;
+                    newMessage.Date = package.GetDate();
+                    newMessage.Time = package.GetTime();
 
-                    // processing the chat;
-                    var messageChat = TryAddChat(package, messageSender, context) ?? throw new InvalidDataException("[Manual] Server failed to process the chat for the new message. Please, inspect the chat processing method.");
-                    messageChat.MessageList?.Add(newMessage);
-                    newMessage.Chat = messageChat;
+                    // check if db knows the sender
+                    User newSender = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
+                    if (newSender is null)
+                    {
+                        newSender = new(package, UserRoles.Sender);
+                        context.Users.Add(newSender);
+                    }
+                    newMessage.Author = newSender;
 
-                    // adding message to the db
+                    // check if db knows the reciever
+                    User newReciever = context.Users.FirstOrDefault(u => u.PublicId.Equals(package.GetReciever()));
+                    if (newReciever is null)
+                    {
+                        newReciever = new(package, UserRoles.Reciever);
+                        context.Users.Add(newReciever);
+                    }
 
+                    // check if it isn't a new chat
+                    Chat newChat = context.Chats.FirstOrDefault(c => c.UserList.Contains(newSender) && c.UserList.Contains(newReciever) && c.UserList.Count == 2);
+                    if (package.GetReciever() != "@All")
+                    {
+                        if (newChat is null)
+                        {
+                            newChat = new();
+                            newChat.UserList.Add(newSender);
+                            newChat.UserList.Add(newReciever);
+                            context.Chats.Add(newChat);
+                        }
+                    }
+
+                    newChat.MessageList.Add(newMessage);
+                    newMessage.Chat = newChat;
                     context.Messages.Add(newMessage);
                     context.SaveChanges();
                 }
@@ -342,56 +363,6 @@ namespace MessengerService.Datalink
 
 
         #region LOGIC - private Behavior
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /// ↓                       ↓  LOGIC DB COMMUNICATION   ↓                      ↓    ///
-        /////////////////////////////////////////////////////////////////////////////////////// 
-
-
-        /// <summary>
-        /// Get the user and add them to the db if they are not already present there.
-        /// <br />
-        /// Получить пользователя и добавить его в б/д, если он там ешё не числится.
-        /// </summary>
-        private User? TryAddUser(IMessage package, MessengerDatabaseContext context, UserRoles role)
-        {
-            User? newSender = null;
-            var existingSender = context.Users.AsNoTracking().FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
-            if (existingSender is null)
-            {
-                newSender = new(package, UserRoles.Sender);
-                context.Users.Add(newSender);
-                context.SaveChanges();
-            }
-            else newSender = existingSender;
-            return newSender;
-        }
-
-
-        /// <summary>
-        /// Get the chat of the message or create it, if it is not present at the db.
-        /// <br />
-        /// Получить чат сообщения, или создать его, если его ещё нет в б/д.
-        /// </summary>
-        private Chat? TryAddChat(IMessage package, User messageSender, MessengerDatabaseContext context)
-        {
-            Chat? messageChat = null;
-            var messageReciever = TryAddUser(package, context ,UserRoles.Reciever);
-
-            var existingChat = context.Chats.Include(c => c.UserList).FirstOrDefault(c => c.UserList.Contains(messageSender) && c.UserList.Contains(messageReciever));
-            if (existingChat is null)
-            {
-                messageChat.UserList.Add(messageSender);
-                messageChat.UserList.Add(messageReciever);
-                context.Chats.Add(messageChat);
-                context.SaveChanges();
-            }
-            else messageChat = existingChat;
-
-            return messageChat;
-        }
 
 
 
