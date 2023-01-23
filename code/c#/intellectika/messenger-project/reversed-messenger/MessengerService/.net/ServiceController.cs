@@ -242,19 +242,20 @@ namespace MessengerService.Datalink
                 newMessage.Contents = (string)package.GetMessage();
                 newMessage.Date = package.GetDate();
                 newMessage.Time = package.GetTime();
-
-                // retrieving a sender;
-                var messageSender = TryAddUser(package, UserRoles.Sender) ?? throw new InvalidDataException("[Manual] Server failed to substract a sender from the message package. Please, inspect the user processing method.");
-                newMessage.Author = messageSender;
-
-                // processing the chat;
-                var messageChat = TryAddChat(package, messageSender) ?? throw new InvalidDataException("[Manual] Server failed to process the chat for the new message. Please, inspect the chat processing method.");
-                messageChat.MessageList?.Add(newMessage);
-                newMessage.Chat = messageChat;
-
-                // adding message to the db
                 using (MessengerDatabaseContext context = new())
                 {
+
+                    // retrieving a sender;
+                    var messageSender = TryAddUser(package, context, UserRoles.Sender) ?? throw new InvalidDataException("[Manual] Server failed to substract a sender from the message package. Please, inspect the user processing method.");
+                    newMessage.Author = messageSender;
+
+                    // processing the chat;
+                    var messageChat = TryAddChat(package, messageSender, context) ?? throw new InvalidDataException("[Manual] Server failed to process the chat for the new message. Please, inspect the chat processing method.");
+                    messageChat.MessageList?.Add(newMessage);
+                    newMessage.Chat = messageChat;
+
+                    // adding message to the db
+
                     context.Messages.Add(newMessage);
                     context.SaveChanges();
                 }
@@ -354,21 +355,17 @@ namespace MessengerService.Datalink
         /// <br />
         /// Получить пользователя и добавить его в б/д, если он там ешё не числится.
         /// </summary>
-        private User? TryAddUser(IMessage package, UserRoles role)
+        private User? TryAddUser(IMessage package, MessengerDatabaseContext context, UserRoles role)
         {
             User? newSender = null;
-            using (MessengerDatabaseContext context = new())
+            var existingSender = context.Users.AsNoTracking().FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
+            if (existingSender is null)
             {
-                var existingSender = context.Users.AsNoTracking().FirstOrDefault(u => u.PublicId.Equals(package.GetSender()));
-                if (existingSender is null)
-                {
-                    newSender = new(package, UserRoles.Sender);
-                    context.Users.Add(newSender);
-                    context.SaveChanges();
-                }
-                else newSender = existingSender;
-                context.Dispose();
+                newSender = new(package, UserRoles.Sender);
+                context.Users.Add(newSender);
+                context.SaveChanges();
             }
+            else newSender = existingSender;
             return newSender;
         }
 
@@ -381,7 +378,7 @@ namespace MessengerService.Datalink
         private Chat? TryAddChat(IMessage package, User messageSender, MessengerDatabaseContext context)
         {
             Chat? messageChat = null;
-            var messageReciever = TryAddUser(package, UserRoles.Reciever);
+            var messageReciever = TryAddUser(package, context ,UserRoles.Reciever);
 
             var existingChat = context.Chats.Include(c => c.UserList).FirstOrDefault(c => c.UserList.Contains(messageSender) && c.UserList.Contains(messageReciever));
             if (existingChat is null)
