@@ -131,11 +131,8 @@ namespace MessengerService.Datalink
 
                 if (client is not null)
                 {
-                    client.ProcessTextMessageEvent += AddNewMessageToTheDb;
-                    client.ProcessTextMessageEvent += broadcaster.BroadcastMessage;
-                    client.UserDisconnected += broadcaster.BroadcastDisconnect;
-                    client.MessageDeletedEvent += DeleteMessageFromDb;
-                    client.MessageDeletedEvent += broadcaster.BroadcastMessageDeletion;
+                    SubscribeClientToEvents(client);
+
 
                     reader = new(client.ClientSocket.GetStream());
 
@@ -499,6 +496,22 @@ namespace MessengerService.Datalink
                 context.Users.Add(newUser);
                 context.SaveChanges();
             }
+        }
+
+
+
+        /// <summary>
+        /// Subscribe an instance of the ServiceReciever to all the control's events.
+        /// <br />
+        /// Подписать экземпляр service reciever'а на все события контроллера.
+        /// </summary>
+        private void SubscribeClientToEvents(ServiceReciever client)
+        {
+            client.ProcessTextMessageEvent += AddNewMessageToTheDb;
+            client.ProcessTextMessageEvent += broadcaster.BroadcastMessage;
+            client.UserDisconnected += broadcaster.BroadcastDisconnect;
+            client.MessageDeletedEvent += DeleteMessageFromDb;
+            client.MessageDeletedEvent += broadcaster.BroadcastMessageDeletion;
         }
 
 
