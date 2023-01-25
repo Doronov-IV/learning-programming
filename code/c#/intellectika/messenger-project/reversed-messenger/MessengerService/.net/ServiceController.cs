@@ -122,7 +122,7 @@ namespace MessengerService.Datalink
             PackageReader reader;
             ServiceReciever client;
             JsonMessagePackage msg = null;
-
+            
             while (true)
             {
                 client = null;
@@ -195,7 +195,7 @@ namespace MessengerService.Datalink
                     try
                     {
                         if (authorizer != null && authorizer.ClientSocket.Connected)
-                            if (reader is not null) // it is null
+                            if (reader is not null)
                                 await Task.Run(() => message = JsonMessageFactory.GetUnserializedPackage(reader.ReadJsonMessage()));
                     }
                     catch { /* Notofication exception */}
