@@ -10,38 +10,171 @@ namespace ShootingRange
 {
     public static class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            
-            string A = DateTime.Now.ToString("HH:mm:ss:fff");
-            string B = new string(A); 
-            string C = new string(A);
+            Class aaaaaa1 = new Class();
+            Class aaaaaa2 = new Class();
+            Struct bbbbbb1 = new Struct();
+            Struct bbbbbb2 = new Struct();
+            Struc cccccc1 = new Struc();
+            Struc cccccc2 = new Struc();
 
-            var bRes = IsTimeAproximatelyEqual(B, C);
+            bbbbbb2 = bbbbbb1;
+            cccccc2 = cccccc1;
+
+            ChangeShit(bbbbbb1);
+            Console.WriteLine(bbbbbb1.id);
+            ChangeShit(ref bbbbbb2);
+            Console.WriteLine(bbbbbb2.id);
+
+            ChangeShit(cccccc1);
+            Console.WriteLine(cccccc1.id);
+            ChangeShit(ref cccccc2);
+            Console.WriteLine(cccccc2.id);
+
+
+
         }
 
-        public static void ChangeClass(Class @class) => @class.name = "Hej";
-        public static void ChangeVariable(int variable, out int res) => res = variable;
-
-
-        public static bool IsTimeAproximatelyEqual(string timeOne, string timeTwo)
+        public static void ChangeShit(Class Class)
         {
-            int nTimeOne = Int32.Parse(StringDateTime.RemoveSeparation(timeOne));
-            int nTimeTwo = Int32.Parse(StringDateTime.RemoveSeparation(timeTwo));
-
-            int debugResOne = nTimeOne;
-            int debugResTwo = nTimeTwo;
-
-            return debugResOne == debugResTwo;
+            Class.Value = "AAAAAAAAAA";
+            Class.Id = 999;
         }
+
+        public static void ChangeShit(ref Class Class)
+        {
+            Class.Value = "AAAAAAAAAA";
+            Class.Id = 999;
+        }
+
+
+        public static void ChangeShit(Struct Struct)
+        {
+            Struct.Value = "AAAAAAAAAA";
+            Struct.Id = 999;
+        }
+
+        public static void ChangeShit(ref Struct Struct)
+        {
+            Struct.Value = "AAAAAAAAAA";
+            Struct.Id = 999;
+        }
+
+        public static void ChangeShit(Struc Struc)
+        {
+            Struc.Value = "AAAAAAAAAA";
+            Struc.Id = 999;
+        }
+
+        public static void ChangeShit(ref Struc Struc)
+        {
+            Struc.Value = "AAAAAAAAAA";
+            Struc.Id = 999;
+        }
+
     }
 
 
     public class Class
     {
-        public string name;
-        public int age;
+        public string Type
+        {
+            get
+            {
+                return GetType().ToString();
+            }
+        }
+        
+        public string Clas
+        {
+            get
+            {
+                return "Clas";
+            }
+        }
+
+        public string value = "Hello";
+
+        public string Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
+            }
+        }
+
+        public int id = 1;
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public Struct structa = new();
     }
 
-    
+
+    public struct Struct 
+    {
+        public string Struc
+        {
+            get
+            {
+                return "Struc";
+            }
+        }
+
+        public string value;
+        public string Value
+        {
+            get { return value; }
+            set { this.value = value; }
+        }
+
+        public int id;
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+    }
+
+
+    public ref struct Struc
+    {
+        public string Stru
+        {
+            get
+            {
+                return "Stru";
+            }
+        }
+
+        public string value;
+        public string Value
+        {
+            get { return value; }
+            set { this.value = value; }
+        }
+
+        public int id;
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+    }
+
+
+
+
+
+
 }
