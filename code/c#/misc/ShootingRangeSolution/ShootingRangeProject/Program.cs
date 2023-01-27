@@ -23,13 +23,13 @@ namespace ShootingRange
             cccccc2 = cccccc1;
 
             ChangeShit(bbbbbb1);
-            Console.WriteLine(bbbbbb1.id);
             ChangeShit(ref bbbbbb2);
+            Console.WriteLine(bbbbbb1.id);
             Console.WriteLine(bbbbbb2.id);
 
             ChangeShit(cccccc1);
-            Console.WriteLine(cccccc1.id);
             ChangeShit(ref cccccc2);
+            Console.WriteLine(cccccc1.id);
             Console.WriteLine(cccccc2.id);
 
 
