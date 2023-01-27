@@ -5,6 +5,10 @@ global using System.Text;
 global using System;
 using Tools.Toolbox;
 using Tools.Formatting;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Security;
+using System.Runtime.InteropServices;
 
 namespace ShootingRange
 {
@@ -12,29 +16,42 @@ namespace ShootingRange
     {
         public static void Main(string[] args)
         {
-            Class aaaaaa1 = new Class();
-            Class aaaaaa2 = new Class();
-            Struct bbbbbb1 = new Struct();
-            Struct bbbbbb2 = new Struct();
-            Struc cccccc1 = new Struc();
-            Struc cccccc2 = new Struc();
+            // Instantiate the secure string.
+            SecureString securePwd = new SecureString();
+            ConsoleKeyInfo key;
 
-            bbbbbb2 = bbbbbb1;
-            cccccc2 = cccccc1;
+            Console.Write("Enter password: ");
+            do
+            {
+                key = Console.ReadKey(true);
 
-            ChangeShit(bbbbbb1);
-            ChangeShit(ref bbbbbb2);
-            Console.WriteLine(bbbbbb1.id);
-            Console.WriteLine(bbbbbb2.id);
+                // Ignore any key out of range.
+                if (((int)key.Key) >= 65 && ((int)key.Key <= 90))
+                {
+                    // Append the character to the password.
+                    securePwd.AppendChar(key.KeyChar);
+                    Console.Write("*");
+                }
+                // Exit if Enter key is pressed.
+            } while (key.Key != ConsoleKey.Enter);
+            Console.WriteLine();
 
-            ChangeShit(cccccc1);
-            ChangeShit(ref cccccc2);
-            Console.WriteLine(cccccc1.id);
-            Console.WriteLine(cccccc2.id);
-
-
-
-        }
+            try
+            {
+                string password = new System.Net.NetworkCredential(string.Empty, securePwd).Password;
+                Console.WriteLine(password);
+            }
+            catch (Win32Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                securePwd.Dispose();
+            }
+        
+        
+    }
 
         public static void ChangeShit(Class Class)
         {

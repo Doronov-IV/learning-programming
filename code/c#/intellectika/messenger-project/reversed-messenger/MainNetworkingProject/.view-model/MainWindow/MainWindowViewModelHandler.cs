@@ -139,7 +139,7 @@ namespace MainNetworkingProject.ViewModel.MainWindow
 
         public void OnClearAutorizationButtonClick()
         {
-            using (SqlConnection connection = new("Server=.\\doronoviv;Database=MessengerAuthorizationDatabase;Trusted_Connection=True;Encrypt=false;"))
+            using (SqlConnection connection = new("Server=.\\doronoviv;Database=AuthorizerDatabase;Trusted_Connection=True;Encrypt=false;"))
             {
                 connection.Open();
                 SqlCommand command = new(
