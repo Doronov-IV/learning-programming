@@ -16,85 +16,36 @@ namespace ShootingRange
     {
         public static void Main(string[] args)
         {
-            // Instantiate the secure string.
-            SecureString securePwd = new SecureString();
-            ConsoleKeyInfo key;
 
-            Console.Write("Enter password: ");
-            do
-            {
-                key = Console.ReadKey(true);
+            IInterfaceable clas = new Class();
+            Console.WriteLine(clas.GetStuff(args));
 
-                // Ignore any key out of range.
-                if (((int)key.Key) >= 65 && ((int)key.Key <= 90))
-                {
-                    // Append the character to the password.
-                    securePwd.AppendChar(key.KeyChar);
-                    Console.Write("*");
-                }
-                // Exit if Enter key is pressed.
-            } while (key.Key != ConsoleKey.Enter);
-            Console.WriteLine();
+            // equals
 
-            try
-            {
-                string password = new System.Net.NetworkCredential(string.Empty, securePwd).Password;
-                Console.WriteLine(password);
-            }
-            catch (Win32Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                securePwd.Dispose();
-            }
-        
-        
-    }
+            Class clas1 = new Class();
+            Console.WriteLine(((IInterfaceable)clas1).GetStuff(args));
 
-        public static void ChangeShit(Class Class)
-        {
-            Class.Value = "AAAAAAAAAA";
-            Class.Id = 999;
-        }
-
-        public static void ChangeShit(ref Class Class)
-        {
-            Class.Value = "AAAAAAAAAA";
-            Class.Id = 999;
-        }
-
-
-        public static void ChangeShit(Struct Struct)
-        {
-            Struct.Value = "AAAAAAAAAA";
-            Struct.Id = 999;
-        }
-
-        public static void ChangeShit(ref Struct Struct)
-        {
-            Struct.Value = "AAAAAAAAAA";
-            Struct.Id = 999;
-        }
-
-        public static void ChangeShit(Struc Struc)
-        {
-            Struc.Value = "AAAAAAAAAA";
-            Struc.Id = 999;
-        }
-
-        public static void ChangeShit(ref Struc Struc)
-        {
-            Struc.Value = "AAAAAAAAAA";
-            Struc.Id = 999;
         }
 
     }
 
 
-    public class Class
+    public class Class : IInterfaceable, ISomethingable
     {
+
+        string IInterfaceable.GetStuff(string[] args)
+        {
+            string res = "interfaceable";
+            return res;
+        }
+
+        string ISomethingable.GetStuff(string[] args)
+        {
+            string res = "somethingable";
+            return res;
+        }
+
+
         public string Type
         {
             get
@@ -102,7 +53,7 @@ namespace ShootingRange
                 return GetType().ToString();
             }
         }
-        
+
         public string Clas
         {
             get
@@ -131,67 +82,17 @@ namespace ShootingRange
             get { return id; }
             set { id = value; }
         }
-
-        public Struct structa = new();
     }
 
-
-    public struct Struct 
+    public interface IInterfaceable
     {
-        public string Struc
-        {
-            get
-            {
-                return "Struc";
-            }
-        }
-
-        public string value;
-        public string Value
-        {
-            get { return value; }
-            set { this.value = value; }
-        }
-
-        public int id;
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
+        public string GetStuff(string[] args);
     }
 
 
-    public ref struct Struc
+    public interface ISomethingable 
     {
-        public string Stru
-        {
-            get
-            {
-                return "Stru";
-            }
-        }
-
-        public string value;
-        public string Value
-        {
-            get { return value; }
-            set { this.value = value; }
-        }
-
-        public int id;
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
+        public string GetStuff(string[] args);
     }
-
-
-
-
-
-
+   
 }
