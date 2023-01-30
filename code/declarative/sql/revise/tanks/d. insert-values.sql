@@ -1,0 +1,82 @@
+/*	INSERT VALUES	*/
+
+
+-- ADD TWO PRICES FOR TWO GUNS
+USE QueryRepetition
+GO
+INSERT INTO Prices VALUES
+(450000, 'ˆ'),
+(400000, '$')
+
+
+-- ADD TWO PRICES FOR TWO ENGINES
+USE QueryRepetition
+GO
+INSERT INTO Prices VALUES
+(650000, 'ˆ'),
+(600000, '$')
+
+
+-- ADD TWO PRICES FOR TWO TANKS
+USE QueryRepetition
+GO
+INSERT INTO Prices VALUES
+(5000000, 'ˆ'),
+(5500000, '$')
+
+
+-- ADD TWO BUDGETS FOR TWO TANK MANUFACTURERS
+USE QueryRepetition
+GO
+INSERT INTO Budgets VALUES
+(16000000000, 'ˆ'),
+(40000000000, '$')
+
+
+-- ADD TWO BUDGETS FOR TWO ENGINE MANUFACTURERS
+USE QueryRepetition
+GO
+INSERT INTO Budgets VALUES
+(850000000, 'ˆ'),
+(82700000, '$')
+
+
+-- ADD TWO MANUFACTURERS FOR TWO TANKS
+USE QueryRepetition
+GO 
+INSERT INTO Manufacturers VALUES
+(N'Rheinmetall', 'Germany', 0),
+(N'General Dynamics', 'USA', 1)
+
+-- ADD TWO MANUFACTURERS FOR TWO ENGINES
+USE QueryRepetition
+GO 
+INSERT INTO Manufacturers VALUES
+(N'RENK', 'Germany', 2),
+(N'Lycoming Engines', 'USA', 3)
+
+
+-- ADD TWO ENGINES FOR TWO TANKS
+USE QueryRepetition
+GO
+INSERT INTO Engines VALUES
+(N'MTU MB 873 Ka-501', 1500, 2, 2),
+(N'AGT1500', 1500, 3, 3)
+
+
+
+
+-- ADD TWO GUNS
+USE QueryRepetition
+GO
+INSERT INTO Guns VALUES
+('Rh-120 L44', 120, 44, 0, 0),
+('M256', 120, 44, 1, 1)
+
+
+-- ADD TWO TANKS
+USE QueryRepetition
+GO
+INSERT INTO Tanks VALUES
+(N'Leopard 2A5', 0, 0, 4, 0, 4),
+(N'M1A2 Abrams', 1, 1, 4, 1, 5)
