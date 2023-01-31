@@ -1,0 +1,8 @@
+Dependencies can also be called 'services'. In .NET DI services are usually stored in a special collection that has a type of IServiceCollection. The default implementation class is ServiceCollection.
+There are several methods to add a service to the collection. Their difference comes with the lifecycle of the objects they provide. 
+	— Transient is used for some temporal references, being renewed after each call.
+	— Scoped creates specific context or scope in which all the calls would reference local instance.
+	— Singleton represents a global static object that will be common for all the application.
+Each of those methods accept a type of a service via generics.
+
+For service retrieval there are two main methods. First one being GetService, which returns null on search failure. The second one – GetRequiredServuce will generate an exception if the type would not be found.
