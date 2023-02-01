@@ -15,8 +15,8 @@
             gunBuilder.Property(g => g.CaliberMillimetres);
             gunBuilder.Property(g => g.LengthInCalibers);
 
-            gunBuilder.HasOne<Price>(e => e.PriceReference);
-            gunBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference);
+            gunBuilder.HasOne<Price>(e => e.PriceReference).WithOne().HasForeignKey<Gun>(g => g.PriceId);
+            gunBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference).WithOne().HasForeignKey<Gun>(g => g.ManufacturerId);
         }
 
     }

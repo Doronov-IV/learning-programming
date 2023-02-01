@@ -14,10 +14,10 @@
 
             mbtBuilder.Property(mbt => mbt.CrewCount);
 
-            mbtBuilder.HasOne<Price>(e => e.PriceReference);
-            mbtBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference);
-            mbtBuilder.HasOne<Engine>(mbt => mbt.EngineReference);
-            mbtBuilder.HasOne<Gun>(mbt => mbt.GunReference);
+            mbtBuilder.HasOne<Price>(e => e.PriceReference).WithOne().HasForeignKey<MainBattleTank>(mbt => mbt.PriceId);
+            mbtBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference).WithOne().HasForeignKey<MainBattleTank>(mbt => mbt.ManufacturerId);
+            mbtBuilder.HasOne<Engine>(mbt => mbt.EngineReference).WithOne().HasForeignKey<MainBattleTank>(mbt => mbt.EngineId);
+            mbtBuilder.HasOne<Gun>(mbt => mbt.GunReference).WithOne().HasForeignKey<MainBattleTank>(mbt => mbt.GunId);
         }
     }
 }
