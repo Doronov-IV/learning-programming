@@ -14,6 +14,7 @@ namespace MainEntityProject.Model.Context
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Engine> Engines { get; set; }
         public DbSet<Gun> Guns { get; set; }
+        public DbSet<MainBattleTank> Tanks { get; set; }
 
 
 
@@ -70,7 +71,7 @@ namespace MainEntityProject.Model.Context
         /// </summary>
         public VehicleDatabaseContext()
         {
-            var debugInfo = Database.EnsureDeleted();
+            var debugInfo = Database.EnsureCreated();
         }
 
 
@@ -86,7 +87,6 @@ namespace MainEntityProject.Model.Context
         /// </param>
         public VehicleDatabaseContext(DbContextOptions<VehicleDatabaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
 

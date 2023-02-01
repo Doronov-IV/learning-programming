@@ -13,7 +13,7 @@
             budgetBuilder.HasKey(b => b.Id);
             budgetBuilder.Property(b => b.Value);
             budgetBuilder.Property(b => b.Currency);
-            budgetBuilder.HasOne(b => b.ManufacturerReference).WithOne(m => m.BudgetReference).HasForeignKey<Manufacturer>(x => x.BudgetId);
+            budgetBuilder.HasOne(b => b.ManufacturerReference).WithOne(m => m.BudgetReference).HasForeignKey<Manufacturer>(x => x.BudgetId).OnDelete(DeleteBehavior.Cascade);
         }
 
     }

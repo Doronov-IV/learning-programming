@@ -7,7 +7,7 @@ namespace MainEntityProject.Controls.Applications
     {
         public async Task Start()
         {
-            await using var context = new OwnedPropertyInheritanceContext(); 
+             
         }
     }
 }

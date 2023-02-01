@@ -146,7 +146,7 @@ namespace MainEntityProject.Migrations
                     b.HasIndex("PriceId")
                         .IsUnique();
 
-                    b.ToTable("MainBattleTank");
+                    b.ToTable("Tanks");
                 });
 
             modelBuilder.Entity("MainEntityProject.Model.Entities.Manufacturer", b =>
@@ -199,14 +199,12 @@ namespace MainEntityProject.Migrations
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.Engine", "ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.Engine", "PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
 
@@ -218,14 +216,12 @@ namespace MainEntityProject.Migrations
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.Gun", "ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.Gun", "PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
 
@@ -237,26 +233,22 @@ namespace MainEntityProject.Migrations
                     b.HasOne("MainEntityProject.Model.Entities.Engine", "EngineReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "EngineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Gun", "GunReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "GunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
                         .WithOne()
                         .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("EngineReference");
 
@@ -272,8 +264,7 @@ namespace MainEntityProject.Migrations
                     b.HasOne("MainEntityProject.Model.Entities.Budget", "BudgetReference")
                         .WithOne("ManufacturerReference")
                         .HasForeignKey("MainEntityProject.Model.Entities.Manufacturer", "BudgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("BudgetReference");
                 });

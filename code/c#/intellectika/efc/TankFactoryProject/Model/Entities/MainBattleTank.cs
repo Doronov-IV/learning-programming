@@ -27,5 +27,33 @@
         public Engine? EngineReference { get; set; }
 
 
+
+        /// <summary>
+        /// Default constructor.
+        /// <br />
+        /// Конструктор по умолчанию.
+        /// </summary>
+        public MainBattleTank()
+        {
+        }
+
+
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public MainBattleTank(string? modelName, int crewCount, Manufacturer? manufactorerReference, Price? priceReference, Gun? gunReference, Engine? engineReference)
+        {
+            ModelName = modelName;
+            CrewCount = crewCount;
+            ManufacturerReference = manufactorerReference;
+            PriceReference = priceReference;
+            GunReference = gunReference;
+            EngineReference = engineReference;
+        }
+
+
     }
 }

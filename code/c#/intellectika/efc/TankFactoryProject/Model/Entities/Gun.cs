@@ -35,5 +35,20 @@
             PriceReference = null;
             ManufacturerReference = null;
         }
+
+
+        /// <summary>
+        /// Parametrized constructor.
+        /// <br />
+        /// Параметризованный конструктор.
+        /// </summary>
+        public Gun(string? modelName, int caliberMillimetres, int lengthInCalibers, Manufacturer? manufacturerReference, Price? priceReference) : base()
+        {
+            ModelName = modelName;
+            CaliberMillimetres = caliberMillimetres;
+            LengthInCalibers = lengthInCalibers;
+            ManufacturerReference = manufacturerReference;
+            PriceReference = priceReference;
+        }
     }
 }
