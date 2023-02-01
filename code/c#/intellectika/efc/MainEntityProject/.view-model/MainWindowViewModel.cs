@@ -44,22 +44,6 @@ namespace MainEntityProject.ViewModel
 
 
 
-        /// <summary>
-        /// A set of flags providing view with connection info;
-        /// <br />
-        /// Набор флагов для информирования вида;
-        /// </summary>
-        public CustomConnectionStatus ConnectionStatus
-        {
-            get { return _connectionStatus; }
-            set
-            {
-                _connectionStatus = value;
-            }
-        }
-
-
-
 
         ///////////////////////////////////////////////////////////////////////////////////////
         /// ↓                               ↓   FIELDS   ↓                             ↓    ///
@@ -72,8 +56,6 @@ namespace MainEntityProject.ViewModel
 
 
 
-        /// <inheritdoc cref="ConnectionStatus"/>
-        private CustomConnectionStatus _connectionStatus;
 
 
         private DbContextOptions<CurrentDatabaseContext> _connectionOptions;
@@ -158,7 +140,6 @@ namespace MainEntityProject.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            _connectionStatus = new();
             _serverName = string.Empty;
 
             FillTablesCommand = new(OnDoFillTablesClickAsync);

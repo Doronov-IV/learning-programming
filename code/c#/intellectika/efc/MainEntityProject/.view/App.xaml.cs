@@ -23,7 +23,6 @@ global using Prism.Commands;
 
 global using Tools.ClassExtensions;
 global using Tools.Collections;
-global using Tools.Connection;
 global using Tools.Toolbox;
 
 namespace EntityProject

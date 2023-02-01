@@ -30,6 +30,10 @@ namespace ShootingRange
 
             var logService = provider.GetService<Logger>();
 
+            var eeeeeee = provider.GetServices(typeof(WhiteConsoleLogService)).FirstOrDefault() as WhiteConsoleLogService;
+
+            eeeeeee.Write("aaaaaaaaaaaaaaaaaaaa");
+
             logService?.Log("Hello world");
 
         }
