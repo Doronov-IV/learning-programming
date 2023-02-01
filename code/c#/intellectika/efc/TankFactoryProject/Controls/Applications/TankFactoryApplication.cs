@@ -1,7 +1,7 @@
-﻿using TankFactory.Controls.Common;
-using TankFactory.Model.Context;
+﻿using MainEntityProject.Controls.Common;
+using MainEntityProject.Model.Context;
 
-namespace TankFactory.Controls.Applications
+namespace MainEntityProject.Controls.Applications
 {
     public class TankFactoryApplication : IApplication
     {

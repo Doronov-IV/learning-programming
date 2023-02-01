@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TankFactory.Model.Context;
+using MainEntityProject.Model.Context;
 
 #nullable disable
 
-namespace TankFactoryProject.Migrations
+namespace MainEntityProject.Migrations
 {
     [DbContext(typeof(VehicleDatabaseContext))]
     partial class VehicleDatabaseContextModelSnapshot : ModelSnapshot

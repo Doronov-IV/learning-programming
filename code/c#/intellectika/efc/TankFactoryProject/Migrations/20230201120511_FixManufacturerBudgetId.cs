@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace TankFactoryProject.Migrations
+namespace MainEntityProject.Migrations
 {
     /// <inheritdoc />
     public partial class FixManufacturerBudgetId : Migration

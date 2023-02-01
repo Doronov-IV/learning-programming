@@ -1,4 +1,4 @@
-﻿namespace TankFactory.Controls.Common
+﻿namespace MainEntityProject.Controls.Common
 {
     public interface IApplication
     {

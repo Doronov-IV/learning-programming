@@ -1,4 +1,4 @@
-﻿namespace TankFactory.Model.Entities
+﻿namespace MainEntityProject.Model.Entities
 {
     public class Budget
     {

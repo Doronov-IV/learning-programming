@@ -1,7 +1,7 @@
-﻿using TankFactory.Model.Context;
-using TankFactory.Controls.Common;
+﻿using MainEntityProject.Model.Context;
+using MainEntityProject.Controls.Common;
 
-namespace TankFactory.Controls.Applications
+namespace MainEntityProject.Controls.Applications
 {
     public class OwnedPropertyInheritanceApplication : IApplication
     {

@@ -17,10 +17,10 @@ global using Microsoft.Extensions;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 
-global using TankFactory.Model.Entities;
-using TankFactory.Controls.Applications;
+global using MainEntityProject.Model.Entities;
+global using MainEntityProject.Controls.Applications;
 
-namespace TankFactory.Controls.Common
+namespace MainEntityProject.Controls.Common
 {
     public static class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace TankFactory.Model.Configs
+﻿namespace MainEntityProject.Model.Configs
 {
     public class ManufacturerConfiguration : IEntityTypeConfiguration<Manufacturer>
     {

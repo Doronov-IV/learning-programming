@@ -1,6 +1,6 @@
-﻿using TankFactory.Model.Configs;
+﻿using MainEntityProject.Model.Configs;
 
-namespace TankFactory.Model.Context
+namespace MainEntityProject.Model.Context
 {
     public class OwnedPropertyInheritanceContext : DbContext
     {
