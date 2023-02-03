@@ -15,7 +15,10 @@
             manufacturerBuilder.Property(m => m.Name);
             manufacturerBuilder.Property(m => m.CountryName);
 
-            manufacturerBuilder.HasOne(m => m.BudgetReference).WithOne(x => x.ManufacturerReference).HasForeignKey<Manufacturer>(m => m.BudgetId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
+            
+
+            manufacturerBuilder.HasOne(m => m.BudgetReference).WithOne(x => x.ManufacturerReference).HasForeignKey<Manufacturer>(m => m.BudgetId)
+                .OnDelete(DeleteBehavior.Cascade).IsRequired(false);
 
         }
 

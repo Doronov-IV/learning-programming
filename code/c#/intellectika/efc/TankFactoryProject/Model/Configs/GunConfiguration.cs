@@ -15,8 +15,8 @@
             gunBuilder.Property(g => g.CaliberMillimetres);
             gunBuilder.Property(g => g.LengthInCalibers);
 
-            gunBuilder.HasOne<Price>(e => e.PriceReference).WithOne().HasForeignKey<Gun>(g => g.PriceId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
-            gunBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference).WithOne().HasForeignKey<Gun>(g => g.ManufacturerId).OnDelete(DeleteBehavior.NoAction).IsRequired(false);
+            gunBuilder.HasOne<Price>(e => e.PriceReference).WithMany().HasForeignKey(g => g.PriceId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
+            gunBuilder.HasOne<Manufacturer>(e => e.ManufacturerReference).WithMany().HasForeignKey(g => g.ManufacturerId).OnDelete(DeleteBehavior.NoAction).IsRequired(false);
         }
 
     }

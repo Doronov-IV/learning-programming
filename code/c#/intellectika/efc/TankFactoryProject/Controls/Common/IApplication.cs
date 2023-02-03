@@ -4,5 +4,7 @@
     {
         public Task Start();
 
+        public IServiceProvider GetProvider();
+
     }
 }

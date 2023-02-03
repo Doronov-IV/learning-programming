@@ -4,6 +4,7 @@ using MainEntityProject.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MainEntityProject.Migrations
 {
     [DbContext(typeof(VehicleDatabaseContext))]
-    partial class VehicleDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230203132210_AddTanksReferencesToUnits")]
+    partial class AddTanksReferencesToUnits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,13 +67,17 @@ namespace MainEntityProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerId");
+                    b.HasIndex("ManufacturerId")
+                        .IsUnique()
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
                     b.HasIndex("ModelName")
                         .IsUnique()
                         .HasFilter("[ModelName] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Engines");
                 });
@@ -100,13 +107,17 @@ namespace MainEntityProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerId");
+                    b.HasIndex("ManufacturerId")
+                        .IsUnique()
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
                     b.HasIndex("ModelName")
                         .IsUnique()
                         .HasFilter("[ModelName] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Guns");
                 });
@@ -143,13 +154,17 @@ namespace MainEntityProject.Migrations
 
                     b.HasIndex("GunId");
 
-                    b.HasIndex("ManufacturerId");
+                    b.HasIndex("ManufacturerId")
+                        .IsUnique()
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
                     b.HasIndex("ModelName")
                         .IsUnique()
                         .HasFilter("[ModelName] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Tanks");
                 });
@@ -203,13 +218,13 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.Engine", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Engine", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Engine", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
@@ -220,13 +235,13 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.Gun", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Gun", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Gun", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
@@ -237,23 +252,23 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.MainBattleTank", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Engine", "EngineReference")
-                        .WithMany()
+                        .WithMany("Tanks")
                         .HasForeignKey("EngineId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Gun", "GunReference")
-                        .WithMany()
+                        .WithMany("Tanks")
                         .HasForeignKey("GunId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("EngineReference");
@@ -278,6 +293,16 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.Budget", b =>
                 {
                     b.Navigation("ManufacturerReference");
+                });
+
+            modelBuilder.Entity("MainEntityProject.Model.Entities.Engine", b =>
+                {
+                    b.Navigation("Tanks");
+                });
+
+            modelBuilder.Entity("MainEntityProject.Model.Entities.Gun", b =>
+                {
+                    b.Navigation("Tanks");
                 });
 #pragma warning restore 612, 618
         }

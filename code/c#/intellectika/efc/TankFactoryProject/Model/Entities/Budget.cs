@@ -9,8 +9,26 @@
 
         public string Currency { get; set; } = null!;
 
-
         public Manufacturer? ManufacturerReference { get; set; }
+
+
+
+
+        /// <summary>
+        /// Equals method override.
+        /// <br />
+        /// Переопределение метода "Equals".
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj is Budget)
+            {
+                var bdgRef = obj as Budget;
+                return bdgRef.Value.Equals(this.Value) && bdgRef.Currency.Equals(this.Currency);
+            }
+
+            else return base.Equals(obj);
+        }
 
 
 

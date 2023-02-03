@@ -1,4 +1,5 @@
 ﻿using MainEntityProject.Model.Configs;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace MainEntityProject.Model.Context
 {

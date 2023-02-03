@@ -9,5 +9,10 @@ namespace MainEntityProject.Controls.Applications
         {
              
         }
+
+        public IServiceProvider GetProvider()
+        {
+            return new ServiceCollection().BuildServiceProvider();
+        }
     }
 }

@@ -10,6 +10,25 @@
         public string Currency { get; set; } = null!;
 
 
+
+        /// <summary>
+        /// Equals method override.
+        /// <br />
+        /// Переопределение метода "Equals".
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj is Price)
+            {
+                var prcRef = obj as Price;
+                return prcRef.Value.Equals(this.Value) && prcRef.Currency.Equals(this.Currency);
+            }
+
+            else return base.Equals(obj);
+        }
+
+
+
         /// <summary>
         /// Default constructor.
         /// <br />

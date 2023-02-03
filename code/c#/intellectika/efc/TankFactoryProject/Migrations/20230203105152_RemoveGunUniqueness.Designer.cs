@@ -4,6 +4,7 @@ using MainEntityProject.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MainEntityProject.Migrations
 {
     [DbContext(typeof(VehicleDatabaseContext))]
-    partial class VehicleDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230203105152_RemoveGunUniqueness")]
+    partial class RemoveGunUniqueness
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,20 +60,20 @@ namespace MainEntityProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModelName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PriceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerId");
-
-                    b.HasIndex("ModelName")
+                    b.HasIndex("ManufacturerId")
                         .IsUnique()
-                        .HasFilter("[ModelName] IS NOT NULL");
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Engines");
                 });
@@ -93,20 +96,20 @@ namespace MainEntityProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModelName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PriceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerId");
-
-                    b.HasIndex("ModelName")
+                    b.HasIndex("ManufacturerId")
                         .IsUnique()
-                        .HasFilter("[ModelName] IS NOT NULL");
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Guns");
                 });
@@ -139,17 +142,25 @@ namespace MainEntityProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EngineId");
+                    b.HasIndex("EngineId")
+                        .IsUnique()
+                        .HasFilter("[EngineId] IS NOT NULL");
 
-                    b.HasIndex("GunId");
+                    b.HasIndex("GunId")
+                        .IsUnique()
+                        .HasFilter("[GunId] IS NOT NULL");
 
-                    b.HasIndex("ManufacturerId");
+                    b.HasIndex("ManufacturerId")
+                        .IsUnique()
+                        .HasFilter("[ManufacturerId] IS NOT NULL");
 
                     b.HasIndex("ModelName")
                         .IsUnique()
                         .HasFilter("[ModelName] IS NOT NULL");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("PriceId")
+                        .IsUnique()
+                        .HasFilter("[PriceId] IS NOT NULL");
 
                     b.ToTable("Tanks");
                 });
@@ -203,13 +214,13 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.Engine", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Engine", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Engine", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
@@ -220,13 +231,13 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.Gun", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Gun", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.Gun", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ManufacturerReference");
@@ -237,23 +248,23 @@ namespace MainEntityProject.Migrations
             modelBuilder.Entity("MainEntityProject.Model.Entities.MainBattleTank", b =>
                 {
                     b.HasOne("MainEntityProject.Model.Entities.Engine", "EngineReference")
-                        .WithMany()
-                        .HasForeignKey("EngineId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "EngineId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Gun", "GunReference")
-                        .WithMany()
-                        .HasForeignKey("GunId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "GunId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Manufacturer", "ManufacturerReference")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "ManufacturerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("MainEntityProject.Model.Entities.Price", "PriceReference")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
+                        .WithOne()
+                        .HasForeignKey("MainEntityProject.Model.Entities.MainBattleTank", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("EngineReference");

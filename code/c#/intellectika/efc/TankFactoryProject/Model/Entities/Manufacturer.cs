@@ -9,9 +9,29 @@
 
         public string? CountryName { get; set; }
 
-        public int BudgetId { get; set; }
+        public int? BudgetId { get; set; }
 
         public Budget? BudgetReference { get; set; }
+
+
+
+
+        /// <summary>
+        /// Equals method override.
+        /// <br />
+        /// Переопределение метода "Equals".
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj is Manufacturer)
+            {
+                var manufacturerRef = obj as Manufacturer;
+                return manufacturerRef.Name.Equals(this.Name);
+            }
+
+            else return base.Equals(obj);
+        }
+
 
 
 
@@ -24,7 +44,7 @@
         {
             Name = null;
             CountryName = null;
-            BudgetReference = null;
+            BudgetReference = new();
         }
 
 
