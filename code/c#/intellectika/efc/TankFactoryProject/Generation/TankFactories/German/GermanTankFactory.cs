@@ -43,7 +43,7 @@ namespace MainEntityProject.Generation.TankFactories
                 engineReference: new Engine("V46", 780, zavod, new Price(168_000, "₽")),
                 gunReference: new Gun("2A46M", 125, 48, zavod, null)
             );
-            
+
         }
 
 

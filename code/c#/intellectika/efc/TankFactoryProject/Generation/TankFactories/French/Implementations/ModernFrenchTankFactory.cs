@@ -1,35 +1,15 @@
-﻿namespace MainEntityProject.Generation.TankFactories
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MainEntityProject.Generation.TankFactories.Implementations
 {
-    public class FrenchTankFactory : ITankFactory
+    public class ModernFrenchTankFactory : ITankFactory
     {
 
-
-        #region API
-
-
-
-        public MainBattleTank CreateImportedTank()
-        {
-            return CreateSK105();
-        }
-
         public MainBattleTank CreateNativeTank()
-        {
-            return CreateLeclercS2();
-        }
-
-
-
-        #endregion API
-
-
-
-
-        #region Logic
-
-
-
-        public MainBattleTank CreateLeclercS2()
         {
             var gunManufacturer = new Manufacturer("Nexter Systems", "France", null);
             var engineManufacturer = new Manufacturer("Wärtsilä", "Finland", null);
@@ -46,8 +26,7 @@
         }
 
 
-
-        public MainBattleTank CreateSK105()
+        public MainBattleTank CreateImportedTank()
         {
             var engineManufacturer = new Manufacturer("Steyr", "Austria", null);
             var gunManufacturer = new Manufacturer("arsenal de Bourges (ABS)", "France", null);
@@ -61,30 +40,6 @@
                 gunReference: new Gun("CN 105 G1", 105, 44.019047619, gunManufacturer, null)
             );
         }
-
-
-
-        #endregion Logic
-
-
-
-
-        #region Construction
-
-
-
-        /// <summary>
-        /// Default constructor.
-        /// <br />
-        /// Конструктор по умолчанию.
-        /// </summary>
-        public FrenchTankFactory()
-        {
-        }
-
-
-
-        #endregion Construction
 
     }
 }
