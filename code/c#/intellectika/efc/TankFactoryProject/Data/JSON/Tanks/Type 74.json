@@ -1,57 +1,56 @@
 {
   "ModelName": "Type 74",
-  "ManufacturerId": null,
-  "PriceId": null,
+  "ManufacturerId": 252,
+  "PriceId": 175,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Watervliet Arsenal",
-    "CountryName": "U.S.A.",
+    "Name": null,
+    "CountryName": null,
     "BudgetId": null,
-    "BudgetReference": null
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A",
+      "ManufacturerReference": null
+    }
   },
-  "PriceReference": {
-    "Id": 0,
-    "Value": 375000000,
-    "Currency": "¥"
-  },
-  "Id": 0,
+  "PriceReference": null,
+  "Id": 145,
   "CrewCount": 4,
-  "GunId": null,
-  "EngineId": null,
+  "GunId": 137,
+  "EngineId": 138,
   "GunReference": {
-    "ModelName": "M68",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
-    "ManufacturerReference": {
-      "Id": 0,
-      "Name": "Watervliet Arsenal",
-      "CountryName": "U.S.A.",
-      "BudgetId": null,
-      "BudgetReference": null
-    },
+    "ManufacturerReference": null,
     "PriceReference": null,
     "Id": null,
-    "CaliberMillimetres": 105,
-    "LengthInCalibers": 52.8571428571
+    "CaliberMillimetres": 0,
+    "LengthInCalibers": 0.0
   },
   "EngineReference": {
-    "ModelName": "Mitsubishi 10ZF Model 21",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Mitsubishi Heavy Industries",
-      "CountryName": "Japan",
+      "Name": null,
+      "CountryName": null,
       "BudgetId": null,
       "BudgetReference": {
         "Id": 0,
-        "Value": 3860000000,
-        "Currency": "¥",
+        "Value": 0,
+        "Currency": "N/A",
         "ManufacturerReference": null
       }
     },
-    "PriceReference": null,
+    "PriceReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A"
+    },
     "Id": 0,
-    "HorsePowers": 750
+    "HorsePowers": 0
   }
 }

@@ -1,56 +1,56 @@
 {
   "ModelName": "T-72M",
-  "ManufacturerId": null,
-  "PriceId": null,
+  "ManufacturerId": 249,
+  "PriceId": 174,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Uralgovnozavod",
-    "CountryName": "U.S.S.R",
+    "Name": null,
+    "CountryName": null,
     "BudgetId": null,
-    "BudgetReference": null
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A",
+      "ManufacturerReference": null
+    }
   },
-  "PriceReference": {
-    "Id": 0,
-    "Value": 1000000,
-    "Currency": "$"
-  },
-  "Id": 0,
+  "PriceReference": null,
+  "Id": 142,
   "CrewCount": 3,
-  "GunId": null,
-  "EngineId": null,
+  "GunId": 135,
+  "EngineId": 136,
   "GunReference": {
-    "ModelName": "2A46M",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
-    "ManufacturerReference": {
-      "Id": 0,
-      "Name": "Uralgovnozavod",
-      "CountryName": "U.S.S.R",
-      "BudgetId": null,
-      "BudgetReference": null
-    },
+    "ManufacturerReference": null,
     "PriceReference": null,
     "Id": null,
-    "CaliberMillimetres": 125,
-    "LengthInCalibers": 48.0
+    "CaliberMillimetres": 0,
+    "LengthInCalibers": 0.0
   },
   "EngineReference": {
-    "ModelName": "V46",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Uralgovnozavod",
-      "CountryName": "U.S.S.R",
+      "Name": null,
+      "CountryName": null,
       "BudgetId": null,
-      "BudgetReference": null
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 0,
+        "Currency": "N/A",
+        "ManufacturerReference": null
+      }
     },
     "PriceReference": {
       "Id": 0,
-      "Value": 168000,
-      "Currency": "₽"
+      "Value": 0,
+      "Currency": "N/A"
     },
     "Id": 0,
-    "HorsePowers": 780
+    "HorsePowers": 0
   }
 }

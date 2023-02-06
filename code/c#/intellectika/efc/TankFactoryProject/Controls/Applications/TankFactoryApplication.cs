@@ -26,11 +26,12 @@ namespace MainEntityProject.Controls.Applications
 
             DatabaseDialer visitor = new(this);
 
-            foreach (var item in list)
+            var context = GetProvider().GetRequiredService<VehicleDatabaseContext>();
+
+            Parallel.ForEach(context.Tanks, (tank) =>
             {
-                await TankJsonSerializer.Serialize(item.CreateNativeTank());
-                await TankJsonSerializer.Serialize(item.CreateImportedTank());
-            }
+                TankJsonSerializer.Serialize(tank);
+            });
         }
 
 

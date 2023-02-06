@@ -1,71 +1,56 @@
 {
   "ModelName": "Leopard 2A5",
-  "ManufacturerId": null,
-  "PriceId": null,
+  "ManufacturerId": 247,
+  "PriceId": 172,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Rheinmetall",
-    "CountryName": "Germany",
+    "Name": null,
+    "CountryName": null,
     "BudgetId": null,
     "BudgetReference": {
       "Id": 0,
-      "Value": 850000000,
-      "Currency": "€",
+      "Value": 0,
+      "Currency": "N/A",
       "ManufacturerReference": null
     }
   },
-  "PriceReference": {
-    "Id": 0,
-    "Value": 5600000,
-    "Currency": "$"
-  },
-  "Id": 0,
+  "PriceReference": null,
+  "Id": 141,
   "CrewCount": 4,
-  "GunId": null,
-  "EngineId": null,
+  "GunId": 134,
+  "EngineId": 135,
   "GunReference": {
-    "ModelName": "Rh120 L/44",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
-    "ManufacturerReference": {
-      "Id": 0,
-      "Name": "Rheinmetall",
-      "CountryName": "Germany",
-      "BudgetId": null,
-      "BudgetReference": {
-        "Id": 0,
-        "Value": 850000000,
-        "Currency": "€",
-        "ManufacturerReference": null
-      }
-    },
+    "ManufacturerReference": null,
     "PriceReference": null,
     "Id": null,
-    "CaliberMillimetres": 120,
-    "LengthInCalibers": 44.0
+    "CaliberMillimetres": 0,
+    "LengthInCalibers": 0.0
   },
   "EngineReference": {
-    "ModelName": "MTU MB 873 Ka-501",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Renk",
-      "CountryName": "Germany",
+      "Name": null,
+      "CountryName": null,
       "BudgetId": null,
       "BudgetReference": {
         "Id": 0,
-        "Value": 82700000,
-        "Currency": "€",
+        "Value": 0,
+        "Currency": "N/A",
         "ManufacturerReference": null
       }
     },
     "PriceReference": {
       "Id": 0,
-      "Value": 650000,
-      "Currency": "€"
+      "Value": 0,
+      "Currency": "N/A"
     },
     "Id": 0,
-    "HorsePowers": 1500
+    "HorsePowers": 0
   }
 }

@@ -1,48 +1,56 @@
 {
   "ModelName": "Strv 103A",
-  "ManufacturerId": null,
+  "ManufacturerId": 250,
   "PriceId": null,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Bofors",
-    "CountryName": "Sweden",
+    "Name": null,
+    "CountryName": null,
     "BudgetId": null,
-    "BudgetReference": null
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A",
+      "ManufacturerReference": null
+    }
   },
   "PriceReference": null,
-  "Id": 0,
+  "Id": 143,
   "CrewCount": 3,
-  "GunId": null,
-  "EngineId": null,
+  "GunId": 136,
+  "EngineId": 137,
   "GunReference": {
-    "ModelName": "L74 10,5 cm L/62",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
-    "ManufacturerReference": {
-      "Id": 0,
-      "Name": "Bofors",
-      "CountryName": "Sweden",
-      "BudgetId": null,
-      "BudgetReference": null
-    },
+    "ManufacturerReference": null,
     "PriceReference": null,
     "Id": null,
-    "CaliberMillimetres": 105,
-    "LengthInCalibers": 62.0
+    "CaliberMillimetres": 0,
+    "LengthInCalibers": 0.0
   },
   "EngineReference": {
-    "ModelName": "Detroit diesel 6V53T",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Detroit Diesel Corporation",
-      "CountryName": "U.S.A.",
+      "Name": null,
+      "CountryName": null,
       "BudgetId": null,
-      "BudgetReference": null
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 0,
+        "Currency": "N/A",
+        "ManufacturerReference": null
+      }
     },
-    "PriceReference": null,
+    "PriceReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A"
+    },
     "Id": 0,
-    "HorsePowers": 290
+    "HorsePowers": 0
   }
 }

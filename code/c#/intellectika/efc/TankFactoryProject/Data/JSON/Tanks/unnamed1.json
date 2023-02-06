@@ -1,48 +1,56 @@
 {
   "ModelName": "SK-105 \"Kürassier\"",
-  "ManufacturerId": null,
+  "ManufacturerId": 246,
   "PriceId": null,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Steyr",
-    "CountryName": "Austria",
+    "Name": null,
+    "CountryName": null,
     "BudgetId": null,
-    "BudgetReference": null
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A",
+      "ManufacturerReference": null
+    }
   },
   "PriceReference": null,
-  "Id": 0,
+  "Id": 140,
   "CrewCount": 4,
-  "GunId": null,
-  "EngineId": null,
+  "GunId": 133,
+  "EngineId": 134,
   "GunReference": {
-    "ModelName": "CN 105 G1",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
-    "ManufacturerReference": {
-      "Id": 0,
-      "Name": "arsenal de Bourges (ABS)",
-      "CountryName": "France",
-      "BudgetId": null,
-      "BudgetReference": null
-    },
+    "ManufacturerReference": null,
     "PriceReference": null,
     "Id": null,
-    "CaliberMillimetres": 105,
-    "LengthInCalibers": 44.019047619
+    "CaliberMillimetres": 0,
+    "LengthInCalibers": 0.0
   },
   "EngineReference": {
-    "ModelName": "Steyr 7FA",
+    "ModelName": null,
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Steyr",
-      "CountryName": "Austria",
+      "Name": null,
+      "CountryName": null,
       "BudgetId": null,
-      "BudgetReference": null
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 0,
+        "Currency": "N/A",
+        "ManufacturerReference": null
+      }
     },
-    "PriceReference": null,
+    "PriceReference": {
+      "Id": 0,
+      "Value": 0,
+      "Currency": "N/A"
+    },
     "Id": 0,
-    "HorsePowers": 320
+    "HorsePowers": 0
   }
 }
