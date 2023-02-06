@@ -1,0 +1,52 @@
+{
+  "ModelName": "Leclerc S1",
+  "ManufacturerId": null,
+  "PriceId": null,
+  "ManufacturerReference": {
+    "Id": 0,
+    "Name": "Nexter Systems",
+    "CountryName": "France",
+    "BudgetId": null,
+    "BudgetReference": null
+  },
+  "PriceReference": {
+    "Id": 0,
+    "Value": 16000000,
+    "Currency": "€"
+  },
+  "Id": 0,
+  "CrewCount": 3,
+  "GunId": null,
+  "EngineId": null,
+  "GunReference": {
+    "ModelName": "CN120-26",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Nexter Systems",
+      "CountryName": "France",
+      "BudgetId": null,
+      "BudgetReference": null
+    },
+    "PriceReference": null,
+    "Id": null,
+    "CaliberMillimetres": 120,
+    "LengthInCalibers": 52.0
+  },
+  "EngineReference": {
+    "ModelName": "V8X SACM",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Wärtsilä",
+      "CountryName": "Finland",
+      "BudgetId": null,
+      "BudgetReference": null
+    },
+    "PriceReference": null,
+    "Id": 0,
+    "HorsePowers": 1500
+  }
+}

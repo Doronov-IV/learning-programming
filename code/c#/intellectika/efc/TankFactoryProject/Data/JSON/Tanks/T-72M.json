@@ -1,0 +1,56 @@
+{
+  "ModelName": "T-72M",
+  "ManufacturerId": null,
+  "PriceId": null,
+  "ManufacturerReference": {
+    "Id": 0,
+    "Name": "Uralgovnozavod",
+    "CountryName": "U.S.S.R",
+    "BudgetId": null,
+    "BudgetReference": null
+  },
+  "PriceReference": {
+    "Id": 0,
+    "Value": 1000000,
+    "Currency": "$"
+  },
+  "Id": 0,
+  "CrewCount": 3,
+  "GunId": null,
+  "EngineId": null,
+  "GunReference": {
+    "ModelName": "2A46M",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Uralgovnozavod",
+      "CountryName": "U.S.S.R",
+      "BudgetId": null,
+      "BudgetReference": null
+    },
+    "PriceReference": null,
+    "Id": null,
+    "CaliberMillimetres": 125,
+    "LengthInCalibers": 48.0
+  },
+  "EngineReference": {
+    "ModelName": "V46",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Uralgovnozavod",
+      "CountryName": "U.S.S.R",
+      "BudgetId": null,
+      "BudgetReference": null
+    },
+    "PriceReference": {
+      "Id": 0,
+      "Value": 168000,
+      "Currency": "₽"
+    },
+    "Id": 0,
+    "HorsePowers": 780
+  }
+}

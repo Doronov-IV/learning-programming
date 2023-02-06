@@ -1,0 +1,71 @@
+{
+  "ModelName": "Strv 122A",
+  "ManufacturerId": null,
+  "PriceId": null,
+  "ManufacturerReference": {
+    "Id": 0,
+    "Name": "Rheinmetall",
+    "CountryName": "Germany",
+    "BudgetId": null,
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 850000000,
+      "Currency": "€",
+      "ManufacturerReference": null
+    }
+  },
+  "PriceReference": {
+    "Id": 0,
+    "Value": 5600000,
+    "Currency": "$"
+  },
+  "Id": 0,
+  "CrewCount": 4,
+  "GunId": null,
+  "EngineId": null,
+  "GunReference": {
+    "ModelName": "Rh120 L/44",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Rheinmetall",
+      "CountryName": "Germany",
+      "BudgetId": null,
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 850000000,
+        "Currency": "€",
+        "ManufacturerReference": null
+      }
+    },
+    "PriceReference": null,
+    "Id": null,
+    "CaliberMillimetres": 120,
+    "LengthInCalibers": 44.0
+  },
+  "EngineReference": {
+    "ModelName": "MTU MB 873 Ka-501",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Renk",
+      "CountryName": "Germany",
+      "BudgetId": null,
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 82700000,
+        "Currency": "€",
+        "ManufacturerReference": null
+      }
+    },
+    "PriceReference": {
+      "Id": 0,
+      "Value": 650000,
+      "Currency": "€"
+    },
+    "Id": 0,
+    "HorsePowers": 1500
+  }
+}

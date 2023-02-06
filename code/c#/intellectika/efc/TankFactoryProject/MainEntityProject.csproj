@@ -34,8 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Binary\" />
+    <Folder Include="Data\JSON\Tanks\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Model\Generated\" />
   </ItemGroup>
 
 </Project>

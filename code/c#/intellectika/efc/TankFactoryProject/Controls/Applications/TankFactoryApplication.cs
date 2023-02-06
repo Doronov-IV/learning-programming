@@ -3,6 +3,7 @@ using MainEntityProject.Controls.Common;
 using MainEntityProject.Generation;
 using MainEntityProject.Generation.TankFactories;
 using MainEntityProject.LocalService;
+using MainEntityProject.Data.JSON;
 
 namespace MainEntityProject.Controls.Applications
 {
@@ -27,8 +28,8 @@ namespace MainEntityProject.Controls.Applications
 
             foreach (var item in list)
             {
-                await visitor.AddTank(item.CreateNativeTank());
-                await visitor.AddTank(item.CreateImportedTank());
+                await TankJsonSerializer.Serialize(item.CreateNativeTank());
+                await TankJsonSerializer.Serialize(item.CreateImportedTank());
             }
         }
 
