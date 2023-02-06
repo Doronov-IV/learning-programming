@@ -1,0 +1,67 @@
+{
+  "ModelName": "Type 90 tank",
+  "ManufacturerId": null,
+  "PriceId": null,
+  "ManufacturerReference": {
+    "Id": 0,
+    "Name": "Mitsubishi Heavy Industries",
+    "CountryName": "Japan",
+    "BudgetId": null,
+    "BudgetReference": {
+      "Id": 0,
+      "Value": 3860000000,
+      "Currency": "¥",
+      "ManufacturerReference": null
+    }
+  },
+  "PriceReference": {
+    "Id": 0,
+    "Value": 790000000,
+    "Currency": "¥"
+  },
+  "Id": 0,
+  "CrewCount": 3,
+  "GunId": null,
+  "EngineId": null,
+  "GunReference": {
+    "ModelName": "Rh120 L/44",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Rheinmetall",
+      "CountryName": "Germany",
+      "BudgetId": null,
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 850000000,
+        "Currency": "€",
+        "ManufacturerReference": null
+      }
+    },
+    "PriceReference": null,
+    "Id": null,
+    "CaliberMillimetres": 120,
+    "LengthInCalibers": 44.0
+  },
+  "EngineReference": {
+    "ModelName": "Mitsubishi 10ZG",
+    "ManufacturerId": null,
+    "PriceId": null,
+    "ManufacturerReference": {
+      "Id": 0,
+      "Name": "Mitsubishi Heavy Industries",
+      "CountryName": "Japan",
+      "BudgetId": null,
+      "BudgetReference": {
+        "Id": 0,
+        "Value": 3860000000,
+        "Currency": "¥",
+        "ManufacturerReference": null
+      }
+    },
+    "PriceReference": null,
+    "Id": 0,
+    "HorsePowers": 1500
+  }
+}

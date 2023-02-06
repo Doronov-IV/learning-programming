@@ -19,25 +19,19 @@
 
             if (!File.Exists(jsonFileName))
             {
-                lock (locker)
+                string jsonString = JsonConvert.SerializeObject(vehicle, Formatting.Indented);
+
+                try
                 {
-                    string jsonString = JsonConvert.SerializeObject(vehicle, Formatting.Indented);
-
-                    try
-                    {
-                        Task.Run(() =>
-                        {
-                            File.Create(jsonFileName);
-                        });
-                    }
-                    catch (System.IO.IOException ex)
-                    {
-                        jsonFileName = alternativeJsonFileName;
-                        fileId++;
-                    }
-
-                    File.WriteAllTextAsync(jsonFileName, jsonString);
+                    using var fs = File.Create(jsonFileName);
                 }
+                catch (System.IO.IOException ex)
+                {
+                    jsonFileName = alternativeJsonFileName;
+                    fileId++;
+                }
+
+                await File.WriteAllTextAsync(jsonFileName, jsonString, new CancellationTokenSource(10000).Token);
             }
         }
 
@@ -50,12 +44,9 @@
 
             if (File.Exists(jsonFileName))
             {
-                lock (locker)
-                {
-                    string jsonString = File.ReadAllText(jsonFileName);
+                string jsonString = await File.ReadAllTextAsync(jsonFileName);
 
-                    vehicle = JsonConvert.DeserializeObject<MainBattleTank>(jsonString);
-                }
+                vehicle = JsonConvert.DeserializeObject<MainBattleTank>(jsonString);
             }
             else throw new FileNotFoundException($@"[Manual] file {modelName} was not found in the json directory.");
 

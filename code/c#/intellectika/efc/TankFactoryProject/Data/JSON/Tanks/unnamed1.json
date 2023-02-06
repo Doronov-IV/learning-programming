@@ -1,48 +1,48 @@
 {
-  "ModelName": "Strv 103A",
+  "ModelName": "SK-105 \"Kürassier\"",
   "ManufacturerId": null,
   "PriceId": null,
   "ManufacturerReference": {
     "Id": 0,
-    "Name": "Bofors",
-    "CountryName": "Sweden",
+    "Name": "Steyr",
+    "CountryName": "Austria",
     "BudgetId": null,
     "BudgetReference": null
   },
   "PriceReference": null,
   "Id": 0,
-  "CrewCount": 3,
+  "CrewCount": 4,
   "GunId": null,
   "EngineId": null,
   "GunReference": {
-    "ModelName": "L74 10,5 cm L/62",
+    "ModelName": "CN 105 G1",
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Bofors",
-      "CountryName": "Sweden",
+      "Name": "arsenal de Bourges (ABS)",
+      "CountryName": "France",
       "BudgetId": null,
       "BudgetReference": null
     },
     "PriceReference": null,
     "Id": null,
     "CaliberMillimetres": 105,
-    "LengthInCalibers": 62.0
+    "LengthInCalibers": 44.019047619
   },
   "EngineReference": {
-    "ModelName": "Detroit diesel 6V53T",
+    "ModelName": "Steyr 7FA",
     "ManufacturerId": null,
     "PriceId": null,
     "ManufacturerReference": {
       "Id": 0,
-      "Name": "Detroit Diesel Corporation",
-      "CountryName": "U.S.A.",
+      "Name": "Steyr",
+      "CountryName": "Austria",
       "BudgetId": null,
       "BudgetReference": null
     },
     "PriceReference": null,
     "Id": 0,
-    "HorsePowers": 290
+    "HorsePowers": 320
   }
 }
