@@ -6,13 +6,13 @@ namespace MainEntityProject.LocalService
     {
 
         private MainBattleTank vehicle;
-        private MainBattleTank duplicate;
+        private MainBattleTank vehicleDuplicate;
         private VehicleDatabaseContext context;
 
 
         public async Task Start()
         {
-            await StartAssemblyChain(vehicle, duplicate);
+            await StartAssemblyChain(vehicle, vehicleDuplicate);
         }
 
 
@@ -239,7 +239,7 @@ namespace MainEntityProject.LocalService
         public TankReceptionChain(MainBattleTank vehicle, MainBattleTank duplicate, VehicleDatabaseContext context)
         {
             this.vehicle = vehicle;
-            this.duplicate = duplicate;
+            this.vehicleDuplicate = duplicate;
             this.context = context;
         }
 
