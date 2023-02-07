@@ -221,7 +221,11 @@ namespace MainEntityProject.LocalService
             if (existingTank is null)
             { 
                 await context.Tanks.AddAsync(duplicate);
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch { /* Mock */ }
             }
         }
 

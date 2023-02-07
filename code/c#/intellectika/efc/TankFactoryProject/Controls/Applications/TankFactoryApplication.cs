@@ -15,7 +15,7 @@ namespace MainEntityProject.Controls.Applications
 
         public async Task Start()
         {
-
+            /*
             List<ITankFactory> list = new()
             {
                 new FrenchTankFactory(),
@@ -32,6 +32,17 @@ namespace MainEntityProject.Controls.Applications
             {
                 TankJsonSerializer.Serialize(tank);
             });
+            */
+
+            TankGenerator gen = new();
+            DatabaseDialer visitor = new(this);
+
+            for(int i = 0; i < 50; i++)
+            {
+                var vehicle = await gen.GetNext();
+                await visitor.AddTank(vehicle);
+            }
+
         }
 
 

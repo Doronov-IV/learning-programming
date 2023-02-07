@@ -1,0 +1,40 @@
+Taurus
+Minataur
+Cyclone MD
+Scorpion NN
+M1A3E5 Abrams
+Karakal 2A4
+T-72SMTDBV
+T-34 Super
+Vesper
+Armata
+Colossus
+Shrek
+Type 25
+Type 28
+Type 28A1
+Type 29B
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+P
+R
+S
+T
+U
+W
+X
+Y
+Z

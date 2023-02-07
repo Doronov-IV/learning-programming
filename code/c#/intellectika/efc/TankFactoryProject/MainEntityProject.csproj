@@ -36,6 +36,7 @@
   <ItemGroup>
     <Folder Include="Data\Binary\" />
     <Folder Include="Data\JSON\Tanks\" />
+    <Folder Include="Data\Text\" />
     <Folder Include="Generation\TankFactories\German\Implementations\" />
     <Folder Include="Generation\TankFactories\Japanese\Implementations\" />
     <Folder Include="Generation\TankFactories\Swedish\Implementations\" />
