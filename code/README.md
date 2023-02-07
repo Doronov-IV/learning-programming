@@ -4,4 +4,4 @@ I keep it for myself to remember old lessons and keep the knowledge that has bee
 
 # Roadmap
 
-A ['Roadmap'](https://github.com/DoronovIV/computer-science-learning/wiki/Roadmap) wiki page
+[Roadmap](https://github.com/DoronovIV/computer-science-learning/wiki/Roadmap) wiki page
