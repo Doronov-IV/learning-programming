@@ -1,12 +1,13 @@
 global using System;
 global using Newtonsoft.Json;
 using System.Text.Json;
+using emptyproject.Applications;
 
-namespace emptyproject
+namespace emptyproject.Controls
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,10 @@ namespace emptyproject
             app.MapGet("/", () => "Hello World!");
 
 
-            PersonListApplication listApp = new(app);
-            listApp.RunCustomApplication();
+            ICustomApplication listApp = new PersonListApplication(app);
+            await listApp.Run();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

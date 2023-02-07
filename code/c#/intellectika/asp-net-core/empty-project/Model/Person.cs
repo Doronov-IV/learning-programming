@@ -1,4 +1,4 @@
-﻿namespace emptyproject
+﻿namespace emptyproject.Model
 {
     public class Person
     {

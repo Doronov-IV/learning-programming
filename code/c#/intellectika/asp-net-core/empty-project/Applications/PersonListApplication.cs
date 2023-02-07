@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using emptyproject.Controls;
+using System.Text.RegularExpressions;
 
-namespace emptyproject
+namespace emptyproject.Applications
 {
-    public class PersonListApplication
+    public class PersonListApplication : ICustomApplication
     {
 
         private WebApplication _currentWebApplication;
@@ -16,7 +17,7 @@ namespace emptyproject
 
         private PersonListBusinessLogic personListLogic;
 
-        public void RunCustomApplication()
+        public async Task Run()
         {
             AddRestMiddleware();
         }
@@ -24,7 +25,7 @@ namespace emptyproject
 
         private void AddRestMiddleware()
         {
-            CurrentWebApplication.Run(async(context) =>
+            CurrentWebApplication.Run(async (context) =>
             {
                 var response = context.Response;
                 var request = context.Request;
@@ -37,7 +38,7 @@ namespace emptyproject
                     await personListLogic.GetAllPeopleAsync(response);
                 }
 
-                else if (Regex.IsMatch(path, expressionForGuid) && request.Method.Equals("GET")) 
+                else if (Regex.IsMatch(path, expressionForGuid) && request.Method.Equals("GET"))
                 {
                     string? id = path.Value.Split("/")[3];
                     await personListLogic.GetPersonAsync(id, response);
@@ -62,7 +63,7 @@ namespace emptyproject
                 else
                 {
                     response.ContentType = "text/html; charset=utf-8";
-                    await response.SendFileAsync("html/index.html");
+                    await response.SendFileAsync("html/form.html");
                 }
             });
         }

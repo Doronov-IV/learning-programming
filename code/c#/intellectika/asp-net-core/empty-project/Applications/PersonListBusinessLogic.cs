@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace emptyproject
+using emptyproject.Model;
+
+namespace emptyproject.Applications
 {
     /// <summary>
     /// An instance containing all Person List REST business logic.
@@ -64,7 +66,7 @@ namespace emptyproject
 
             if (user is not null) await response.WriteAsJsonAsync(user);
 
-            else WriteUserNotFOundMessageAsync(response);
+            else await WriteUserNotFOundMessageAsync(response);
         }
 
 
@@ -85,7 +87,7 @@ namespace emptyproject
                 await response.WriteAsJsonAsync(user);
             }
 
-            else WriteUserNotFOundMessageAsync(response);
+            else await WriteUserNotFOundMessageAsync(response);
         }
 
 
@@ -113,7 +115,7 @@ namespace emptyproject
                 else throw new InvalidDataException("[Manual] Invalid input data.");
             }
 
-            catch(InvalidDataException ex)
+            catch (InvalidDataException ex)
             {
                 await WriteIncorrectDataMessageAsync(response);
             }
@@ -126,7 +128,7 @@ namespace emptyproject
         /// <br />
         /// Изменить пользовательские данные.
         /// </summary>
-        public async Task UpdatePersonAsync(HttpResponse response, HttpRequest request) 
+        public async Task UpdatePersonAsync(HttpResponse response, HttpRequest request)
         {
             try
             {
@@ -181,7 +183,7 @@ namespace emptyproject
         {
             response.StatusCode = 400;
 
-            await response.WriteAsJsonAsync(new {message = "Incorrect data."} );
+            await response.WriteAsJsonAsync(new { message = "Incorrect data." });
         }
 
 
