@@ -34,12 +34,52 @@ namespace ShootingRange
         }
         static void Main(string[] args)
         {
-            int a = 5;
-            Console.WriteLine( static () =>
-            {
-                a.CompareTo(5);
-            });
+            Classs clas = new();
+
+            Console.WriteLine()
         }
+
+
+        public interface ISomethingable
+        {
+            public int aaaa { set; get; }
+
+            public virtual void A()
+            {
+                aaaa = 5;
+            }
+        }
+
+
+        public interface IInterfaceable 
+        {
+            public int aaaa { set; get; }
+
+
+            public virtual void B()
+            {
+                aaaa = 5;
+            }
+        }
+
+
+        public class Classs : IInterfaceable, ISomethingable
+        { 
+
+            int IInterfaceable.aaaa { set; get; }
+            int ISomethingable.aaaa { set; get; }
+
+            public void A()
+            {
+                aaaa = 5;
+            }
+
+            public void B()
+            {
+                aaaa = 10;
+            }
+        }
+
 
     }
 }
