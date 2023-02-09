@@ -2,7 +2,7 @@
 {
     public interface ICustomApplication
     {
-        public Task Run();
+        public Task RunAsync();
 
     }
 }

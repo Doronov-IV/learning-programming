@@ -18,7 +18,7 @@ namespace emptyproject.Controls
 
 
             ICustomApplication listApp = new PersonListApplication(app);
-            await listApp.Run();
+            await listApp.RunAsync();
 
             await app.RunAsync();
         }

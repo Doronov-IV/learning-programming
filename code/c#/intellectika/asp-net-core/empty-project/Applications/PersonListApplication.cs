@@ -17,7 +17,7 @@ namespace emptyproject.Applications
 
         private PersonListBusinessLogic personListLogic;
 
-        public async Task Run()
+        public async Task RunAsync()
         {
             AddRestMiddleware();
         }
