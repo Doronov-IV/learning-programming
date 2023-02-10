@@ -14,6 +14,7 @@ using ShootingRangeProject;
 
 namespace ShootingRange
 {
+
     public static class Program
     {
         static IEnumerable<int> Square(IEnumerable<int> a)
@@ -34,49 +35,54 @@ namespace ShootingRange
         }
         static void Main(string[] args)
         {
-            Classs clas = new();
+            Classs clas = 5;
 
-            Console.WriteLine()
+            clas.A();
+
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+
+            Console.ReadKey();
         }
 
 
         public interface ISomethingable
         {
-            public int aaaa { set; get; }
-
-            public virtual void A()
-            {
-                aaaa = 5;
-            }
+            public void A();
         }
 
 
-        public interface IInterfaceable 
+        public interface IInterfaceable : ISomethingable
         {
-            public int aaaa { set; get; }
-
-
-            public virtual void B()
-            {
-                aaaa = 5;
-            }
+            public void B();
         }
 
 
-        public class Classs : IInterfaceable, ISomethingable
-        { 
 
-            int IInterfaceable.aaaa { set; get; }
-            int ISomethingable.aaaa { set; get; }
+        public class Classs : IInterfaceable
+        {
+            public int a = 5;
 
-            public void A()
+            public unsafe void A()
             {
-                aaaa = 5;
+
+
+                unsafe
+                {
+                    const int array_size = 99999999;
+                    int[] array = new int[array_size];
+                    int* arrayPtr = (int*)&array;
+                    int i = 0;
+
+                    array = null;
+
+                    Thread.Sleep(5000);
+                }
+
             }
 
             public void B()
             {
-                aaaa = 10;
+                throw new NotImplementedException();
             }
         }
 
