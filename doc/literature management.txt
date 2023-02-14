@@ -1,0 +1,31 @@
+The overall list:
+
+	branch Anton
+		Nutshell
+		ASP NET Core in action
+		EFC in action
+
+
+	branch Andrei
+		Richter
+		Concurrency
+
+
+
+Progress: 
+	
+	ASP – 18
+	EFC – 0
+	Concurrency – 0
+	Richter – n/a
+	Nutshell – n/a
+
+
+
+Priority queue:
+
+	ASP
+	EFC
+	Concurrency
+	Richter
+	Nutshell

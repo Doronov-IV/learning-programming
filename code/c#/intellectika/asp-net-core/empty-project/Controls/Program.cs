@@ -2,9 +2,12 @@ global using System;
 global using Newtonsoft.Json;
 using System.Text.Json;
 using emptyproject.Applications;
+using emptyproject.MiddlewareLike.FileUpload;
+using Microsoft.AspNetCore.Mvc;
 
 namespace emptyproject.Controls
 {
+    [DisableRequestSizeLimit]
     public class Program
     {
         public static async Task Main(string[] args)
@@ -17,8 +20,7 @@ namespace emptyproject.Controls
             app.MapGet("/", () => "Hello World!");
 
 
-            ICustomApplication listApp = new PersonListApplication(app);
-            await listApp.RunAsync();
+            app.UseUploadFile();
 
             await app.RunAsync();
         }
