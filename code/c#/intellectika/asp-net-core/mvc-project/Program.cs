@@ -1,3 +1,5 @@
+using mvcproject.Middleware;
+
 namespace mvcproject
 {
     public class Program
@@ -31,6 +33,9 @@ namespace mvcproject
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+            app.UsePersonManager();
 
 
             MyStartup startupConfig = new();

@@ -20,7 +20,8 @@ namespace emptyproject.Controls
             app.MapGet("/", () => "Hello World!");
 
 
-            app.UseUploadFile();
+            PersonListApplication application = new(app);
+            await application.RunAsync();
 
             await app.RunAsync();
         }
