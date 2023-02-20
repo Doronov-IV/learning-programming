@@ -14,7 +14,7 @@ The overall list:
 
 Progress: 
 	
-	ASP – 18
+	ASP – 42
 	EFC – 0
 	Concurrency – 0
 	Richter – n/a
