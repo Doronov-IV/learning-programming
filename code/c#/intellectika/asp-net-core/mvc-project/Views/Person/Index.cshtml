@@ -20,10 +20,14 @@
     </head>
     <body>
         <h2>User list</h2>
-        <div>
-            <input type="hidden" id="userId" />
+        <div class="card">
+        <div class="card-header">
+        </div>
+
+        <div class="card-body">
+            <!--input type="hidden" id="userId" />
             <p>
-                Имя:<br />
+                Name:<br />
                 <input id="userName" />
             </p>
             <p>
@@ -33,7 +37,31 @@
             <p>
                 <button id="saveBtn">Save</button>
                 <button id="resetBtn">Reset</button>
-            </p>
+            </p -->
+
+
+            <form>
+
+                <div>
+                    <label class="form-label">Name:</label>
+                    <input id="userName" class="form-control"/>
+                </div>
+
+                <div>
+                    <label class="form-label">Age:</label>
+                    <input id="userAge" typ="number" class="form-control"/>
+                </div>
+
+                <div margin-top="20">
+                    <button id="saveBtn">Save</button>
+                    <button id="resetBtn">Reset</button>
+                </div>
+
+            </form>
+
+                </div>
+            <div class="card-footer">
+            </div>
         </div>
         <table>
             <thead><tr><th>Name</th><th>Age</th><th></th></tr></thead>

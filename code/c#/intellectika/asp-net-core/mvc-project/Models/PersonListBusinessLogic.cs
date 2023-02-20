@@ -3,7 +3,7 @@
 namespace mvcproject.Models
 {
     /// <summary>
-    /// An instance containing all Person List REST business logic.
+    /// An instance containing all PersonModel List REST business logic.
     /// <br />
     /// Объект, содержащий всю REST логику списка пользователей.
     /// </summary>
@@ -16,7 +16,7 @@ namespace mvcproject.Models
 
 
         /// <inheritdoc cref="PersonList"/>
-        private List<Person> _personList;
+        private List<PersonModel> _personList;
 
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace mvcproject.Models
         /// <br />
         /// Список пользователей.
         /// </summary>
-        public List<Person> PersonList
+        public List<PersonModel> PersonList
         {
             get { return _personList; }
             set { _personList = value; }
@@ -60,7 +60,7 @@ namespace mvcproject.Models
         /// </summary>
         public async Task GetPersonAsync(string id, HttpResponse response)
         {
-            Person? user = PersonList.FirstOrDefault(u => u.Id.Equals(id));
+            PersonModel? user = PersonList.FirstOrDefault(u => u.Id.Equals(id));
 
             if (user is not null) await response.WriteAsJsonAsync(user);
 
@@ -76,7 +76,7 @@ namespace mvcproject.Models
         /// </summary>
         public async Task DeletePersonAsync(string id, HttpResponse response)
         {
-            Person? user = PersonList.FirstOrDefault(u => u.Id.Equals(id));
+            PersonModel? user = PersonList.FirstOrDefault(u => u.Id.Equals(id));
 
             if (user is not null)
             {
@@ -99,7 +99,7 @@ namespace mvcproject.Models
         {
             try
             {
-                var user = await request.ReadFromJsonAsync<Person>();
+                var user = await request.ReadFromJsonAsync<PersonModel>();
 
                 if (user is not null)
                 {
@@ -130,7 +130,7 @@ namespace mvcproject.Models
         {
             try
             {
-                Person? userData = await request.ReadFromJsonAsync<Person>();
+                PersonModel? userData = await request.ReadFromJsonAsync<PersonModel>();
 
                 if (userData is not null)
                 {
@@ -211,7 +211,7 @@ namespace mvcproject.Models
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public PersonListBusinessLogic(List<Person> userList)
+        public PersonListBusinessLogic(List<PersonModel> userList)
         {
             PersonList = userList;
         }

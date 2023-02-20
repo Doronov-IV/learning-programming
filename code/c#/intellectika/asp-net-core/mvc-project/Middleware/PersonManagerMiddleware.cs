@@ -28,7 +28,7 @@ namespace mvcproject
             var path = request.Path;
 
             string expressionForGuid = @"^/api/users/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
-            string apiPath = "/Home/api/users";
+            string apiPath = "/api/users";
 
             if (path.Equals(apiPath) && request.Method.Equals("GET"))
             {

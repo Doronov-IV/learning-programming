@@ -1,6 +1,6 @@
 ﻿namespace mvcproject.Models
 {
-    public class Person
+    public class PersonModel
     {
 
         public string Id { get; set; }
@@ -13,7 +13,7 @@
         /// <br />
         /// Конструктор по умолчанию.
         /// </summary>
-        public Person()
+        public PersonModel()
         {
         }
 
@@ -23,7 +23,7 @@
         /// <br />
         /// Параметризованный конструктор.
         /// </summary>
-        public Person(string id, string name, int age)
+        public PersonModel(string id, string name, int age)
         {
             Id = id;
             Name = name;
