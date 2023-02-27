@@ -1,4 +1,8 @@
-# VenderAngular
+# Welcome
+This is my test project to get acquainted with JavaScript, TypeScript and Angular.  
+It should represent a template for some sort of shop.
+
+# Vender
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
