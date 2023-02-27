@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Input } from '@angular/core';
+import { IProduct } from 'src/app/models/product';
 
 @Component({
   selector: 'app-product',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
+  @Input() product: IProduct
 
+  detailsShown = false
 }

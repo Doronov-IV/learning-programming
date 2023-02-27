@@ -1,1 +1,34 @@
-<p>product works!</p>
+<div class="py-4 px-6 border rounded flex items-center flex-col mb-2">
+    <img [src]="product.image" [alt]="product.title" class="w-1/6 mb-2">
+    <h2 class="mb-2 text-md text-center">{{product.title}}</h2>
+
+
+    <p class="mb-2">
+        <span [ngStyle]="{fontWeight: 'bold'}">{{product.rating.rate}}⭐</span> 
+        <span class="ml-2">({{product.rating.count}})</span>
+    </p>
+
+    <p>Price: <span class="font-bold">{{product.price | currency}}</span></p>
+
+    <button 
+    class="border m-2 py-2 px-4 rounded"
+
+    [ngClass]="{
+        'bg-yellow-400' : !detailsShown,
+        'bg-blue-400' : detailsShown
+    }"
+
+    (click)="detailsShown = !detailsShown"
+    >
+
+        {{ detailsShown ? 'Less' : 'More' }} Details
+    
+    </button>
+
+    <div *ngIf="detailsShown">
+    <p class="mt-2 mb-2">{{product.description}}</p>
+    </div>
+
+
+
+</div>
