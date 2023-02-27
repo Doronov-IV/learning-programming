@@ -1,7 +1,9 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Observer, tap } from 'rxjs';
 import { IProduct } from './models/product';
 import { ProductService } from './services/product.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,15 +13,15 @@ import { ProductService } from './services/product.service';
 })
 export class AppComponent implements OnInit {
   title = 'vender'
-  products: IProduct[] = []
+  isLoading : boolean = false
+  term : string = ""
+  products$: Observable<IProduct[]>
+  
 
-  constructor(private productService: ProductService) {
-
-  }
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe(products => {
-      this.products = products;
-    })  
+    this.isLoading = true
+    this.products$ = this.productService.getAll().pipe(tap(() => this.isLoading = false))
   }
 }

@@ -1,13 +1,23 @@
+<app-global-error></app-global-error>
+
 <div class="max-w-2xl container mx-auto pt-5">
 
-    <h1 class="text-center mb-2 text-lg">{{ title | titlecase }}</h1>
+    <p *ngIf="isLoading" class="text-center text-lg">Loading</p>
+
+    <h1 *ngIf="!isLoading" class="text-center mb-2 text-lg">{{ title | titlecase }}</h1>
+
+    <input
+        type="text"
+        class="mb-3 mt-3 border py-2 px-4 w-full rounded"
+        placeholder="Filter"
+        [(ngModel)]="term" 
+    >
+
 
     <app-product 
-        *ngFor="let product of products; let i = index" 
-        [product]="product"
-        >
-
-
+    *ngFor="let product of products$ | async; let i = index" 
+    [product]="product"
+    >
 
     </app-product>
 
