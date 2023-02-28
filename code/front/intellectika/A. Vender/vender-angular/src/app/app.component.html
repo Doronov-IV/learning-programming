@@ -14,7 +14,7 @@
         [(ngModel)]="term" 
     >
 
-    <div *ngIf="products$ | async as products" >
+    <div *ngIf="productService.products as products" >
         <app-product
         *ngFor="let product of products | filterProduct: term; let i = index" 
         [product]="product"
@@ -23,9 +23,9 @@
         </app-product>
     </div>
 
-    <app-model *ngIf="modelService.isVisible$ | async" title="Create New Product">
+    <app-modal *ngIf="modelService.isVisible$ | async" title="Create New Product">
         <app-create-product></app-create-product>
-    </app-model>
+    </app-modal>
 
 
     <button

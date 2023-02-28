@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { catchError, delay, Observable, retry, throwError } from "rxjs";
 import { IProduct } from "../models/product";
 import { ErrorService } from "./error.service";
+import { tap } from 'rxjs/operators';
 
 
 
@@ -12,6 +13,8 @@ import { ErrorService } from "./error.service";
 export class ProductService {
 
     readonly delayTime = 2000
+
+    products: IProduct[] = []
 
 
     constructor(
@@ -24,10 +27,20 @@ export class ProductService {
             params: new HttpParams({
                 fromObject: {limit: 5}
             })
-        }).pipe(delay(this.delayTime),
-        retry(2),
-        catchError(this.handleError.bind(this))
+        }).pipe(
+            delay(this.delayTime),
+            retry(2),
+            tap(products => this.products = products),
+            catchError(this.handleError.bind(this))
         )
+    }
+
+
+    create(product: IProduct) : Observable<IProduct> {
+        return this.http.post<IProduct>('https://fakestoreapi.com/products', product)
+            .pipe(
+                tap(prod => this.products.push(prod))
+            )
     }
 
 

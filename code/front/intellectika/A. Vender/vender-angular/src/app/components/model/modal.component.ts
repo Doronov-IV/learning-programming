@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModelService } from 'src/app/services/model.service';
 
 @Component({
-  selector: 'app-model',
-  templateUrl: './model.component.html',
-  styleUrls: ['./model.component.css']
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
 })
-export class ModelComponent implements OnInit {
+export class ModalComponent implements OnInit {
 
   @Input() title: string
 

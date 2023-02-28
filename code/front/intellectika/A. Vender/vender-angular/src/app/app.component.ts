@@ -17,16 +17,19 @@ export class AppComponent implements OnInit {
   title = 'vender'
   isLoading : boolean = false
   term : string = ""
-  products$: Observable<IProduct[]>
+  // products$: Observable<IProduct[]>
   
 
   constructor(
-    private productService: ProductService,
+    public productService: ProductService,
     public modelService: ModelService
     ) {}
 
   ngOnInit(): void {
     this.isLoading = true
-    this.products$ = this.productService.getAll().pipe(tap(() => this.isLoading = false))
+    // this.products$ = this.productService.getAll().pipe(tap(() => this.isLoading = false))
+    this.productService.getAll().subscribe(() => {
+      this.isLoading = false
+    })
   }
 }

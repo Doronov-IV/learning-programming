@@ -10,7 +10,7 @@ import { GlobalErrorComponent } from './components/global-error/global-error.com
 
 import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
-import { ModelComponent } from './components/model/model.component';
+import { ModalComponent } from './components/model/modal.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { FocusDirective } from './directives/focus.directive';
 
@@ -21,7 +21,7 @@ import { FocusDirective } from './directives/focus.directive';
     ProductComponent,
     GlobalErrorComponent,
     FilterProductPipe,
-    ModelComponent,
+    ModalComponent,
     CreateProductComponent,
     FocusDirective,
   ],
