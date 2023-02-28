@@ -1,38 +1,9 @@
 <app-global-error></app-global-error>
 
-<div class="max-w-2xl container mx-auto pt-5">
+<app-navigation></app-navigation>
 
-    <p *ngIf="isLoading" class="text-center text-lg">Loading</p>
+<div class="max-w-2xl container mx-auto pt-5 mt-[50px]">
 
-    <h1 *ngIf="!isLoading" class="text-center mb-2 text-lg">{{ title | titlecase }}</h1>
-
-    <input
-        *ngIf="!isLoading"
-        type="text"
-        class="mb-3 mt-3 border py-2 px-4 w-full rounded"
-        placeholder="Filter"
-        [(ngModel)]="term" 
-    >
-
-    <div *ngIf="productService.products as products" >
-        <app-product
-        *ngFor="let product of products | filterProduct: term; let i = index" 
-        [product]="product"
-        >
-        
-        </app-product>
-    </div>
-
-    <app-modal *ngIf="modelService.isVisible$ | async" title="Create New Product">
-        <app-create-product></app-create-product>
-    </app-modal>
-
-
-    <button
-        class="rounded-full bg-red-700 text-white fixed right-5 bottom-5 py-2 px-4"
-        (click)="modelService.open()"
-    >
-        +
-    </button>
+    <router-outlet></router-outlet>
 
 </div>

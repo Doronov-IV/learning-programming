@@ -13,23 +13,4 @@ import { ModalService } from './services/modal.service';
   styleUrls: ['./app.component.css'],
   providers: [TitleCasePipe]
 })
-export class AppComponent implements OnInit {
-  title = 'vender'
-  isLoading : boolean = false
-  term : string = ""
-  // products$: Observable<IProduct[]>
-  
-
-  constructor(
-    public productService: ProductService,
-    public modelService: ModalService
-    ) {}
-
-  ngOnInit(): void {
-    this.isLoading = true
-    // this.products$ = this.productService.getAll().pipe(tap(() => this.isLoading = false))
-    this.productService.getAll().subscribe(() => {
-      this.isLoading = false
-    })
-  }
-}
+export class AppComponent { }

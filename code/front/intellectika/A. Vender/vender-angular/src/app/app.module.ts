@@ -13,6 +13,9 @@ import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { ModalComponent } from './components/model/modal.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { FocusDirective } from './directives/focus.directive';
+import { ProductPageComponent } from './pages/product-page/product-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 
 @NgModule({
@@ -24,6 +27,9 @@ import { FocusDirective } from './directives/focus.directive';
     ModalComponent,
     CreateProductComponent,
     FocusDirective,
+    ProductPageComponent,
+    AboutPageComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
