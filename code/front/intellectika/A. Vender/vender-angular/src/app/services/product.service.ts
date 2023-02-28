@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 })
 export class ProductService {
 
-    readonly delayTime = 2000
+    readonly delayTime = 1000
 
     products: IProduct[] = []
 
