@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModelService } from 'src/app/services/model.service';
 
 @Component({
   selector: 'app-model',
@@ -9,7 +10,7 @@ export class ModelComponent implements OnInit {
 
   @Input() title: string
 
-  constructor() {}
+  constructor(public modelService: ModelService) {}
 
   ngOnInit(): void {
   }

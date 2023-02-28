@@ -5,6 +5,7 @@ import { IProduct } from './models/product';
 import { ProductService } from './services/product.service';
 import { FormsModule } from '@angular/forms';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
+import { ModelService } from './services/model.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,10 @@ export class AppComponent implements OnInit {
   products$: Observable<IProduct[]>
   
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    public modelService: ModelService
+    ) {}
 
   ngOnInit(): void {
     this.isLoading = true

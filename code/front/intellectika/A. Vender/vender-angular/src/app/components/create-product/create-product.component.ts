@@ -11,7 +11,7 @@ import { FormControlDirective } from '@angular/forms'
 export class CreateProductComponent implements OnInit {
 
   form = new FormGroup( {
-    title: new FormControl<string>(' ', [
+    title: new FormControl<string>('', [
       Validators.required,
       Validators.minLength(6)
     ])
