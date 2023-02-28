@@ -40,11 +40,7 @@ export class CreateProductComponent implements OnInit {
         price: 13.5,
         description: 'lorem ipsum set',
         image: 'https://i.pravatar.cc',
-        category: 'electronic',
-        rating: {
-          rate: 42,
-          count: 1
-      }
+        category: 'electronic'
     }).subscribe(() => {
       this.modelService.close()
     })

@@ -4,8 +4,8 @@
 
 
     <p class="mb-2">
-        <span [ngStyle]="{fontWeight: 'bold'}">{{product.rating.rate}}⭐</span> 
-        <span class="ml-2">({{product.rating.count}})</span>
+        <span [ngStyle]="{fontWeight: 'bold'}">{{product.rating?.rate || 0}}⭐</span> 
+        <span class="ml-2">({{product.rating?.count || 0}})</span>
     </p>
 
     <p>Price: <span class="font-bold">{{product.price | currency}}</span></p>
