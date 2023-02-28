@@ -5,7 +5,7 @@ import { IProduct } from './models/product';
 import { ProductService } from './services/product.service';
 import { FormsModule } from '@angular/forms';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
-import { ModelService } from './services/model.service';
+import { ModalService } from './services/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public productService: ProductService,
-    public modelService: ModelService
+    public modelService: ModalService
     ) {}
 
   ngOnInit(): void {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControlDirective } from '@angular/forms'
-import { ModelService } from 'src/app/services/model.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
+
 export class CreateProductComponent implements OnInit {
 
   form = new FormGroup( {
@@ -21,7 +22,7 @@ export class CreateProductComponent implements OnInit {
 
   constructor(
       private productService: ProductService, 
-      private modelService: ModelService
+      private modelService: ModalService
     ) {}
 
   ngOnInit(): void {

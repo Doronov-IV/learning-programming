@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModelService } from 'src/app/services/model.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-modal',
@@ -10,7 +10,7 @@ export class ModalComponent implements OnInit {
 
   @Input() title: string
 
-  constructor(public modelService: ModelService) {}
+  constructor(public modelService: ModalService) {}
 
   ngOnInit(): void {
   }
