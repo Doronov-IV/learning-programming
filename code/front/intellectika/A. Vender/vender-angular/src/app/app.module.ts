@@ -9,13 +9,17 @@ import { ProductComponent } from './components/product/product.component';
 import { GlobalErrorComponent } from './components/global-error/global-error.component';
 
 import { FormsModule } from '@angular/forms';
+import { FilterProductPipe } from './pipes/filter-product.pipe';
+import { ModelComponent } from './components/model/model.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
-    GlobalErrorComponent
+    GlobalErrorComponent,
+    FilterProductPipe,
+    ModelComponent
   ],
   imports: [
     BrowserModule,
