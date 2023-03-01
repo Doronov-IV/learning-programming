@@ -23,7 +23,7 @@ export class ProductService {
     }
 
     getAll(): Observable<IProduct[]> {
-        return this.http.get<IProduct[]>('https://fakestoreapi.com/products', {
+        return this.http.get<IProduct[]>('http://localhost:3000/product', {
             params: new HttpParams({
                 fromObject: {limit: 5}
             })
