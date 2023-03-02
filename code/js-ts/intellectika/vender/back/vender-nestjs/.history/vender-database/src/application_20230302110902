@@ -1,0 +1,35 @@
+import { AppDataSource } from "./data-source"
+import { Product } from "./entity/Product"
+import { Rating } from "./entity/Rating"
+import * as fs from 'fs' 
+import { EntityManager } from "typeorm"
+
+export class Application {
+
+    rub(): void {
+
+
+
+        this.printReport()
+    }
+
+
+    addRating(rating: Rating) {
+            
+    }
+
+
+
+    clearTables() {
+        AppDataSource.initialize().then(async () => {     
+            let manager: EntityManager = new EntityManager(AppDataSource)
+            await manager.query('USE StoreDatabase; DELETE FROM rating; DBCC CHECKIDENT (rating, RESEED, 0)')    
+        }).catch(error => console.log(error))
+    }
+
+
+    printReport(): void {
+        console.log('[manual] application-execution-finished')
+    }
+
+}

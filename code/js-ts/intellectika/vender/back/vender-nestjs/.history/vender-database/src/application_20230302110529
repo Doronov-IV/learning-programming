@@ -1,0 +1,9 @@
+
+
+export class Application {
+
+    rub(): void {
+        console.log('[manual] application-execution finished')
+    }
+
+}

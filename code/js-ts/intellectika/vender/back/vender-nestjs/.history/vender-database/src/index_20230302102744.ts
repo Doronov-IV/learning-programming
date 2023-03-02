@@ -1,0 +1,13 @@
+import { AppDataSource } from "./data-source"
+import { Product } from "./entity/Product"
+import { Rating } from "./entity/Rating"
+import * as fs from 
+
+AppDataSource.initialize().then(async () => {
+
+    const ratingRepository = AppDataSource.getRepository(Rating)
+    const productRepository = AppDataSource.getRepository(Product)
+
+    
+
+}).catch(error => console.log(error))

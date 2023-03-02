@@ -1,0 +1,17 @@
+
+
+export class Application {
+
+    rub(): void {
+
+        
+
+        this.printReport()
+    }
+
+
+    printReport(): void {
+        console.log('[manual] application-execution-finished')
+    }
+
+}
