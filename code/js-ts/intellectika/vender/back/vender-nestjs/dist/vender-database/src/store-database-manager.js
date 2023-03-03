@@ -14,10 +14,13 @@ class StoreDatabaseManager {
         this.ratingRepository = data_source_1.AppDataSource.getRepository(Rating_1.Rating);
     }
     addProduct(product) {
-        this.performOperation(() => {
+        this.performOperation(async () => {
+            let rating = product.rating;
+            rating.products = [product];
+            this.ratingRepository.save(rating);
             this.productRepository.save(product);
-            this.printReport('add-product');
         });
+        this.printReport('add-product');
     }
     addRating(rating) {
         this.performOperation(() => {
@@ -33,11 +36,15 @@ class StoreDatabaseManager {
         }
         let products = [];
         products = await this.productRepository.find();
+        let ratings = await this.ratingRepository.find({
+            products: []
+        });
         return products;
     }
-    clearTables() {
+    clearDatabase() {
         this.performOperation(async () => {
             let manager = new typeorm_1.EntityManager(data_source_1.AppDataSource);
+            await manager.query('USE StoreDatabase; DELETE FROM product; DBCC CHECKIDENT (product, RESEED, 0)');
             await manager.query('USE StoreDatabase; DELETE FROM rating; DBCC CHECKIDENT (rating, RESEED, 0)');
             this.printReport('clear');
         });

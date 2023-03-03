@@ -8,8 +8,8 @@ export declare class StoreDatabaseManager {
     addProduct(product: Product): void;
     addRating(rating: Rating): void;
     getAllProducts(): Promise<IProduct[]>;
-    clearTables(): void;
+    clearDatabase(): void;
     private printReport;
     private performOperation;
-    private fillDatabase;
+    fillDatabase(): void;
 }

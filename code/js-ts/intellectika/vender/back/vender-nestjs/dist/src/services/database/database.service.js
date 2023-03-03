@@ -16,6 +16,9 @@ let DatabaseService = class DatabaseService {
     async getAll() {
         return await this.dbManager.getAllProducts();
     }
+    async performSomeActions() {
+        await this.dbManager.fillDatabase();
+    }
 };
 DatabaseService = __decorate([
     (0, common_1.Injectable)()

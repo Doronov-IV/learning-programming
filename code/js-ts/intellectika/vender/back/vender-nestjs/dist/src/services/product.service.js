@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
+const fs = require("fs");
 const database_service_1 = require("./database/database.service");
 let ProductService = class ProductService {
     constructor() {
@@ -17,14 +18,19 @@ let ProductService = class ProductService {
         return await this.readProducts();
     }
     async readProducts() {
-        if (this.products.length === 0) {
-            let databaseService = new database_service_1.DatabaseService();
+        let databaseService = new database_service_1.DatabaseService();
+        if (this.getAppStatus() === "auto") {
             this.products = await databaseService.getAll();
-            console.log(this.products.length);
-            return this.products;
         }
-        else
-            return this.products;
+        else {
+            await databaseService.performSomeActions();
+        }
+        return this.products;
+    }
+    getAppStatus() {
+        let rawJson = fs.readFileSync('config/app.json', 'utf-8');
+        let config = JSON.parse(rawJson);
+        return config.status;
     }
 };
 ProductService = __decorate([
