@@ -372,6 +372,7 @@ FodyWeavers.xsd
 
 # Local History for Visual Studio Code
 .history/
+.anhular/
 
 # Built Visual Studio Code Extensions
 *.vsix
