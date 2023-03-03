@@ -16,15 +16,15 @@ let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    getProducts() {
-        return this.productService.getProducts();
+    async getProducts() {
+        return await this.productService.getProducts();
     }
 };
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProducts", null);
 ProductController = __decorate([
     (0, common_1.Controller)('product'),

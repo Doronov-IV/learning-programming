@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "nvarchar", length: "MAX" }),
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([

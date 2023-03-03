@@ -27,7 +27,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Rating.prototype, "count", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Product_1.Product, (product) => product.rating),
+    (0, typeorm_1.OneToMany)(() => Product_1.Product, (product) => product.rating, {
+        cascade: true,
+        onUpdate: 'CASCADE'
+    }),
     __metadata("design:type", Array)
 ], Rating.prototype, "products", void 0);
 Rating = __decorate([

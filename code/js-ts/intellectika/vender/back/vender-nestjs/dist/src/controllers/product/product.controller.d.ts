@@ -3,5 +3,5 @@ import { ProductService } from '../../services/product.service';
 export declare class ProductController {
     private productService;
     constructor(productService: ProductService);
-    getProducts(): IProduct[];
+    getProducts(): Promise<IProduct[]>;
 }

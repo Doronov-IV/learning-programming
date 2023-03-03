@@ -13,13 +13,13 @@ let ProductService = class ProductService {
     constructor() {
         this.products = [];
     }
-    getProducts() {
-        return this.readProducts();
+    async getProducts() {
+        return await this.readProducts();
     }
-    readProducts() {
+    async readProducts() {
         if (this.products.length === 0) {
             let databaseService = new database_service_1.DatabaseService();
-            this.products = databaseService.getAll();
+            this.products = await databaseService.getAll();
             console.log(this.products.length);
             return this.products;
         }

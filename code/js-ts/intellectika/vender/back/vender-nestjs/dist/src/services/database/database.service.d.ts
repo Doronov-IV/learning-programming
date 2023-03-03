@@ -1,6 +1,6 @@
-import { StoreDatabaseManager } from '../database/store-database-manager';
+import { StoreDatabaseManager } from '../../../vender-database/src/store-database-manager';
 import { IProduct } from 'src/iproduct/iproduct.interface';
 export declare class DatabaseService {
     readonly dbManager: StoreDatabaseManager;
-    getAll(): IProduct[];
+    getAll(): Promise<IProduct[]>;
 }

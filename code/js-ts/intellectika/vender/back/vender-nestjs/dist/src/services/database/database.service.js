@@ -8,13 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseService = void 0;
 const common_1 = require("@nestjs/common");
-const store_database_manager_1 = require("../database/store-database-manager");
+const store_database_manager_1 = require("../../../vender-database/src/store-database-manager");
 let DatabaseService = class DatabaseService {
     constructor() {
         this.dbManager = new store_database_manager_1.StoreDatabaseManager();
     }
-    getAll() {
-        return this.dbManager.getAllProducts();
+    async getAll() {
+        return await this.dbManager.getAllProducts();
     }
 };
 DatabaseService = __decorate([
