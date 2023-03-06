@@ -1,2 +1,2 @@
-#Front
-This is a 'front' folder.
+# Welcome
+This is a 'ts/js' folder.
