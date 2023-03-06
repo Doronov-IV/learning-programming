@@ -1,8 +1,9 @@
 module.exports = class OperatorApplication {
 
     public run() {
-        this.runConditional()
+        this.runSidEffects()
     }
+
 
     private runEquality() {
 
@@ -46,6 +47,17 @@ module.exports = class OperatorApplication {
             console.log("\t" + messageString + "\n")
         })
 
+    }
+
+
+    private runSidEffects() {
+        this.doVerboseAction("side-effects-test", () =>{
+            let someVar // = undefined // doesn't work
+            
+            console.log("\t\tsomeVar: ", void someVar, " (void)\n")
+            console.log("\t\tsomeVar: ", someVar = 5, " (= 5)\n")
+            console.log("\t\tsomeVar: ", someVar ?? 10, " (?? 10)\n")
+        })
     }
 
 
