@@ -1,2 +1,2 @@
 # Welcome
-This is a 'ts/js' folder.
+This is a 'ts / js' folder.
