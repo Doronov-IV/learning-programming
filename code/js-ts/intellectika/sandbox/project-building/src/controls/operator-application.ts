@@ -1,4 +1,8 @@
-module.exports = class OperatorApplication {
+import { prototype } from "events"
+
+let commonApp = require('./common-application')
+
+module.exports = class OperatorApplication extends commonApp {
 
     public run() {
         this.runSidEffects()
@@ -58,13 +62,6 @@ module.exports = class OperatorApplication {
             console.log("\t\tsomeVar: ", someVar = 5, " (= 5)\n")
             console.log("\t\tsomeVar: ", someVar ?? 10, " (?? 10)\n")
         })
-    }
-
-
-    private doVerboseAction(actionName: string, callback) {
-        console.log("\n\t[manual] action \"" + actionName + "\" has started.\n")
-        callback()
-        console.log("\t[manual] action \"" + actionName + "\" has been run.\n")
     }
 
 }

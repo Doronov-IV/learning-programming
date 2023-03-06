@@ -1,12 +1,14 @@
-module.exports = class ExpressionStatementsApplication {
+let commonApp = require('./common-application')
+
+module.exports = class ExpressionStatementsApplication extends commonApp {
     public run(): void {
-        this.runTimes();
+        this.runLoops();
     }
 
 
     public runTimes() {
         this.doVerboseAction("times-test", () => {
-            // unfortunately, this example does not work
+            // unfortunately, this example does not work for me rn
             // 
             // let a = 5;
             // (a).times(function(n) {
@@ -18,15 +20,41 @@ module.exports = class ExpressionStatementsApplication {
             // the expression itself cannot handle w/o a semicolon, my node.js is denying me compilation.
             // luckily, the ide/idle/text-editor can typically give a hint on that.
             // although in this case it might be due to the addon (extension) I installed previously.
-            let a = [1] // ;
+            let a = [1]; // ;
             [1,2,3].push(4)
         })
     }
 
 
-    private doVerboseAction(actionName: string, callback) {
-        console.log("\n\t[manual] action \"" + actionName + "\" has started.\n")
-        callback()
-        console.log("\t[manual] action \"" + actionName + "\" has been run.\n")
+    public runLoops() {
+        this.doVerboseAction("loops-test", () => {
+            let obj = {
+                a: 5,
+                b: "some string",
+                c: {
+                    a1: 2,
+                    b1: "some other string"
+                }
+            }
+
+
+            let show = function(obj: Object): void {
+                for(let unit in obj) {
+                    console.log(unit)
+                }
+            }
+
+
+            for (let item in obj) {
+                if (typeof item == "object") {
+                    show(item)
+                }
+
+                else console.log(item + ": " + obj[item] + "\n")
+            }
+
+            
+        })
     }
+
 }
